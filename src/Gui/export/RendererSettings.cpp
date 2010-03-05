@@ -34,9 +34,9 @@ RendererSettings::RendererSettings()
     m_ui.setupUi( this );
     connect( m_ui.outputFileNameButton, SIGNAL(clicked() ),
              this, SLOT(selectOutputFileName() ) );
-    m_ui.width->setValue( VLMC_GET_INT( "video/VideoProjectWidth" ) );
-    m_ui.height->setValue( VLMC_GET_INT( "video/VideoProjectHeight" ) );
-    m_ui.fps->setValue( VLMC_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+    m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
+    m_ui.height->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectHeight" ) );
+    m_ui.fps->setValue( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
 }
 
 void
