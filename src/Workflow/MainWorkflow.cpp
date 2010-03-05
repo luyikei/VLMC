@@ -258,16 +258,11 @@ MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId,
     m_tracks[trackType]->unmuteClip( uuid, trackId );
 }
 
-void toggleBreakPoint()
-{
-}
-
 void
 MainWorkflow::setCurrentFrame( qint64 currentFrame, MainWorkflow::FrameChangedReason reason )
 {
     QWriteLocker    lock( m_currentFrameLock );
 
-    toggleBreakPoint();
     if ( m_renderStarted == true )
     {
         //Since any track can be reactivated, we reactivate all of them, and let them
