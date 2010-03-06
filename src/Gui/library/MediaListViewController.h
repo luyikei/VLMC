@@ -17,7 +17,6 @@ public:
     virtual ~MediaListViewController();
 
 private:
-    void                    updateClipCount();
     StackViewController*    m_nav;
     QUuid                   m_currentUuid;
     QHash<QUuid, QWidget*>* m_cells;
@@ -35,7 +34,7 @@ public slots:
     void        clipSelection( const QUuid& uuid );
 
 private slots:
-    void    restoreContext();
+    void        restoreContext();
 signals:
     void        mediaSelected( Media* media );
     void        mediaDeleted( const QUuid& uuid );
