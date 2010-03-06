@@ -206,7 +206,7 @@ void        PreviewWidget::createNewClipFromMarkers()
     Clip*   part = new Clip( selectedMedia, beg, end );
 
     //Adding the newly created clip to the media
-    selectedMedia->addClip( part );
-    emit addClip( part );
+    if ( selectedMedia->addClip( part ) == false )
+        delete part;
     return ;
 }

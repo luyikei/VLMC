@@ -97,8 +97,6 @@ ImportController::ImportController(QWidget *parent) :
 
     connect( m_mediaListController, SIGNAL( showClipListAsked( const QUuid& ) ),
              this, SLOT( showClipList( const QUuid& ) ) );
-    connect( m_preview, SIGNAL( addClip( Clip* ) ),
-             m_mediaListController, SLOT( clipAdded( Clip* ) ) ); //StackViewController
     connect( m_stackNav, SIGNAL( previousButtonPushed() ),
              this, SLOT( restoreContext() ) );
 

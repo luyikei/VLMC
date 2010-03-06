@@ -140,7 +140,7 @@ public:
 
 //    bool                        hasMetadata() const;
 
-    void                        addClip( Clip* clip );
+    bool                        addClip( Clip* clip );
     void                        removeClip( const QUuid& uuid );
     Clip*                       clip( const QUuid& uuid ) const { return m_clips[uuid]; }
     const QHash<QUuid, Clip*>*  clips() const { return &m_clips; }
@@ -179,6 +179,7 @@ signals:
     void                        metaDataComputed( const Media* );
     void                        snapshotComputed( const Media* );
     void                        audioSpectrumComputed( const QUuid& );
+    void                        clipAdded( Clip* );
 };
 
 #endif // CLIP_H__

@@ -46,6 +46,8 @@ ImportMediaListController::addMedia( Media* media )
              this, SIGNAL( mediaDeleted( const QUuid& ) ) );
     connect( cell, SIGNAL( arrowClicked( const QUuid& ) ),
              this, SIGNAL( showClipListAsked( const QUuid& ) ) );
+    connect( media, SIGNAL( clipAdded(Clip*) ),
+             this, SLOT( clipAdded( Clip* ) ) );
 
     cell->setTitle( media->fileName() );
     cell->setThumbnail( media->snapshot() );

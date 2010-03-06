@@ -50,6 +50,8 @@ void        MediaListViewController::newMediaLoaded( Media* media )
              this, SLOT( showClipList( const QUuid& ) ) );
     connect( media, SIGNAL( snapshotComputed( const Media* ) ),
              this, SLOT( updateCell( const Media* ) ) );
+    connect( media, SIGNAL( clipAdded( Clip* ) ),
+             this, SLOT( newClipAdded(Clip*) ) );
     cell->setNbClips( media->clips()->size() );
     cell->setThumbnail( media->snapshot() );
     cell->setTitle( media->fileName() );

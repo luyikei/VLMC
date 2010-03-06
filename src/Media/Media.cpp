@@ -268,16 +268,18 @@ bool                Media::matchMetaTag( const QString& tag ) const
     return false;
 }
 
-void            Media::addClip( Clip* clip )
+bool            Media::addClip( Clip* clip )
 {
     if ( clip->getParent() != this )
-        return ;
+        return false;
     foreach ( Clip *c, m_clips.values() )
     {
         if ( clip->begin() == c->begin() && clip->end() == clip->end() )
-            return ;
+            return false;
     }
     m_clips.insert( clip->uuid(), clip );
+    emit clipAdded( clip );
+    return true;
 }
 
 void            Media::removeClip( const QUuid& uuid )
@@ -294,7 +296,7 @@ Media::hasAudioTrack() const
 bool
 Media::hasVideoTrack() const
 {
-    return ( m_nbVideoTracks > 0);
+    return ( m_nbVideoTracks > 0 );
 }
 
 void
