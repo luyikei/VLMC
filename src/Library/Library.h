@@ -95,14 +95,6 @@ public:
     bool    addMedia( const QFileInfo& fileInfo, const QString& uuid = QString() );
 
     /**
-     *  \brief  Add the clip to the library
-     *  \param  clip The clip to add.
-     *  \sa     addMedia( Media* media )
-     *  \sa     media( const QUuid& uuid)
-     *  \sa     clip( const QUuid& uuid )
-     */
-    void    addClip( Clip* clip );
-    /**
      *  \brief  Add an already preparsed media.
      *
      *  \param  media   The media to add to the library

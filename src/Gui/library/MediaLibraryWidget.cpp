@@ -54,12 +54,6 @@ const ViewController*       MediaLibraryWidget::getCurrentViewController()
     return m_nav->getCurrentViewController();
 }
 
-void    MediaLibraryWidget::clipAdded( Clip* clip )
-{
-    Library::getInstance()->addClip( clip );
-    emit addClipToViewController( clip );
-}
-
 void    MediaLibraryWidget::mediaSelection( Media* media )
 {
     emit mediaSelected( media );

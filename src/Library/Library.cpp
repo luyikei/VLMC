@@ -127,13 +127,6 @@ Library::addMedia( Media *media )
     emit newMediaLoaded( media );
 }
 
-void
-Library::addClip( Clip* clip )
-{
-    Media* media = m_medias[clip->getParent()->uuid()];
-    media->addClip( clip );
-}
-
 bool
 Library::mediaAlreadyLoaded( const QFileInfo& fileInfo )
 {
