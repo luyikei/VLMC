@@ -99,9 +99,11 @@ Library::deleteMedia( const QUuid& uuid )
         delete m_medias.take( uuid );
 }
 
-void
+bool
 Library::addMedia( const QFileInfo& fileInfo, const QString& uuid )
 {
+    if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
+        return false;
     Media* media = new Media( fileInfo.filePath(), uuid );
 
     foreach( Media* it, m_medias.values() )
@@ -109,11 +111,12 @@ Library::addMedia( const QFileInfo& fileInfo, const QString& uuid )
         if ( it->fileInfo()->filePath() == media->fileInfo()->filePath() )
         {
             delete media;
-            return;
+            return false;
         }
     }
     MetaDataManager::getInstance()->computeMediaMetadata( media );
     addMedia( media );
+    return true;
 }
 
 
@@ -200,7 +203,11 @@ Library::loadProject( const QDomElement& medias )
         }
         else
         {
-            addMedia( path, uuid );
+            if ( addMedia( path, uuid ) == false )
+            {
+                elem = elem.nextSibling().toElement();
+                continue ;
+            }
         }
         if ( clipList.size() != 0 )
         {
@@ -224,7 +231,6 @@ Library::loadProject( const QDomElement& medias )
                 }
             }
         }
-
         elem = elem.nextSibling().toElement();
     }
     emit projectLoaded();

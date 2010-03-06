@@ -87,11 +87,12 @@ public:
     /**
      *  \brief  Add a file to the media library
      *  \param  fileInfo the file info of the media
+     *  \return         true if the media was successfully loaded. false otherwise.
      *  \sa     addClip( Clip* clip )
      *  \sa     media( const QUuid& uuid)
      *  \sa     clip( const QUuid& uuid )
      */
-    void    addMedia( const QFileInfo& fileInfo, const QString& uuid = QString() );
+    bool    addMedia( const QFileInfo& fileInfo, const QString& uuid = QString() );
 
     /**
      *  \brief  Add the clip to the library
