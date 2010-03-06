@@ -60,6 +60,7 @@ ImportController::ImportController(QWidget *parent) :
     m_filesModel->sort( 0, Qt::AscendingOrder );
     m_filesModel->setNameFilters( filters );
     m_filesModel->setRootPath( "/" );
+    m_filesModel->setNameFilterDisables( false );
 
     restoreCurrentPath();
 
