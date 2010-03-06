@@ -45,7 +45,6 @@ private:
 
 private slots:
     void    mediaSelection( Media* media );
-    void    clipSelection( Clip* clip );
 
 signals:
     void    mediaSelected( Media* media );

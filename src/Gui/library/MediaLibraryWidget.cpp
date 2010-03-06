@@ -58,7 +58,3 @@ void    MediaLibraryWidget::mediaSelection( Media* media )
 {
     emit mediaSelected( media );
 }
-
-void    MediaLibraryWidget::clipSelection( Clip* clip )
-{
-}
