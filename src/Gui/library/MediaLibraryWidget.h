@@ -25,10 +25,11 @@
 
 #include <QWidget>
 
-class StackViewController;
-class ViewController;
-class Media;
-class Clip;
+class   StackViewController;
+class   ViewController;
+class   Media;
+class   Clip;
+class   QUuid;
 
 class MediaLibraryWidget : public QWidget
 {
@@ -43,12 +44,8 @@ public:
 private:
     StackViewController*    m_nav;
 
-private slots:
-    void    mediaSelection( Media* media );
-
 signals:
-    void    mediaSelected( Media* media );
-    void    previewClipSetted( Clip* clip );
+    void    clipSelected( const QUuid& );
     void    importRequired();
     void    addClipToViewController( Clip* clip );
 };

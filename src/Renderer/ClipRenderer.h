@@ -71,8 +71,11 @@ private:
     bool                    m_mediaChanged;
 
 public slots:
-    virtual void            setClip( Clip* clip );
-    virtual void            setMedia( Media* media );
+    /**
+     *  \brief      Set the Clip to render
+     *  \param      clip    The clip to render
+     */
+    virtual void            setClip( const QUuid& );
     virtual void            mediaUnloaded( const QUuid& );
     virtual void            previewWidgetCursorChanged( qint64 newFrame );
 

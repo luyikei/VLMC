@@ -33,12 +33,10 @@ MediaLibraryWidget::MediaLibraryWidget( QWidget* parent ) : QWidget( parent )
     MediaListViewController* list = new MediaListViewController( m_nav );
     Library*  library = Library::getInstance();
     //Media
-    connect( list, SIGNAL( mediaSelected( Media* ) ), this, SLOT( mediaSelection( Media* ) ) );
-    connect( list, SIGNAL( mediaDeleted( const QUuid& ) ), library, SLOT( removingMediaAsked( const QUuid& ) ) );
+    connect( list, SIGNAL( clipSelected( const QUuid& ) ), this, SIGNAL( clipSelected( const QUuid& ) ) );
+    connect( list, SIGNAL( clipDeleted( const QUuid& ) ), library, SLOT( removingMediaAsked( const QUuid& ) ) );
     connect( library, SIGNAL( mediaRemoved( QUuid ) ), list, SLOT( mediaRemoved( const QUuid& ) ) );
     connect( m_nav, SIGNAL( importRequired() ), this, SIGNAL( importRequired() ) );
-    //Clip
-    connect( list, SIGNAL( clipSelected( Clip* ) ), this, SIGNAL( previewClipSetted( Clip* ) ) );
     connect( this, SIGNAL( addClipToViewController( Clip* ) ), list, SLOT( newClipAdded( Clip* ) ) );
     m_nav->pushViewController( list );
     setMinimumWidth( 280 );
@@ -52,9 +50,4 @@ MediaLibraryWidget::~MediaLibraryWidget()
 const ViewController*       MediaLibraryWidget::getCurrentViewController()
 {
     return m_nav->getCurrentViewController();
-}
-
-void    MediaLibraryWidget::mediaSelection( Media* media )
-{
-    emit mediaSelected( media );
 }

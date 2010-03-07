@@ -87,8 +87,9 @@ ImportController::ImportController(QWidget *parent) :
     connect( m_ui->forwardButton, SIGNAL( clicked() ),
              this, SLOT( forwardButtonClicked() ) );
 
-    connect( this, SIGNAL( mediaSelected( Media* ) ),
-             m_preview->getGenericRenderer(), SLOT( setMedia( Media* ) ) );
+    connect( m_mediaListController, SIGNAL( mediaSelected( const QUuid& ) ),
+             qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
+             SLOT( setClip( const QUuid& ) ) );
     connect( this, SIGNAL( mediaSelected( Media* ) ),
              m_tag, SLOT( mediaSelected( Media* ) ) );
 

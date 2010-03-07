@@ -235,16 +235,13 @@ void        MainWindow::setupLibrary()
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
-    connect( mediaLibraryWidget, SIGNAL( mediaSelected( Media* ) ),
-             m_clipPreview->getGenericRenderer(), SLOT( setMedia( Media* ) ) );
+    connect( mediaLibraryWidget, SIGNAL( clipSelected(QUuid) ),
+             m_clipPreview->getGenericRenderer(), SLOT( setClip( QUuid ) ) );
 
     connect( Library::getInstance(), SIGNAL( mediaRemoved( const QUuid& ) ),
              m_clipPreview->getGenericRenderer(), SLOT( mediaUnloaded( QUuid ) ) );
 
     connect( mediaLibraryWidget, SIGNAL( importRequired() ), this, SLOT( on_actionImport_triggered() ) );
-
-    connect( mediaLibraryWidget, SIGNAL( previewClipSetted( Clip* ) ),
-            m_clipPreview->getGenericRenderer(), SLOT( setClip( Clip* ) ) );
 }
 
 void    MainWindow::on_actionSave_triggered()

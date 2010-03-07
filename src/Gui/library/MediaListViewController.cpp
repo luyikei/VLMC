@@ -22,7 +22,7 @@
 
 #include "MediaListViewController.h"
 
-#include <QDebug>
+#include "Clip.h"
 
 MediaListViewController::MediaListViewController( StackViewController* nav ) :
         ListViewController( nav ), m_nav( nav ), m_clipsListView( 0 )
@@ -45,7 +45,7 @@ void        MediaListViewController::newMediaLoaded( Media* media )
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );
     connect( cell, SIGNAL ( cellDeleted( QUuid ) ),
-             this, SIGNAL( mediaDeleted( QUuid ) ) );
+             this, SIGNAL( clipDeleted( QUuid ) ) );
     connect( cell, SIGNAL( arrowClicked( const QUuid& ) ),
              this, SLOT( showClipList( const QUuid& ) ) );
     connect( media, SIGNAL( clipAdded( Clip* ) ),
@@ -71,7 +71,7 @@ void    MediaListViewController::cellSelection( const QUuid& uuid )
         p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
         m_cells->value( uuid )->setPalette( p );
         m_currentUuid = uuid;
-        emit mediaSelected( Library::getInstance()->media( uuid ) );
+        emit clipSelected( uuid );
     }
 }
 
@@ -81,6 +81,7 @@ void    MediaListViewController::mediaRemoved( const QUuid& uuid )
     removeCell( cell );
     m_cells->remove( uuid );
     m_currentUuid = QUuid();
+    emit clipDeleted( uuid );
 }
 
 void    MediaListViewController::showClipList( const QUuid& uuid )
@@ -91,8 +92,8 @@ void    MediaListViewController::showClipList( const QUuid& uuid )
          Library::getInstance()->media( uuid )-> clipsCount() == 0 )
         return ;
     m_lastUuidClipListAsked = uuid;
-    m_clipsListView = new ClipListViewController( m_nav, uuid );
-    m_clipsListView->addClipsFromMedia( Library::getInstance()->media( uuid ) );
+    m_clipsListView = new MediaListViewController( m_nav );
+    m_clipsListView->newMediaLoaded( Library::getInstance()->media( uuid ) );
     connect( m_clipsListView, SIGNAL( clipSelected( const QUuid& ) ),
             this, SLOT( clipSelection( const QUuid& ) ) );
     m_nav->pushViewController( m_clipsListView );
@@ -116,27 +117,10 @@ void    MediaListViewController::newClipAdded( Clip* clip )
 
 void    MediaListViewController::restoreContext()
 {
-    if ( m_clipsListView->getNbDeletion() != 0 )
+    MediaCellView*  cell = qobject_cast<MediaCellView*>( m_cells->value( m_lastUuidClipListAsked, 0 ) );
+    if ( cell != 0 )
     {
-        if ( m_cells->contains( m_lastUuidClipListAsked ) )
-        {
-            MediaCellView*  cell = qobject_cast<MediaCellView*>( m_cells->value( m_lastUuidClipListAsked, 0 ) );
-            if ( cell != 0 )
-            {
-                cell->decrementClipCount( m_clipsListView->getNbDeletion() );
-                m_clipsListView->resetNbDeletion();
-            }
-        }
+        qDebug() << "FIXME: Update clip count";
     }
     delete m_clipsListView;
-}
-
-void
-MediaListViewController::clipSelection( const QUuid& uuid )
-{
-    Clip* clip;
-    if ( ( clip = Library::getInstance()->clip( m_currentUuid, uuid ) ) != 0 )
-    {
-        emit clipSelected( clip );
-    }
 }

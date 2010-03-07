@@ -182,20 +182,6 @@ public slots:
      */
     virtual void                    __endReached() = 0;
     /**
-     *  \brief      Set the Clip to render
-     *  \param      clip    The clip to render
-     *  \warning    This must only be called from a ClipRenderer implementation
-     *  \todo       This method shouldn't be here, as it is not generic at all.
-     */
-    virtual void                    setClip( Clip* clip ) = 0;
-    /**
-     *  \brief      Set the Media to render.
-     *  \param      media   The media to render.
-     *  \warning    This must only be called from a ClipRenderer implementation
-     *  \todo       This method shouldn't be here, as it is not generic at all.
-     */
-    virtual void                    setMedia( Media* media ) = 0;
-    /**
      *  \brief      Handle a media unloading. Mainly, this should stop the render
      *              using this media if any.
      *  \param      uuid    The unloaded media uuid

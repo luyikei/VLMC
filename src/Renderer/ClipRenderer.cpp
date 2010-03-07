@@ -25,12 +25,13 @@
 #include <QtGlobal>
 #include <QLabel>
 
+#include "Clip.h"
 #include "ClipRenderer.h"
+#include "Library.h"
 #include "Media.h"
 #include "MainWorkflow.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
-#include "Clip.h"
 
 ClipRenderer::ClipRenderer() :
     GenericRenderer(),
@@ -56,22 +57,11 @@ ClipRenderer::~ClipRenderer()
 }
 
 void
-ClipRenderer::setMedia( Media *media )
+ClipRenderer::setClip( const QUuid& uuid )
 {
-    m_selectedMedia = media;
-    if ( media == NULL || media->lengthMS() == 0 )
-        return ;
-    m_begin = 0;
-    m_end = media->nbFrames();
-    if ( m_isRendering == true )
-        m_mediaChanged = true;
-    else
-        m_clipLoaded = false;
-}
+    qDebug() << "setting clip:" << uuid;
+    Clip*   clip = Library::getInstance()->clip( uuid );
 
-void
-ClipRenderer::setClip( Clip *clip )
-{
     if ( clip == NULL || clip->length() == 0 )
     {
         m_selectedMedia = NULL;
