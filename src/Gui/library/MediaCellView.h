@@ -54,8 +54,6 @@ public:
     void                    decrementClipCount( const int nb );
     QString                 title() const;
     const QUuid&            uuid() const;
-    const ClickableLabel*   nextButton() const;
-    const ClickableLabel*   deleteButton() const;
     void                    containsClip();
 
 protected:

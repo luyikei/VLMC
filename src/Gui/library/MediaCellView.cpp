@@ -144,16 +144,6 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
-const ClickableLabel*   MediaCellView::nextButton() const
-{
-    return m_ui->arrow;
-}
-
-const ClickableLabel*   MediaCellView::deleteButton() const
-{
-    return m_ui->delLabel;
-}
-
 void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
     emit cellDeleted( uuid() );
@@ -206,5 +196,5 @@ MediaCellView::containsClip()
 void
 MediaCellView::enableCell()
 {
-    this->setEnabled( true );
+    setEnabled( true );
 }
