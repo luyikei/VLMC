@@ -175,13 +175,14 @@ ImportController::clipSelection( const QUuid& uuid )
 void
 ImportController::updateMediaRequested( const Media *media )
 {
-    if ( m_temporaryMedias.contains( media->uuid() ) == false )
+    if ( m_temporaryMedias.contains( media->baseClip()->uuid() ) == false )
         return ;
-    MediaCellView*    cell = m_mediaListController->cell( media->uuid() );
+    MediaCellView*    cell = m_mediaListController->cell( media->baseClip()->uuid() );
     if ( cell == NULL )
         return;
     cell->setThumbnail( media->snapshot() );
     cell->setLength( media->lengthMS() );
+    cell->setEnabled( true );
 }
 
 void
@@ -246,7 +247,7 @@ ImportController::importMedia( const QString &filePath )
              this, SLOT( updateMediaRequested( const Media* ) ) );
     connect( media, SIGNAL( snapshotComputed( const Media* ) ),
              this, SLOT( mediaLoaded() ) );
-    m_temporaryMedias[media->uuid()] = media;
+    m_temporaryMedias[media->baseClip()->uuid()] = media;
     MetaDataManager::getInstance()->computeMediaMetadata( media );
     m_mediaListController->addMedia( media );
 }
@@ -458,7 +459,7 @@ ImportController::failedToLoad( Media *media )
     m_ui->errorLabelImg->show();
     m_ui->errorLabel->show();
     QTimer::singleShot( 3000, this, SLOT( hideErrors() ) );
-    mediaDeletion( media->uuid() );
+    mediaDeletion( media->baseClip()->uuid() );
 }
 
 void

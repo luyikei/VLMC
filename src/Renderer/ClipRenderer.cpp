@@ -189,7 +189,7 @@ ClipRenderer::getLengthMs() const
 void
 ClipRenderer::mediaUnloaded( const QUuid& uuid )
 {
-    if ( m_selectedMedia != NULL && m_selectedMedia->uuid() == uuid )
+    if ( m_selectedMedia != NULL && m_selectedMedia->baseClip()->uuid() == uuid )
     {
         m_mediaPlayer->stop();
         m_clipLoaded = false;

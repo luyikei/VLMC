@@ -31,14 +31,17 @@
 
 const int   Clip::DefaultFPS = 30;
 
-Clip::Clip( Media *parent ) :
+Clip::Clip( Media *parent, const QString& uuid ) :
         m_parent( parent ),
         m_begin( 0 ),
         m_end( parent->nbFrames() ),
         m_maxBegin( 0 ),
         m_maxEnd( parent->nbFrames() )
 {
-    m_Uuid = QUuid::createUuid();
+    if ( uuid.isEmpty() == true )
+        m_Uuid = QUuid::createUuid();
+    else
+        m_Uuid = QUuid( uuid );
     computeLength();
 }
 
@@ -208,6 +211,12 @@ Clip::uuid() const
 {
     Q_ASSERT( m_Uuid.isNull() == false );
     return m_Uuid;
+}
+
+void
+Clip::setUuid( const QUuid &uuid )
+{
+    m_Uuid = uuid;
 }
 
 void

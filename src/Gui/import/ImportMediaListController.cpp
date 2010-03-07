@@ -39,7 +39,7 @@ ImportMediaListController::~ImportMediaListController()
 void
 ImportMediaListController::addMedia( Media* media )
 {
-    MediaCellView* cell = new MediaCellView( media->uuid() );
+    MediaCellView* cell = new MediaCellView( media->baseClip()->uuid() );
     connect( cell, SIGNAL( cellSelected( const QUuid& ) ),
              this, SIGNAL( mediaSelected( const QUuid& ) ) );
     connect( cell, SIGNAL( cellDeleted( const QUuid& ) ),
@@ -53,7 +53,7 @@ ImportMediaListController::addMedia( Media* media )
     cell->setThumbnail( media->snapshot() );
     addCell( cell );
 
-    m_mediaCellList->insert( media->uuid(), cell );
+    m_mediaCellList->insert( media->baseClip()->uuid(), cell );
     if ( media->baseClip() == NULL )
         connect( media, SIGNAL( metaDataComputed( const Media* ) ),
                  cell, SLOT( enableCell() ) );
@@ -62,7 +62,7 @@ ImportMediaListController::addMedia( Media* media )
 void
 ImportMediaListController::metaDataComputed( const Media* media )
 {
-    m_mediaCellList->value( media->uuid() )->setThumbnail( media->snapshot() );
+    m_mediaCellList->value( media->baseClip()->uuid() )->setThumbnail( media->snapshot() );
 }
 
 MediaCellView*
@@ -144,7 +144,7 @@ ImportMediaListController::clipAdded( Clip* clip )
 {
     if ( clip->getParent() == 0 )
         return ;
-    const QUuid& uuid = clip->getParent()->uuid();
+    const QUuid& uuid = clip->getParent()->baseClip()->uuid();
     if ( m_mediaCellList->contains( uuid ) )
         m_mediaCellList->value( uuid )->incrementClipCount();
 }

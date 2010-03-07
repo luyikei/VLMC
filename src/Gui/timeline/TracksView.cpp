@@ -196,7 +196,7 @@ TracksView::deleteMedia( const QUuid &uuid  )
     // is the one we would like to remove.
     foreach( item, items )
     {
-        if ( item->clip()->getParent()->uuid() ==
+        if ( item->clip()->getParent()->baseClip()->uuid() ==
              uuid )
         {
             // This item needs to be removed.
@@ -323,7 +323,6 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
         connect( m_dragVideoItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
-
     // Group the items together
     if ( audioClip != NULL && videoClip != NULL )
         m_dragVideoItem->group( m_dragAudioItem );

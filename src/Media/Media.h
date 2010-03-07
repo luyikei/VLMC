@@ -113,9 +113,6 @@ public:
 
     qint64                      nbFrames() const;
 
-    const QUuid                 &uuid() const;
-    void                        setUuid( const QUuid& uuid );
-
     bool                        hasAudioTrack() const;
     bool                        hasVideoTrack() const;
     void                        setNbAudioTrack( int nbTrack );
@@ -149,6 +146,7 @@ public:
     QList<int>*                 audioValues() { return m_audioValueList; }
 
     Clip*                       baseClip() { return m_baseClip; }
+    const Clip*                 baseClip() const { return m_baseClip; }
 
 private:
     void                        setFileType();
@@ -159,7 +157,6 @@ protected:
     QString                     m_mrl;
     QList<QString>              m_volatileParameters;
     QPixmap*                    m_snapshot;
-    QUuid                       m_uuid;
     QFileInfo*                  m_fileInfo;
     qint64                      m_lengthMS;
     qint64                      m_nbFrames;

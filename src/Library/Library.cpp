@@ -56,20 +56,14 @@ Library::media( const QUuid& uuid )
 Clip*
 Library::clip( const QUuid& uuid )
 {
-    if ( m_medias.contains( uuid ) )
-    {
-        Media* media = m_medias.value( uuid );
-        if ( media->baseClip() == NULL )
-            return NULL;
-        return media->baseClip();
-    }
+    Media*  m = media( uuid );
+    if ( m != NULL )
+        return m->baseClip();
 
-    QUuid mediaUuid;
-    foreach( mediaUuid, m_medias.keys() )
+    foreach( m, m_medias.values() )
     {
-        Media* media = m_medias.value( mediaUuid );
-        if ( media != NULL && media->clips().contains( uuid ) )
-            return media->clip( uuid );
+        if ( m != NULL && m->clips().contains( uuid ) )
+            return m->clip( uuid );
     }
     return NULL;
 }
@@ -125,7 +119,7 @@ Library::addMedia( const QFileInfo& fileInfo, const QString& uuid )
 void
 Library::addMedia( Media *media )
 {
-    m_medias[media->uuid()] = media;
+    m_medias[media->baseClip()->uuid()] = media;
     emit newMediaLoaded( media );
 }
 
@@ -189,9 +183,9 @@ Library::loadProject( const QDomElement& medias )
                 if ( it.value()->fileInfo()->absoluteFilePath() == path )
                 {
                     media = it.value();
-                    media->setUuid( QUuid( uuid ) );
+                    media->baseClip()->setUuid( QUuid( uuid ) );
                     m_medias.erase( it );
-                    m_medias[media->uuid()] = media;
+                    m_medias[media->baseClip()->uuid()] = media;
                     break ;
                 }
             }
@@ -250,7 +244,7 @@ Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
         text = doc.createTextNode( it.value()->fileInfo()->absoluteFilePath() );
 
         QDomElement uuid = doc.createElement( "uuid" );
-        QDomCharacterData text2 = doc.createTextNode( it.value()->uuid().toString() );
+        QDomCharacterData text2 = doc.createTextNode( it.value()->baseClip()->uuid().toString() );
 
         mrl.appendChild( text );
         uuid.appendChild( text2 );
@@ -267,7 +261,7 @@ Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
                 clip.setAttribute( "begin", c->begin() );
                 clip.setAttribute( "end", c->end() );
                 clip.setAttribute( "uuid", c->uuid() );
-                clip.setAttribute( "parentUuid", c->getParent()->uuid() );
+                clip.setAttribute( "parentUuid", c->getParent()->baseClip()->uuid() );
                 clips.appendChild( clip );
             }
             media.appendChild( clips );

@@ -52,11 +52,6 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
     m_nbAudioTracks( 0 ),
     m_nbVideoTracks( 0 )
 {
-    if ( uuid.length() == 0 )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = QUuid( uuid );
-
     if ( filePath.startsWith( Media::streamPrefix ) == false )
     {
         m_inputType = Media::File;
@@ -79,6 +74,7 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
         m_fileName = m_mrl;
         qDebug() << "Loading a stream";
     }
+    m_baseClip = new Clip( this, uuid );
     m_audioValueList = new QList<int>();
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
 }
@@ -143,11 +139,6 @@ const QPixmap&    Media::snapshot() const
     return *Media::defaultSnapshot;
 }
 
-const QUuid&        Media::uuid() const
-{
-    return m_uuid;
-}
-
 const QFileInfo*    Media::fileInfo() const
 {
     return m_fileInfo;
@@ -200,8 +191,9 @@ Media::FileType     Media::fileType() const
 
 void            Media::emitMetaDataComputed()
 {
-    Q_ASSERT( m_baseClip == NULL );
-    m_baseClip = new Clip( this );
+    m_baseClip->setBegin( 0 );
+    m_baseClip->setEnd( m_nbFrames );
+    m_baseClip->computeLength();
     emit metaDataComputed( this );
 }
 
@@ -212,17 +204,12 @@ void            Media::emitSnapshotComputed()
 
 void            Media::emitAudioSpectrumComuted()
 {
-    emit audioSpectrumComputed( this->uuid() );
+    emit audioSpectrumComputed( baseClip()->uuid() );
 }
 
 Media::InputType    Media::inputType() const
 {
     return m_inputType;
-}
-
-void                Media::setUuid( const QUuid& uuid )
-{
-    m_uuid = uuid;
 }
 
 void                Media::setNbFrames( qint64 nbFrames )

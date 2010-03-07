@@ -400,7 +400,7 @@ void    TrackWorkflow::save( QDomDocument& doc, QDomElement& trackNode ) const
         {
             QDomElement     parent = doc.createElement( "parent" );
 
-            QDomCharacterData   text = doc.createTextNode( it.value()->getClip()->getParent()->uuid().toString() );
+            QDomCharacterData   text = doc.createTextNode( it.value()->getClip()->getParent()->baseClip()->uuid().toString() );
             parent.appendChild( text );
             clipNode.appendChild( parent );
         }

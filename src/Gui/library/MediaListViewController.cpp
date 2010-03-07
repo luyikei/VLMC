@@ -40,7 +40,7 @@ MediaListViewController::~MediaListViewController()
 
 void        MediaListViewController::newMediaLoaded( Media* media )
 {
-    MediaCellView* cell = new MediaCellView( media->uuid() );
+    MediaCellView* cell = new MediaCellView( media->baseClip()->uuid() );
 
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );
@@ -59,7 +59,7 @@ void        MediaListViewController::newMediaLoaded( Media* media )
     if ( media->baseClip() != NULL )
         cell->setEnabled(true);
     addCell(cell);
-    m_cells->insert( media->uuid(), cell );
+    m_cells->insert( media->baseClip()->uuid(), cell );
 }
 
 void    MediaListViewController::cellSelection( const QUuid& uuid )
@@ -92,7 +92,7 @@ void    MediaListViewController::mediaRemoved( const QUuid& uuid )
 
 void    MediaListViewController::updateCell( const Media* media )
 {
-    MediaCellView* cell = qobject_cast<MediaCellView*>( m_cells->value( media->uuid(), NULL ) );
+    MediaCellView* cell = qobject_cast<MediaCellView*>( m_cells->value( media->baseClip()->uuid(), NULL ) );
     if ( cell != NULL )
     {
         cell->setNbClips( media->clipsCount() );
@@ -121,7 +121,7 @@ void    MediaListViewController::newClipAdded( Clip* clip )
 {
     if ( clip->getParent() == 0 )
         return ;
-    const QUuid& uuid = clip->getParent()->uuid();
+    const QUuid& uuid = clip->getParent()->baseClip()->uuid();
 
     if ( m_cells->contains( uuid ) )
     {

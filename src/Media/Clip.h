@@ -42,7 +42,7 @@ class   Clip : public QObject
 
     public:
         static const int DefaultFPS;
-        Clip( Media *parent );
+        Clip( Media *parent, const QString& uuid = QString() );
         Clip( Media *parent, qint64 begin, qint64 end = -1 );
         Clip( Clip *creator, qint64 begin, qint64 end );
         Clip( const Clip *clip );
@@ -79,6 +79,7 @@ class   Clip : public QObject
             \return         The Clip's Uuid as a QUuid
         */
         const QUuid         &uuid() const;
+        void                setUuid( const QUuid &uuid );
 
         const QStringList   &metaTags() const;
         void                setMetaTags( const QStringList &tags );
@@ -90,9 +91,9 @@ class   Clip : public QObject
         qint64              maxBegin() const;
         qint64              maxEnd() const;
 
-    private:
         void                computeLength();
 
+    private:
         Media               *m_parent;
         /**
          *  \brief  This represents the beginning of the Clip in frames, from the

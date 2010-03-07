@@ -127,8 +127,6 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
         return;
 
     QMimeData* mimeData = new QMimeData;
-    //FIXME the second argument is a media UUID instead of a Clip
-    // and this is not logical... but it works.
     mimeData->setData( "vlmc/uuid", m_uuid.toString().toAscii() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
