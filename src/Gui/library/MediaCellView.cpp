@@ -41,11 +41,15 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     connect( m_ui->arrow,
              SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
-    setEnabled( false );
+    if ( clip->getParent()->isMetadataComputed() == false )
+        setEnabled( false );
     connect( clip->getParent(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
     connect( clip->getParent(), SIGNAL( snapshotComputed(const Media*) ),
              this, SLOT( snapshotUpdated(const Media*) ) );
+    setThumbnail( clip->getParent()->snapshot() );
+    setTitle( clip->getParent()->fileName() );
+    setLength( clip->lengthSecond() * 1000 );
 }
 
 void

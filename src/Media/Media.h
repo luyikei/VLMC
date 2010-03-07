@@ -148,6 +148,8 @@ public:
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
 
+    bool                        isMetadataComputed() const;
+
 private:
     void                        setFileType();
 
@@ -172,6 +174,7 @@ protected:
     QList<int>*                 m_audioValueList;
     int                         m_nbAudioTracks;
     int                         m_nbVideoTracks;
+    bool                        m_metadataComputed;
 
 signals:
     void                        metaDataComputed( const Media* );

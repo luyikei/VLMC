@@ -86,16 +86,7 @@ ImportMediaListController::addClip( Clip* clip )
     connect( cell, SIGNAL( cellDeleted( const QUuid& ) ),
              this, SLOT( clipDeletion( const QUuid& ) ) );
 
-    QString size;
-
-    size.setNum( m_mediaCellList->size() + 1 );
-
-    cell->setTitle( clip->getParent()->fileName() + "_" + size );
-    cell->setThumbnail( clip->getParent()->snapshot() );
-    cell->setLength( clip->lengthSecond(), false  );
-    cell->setEnabled( true );
     addCell( cell );
-
     m_mediaCellList->insert( clip->uuid(), cell );
 }
 

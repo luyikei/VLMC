@@ -51,11 +51,6 @@ void        MediaListViewController::newMediaLoaded( Media* media )
     connect( media, SIGNAL( clipAdded( Clip* ) ),
              this, SLOT( newClipAdded(Clip*) ) );
     cell->setNbClips( media->clipsCount() );
-    cell->setThumbnail( media->snapshot() );
-    cell->setTitle( media->fileName() );
-    cell->setLength( media->lengthMS() );
-    if ( media->baseClip() != NULL )
-        cell->setEnabled(true);
     addCell(cell);
     m_cells->insert( media->baseClip()->uuid(), cell );
 }

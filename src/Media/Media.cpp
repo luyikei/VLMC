@@ -49,7 +49,8 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
     m_height( 0 ),
     m_fps( .0f ),
     m_nbAudioTracks( 0 ),
-    m_nbVideoTracks( 0 )
+    m_nbVideoTracks( 0 ),
+    m_metadataComputed( false )
 {
     if ( filePath.startsWith( Media::streamPrefix ) == false )
     {
@@ -193,6 +194,7 @@ void            Media::emitMetaDataComputed()
     m_baseClip->setBegin( 0 );
     m_baseClip->setEnd( m_nbFrames );
     m_baseClip->computeLength();
+    m_metadataComputed = true;
     emit metaDataComputed( this );
 }
 
@@ -328,4 +330,10 @@ int
 Media::nbVideoTracks() const
 {
     return m_nbVideoTracks;
+}
+
+bool
+Media::isMetadataComputed() const
+{
+    return m_metadataComputed;
 }
