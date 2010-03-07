@@ -57,11 +57,8 @@ ClipRenderer::~ClipRenderer()
 }
 
 void
-ClipRenderer::setClip( const QUuid& uuid )
+ClipRenderer::setClip( Clip* clip )
 {
-    qDebug() << "setting clip:" << uuid;
-    Clip*   clip = Library::getInstance()->clip( uuid );
-
     if ( clip == NULL || clip->length() == 0 )
     {
         m_selectedMedia = NULL;
@@ -207,7 +204,7 @@ ClipRenderer::getFps() const
 }
 
 Media*
-ClipRenderer::getMedia() const
+ClipRenderer::getMedia()
 {
     return m_selectedMedia;
 }

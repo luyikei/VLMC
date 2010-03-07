@@ -29,13 +29,16 @@
 #include "Library.h"
 #include "Media.h"
 
+class   MediaContainer;
+
 class MediaListViewController : public ListViewController
 {
     Q_OBJECT
 
 public:
-    MediaListViewController( StackViewController* nav );
+    MediaListViewController( StackViewController* nav, MediaContainer* mc );
     virtual ~MediaListViewController();
+    void    addClip( Clip* clip );
 
 private:
     StackViewController*        m_nav;
@@ -43,19 +46,21 @@ private:
     QHash<QUuid, QWidget*>*     m_cells;
     MediaListViewController*    m_clipsListView;
     QUuid                       m_lastUuidClipListAsked;
+    MediaContainer*             m_mediaContainer;
 
 public slots:
-    void        newMediaLoaded( Media* media );
     void        cellSelection( const QUuid& uuid );
-    void        mediaRemoved( const QUuid& uuid );
     void        showClipList( const QUuid& uuid );
-    void        newClipAdded( Clip* clip );
     void        clear();
 
 private slots:
     void        restoreContext();
+    void        newClipAdded( Clip* clip );
+    void        mediaRemoved( const QUuid& uuid );
+    void        newMediaLoaded( Media* media );
+
 signals:
-    void        clipSelected( const QUuid& );
+    void        clipSelected( Clip* );
     void        clipDeleted( const QUuid& );
 };
 #endif // MEDIALISTVIEWCONTROLLER_H

@@ -23,11 +23,15 @@
 #include "MediaListViewController.h"
 
 #include "Clip.h"
+#include "MediaContainer.h"
 
-MediaListViewController::MediaListViewController( StackViewController* nav ) :
-        ListViewController( nav ), m_nav( nav ), m_clipsListView( 0 )
+MediaListViewController::MediaListViewController( StackViewController* nav, MediaContainer* mc ) :
+        ListViewController( nav ),
+        m_nav( nav ),
+        m_clipsListView( 0 ),
+        m_mediaContainer( mc )
 {
-    connect( Library::getInstance(), SIGNAL( newMediaLoaded( Media* ) ),
+    connect( mc, SIGNAL( newMediaLoaded( Media* ) ),
              this, SLOT( newMediaLoaded( Media* ) ) );
     m_cells = new QHash<QUuid, QWidget*>();
     connect( m_nav, SIGNAL( previousButtonPushed() ), this, SLOT( restoreContext() ) );
@@ -71,7 +75,7 @@ void    MediaListViewController::cellSelection( const QUuid& uuid )
         p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
         m_cells->value( uuid )->setPalette( p );
         m_currentUuid = uuid;
-        emit clipSelected( uuid );
+        emit clipSelected( m_mediaContainer->clip( uuid ) );
     }
 }
 
@@ -96,12 +100,12 @@ void    MediaListViewController::showClipList( const QUuid& uuid )
 {
     if ( !m_cells->contains( uuid ) )
         return ;
-    if ( Library::getInstance()->media( uuid ) == NULL ||
-         Library::getInstance()->media( uuid )-> clipsCount() == 0 )
+    if ( m_mediaContainer->media( uuid ) == NULL ||
+         m_mediaContainer->media( uuid )-> clipsCount() == 0 )
         return ;
     m_lastUuidClipListAsked = uuid;
-    m_clipsListView = new MediaListViewController( m_nav );
-    m_clipsListView->newMediaLoaded( Library::getInstance()->media( uuid ) );
+    m_clipsListView = new MediaListViewController( m_nav, Library::getInstance() );
+    m_clipsListView->newMediaLoaded( m_mediaContainer->media( uuid ) );
     connect( m_clipsListView, SIGNAL( clipSelected( const QUuid& ) ),
             this, SLOT( clipSelection( const QUuid& ) ) );
     m_nav->pushViewController( m_clipsListView );
@@ -121,6 +125,12 @@ void    MediaListViewController::newClipAdded( Clip* clip )
             cell->incrementClipCount();
         }
     }
+}
+
+void
+MediaListViewController::addClip( Clip *clip )
+{
+    newClipAdded( clip );
 }
 
 void    MediaListViewController::restoreContext()

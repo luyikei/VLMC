@@ -68,6 +68,7 @@ SET(VLMC_SRCS
     Gui/wizard/VideoPage.cpp
     Gui/wizard/WelcomePage.cpp
     Library/Library.cpp
+    Library/MediaContainer.cpp
     LibVLCpp/VLCInstance.cpp
     LibVLCpp/VLCMedia.cpp
     LibVLCpp/VLCMediaPlayer.cpp
@@ -157,6 +158,7 @@ SET (VLMC_HDRS
     Gui/wizard/WelcomePage.h
     Gui/WorkflowFileRendererDialog.h
     Library/Library.h
+    Library/MediaContainer.h
     LibVLCpp/VLCInstance.h
     LibVLCpp/VLCMediaPlayer.h
     Media/Clip.h

@@ -117,7 +117,7 @@ void            MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
     {
         ClipProperty* cp = new ClipProperty( m_clip, this );
         cp->setModal( true );
-        cp->show();
+        cp->exec();
         delete cp;
     }
 }

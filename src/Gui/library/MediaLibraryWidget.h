@@ -45,7 +45,7 @@ private:
     StackViewController*    m_nav;
 
 signals:
-    void    clipSelected( const QUuid& );
+    void    clipSelected( Clip* );
     void    importRequired();
     void    addClipToViewController( Clip* clip );
 };

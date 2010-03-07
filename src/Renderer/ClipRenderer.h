@@ -53,7 +53,7 @@ public:
     virtual qint64          getLengthMs() const;
     virtual qint64          getCurrentFrame() const;
     virtual float           getFps() const;
-    virtual Media*          getMedia() const;
+    virtual Media*          getMedia();
 
 private:
     void                    startPreview();
@@ -75,7 +75,7 @@ public slots:
      *  \brief      Set the Clip to render
      *  \param      clip    The clip to render
      */
-    virtual void            setClip( const QUuid& );
+    void                    setClip( Clip* clip );
     virtual void            mediaUnloaded( const QUuid& );
     virtual void            previewWidgetCursorChanged( qint64 newFrame );
 

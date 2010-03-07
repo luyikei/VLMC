@@ -32,107 +32,10 @@
 #include "Media.h"
 #include "MetaDataManager.h"
 
-#include <QDebug>
-#include <QDir>
+#include <QtDebug>
 #include <QDomElement>
 #include <QHash>
-#include <QMessageBox>
-#include <QProgressDialog>
 #include <QUuid>
-
-Library::Library()
-{
-}
-
-Media*
-Library::media( const QUuid& uuid )
-{
-    QHash<QUuid, Media*>::const_iterator   it = m_medias.find( uuid );
-    if ( it == m_medias.end() )
-        return NULL;
-    return *it;
-}
-
-Clip*
-Library::clip( const QUuid& uuid )
-{
-    Media*  m = media( uuid );
-    if ( m != NULL )
-        return m->baseClip();
-
-    foreach( m, m_medias.values() )
-    {
-        if ( m != NULL && m->clips().contains( uuid ) )
-            return m->clip( uuid );
-    }
-    return NULL;
-}
-
-Clip*
-Library::clip( const QUuid& mediaUuid, const QUuid& clipUuid )
-{
-    if ( m_medias.contains( mediaUuid ) )
-    {
-        if ( m_medias.value( mediaUuid )->clips().contains( clipUuid ) )
-            return m_medias.value( mediaUuid )->clip( clipUuid );
-        else
-            m_medias.value( mediaUuid )->baseClip();
-    }
-    return NULL;
-}
-
-void
-Library::removingMediaAsked( const QUuid& uuid )
-{
-    deleteMedia( uuid );
-    emit mediaRemoved( uuid );
-}
-
-void
-Library::deleteMedia( const QUuid& uuid )
-{
-    if ( m_medias.contains( uuid ) )
-        delete m_medias.take( uuid );
-}
-
-bool
-Library::addMedia( const QFileInfo& fileInfo, const QString& uuid )
-{
-    if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
-        return false;
-    Media* media = new Media( fileInfo.filePath(), uuid );
-
-    foreach( Media* it, m_medias.values() )
-    {
-        if ( it->fileInfo()->filePath() == media->fileInfo()->filePath() )
-        {
-            delete media;
-            return false;
-        }
-    }
-    MetaDataManager::getInstance()->computeMediaMetadata( media );
-    addMedia( media );
-    return true;
-}
-
-
-void
-Library::addMedia( Media *media )
-{
-    m_medias[media->baseClip()->uuid()] = media;
-    emit newMediaLoaded( media );
-}
-
-bool
-Library::mediaAlreadyLoaded( const QFileInfo& fileInfo )
-{
-    foreach( Media* media, m_medias.values() )
-    {
-        if ( media->fileInfo()->filePath() == fileInfo.filePath() )
-            return true;
-    }
-    return false;
-}
 
 void
 Library::loadProject( const QDomElement& medias )
@@ -268,32 +171,4 @@ Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
         }
     }
     rootNode.appendChild( medias );
-}
-
-void
-Library::clear()
-{
-    QHash<QUuid, Media*>::iterator  it = m_medias.begin();
-    QHash<QUuid, Media*>::iterator  end = m_medias.end();
-
-    while ( it != end )
-    {
-        emit mediaRemoved( it.key() );
-        delete it.value();
-        ++it;
-    }
-    m_medias.clear();
-}
-
-void
-Library::removeClip( const QUuid& mediaId, const QUuid& clipId )
-{
-    Media*  med = 0;
-    if ( m_medias.contains( mediaId ) )
-        med = m_medias[mediaId];
-    else
-        return;
-
-    if ( med->clips().contains( clipId ) )
-        med->removeClip( clipId );
 }

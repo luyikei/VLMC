@@ -235,8 +235,9 @@ void        MainWindow::setupLibrary()
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
-    connect( mediaLibraryWidget, SIGNAL( clipSelected(QUuid) ),
-             m_clipPreview->getGenericRenderer(), SLOT( setClip( QUuid ) ) );
+    connect( mediaLibraryWidget, SIGNAL( clipSelected( Clip* ) ),
+             qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() ),
+             SLOT( setClip( Clip* ) ) );
 
     connect( Library::getInstance(), SIGNAL( mediaRemoved( const QUuid& ) ),
              m_clipPreview->getGenericRenderer(), SLOT( mediaUnloaded( QUuid ) ) );

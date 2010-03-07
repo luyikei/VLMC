@@ -39,8 +39,9 @@
 
 #include <QDialog>
 #include <QFileSystemModel>
-#include <QFileSystemWatcher>
 #include <QProgressDialog>
+
+class   MediaContainer;
 
 namespace Ui
 {
@@ -58,8 +59,7 @@ class ImportController : public QDialog
     public:
         ImportController(QWidget *parent = 0);
         ~ImportController();
-        void    setUIMetaData( Media* media );
-        void    setUIMetaData( Clip* clip );
+        void    setUIMetaData( Clip *clip );
 
     protected:
         void changeEvent( QEvent *e );
@@ -68,7 +68,6 @@ class ImportController : public QDialog
         void                        saveCurrentPath();
         void                        restoreCurrentPath();
         void                        collapseAllButCurrentPath();
-        void                        deleteTemporaryMedias();
         void                        importMedia( const QString &filePath );
         void                        importDir( const QString &path );
         Ui::ImportController*       m_ui;
@@ -81,14 +80,14 @@ class ImportController : public QDialog
         QString                     m_currentlyWatchedDir;
         QUuid                       m_currentUuid;
         QUuid                       m_savedUuid;
-        QHash< QUuid, Media*>       m_temporaryMedias;
+        MediaContainer              *m_temporaryMedias;
         quint32                     m_nbMediaToLoad;
         quint32                     m_nbMediaLoaded;
 
     public slots:
         void        accept();
         void        reject();
-        void        mediaSelection( const QUuid& uuid );
+        void        mediaSelection( Clip* clip );
         void        clipSelection( const QUuid& uuid );
         void        mediaDeletion( const QUuid& uuid );
         void        clipDeletion( const QUuid& uuid );
@@ -104,7 +103,6 @@ class ImportController : public QDialog
         void        hideErrors();
 
     signals:
-        void        mediaSelected( Media* );
         void        clipSelected( Clip* );
 };
 

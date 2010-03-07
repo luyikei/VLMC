@@ -116,7 +116,7 @@ public:
      *  \return     The currently rendered Media
      *  \todo       This method should not be here, as it is not generic at all.
      */
-    virtual Media*                  getMedia() const
+    virtual  Media*                 getMedia() const
     {
         return 0;
     }
