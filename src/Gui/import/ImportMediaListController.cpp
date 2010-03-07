@@ -120,13 +120,8 @@ ImportMediaListController::removeClip( const QUuid& uuid )
 void
 ImportMediaListController::cleanAll()
 {
-    QUuid uuid;
-    MediaCellView* cell;
-    foreach( uuid, m_mediaCellList->keys() )
-    {
-        cell = m_mediaCellList->value( uuid );
+    foreach( MediaCellView* cell, m_mediaCellList->values() )
         removeCell( cell );
-    }
     m_mediaCellList->clear();
 }
 
