@@ -69,7 +69,6 @@ class   Clip : public QObject
 
         /**
             \return         Returns the Media that the clip was basep uppon.
-
         */
         Media*              getParent();
 

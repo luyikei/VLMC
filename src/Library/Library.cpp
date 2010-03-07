@@ -61,8 +61,7 @@ Library::clip( const QUuid& uuid )
         Media* media = m_medias.value( uuid );
         if ( media->baseClip() == NULL )
             return NULL;
-        Clip* clip = new Clip( media->baseClip() );
-        return clip;
+        return media->baseClip();
     }
 
     QUuid mediaUuid;
@@ -83,7 +82,7 @@ Library::clip( const QUuid& mediaUuid, const QUuid& clipUuid )
         if ( m_medias.value( mediaUuid )->clips().contains( clipUuid ) )
             return m_medias.value( mediaUuid )->clip( clipUuid );
         else
-            return new Clip( m_medias.value( mediaUuid )->baseClip() );
+            m_medias.value( mediaUuid )->baseClip();
     }
     return NULL;
 }

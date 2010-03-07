@@ -133,15 +133,14 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
     //FIXME : change the way the library handles Clips
-    Clip* clip = Library::getInstance()->clip( m_uuid );
+    const Clip* clip = Library::getInstance()->clip( m_uuid );
     if ( 0 == clip )
         return ;
     //getting the media from the current Clip
-    Media*  parent = Library::getInstance()->clip( m_uuid )->getParent();
+    const Media*  parent = Library::getInstance()->clip( m_uuid )->getParent();
     if ( 0 == parent )
         return ;
-    drag->setPixmap( Library::getInstance()->clip( m_uuid )->getParent()->
-                     snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
+    drag->setPixmap( parent->snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
