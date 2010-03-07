@@ -282,6 +282,27 @@ bool            Media::addClip( Clip* clip )
     return true;
 }
 
+Clip*
+Media::clip( const QUuid &uuid )
+{
+    QHash<QUuid, Clip*>::const_iterator it = m_clips.find( uuid );
+    if ( it == m_clips.end() )
+        return NULL;
+    return *it;
+}
+
+quint32
+Media::clipsCount() const
+{
+    return m_clips.size();
+}
+
+const QHash<QUuid, Clip*>&
+Media::clips() const
+{
+    return m_clips;
+}
+
 void            Media::removeClip( const QUuid& uuid )
 {
     m_clips.remove( uuid );

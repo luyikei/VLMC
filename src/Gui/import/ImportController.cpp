@@ -382,7 +382,7 @@ ImportController::showClipList( const QUuid& uuid )
     if ( m_temporaryMedias.contains( uuid ) == false )
         return ;
     Media* media = m_temporaryMedias[uuid];
-    if ( media->clips()->size() == 0 )
+    if ( media->clipsCount() == 0 )
         return ;
 
     m_clipListController = new ImportMediaListController( m_stackNav );

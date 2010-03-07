@@ -142,8 +142,9 @@ public:
 
     bool                        addClip( Clip* clip );
     void                        removeClip( const QUuid& uuid );
-    Clip*                       clip( const QUuid& uuid ) const { return m_clips[uuid]; }
-    const QHash<QUuid, Clip*>*  clips() const { return &m_clips; }
+    Clip*                       clip( const QUuid& uuid );
+    quint32                     clipsCount() const;
+    const QHash<QUuid, Clip*>   &clips() const;
 
     QList<int>*                 audioValues() { return m_audioValueList; }
 

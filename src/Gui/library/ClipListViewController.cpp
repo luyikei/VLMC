@@ -45,7 +45,7 @@ ClipListViewController::~ClipListViewController()
 
 void    ClipListViewController::addClipsFromMedia( Media* media )
 {
-    foreach( Clip* clip, *media->clips() )
+    foreach( Clip* clip, media->clips() )
         addClip( clip );
 }
 

@@ -69,7 +69,7 @@ Library::clip( const QUuid& uuid )
     foreach( mediaUuid, m_medias.keys() )
     {
         Media* media = m_medias.value( mediaUuid );
-        if ( media != NULL && media->clips()->contains( uuid ) )
+        if ( media != NULL && media->clips().contains( uuid ) )
             return media->clip( uuid );
     }
     return NULL;
@@ -80,7 +80,7 @@ Library::clip( const QUuid& mediaUuid, const QUuid& clipUuid )
 {
     if ( m_medias.contains( mediaUuid ) )
     {
-        if ( m_medias.value( mediaUuid )->clips()->contains( clipUuid ) )
+        if ( m_medias.value( mediaUuid )->clips().contains( clipUuid ) )
             return m_medias.value( mediaUuid )->clip( clipUuid );
         else
             return new Clip( m_medias.value( mediaUuid )->baseClip() );
@@ -259,10 +259,10 @@ Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
         media.appendChild( mrl );
         media.appendChild( uuid );
         //Creating the clip branch
-        if ( it.value()->clips()->size() != 0 )
+        if ( it.value()->clipsCount() != 0 )
         {
             QDomElement clips = doc.createElement( "clips" );
-            foreach( Clip* c, it.value()->clips()->values() )
+            foreach( Clip* c, it.value()->clips().values() )
             {
                 QDomElement clip = doc.createElement( "clip" );
                 clip.setAttribute( "begin", c->begin() );
@@ -301,6 +301,6 @@ Library::removeClip( const QUuid& mediaId, const QUuid& clipId )
     else
         return;
 
-    if ( med->clips()->contains( clipId ) )
+    if ( med->clips().contains( clipId ) )
         med->removeClip( clipId );
 }

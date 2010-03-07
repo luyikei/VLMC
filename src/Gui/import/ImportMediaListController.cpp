@@ -133,9 +133,8 @@ ImportMediaListController::cleanAll()
 void
 ImportMediaListController::addClipsFromMedia( Media* media )
 {
-    QUuid uuid;
-    foreach( uuid, media->clips()->keys() )
-        addClip( media->clips()->value( uuid ) );
+    foreach( Clip* clip, media->clips().values() )
+        addClip( clip );
 }
 
 void
