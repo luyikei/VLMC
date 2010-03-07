@@ -20,8 +20,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
 #include <QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
 
 #include "ListViewController.h"
 #include "MediaCellView.h"

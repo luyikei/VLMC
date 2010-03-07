@@ -23,16 +23,14 @@
 #ifndef LISTVIEWCONTROLLER_H
 #define LISTVIEWCONTROLLER_H
 
-#include <QWidget>
-#include <QListView>
-#include <QAbstractItemModel>
-#include <QScrollArea>
-#include <QUuid>
-
 #include "ViewController.h"
-#include "StackViewController.h"
-#include "Clip.h"
 
+#include <QObject>
+
+class   StackViewController;
+
+class   QVBoxLayout;
+class   QScrollArea;
 
 class ListViewController : public ViewController
 {
