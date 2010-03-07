@@ -84,6 +84,14 @@ void    MediaListViewController::mediaRemoved( const QUuid& uuid )
     emit clipDeleted( uuid );
 }
 
+void
+MediaListViewController::clear()
+{
+    foreach ( QWidget* cell, m_cells->values() )
+        removeCell( cell );
+    m_cells->clear();
+}
+
 void    MediaListViewController::showClipList( const QUuid& uuid )
 {
     if ( !m_cells->contains( uuid ) )

@@ -40,14 +40,13 @@ ImportController::ImportController(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::ImportController),
     m_clipListController( 0 ),
-    m_controllerSwitched( false ),
     m_nbMediaToLoad( 0 ),
     m_nbMediaLoaded( 0 )
 {
     m_ui->setupUi(this);
     m_preview = new PreviewWidget( new ClipRenderer, m_ui->previewContainer );
     m_stackNav = new StackViewController( m_ui->stackViewContainer, false );
-    m_mediaListController = new ImportMediaListController( m_stackNav );
+    m_mediaListController = new MediaListViewController( m_stackNav );
     m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
     m_stackNav->pushViewController( m_mediaListController );
@@ -132,45 +131,32 @@ ImportController::changeEvent( QEvent *e )
 void
 ImportController::mediaSelection( const QUuid& uuid )
 {
-    if ( m_mediaListController->contains( uuid ) )
-    {
-        if ( !m_currentUuid.isNull() && m_mediaListController->contains( m_currentUuid ) )
-            m_mediaListController->cell( m_currentUuid )->setPalette( this->palette() );
-        QPalette p = m_mediaListController->cell( uuid )->palette();
-        p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
-        m_mediaListController->cell( uuid )->setPalette( p );
+    if ( m_currentUuid == uuid )
+        return ;
 
-        setUIMetaData( m_temporaryMedias[uuid] );
-        if ( uuid != NULL && uuid != m_currentUuid )
-            m_preview->stop();
-        m_currentUuid = uuid;
-        emit mediaSelected( m_temporaryMedias[uuid] );
-    }
+    setUIMetaData( m_temporaryMedias[uuid] );
+    m_preview->stop();
+    m_currentUuid = uuid;
+    emit mediaSelected( m_temporaryMedias[uuid] );
 }
 
 void
 ImportController::clipSelection( const QUuid& uuid )
 {
-    if ( !m_currentUuid.isNull() && !m_controllerSwitched )
-        m_clipListController->cell( m_currentUuid )->setPalette( palette() );
-    else
-        m_controllerSwitched = false;
-    QPalette p = m_clipListController->cell( uuid )->palette();
-    p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
-    m_clipListController->cell( uuid )->setPalette( p );
+    if ( uuid == m_currentUuid )
+        return ;
     Clip*   clip;
+
     foreach( Media* media, m_temporaryMedias.values() )
     {
-        if ( ( clip = media->clip( uuid ) ) != 0 )
+        if ( ( clip = media->clip( uuid ) ) != NULL )
             break;
     }
-    if ( clip == 0 )
+    if ( clip == NULL )
         return ;
     setUIMetaData( clip );
-    if ( uuid != m_currentUuid )
-        m_preview->stop();
+    m_preview->stop();
     emit clipSelected( clip );
-    m_currentUuid = uuid;
 }
 
 void
@@ -233,7 +219,7 @@ ImportController::importMedia( const QString &filePath )
              this, SLOT( mediaLoaded() ) );
     m_temporaryMedias[media->baseClip()->uuid()] = media;
     MetaDataManager::getInstance()->computeMediaMetadata( media );
-    m_mediaListController->addMedia( media );
+    m_mediaListController->newMediaLoaded( media );
 }
 
 void
@@ -295,7 +281,7 @@ void
 ImportController::reject()
 {
     m_preview->stop();
-    m_mediaListController->cleanAll();
+    m_mediaListController->clear();
     deleteTemporaryMedias();
     collapseAllButCurrentPath();
     done( Rejected );
@@ -304,7 +290,7 @@ ImportController::reject()
 void
 ImportController::accept()
 {
-    m_mediaListController->cleanAll();
+    m_mediaListController->clear();
     m_preview->stop();
     collapseAllButCurrentPath();
     foreach ( Media* media, m_temporaryMedias.values() )
@@ -339,7 +325,6 @@ ImportController::collapseAllButCurrentPath()
 void
 ImportController::mediaDeletion( const QUuid& uuid )
 {
-    m_mediaListController->removeMedia( uuid );
     if ( m_temporaryMedias.contains( uuid ) == true )
         delete m_temporaryMedias.take( uuid );
 
@@ -354,7 +339,6 @@ ImportController::mediaDeletion( const QUuid& uuid )
 void
 ImportController::clipDeletion( const QUuid& uuid )
 {
-    m_clipListController->removeClip( uuid );
     foreach( Media* media, m_temporaryMedias.values() )
     {
         if ( media != NULL && media->clip( uuid ) )
@@ -371,32 +355,23 @@ ImportController::showClipList( const QUuid& uuid )
     if ( media->clipsCount() == 0 )
         return ;
 
-    m_clipListController = new ImportMediaListController( m_stackNav );
+    m_clipListController = new MediaListViewController( m_stackNav );
     connect( m_clipListController, SIGNAL( clipSelected( const QUuid& ) ),
              this, SLOT( clipSelection( const QUuid& ) ) );
     connect( m_clipListController, SIGNAL( clipDeleted( const QUuid& ) ),
              this, SLOT( clipDeletion( const QUuid& ) ) );
-    m_clipListController->addClipsFromMedia( media );
+    foreach ( Clip* clip, media->clips().values() )
+        m_clipListController->newClipAdded( clip );
     if ( !m_currentUuid.isNull() )
         m_savedUuid = m_currentUuid;
-    m_controllerSwitched = true;
     m_stackNav->pushViewController( m_clipListController );
 }
 
 void
 ImportController::restoreContext()
 {
-    if ( m_clipListController->nbDeletions() != 0 )
-    {
-        if ( !m_savedUuid.isNull() && m_mediaListController->cell( m_savedUuid ) != NULL )
-        {
-            MediaCellView*  cell = m_mediaListController->cell( m_savedUuid );
-            cell->decrementClipCount( m_clipListController->nbDeletions() );
-        }
-    }
-    if ( !m_savedUuid.isNull() )
-        m_currentUuid = m_savedUuid;
-    m_controllerSwitched = false;
+    qDebug() << "FIXME: update clip count";
+    m_currentUuid = m_savedUuid;
 }
 
 void

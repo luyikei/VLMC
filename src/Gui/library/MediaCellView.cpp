@@ -201,3 +201,9 @@ MediaCellView::containsClip()
                 SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this,
                 SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
 }
+
+const QUuid&
+MediaCellView::uuid() const
+{
+    return m_clip->uuid();
+}

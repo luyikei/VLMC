@@ -31,7 +31,7 @@
 #define IMPORTCONTROLLER_H
 
 #include "Clip.h"
-#include "ImportMediaListController.h"
+#include "MediaListViewController.h"
 #include "Media.h"
 #include "PreviewWidget.h"
 #include "StackViewController.h"
@@ -75,13 +75,12 @@ class ImportController : public QDialog
         PreviewWidget*              m_preview;
         StackViewController*        m_stackNav;
         TagWidget*                  m_tag;
-        ImportMediaListController*  m_mediaListController;
-        ImportMediaListController*  m_clipListController;
+        MediaListViewController     *m_mediaListController;
+        MediaListViewController     *m_clipListController;
         QFileSystemModel            *m_filesModel;
         QString                     m_currentlyWatchedDir;
         QUuid                       m_currentUuid;
         QUuid                       m_savedUuid;
-        bool                        m_controllerSwitched;
         QHash< QUuid, Media*>       m_temporaryMedias;
         quint32                     m_nbMediaToLoad;
         quint32                     m_nbMediaLoaded;

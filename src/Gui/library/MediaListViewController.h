@@ -50,6 +50,7 @@ public slots:
     void        mediaRemoved( const QUuid& uuid );
     void        showClipList( const QUuid& uuid );
     void        newClipAdded( Clip* clip );
+    void        clear();
 
 private slots:
     void        restoreContext();

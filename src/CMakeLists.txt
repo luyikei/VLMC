@@ -35,7 +35,6 @@ SET(VLMC_SRCS
     Gui/WorkflowFileRendererDialog.cpp
     Gui/export/RendererSettings.cpp
     Gui/import/ImportController.cpp
-    Gui/import/ImportMediaListController.cpp
     Gui/library/ListViewController.cpp
     Gui/library/MediaCellView.cpp
     Gui/library/MediaLibraryWidget.cpp
@@ -115,7 +114,6 @@ SET (VLMC_HDRS
     Gui/export/RendererSettings.h
     Gui/FileInfoListModel.h
     Gui/import/ImportController.h
-    Gui/import/ImportMediaListController.h
     Gui/LanguageHelper.h
     Gui/LCDTimecode.h
     Gui/library/ListViewController.h

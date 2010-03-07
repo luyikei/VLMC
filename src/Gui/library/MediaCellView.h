@@ -57,6 +57,7 @@ public:
     void                    decrementClipCount( const int nb );
     QString                 title() const;
     void                    containsClip();
+    const QUuid&            uuid() const;
 
 protected:
     void                    changeEvent( QEvent *e );
