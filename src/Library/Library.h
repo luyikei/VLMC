@@ -123,20 +123,6 @@ private:
      *  \brief The List of medias loaded into the library
      */
     QHash<QUuid, Media*>    m_medias;
-    /**
-     *  \brief  This method allows to get whereas Media or clip by uuid
-     *  \param container The type of container used for storage, where T is Clip or Media
-     *  \param uuid The uuid of the element you are looking for
-     */
-    template <typename T>
-    T                       getElementByUuid( const QHash<QUuid, T>& container ,
-                                              const QUuid& uuid )
-    {
-        typename QHash<QUuid, T>::const_iterator   it = container.find( uuid );
-        if ( it == container.end() )
-            return NULL;
-        return *it;
-    }
 
 public slots:
     /**

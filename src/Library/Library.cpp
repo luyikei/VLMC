@@ -47,7 +47,10 @@ Library::Library()
 Media*
 Library::media( const QUuid& uuid )
 {
-    return getElementByUuid( m_medias, uuid );
+    QHash<QUuid, Media*>::const_iterator   it = m_medias.find( uuid );
+    if ( it == m_medias.end() )
+        return NULL;
+    return *it;
 }
 
 Clip*
@@ -67,7 +70,7 @@ Library::clip( const QUuid& uuid )
     {
         Media* media = m_medias.value( mediaUuid );
         if ( media != NULL && media->clips()->contains( uuid ) )
-            return getElementByUuid( *media->clips(), uuid );
+            return media->clip( uuid );
     }
     return NULL;
 }
