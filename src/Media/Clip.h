@@ -119,7 +119,7 @@ class   Clip : public QObject
          *  timeline, as a unique object, even if this clip is present more than
          *  once.
          */
-        QUuid               m_Uuid;
+        QUuid               m_uuid;
         QStringList         m_metaTags;
         QString             m_notes;
 
