@@ -27,7 +27,6 @@
 #include "ClipProperty.h"
 
 #include <QTime>
-#include <QDebug>
 
 MediaCellView::MediaCellView( const QUuid& uuid, QWidget *parent ) :
         QWidget( parent ), m_ui( new Ui::MediaCellView ), m_uuid( uuid )
@@ -35,7 +34,8 @@ MediaCellView::MediaCellView( const QUuid& uuid, QWidget *parent ) :
     m_ui->setupUi( this );
     setFocusPolicy( Qt::ClickFocus );
     setAutoFillBackground( true );
-    connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
+    connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
+             this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
     //TODO : if it's a clip, disable the arrow
     connect( m_ui->arrow,
              SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
@@ -99,9 +99,10 @@ void            MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
         Clip* clip = Library::getInstance()->clip( m_uuid );
         if ( clip == NULL )
             return;
-        ClipProperty* mp = new ClipProperty( clip, this );
-        mp->setModal( true );
-        mp->show();
+        ClipProperty* cp = new ClipProperty( clip, this );
+        cp->setModal( true );
+        cp->show();
+        delete cp;
     }
 }
 
