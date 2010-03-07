@@ -61,7 +61,7 @@ void    ClipListViewController::resetNbDeletion()
 
 void    ClipListViewController::addClip( Clip* clip )
 {
-    MediaCellView* cell = new MediaCellView( clip->uuid() );
+    MediaCellView* cell = new MediaCellView( clip );
     cell->containsClip();
     connect( cell, SIGNAL( cellSelected( QUuid ) ), this, SLOT( cellSelection( const QUuid& ) ) );
     connect( cell, SIGNAL( cellDeleted( const QUuid& ) ), this, SLOT( clipDeletion( const QUuid& ) ) );
@@ -73,7 +73,7 @@ void    ClipListViewController::addClip( Clip* clip )
     cell->setLength( clip->lengthSecond(), false );
     addCell( cell );
     m_cells.insert( clip->uuid(), cell );
-    cell->enableCell();
+    cell->setEnabled( true );
 }
 
 void    ClipListViewController::clean()

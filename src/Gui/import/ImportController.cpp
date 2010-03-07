@@ -173,19 +173,6 @@ ImportController::clipSelection( const QUuid& uuid )
 }
 
 void
-ImportController::updateMediaRequested( const Media *media )
-{
-    if ( m_temporaryMedias.contains( media->baseClip()->uuid() ) == false )
-        return ;
-    MediaCellView*    cell = m_mediaListController->cell( media->baseClip()->uuid() );
-    if ( cell == NULL )
-        return;
-    cell->setThumbnail( media->snapshot() );
-    cell->setLength( media->lengthMS() );
-    cell->setEnabled( true );
-}
-
-void
 ImportController::setUIMetaData( Media* media )
 {
     if ( media != NULL )
@@ -241,10 +228,6 @@ ImportController::importMedia( const QString &filePath )
         return ;
 
     Media*          media = new Media( filePath );
-    connect( media, SIGNAL( metaDataComputed( const Media* ) ),
-             this, SLOT( updateMediaRequested( const Media* ) ) );
-    connect( media, SIGNAL( snapshotComputed( const Media* ) ),
-             this, SLOT( updateMediaRequested( const Media* ) ) );
     connect( media, SIGNAL( snapshotComputed( const Media* ) ),
              this, SLOT( mediaLoaded() ) );
     m_temporaryMedias[media->baseClip()->uuid()] = media;

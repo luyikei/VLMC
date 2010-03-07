@@ -28,19 +28,38 @@
 
 #include <QTime>
 
-MediaCellView::MediaCellView( const QUuid& uuid, QWidget *parent ) :
-        QWidget( parent ), m_ui( new Ui::MediaCellView ), m_uuid( uuid )
+MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
+        QWidget( parent ),
+        m_ui( new Ui::MediaCellView ),
+        m_clip( clip )
 {
     m_ui->setupUi( this );
     setFocusPolicy( Qt::ClickFocus );
     setAutoFillBackground( true );
     connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
-    //TODO : if it's a clip, disable the arrow
     connect( m_ui->arrow,
              SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
     setEnabled( false );
+    connect( clip->getParent(), SIGNAL( metaDataComputed(const Media*) ),
+             this, SLOT( metadataUpdated( const Media*) ) );
+    connect( clip->getParent(), SIGNAL( snapshotComputed(const Media*) ),
+             this, SLOT( snapshotUpdated(const Media*) ) );
+}
+
+void
+MediaCellView::metadataUpdated( const Media *media )
+{
+    setNbClips( media->clipsCount() );
+    setLength( media->lengthMS() );
+    setEnabled( true );
+}
+
+void
+MediaCellView::snapshotUpdated( const Media *media )
+{
+    setThumbnail( media->snapshot() );
 }
 
 MediaCellView::~MediaCellView()
@@ -71,7 +90,8 @@ void            MediaCellView::setNbClips( int nbClip )
     m_ui->clipCount->setText( QString::number( nbClip ) );
 }
 
-void            MediaCellView::setThumbnail( const QPixmap& pixmap )
+void
+MediaCellView::setThumbnail( const QPixmap &pixmap )
 {
     m_ui->thumbnail->setScaledContents( false );
     m_ui->thumbnail->setPixmap( pixmap.scaled( 64, 64, Qt::KeepAspectRatio ) );
@@ -87,19 +107,11 @@ QString  MediaCellView::title() const
     return m_ui->title->text();
 }
 
-const QUuid&    MediaCellView::uuid() const
-{
-    return m_uuid;
-}
-
 void            MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
 {
     if ( ( event->buttons() | Qt::LeftButton ) == Qt::LeftButton )
     {
-        Clip* clip = Library::getInstance()->clip( m_uuid );
-        if ( clip == NULL )
-            return;
-        ClipProperty* cp = new ClipProperty( clip, this );
+        ClipProperty* cp = new ClipProperty( m_clip, this );
         cp->setModal( true );
         cp->show();
         delete cp;
@@ -113,7 +125,7 @@ void            MediaCellView::mousePressEvent( QMouseEvent* event )
     if ( ( event->buttons() | Qt::LeftButton ) == Qt::LeftButton )
     {
         m_dragStartPos = event->pos();
-        emit cellSelected( m_uuid );
+        emit cellSelected( m_clip->uuid() );
     }
 }
 
@@ -127,29 +139,24 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
         return;
 
     QMimeData* mimeData = new QMimeData;
-    mimeData->setData( "vlmc/uuid", m_uuid.toString().toAscii() );
+    //FIXME the second argument is a media UUID instead of a Clip
+    // and this is not logical... but it works.
+    mimeData->setData( "vlmc/uuid", m_clip->uuid().toString().toAscii() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
-    //FIXME : change the way the library handles Clips
-    const Clip* clip = Library::getInstance()->clip( m_uuid );
-    if ( 0 == clip )
-        return ;
-    //getting the media from the current Clip
-    const Media*  parent = Library::getInstance()->clip( m_uuid )->getParent();
-    if ( 0 == parent )
-        return ;
+    const Media*  parent = m_clip->getParent();
     drag->setPixmap( parent->snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
 void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
-    emit cellDeleted( uuid() );
+    emit cellDeleted( m_clip->uuid() );
 }
 
 void        MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
 {
-    emit arrowClicked( uuid() );
+    emit arrowClicked( m_clip->uuid() );
 }
 
 void        MediaCellView::setLength( qint64 length, bool mSecs )
@@ -189,10 +196,4 @@ MediaCellView::containsClip()
     disconnect( m_ui->arrow,
                 SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this,
                 SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
-}
-
-void
-MediaCellView::enableCell()
-{
-    setEnabled( true );
 }

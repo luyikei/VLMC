@@ -28,6 +28,9 @@
 #include <QMouseEvent>
 #include "ClickableLabel.h"
 
+class   Clip;
+class   Media;
+
 namespace Ui
 {
     class MediaCellView;
@@ -38,7 +41,7 @@ class MediaCellView : public QWidget
     Q_OBJECT
 
 public:
-    MediaCellView( const QUuid& uuid, QWidget *parent = 0 );
+    MediaCellView( Clip* clip, QWidget *parent = 0 );
     ~MediaCellView();
 
     void                    setTitle( const QString& title );
@@ -53,15 +56,14 @@ public:
     void                    incrementClipCount();
     void                    decrementClipCount( const int nb );
     QString                 title() const;
-    const QUuid&            uuid() const;
     void                    containsClip();
 
 protected:
-    void changeEvent( QEvent *e );
+    void                    changeEvent( QEvent *e );
 
 private:
     Ui::MediaCellView*  m_ui;
-    const QUuid         m_uuid;
+    Clip*               m_clip;
     QPoint              m_dragStartPos;
 
 protected:
@@ -77,8 +79,10 @@ signals:
 public slots:
     void        deleteButtonClicked( QWidget* sender, QMouseEvent* event );
     void        arrowButtonClicked( QWidget* sender, QMouseEvent* event );
-    void        enableCell();
 
+private slots:
+    void        snapshotUpdated( const Media *media );
+    void        metadataUpdated( const Media *media );
 };
 
 #endif // MEDIACELLVIEW_H
