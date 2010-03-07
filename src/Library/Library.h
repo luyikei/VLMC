@@ -78,16 +78,14 @@ public:
      *  \sa     media( const QUuid& uuid )
      */
     Clip*   clip( const QUuid& mediaUuid, const QUuid& clipUuid );
-    /**
-     * \brief returns the medias qHash
-     *  \return a pointer to the medias qHash, or NULL if no there is no medias
-     *  \sa     temporaryMedias( const QUuid& uuid )
-     */
-     QHash<QUuid, Media*>*   medias() { return &m_medias; }
+
     /**
      *  \brief  Add a file to the media library
-     *  \param  fileInfo the file info of the media
-     *  \return         true if the media was successfully loaded. false otherwise.
+     *
+     *  This method will also handle metadata parsing. Right now, this is only meant to be
+     *  used when loading a project.
+     *  \param  fileInfo    the file info of the media
+     *  \return             true if the media was successfully loaded. false otherwise.
      *  \sa     addClip( Clip* clip )
      *  \sa     media( const QUuid& uuid)
      *  \sa     clip( const QUuid& uuid )
