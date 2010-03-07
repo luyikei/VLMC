@@ -29,7 +29,8 @@
 #include "ListViewController.h"
 #include "Media.h"
 #include "Clip.h"
-#include "ImportMediaCellView.h"
+
+class   MediaCellView;
 
 class ImportMediaListController : public ListViewController
 {
@@ -45,14 +46,14 @@ class ImportMediaListController : public ListViewController
         void    cleanAll();
         void    addClipsFromMedia( Media* media );
 
-        const QHash<QUuid, ImportMediaCellView*>* mediaCellList() const;
-        ImportMediaCellView* cell( QUuid uuid ) const;
+        const QHash<QUuid, MediaCellView*>* mediaCellList() const;
+        MediaCellView*  cell( QUuid uuid ) const;
         bool    contains( QUuid uuid );
         int     nbDeletions() const { return m_clipDeleted; }
 
     private:
         StackViewController*                m_nav;
-        QHash<QUuid, ImportMediaCellView*>* m_mediaCellList;
+        QHash<QUuid, MediaCellView*>*       m_mediaCellList;
         int                                 m_clipDeleted;
 
     public slots:

@@ -29,6 +29,7 @@
 #include "ImportController.h"
 #include "Library.h"
 #include "MetaDataManager.h"
+#include "MediaCellView.h"
 
 #include <QPalette>
 #include <QSettings>
@@ -176,7 +177,7 @@ ImportController::updateMediaRequested( const Media *media )
 {
     if ( m_temporaryMedias.contains( media->uuid() ) == false )
         return ;
-    ImportMediaCellView*    cell = m_mediaListController->cell( media->uuid() );
+    MediaCellView*    cell = m_mediaListController->cell( media->uuid() );
     if ( cell == NULL )
         return;
     cell->setThumbnail( media->snapshot() );
@@ -404,7 +405,7 @@ ImportController::restoreContext()
     {
         if ( !m_savedUuid.isNull() && m_mediaListController->cell( m_savedUuid ) != NULL )
         {
-            ImportMediaCellView* cell = m_mediaListController->cell( m_savedUuid );
+            MediaCellView*  cell = m_mediaListController->cell( m_savedUuid );
             cell->decrementClipCount( m_clipListController->nbDeletions() );
         }
     }
