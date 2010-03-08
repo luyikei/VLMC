@@ -45,73 +45,42 @@ Clip::Clip( Media *parent, const QString& uuid ) :
     computeLength();
 }
 
-Clip::Clip( Clip *creator, qint64 begin, qint64 end ) :
-        m_parent( creator->getParent() ),
+Clip::Clip( Clip *clip, qint64 begin /*= 0*/, qint64 end /*= -1*/ ) :
+        m_parent( clip->m_parent ),
         m_begin( begin ),
         m_end( end ),
-        m_maxBegin( begin ),
-        m_maxEnd( end )
+        m_metaTags( clip->m_metaTags ),
+        m_notes( clip->m_notes ),
+        m_maxBegin( clip->m_begin ),
+        m_maxEnd( clip->m_end )
 {
+    if ( begin == -1 )
+        m_begin = clip->begin();
+    if ( end == -1 )
+        m_end = clip->end();
     m_uuid = QUuid::createUuid();
     computeLength();
 }
 
-Clip::Clip( Media *parent, qint64 begin, qint64 end /*= -1*/ ) :
+Clip::Clip( Media *parent, qint64 begin, qint64 end /*= -1*/,
+            const QString &uuid /*= QString()*/ ) :
         m_parent( parent ),
         m_begin( begin ),
         m_end( end ),
         m_maxBegin( begin ),
         m_maxEnd( end )
 {
-    //FIXME: WTF ?
-    Q_ASSERT( parent->inputType() == Media::File || ( begin == 0 && end == m_parent->nbFrames() ) );
-
-    if ( parent->inputType() == Media::File && end < 0 )
+    if ( end < 0 )
     {
         m_end = parent->nbFrames();
         m_maxEnd = m_end;
     }
-    m_uuid = QUuid::createUuid();
+    if ( uuid.isEmpty() == true )
+        m_uuid = QUuid::createUuid();
+    else
+        m_uuid = QUuid( uuid );
     computeLength();
 }
-
-Clip::Clip( const Clip *clip ) :
-        m_parent( clip->m_parent ),
-        m_begin( clip->m_begin ),
-        m_end( clip->m_end ),
-        m_length( clip->m_length ),
-        m_lengthSeconds( clip->m_lengthSeconds ),
-        m_metaTags( clip->m_metaTags ),
-        m_notes( clip->m_notes ),
-        m_maxBegin( clip->m_begin ),
-        m_maxEnd( clip->m_end )
-{
-    m_uuid = QUuid::createUuid();
-}
-
-Clip::Clip( const QUuid &uuid, qint64 begin, qint64 end ) :
-        m_begin( begin),
-        m_end( end ),
-        m_maxBegin( begin ),
-        m_maxEnd( end )
-{
-    Q_UNUSED( end );
-    Media*  media = Library::getInstance()->media( uuid );
-    Q_ASSERT( media != NULL );
-    m_parent = media;
-    m_uuid = QUuid::createUuid();
-    computeLength();
-}
-
-Clip::Clip( Media *parent, qint64 begin, qint64 end, const QUuid &uuid )
-    : m_parent( parent ),
-    m_begin( begin ),
-    m_end( end ),
-    m_uuid( uuid )
-{
-    computeLength();
-}
-
 
 Clip::~Clip()
 {

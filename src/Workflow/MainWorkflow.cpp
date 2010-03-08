@@ -312,7 +312,7 @@ MainWorkflow::loadProject( const QDomElement &project )
         {
             //Iterate over clip fields:
             QDomElement clipProperty = clip.firstChild().toElement();
-            QUuid                       parent;
+            QUuid                       parentUuid;
             qint64                      begin;
             qint64                      end;
             qint64                      startPos;
@@ -324,7 +324,7 @@ MainWorkflow::loadProject( const QDomElement &project )
                 bool    ok;
 
                 if ( tagName == "parent" )
-                    parent = QUuid( clipProperty.text() );
+                    parentUuid = QUuid( clipProperty.text() );
                 else if ( tagName == "begin" )
                 {
                     begin = clipProperty.text().toLongLong( &ok );
@@ -368,9 +368,10 @@ MainWorkflow::loadProject( const QDomElement &project )
                 clipProperty = clipProperty.nextSibling().toElement();
             }
 
-            if ( Library::getInstance()->media( parent ) != NULL )
+            if ( Library::getInstance()->media( parentUuid ) != NULL )
             {
-                Clip        *c = new Clip( parent, begin, end );
+                Clip    *c = new Clip( Library::getInstance()->media( parentUuid ),
+                                       begin, end, parentUuid.toString() );
                 addClip( c, trackId, startPos, trackType );
             }
 

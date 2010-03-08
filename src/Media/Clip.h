@@ -42,12 +42,34 @@ class   Clip : public QObject
 
     public:
         static const int DefaultFPS;
+        /**
+         *  \brief  Construct the base clip for a Media.
+         *
+         *  This clip will represent the whole media as a Clip.
+         *  \param  parent  The media to represent.
+         *  \param  uuid    A forced unique id. If not given, a new unique id will be generated.
+         */
         Clip( Media *parent, const QString& uuid = QString() );
-        Clip( Media *parent, qint64 begin, qint64 end = -1 );
-        Clip( Clip *creator, qint64 begin, qint64 end );
-        Clip( const Clip *clip );
-        Clip( const QUuid &uuid, qint64 begin = 0, qint64 end = -1 );
-        Clip( Media *parent, qint64 begin, qint64 end, const QUuid &uuid );
+        /**
+         *  \brief  Constructs a Clip that is a subpart of a Media.
+         *
+         *  \param  parent  The media to represent.
+         *  \param  begin   The clip beginning (in frames, from the parent's beginning)
+         *  \param  end     The end, in frames, from the parent's beginning. If not given,
+         *                  the end of the parent will be used.
+         *  \param  uuid    A unique identifier. If not given, one will be generated.
+         */
+        Clip( Media *parent, qint64 begin, qint64 end = -1, const QString &uuid = QString() );
+        /**
+         *  \brief  Clones a Clip, potentially with a new begin and end.
+         *
+         *  \param  creator The clip to clone.
+         *  \param  begin   The clip beginning (in frames, from the parent's beginning).
+         *                  If not given, 0 is assumed.
+         *  \param  end     The end, in frames, from the parent's beginning. If not given,
+         *                  the end of the parent will be used.
+         */
+        Clip( Clip *creator, qint64 begin = -1, qint64 end = -1 );
         virtual ~Clip();
 
         qint64              begin() const;
