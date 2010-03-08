@@ -38,7 +38,6 @@ MediaLibraryWidget::MediaLibraryWidget( QWidget* parent ) : QWidget( parent )
     connect( list, SIGNAL( clipDeleted( const QUuid& ) ), library, SLOT( removingMediaAsked( const QUuid& ) ) );
     connect( library, SIGNAL( mediaRemoved( QUuid ) ), list, SLOT( mediaRemoved( const QUuid& ) ) );
     connect( m_nav, SIGNAL( importRequired() ), this, SIGNAL( importRequired() ) );
-    connect( this, SIGNAL( addClipToViewController( Clip* ) ), list, SLOT( newClipAdded( Clip* ) ) );
     m_nav->pushViewController( list );
     setMinimumWidth( 280 );
 }
