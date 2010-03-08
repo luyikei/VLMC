@@ -291,9 +291,12 @@ Media::clips() const
     return m_clips;
 }
 
-void            Media::removeClip( const QUuid& uuid )
+Clip*
+Media::removeClip( const QUuid& uuid )
 {
-    m_clips.remove( uuid );
+    Clip*   clip = m_clips.take( uuid );
+    emit clipRemoved( clip );
+    return clip;
 }
 
 bool

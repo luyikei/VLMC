@@ -138,7 +138,7 @@ public:
 //    bool                        hasMetadata() const;
 
     bool                        addClip( Clip* clip );
-    void                        removeClip( const QUuid& uuid );
+    Clip                        *removeClip( const QUuid& uuid );
     Clip*                       clip( const QUuid& uuid );
     quint32                     clipsCount() const;
     const QHash<QUuid, Clip*>   &clips() const;
@@ -181,6 +181,7 @@ signals:
     void                        snapshotComputed( const Media* );
     void                        audioSpectrumComputed( const QUuid& );
     void                        clipAdded( Clip* );
+    void                        clipRemoved( Clip* );
 };
 
 #endif // CLIP_H__

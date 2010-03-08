@@ -45,7 +45,6 @@ public:
     ~MediaCellView();
 
     void                    setTitle( const QString& title );
-    void                    setNbClips( int nbClip );
     void                    setThumbnail( const QPixmap& pixmap );
     const QPixmap*          getThumbnail() const;
     /**
@@ -84,6 +83,8 @@ public slots:
 private slots:
     void        snapshotUpdated( const Media *media );
     void        metadataUpdated( const Media *media );
+    void        nbClipUpdated( Clip *clip );
+
 };
 
 #endif // MEDIACELLVIEW_H

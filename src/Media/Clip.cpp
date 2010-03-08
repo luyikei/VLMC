@@ -236,3 +236,9 @@ Clip::maxEnd() const
 {
     return m_maxEnd;
 }
+
+bool
+Clip::isBaseClip() const
+{
+    return ( m_parent->baseClip() == this );
+}

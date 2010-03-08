@@ -115,6 +115,8 @@ class   Clip : public QObject
 
         void                computeLength();
 
+        bool                isBaseClip() const;
+
     private:
         Media               *m_parent;
         /**

@@ -38,24 +38,46 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     setAutoFillBackground( true );
     connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
-    connect( m_ui->arrow,
-             SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
-             SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
+    if ( clip->isBaseClip() == true )
+    {
+        connect( m_ui->arrow,
+                 SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
+                 SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
+        m_ui->clipCount->setText( QString::number( clip->getParent()->clipsCount() ) );
+        connect( clip->getParent(), SIGNAL( clipAdded(Clip*) ),
+                 this, SLOT( nbClipUpdated( Clip* ) ) );
+        connect( clip->getParent(), SIGNAL( clipRemoved( Clip* ) ),
+                 this, SLOT( nbClipUpdated( Clip* ) ) );
+    }
+    else
+    {
+        m_ui->clipCount->hide();
+        m_ui->clipCountLabel->hide();
+        m_ui->arrow->hide();
+        disconnect( m_ui->arrow,
+                    SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this,
+                    SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
+    }
     if ( clip->getParent()->isMetadataComputed() == false )
         setEnabled( false );
     connect( clip->getParent(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
     connect( clip->getParent(), SIGNAL( snapshotComputed(const Media*) ),
              this, SLOT( snapshotUpdated(const Media*) ) );
+
     setThumbnail( clip->getParent()->snapshot() );
     setTitle( clip->getParent()->fileName() );
     setLength( clip->lengthSecond() * 1000 );
 }
 
+MediaCellView::~MediaCellView()
+{
+    delete m_ui;
+}
+
 void
 MediaCellView::metadataUpdated( const Media *media )
 {
-    setNbClips( media->clipsCount() );
     setLength( media->lengthMS() );
     setEnabled( true );
 }
@@ -64,11 +86,6 @@ void
 MediaCellView::snapshotUpdated( const Media *media )
 {
     setThumbnail( media->snapshot() );
-}
-
-MediaCellView::~MediaCellView()
-{
-    delete m_ui;
 }
 
 void MediaCellView::changeEvent( QEvent *e )
@@ -89,9 +106,9 @@ void            MediaCellView::setTitle( const QString& title )
     m_ui->title->setText( title );
 }
 
-void            MediaCellView::setNbClips( int nbClip )
+void            MediaCellView::nbClipUpdated( Clip *clip )
 {
-    m_ui->clipCount->setText( QString::number( nbClip ) );
+    m_ui->clipCount->setText( QString::number( clip->getParent()->clipsCount() ) );
 }
 
 void
@@ -194,12 +211,7 @@ void        MediaCellView::decrementClipCount( const int nb )
 void
 MediaCellView::containsClip()
 {
-    m_ui->clipCount->hide();
-    m_ui->clipCountLabel->hide();
-    m_ui->arrow->hide();
-    disconnect( m_ui->arrow,
-                SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this,
-                SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
+
 }
 
 const QUuid&

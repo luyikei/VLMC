@@ -54,7 +54,6 @@ void        MediaListViewController::newMediaLoaded( Media* media )
              this, SLOT( showClipList( const QUuid& ) ) );
     connect( media, SIGNAL( clipAdded( Clip* ) ),
              this, SLOT( newClipAdded(Clip*) ) );
-    cell->setNbClips( media->clipsCount() );
     addCell(cell);
     m_cells->insert( media->baseClip()->uuid(), cell );
 }
