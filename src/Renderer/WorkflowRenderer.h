@@ -136,6 +136,8 @@ class   WorkflowRenderer : public GenericRenderer
          */
         void                killRenderer();
 
+        virtual Media*      getMedia() { return NULL; }
+
     private:
         /**
          *  \brief          This is a subpart of the togglePlayPause( bool ) method

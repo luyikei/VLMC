@@ -116,11 +116,7 @@ public:
      *  \return     The currently rendered Media
      *  \todo       This method should not be here, as it is not generic at all.
      */
-    virtual  Media*                 getMedia() const
-    {
-        return 0;
-    }
-
+    virtual  Media*                 getMedia() = 0;
     /**
      *  \brief      Return the length in frames
      *  \warning    The returned value may not be accurate as it depends on FPS, that
