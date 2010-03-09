@@ -115,7 +115,8 @@ class   Clip : public QObject
 
         void                computeLength();
 
-        bool                isBaseClip() const;
+        bool                isRootClip() const;
+        Clip*               rootClip();
 
     private:
         Media               *m_parent;
@@ -158,6 +159,13 @@ class   Clip : public QObject
          *  ie this clip won't end before m_maxEnd.
          */
         qint64              m_maxEnd;
+
+        /**
+         *  \brief          Return the root clip.
+         *
+         *  The root clip is the base clip for the parent media.
+         */
+        Clip*               m_rootClip;
 
     signals:
         void                lengthUpdated();

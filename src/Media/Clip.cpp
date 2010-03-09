@@ -36,8 +36,10 @@ Clip::Clip( Media *parent, const QString& uuid ) :
         m_begin( 0 ),
         m_end( parent->nbFrames() ),
         m_maxBegin( 0 ),
-        m_maxEnd( parent->nbFrames() )
+        m_maxEnd( parent->nbFrames() ),
+        m_rootClip( NULL )
 {
+    Q_ASSERT( parent->baseClip() == NULL );
     if ( uuid.isEmpty() == true )
         m_uuid = QUuid::createUuid();
     else
@@ -52,7 +54,8 @@ Clip::Clip( Clip *clip, qint64 begin /*= 0*/, qint64 end /*= -1*/ ) :
         m_metaTags( clip->m_metaTags ),
         m_notes( clip->m_notes ),
         m_maxBegin( clip->m_begin ),
-        m_maxEnd( clip->m_end )
+        m_maxEnd( clip->m_end ),
+        m_rootClip( clip->getParent()->baseClip() )
 {
     if ( begin == -1 )
         m_begin = clip->begin();
@@ -68,7 +71,8 @@ Clip::Clip( Media *parent, qint64 begin, qint64 end /*= -1*/,
         m_begin( begin ),
         m_end( end ),
         m_maxBegin( begin ),
-        m_maxEnd( end )
+        m_maxEnd( end ),
+        m_rootClip( parent->baseClip() )
 {
     if ( end < 0 )
     {
@@ -237,8 +241,14 @@ Clip::maxEnd() const
     return m_maxEnd;
 }
 
-bool
-Clip::isBaseClip() const
+Clip*
+Clip::rootClip()
 {
-    return ( m_parent->baseClip() == this );
+    return m_rootClip;
+}
+
+bool
+Clip::isRootClip() const
+{
+    return ( m_rootClip == NULL );
 }

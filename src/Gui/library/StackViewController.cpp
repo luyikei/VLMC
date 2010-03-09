@@ -100,7 +100,7 @@ void        StackViewController::popViewController( bool animated )
     else
     {
        m_nav->previousButton()->setText( "< " +
-           m_controllerStack->value( m_controllerStack->size() - 1 )->title() );
+       m_controllerStack->value( m_controllerStack->size() - 1 )->title() );
     }
 }
 

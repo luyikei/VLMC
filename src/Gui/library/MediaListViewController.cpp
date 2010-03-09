@@ -101,7 +101,7 @@ void    MediaListViewController::showClipList( const QUuid& uuid )
          m_mediaContainer->media( uuid )-> clipsCount() == 0 )
         return ;
     m_lastUuidClipListAsked = uuid;
-    m_clipsListView = new MediaListViewController( m_nav, Library::getInstance() );
+    m_clipsListView = new MediaListViewController( m_nav, m_mediaContainer );
     m_clipsListView->newMediaLoaded( m_mediaContainer->media( uuid ) );
     connect( m_clipsListView, SIGNAL( clipSelected( const QUuid& ) ),
             this, SLOT( clipSelection( const QUuid& ) ) );
@@ -110,10 +110,5 @@ void    MediaListViewController::showClipList( const QUuid& uuid )
 
 void    MediaListViewController::restoreContext()
 {
-    MediaCellView*  cell = qobject_cast<MediaCellView*>( m_cells->value( m_lastUuidClipListAsked, 0 ) );
-    if ( cell != 0 )
-    {
-        qDebug() << "FIXME: Update clip count";
-    }
     delete m_clipsListView;
 }

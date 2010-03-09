@@ -48,6 +48,7 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
     m_width( 0 ),
     m_height( 0 ),
     m_fps( .0f ),
+    m_baseClip( NULL ),
     m_nbAudioTracks( 0 ),
     m_nbVideoTracks( 0 ),
     m_metadataComputed( false )

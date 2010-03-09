@@ -28,6 +28,8 @@
 
 #include <QTime>
 
+#include <QtDebug>
+
 MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         QWidget( parent ),
         m_ui( new Ui::MediaCellView ),
@@ -38,7 +40,7 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     setAutoFillBackground( true );
     connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
-    if ( clip->isBaseClip() == true )
+    if ( clip->isRootClip() == true )
     {
         connect( m_ui->arrow,
                  SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
