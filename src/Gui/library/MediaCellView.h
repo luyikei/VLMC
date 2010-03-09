@@ -52,8 +52,6 @@ public:
      *  \param  length  The media length, in ms.
      */
     void                    setLength( qint64 length, bool mSecs = true );
-    void                    incrementClipCount();
-    void                    decrementClipCount( const int nb );
     QString                 title() const;
     void                    containsClip();
     const QUuid&            uuid() const;

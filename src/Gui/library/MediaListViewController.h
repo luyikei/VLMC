@@ -38,7 +38,6 @@ class MediaListViewController : public ListViewController
 public:
     MediaListViewController( StackViewController* nav, MediaContainer* mc );
     virtual ~MediaListViewController();
-    void    addClip( Clip* clip );
 
 private:
     StackViewController*        m_nav;
@@ -55,7 +54,6 @@ public slots:
 
 private slots:
     void        restoreContext();
-    void        newClipAdded( Clip* clip );
     void        mediaRemoved( const QUuid& uuid );
     void        newMediaLoaded( Media* media );
 

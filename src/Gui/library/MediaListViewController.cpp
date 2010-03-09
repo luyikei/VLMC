@@ -52,8 +52,6 @@ void        MediaListViewController::newMediaLoaded( Media* media )
              this, SIGNAL( clipDeleted( QUuid ) ) );
     connect( cell, SIGNAL( arrowClicked( const QUuid& ) ),
              this, SLOT( showClipList( const QUuid& ) ) );
-    connect( media, SIGNAL( clipAdded( Clip* ) ),
-             this, SLOT( newClipAdded(Clip*) ) );
     addCell(cell);
     m_cells->insert( media->baseClip()->uuid(), cell );
 }
@@ -108,28 +106,6 @@ void    MediaListViewController::showClipList( const QUuid& uuid )
     connect( m_clipsListView, SIGNAL( clipSelected( const QUuid& ) ),
             this, SLOT( clipSelection( const QUuid& ) ) );
     m_nav->pushViewController( m_clipsListView );
-}
-
-void    MediaListViewController::newClipAdded( Clip* clip )
-{
-    if ( clip->getParent() == 0 )
-        return ;
-    const QUuid& uuid = clip->getParent()->baseClip()->uuid();
-
-    if ( m_cells->contains( uuid ) )
-    {
-        MediaCellView*  cell = qobject_cast<MediaCellView*>( m_cells->value( uuid, 0 ) );
-        if ( cell != 0 )
-        {
-            cell->incrementClipCount();
-        }
-    }
-}
-
-void
-MediaListViewController::addClip( Clip *clip )
-{
-    newClipAdded( clip );
 }
 
 void    MediaListViewController::restoreContext()

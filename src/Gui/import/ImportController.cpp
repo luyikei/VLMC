@@ -320,8 +320,6 @@ ImportController::showClipList( const QUuid& uuid )
              this, SLOT( clipSelection( const QUuid& ) ) );
     connect( m_clipListController, SIGNAL( clipDeleted( const QUuid& ) ),
              this, SLOT( clipDeletion( const QUuid& ) ) );
-    foreach ( Clip* clip, media->clips().values() )
-        m_clipListController->addClip( clip );
     if ( !m_currentUuid.isNull() )
         m_savedUuid = m_currentUuid;
     m_stackNav->pushViewController( m_clipListController );
