@@ -42,20 +42,20 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     //Duration
     ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
-    ui->nameValueLabel->setText( m_clip->getParent()->fileInfo()->fileName() );
-    setWindowTitle( m_clip->getParent()->fileInfo()->fileName() + " " + tr( "properties" ) );
+    ui->nameValueLabel->setText( m_clip->getMedia()->fileInfo()->fileName() );
+    setWindowTitle( m_clip->getMedia()->fileInfo()->fileName() + " " + tr( "properties" ) );
     //Resolution
-    ui->resolutionValueLabel->setText( QString::number( m_clip->getParent()->width() )
-                                       + " x " + QString::number( m_clip->getParent()->height() ) );
+    ui->resolutionValueLabel->setText( QString::number( m_clip->getMedia()->width() )
+                                       + " x " + QString::number( m_clip->getMedia()->height() ) );
     //FPS
-    ui->fpsValueLabel->setText( QString::number( m_clip->getParent()->fps() ) );
+    ui->fpsValueLabel->setText( QString::number( m_clip->getMedia()->fps() ) );
     //Snapshot
-    ui->snapshotLabel->setPixmap( m_clip->getParent()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
+    ui->snapshotLabel->setPixmap( m_clip->getMedia()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
     //nb tracks :
     ui->nbVideoTracksValueLabel->setText(
-            QString::number( m_clip->getParent()->nbVideoTracks() ) );
+            QString::number( m_clip->getMedia()->nbVideoTracks() ) );
     ui->nbAudioTracksValueLabel->setText(
-            QString::number( m_clip->getParent()->nbAudioTracks() ) );
+            QString::number( m_clip->getMedia()->nbAudioTracks() ) );
     //Metatags
     const QPushButton* button = ui->buttonBox->button( QDialogButtonBox::Apply );
     Q_ASSERT( button != NULL);

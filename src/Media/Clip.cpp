@@ -31,63 +31,58 @@
 
 const int   Clip::DefaultFPS = 30;
 
-Clip::Clip( Media *parent, const QString& uuid ) :
-        m_parent( parent ),
-        m_begin( 0 ),
-        m_end( parent->nbFrames() ),
-        m_maxBegin( 0 ),
-        m_maxEnd( parent->nbFrames() ),
-        m_rootClip( NULL )
-{
-    Q_ASSERT( parent->baseClip() == NULL );
-    if ( uuid.isEmpty() == true )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = QUuid( uuid );
-    computeLength();
-}
-
-Clip::Clip( Clip *clip, qint64 begin /*= 0*/, qint64 end /*= -1*/ ) :
-        m_parent( clip->m_parent ),
-        m_begin( begin ),
-        m_end( end ),
-        m_metaTags( clip->m_metaTags ),
-        m_notes( clip->m_notes ),
-        m_maxBegin( clip->m_begin ),
-        m_maxEnd( clip->m_end ),
-        m_rootClip( clip->getParent()->baseClip() )
-{
-    if ( begin == -1 )
-        m_begin = clip->begin();
-    if ( end == -1 )
-        m_end = clip->end();
-    m_uuid = QUuid::createUuid();
-    computeLength();
-}
-
-Clip::Clip( Media *parent, qint64 begin, qint64 end /*= -1*/,
-            const QString &uuid /*= QString()*/ ) :
-        m_parent( parent ),
+Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString& uuid /*= QString()*/ ) :
+        m_media( media ),
         m_begin( begin ),
         m_end( end ),
         m_maxBegin( begin ),
-        m_maxEnd( end ),
-        m_rootClip( parent->baseClip() )
+        m_parent( media->baseClip() )
 {
-    if ( end < 0 )
+    if ( end == -1 )
     {
-        m_end = parent->nbFrames();
+        m_end = media->nbFrames();
         m_maxEnd = m_end;
     }
     if ( uuid.isEmpty() == true )
         m_uuid = QUuid::createUuid();
     else
         m_uuid = QUuid( uuid );
+    m_childs = new MediaContainer( this );
+    m_rootClip = media->baseClip();
+    computeLength();
+}
+
+Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
+            const QString &uuid /*= QString()*/ ) :
+        m_parent( parent ),
+        m_begin( begin ),
+        m_end( end ),
+        m_maxBegin( begin ),
+        m_maxEnd( end ),
+        m_rootClip( parent->rootClip() ),
+        m_media( parent->getMedia() )
+{
+    if ( begin < 0 )
+    {
+        m_begin = parent->begin();
+        m_maxBegin = m_begin;
+    }
+    if ( end < 0 )
+    {
+        m_end = parent->getMedia()->nbFrames();
+        m_maxEnd = m_end;
+    }
+    if ( uuid.isEmpty() == true )
+        m_uuid = QUuid::createUuid();
+    else
+        m_uuid = QUuid( uuid );
+    m_childs = new MediaContainer( this );
     computeLength();
 }
 
 Clip::~Clip()
 {
+    delete m_childs;
 }
 
 qint64
@@ -103,9 +98,9 @@ Clip::end() const
 }
 
 Media*
-Clip::getParent()
+Clip::getMedia()
 {
-    return m_parent;
+    return m_media;
 }
 
 qint64
@@ -123,9 +118,9 @@ Clip::lengthSecond() const
 void
 Clip::computeLength()
 {
-    if ( m_parent->inputType() == Media::File )
+    if ( m_media->inputType() == Media::File )
     {
-        float   fps = m_parent->fps();
+        float   fps = m_media->fps();
         if ( fps < 0.1f )
             fps = Clip::DefaultFPS;
         m_length = m_end - m_begin;
@@ -244,6 +239,8 @@ Clip::maxEnd() const
 Clip*
 Clip::rootClip()
 {
+    if ( m_rootClip == NULL )
+        return this;
     return m_rootClip;
 }
 
@@ -251,4 +248,40 @@ bool
 Clip::isRootClip() const
 {
     return ( m_rootClip == NULL );
+}
+
+Clip*
+Clip::getParent()
+{
+    return m_parent;
+}
+
+const Clip*
+Clip::getParent() const
+{
+    return m_parent;
+}
+
+MediaContainer*
+Clip::getChilds()
+{
+    return m_childs;
+}
+
+const MediaContainer*
+Clip::getChilds() const
+{
+    return m_childs;
+}
+
+void
+Clip::addSubclip( Clip *clip )
+{
+    m_childs->addClip( clip );
+}
+
+void
+Clip::clear()
+{
+    m_childs->clear();
 }

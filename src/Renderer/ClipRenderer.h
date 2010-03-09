@@ -53,7 +53,7 @@ public:
     virtual qint64          getLengthMs() const;
     virtual qint64          getCurrentFrame() const;
     virtual float           getFps() const;
-    virtual Media*          getMedia();
+    virtual Clip            *getClip();
 
 private:
     void                    startPreview();
@@ -61,7 +61,7 @@ private:
 private:
     bool                    m_clipLoaded;
     LibVLCpp::Media*        m_vlcMedia;
-    Media*                  m_selectedMedia;
+    Clip*                   m_selectedClip;
     qint64                  m_begin;
     qint64                  m_end;
     /**
@@ -76,7 +76,8 @@ public slots:
      *  \param      clip    The clip to render
      */
     void                    setClip( Clip* clip );
-    virtual void            mediaUnloaded( const QUuid& );
+    void                    clipUnloaded( const QUuid& uuid );
+    void                    clipUnloaded( const Clip* clip );
     virtual void            previewWidgetCursorChanged( qint64 newFrame );
 
     /**

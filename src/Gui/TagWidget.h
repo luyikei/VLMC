@@ -55,10 +55,10 @@ class TagWidget : public QWidget
         int             m_nbButton;
         QStringList     m_defaultTagList;
         QWidgetList     m_buttonList;
-        Media*          m_currentMedia;
+        Clip            *m_currentClip;
 
     public slots:
-        void    mediaSelected( Media* media );
+        void    clipSelected( Clip* clip );
         void    buttonTagClicked();
         void    setMetaTags();
 };

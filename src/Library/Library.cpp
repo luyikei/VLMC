@@ -77,18 +77,17 @@ Library::loadProject( const QDomElement& medias )
         //FIXME: This is verry redondant...
         if ( mediaAlreadyLoaded( path ) == true )
         {
-            Media*   media;
-            QHash<QUuid, Media*>::iterator   it = m_medias.begin();
-            QHash<QUuid, Media*>::iterator   end = m_medias.end();
+            QHash<QUuid, Clip*>::iterator   it = m_clips.begin();
+            QHash<QUuid, Clip*>::iterator   end = m_clips.end();
 
             for ( ; it != end; ++it )
             {
-                if ( it.value()->fileInfo()->absoluteFilePath() == path )
+                if ( it.value()->getMedia()->fileInfo()->absoluteFilePath() == path )
                 {
-                    media = it.value();
-                    media->baseClip()->setUuid( QUuid( uuid ) );
-                    m_medias.erase( it );
-                    m_medias[media->baseClip()->uuid()] = media;
+                    Clip*   clip = it.value();
+                    clip->setUuid( QUuid( uuid ) );
+                    m_clips.erase( it );
+                    m_clips[clip->uuid()] = clip;
                     break ;
                 }
             }
@@ -113,12 +112,11 @@ Library::loadProject( const QDomElement& medias )
                     QString clipUuid = clip.attribute( "uuid", "" );
                     if ( beg != "" && end != "" && uuid != "" )
                     {
-                        Media* media = m_medias[QUuid( uuid )];
-                        if ( media != 0 )
-                        {
-                            Clip* clip = new Clip( media, beg.toInt(), end.toInt(), QUuid( clipUuid ) );
-                            media->addClip( clip );
-                        }
+                        if ( m_clips.contains( uuid ) == false )
+                            continue ;
+                        Clip* parentClip = m_clips[QUuid( uuid )];
+                        Clip* clip = new Clip( parentClip, beg.toInt(), end.toInt(), QUuid( clipUuid ) );
+                        parentClip->addSubclip( clip );
                     }
                 }
             }
@@ -131,44 +129,45 @@ Library::loadProject( const QDomElement& medias )
 void
 Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
 {
-    QHash<QUuid, Media*>::iterator          it = m_medias.begin();
-    QHash<QUuid, Media*>::iterator          end = m_medias.end();
-
-    QDomElement medias = doc.createElement( "medias" );
-
-    for ( ; it != end; ++it )
-    {
-        QDomElement media = doc.createElement( "media" );
-
-        medias.appendChild( media );
-        QDomElement mrl = doc.createElement( "path" );
-
-        QDomCharacterData text;
-        text = doc.createTextNode( it.value()->fileInfo()->absoluteFilePath() );
-
-        QDomElement uuid = doc.createElement( "uuid" );
-        QDomCharacterData text2 = doc.createTextNode( it.value()->baseClip()->uuid().toString() );
-
-        mrl.appendChild( text );
-        uuid.appendChild( text2 );
-
-        media.appendChild( mrl );
-        media.appendChild( uuid );
-        //Creating the clip branch
-        if ( it.value()->clipsCount() != 0 )
-        {
-            QDomElement clips = doc.createElement( "clips" );
-            foreach( Clip* c, it.value()->clips().values() )
-            {
-                QDomElement clip = doc.createElement( "clip" );
-                clip.setAttribute( "begin", c->begin() );
-                clip.setAttribute( "end", c->end() );
-                clip.setAttribute( "uuid", c->uuid() );
-                clip.setAttribute( "parentUuid", c->getParent()->baseClip()->uuid() );
-                clips.appendChild( clip );
-            }
-            media.appendChild( clips );
-        }
-    }
-    rootNode.appendChild( medias );
+//    QHash<QUuid, Media*>::iterator          it = m_clips.begin();
+//    QHash<QUuid, Media*>::iterator          end = m_clips.end();
+//
+//    QDomElement medias = doc.createElement( "medias" );
+//
+//    for ( ; it != end; ++it )
+//    {
+//        QDomElement media = doc.createElement( "media" );
+//
+//        medias.appendChild( media );
+//        QDomElement mrl = doc.createElement( "path" );
+//
+//        QDomCharacterData text;
+//        text = doc.createTextNode( it.value()->fileInfo()->absoluteFilePath() );
+//
+//        QDomElement uuid = doc.createElement( "uuid" );
+//        QDomCharacterData text2 = doc.createTextNode( it.value()->baseClip()->uuid().toString() );
+//
+//        mrl.appendChild( text );
+//        uuid.appendChild( text2 );
+//
+//        media.appendChild( mrl );
+//        media.appendChild( uuid );
+//        //Creating the clip branch
+//        if ( it.value()->clipsCount() != 0 )
+//        {
+//            QDomElement clips = doc.createElement( "clips" );
+//            foreach( Clip* c, it.value()->clips().values() )
+//            {
+//                QDomElement clip = doc.createElement( "clip" );
+//                clip.setAttribute( "begin", c->begin() );
+//                clip.setAttribute( "end", c->end() );
+//                clip.setAttribute( "uuid", c->uuid() );
+//                clip.setAttribute( "parentUuid", c->getMedia()->baseClip()->uuid() );
+//                clips.appendChild( clip );
+//            }
+//            media.appendChild( clips );
+//        }
+//    }
+//    rootNode.appendChild( medias );
+    #warning "FIXME: Project saving";
 }

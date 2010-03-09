@@ -33,6 +33,7 @@
 
 #include "Media.h"
 
+class   MediaContainer;
 
 class Media;
 
@@ -43,14 +44,6 @@ class   Clip : public QObject
     public:
         static const int DefaultFPS;
         /**
-         *  \brief  Construct the base clip for a Media.
-         *
-         *  This clip will represent the whole media as a Clip.
-         *  \param  parent  The media to represent.
-         *  \param  uuid    A forced unique id. If not given, a new unique id will be generated.
-         */
-        Clip( Media *parent, const QString& uuid = QString() );
-        /**
          *  \brief  Constructs a Clip that is a subpart of a Media.
          *
          *  \param  parent  The media to represent.
@@ -59,7 +52,7 @@ class   Clip : public QObject
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( Media *parent, qint64 begin, qint64 end = -1, const QString &uuid = QString() );
+        Clip( Media *parent, qint64 begin = 0, qint64 end = -1, const QString &uuid = QString() );
         /**
          *  \brief  Clones a Clip, potentially with a new begin and end.
          *
@@ -69,7 +62,7 @@ class   Clip : public QObject
          *  \param  end     The end, in frames, from the parent's beginning. If not given,
          *                  the end of the parent will be used.
          */
-        Clip( Clip *creator, qint64 begin = -1, qint64 end = -1 );
+        Clip( Clip *creator, qint64 begin = -1, qint64 end = -1, const QString& uuid = QString() );
         virtual ~Clip();
 
         qint64              begin() const;
@@ -92,7 +85,12 @@ class   Clip : public QObject
         /**
             \return         Returns the Media that the clip was basep uppon.
         */
-        Media*              getParent();
+        Media*              getMedia();
+
+        Clip                *getParent();
+        const Clip          *getParent() const;
+        MediaContainer*     getChilds();
+        const MediaContainer*     getChilds() const;
 
         /**
             \brief          Returns an unique Uuid for this clip (which is NOT the
@@ -118,8 +116,15 @@ class   Clip : public QObject
         bool                isRootClip() const;
         Clip*               rootClip();
 
+        /**
+         *  \brief          Clear all the clip subclips recursively.
+         */
+        void                clear();
+
+        void                addSubclip( Clip* clip );
+
     private:
-        Media               *m_parent;
+        Media               *m_media;
         /**
          *  \brief  This represents the beginning of the Clip in frames, from the
          *          beginning of the parent Media.
@@ -166,6 +171,10 @@ class   Clip : public QObject
          *  The root clip is the base clip for the parent media.
          */
         Clip*               m_rootClip;
+
+        MediaContainer*     m_childs;
+
+        Clip*               m_parent;
 
     signals:
         void                lengthUpdated();

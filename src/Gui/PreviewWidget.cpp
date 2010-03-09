@@ -190,8 +190,11 @@ void                        PreviewWidget::markerStopClicked()
 
 void        PreviewWidget::createNewClipFromMarkers()
 {
-    Media*  selectedMedia = m_renderer->getMedia();
-    if ( selectedMedia == NULL )
+    ClipRenderer* clipRenderer = qobject_cast<ClipRenderer*>( m_renderer );
+    Q_ASSERT( clipRenderer != NULL );
+
+    Clip* clip = clipRenderer->getClip();
+    if ( clip == NULL )
         return ;
     qint64  beg = m_ui->rulerWidget->getMarker( PreviewRuler::Start );
     qint64  end = m_ui->rulerWidget->getMarker( PreviewRuler::Stop );
@@ -203,10 +206,8 @@ void        PreviewWidget::createNewClipFromMarkers()
         return ;
 
     beg = beg < 0 ? 0 : beg;
-    Clip*   part = new Clip( selectedMedia, beg, end );
+    Clip*   part = new Clip( clip, beg, end );
 
     //Adding the newly created clip to the media
-    if ( selectedMedia->addClip( part ) == false )
-        delete part;
-    return ;
+    clip->addSubclip( part );
 }

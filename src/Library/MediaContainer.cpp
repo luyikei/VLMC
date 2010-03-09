@@ -28,55 +28,24 @@
 #include "Media.h"
 #include "MetaDataManager.h"
 
-Media*
-MediaContainer::media( const QUuid& uuid )
+MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
 {
-    QHash<QUuid, Media*>::const_iterator   it = m_medias.find( uuid );
-    if ( it == m_medias.end() )
-        return NULL;
-    return *it;
 }
 
 Clip*
 MediaContainer::clip( const QUuid& uuid )
 {
-    Media*  m = media( uuid );
-    if ( m != NULL )
-        return m->baseClip();
-
-    foreach( m, m_medias.values() )
-    {
-        if ( m != NULL && m->clips().contains( uuid ) )
-            return m->clip( uuid );
-    }
-    return NULL;
-}
-
-Clip*
-MediaContainer::clip( const QUuid& mediaUuid, const QUuid& clipUuid )
-{
-    if ( m_medias.contains( mediaUuid ) )
-    {
-        if ( m_medias.value( mediaUuid )->clips().contains( clipUuid ) )
-            return m_medias.value( mediaUuid )->clip( clipUuid );
-        else
-            m_medias.value( mediaUuid )->baseClip();
-    }
+    QHash<QUuid, Clip*>::iterator   it = m_clips.find( uuid );
+    if ( it != m_clips.end() )
+        return it.value();
     return NULL;
 }
 
 void
-MediaContainer::removingMediaAsked( const QUuid& uuid )
+MediaContainer::addMedia( Media *media )
 {
-    deleteMedia( uuid );
-    emit mediaRemoved( uuid );
-}
-
-void
-MediaContainer::deleteMedia( const QUuid& uuid )
-{
-    if ( m_medias.contains( uuid ) )
-        delete m_medias.take( uuid );
+    m_clips[media->baseClip()->uuid()] = media->baseClip();
+    emit newClipLoaded( media->baseClip() );
 }
 
 bool
@@ -86,9 +55,9 @@ MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
         return false;
     Media* media = new Media( fileInfo.filePath(), uuid );
 
-    foreach( Media* it, m_medias.values() )
+    foreach( Clip* it, m_clips.values() )
     {
-        if ( it->fileInfo()->filePath() == media->fileInfo()->filePath() )
+        if ( it->getMedia()->fileInfo()->filePath() == media->fileInfo()->filePath() )
         {
             delete media;
             return false;
@@ -99,82 +68,97 @@ MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
     return true;
 }
 
-
-void
-MediaContainer::addMedia( Media *media )
-{
-    m_medias[media->baseClip()->uuid()] = media;
-    emit newMediaLoaded( media );
-}
-
 bool
 MediaContainer::mediaAlreadyLoaded( const QFileInfo& fileInfo )
 {
-    foreach( Media* media, m_medias.values() )
+    foreach( Clip* clip, m_clips.values() )
     {
-        if ( media->fileInfo()->filePath() == fileInfo.filePath() )
+        if ( clip->getMedia()->fileInfo()->filePath() == fileInfo.filePath() )
             return true;
     }
     return false;
 }
 
 void
+MediaContainer::addClip( Clip* clip )
+{
+    m_clips[clip->uuid()] = clip;
+    emit newClipLoaded( clip );
+}
+
+void
 MediaContainer::clear()
 {
-    QHash<QUuid, Media*>::iterator  it = m_medias.begin();
-    QHash<QUuid, Media*>::iterator  end = m_medias.end();
+    QHash<QUuid, Clip*>::iterator  it = m_clips.begin();
+    QHash<QUuid, Clip*>::iterator  end = m_clips.end();
 
     while ( it != end )
     {
-        emit mediaRemoved( it.key() );
-        delete it.value();
+        emit clipRemoved( it.value() );
+        it.value()->clear();
+        it.value()->deleteLater();
         ++it;
     }
-    m_medias.clear();
+    m_clips.clear();
 }
 
 void
 MediaContainer::removeAll()
 {
-    QHash<QUuid, Media*>::iterator  it = m_medias.begin();
-    QHash<QUuid, Media*>::iterator  end = m_medias.end();
+    QHash<QUuid, Clip*>::iterator  it = m_clips.begin();
+    QHash<QUuid, Clip*>::iterator  end = m_clips.end();
 
     while ( it != end )
     {
-        emit mediaRemoved( it.key() );
+        emit clipRemoved( it.value() );
+        it.value()->clear();
         ++it;
     }
-    m_medias.clear();
+    m_clips.clear();
 }
 
-void
-MediaContainer::removeClip( const QUuid &uuid )
+//Clip*
+//MediaContainer::removeClip( const QUuid &uuid )
+//{
+//    QHash<QUuid, Clip*>::iterator  it = m_clips.find( uuid );
+//    if ( it != m_clips.end() )
+//    {
+//        Clip* clip = it.value();
+//        emit clipRemoved( it.value() );
+//        m_clips.remove( uuid );
+//        return clip;
+//    }
+//    return NULL;
+//}
+
+Clip*
+MediaContainer::removeClip( const Clip* clip )
 {
-    foreach( Media* media, m_medias.values() )
+    QHash<QUuid, Clip*>::iterator  it = m_clips.find( clip->uuid() );
+    if ( it != m_clips.end() )
     {
-        if ( media->clip( uuid ) )
-        {
-            media->removeClip( uuid );
-            return ;
-        }
+        Clip* removed = it.value();
+        emit clipRemoved( it.value() );
+        m_clips.remove( clip->uuid() );
+        return removed;
     }
+    return NULL;
 }
 
-void
-MediaContainer::removeClip( const QUuid& mediaId, const QUuid& clipId )
+const QHash<QUuid, Clip*>&
+MediaContainer::clips() const
 {
-    Media*  med = 0;
-    if ( m_medias.contains( mediaId ) )
-        med = m_medias[mediaId];
-    else
-        return;
-
-    if ( med->clips().contains( clipId ) )
-        med->removeClip( clipId );
+    return m_clips;
 }
 
-const QHash<QUuid, Media*>&
-MediaContainer::medias() const
+Clip*
+MediaContainer::getParent()
 {
-    return m_medias;
+    return m_parent;
+}
+
+quint32
+MediaContainer::count() const
+{
+    return m_clips.size();
 }

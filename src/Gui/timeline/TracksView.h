@@ -191,7 +191,7 @@ public slots:
      * \brief Remove a Media from the timeline (and from the backend).
      * \param uuid The unique identifier of the Media.
      */
-    void                    deleteMedia( const QUuid &uuid  );
+    void                    deleteMedia( const Clip* clip  );
     /**
      * \brief Insert an item into the timeline.
      * \param clip Clip to insert.

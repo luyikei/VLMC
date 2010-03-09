@@ -28,36 +28,23 @@
 #include <math.h>
 
 TagWidget::TagWidget( QWidget *parent, int nbButton, QStringList tagList ) :
-    QWidget( parent ), m_ui( new Ui::TagWidget ), m_nbButton( nbButton ), m_defaultTagList( tagList ), m_currentMedia( NULL )
+    QWidget( parent ),
+    m_ui( new Ui::TagWidget ),
+    m_nbButton( nbButton ),
+    m_defaultTagList( tagList ),
+    m_currentClip( NULL )
 {
     m_ui->setupUi( this );
     m_defaultTagList << "OutDoor" << "Hollidays" << "Seaside" << "Sunset" << "Familly";
 
-//    int nbRow =  sqrt( nbButton );
-//    int x = 0;
-//    int y = 0;
-//
-//    for( int i = 0; i < nbButton; i++ )
-//    {
-//        if ( x == nbRow )
-//        {
-//            x = 0;
-//            y++;
-//        }
-//        QPushButton* button = new QPushButton();
-//        button->setCheckable( true );
-//        connect( button, SIGNAL( clicked() ), this, SLOT( buttonTagClicked() ) );
-//        m_buttonList.append( button );
-//        m_ui->buttonGridLayout->addWidget( button, x++, y );
-//    }
-
     for( int i = 0; i < m_defaultTagList.count(); i++ )
+    {
         if ( i < m_buttonList.count() )
         {
             static_cast<QPushButton*>( m_buttonList[i])->setText( m_defaultTagList[i] );
             static_cast<QPushButton*>( m_buttonList[i])->setEnabled( false );
         }
-
+    }
     connect( m_ui->TagTextEdit, SIGNAL( textChanged() ), this, SLOT( setMetaTags() ) );
 }
 
@@ -66,14 +53,14 @@ TagWidget::~TagWidget()
     delete m_ui;
 }
 
-void    TagWidget::mediaSelected( Media* media )
+void    TagWidget::clipSelected( Clip* clip )
 {
-    m_currentMedia = media;
+    m_currentClip = clip;
     setTagTextEdit();
     for (int i = 0; i < m_buttonList.count(); i++)
     {
         static_cast<QPushButton*>( m_buttonList[i])->setEnabled( true );
-        if ( m_currentMedia->metaTags().contains( static_cast<QPushButton*>(m_buttonList[i])->text() ) )
+        if ( m_currentClip->metaTags().contains( static_cast<QPushButton*>(m_buttonList[i])->text() ) )
             static_cast<QPushButton*>(m_buttonList[i])->setChecked( true );
         else
             static_cast<QPushButton*>(m_buttonList[i])->setChecked( false );
@@ -82,18 +69,18 @@ void    TagWidget::mediaSelected( Media* media )
 
 void    TagWidget::setMetaTags()
 {
-    if ( m_currentMedia != NULL )
+    if ( m_currentClip != NULL )
     {
         QStringList tagList = m_ui->TagTextEdit->document()->toPlainText().split( ",", QString::SkipEmptyParts );
-        m_currentMedia->setMetaTags( tagList );
+        m_currentClip->setMetaTags( tagList );
     }
 }
 
 void    TagWidget:: buttonTagClicked()
 {
-    if ( m_currentMedia != NULL )
+    if ( m_currentClip != NULL )
     {
-        QStringList tagList = m_currentMedia->metaTags();
+        QStringList tagList = m_currentClip->metaTags();
         for (int i = 0; i < m_buttonList.count(); i++)
         {
             QPushButton* button = static_cast<QPushButton*>(m_buttonList[i]);
@@ -102,7 +89,7 @@ void    TagWidget:: buttonTagClicked()
             else if ( !button->isChecked() && tagList.contains( button->text() ) )
                 tagList.removeAll( button->text() );
         }
-        m_currentMedia->setMetaTags( tagList );
+        m_currentClip->setMetaTags( tagList );
         setTagTextEdit();
     }
 }
@@ -110,13 +97,15 @@ void    TagWidget:: buttonTagClicked()
 void    TagWidget::setTagTextEdit()
 {
     QString tags;
-    if ( m_currentMedia != NULL )
+    if ( m_currentClip != NULL )
     {
-        for( int i = 0; i < m_currentMedia->metaTags().count(); i++ )
+        for( int i = 0; i < m_currentClip->metaTags().count(); i++ )
+        {
             if (i == 0)
-                tags += m_currentMedia->metaTags()[i];
+                tags += m_currentClip->metaTags()[i];
             else
-                tags += "," + m_currentMedia->metaTags()[i];
+                tags += "," + m_currentClip->metaTags()[i];
+        }
         m_ui->TagTextEdit->setText(tags);
         setButtonList( m_defaultTagList );
     }
@@ -124,10 +113,14 @@ void    TagWidget::setTagTextEdit()
 
 void    TagWidget::setButtonList( QStringList tagList )
 {
-    if ( m_currentMedia != NULL )
+    if ( m_currentClip != NULL )
+    {
         for( int i = 0; i < tagList.count(); i++ )
+        {
             if ( i < m_buttonList.count() )
                 static_cast<QPushButton*>( m_buttonList[i] )->setText( tagList[i] );
+        }
+    }
 }
 
 void TagWidget::changeEvent( QEvent *e )

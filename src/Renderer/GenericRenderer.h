@@ -109,16 +109,6 @@ public:
     virtual float                   getFps() const = 0;
 
     /**
-     *  \brief      Returns the currently rendered media.
-     *
-     *  This method is provided for genericity between renderers, but should never
-     *  beeing called from something else than a ClipRenderer
-     *  \return     The currently rendered Media
-     *  \todo       This method should not be here, as it is not generic at all.
-     */
-    virtual  Media*                 getMedia() = 0;
-
-    /**
      *  \brief      Return the length in frames
      *  \warning    The returned value may not be accurate as it depends on FPS, that
      *              can be badly computed
@@ -178,14 +168,6 @@ public slots:
      *  \brief      This SLOT has to be called when the render ends.
      */
     virtual void                    __endReached() = 0;
-    /**
-     *  \brief      Handle a media unloading. Mainly, this should stop the render
-     *              using this media if any.
-     *  \param      uuid    The unloaded media uuid
-     *  \warning    This must only be called from a ClipRenderer implementation
-     *  \todo       This method shouldn't be here, as it is not generic at all.
-     */
-    virtual void                    mediaUnloaded( const QUuid& uuid ) = 0;
     /**
      *  \brief      This SLOT will be called when the time cursor has changed.
      *

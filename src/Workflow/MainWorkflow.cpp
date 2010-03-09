@@ -368,9 +368,9 @@ MainWorkflow::loadProject( const QDomElement &project )
                 clipProperty = clipProperty.nextSibling().toElement();
             }
 
-            if ( Library::getInstance()->media( parentUuid ) != NULL )
+            if ( Library::getInstance()->clip( parentUuid ) != NULL )
             {
-                Clip    *c = new Clip( Library::getInstance()->media( parentUuid ),
+                Clip    *c = new Clip( Library::getInstance()->clip( parentUuid ),
                                        begin, end, parentUuid.toString() );
                 addClip( c, trackId, startPos, trackType );
             }

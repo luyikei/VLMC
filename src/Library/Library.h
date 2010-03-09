@@ -50,7 +50,7 @@ class Media;
 
 /**
  *  \class Library
- *  \brief Library Object that handles medias
+ *  \brief Library Object that handles public Clips
  */
 class Library : public MediaContainer, public Singleton<Library>
 {

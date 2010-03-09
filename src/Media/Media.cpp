@@ -75,7 +75,7 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
         m_fileName = m_mrl;
         qDebug() << "Loading a stream";
     }
-    m_baseClip = new Clip( this, uuid );
+    m_baseClip = new Clip( this, 0, -1, uuid );
     m_audioValueList = new QList<int>();
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
 }
@@ -232,72 +232,6 @@ const QString&      Media::mrl() const
 const QString&      Media::fileName() const
 {
     return m_fileName;
-}
-
-const QStringList&  Media::metaTags() const
-{
-    return m_metaTags;
-}
-
-void                Media::setMetaTags( const QStringList& tags )
-{
-    m_metaTags = tags;
-}
-
-bool                Media::matchMetaTag( const QString& tag ) const
-{
-    if ( tag.length() == 0 )
-        return true;
-    QString metaTag;
-    foreach ( metaTag, m_metaTags )
-    {
-        if ( metaTag.startsWith( tag, Qt::CaseInsensitive ) == true )
-            return true;
-    }
-    return false;
-}
-
-bool            Media::addClip( Clip* clip )
-{
-    if ( clip->getParent() != this )
-        return false;
-    foreach ( Clip *c, m_clips.values() )
-    {
-        if ( clip->begin() == c->begin() && clip->end() == clip->end() )
-            return false;
-    }
-    m_clips.insert( clip->uuid(), clip );
-    emit clipAdded( clip );
-    return true;
-}
-
-Clip*
-Media::clip( const QUuid &uuid )
-{
-    QHash<QUuid, Clip*>::const_iterator it = m_clips.find( uuid );
-    if ( it == m_clips.end() )
-        return NULL;
-    return *it;
-}
-
-quint32
-Media::clipsCount() const
-{
-    return m_clips.size();
-}
-
-const QHash<QUuid, Clip*>&
-Media::clips() const
-{
-    return m_clips;
-}
-
-Clip*
-Media::removeClip( const QUuid& uuid )
-{
-    Clip*   clip = m_clips.take( uuid );
-    emit clipRemoved( clip );
-    return clip;
 }
 
 bool

@@ -73,8 +73,8 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
 
     connect( m_cursorLine, SIGNAL( cursorPositionChanged(qint64) ),
              this, SLOT( ensureCursorVisible() ) );
-    connect( Library::getInstance(), SIGNAL( mediaRemoved( QUuid ) ),
-             this, SLOT( deleteMedia( QUuid ) ) );
+    connect( Library::getInstance(), SIGNAL( clipRemoved( const Clip* ) ),
+             this, SLOT( deleteMedia( const Clip* ) ) );
 }
 
 void
@@ -185,7 +185,7 @@ TracksView::clear()
 }
 
 void
-TracksView::deleteMedia( const QUuid &uuid  )
+TracksView::deleteMedia( const Clip* clip  )
 {
     AbstractGraphicsMediaItem *item;
 
@@ -196,8 +196,8 @@ TracksView::deleteMedia( const QUuid &uuid  )
     // is the one we would like to remove.
     foreach( item, items )
     {
-        if ( item->clip()->getParent()->baseClip()->uuid() ==
-             uuid )
+        if ( item->clip()->getMedia()->baseClip()->uuid() ==
+             clip->uuid() )
         {
             // This item needs to be removed.
             // Saving its values
@@ -291,15 +291,15 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     QUuid uuid = QUuid( QString( event->mimeData()->data( "vlmc/uuid" ) ) );
     Clip *clip = Library::getInstance()->clip( uuid );
     if ( !clip ) return;
-    if ( clip->getParent()->hasAudioTrack() == false &&
-         clip->getParent()->hasVideoTrack() == false )
+    if ( clip->getMedia()->hasAudioTrack() == false &&
+         clip->getMedia()->hasVideoTrack() == false )
         return ;
 
     Clip *audioClip = NULL;
     Clip *videoClip = NULL;
     //FIXME: Creating a new clip leaks, but at least we have independant clips.
 
-    if ( clip->getParent()->hasAudioTrack() == true )
+    if ( clip->getMedia()->hasAudioTrack() == true )
     {
         audioClip = new Clip( clip );
 
@@ -311,7 +311,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
-    if ( clip->getParent()->hasVideoTrack() == true )
+    if ( clip->getMedia()->hasVideoTrack() == true )
     {
         videoClip = new Clip( clip );
 

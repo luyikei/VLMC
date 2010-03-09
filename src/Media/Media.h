@@ -127,21 +127,11 @@ public:
     InputType                   inputType() const;
     static const QString        streamPrefix;
 
-    const QStringList&          metaTags() const;
-    void                        setMetaTags( const QStringList& tags );
-    bool                        matchMetaTag( const QString& tag ) const;
-
     void                        emitMetaDataComputed();
     void                        emitSnapshotComputed();
     void                        emitAudioSpectrumComuted();
 
 //    bool                        hasMetadata() const;
-
-    bool                        addClip( Clip* clip );
-    Clip                        *removeClip( const QUuid& uuid );
-    Clip*                       clip( const QUuid& uuid );
-    quint32                     clipsCount() const;
-    const QHash<QUuid, Clip*>   &clips() const;
 
     QList<int>*                 audioValues() { return m_audioValueList; }
 
@@ -168,9 +158,7 @@ protected:
     FileType                    m_fileType;
     InputType                   m_inputType;
     QString                     m_fileName;
-    QStringList                 m_metaTags;
     Clip*                       m_baseClip;
-    QHash<QUuid, Clip*>         m_clips;
     QList<int>*                 m_audioValueList;
     int                         m_nbAudioTracks;
     int                         m_nbVideoTracks;
@@ -180,8 +168,6 @@ signals:
     void                        metaDataComputed( const Media* );
     void                        snapshotComputed( const Media* );
     void                        audioSpectrumComputed( const QUuid& );
-    void                        clipAdded( Clip* );
-    void                        clipRemoved( Clip* );
 };
 
 #endif // CLIP_H__

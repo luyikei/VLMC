@@ -34,10 +34,10 @@ MediaLibraryWidget::MediaLibraryWidget( QWidget* parent ) : QWidget( parent )
     m_nav = new StackViewController( this );
     MediaListViewController* list = new MediaListViewController( m_nav, library );
     //Media
-    connect( list, SIGNAL( clipSelected( Clip* ) ), this, SIGNAL( clipSelected( Clip* ) ) );
-    connect( list, SIGNAL( clipDeleted( const QUuid& ) ), library, SLOT( removingMediaAsked( const QUuid& ) ) );
-    connect( library, SIGNAL( mediaRemoved( QUuid ) ), list, SLOT( mediaRemoved( const QUuid& ) ) );
-    connect( m_nav, SIGNAL( importRequired() ), this, SIGNAL( importRequired() ) );
+    connect( list, SIGNAL( clipSelected( Clip* ) ),
+             this, SIGNAL( clipSelected( Clip* ) ) );
+    connect( m_nav, SIGNAL( importRequired() ),
+             this, SIGNAL( importRequired() ) );
     m_nav->pushViewController( list );
     setMinimumWidth( 280 );
 }

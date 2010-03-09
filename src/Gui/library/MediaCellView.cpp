@@ -40,35 +40,29 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     setAutoFillBackground( true );
     connect( m_ui->delLabel, SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
              this, SLOT( deleteButtonClicked( QWidget*, QMouseEvent* ) ) );
-    if ( clip->isRootClip() == true )
-    {
-        connect( m_ui->arrow,
-                 SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
-                 SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
-        m_ui->clipCount->setText( QString::number( clip->getParent()->clipsCount() ) );
-        connect( clip->getParent(), SIGNAL( clipAdded(Clip*) ),
-                 this, SLOT( nbClipUpdated( Clip* ) ) );
-        connect( clip->getParent(), SIGNAL( clipRemoved( Clip* ) ),
-                 this, SLOT( nbClipUpdated( Clip* ) ) );
-    }
-    else
+    connect( m_ui->arrow,
+             SIGNAL( clicked( QWidget*, QMouseEvent* ) ),
+             SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
+    m_ui->clipCount->setText( QString::number( clip->getChilds()->count() ) );
+    connect( clip->getChilds(), SIGNAL( newClipLoaded( Clip* ) ),
+             this, SLOT( nbClipUpdated( Clip* ) ) );
+    connect( clip->getChilds(), SIGNAL( clipRemoved( const Clip* ) ),
+             this, SLOT( nbClipUpdated( const Clip* ) ) );
+    if ( clip->getChilds()->count() == 0 )
     {
         m_ui->clipCount->hide();
         m_ui->clipCountLabel->hide();
         m_ui->arrow->hide();
-        disconnect( m_ui->arrow,
-                    SIGNAL( clicked( QWidget*, QMouseEvent* ) ), this,
-                    SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
     }
-    if ( clip->getParent()->isMetadataComputed() == false )
+    if ( clip->getMedia()->isMetadataComputed() == false )
         setEnabled( false );
-    connect( clip->getParent(), SIGNAL( metaDataComputed(const Media*) ),
+    connect( clip->getMedia(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
-    connect( clip->getParent(), SIGNAL( snapshotComputed(const Media*) ),
+    connect( clip->getMedia(), SIGNAL( snapshotComputed(const Media*) ),
              this, SLOT( snapshotUpdated(const Media*) ) );
 
-    setThumbnail( clip->getParent()->snapshot() );
-    setTitle( clip->getParent()->fileName() );
+    setThumbnail( clip->getMedia()->snapshot() );
+    setTitle( clip->getMedia()->fileName() );
     setLength( clip->lengthSecond() * 1000 );
 }
 
@@ -108,9 +102,30 @@ void            MediaCellView::setTitle( const QString& title )
     m_ui->title->setText( title );
 }
 
-void            MediaCellView::nbClipUpdated( Clip *clip )
+void
+MediaCellView::nbClipUpdated( Clip *clip )
 {
-    m_ui->clipCount->setText( QString::number( clip->getParent()->clipsCount() ) );
+    nbClipUpdated( const_cast<const Clip*>( clip ) );
+}
+
+void            MediaCellView::nbClipUpdated( const Clip *clip )
+{
+    quint32     nbClips = clip->getParent()->getChilds()->count();
+
+    if ( nbClips == 0 )
+    {
+        m_ui->clipCount->hide();
+        m_ui->clipCountLabel->hide();
+        m_ui->arrow->hide();
+        m_ui->clipCount->setText( "0" );
+    }
+    else
+    {
+        m_ui->clipCount->show();
+        m_ui->clipCountLabel->show();
+        m_ui->arrow->show();
+        m_ui->clipCount->setText( QString::number( nbClips ) );
+    }
 }
 
 void
@@ -167,14 +182,14 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
     mimeData->setData( "vlmc/uuid", m_clip->uuid().toString().toAscii() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
-    const Media*  parent = m_clip->getParent();
+    const Media*  parent = m_clip->getMedia();
     drag->setPixmap( parent->snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
 void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
-    emit cellDeleted( m_clip->uuid() );
+    emit cellDeleted( m_clip );
 }
 
 void        MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
@@ -190,12 +205,6 @@ void        MediaCellView::setLength( qint64 length, bool mSecs )
     else
         duration = duration.addSecs( length );
     m_ui->length->setText( duration.toString( "hh:mm:ss" ) );
-}
-
-void
-MediaCellView::containsClip()
-{
-
 }
 
 const QUuid&

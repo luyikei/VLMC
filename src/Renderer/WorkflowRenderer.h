@@ -136,8 +136,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         void                killRenderer();
 
-        virtual Media*      getMedia() { return NULL; }
-
     private:
         /**
          *  \brief          This is a subpart of the togglePlayPause( bool ) method
@@ -288,18 +286,6 @@ class   WorkflowRenderer : public GenericRenderer
 
 
     public slots:
-        /**
-         *  \brief          Unused from this renderer.
-         */
-        virtual void        setClip( Clip* ){}
-        /**
-         *  \brief          Unused from this renderer.
-         */
-        virtual void        setMedia( Media* ) {}
-        /**
-         *  \brief          Unused from this renderer.
-         */
-        void                mediaUnloaded( const QUuid& ) {}
         /**
          *  \brief          The current frame just changed because of the timeline cursor
          */

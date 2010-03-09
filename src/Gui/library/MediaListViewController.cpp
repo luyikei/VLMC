@@ -31,29 +31,33 @@ MediaListViewController::MediaListViewController( StackViewController* nav, Medi
         m_clipsListView( 0 ),
         m_mediaContainer( mc )
 {
-    connect( mc, SIGNAL( newMediaLoaded( Media* ) ),
-             this, SLOT( newMediaLoaded( Media* ) ) );
-    m_cells = new QHash<QUuid, QWidget*>();
-    connect( m_nav, SIGNAL( previousButtonPushed() ), this, SLOT( restoreContext() ) );
+    connect( mc, SIGNAL( newClipLoaded(Clip*) ),
+             this, SLOT( newClipLoaded( Clip* ) ) );
+    foreach ( Clip* clip, mc->clips() )
+        newClipLoaded( clip );
+    connect( m_nav, SIGNAL( previousButtonPushed() ),
+             this, SLOT( restoreContext() ) );
 }
 
 MediaListViewController::~MediaListViewController()
 {
-    delete m_cells;
+    foreach ( QWidget* cell, m_cells )
+        delete cell;
+    m_cells.clear();
 }
 
-void        MediaListViewController::newMediaLoaded( Media* media )
+void        MediaListViewController::newClipLoaded( Clip *clip )
 {
-    MediaCellView* cell = new MediaCellView( media->baseClip() );
+    MediaCellView* cell = new MediaCellView( clip );
 
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );
-    connect( cell, SIGNAL ( cellDeleted( QUuid ) ),
-             this, SIGNAL( clipDeleted( QUuid ) ) );
+    connect( cell, SIGNAL ( cellDeleted( const Clip* ) ),
+             this, SLOT( clipRemoved( const Clip* ) ) );
     connect( cell, SIGNAL( arrowClicked( const QUuid& ) ),
-             this, SLOT( showClipList( const QUuid& ) ) );
-    addCell(cell);
-    m_cells->insert( media->baseClip()->uuid(), cell );
+             this, SLOT( showSubClips( const QUuid& ) ) );
+    addCell( cell );
+    m_cells.insert( clip->uuid(), cell );
 }
 
 void    MediaListViewController::cellSelection( const QUuid& uuid )
@@ -61,54 +65,49 @@ void    MediaListViewController::cellSelection( const QUuid& uuid )
     if ( m_currentUuid == uuid )
         return;
 
-    if ( m_cells->contains( uuid ) )
+    if ( m_cells.contains( uuid ) )
     {
-        if ( !m_currentUuid.isNull() && m_cells->contains( m_currentUuid ) )
+        if ( !m_currentUuid.isNull() && m_cells.contains( m_currentUuid ) )
         {
-            QWidget* cell = m_cells->value( m_currentUuid );
-            cell->setPalette( m_cells->value( uuid )->palette() );
+            QWidget* cell = m_cells.value( m_currentUuid );
+            cell->setPalette( m_cells.value( uuid )->palette() );
         }
-        QPalette p = m_cells->value( uuid )->palette();
+        QPalette p = m_cells.value( uuid )->palette();
         p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
-        m_cells->value( uuid )->setPalette( p );
+        m_cells.value( uuid )->setPalette( p );
         m_currentUuid = uuid;
         emit clipSelected( m_mediaContainer->clip( uuid ) );
     }
 }
 
-void    MediaListViewController::mediaRemoved( const QUuid& uuid )
+void    MediaListViewController::clipRemoved( const Clip* clip )
 {
-    QWidget* cell = m_cells->value( uuid );
+    QWidget* cell = m_cells.value( clip->uuid() );
     removeCell( cell );
-    m_cells->remove( uuid );
+    m_cells.remove( clip->uuid() );
     m_currentUuid = QUuid();
-    emit clipDeleted( uuid );
+    m_mediaContainer->removeClip( clip );
+    emit clipDeleted( clip->uuid() );
+    delete clip;
 }
 
 void
 MediaListViewController::clear()
 {
-    foreach ( QWidget* cell, m_cells->values() )
+    foreach ( QWidget* cell, m_cells.values() )
         removeCell( cell );
-    m_cells->clear();
+    m_cells.clear();
 }
 
-void    MediaListViewController::showClipList( const QUuid& uuid )
+void    MediaListViewController::showSubClips( const QUuid& uuid )
 {
-    if ( !m_cells->contains( uuid ) )
-        return ;
-    if ( m_mediaContainer->media( uuid ) == NULL ||
-         m_mediaContainer->media( uuid )-> clipsCount() == 0 )
-        return ;
-    m_lastUuidClipListAsked = uuid;
-    m_clipsListView = new MediaListViewController( m_nav, m_mediaContainer );
-    m_clipsListView->newMediaLoaded( m_mediaContainer->media( uuid ) );
-    connect( m_clipsListView, SIGNAL( clipSelected( const QUuid& ) ),
-            this, SLOT( clipSelection( const QUuid& ) ) );
+    Clip*   clip = m_mediaContainer->clip( uuid );
+    m_clipsListView = new MediaListViewController( m_nav, clip->getChilds() );
     m_nav->pushViewController( m_clipsListView );
 }
 
 void    MediaListViewController::restoreContext()
 {
     delete m_clipsListView;
+    m_currentUuid = QUuid();
 }

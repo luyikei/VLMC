@@ -36,13 +36,7 @@ class   MediaContainer : public QObject
     Q_OBJECT
 
 public:
-    /**
-     *  \brief  returns the media that match the unique identifier
-     *  \param  uuid    the unique identifier of the media
-     *  \return a pointer to the required media, or NULL if no medias matches
-     *  \sa     clip( const QUuid& uuid )
-     */
-    Media*  media( const QUuid& uuid );
+    MediaContainer( Clip* parent = NULL );
     /**
      *  \brief  returns the clip that match the unique identifier
      *  \param  uuid    the unique identifier of the media
@@ -50,20 +44,20 @@ public:
      *  \sa     media( const QUuid& uuid )
      */
     Clip*   clip( const QUuid& uuid );
+
     /**
-     *  \brief  returns the clip that match the unique identifier
-     *  \param  mediaUuid the unique identifier of the media
-     *  \param  clipUuid the unique identifier of the clip
-     *  \return a pointer to the required clip, or NULL if no clips matches
-     *  \sa     media( const QUuid& uuid )
+     *  \brief  Add an already preparsed media.
+     *
+     *  This will emit the newClipLoaded signal.
+     *
+     *  \param  media   The media to add to the library
      */
-    Clip*   clip( const QUuid& mediaUuid, const QUuid& clipUuid );
+    void        addMedia( Media *media );
 
     /**
      *  \brief  Add a file to the media library
      *
-     *  This method will also handle metadata parsing. Right now, this is only meant to be
-     *  used when loading a project.
+     *  This method will also handle metadata parsing.
      *  \param  fileInfo    the file info of the media
      *  \return             true if the media was successfully loaded. false otherwise.
      *  \sa     addClip( Clip* clip )
@@ -71,69 +65,65 @@ public:
      *  \sa     clip( const QUuid& uuid )
      */
     bool    addMedia( const QFileInfo& fileInfo, const QString& uuid = QString() );
-
-    /**
-     *  \brief  Add an already preparsed media.
-     *
-     *  \param  media   The media to add to the library
-     */
-    void    addMedia( Media *media );
-
     /**
      *  \brief  Check if a file has already been loaded into library.
      *  \param  fileInfo    The file infos
      *  \return true if the file is already loaded, false otherwhise
      */
     bool    mediaAlreadyLoaded( const QFileInfo& fileInfo );
-
-    const QHash<QUuid, Media*>      &medias() const;
+    /**
+     *  \brief  Add a clip.
+     *
+     *  This will emit the newClipLoaded signal.
+     *
+     *  \param  clip    The clip to be added.
+     */
+    void    addClip( Clip* clip );
 
     /**
-     *  \brief      Remove all the medias, but doesn't delete them.
+     *  \return All the loaded Clip
      */
-    void    removeAll();
+    const QHash<QUuid, Clip*>   &clips() const;
+
+    Clip*       getParent();
+
+    quint32     count() const;
 
 protected:
     /**
      *  \brief The List of medias loaded into the library
      */
-    QHash<QUuid, Media*>    m_medias;
+    QHash<QUuid, Clip*>     m_clips;
+
+    Clip*                   m_parent;
 
 public slots:
     /**
-     *  \brief This slot must be called when you want a media to be removed from library
-     *  \param uuid The uuid of the media to be removed
+     *  \brief  Delete a Clip from the container
+     *  \param  clip    The clip to remove.
      */
-    void    removingMediaAsked( const QUuid& uuid );
+    Clip    *removeClip( const Clip* clip );
     /**
-     *  \brief  Delete the media when it's ready
-     *  \param  uuid the unique identifier of the media to delete
-     */
-    void    deleteMedia( const QUuid& uuid );
-    /**
-     *  \brief  Clear the library (remove all the loaded media and delete them)
+     *  \brief  Clear the library (remove all the loaded Clip, delete their subclips, and
+     *          delete them)
      */
     void    clear();
     /**
-     *  \brief Remove a clip from a media
+     *  \brief      Remove all the medias, but doesn't delete them.
      */
-    void    removeClip( const QUuid& mediaId, const QUuid& clipId );
-    /**
-     *  \brief  Remove a clip by uuid, without knowing its parent.
-     */
-    void    removeClip( const QUuid& uuid );
+    void    removeAll();
 
 signals:
     /**
-     *  \brief          This signal should be emitted to tell a new media have been added
-     *  \param media    The newly added media
+     *  \brief          This signal should be emitted to tell a new Clip have been added
+     *  \param Clip     The newly added clip
      */
-    void    newMediaLoaded( Media* );
+    void    newClipLoaded( Clip* );
     /**
-     *  \brief This signal should be emiteted when a media has been removed
-     *  \param uuid The removed media uuid
+     *  \brief This signal should be emiteted when a Clip has been removed
+     *  \param uuid The removed clip uuid
      */
-    void    mediaRemoved( const QUuid& );
+    void    clipRemoved( const Clip* );
 };
 
 #endif // MEDIACONTAINER_H

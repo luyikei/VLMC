@@ -42,20 +42,20 @@ public:
 private:
     StackViewController*        m_nav;
     QUuid                       m_currentUuid;
-    QHash<QUuid, QWidget*>*     m_cells;
+    QHash<QUuid, QWidget*>      m_cells;
     MediaListViewController*    m_clipsListView;
     QUuid                       m_lastUuidClipListAsked;
     MediaContainer*             m_mediaContainer;
 
 public slots:
     void        cellSelection( const QUuid& uuid );
-    void        showClipList( const QUuid& uuid );
+    void        showSubClips( const QUuid& uuid );
     void        clear();
 
 private slots:
     void        restoreContext();
-    void        mediaRemoved( const QUuid& uuid );
-    void        newMediaLoaded( Media* media );
+    void        clipRemoved( const Clip* );
+    void        newClipLoaded( Clip* clip );
 
 signals:
     void        clipSelected( Clip* );

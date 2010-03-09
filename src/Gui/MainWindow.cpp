@@ -229,6 +229,8 @@ void        MainWindow::setupLibrary()
 
     MediaLibraryWidget* mediaLibraryWidget = new MediaLibraryWidget( this );
     m_importController = new ImportController();
+    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
+    Q_ASSERT( clipRenderer != NULL );
 
     DockWidgetManager::instance()->addDockedWidget( mediaLibraryWidget,
                                                     tr( "Media Library" ),
@@ -236,13 +238,13 @@ void        MainWindow::setupLibrary()
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
     connect( mediaLibraryWidget, SIGNAL( clipSelected( Clip* ) ),
-             qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() ),
-             SLOT( setClip( Clip* ) ) );
+             clipRenderer, SLOT( setClip( Clip* ) ) );
 
-    connect( Library::getInstance(), SIGNAL( mediaRemoved( const QUuid& ) ),
-             m_clipPreview->getGenericRenderer(), SLOT( mediaUnloaded( QUuid ) ) );
+    connect( Library::getInstance(), SIGNAL( clipRemoved( const Clip* ) ),
+             clipRenderer, SLOT( clipUnloaded( const Clip* ) ) );
 
-    connect( mediaLibraryWidget, SIGNAL( importRequired() ), this, SLOT( on_actionImport_triggered() ) );
+    connect( mediaLibraryWidget, SIGNAL( importRequired() ),
+             this, SLOT( on_actionImport_triggered() ) );
 }
 
 void    MainWindow::on_actionSave_triggered()

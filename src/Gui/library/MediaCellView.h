@@ -53,7 +53,6 @@ public:
      */
     void                    setLength( qint64 length, bool mSecs = true );
     QString                 title() const;
-    void                    containsClip();
     const QUuid&            uuid() const;
 
 protected:
@@ -72,7 +71,7 @@ protected:
 signals:
     void        cellSelected( const QUuid& uuid );
     void        arrowClicked( const QUuid& uuid );
-    void        cellDeleted( const QUuid& uuid );
+    void        cellDeleted( const Clip* );
 
 public slots:
     void        deleteButtonClicked( QWidget* sender, QMouseEvent* event );
@@ -81,6 +80,7 @@ public slots:
 private slots:
     void        snapshotUpdated( const Media *media );
     void        metadataUpdated( const Media *media );
+    void        nbClipUpdated( const Clip *clip );
     void        nbClipUpdated( Clip *clip );
 
 };
