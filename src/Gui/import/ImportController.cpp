@@ -43,7 +43,9 @@ ImportController::ImportController(QWidget *parent) :
     m_nbMediaLoaded( 0 )
 {
     m_ui->setupUi(this);
-    m_preview = new PreviewWidget( new ClipRenderer, m_ui->previewContainer );
+    //The renderer will be deleted by the PreviewWidget
+    m_clipRenderer = new ClipRenderer;
+    m_preview = new PreviewWidget( m_clipRenderer, m_ui->previewContainer );
     m_stackNav = new StackViewController( m_ui->stackViewContainer );
     m_temporaryMedias = new MediaContainer;
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
@@ -87,13 +89,11 @@ ImportController::ImportController(QWidget *parent) :
              this, SLOT( forwardButtonClicked() ) );
 
     connect( this, SIGNAL( clipSelected( Clip* ) ),
-             qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
-             SLOT( setClip( Clip* ) ) );
+             m_clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SLOT( clipSelection( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipDeleted( const QUuid& ) ),
-             qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
-             SLOT( clipUnloaded( const QUuid& ) ) );
+             m_clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     connect( MetaDataManager::getInstance(), SIGNAL( failedToCompute( Media* ) ),
              this, SLOT( failedToLoad( Media* ) ) );
@@ -239,6 +239,7 @@ ImportController::reject()
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
+    m_clipRenderer->setClip( NULL );
     done( Rejected );
 }
 
@@ -251,6 +252,7 @@ ImportController::accept()
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         Library::getInstance()->addMedia( clip->getMedia() );
     m_temporaryMedias->removeAll();
+    m_clipRenderer->setClip( NULL );
     done( Accepted );
 }
 

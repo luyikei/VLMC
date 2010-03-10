@@ -40,6 +40,7 @@
 #include <QFileSystemModel>
 #include <QProgressDialog>
 
+class   ClipRenderer;
 class   MediaContainer;
 class   MediaListView;
 
@@ -81,6 +82,7 @@ class ImportController : public QDialog
         MediaContainer              *m_temporaryMedias;
         quint32                     m_nbMediaToLoad;
         quint32                     m_nbMediaLoaded;
+        ClipRenderer*               m_clipRenderer;
 
     public slots:
         void        accept();
