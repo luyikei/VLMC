@@ -41,7 +41,6 @@ class   PreferenceWidget : public QWidget
                           QWidget* parent = 0 );
         virtual ~PreferenceWidget() {}
 
-        virtual void    load();
         virtual void    save();
     private:
         ISettingsCategorieWidget        *widgetFactory( SettingValue* s );

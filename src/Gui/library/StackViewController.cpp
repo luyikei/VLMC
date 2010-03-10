@@ -23,8 +23,8 @@
 #include "StackViewController.h"
 #include "ImportController.h"
 
-StackViewController::StackViewController( QWidget* parent, bool enableImport ) :
-        QWidget( parent ), m_importButton( NULL ), m_current( 0 )
+StackViewController::StackViewController( QWidget* parent ) :
+        QWidget( parent ), m_current( 0 )
 {
     m_nav     = new StackViewNavController( this );
     m_layout  = new QVBoxLayout( this );
@@ -33,21 +33,12 @@ StackViewController::StackViewController( QWidget* parent, bool enableImport ) :
     connect( m_nav->previousButton(), SIGNAL( clicked() ),
                      this, SLOT( previous() ) );
     m_layout->addWidget( m_nav );
-
-    if ( enableImport )
-    {
-        m_importButton = new QPushButton( "Import", parent );
-        m_layout->addWidget( m_importButton );
-        connect( m_importButton, SIGNAL( clicked() ), this, SIGNAL( importRequired() ) );
-    }
     parent->setLayout( m_layout );
 }
 
 StackViewController::~StackViewController()
 {
     delete m_nav;
-    if ( m_importButton != NULL )
-        delete m_importButton;
     delete m_controllerStack;
 }
 

@@ -55,7 +55,6 @@ PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::T
         layout->addRow( label, widget->widget() );
         m_settings.push_back( widget );
     }
-
     setLayout( layout );
 }
 
@@ -77,11 +76,6 @@ PreferenceWidget::widgetFactory( SettingValue *s )
     case SettingValue::Bool:
         return new BoolWidget( s, this );
     }
-}
-
-void
-PreferenceWidget::load()
-{
 }
 
 void

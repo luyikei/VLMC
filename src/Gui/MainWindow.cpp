@@ -227,12 +227,16 @@ void
 MainWindow::setupLibrary()
 {
     //GUI part :
-    QWidget* libraryWidget = new QWidget( this );
+    QWidget     *libraryWidget = new QWidget( this );
     libraryWidget->setMinimumWidth( 280 );
-    StackViewController *nav = new StackViewController( libraryWidget, true );
+
+    QPushButton *button = new QPushButton( tr( "Import" ), this );
+    connect( button, SIGNAL( clicked() ), this, SLOT( on_actionImport_triggered() ) );
+
+    StackViewController *nav = new StackViewController( libraryWidget );
     MediaListView   *mediaView = new MediaListView( nav, Library::getInstance() );
     nav->pushViewController( mediaView );
-    connect( nav, SIGNAL( importRequired() ), this, SLOT( on_actionImport_triggered() ) );
+    libraryWidget->layout()->addWidget( button );
 
     m_importController = new ImportController();
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );

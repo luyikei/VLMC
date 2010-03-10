@@ -4,7 +4,7 @@
  * Copyright (C) 2008-2010 VideoLAN
  *
  * Authors: Thomas Boquet <thomas.boquet@gmail.com>
- * Authors: Clement CHAVANCE <chavance.c@gmail.com>
+ *          Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

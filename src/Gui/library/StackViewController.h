@@ -40,7 +40,7 @@ class StackViewController : public QWidget
     Q_OBJECT
 
 public:
-    StackViewController( QWidget* parent = 0, bool enableImport = true );
+    StackViewController( QWidget* parent = 0 );
     ~StackViewController();
 
     void                    pushViewController( ViewController* viewController,
@@ -49,7 +49,6 @@ public:
 
 private:
     StackViewNavController*     m_nav;
-    QPushButton*                m_importButton;
     QVBoxLayout*                m_layout;
     ViewController*             m_current;
     QStack<ViewController*>*    m_controllerStack;
@@ -58,7 +57,6 @@ public slots:
     void                        previous();
 
 signals:
-    void                        importRequired();
     void                        previousButtonPushed();
 
 };

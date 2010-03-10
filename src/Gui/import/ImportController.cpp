@@ -44,7 +44,7 @@ ImportController::ImportController(QWidget *parent) :
 {
     m_ui->setupUi(this);
     m_preview = new PreviewWidget( new ClipRenderer, m_ui->previewContainer );
-    m_stackNav = new StackViewController( m_ui->stackViewContainer, false );
+    m_stackNav = new StackViewController( m_ui->stackViewContainer );
     m_temporaryMedias = new MediaContainer;
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
     m_tag = new TagWidget( m_ui->tagContainer, 6 );
