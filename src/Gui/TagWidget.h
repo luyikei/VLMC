@@ -61,6 +61,9 @@ class TagWidget : public QWidget
         void    clipSelected( Clip* clip );
         void    buttonTagClicked();
         void    setMetaTags();
+
+    private slots:
+        void    clipDestroyed();
 };
 
 #endif // TAGWIDGET_H

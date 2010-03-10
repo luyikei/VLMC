@@ -65,6 +65,9 @@ void    TagWidget::clipSelected( Clip* clip )
         else
             static_cast<QPushButton*>(m_buttonList[i])->setChecked( false );
     }
+    connect( clip->getMedia(), SIGNAL( metaDataComputed( const Media* ) ),
+             this, SLOT( setMetaTags() ) );
+    connect( clip, SIGNAL( destroyed() ), this, SLOT( clipDestroyed() ) );
 }
 
 void    TagWidget::setMetaTags()
@@ -134,4 +137,10 @@ void TagWidget::changeEvent( QEvent *e )
         default:
             break;
     }
+}
+
+void
+TagWidget::clipDestroyed()
+{
+    m_currentClip = NULL;
 }

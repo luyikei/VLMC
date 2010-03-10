@@ -57,6 +57,7 @@ void        MediaListView::newClipLoaded( Clip *clip )
              this, SLOT( showSubClips( const QUuid& ) ) );
     addCell( cell );
     m_cells.insert( clip->uuid(), cell );
+    cellSelection( clip->uuid() );
 }
 
 void    MediaListView::cellSelection( const QUuid& uuid )

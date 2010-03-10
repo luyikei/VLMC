@@ -103,6 +103,12 @@ Clip::getMedia()
     return m_media;
 }
 
+const Media*
+Clip::getMedia() const
+{
+    return m_media;
+}
+
 qint64
 Clip::length() const
 {

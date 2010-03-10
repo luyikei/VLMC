@@ -59,7 +59,7 @@ class ImportController : public QDialog
     public:
         ImportController(QWidget *parent = 0);
         ~ImportController();
-        void    setUIMetaData( Clip *clip );
+        void    setUIMetaData( const Clip *clip );
 
     protected:
         void changeEvent( QEvent *e );
@@ -96,6 +96,7 @@ class ImportController : public QDialog
         void        mediaLoaded();
         void        failedToLoad( Media* media );
         void        hideErrors();
+        void        metaDataComputed( const Media* media );
 
     signals:
         void        clipSelected( Clip* );

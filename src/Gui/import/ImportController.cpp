@@ -151,7 +151,7 @@ ImportController::clipSelection( const QUuid& uuid )
 }
 
 void
-ImportController::setUIMetaData( Clip* clip )
+ImportController::setUIMetaData( const Clip* clip )
 {
     if ( clip != NULL )
     {
@@ -184,7 +184,10 @@ ImportController::importMedia( const QString &filePath )
     ++m_nbMediaToLoad;
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
 
-    m_temporaryMedias->addMedia( filePath );
+    Media* media = m_temporaryMedias->addMedia( filePath );
+    if ( media )
+        connect( media, SIGNAL( metaDataComputed( const Media* ) ),
+                 this, SLOT( metaDataComputed( const Media* ) ) );
 }
 
 void
@@ -332,4 +335,10 @@ ImportController::hideErrors()
 {
     m_ui->errorLabelImg->hide();
     m_ui->errorLabel->hide();
+}
+
+void
+ImportController::metaDataComputed( const Media *media )
+{
+    setUIMetaData( media->baseClip() );
 }

@@ -48,11 +48,11 @@ MediaContainer::addMedia( Media *media )
     emit newClipLoaded( media->baseClip() );
 }
 
-bool
+Media*
 MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
 {
     if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
-        return false;
+        return NULL;
     Media* media = new Media( fileInfo.filePath(), uuid );
 
     foreach( Clip* it, m_clips.values() )
@@ -60,12 +60,12 @@ MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
         if ( it->getMedia()->fileInfo()->filePath() == media->fileInfo()->filePath() )
         {
             delete media;
-            return false;
+            return NULL;
         }
     }
     MetaDataManager::getInstance()->computeMediaMetadata( media );
     addMedia( media );
-    return true;
+    return media;
 }
 
 bool
