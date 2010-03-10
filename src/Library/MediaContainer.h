@@ -70,15 +70,17 @@ public:
      *  \param  fileInfo    The file infos
      *  \return true if the file is already loaded, false otherwhise
      */
-    bool    mediaAlreadyLoaded( const QFileInfo& fileInfo );
+    bool        mediaAlreadyLoaded( const QFileInfo& fileInfo );
     /**
      *  \brief  Add a clip.
      *
-     *  This will emit the newClipLoaded signal.
+     *  The method will first check for an identic clip existence.
+     *  This will emit the newClipLoaded signal if the Clip is added.
      *
      *  \param  clip    The clip to be added.
+     *  \return true if the Clip has been added.
      */
-    void    addClip( Clip* clip );
+    bool        addClip( Clip* clip );
 
     /**
      *  \return All the loaded Clip

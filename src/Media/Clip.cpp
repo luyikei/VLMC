@@ -280,10 +280,10 @@ Clip::getChilds() const
     return m_childs;
 }
 
-void
+bool
 Clip::addSubclip( Clip *clip )
 {
-    m_childs->addClip( clip );
+    return m_childs->addClip( clip );
 }
 
 void

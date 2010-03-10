@@ -122,7 +122,7 @@ class   Clip : public QObject
          */
         void                clear();
 
-        void                addSubclip( Clip* clip );
+        bool                addSubclip( Clip* clip );
 
     private:
         Media               *m_media;

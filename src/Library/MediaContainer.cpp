@@ -79,11 +79,19 @@ MediaContainer::mediaAlreadyLoaded( const QFileInfo& fileInfo )
     return false;
 }
 
-void
+bool
 MediaContainer::addClip( Clip* clip )
 {
+    foreach ( Clip* c, m_clips.values() )
+    {
+        if ( clip->uuid() == c->uuid() ||
+             ( clip->getMedia()->fileInfo() == clip->getMedia()->fileInfo() &&
+                    ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
+            return false;
+    }
     m_clips[clip->uuid()] = clip;
     emit newClipLoaded( clip );
+    return true;
 }
 
 void
