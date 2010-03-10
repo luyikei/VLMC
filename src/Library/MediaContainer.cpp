@@ -117,32 +117,24 @@ MediaContainer::removeAll()
     m_clips.clear();
 }
 
-//Clip*
-//MediaContainer::removeClip( const QUuid &uuid )
-//{
-//    QHash<QUuid, Clip*>::iterator  it = m_clips.find( uuid );
-//    if ( it != m_clips.end() )
-//    {
-//        Clip* clip = it.value();
-//        emit clipRemoved( it.value() );
-//        m_clips.remove( uuid );
-//        return clip;
-//    }
-//    return NULL;
-//}
+Clip*
+MediaContainer::removeClip( const QUuid &uuid )
+{
+    QHash<QUuid, Clip*>::iterator  it = m_clips.find( uuid );
+    if ( it != m_clips.end() )
+    {
+        Clip* clip = it.value();
+        emit clipRemoved( it.value() );
+        m_clips.remove( uuid );
+        return clip;
+    }
+    return NULL;
+}
 
 Clip*
 MediaContainer::removeClip( const Clip* clip )
 {
-    QHash<QUuid, Clip*>::iterator  it = m_clips.find( clip->uuid() );
-    if ( it != m_clips.end() )
-    {
-        Clip* removed = it.value();
-        emit clipRemoved( it.value() );
-        m_clips.remove( clip->uuid() );
-        return removed;
-    }
-    return NULL;
+    return removeClip( clip->uuid() );
 }
 
 const QHash<QUuid, Clip*>&

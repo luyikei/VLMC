@@ -1,9 +1,10 @@
 /*****************************************************************************
- * MediaListViewController.h:
+ * MediaListView.h:
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
  * Authors: Thomas Boquet <thomas.boquet@gmail.com>
+ *          Hugo Beauzée-Luyssen <beauze.h@vlmc.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,8 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef MEDIALISTVIEWCONTROLLER_H
-#define MEDIALISTVIEWCONTROLLER_H
+#ifndef MEDIALISTVIEW_H
+#define MEDIALISTVIEW_H
 
 #include "StackViewController.h"
 #include "ListViewController.h"
@@ -31,19 +32,19 @@
 
 class   MediaContainer;
 
-class MediaListViewController : public ListViewController
+class MediaListView : public ListViewController
 {
     Q_OBJECT
 
 public:
-    MediaListViewController( StackViewController* nav, MediaContainer* mc );
-    virtual ~MediaListViewController();
+    MediaListView( StackViewController* nav, MediaContainer* mc );
+    virtual ~MediaListView();
 
 private:
     StackViewController*        m_nav;
     QUuid                       m_currentUuid;
     QHash<QUuid, QWidget*>      m_cells;
-    MediaListViewController*    m_clipsListView;
+    MediaListView*              m_clipsListView;
     QUuid                       m_lastUuidClipListAsked;
     MediaContainer*             m_mediaContainer;
 
@@ -61,4 +62,4 @@ signals:
     void        clipSelected( Clip* );
     void        clipDeleted( const QUuid& );
 };
-#endif // MEDIALISTVIEWCONTROLLER_H
+#endif // MEDIALISTVIEW_H

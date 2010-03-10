@@ -31,7 +31,6 @@
 #define IMPORTCONTROLLER_H
 
 #include "Clip.h"
-#include "MediaListViewController.h"
 #include "Media.h"
 #include "PreviewWidget.h"
 #include "StackViewController.h"
@@ -42,6 +41,7 @@
 #include <QProgressDialog>
 
 class   MediaContainer;
+class   MediaListView;
 
 namespace Ui
 {
@@ -74,8 +74,7 @@ class ImportController : public QDialog
         PreviewWidget*              m_preview;
         StackViewController*        m_stackNav;
         TagWidget*                  m_tag;
-        MediaListViewController     *m_mediaListController;
-        MediaListViewController     *m_clipListController;
+        MediaListView               *m_mediaListView;
         QFileSystemModel            *m_filesModel;
         QString                     m_currentlyWatchedDir;
         QUuid                       m_currentUuid;

@@ -38,7 +38,7 @@ SET(VLMC_SRCS
     Gui/library/ListViewController.cpp
     Gui/library/MediaCellView.cpp
     Gui/library/MediaLibraryWidget.cpp
-    Gui/library/MediaListViewController.cpp
+    Gui/library/MediaListView.cpp
     Gui/library/StackViewController.cpp
     Gui/library/StackViewNavController.cpp
     Gui/settings/BoolWidget.cpp
@@ -120,7 +120,7 @@ SET (VLMC_HDRS
     Gui/library/ListViewController.h
     Gui/library/MediaCellView.h
     Gui/library/MediaLibraryWidget.h
-    Gui/library/MediaListViewController.h
+    Gui/library/MediaListView.h
     Gui/library/StackViewController.h
     Gui/library/StackViewNavController.h
     Gui/library/ViewController.h

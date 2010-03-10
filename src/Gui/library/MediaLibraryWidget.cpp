@@ -22,7 +22,7 @@
 
 #include "MediaLibraryWidget.h"
 #include "StackViewController.h"
-#include "MediaListViewController.h"
+#include "MediaListView.h"
 
 #include "Media.h"
 #include "Clip.h"
@@ -32,7 +32,7 @@ MediaLibraryWidget::MediaLibraryWidget( QWidget* parent ) : QWidget( parent )
     Library*  library = Library::getInstance();
 
     m_nav = new StackViewController( this );
-    MediaListViewController* list = new MediaListViewController( m_nav, library );
+    MediaListView* list = new MediaListView( m_nav, library );
     //Media
     connect( list, SIGNAL( clipSelected( Clip* ) ),
              this, SIGNAL( clipSelected( Clip* ) ) );

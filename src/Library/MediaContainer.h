@@ -103,6 +103,7 @@ public slots:
      *  \param  clip    The clip to remove.
      */
     Clip    *removeClip( const Clip* clip );
+    Clip    *removeClip( const QUuid& uuid );
     /**
      *  \brief  Clear the library (remove all the loaded Clip, delete their subclips, and
      *          delete them)

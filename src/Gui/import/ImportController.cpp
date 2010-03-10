@@ -30,6 +30,7 @@
 #include "Library.h"
 #include "MetaDataManager.h"
 #include "MediaCellView.h"
+#include "MediaListView.h"
 
 #include <QPalette>
 #include <QSettings>
@@ -39,7 +40,6 @@
 ImportController::ImportController(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::ImportController),
-    m_clipListController( 0 ),
     m_nbMediaToLoad( 0 ),
     m_nbMediaLoaded( 0 )
 {
@@ -47,10 +47,10 @@ ImportController::ImportController(QWidget *parent) :
     m_preview = new PreviewWidget( new ClipRenderer, m_ui->previewContainer );
     m_stackNav = new StackViewController( m_ui->stackViewContainer, false );
     m_temporaryMedias = new MediaContainer;
-    m_mediaListController = new MediaListViewController( m_stackNav, m_temporaryMedias );
+    m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
     m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
-    m_stackNav->pushViewController( m_mediaListController );
+    m_stackNav->pushViewController( m_mediaListView );
 
     QStringList filters;
     filters << Media::AudioExtensions.split(' ', QString::SkipEmptyParts)
@@ -87,12 +87,12 @@ ImportController::ImportController(QWidget *parent) :
     connect( m_ui->forwardButton, SIGNAL( clicked() ),
              this, SLOT( forwardButtonClicked() ) );
 
-    connect( m_mediaListController, SIGNAL( clipSelected( Clip* ) ),
+    connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
              SLOT( setClip( Clip* ) ) );
-    connect( m_mediaListController, SIGNAL( clipSelected( Clip* ) ),
+    connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SLOT( mediaSelection( Clip* ) ) );
-    connect( m_mediaListController, SIGNAL( clipDeleted( const QUuid& ) ),
+    connect( m_mediaListView, SIGNAL( clipDeleted( const QUuid& ) ),
              qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
              SLOT( clipUnloaded( const QUuid& ) ) );
 
@@ -246,7 +246,7 @@ void
 ImportController::reject()
 {
     m_preview->stop();
-    m_mediaListController->clear();
+    m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
     done( Rejected );
@@ -255,7 +255,7 @@ ImportController::reject()
 void
 ImportController::accept()
 {
-    m_mediaListController->clear();
+    m_mediaListView->clear();
     m_preview->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
