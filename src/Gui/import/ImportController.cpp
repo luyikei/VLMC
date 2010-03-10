@@ -166,6 +166,8 @@ ImportController::setUIMetaData( const Clip* clip )
 void
 ImportController::importMedia( const QString &filePath )
 {
+    if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true )
+        return ;
     ++m_nbMediaToLoad;
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
 
