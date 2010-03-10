@@ -5,7 +5,7 @@
  *
  * Authors: Geoffroy Lacarriere <geoffroylaca@gmail.com>
  *          Thomas Boquet <thomas.boquet@gmail.com>
- *          Clement Chavance <chavance.c@gmail.com>
+ *          Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +78,6 @@ class ImportController : public QDialog
         QFileSystemModel            *m_filesModel;
         QString                     m_currentlyWatchedDir;
         QUuid                       m_currentUuid;
-        QUuid                       m_savedUuid;
         MediaContainer              *m_temporaryMedias;
         quint32                     m_nbMediaToLoad;
         quint32                     m_nbMediaLoaded;
@@ -87,7 +86,6 @@ class ImportController : public QDialog
         void        accept();
         void        reject();
         void        mediaSelection( Clip* clip );
-        void        clipSelection( const QUuid& uuid );
 
     private slots:
         void        forwardButtonClicked();

@@ -5,7 +5,6 @@
  *
  * Authors: Geoffroy Lacarriere <geoffroylaca@gmail.com>
  *          Thomas Boquet <thomas.boquet@gmail.com>
- *          Clement Chavance <chavance.c@gmail.com>
  *          Hugo Beauzée-Luyssen <hugo@vlmc.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -133,20 +132,6 @@ ImportController::mediaSelection( Clip* clip )
     m_preview->stop();
     m_currentUuid = uuid;
     m_tag->clipSelected( clip );
-    emit clipSelected( clip );
-}
-
-void
-ImportController::clipSelection( const QUuid& uuid )
-{
-    if ( uuid == m_currentUuid )
-        return ;
-    Clip*   clip = m_temporaryMedias->clip( uuid );
-
-    if ( clip == NULL )
-        return ;
-    setUIMetaData( clip );
-    m_preview->stop();
     emit clipSelected( clip );
 }
 
