@@ -62,6 +62,7 @@ ClipRenderer::setClip( Clip* clip )
     if ( clip == NULL )
     {
         m_selectedClip = NULL;
+        m_clipLoaded = false;
         return ;
     }
     m_selectedClip = clip;
@@ -125,10 +126,6 @@ ClipRenderer::togglePlayPause( bool forcePause )
         startPreview();
         return ;
     }
-    //If for some reason, nothing was loaded in startPreview(), we just return.
-    if ( m_clipLoaded == false )
-        return ;
-
     if ( m_paused == false && m_isRendering == true )
     {
         m_mediaPlayer->pause();
