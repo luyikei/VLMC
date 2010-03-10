@@ -85,9 +85,9 @@ class ImportController : public QDialog
     public slots:
         void        accept();
         void        reject();
-        void        mediaSelection( Clip* clip );
 
     private slots:
+        void        clipSelection( Clip* clip );
         void        forwardButtonClicked();
         void        treeViewClicked( const QModelIndex& index );
         void        treeViewDoubleClicked( const QModelIndex& index );

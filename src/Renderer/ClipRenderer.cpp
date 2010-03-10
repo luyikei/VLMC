@@ -59,12 +59,20 @@ ClipRenderer::~ClipRenderer()
 void
 ClipRenderer::setClip( Clip* clip )
 {
-    if ( clip == NULL || clip->length() == 0 )
+    if ( clip == NULL )
     {
         m_selectedClip = NULL;
         return ;
     }
     m_selectedClip = clip;
+    if ( clip->length() == 0 )
+        return ;
+    updateInfos( clip );
+}
+
+void
+ClipRenderer::updateInfos( Clip* clip )
+{
     m_begin = clip->begin();
     m_end = clip->end();
     if ( m_isRendering == true )
@@ -78,6 +86,7 @@ ClipRenderer::startPreview()
 {
     if ( m_selectedClip == NULL )
         return ;
+    updateInfos( m_selectedClip );
 
     //If an old media is found, we delete it, and disconnect
     if ( m_vlcMedia != NULL )

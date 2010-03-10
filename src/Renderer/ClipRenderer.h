@@ -79,6 +79,7 @@ public slots:
     void                    clipUnloaded( const QUuid& uuid );
     void                    clipUnloaded( const Clip* clip );
     virtual void            previewWidgetCursorChanged( qint64 newFrame );
+    void                    updateInfos( Clip* clip );
 
     /**
      *  \brief      Triggered at every libvlc_MediaPlayerTimeChanged event.

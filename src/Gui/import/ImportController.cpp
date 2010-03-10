@@ -86,11 +86,11 @@ ImportController::ImportController(QWidget *parent) :
     connect( m_ui->forwardButton, SIGNAL( clicked() ),
              this, SLOT( forwardButtonClicked() ) );
 
-    connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
+    connect( this, SIGNAL( clipSelected( Clip* ) ),
              qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
              SLOT( setClip( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
-             this, SLOT( mediaSelection( Clip* ) ) );
+             this, SLOT( clipSelection( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipDeleted( const QUuid& ) ),
              qobject_cast<const ClipRenderer*>( m_preview->getGenericRenderer() ),
              SLOT( clipUnloaded( const QUuid& ) ) );
@@ -122,7 +122,7 @@ ImportController::changeEvent( QEvent *e )
 }
 
 void
-ImportController::mediaSelection( Clip* clip )
+ImportController::clipSelection( Clip* clip )
 {
     const QUuid& uuid = clip->uuid();
     if ( m_currentUuid == uuid )
