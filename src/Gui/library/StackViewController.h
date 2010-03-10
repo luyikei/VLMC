@@ -46,7 +46,6 @@ public:
     void                    pushViewController( ViewController* viewController,
                                                 bool animated = false );
     void                    popViewController( bool animated = false );
-    const ViewController*   getCurrentViewController() const;
 
 private:
     StackViewNavController*     m_nav;

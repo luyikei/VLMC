@@ -46,8 +46,3 @@ MediaLibraryWidget::~MediaLibraryWidget()
 {
     delete m_nav;
 }
-
-const ViewController*       MediaLibraryWidget::getCurrentViewController()
-{
-    return m_nav->getCurrentViewController();
-}

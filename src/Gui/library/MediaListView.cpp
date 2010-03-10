@@ -28,7 +28,6 @@
 MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
         ListViewController( nav ),
         m_nav( nav ),
-        m_clipsListView( 0 ),
         m_mediaContainer( mc )
 {
     connect( mc, SIGNAL( newClipLoaded(Clip*) ),
@@ -37,8 +36,6 @@ MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
              mc, SLOT(removeClip( const QUuid& ) ) );
     foreach ( Clip* clip, mc->clips() )
         newClipLoaded( clip );
-    connect( m_nav, SIGNAL( previousButtonPushed() ),
-             this, SLOT( restoreContext() ) );
 }
 
 MediaListView::~MediaListView()
@@ -103,12 +100,5 @@ MediaListView::clear()
 void    MediaListView::showSubClips( const QUuid& uuid )
 {
     Clip*   clip = m_mediaContainer->clip( uuid );
-    m_clipsListView = new MediaListView( m_nav, clip->getChilds() );
-    m_nav->pushViewController( m_clipsListView );
-}
-
-void    MediaListView::restoreContext()
-{
-    delete m_clipsListView;
-    m_currentUuid = QUuid();
+    m_nav->pushViewController( new MediaListView( m_nav, clip->getChilds() ) );
 }

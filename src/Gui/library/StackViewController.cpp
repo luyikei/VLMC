@@ -27,16 +27,11 @@ StackViewController::StackViewController( QWidget* parent, bool enableImport ) :
         QWidget( parent ), m_importButton( NULL ), m_current( 0 )
 {
     m_nav     = new StackViewNavController( this );
-
     m_layout  = new QVBoxLayout;
-
     m_controllerStack = new QStack<ViewController*>();
 
     connect( m_nav->previousButton(), SIGNAL( clicked() ),
                      this, SLOT( previous() ) );
-
-
-
     m_layout->addWidget( m_nav );
 
     if ( enableImport )
@@ -45,7 +40,6 @@ StackViewController::StackViewController( QWidget* parent, bool enableImport ) :
         m_layout->addWidget( m_importButton );
         connect( m_importButton, SIGNAL( clicked() ), this, SIGNAL( importRequired() ) );
     }
-
     parent->setLayout( m_layout );
 }
 
@@ -89,6 +83,7 @@ void        StackViewController::popViewController( bool animated )
 
     m_layout->removeWidget( m_current->view() );
     m_current->view()->hide();
+    delete m_current;
     m_current = m_controllerStack->pop();
 
     m_nav->setTitle( m_current->title() );
@@ -108,10 +103,5 @@ void        StackViewController::previous()
 {
     popViewController();
     emit previousButtonPushed();
-}
-
-const ViewController*   StackViewController::getCurrentViewController() const
-{
-    return m_current;
 }
 

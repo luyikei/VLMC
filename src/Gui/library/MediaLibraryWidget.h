@@ -39,8 +39,6 @@ public:
     MediaLibraryWidget( QWidget* parent = 0 );
     virtual ~MediaLibraryWidget();
 
-    const ViewController*   getCurrentViewController();
-
 private:
     StackViewController*    m_nav;
 
