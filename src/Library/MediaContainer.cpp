@@ -124,8 +124,8 @@ MediaContainer::removeClip( const QUuid &uuid )
     if ( it != m_clips.end() )
     {
         Clip* clip = it.value();
-        emit clipRemoved( it.value() );
         m_clips.remove( uuid );
+        emit clipRemoved( clip );
         return clip;
     }
     return NULL;
