@@ -45,12 +45,12 @@
 
 /* Widgets */
 #include "DockWidgetManager.h"
-#include "UndoStack.h"
+#include "ImportController.h"
+#include "MediaListView.h"
 #include "PreviewWidget.h"
-#include "MediaLibraryWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
-#include "ImportController.h"
+#include "UndoStack.h"
 
 /* Settings / Preferences */
 #include "ProjectManager.h"
@@ -223,28 +223,30 @@ MainWindow::loadVlmcPreferences( const QString &subPart )
 
 #undef CREATE_MENU_SHORTCUT
 
-void        MainWindow::setupLibrary()
+void
+MainWindow::setupLibrary()
 {
     //GUI part :
+    QWidget* libraryWidget = new QWidget( this );
+    libraryWidget->setMinimumWidth( 280 );
+    StackViewController *nav = new StackViewController( libraryWidget, true );
+    MediaListView   *mediaView = new MediaListView( nav, Library::getInstance() );
+    nav->pushViewController( mediaView );
+    connect( nav, SIGNAL( importRequired() ), this, SLOT( on_actionImport_triggered() ) );
 
-    MediaLibraryWidget* mediaLibraryWidget = new MediaLibraryWidget( this );
     m_importController = new ImportController();
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
 
-    DockWidgetManager::instance()->addDockedWidget( mediaLibraryWidget,
-                                                    tr( "Media Library" ),
+    DockWidgetManager::instance()->addDockedWidget( libraryWidget, tr( "Media Library" ),
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
-    connect( mediaLibraryWidget, SIGNAL( clipSelected( Clip* ) ),
+    connect( mediaView, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
 
     connect( Library::getInstance(), SIGNAL( clipRemoved( const Clip* ) ),
              clipRenderer, SLOT( clipUnloaded( const Clip* ) ) );
-
-    connect( mediaLibraryWidget, SIGNAL( importRequired() ),
-             this, SLOT( on_actionImport_triggered() ) );
 }
 
 void    MainWindow::on_actionSave_triggered()

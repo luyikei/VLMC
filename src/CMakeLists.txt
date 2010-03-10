@@ -37,7 +37,6 @@ SET(VLMC_SRCS
     Gui/import/ImportController.cpp
     Gui/library/ListViewController.cpp
     Gui/library/MediaCellView.cpp
-    Gui/library/MediaLibraryWidget.cpp
     Gui/library/MediaListView.cpp
     Gui/library/StackViewController.cpp
     Gui/library/StackViewNavController.cpp
@@ -119,7 +118,6 @@ SET (VLMC_HDRS
     Gui/LCDTimecode.h
     Gui/library/ListViewController.h
     Gui/library/MediaCellView.h
-    Gui/library/MediaLibraryWidget.h
     Gui/library/MediaListView.h
     Gui/library/StackViewController.h
     Gui/library/StackViewNavController.h
@@ -189,7 +187,6 @@ SET(VLMC_UIS
     Gui/ui/About.ui
     Gui/ui/ClipProperty.ui
     Gui/ui/FileBrowser.ui
-    Gui/ui/LibraryWidget.ui
     Gui/ui/MainWindow.ui
     Gui/ui/PreviewWidget.ui
     Gui/ui/TagWidget.ui

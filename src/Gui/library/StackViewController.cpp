@@ -27,7 +27,7 @@ StackViewController::StackViewController( QWidget* parent, bool enableImport ) :
         QWidget( parent ), m_importButton( NULL ), m_current( 0 )
 {
     m_nav     = new StackViewNavController( this );
-    m_layout  = new QVBoxLayout;
+    m_layout  = new QVBoxLayout( this );
     m_controllerStack = new QStack<ViewController*>();
 
     connect( m_nav->previousButton(), SIGNAL( clicked() ),
@@ -48,7 +48,6 @@ StackViewController::~StackViewController()
     delete m_nav;
     if ( m_importButton != NULL )
         delete m_importButton;
-    delete m_layout;
     delete m_controllerStack;
 }
 
