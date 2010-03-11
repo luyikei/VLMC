@@ -28,8 +28,8 @@ SET(VLMC_SRCS
     Gui/LanguageHelper.cpp
     Gui/LCDTimecode.cpp
     Gui/MainWindow.cpp
-    Gui/PreviewRuler.cpp
-    Gui/PreviewWidget.cpp
+    Gui/preview/PreviewRuler.cpp
+    Gui/preview/PreviewWidget.cpp
     Gui/TagWidget.cpp
     Gui/UndoStack.cpp
     Gui/WorkflowFileRendererDialog.cpp
@@ -123,8 +123,8 @@ SET (VLMC_HDRS
     Gui/library/StackViewNavController.h
     Gui/library/ViewController.h
     Gui/MainWindow.h
-    Gui/PreviewRuler.h
-    Gui/PreviewWidget.h
+    Gui/preview/PreviewRuler.h
+    Gui/preview/PreviewWidget.h
     Gui/settings/BoolWidget.h
     Gui/settings/DoubleWidget.h
     Gui/settings/IntWidget.h
@@ -188,7 +188,7 @@ SET(VLMC_UIS
     Gui/ui/ClipProperty.ui
     Gui/ui/FileBrowser.ui
     Gui/ui/MainWindow.ui
-    Gui/ui/PreviewWidget.ui
+    Gui/preview/ui/PreviewWidget.ui
     Gui/ui/TagWidget.ui
     Gui/ui/Timeline.ui
     Gui/ui/transcode.ui
@@ -233,6 +233,7 @@ INCLUDE_DIRECTORIES(
   Gui
   Gui/import
   Gui/library
+  Gui/preview
   Gui/settings
   Gui/timeline
   Gui/widgets
