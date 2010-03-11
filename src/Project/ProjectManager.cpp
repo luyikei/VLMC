@@ -220,8 +220,7 @@ void    ProjectManager::saveProject( bool saveAs /*= true*/ )
 void    ProjectManager::__saveProject( const QString &fileName )
 {
     QDomImplementation    implem = QDomDocument().implementation();
-    //FIXME: Think about naming the project...
-    QString name = "VLMCProject";
+    QString name = projectName();
     QString publicId = "-//XADECK//DTD Stone 1.0 //EN";
     QString systemId = "http://www-imagis.imag.fr/DTD/stone1.dtd";
     QDomDocument doc(implem.createDocumentType( name, publicId, systemId ) );

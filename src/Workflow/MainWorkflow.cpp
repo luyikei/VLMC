@@ -65,9 +65,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
 
 MainWorkflow::~MainWorkflow()
 {
-    //FIXME: this is probably useless, since already done by the renderer
-    stop();
-
     delete m_effectEngine;
     delete m_renderStartedMutex;
     delete m_currentFrameLock;

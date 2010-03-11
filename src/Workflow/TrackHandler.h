@@ -53,8 +53,6 @@ class   TrackHandler : public QObject
          *                              it's the same as currentFrame, but for an audio
          *                              track, it will be different.
          *  \param      paused          The renderer paused state
-         *  \todo       This should probably be partialy handled by the trackHandler, as the work
-         *              is exactly the same for both audio and video trackWorkflow in most of the case... or not.
          */
         void                    getOutput( qint64 currentFrame, qint64 subFrame,
                                            bool paused );

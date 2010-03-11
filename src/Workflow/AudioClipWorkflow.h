@@ -79,7 +79,6 @@ class   AudioClipWorkflow : public ClipWorkflow
                                             quint32 bits_per_sample,
                                             quint32 size, qint64 pts );
 
-        //FIXME: this is totally random powered ! Please adjust with a value that does make sense...
         static const quint32   nbBuffers = 256;
 };
 
