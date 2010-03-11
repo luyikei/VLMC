@@ -7,8 +7,8 @@ SET(VLMC_SRCS
     main.cpp
     Commands/Commands.cpp
     Commands/KeyboardShortcutHelper.cpp
-    Configuration/SettingsManager.cpp
-    Configuration/SettingValue.cpp
+    Settings/SettingsManager.cpp
+    Settings/SettingValue.cpp
     EffectsEngine/EffectNode.cpp
     EffectsEngine/EffectNodeFactory.cpp
     EffectsEngine/EffectPluginTypeLoader.cpp
@@ -104,8 +104,8 @@ ENDIF(WIN32)
 
 SET (VLMC_HDRS
     Commands/KeyboardShortcutHelper.h
-    Configuration/SettingsManager.h
-    Configuration/SettingValue.h
+    Settings/SettingsManager.h
+    Settings/SettingValue.h
     Gui/About.h
     Gui/ClickableLabel.h
     Gui/ClipProperty.h
@@ -224,7 +224,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
   Commands
-  Configuration
+  Settings 
   EffectsEngine
   EffectsEngine/PluginsAPI
   Gui
