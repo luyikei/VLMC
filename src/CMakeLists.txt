@@ -24,7 +24,6 @@ SET(VLMC_SRCS
     Gui/ClickableLabel.cpp
     Gui/ClipProperty.cpp
     Gui/DockWidgetManager.cpp
-    Gui/FileInfoListModel.cpp
     Gui/LanguageHelper.cpp
     Gui/LCDTimecode.cpp
     Gui/MainWindow.cpp
@@ -112,7 +111,6 @@ SET (VLMC_HDRS
     Gui/ClipProperty.h
     Gui/DockWidgetManager.h
     Gui/export/RendererSettings.h
-    Gui/FileInfoListModel.h
     Gui/import/ImportController.h
     Gui/LanguageHelper.h
     Gui/LCDTimecode.h
