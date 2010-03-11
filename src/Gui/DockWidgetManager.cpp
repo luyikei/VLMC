@@ -27,16 +27,6 @@
 #include "DockWidgetManager.h"
 #include "MainWindow.h"
 
-DockWidgetManager *DockWidgetManager::m_instance = 0;
-
-DockWidgetManager *DockWidgetManager::instance( QObject *parent )
-{
-    if (m_instance == 0)
-        m_instance = new DockWidgetManager( parent );
-
-    return (m_instance);
-}
-
 void DockWidgetManager::setMainWindow( MainWindow *mainWin )
 {
     m_mainWin = mainWin;

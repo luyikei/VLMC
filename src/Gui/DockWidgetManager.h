@@ -23,6 +23,8 @@
 #ifndef DOCKWIDGETMANAGER_H
 #define DOCKWIDGETMANAGER_H
 
+#include "QSingleton.hpp"
+
 #include <QObject>
 #include <QWidget>
 #include <QDockWidget>
@@ -31,7 +33,7 @@
 
 class MainWindow;
 
-class DockWidgetManager : public QObject
+class DockWidgetManager : public QObject, public QSingleton<DockWidgetManager>
 {
     Q_OBJECT
 
@@ -55,10 +57,10 @@ class DockWidgetManager : public QObject
 
         MainWindow *m_mainWin;
         QMap<QString, QDockWidget*> m_dockWidgets;
-        static DockWidgetManager *m_instance;
-
     public slots:
         void transLateWidgetTitle();
+
+        friend  class   QSingleton<DockWidgetManager>;
 };
 
 #endif

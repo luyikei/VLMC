@@ -26,8 +26,6 @@
 #include <QPlainTextEdit>
 #include "About.h"
 
-About* About::m_instance = NULL;
-
 About::About( QWidget *parent ) :
     QDialog( parent )
 {
@@ -53,14 +51,6 @@ void About::changeEvent( QEvent *e )
     default:
         break;
     }
-}
-
-About* About::instance()
-{
-    if ( m_instance )
-        return m_instance;
-    m_instance = new About();
-    return m_instance;
 }
 
 void About::setText( const QString& filename, QPlainTextEdit* widget )

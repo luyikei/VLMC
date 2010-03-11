@@ -84,7 +84,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     initVlmcPreferences();
 
     // GUI
-    DockWidgetManager::instance( this )->setMainWindow( this );
+    DockWidgetManager::getInstance( this )->setMainWindow( this );
     createGlobalPreferences();
     createProjectPreferences();
     initializeDockWidgets();
@@ -95,7 +95,7 @@ MainWindow::MainWindow( QWidget *parent ) :
 
     // Translations
     connect( this, SIGNAL( translateDockWidgetTitle() ),
-             DockWidgetManager::instance(), SLOT( transLateWidgetTitle() ) );
+             DockWidgetManager::getInstance(), SLOT( transLateWidgetTitle() ) );
 
     // Zoom
     connect( m_zoomSlider, SIGNAL( valueChanged( int ) ),
@@ -242,7 +242,7 @@ MainWindow::setupLibrary()
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
 
-    DockWidgetManager::instance()->addDockedWidget( libraryWidget, tr( "Media Library" ),
+    DockWidgetManager::getInstance()->addDockedWidget( libraryWidget, tr( "Media Library" ),
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
@@ -343,7 +343,7 @@ void MainWindow::initializeDockWidgets( void )
     m_timeline->show();
     setCentralWidget( m_timeline );
 
-    DockWidgetManager *dockManager = DockWidgetManager::instance();
+    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
     m_clipPreview = new PreviewWidget( new ClipRenderer, this );
     dockManager->addDockedWidget( m_clipPreview,
@@ -413,7 +413,7 @@ void MainWindow::on_actionPreferences_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-    About::instance()->exec();
+    About::getInstance()->exec();
 }
 
 void MainWindow::on_actionTranscode_triggered()

@@ -24,17 +24,16 @@
 #define ABOUT_H
 
 #include <QDialog>
+
+#include "QSingleton.hpp"
 #include "ui_About.h"
 
 class QPlainTextEdit;
 
-class About : public QDialog
+class About : public QDialog, public QSingleton<About>
 {
     Q_OBJECT
     Q_DISABLE_COPY( About )
-public:
-    static About* instance();
-
 protected:
     virtual void    changeEvent( QEvent *e );
 
@@ -42,7 +41,8 @@ private:
     explicit        About( QWidget *parent = 0 );
     void            setText( const QString& filename, QPlainTextEdit* widget );
     Ui::AboutVLMC   m_ui;
-    static About*   m_instance;
+
+    friend class    QSingleton<About>;
 };
 
 #endif // ABOUT_H
