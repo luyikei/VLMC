@@ -25,7 +25,7 @@ SET(VLMC_SRCS
     Gui/ClipProperty.cpp
     Gui/DockWidgetManager.cpp
     Gui/LanguageHelper.cpp
-    Gui/LCDTimecode.cpp
+    Gui/preview/LCDTimecode.cpp
     Gui/MainWindow.cpp
     Gui/preview/PreviewRuler.cpp
     Gui/preview/PreviewWidget.cpp
@@ -113,7 +113,7 @@ SET (VLMC_HDRS
     Gui/export/RendererSettings.h
     Gui/import/ImportController.h
     Gui/LanguageHelper.h
-    Gui/LCDTimecode.h
+    Gui/preview/LCDTimecode.h
     Gui/library/ListViewController.h
     Gui/library/MediaCellView.h
     Gui/library/MediaListView.h
