@@ -41,11 +41,6 @@ class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
 
-//TODO: REMOVE THIS
-#ifndef FPS
-#define FPS     30
-#endif
-
 #ifndef MAX_TRACKS
 #define MAX_TRACKS 64
 #endif
