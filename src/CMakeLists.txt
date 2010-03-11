@@ -184,7 +184,6 @@ SET(VLMC_UIS
     Gui/library/ui/StackViewNavController.ui
     Gui/ui/About.ui
     Gui/ui/ClipProperty.ui
-    Gui/ui/FileBrowser.ui
     Gui/ui/MainWindow.ui
     Gui/preview/ui/PreviewWidget.ui
     Gui/import/ui/TagWidget.ui
