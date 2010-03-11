@@ -29,7 +29,7 @@ SET(VLMC_SRCS
     Gui/MainWindow.cpp
     Gui/preview/PreviewRuler.cpp
     Gui/preview/PreviewWidget.cpp
-    Gui/TagWidget.cpp
+    Gui/import/TagWidget.cpp
     Gui/UndoStack.cpp
     Gui/WorkflowFileRendererDialog.cpp
     Gui/export/RendererSettings.cpp
@@ -134,7 +134,7 @@ SET (VLMC_HDRS
     Gui/settings/PreferenceWidget.h
     Gui/settings/Settings.h
     Gui/settings/StringWidget.h
-    Gui/TagWidget.h
+    Gui/import/TagWidget.h
     Gui/timeline/AbstractGraphicsMediaItem.h
     Gui/timeline/GraphicsAudioItem.h 
     Gui/timeline/GraphicsCursorItem.h
@@ -187,7 +187,7 @@ SET(VLMC_UIS
     Gui/ui/FileBrowser.ui
     Gui/ui/MainWindow.ui
     Gui/preview/ui/PreviewWidget.ui
-    Gui/ui/TagWidget.ui
+    Gui/import/ui/TagWidget.ui
     Gui/ui/Timeline.ui
     Gui/ui/transcode.ui
     Gui/ui/WorkflowFileRendererDialog.ui
