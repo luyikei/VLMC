@@ -321,3 +321,16 @@ Clip::save( QXmlStreamWriter &project )
     }
     project.writeEndElement();
 }
+
+QString
+Clip::fullId() const
+{
+    const Clip* c = this;
+    QString     id = m_uuid.toString();
+    while ( c->isRootClip() == false )
+    {
+        c = c->getParent();
+        id = c->uuid() + '/' + id;
+    }
+    return id;
+}

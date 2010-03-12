@@ -289,8 +289,8 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     if ( event->mimeData()->hasFormat( "vlmc/uuid" ) )
         event->acceptProposedAction();
 
-    QUuid uuid = QUuid( QString( event->mimeData()->data( "vlmc/uuid" ) ) );
-    Clip *clip = Library::getInstance()->clip( uuid );
+    QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
+    Clip *clip = Library::getInstance()->clip( fullId );
     if ( !clip ) return;
     if ( clip->getMedia()->hasAudioTrack() == false &&
          clip->getMedia()->hasVideoTrack() == false )

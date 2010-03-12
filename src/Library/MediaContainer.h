@@ -42,9 +42,17 @@ public:
      *  \brief  returns the clip that match the unique identifier
      *  \param  uuid    the unique identifier of the media
      *  \return a pointer to the required clip, or NULL if no clips matches
-     *  \sa     media( const QUuid& uuid )
      */
     Clip*   clip( const QUuid& uuid );
+
+    /**
+     *  \brief  returns the clip that match the unique identifier
+     *
+     *  The identifier may be a full id (ie the full path, starting at the root clip)
+     *  \param  uuid    the unique identifier of the media
+     *  \return a pointer to the required clip, or NULL if no clips matches
+     */
+    Clip*   clip( const QString& uuid );
 
     /**
      *  \brief  Add an already preparsed media.

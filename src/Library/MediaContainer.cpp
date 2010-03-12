@@ -41,6 +41,23 @@ MediaContainer::clip( const QUuid& uuid )
     return NULL;
 }
 
+Clip*
+MediaContainer::clip( const QString &uuid )
+{
+    MediaContainer      *mc = this;
+    Clip                *clip;
+    QStringList         ids = uuid.split( '/' );
+
+    foreach ( QString id, ids )
+    {
+        clip = mc->clip( QUuid( id ) );
+        if ( clip == NULL )
+            return NULL;
+        mc = clip->getChilds();
+    }
+    return clip;
+}
+
 void
 MediaContainer::addMedia( Media *media )
 {
