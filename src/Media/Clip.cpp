@@ -39,6 +39,7 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
         m_begin( begin ),
         m_end( end ),
         m_maxBegin( begin ),
+        m_maxEnd( end ),
         m_parent( media->baseClip() )
 {
     if ( end == -1 )
@@ -307,8 +308,6 @@ Clip::save( QXmlStreamWriter &project )
         project.writeAttribute( "rootClip", m_rootClip->uuid() );
         project.writeAttribute( "begin", QString::number( m_begin ) );
         project.writeAttribute( "end", QString::number( m_end ) );
-        project.writeAttribute( "maxBegin", QString::number( m_maxBegin ) );
-        project.writeAttribute( "maxEnd", QString::number( m_maxEnd ) );
     }
     project.writeAttribute( "uuid", m_uuid.toString() );
     project.writeAttribute( "metatags", m_metaTags.join( "," ) );
