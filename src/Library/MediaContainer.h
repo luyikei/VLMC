@@ -123,7 +123,8 @@ public slots:
      */
     void    clear();
     /**
-     *  \brief      Remove all the medias, but doesn't delete them.
+     *  \brief      Remove all the medias from the container, but doesn't clean nor
+     *              delete them.
      */
     void    removeAll();
 

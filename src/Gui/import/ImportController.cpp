@@ -250,7 +250,7 @@ ImportController::accept()
     m_preview->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
-        Library::getInstance()->addMedia( clip->getMedia() );
+        Library::getInstance()->addClip( clip );
     m_temporaryMedias->removeAll();
     m_clipRenderer->setClip( NULL );
     done( Accepted );

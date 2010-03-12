@@ -119,7 +119,6 @@ MediaContainer::removeAll()
     while ( it != end )
     {
         emit clipRemoved( it.value() );
-        it.value()->clear();
         ++it;
     }
     m_clips.clear();
