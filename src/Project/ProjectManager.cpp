@@ -230,7 +230,7 @@ void    ProjectManager::__saveProject( const QString &fileName )
     project.writeStartElement( "vlmc" );
 
     Library::getInstance()->saveProject( project );
-//    MainWorkflow::getInstance()->saveProject( doc, rootNode );
+    MainWorkflow::getInstance()->saveProject( project );
 //    SettingsManager::getInstance()->save( doc, rootNode );
 
     project.writeEndElement();

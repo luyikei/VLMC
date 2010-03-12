@@ -31,6 +31,7 @@ class   QDomDocument;
 class   QDomElement;
 class   QMutex;
 class   QReadWriteLock;
+class   QXmlStreamWriter;
 
 class   Clip;
 class   EffectsEngine;
@@ -412,12 +413,11 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                            loadProject( const QDomElement& project );
         /**
-         *  \brief          Save the project on a given node, for a given document.
+         *  \brief          Save the project on a XML stream.
          *
-         *  \param  doc         A reference to the document.
-         *  \param  rootNode    A reference on the node that will contain the timeline.
+         *  \param  project The XML stream representing the project
          */
-        void                            saveProject( QDomDocument& doc, QDomElement& rootNode );
+        void                            saveProject( QXmlStreamWriter& project ) const;
         /**
          *  \brief      Clear the workflow.
          *

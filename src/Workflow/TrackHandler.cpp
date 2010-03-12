@@ -27,6 +27,7 @@
 
 #include <QDomDocument>
 #include <QDomElement>
+#include <QXmlStreamWriter>
 
 LightVideoFrame* TrackHandler::nullOutput = NULL;
 
@@ -276,18 +277,17 @@ TrackHandler::getTrackCount() const
 }
 
 void
-TrackHandler::save( QDomDocument& doc, QDomElement& timelineNode ) const
+TrackHandler::save( QXmlStreamWriter& project ) const
 {
     for ( unsigned int i = 0; i < m_trackCount; ++i)
     {
         if ( m_tracks[i]->getLength() > 0 )
         {
-            QDomElement     trackNode = doc.createElement( "track" );
-
-            trackNode.setAttribute( "id", i );
-
-            m_tracks[i]->save( doc, trackNode );
-            timelineNode.appendChild( trackNode );
+            project.writeStartElement( "track" );
+            project.writeAttribute( "type", QString::number( (int)m_trackType ) );
+            project.writeAttribute( "id", QString::number( i ) );
+            m_tracks[i]->save( project );
+            project.writeEndElement();
         }
     }
 }

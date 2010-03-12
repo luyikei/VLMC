@@ -33,6 +33,8 @@
 class   EffectEngine;
 class   TrackWorkflow;
 
+class   QXmlStreamWriter;
+
 class   TrackHandler : public QObject
 {
     Q_OBJECT
@@ -72,7 +74,7 @@ class   TrackHandler : public QObject
 
         bool                    endIsReached() const;
 
-        void                    save( QDomDocument& doc, QDomElement& timelineNode ) const;
+        void                    save( QXmlStreamWriter& project ) const;
 
         /**
          *  \brief      Will configure the track workflow so they render only one frame

@@ -68,7 +68,7 @@ class   TrackWorkflow : public QObject
         //FIXME: this won't be reliable as soon as we change the fps from the configuration
         static const unsigned int               nbFrameBeforePreload = 60;
 
-        void                                    save( QDomDocument& doc, QDomElement& trackNode ) const;
+        void                                    save( QXmlStreamWriter& project ) const;
         void                                    clear();
 
         void                                    renderOneFrame();

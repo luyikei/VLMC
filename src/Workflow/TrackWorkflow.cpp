@@ -29,9 +29,11 @@
 #include "AudioClipWorkflow.h"
 #include "Clip.h"
 #include "Media.h"
+
 #include <QReadWriteLock>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QXmlStreamWriter>
 
 TrackWorkflow::TrackWorkflow( unsigned int trackId, MainWorkflow::TrackType type  ) :
         m_trackId( trackId ),
@@ -386,7 +388,7 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
     return NULL;
 }
 
-void    TrackWorkflow::save( QDomDocument& doc, QDomElement& trackNode ) const
+void    TrackWorkflow::save( QXmlStreamWriter& project ) const
 {
     QReadLocker     lock( m_clipsLock );
 
@@ -395,44 +397,12 @@ void    TrackWorkflow::save( QDomDocument& doc, QDomElement& trackNode ) const
 
     for ( ; it != end ; ++it )
     {
-        QDomElement     clipNode = doc.createElement( "clip" );
-
-        {
-            QDomElement     parent = doc.createElement( "parent" );
-
-            QDomCharacterData   text = doc.createTextNode( it.value()->getClip()->getMedia()->baseClip()->uuid().toString() );
-            parent.appendChild( text );
-            clipNode.appendChild( parent );
-        }
-        {
-            QDomElement     startFrame = doc.createElement( "startFrame" );
-
-            QDomCharacterData   text = doc.createTextNode( QString::number( it.key() ) );
-            startFrame.appendChild( text );
-            clipNode.appendChild( startFrame );
-        }
-        {
-            QDomElement     begin = doc.createElement( "begin" );
-
-            QDomCharacterData   text = doc.createTextNode( QString::number( it.value()->getClip()->begin() ) );
-            begin.appendChild( text );
-            clipNode.appendChild( begin );
-        }
-        {
-            QDomElement     end = doc.createElement( "end" );
-
-            QDomCharacterData   text = doc.createTextNode( QString::number( it.value()->getClip()->end() ) );
-            end.appendChild( text );
-            clipNode.appendChild( end );
-        }
-        {
-            QDomElement     trackType = doc.createElement( "trackType" );
-
-            QDomCharacterData   text = doc.createTextNode( QString::number( m_trackType ) );
-            trackType.appendChild( text );
-            clipNode.appendChild( trackType );
-        }
-        trackNode.appendChild( clipNode );
+        project.writeStartElement( "clip" );
+        project.writeAttribute( "uuid", it.value()->getClip()->getParent()->uuid().toString() );
+        project.writeAttribute( "startFrame", QString::number( it.key() ) );
+        project.writeAttribute( "begin", QString::number( it.value()->getClip()->begin() ) );
+        project.writeAttribute( "end", QString::number( it.value()->getClip()->end() ) );
+        project.writeEndElement();
     }
 }
 

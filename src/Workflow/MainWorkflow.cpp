@@ -34,6 +34,7 @@
 #include "SettingsManager.h"
 
 #include <QDomElement>
+#include <QXmlStreamWriter>
 
 LightVideoFrame     *MainWorkflow::blackOutput = NULL;
 
@@ -379,14 +380,14 @@ MainWorkflow::loadProject( const QDomElement &project )
 }
 
 void
-MainWorkflow::saveProject( QDomDocument& doc, QDomElement& rootNode )
+MainWorkflow::saveProject( QXmlStreamWriter& project ) const
 {
-    QDomElement project = doc.createElement( "timeline" );
+    project.writeStartElement( "timeline" );
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
     {
-        m_tracks[i]->save( doc, project );
+        m_tracks[i]->save( project );
     }
-    rootNode.appendChild( project );
+    project.writeEndElement();
 }
 
 void
