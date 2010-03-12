@@ -26,6 +26,7 @@
 #include "MainWorkflow.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
+#include "Media.h"
 
 ImageClipWorkflow::ImageClipWorkflow( Clip *clip ) :
         ClipWorkflow( clip ),

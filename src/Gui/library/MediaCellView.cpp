@@ -23,12 +23,12 @@
 
 #include "MediaCellView.h"
 #include "ui_MediaCellView.h"
+
+#include "Media.h"
 #include "Library.h"
 #include "ClipProperty.h"
 
 #include <QTime>
-
-#include <QtDebug>
 
 MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         QWidget( parent ),

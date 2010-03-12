@@ -25,9 +25,12 @@
   */
 
 #include <QtDebug>
-#include "Library.h"
 
 #include "Clip.h"
+#include "Library.h"
+#include "Media.h"
+
+#include <QXmlStreamWriter>
 
 const int   Clip::DefaultFPS = 30;
 
@@ -290,4 +293,31 @@ void
 Clip::clear()
 {
     m_childs->clear();
+}
+
+void
+Clip::save( QXmlStreamWriter &project )
+{
+    project.writeStartElement( "clip" );
+    if ( isRootClip() == true )
+        project.writeAttribute( "media", m_media->fileInfo()->absoluteFilePath() );
+    else
+    {
+        project.writeAttribute( "parent", m_parent->uuid() );
+        project.writeAttribute( "rootClip", m_rootClip->uuid() );
+    }
+    project.writeAttribute( "uuid", m_uuid.toString() );
+    project.writeAttribute( "begin", QString::number( m_begin ) );
+    project.writeAttribute( "end", QString::number( m_end ) );
+    project.writeAttribute( "metatags", m_metaTags.join( "," ) );
+    project.writeAttribute( "notes", m_notes );
+    project.writeAttribute( "maxBegin", QString::number( m_maxBegin ) );
+    project.writeAttribute( "maxEnd", QString::number( m_maxEnd ) );
+    if ( m_childs->count() > 0 )
+    {
+        project.writeStartElement( "subClips" );
+        m_childs->save( project );
+        project.writeEndElement();
+    }
+    project.writeEndElement();
 }

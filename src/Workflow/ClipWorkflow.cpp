@@ -21,13 +21,14 @@
  *****************************************************************************/
 
 #include "vlmc.h"
-#include "ClipWorkflow.h"
-#include "MemoryPool.hpp"
-#include "LightVideoFrame.h"
 #include "Clip.h"
-#include "VLCMediaPlayer.h"
+#include "ClipWorkflow.h"
+#include "LightVideoFrame.h"
+#include "Media.h"
+#include "MemoryPool.hpp"
 #include "WaitCondition.hpp"
 #include "VLCMedia.h"
+#include "VLCMediaPlayer.h"
 
 #include <QReadWriteLock>
 #include <QWaitCondition>

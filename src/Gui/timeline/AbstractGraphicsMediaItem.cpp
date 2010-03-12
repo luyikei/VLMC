@@ -29,6 +29,7 @@
 
 #include "Clip.h"
 #include "Commands.h"
+#include "Media.h"
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem() :
         oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),

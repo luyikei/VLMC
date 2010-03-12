@@ -43,6 +43,8 @@ namespace LibVLCpp
 }
 class Clip;
 
+class   QXmlStreamWriter;
+
 /**
   * Represents a basic container for media informations.
   */
@@ -139,6 +141,8 @@ public:
     const Clip*                 baseClip() const { return m_baseClip; }
 
     bool                        isMetadataComputed() const;
+
+    void                        save( QXmlStreamWriter& project );
 
 private:
     void                        setFileType();

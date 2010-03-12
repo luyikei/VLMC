@@ -22,12 +22,13 @@
 
 #include "TracksView.h"
 
+#include "Commands.h"
 #include "Library.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsCursorItem.h"
-#include "Commands.h"
 #include "GraphicsTrack.h"
+#include "Media.h"
 #include "WorkflowRenderer.h"
 
 #include <QScrollBar>

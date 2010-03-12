@@ -36,6 +36,7 @@
 #include <QSettings>
 #include <QtDebug>
 #include <QTimer>
+#include <QXmlStreamWriter>
 
 #include <errno.h>
 #include <signal.h>
@@ -219,24 +220,21 @@ void    ProjectManager::saveProject( bool saveAs /*= true*/ )
 
 void    ProjectManager::__saveProject( const QString &fileName )
 {
-    QDomImplementation    implem = QDomDocument().implementation();
-    QString name = projectName();
-    QString publicId = "-//XADECK//DTD Stone 1.0 //EN";
-    QString systemId = "http://www-imagis.imag.fr/DTD/stone1.dtd";
-    QDomDocument doc(implem.createDocumentType( name, publicId, systemId ) );
-
-    QDomElement rootNode = doc.createElement( "vlmc" );
-
-    Library::getInstance()->saveProject( doc, rootNode );
-    MainWorkflow::getInstance()->saveProject( doc, rootNode );
-    SettingsManager::getInstance()->save( doc, rootNode );
-
-    doc.appendChild( rootNode );
-
-    QFile   file( fileName );
+    QFile               file( fileName );
     file.open( QFile::WriteOnly );
-    file.write( doc.toString().toAscii() );
-    file.close();
+
+    QXmlStreamWriter    project( &file );
+
+    project.setAutoFormatting( true );
+    project.writeStartDocument();
+    project.writeStartElement( "vlmc" );
+
+    Library::getInstance()->saveProject( project );
+//    MainWorkflow::getInstance()->saveProject( doc, rootNode );
+//    SettingsManager::getInstance()->save( doc, rootNode );
+
+    project.writeEndElement();
+    project.writeEndDocument();
 }
 
 void    ProjectManager::newProject( const QString &projectName )

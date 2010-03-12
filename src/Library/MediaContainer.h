@@ -30,6 +30,7 @@
 class   Media;
 class   Clip;
 class   QFileInfo;
+class   QXmlStreamWriter;
 
 class   MediaContainer : public QObject
 {
@@ -81,6 +82,16 @@ public:
      *  \return true if the Clip has been added.
      */
     bool        addClip( Clip* clip );
+
+    /**
+     *  \brief  Save the contained media to the given XML stream
+     *
+     *  This will save all contained clip. If a clip contained subclips, they will be saved
+     *  too, and so on.
+     *
+     *  \param  project     The QXmlStreamWriter to write into.
+     */
+    void        save( QXmlStreamWriter& project );
 
     /**
      *  \return All the loaded Clip

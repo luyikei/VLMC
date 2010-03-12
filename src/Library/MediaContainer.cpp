@@ -162,3 +162,10 @@ MediaContainer::count() const
 {
     return m_clips.size();
 }
+
+void
+MediaContainer::save( QXmlStreamWriter &project )
+{
+    foreach ( Clip* c, m_clips.values() )
+        c->save( project );
+}

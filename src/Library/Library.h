@@ -39,11 +39,10 @@
 #include <QFileInfo>
 #include <QMutex>
 #include <QMutexLocker>
-#include <QDomElement>
 #include <QProgressDialog>
 
-class QDomDocument;
-class QDomElement;
+class   QXmlStreamWriter;
+class   QDomElement;
 
 class Clip;
 class Media;
@@ -69,7 +68,7 @@ public slots:
     /**
      *  \brief
      */
-    void    saveProject( QDomDocument& doc, QDomElement& rootNode );
+    void    saveProject( QXmlStreamWriter& project );
 
 signals:
     /**

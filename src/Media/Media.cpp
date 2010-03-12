@@ -22,16 +22,18 @@
 
 /** \file
   * This file contains the Media class implementation.
-  * It contains a VLCMedia and the meta-datas.
+  * It contains the Media meta-datas, and information to be used with a VLC Media.
   * It's used by the Library
   */
 
-#include <QtDebug>
-#include <QUrl>
 #include "Media.h"
 #include "MetaDataManager.h"
 #include "VLCMedia.h"
 #include "Clip.h"
+
+#include <QXmlStreamWriter>
+#include <QtDebug>
+#include <QUrl>
 
 QPixmap*        Media::defaultSnapshot = NULL;
 const QString   Media::VideoExtensions = "*.mov *.avi *.mkv *.mpg *.mpeg *.wmv *.mp4 *.ogg *.ogv";
@@ -274,4 +276,12 @@ bool
 Media::isMetadataComputed() const
 {
     return m_metadataComputed;
+}
+
+void
+Media::save( QXmlStreamWriter& project )
+{
+    project.writeStartElement( "media" );
+    project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
+    project.writeEndElement();
 }

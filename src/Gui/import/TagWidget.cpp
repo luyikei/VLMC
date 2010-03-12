@@ -23,9 +23,10 @@
 
 #include "TagWidget.h"
 #include "ui_TagWidget.h"
+
+#include "Media.h"
+
 #include <QPushButton>
-#include <QDebug>
-#include <math.h>
 
 TagWidget::TagWidget( QWidget *parent, int nbButton, QStringList tagList ) :
     QWidget( parent ),

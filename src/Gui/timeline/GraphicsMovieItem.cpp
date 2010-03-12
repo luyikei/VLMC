@@ -25,7 +25,9 @@
 #include <QDebug>
 #include <QTime>
 #include <QFontMetrics>
+
 #include "GraphicsMovieItem.h"
+#include "Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
 

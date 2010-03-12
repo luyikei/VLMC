@@ -36,6 +36,7 @@
 #include <QDomElement>
 #include <QHash>
 #include <QUuid>
+#include <QXmlStreamWriter>
 
 void
 Library::loadProject( const QDomElement& medias )
@@ -126,9 +127,9 @@ Library::loadProject( const QDomElement& medias )
     emit projectLoaded();
 }
 
-void
-Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
-{
+//void
+//Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
+//{
 //    QHash<QUuid, Media*>::iterator          it = m_clips.begin();
 //    QHash<QUuid, Media*>::iterator          end = m_clips.end();
 //
@@ -169,5 +170,23 @@ Library::saveProject( QDomDocument& doc, QDomElement& rootNode )
 //        }
 //    }
 //    rootNode.appendChild( medias );
-    #warning "FIXME: Project saving";
+//    #warning "FIXME: Project saving";
+//}
+
+void
+Library::saveProject( QXmlStreamWriter& project )
+{
+    QHash<QUuid, Clip*>::const_iterator     it = m_clips.begin();
+    QHash<QUuid, Clip*>::const_iterator     end = m_clips.end();
+
+    project.writeStartElement( "medias" );
+    while ( it != end )
+    {
+        it.value()->getMedia()->save( project );
+        ++it;
+    }
+    project.writeEndElement();
+    project.writeStartElement( "clips" );
+    save( project );
+    project.writeEndElement();
 }

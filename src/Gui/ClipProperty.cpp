@@ -20,13 +20,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
-#include <QTime>
-#include <QPushButton>
-#include <QInputDialog>
 
 #include "ClipProperty.h"
 #include "ui_ClipProperty.h"
+#include "Media.h"
+
+#include <QTime>
+#include <QPushButton>
+#include <QInputDialog>
 
 ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     QDialog( parent ),

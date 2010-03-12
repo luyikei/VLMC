@@ -29,13 +29,13 @@
 # define CLIP_H__
 
 #include <QObject>
+#include <QStringList>
 #include <QUuid>
 
-#include "Media.h"
-
 class   MediaContainer;
+class   Media;
 
-class Media;
+class   QXmlStreamWriter;
 
 class   Clip : public QObject
 {
@@ -123,6 +123,8 @@ class   Clip : public QObject
         void                clear();
 
         bool                addSubclip( Clip* clip );
+
+        void                save( QXmlStreamWriter& project );
 
     private:
         Media               *m_media;

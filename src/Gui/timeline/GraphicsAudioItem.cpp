@@ -21,13 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QPainter>
-#include <QLinearGradient>
-#include <QDebug>
-#include <QTime>
 #include "GraphicsAudioItem.h"
+#include "Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
+
+#include <QPainter>
+#include <QLinearGradient>
+#include <QTime>
 
 GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : m_clip( clip )
 {
