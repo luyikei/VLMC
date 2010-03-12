@@ -231,7 +231,7 @@ void    ProjectManager::__saveProject( const QString &fileName )
 
     Library::getInstance()->saveProject( project );
     MainWorkflow::getInstance()->saveProject( project );
-//    SettingsManager::getInstance()->save( doc, rootNode );
+    SettingsManager::getInstance()->save( project );
 
     project.writeEndElement();
     project.writeEndDocument();

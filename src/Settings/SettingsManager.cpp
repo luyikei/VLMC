@@ -25,13 +25,13 @@
 #include "SettingValue.h"
 
 #include <QSettings>
-#include <QDomDocument>
 #include <QWriteLocker>
 #include <QReadLocker>
 #include <QXmlStreamWriter>
 #include <QStringList>
 
 #include <QtDebug>
+#include <QDomElement>
 
 void
 SettingsManager::setValue( const QString &key,
@@ -175,40 +175,21 @@ SettingsManager::save() const
 }
 
 void
-SettingsManager::save( QDomDocument &xmlfile, QDomElement &root ) const
+SettingsManager::save( QXmlStreamWriter& project ) const
 {
-    typedef QPair<QString, SettingValue*> settingPair;
-    QMultiHash<QString, settingPair>  parts;
+    SettingHash::const_iterator     it = m_xmlSettings.begin();
+    SettingHash::const_iterator     end = m_xmlSettings.end();
 
-    QReadLocker rl( &m_rwLock );
-    SettingHash::const_iterator it;
-    SettingHash::const_iterator ed = m_xmlSettings.end();
-
-    for ( it = m_xmlSettings.begin(); it != ed; ++it )
+    project.writeStartElement( "project" );
+    while ( it != end )
     {
-        QString key = it.key();
-        if ( key.count( "/" ) == 1 )
-        {
-            int idx = key.indexOf( "/" );
-            QString part = key.left( idx );
-            QString name = key.right( key.size() - idx - 1 );
-
-            parts.insert( part, settingPair( name, it.value() ) );
-        }
+        project.writeStartElement( "property" );
+        project.writeAttribute( "key", it.key() );
+        project.writeAttribute( "value", it.value()->get().toString() );
+        ++it;
+        project.writeEndElement();
     }
-    QList<QString>  keys = parts.uniqueKeys();
-    foreach( QString xmlKey, keys )
-    {
-        QDomElement node = xmlfile.createElement( xmlKey );
-        QList<settingPair>  pairs = parts.values( xmlKey );
-        foreach( settingPair pair, pairs )
-        {
-            QDomElement item = xmlfile.createElement( pair.first );
-            item.setAttribute( "value", pair.second->get().toString() );
-            node.appendChild( item );
-        }
-        root.appendChild( node );
-    }
+    project.writeEndElement();
 }
 
 bool

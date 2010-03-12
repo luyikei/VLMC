@@ -35,7 +35,6 @@
 class SettingValue;
 class QXmlStreamWriter;
 class QDomElement;
-class QDomDocument;
 
 
 //Var helpers :
@@ -115,7 +114,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
                                                 SettingsManager::Type type,
                                                 Qt::ConnectionType cType = Qt::AutoConnection );
         void                        save() const;
-        void                        save( QDomDocument &xmlfile, QDomElement& root ) const;
+        void                        save( QXmlStreamWriter& project ) const;
         bool                        load( const QDomElement &element );
 
         bool                        commit( SettingsManager::Type type );
