@@ -67,12 +67,12 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
 {
     if ( begin < 0 )
     {
-        m_begin = parent->begin();
+        m_begin = parent->m_begin;
         m_maxBegin = m_begin;
     }
     if ( end < 0 )
     {
-        m_end = parent->getMedia()->nbFrames();
+        m_end = parent->m_end;
         m_maxEnd = m_end;
     }
     if ( uuid.isEmpty() == true )
