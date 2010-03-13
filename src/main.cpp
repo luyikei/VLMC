@@ -28,7 +28,7 @@
 
 #include "config.h"
 #include "MainWindow.h"
-#include "SettingsManager.h"
+#include "ProjectManager.h"
 
 #include <QFile>
 
@@ -96,6 +96,8 @@ VLMCmain( int argc, char **argv )
     app.setPalette( p );
 
     MainWindow w;
+    if ( argc > 1 )
+        ProjectManager::getInstance()->loadProject( argv[argc - 1] );
     w.show();
     return app.exec();
 }
