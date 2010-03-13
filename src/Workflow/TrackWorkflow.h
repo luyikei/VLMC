@@ -87,6 +87,8 @@ class   TrackWorkflow : public QObject
         void                                    muteClip( const QUuid& uuid );
         void                                    unmuteClip( const QUuid& uuid );
 
+        void                                    preload();
+
     private:
         void                                    computeLength();
         void*                                   renderClip( ClipWorkflow* cw, qint64 currentFrame,

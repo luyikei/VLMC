@@ -87,7 +87,10 @@ TrackHandler::startRender()
     else
     {
         for ( unsigned int i = 0; i < m_trackCount; ++i )
+        {
             activateTrack( i );
+            m_tracks[i]->preload();
+        }
     }
 }
 

@@ -487,3 +487,20 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
     qWarning() << "Failed to unmute clip" << uuid << "it probably doesn't exist "
             "in this track";
 }
+
+void
+TrackWorkflow::preload()
+{
+    QReadLocker     lock( m_clipsLock );
+
+    QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
+    QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
+    while ( it != end )
+    {
+        qint64          start = it.key();
+        ClipWorkflow*   cw = it.value();
+        if ( start < TrackWorkflow::nbFrameBeforePreload )
+            preloadClip( cw );
+        ++it;
+    }
+}

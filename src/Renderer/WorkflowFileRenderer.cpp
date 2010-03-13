@@ -90,6 +90,8 @@ void        WorkflowFileRenderer::run()
 
     m_mainWorkflow->setFullSpeedRender( true );
     m_mainWorkflow->startRender( width, height );
+    //Waiting for renderers to preload some frames:
+    sleep( 1 );
     m_mediaPlayer->play();
 }
 
@@ -133,25 +135,25 @@ WorkflowFileRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flag
     return ret;
 }
 
-void        
+void
 WorkflowFileRenderer::unlock( void *datas, size_t size, void* buff )
 {
     WorkflowRenderer::unlock( datas, size, buff );
 }
 
-void        
+void
 WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedReason )
 {
     m_dialog->setProgressBarValue( frame * 100 / m_mainWorkflow->getLengthFrame() );
 }
 
-void*       
+void*
 WorkflowFileRenderer::getLockCallback()
 {
     return (void*)&WorkflowFileRenderer::lock;
 }
 
-void*       
+void*
 WorkflowFileRenderer::getUnlockCallback()
 {
     return (void*)&WorkflowFileRenderer::unlock;
