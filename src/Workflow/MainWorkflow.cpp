@@ -284,13 +284,11 @@ MainWorkflow::getClip( const QUuid &uuid, unsigned int trackId,
  *  \warning    The mainworkflow is expected to be already cleared by the ProjectManager
  */
 void
-MainWorkflow::loadProject( const QDomElement &project )
+MainWorkflow::loadProject( const QDomElement &root )
 {
-    if ( project.isNull() == true || project.tagName() != "timeline" )
-    {
-        qWarning() << "Invalid timeline node (" << project.tagName() << ')';
+    QDomElement     project = root.firstChildElement( "timeline" );
+    if ( project.isNull() == true )
         return ;
-    }
 
     QDomElement elem = project.firstChild().toElement();
 
@@ -298,81 +296,47 @@ MainWorkflow::loadProject( const QDomElement &project )
     {
         bool    ok;
 
-        Q_ASSERT( elem.tagName() == "track" );
         unsigned int trackId = elem.attribute( "id" ).toUInt( &ok );
         if ( ok == false )
         {
             qWarning() << "Invalid track number in project file";
             return ;
         }
+        MainWorkflow::TrackType     type;
+        int utype = elem.attribute( "type" ).toInt( &ok );
+        if ( ok == false || (utype < 0 && utype >= MainWorkflow::NbTrackType ) )
+        {
+            qWarning() << "Invalid track type";
+            return ;
+        }
+        type = static_cast<MainWorkflow::TrackType>( utype );
+
         QDomElement clip = elem.firstChild().toElement();
         while ( clip.isNull() == false )
         {
             //Iterate over clip fields:
-            QDomElement clipProperty = clip.firstChild().toElement();
-            QUuid                       parentUuid;
-            qint64                      begin;
-            qint64                      end;
-            qint64                      startPos;
-            MainWorkflow::TrackType     trackType = MainWorkflow::VideoTrack;
+            QString                     uuid;
+            QString                     begin;
+            QString                     end;
+            QString                     startFrame;
 
-            while ( clipProperty.isNull() == false )
+            uuid = clip.attribute( "uuid" );
+            begin = clip.attribute( "begin" );
+            end = clip.attribute( "end" );
+            startFrame = clip.attribute( "startFrame" );
+
+            if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
             {
-                QString tagName = clipProperty.tagName();
-                bool    ok;
-
-                if ( tagName == "parent" )
-                    parentUuid = QUuid( clipProperty.text() );
-                else if ( tagName == "begin" )
-                {
-                    begin = clipProperty.text().toLongLong( &ok );
-                    if ( ok == false )
-                    {
-                        qWarning() << "Invalid clip begin";
-                        return ;
-                    }
-                }
-                else if ( tagName == "end" )
-                {
-                    end = clipProperty.text().toLongLong( &ok );
-                    if ( ok == false )
-                    {
-                        qWarning() << "Invalid clip end";
-                        return ;
-                    }
-                }
-                else if ( tagName == "startFrame" )
-                {
-                    startPos = clipProperty.text().toLongLong( &ok );
-                    if ( ok == false )
-                    {
-                        qWarning() << "Invalid clip starting frame";
-                        return ;
-                    }
-                }
-                else if ( tagName == "trackType" )
-                {
-                    trackType = static_cast<MainWorkflow::TrackType>(
-                                                    clipProperty.text().toUInt( &ok ) );
-                    if ( ok == false )
-                    {
-                        qWarning() << "Invalid track type starting frame";
-                        return ;
-                    }
-                }
-                else
-                    qDebug() << "Unknown field" << clipProperty.tagName();
-
-                clipProperty = clipProperty.nextSibling().toElement();
+                qWarning() << "Invalid clip node";
+                return ;
             }
 
-            if ( Library::getInstance()->clip( parentUuid ) != NULL )
+            Clip* c = Library::getInstance()->clip( uuid );
+            if ( c != NULL )
             {
-                Clip    *c = new Clip( Library::getInstance()->clip( parentUuid ),
-                                       begin, end, parentUuid.toString() );
-                addClip( c, trackId, startPos, trackType );
+                addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
+                         trackId, startFrame.toLongLong(), type );
             }
-
             clip = clip.nextSibling().toElement();
         }
         elem = elem.nextSibling().toElement();

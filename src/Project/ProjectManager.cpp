@@ -133,10 +133,12 @@ void    ProjectManager::cleanChanged( bool val )
 
 void    ProjectManager::loadTimeline()
 {
-//    QDomElement     root = m_domDocument->documentElement();
-//
-//    MainWorkflow::getInstance()->loadProject( root.firstChildElement( "timeline" ) );
-//    emit projectUpdated( projectName(), true );
+    QDomElement     root = m_domDocument->documentElement();
+
+    MainWorkflow::getInstance()->loadProject( root );
+    emit projectUpdated( projectName(), true );
+//    SettingsManager::getInstance()->load( root.firstChildElement( "project" ) );
+    delete m_domDocument;
 }
 
 void    ProjectManager::loadProject( const QString& fileName )
@@ -151,8 +153,8 @@ void    ProjectManager::loadProject( const QString& fileName )
     m_projectFile->open( QFile::ReadOnly );
     m_projectFile->close();
 
-    QDomDocument    doc;
-    doc.setContent( m_projectFile );
+    m_domDocument = new QDomDocument;
+    m_domDocument->setContent( m_projectFile );
     m_needSave = false;
 
     if ( ProjectManager::isBackupFile( fileName ) == false )
@@ -165,11 +167,10 @@ void    ProjectManager::loadProject( const QString& fileName )
         m_projectFile = NULL;
     }
 
-    QDomElement     root = doc.documentElement();
+    QDomElement     root = m_domDocument->documentElement();
 
-//    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
+    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
     Library::getInstance()->loadProject( root );
-//    SettingsManager::getInstance()->load( root.firstChildElement( "project" ) );
 }
 
 QString  ProjectManager::acquireProjectFileName()

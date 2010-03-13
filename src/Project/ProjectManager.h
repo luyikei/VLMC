@@ -30,7 +30,8 @@
 
 #include "Singleton.hpp"
 
-class QFile;
+class   QFile;
+class   QDomDocument;
 
 class   ProjectManager : public QObject, public Singleton<ProjectManager>
 {
@@ -95,6 +96,7 @@ private:
     QString         m_projectName;
     QString         m_projectDescription;
     QTimer*         m_timer;
+    QDomDocument    *m_domDocument;
 
     friend class    Singleton<ProjectManager>;
 
