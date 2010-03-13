@@ -316,9 +316,13 @@ MainWorkflow::loadProject( const QDomElement &root )
         {
             //Iterate over clip fields:
             QString                     uuid;
+            QString                     begin;
+            QString                     end;
             QString                     startFrame;
 
             uuid = clip.attribute( "uuid" );
+            begin = clip.attribute( "begin" );
+            end = clip.attribute( "end" );
             startFrame = clip.attribute( "startFrame" );
 
             if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
@@ -330,7 +334,8 @@ MainWorkflow::loadProject( const QDomElement &root )
             Clip* c = Library::getInstance()->clip( uuid );
             if ( c != NULL )
             {
-                addClip( new Clip( c ), trackId, startFrame.toLongLong(), type );
+                addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
+                         trackId, startFrame.toLongLong(), type );
             }
             clip = clip.nextSibling().toElement();
         }
