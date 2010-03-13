@@ -422,12 +422,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         // Add missing tracks for the target
         if ( item->groupItem()->mediaType() == MainWorkflow::AudioTrack )
         {
-            while ( item->trackNumber() >= m_numAudioTrack )
+            while ( p.track() >= m_numAudioTrack )
                 addAudioTrack();
         }
         else if ( item->groupItem()->mediaType() == MainWorkflow::VideoTrack )
         {
-            while ( item->trackNumber() >= m_numVideoTrack )
+            while ( p.track() >= m_numVideoTrack )
                 addVideoTrack();
         }
 
