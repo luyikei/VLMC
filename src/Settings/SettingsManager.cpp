@@ -193,31 +193,29 @@ SettingsManager::save( QXmlStreamWriter& project ) const
 }
 
 bool
-SettingsManager::load( const QDomElement &element )
+SettingsManager::load( const QDomElement &root )
 {
     //For now it only handle a project node.
-    if ( element.isNull() == true || element.tagName() != "project" )
+    QDomElement     element = root.firstChildElement( "project" );
+    if ( element.isNull() == true )
     {
         qWarning() << "Invalid settings node";
         return false ;
     }
     QWriteLocker    wLock( &m_rwLock );
-    QDomNodeList list = element.childNodes();
-    int nbChild = list.size();
-
-     for ( int idx = 0; idx < nbChild; ++idx )
+    QDomElement s = element.firstChild().toElement();
+    while ( s.isNull() == false )
     {
-        QDomNamedNodeMap attrMap = list.at( idx ).attributes();
-        if ( attrMap.count() > 1 )
-        {
-            qWarning() << "Invalid number of attributes for" << list.at( idx ).nodeName();
-            continue ;
-        }
-        QString key = "project/" + list.at( idx ).toElement().tagName();
-        if ( m_xmlSettings.contains( key ) )
-            m_xmlSettings[key]->set( QVariant( attrMap.item( 0 ).nodeValue() ) );
+        QString     key = s.attribute( "key" );
+        QString     value = s.attribute( "value" );
+
+        if ( key.isEmpty() == true || value.isEmpty() == true )
+            qWarning() << "Invalid setting node.";
+        else
+            setValue( key, value, SettingsManager::Project );
+        s = s.nextSibling().toElement();
     }
-     return true;
+    return true;
 }
 
 bool

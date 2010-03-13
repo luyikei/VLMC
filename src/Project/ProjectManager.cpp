@@ -137,7 +137,7 @@ void    ProjectManager::loadTimeline()
 
     MainWorkflow::getInstance()->loadProject( root );
     emit projectUpdated( projectName(), true );
-//    SettingsManager::getInstance()->load( root.firstChildElement( "project" ) );
+    SettingsManager::getInstance()->load( root );
     delete m_domDocument;
 }
 
