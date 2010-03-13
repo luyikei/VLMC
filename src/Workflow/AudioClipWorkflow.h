@@ -40,6 +40,7 @@ class   AudioClipWorkflow : public ClipWorkflow
             quint32         nbSample;
             quint32         nbChannels;
             qint64          ptsDiff;
+            qint64          pts;
             quint32         debugId;
         };
         class   StackedBuffer : public ::StackedBuffer<AudioSample*>
@@ -54,23 +55,20 @@ class   AudioClipWorkflow : public ClipWorkflow
 
         AudioClipWorkflow( Clip* clip );
         ~AudioClipWorkflow();
-        void                    *getLockCallback() const;
-        void                    *getUnlockCallback() const;
-        virtual void            *getOutput( ClipWorkflow::GetMode mode );
+        void                        *getLockCallback() const;
+        void                        *getUnlockCallback() const;
+        virtual void                *getOutput( ClipWorkflow::GetMode mode );
 
     protected:
-        virtual quint32        getNbComputedBuffers() const;
-        virtual quint32        getMaxComputedBuffers() const;
-        void                    flushComputedBuffers();
+        virtual quint32             getNbComputedBuffers() const;
+        virtual quint32             getMaxComputedBuffers() const;
+        void                        flushComputedBuffers();
 
     private:
-        void                    releaseBuffer( AudioSample* sample );
-
-    private:
-        QQueue<AudioSample*>        m_computedBuffers;
-        QQueue<AudioSample*>        m_availableBuffers;
+        void                        releaseBuffer( AudioSample *sample );
         void                        initVlcOutput();
         AudioSample*                createBuffer( size_t size );
+        void                        insertPastBlock( AudioSample* as );
         static void                 lock( AudioClipWorkflow* clipWorkflow,
                                           quint8** pcm_buffer , quint32 size );
         static void                 unlock( AudioClipWorkflow* clipWorkflow,
@@ -78,6 +76,11 @@ class   AudioClipWorkflow : public ClipWorkflow
                                             quint32 rate, quint32 nb_samples,
                                             quint32 bits_per_sample,
                                             quint32 size, qint64 pts );
+
+    private:
+        QQueue<AudioSample*>        m_computedBuffers;
+        QQueue<AudioSample*>        m_availableBuffers;
+        qint64                      m_ptsOffset;
 
         static const quint32   nbBuffers = 256;
 };

@@ -36,6 +36,7 @@ AudioClipWorkflow::AudioClipWorkflow( Clip *clip ) :
         as->debugId = i;
     }
     debugType = 1;
+    m_ptsOffset = 0;
 }
 
 AudioClipWorkflow::~AudioClipWorkflow()
@@ -72,6 +73,16 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
         qCritical() << "A sound buffer should never be asked with 'Get' mode";
     ::StackedBuffer<AudioSample*> *buff = new StackedBuffer(
             m_computedBuffers.dequeue(), this, true );
+    if ( m_previousPts == -1 )
+    {
+        buff->get()->ptsDiff = 0;
+        m_previousPts = buff->get()->pts;
+    }
+    else
+    {
+        buff->get()->ptsDiff = buff->get()->pts - m_previousPts;
+        m_previousPts = buff->get()->pts;
+    }
     postGetOutput();
     return buff;
 }
@@ -88,6 +99,7 @@ AudioClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( ":sout-transcode-acodec=f32l" );
     m_vlcMedia->addOption( ":sout-transcode-samplerate=48000" );
     m_vlcMedia->addOption( ":sout-transcode-channels=2" );
+    m_vlcMedia->addOption( ":no-sout-transcode-hurry-up" );
     if ( m_fullSpeedRender == false )
         m_vlcMedia->addOption( ":sout-smem-time-sync" );
     else
@@ -138,17 +150,49 @@ AudioClipWorkflow::unlock( AudioClipWorkflow *cw, quint8 *pcm_buffer,
     Q_UNUSED( bits_per_sample );
     Q_UNUSED( size );
 
-    cw->computePtsDiff( pts );
+    pts -= cw->m_ptsOffset;
     AudioSample* as = cw->m_computedBuffers.last();
     if ( as->buff != NULL )
     {
         as->nbSample = nb_samples;
         as->nbChannels = channels;
-        as->ptsDiff = cw->m_currentPts - cw->m_previousPts;
+        as->ptsDiff = 0;
+        as->pts = pts;
+        if ( cw->m_pauseDuration != -1 )
+        {
+            cw->m_ptsOffset += cw->m_pauseDuration;
+            cw->m_pauseDuration = -1;
+        }
+        if ( cw->m_currentPts > pts )
+        {
+            cw->m_computedBuffers.removeLast();
+            cw->insertPastBlock( as );
+        }
+        else
+            cw->m_currentPts = pts;
     }
     cw->commonUnlock();
     cw->m_renderLock->unlock();
     cw->m_computedBuffersMutex->unlock();
+}
+
+void
+AudioClipWorkflow::insertPastBlock( AudioSample *as )
+{
+    QQueue<AudioSample*>::iterator    it = m_computedBuffers.begin();
+    QQueue<AudioSample*>::iterator    end = m_computedBuffers.end();
+
+    while ( it != end )
+    {
+        if ( (*it)->pts > as->pts )
+        {
+            m_computedBuffers.insert( it, as );
+            return ;
+        }
+        ++it;
+    }
+    //Fail safe: reinsert the block at the end.
+    m_computedBuffers.push_back( as );
 }
 
 quint32

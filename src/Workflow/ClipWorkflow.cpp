@@ -226,6 +226,11 @@ void        ClipWorkflow::commonUnlock()
 
 void    ClipWorkflow::computePtsDiff( qint64 pts )
 {
+    if ( debugType == 1 && pts < m_previousPts )
+    {
+        qCritical() << "New PTS is lower than previous PTS !<<<<<<<<<<<<<<<<<<<<<<<<<<" << m_previousPts << pts;
+    }
+
     if ( m_previousPts == -1 )
         m_previousPts = pts;
     if ( m_currentPts == -1 )
@@ -242,10 +247,6 @@ void    ClipWorkflow::computePtsDiff( qint64 pts )
 //    {
 //        qDebug() << "in computePtsDiff, After >> : pts:" << pts << "previousPts:" << m_previousPts
 //                << "currentPts:" << m_currentPts;
-//    }
-//    if ( debugType == 1 && pts < m_previousPts )
-//    {
-//        qCritical() << "New PTS is lower than previous PTS !<<<<<<<<<<<<<<<<<<<<<<<<<<";
 //    }
     m_currentPts = qMax( pts, m_previousPts );
 }
