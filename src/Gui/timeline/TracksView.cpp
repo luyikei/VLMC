@@ -476,7 +476,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         if ( p.isValid() )
         {
             item->setStartPos( p.time() );
-            item->setParentItem( getTrack( item->mediaType(), track ) );
+            item->setParentItem( getTrack( item->mediaType(), p.track() ) );
         }
     }
 }
