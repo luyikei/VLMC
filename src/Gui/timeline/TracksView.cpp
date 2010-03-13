@@ -49,8 +49,6 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     //TODO should be defined by the settings
     m_tracksHeight = 25;
 
-    m_tracksCount = mainWorkflow->getTrackCount( MainWorkflow::VideoTrack );
-
     m_numAudioTrack = 0;
     m_numVideoTrack = 0;
     m_dragVideoItem = NULL;
@@ -638,16 +636,10 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
     if ( m_dragAudioItem || m_dragVideoItem )
         updateDurationNeeded = true;
 
-    if ( m_dragAudioItem )
-    {
-        delete m_dragAudioItem;
-        m_dragAudioItem = NULL;
-    }
-    if ( m_dragVideoItem )
-    {
-        delete m_dragVideoItem;
-        m_dragVideoItem = NULL;
-    }
+    delete m_dragAudioItem;
+    delete m_dragVideoItem;
+    m_dragAudioItem = NULL;
+    m_dragVideoItem = NULL;
 
     if ( updateDurationNeeded )
         updateDuration();

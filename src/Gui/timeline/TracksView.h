@@ -110,12 +110,6 @@ public:
      */
     int tracksHeight() const { return m_tracksHeight; }
     /**
-     * \brief Get the number of tracks.
-     * \warning This method only returns tracks of type VideoTrack!
-     * \return The number of tracks.
-     */
-    unsigned int tracksCount() const { return m_tracksCount; }
-    /**
      * \brief Change the position of the cursor.
      * \param pos The position where to move the cursor, in frames.
      * \sa cursorPos
@@ -311,7 +305,6 @@ private:
     GraphicsTrack           *getTrack( MainWorkflow::TrackType type, unsigned int number );
     QGraphicsScene          *m_scene;
     int                     m_tracksHeight;
-    unsigned int            m_tracksCount;
     int                     m_projectDuration;
     GraphicsCursorItem      *m_cursorLine;
     QGraphicsLinearLayout   *m_layout;
