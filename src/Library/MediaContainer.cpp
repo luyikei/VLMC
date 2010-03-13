@@ -206,6 +206,7 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
             if ( m != NULL )
             {
                 c = new Clip( m, 0, -1, uuid );
+                m->setBaseClip( c );
                 addClip( c );
             }
         }
