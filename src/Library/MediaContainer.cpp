@@ -226,6 +226,9 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
                 addClip( c );
             }
         }
+        if ( metatags.isEmpty() == false )
+            c->setMetaTags( metatags.split( ',' ) );
+        c->setNotes( notes );
         QDomElement subClips = clip.firstChildElement( "subClips" );
         if ( subClips.isNull() == false )
             c->getChilds()->load( subClips, this );
