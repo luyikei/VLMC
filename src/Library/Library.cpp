@@ -61,6 +61,7 @@ Library::loadProject( const QDomElement& doc )
     if ( clips.isNull() == true )
         return ;
     load( clips, this );
+    qDebug() << m_clips;
     emit projectLoaded();
 }
 

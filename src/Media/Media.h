@@ -139,6 +139,7 @@ public:
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
+    void                        setBaseClip( Clip* clip );
 
     bool                        isMetadataComputed() const;
 

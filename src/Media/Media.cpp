@@ -77,7 +77,6 @@ Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
         m_fileName = m_mrl;
         qDebug() << "Loading a stream";
     }
-    m_baseClip = new Clip( this, 0, -1, uuid );
     m_audioValueList = new QList<int>();
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
 }
@@ -284,4 +283,11 @@ Media::save( QXmlStreamWriter& project )
     project.writeStartElement( "media" );
     project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
     project.writeEndElement();
+}
+
+void
+Media::setBaseClip( Clip *clip )
+{
+    Q_ASSERT( m_baseClip == NULL );
+    m_baseClip = clip;
 }
