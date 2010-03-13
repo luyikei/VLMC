@@ -133,16 +133,10 @@ void    ProjectManager::cleanChanged( bool val )
 
 void    ProjectManager::loadTimeline()
 {
-    QDomElement     root = m_domDocument->documentElement();
-
-    MainWorkflow::getInstance()->loadProject( root.firstChildElement( "timeline" ) );
-    emit projectUpdated( projectName(), true );
-}
-
-void    ProjectManager::parseProjectNode( const QDomElement &node )
-{
-    QDomElement     projectNameNode = node.firstChildElement( "ProjectName" );
-    m_projectName = projectNameNode.attribute( "value", ProjectManager::unNamedProject );
+//    QDomElement     root = m_domDocument->documentElement();
+//
+//    MainWorkflow::getInstance()->loadProject( root.firstChildElement( "timeline" ) );
+//    emit projectUpdated( projectName(), true );
 }
 
 void    ProjectManager::loadProject( const QString& fileName )
@@ -154,11 +148,11 @@ void    ProjectManager::loadProject( const QString& fileName )
         return ;
 
     m_projectFile = new QFile( fileName );
-
-    m_domDocument = new QDomDocument;
     m_projectFile->open( QFile::ReadOnly );
-    m_domDocument->setContent( m_projectFile );
     m_projectFile->close();
+
+    QDomDocument    doc;
+    doc.setContent( m_projectFile );
     m_needSave = false;
 
     if ( ProjectManager::isBackupFile( fileName ) == false )
@@ -171,12 +165,11 @@ void    ProjectManager::loadProject( const QString& fileName )
         m_projectFile = NULL;
     }
 
-    QDomElement     root = m_domDocument->documentElement();
+    QDomElement     root = doc.documentElement();
 
-    parseProjectNode( root.firstChildElement( "project" ) );
-    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
-    Library::getInstance()->loadProject( root.firstChildElement( "medias" ) );
-    SettingsManager::getInstance()->load( root.firstChildElement( "project" ) );
+//    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
+    Library::getInstance()->loadProject( root );
+//    SettingsManager::getInstance()->load( root.firstChildElement( "project" ) );
 }
 
 QString  ProjectManager::acquireProjectFileName()

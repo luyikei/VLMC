@@ -31,6 +31,7 @@ class   Media;
 class   Clip;
 class   QFileInfo;
 class   QXmlStreamWriter;
+class   QDomElement;
 
 class   MediaContainer : public QObject
 {
@@ -101,6 +102,8 @@ public:
      */
     void        save( QXmlStreamWriter& project );
 
+    void        load( const QDomElement& root, MediaContainer *parent );
+
     /**
      *  \return All the loaded Clip
      */
@@ -115,6 +118,13 @@ protected:
      *  \brief The List of medias loaded into the library
      */
     QHash<QUuid, Clip*>     m_clips;
+
+    /**
+     *  \brief  Used when loading a project.
+     *
+     *  This should not have an associated getter.
+     */
+    QHash<QString, Media*>  m_medias;
 
     Clip*                   m_parent;
 

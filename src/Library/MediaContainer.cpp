@@ -21,12 +21,15 @@
  *****************************************************************************/
 
 #include <QHash>
+#include <QDomElement>
 #include <QUuid>
 
 #include "Clip.h"
 #include "MediaContainer.h"
 #include "Media.h"
 #include "MetaDataManager.h"
+
+#include <QtDebug>
 
 MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
 {
@@ -81,7 +84,6 @@ MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
         }
     }
     MetaDataManager::getInstance()->computeMediaMetadata( media );
-    addMedia( media );
     return media;
 }
 
@@ -102,9 +104,12 @@ MediaContainer::addClip( Clip* clip )
     foreach ( Clip* c, m_clips.values() )
     {
         if ( clip->uuid() == c->uuid() ||
-             ( clip->getMedia()->fileInfo() == clip->getMedia()->fileInfo() &&
+             ( clip->getMedia()->fileInfo() == c->getMedia()->fileInfo() &&
                     ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
+        {
+            qDebug() << "Clip already loaded.";
             return false;
+        }
     }
     m_clips[clip->uuid()] = clip;
     emit newClipLoaded( clip );
@@ -184,4 +189,46 @@ MediaContainer::save( QXmlStreamWriter &project )
 {
     foreach ( Clip* c, m_clips.values() )
         c->save( project );
+}
+
+void
+MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
+{
+    QDomElement clip = clips.firstChild().toElement();
+
+    while ( clip.isNull() == false )
+    {
+        QString     uuid = clip.attribute( "uuid" );
+        QString     metatags = clip.attribute( "metatags" );
+        QString     notes = clip.attribute( "notes" );
+        Clip        *c;
+
+        if ( clip.hasAttribute( "media" ) == true )
+        {
+            QString media = clip.attribute( "media" );
+            Media*  m = m_medias[media];
+            if ( m != NULL )
+            {
+                c = new Clip( m, 0, -1, uuid );
+                addClip( c );
+            }
+        }
+        else
+        {
+            QString     parent = clip.attribute( "parent" );
+            QString     begin = clip.attribute( "begin" );
+            QString     end = clip.attribute( "end" );
+
+            if ( parent.isEmpty() == false )
+            {
+                Clip*   p = parentMC->clip( QUuid( parent ) );
+                c = new Clip( p, begin.toLongLong(), end.toLongLong(), uuid );
+                addClip( c );
+            }
+        }
+        QDomElement subClips = clip.firstChildElement( "subClips" );
+        if ( subClips.isNull() == false )
+            c->getChilds()->load( subClips, this );
+        clip = clip.nextSibling().toElement();
+    }
 }

@@ -172,6 +172,7 @@ ImportController::importMedia( const QString &filePath )
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
 
     Media* media = m_temporaryMedias->addMedia( filePath );
+    m_temporaryMedias->addClip( media->baseClip() );
     if ( media )
         connect( media, SIGNAL( metaDataComputed( const Media* ) ),
                  this, SLOT( metaDataComputed( const Media* ) ) );

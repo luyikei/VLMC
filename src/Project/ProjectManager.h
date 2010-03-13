@@ -70,7 +70,6 @@ private:
      *  It's only purpose it to write the project for very specific cases.
      */
     void            __saveProject( const QString& fileName );
-    void            parseProjectNode( const QDomElement& node );
     void            emergencyBackup();
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
@@ -91,7 +90,6 @@ private:
 
 private:
     QFile*          m_projectFile;
-    QDomDocument*   m_domDocument;
     bool            m_needSave;
     QStringList     m_recentsProjects;
     QString         m_projectName;
