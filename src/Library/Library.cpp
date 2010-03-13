@@ -46,7 +46,9 @@ Library::loadProject( const QDomElement& doc )
     if ( medias.isNull() == true )
         return ;
 
-    m_nbMediaToLoad = 0;
+    //Add a virtual media, which represents all the clip.
+    //This avoid emitting projectLoaded(); before all the clip are actually loaded.
+    m_nbMediaToLoad = 1;
     QDomElement media = medias.firstChild().toElement();
     while ( media.isNull() == false )
     {
@@ -65,6 +67,7 @@ Library::loadProject( const QDomElement& doc )
     if ( clips.isNull() == true )
         return ;
     load( clips, this );
+    mediaLoaded( NULL );
 }
 
 void
@@ -88,8 +91,11 @@ Library::saveProject( QXmlStreamWriter& project )
 void
 Library::mediaLoaded( const Media* media )
 {
-    disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
-             this, SLOT( mediaLoaded( const Media* ) ) );
+    if ( media != NULL )
+    {
+        disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
+                 this, SLOT( mediaLoaded( const Media* ) ) );
+    }
     m_nbMediaToLoad.fetchAndAddAcquire( -1 );
     if ( m_nbMediaToLoad == 0 )
         emit projectLoaded();
