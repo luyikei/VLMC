@@ -158,7 +158,7 @@ void    ProjectManager::loadProject( const QString& fileName )
     m_needSave = false;
 
     if ( ProjectManager::isBackupFile( fileName ) == false )
-        appendToRecentProject( fileName );
+        appendToRecentProject( QFileInfo( *m_projectFile ).absoluteFilePath() );
     else
     {
         //Delete the project file representation, so the next time the user
@@ -328,15 +328,14 @@ bool    ProjectManager::isBackupFile( const QString& projectFile )
 
 void    ProjectManager::appendToRecentProject( const QString& projectFile )
 {
-        // Append the item to the recents list
-        m_recentsProjects.removeAll( projectFile );
-        m_recentsProjects.prepend( projectFile );
-        while ( m_recentsProjects.count() > 15 )
-            m_recentsProjects.removeLast();
+    // Append the item to the recents list
+    m_recentsProjects.removeAll( projectFile );
+    m_recentsProjects.prepend( projectFile );
+    while ( m_recentsProjects.count() > 15 )
+        m_recentsProjects.removeLast();
 
-        QSettings s;
-        s.setValue( "RecentsProjects", m_recentsProjects );
-        s.sync();
+    QSettings s;
+    s.setValue( "RecentsProjects", m_recentsProjects );
 }
 
 void    ProjectManager::automaticSaveEnabledChanged( const QVariant& val )
