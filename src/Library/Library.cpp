@@ -38,6 +38,10 @@
 #include <QUuid>
 #include <QXmlStreamWriter>
 
+Library::Library() : m_nbMediaToLoad( 0 )
+{
+}
+
 void
 Library::loadProject( const QDomElement& doc )
 {
@@ -53,7 +57,10 @@ Library::loadProject( const QDomElement& doc )
         {
             QString mrl = media.attribute( "mrl" );
             Media* m = addMedia( mrl );
+            connect( m, SIGNAL( metaDataComputed( const Media* ) ),
+                     this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
             m_medias[mrl] = m;
+            ++m_nbMediaToLoad;
         }
         media = media.nextSibling().toElement();
     }
@@ -61,7 +68,6 @@ Library::loadProject( const QDomElement& doc )
     if ( clips.isNull() == true )
         return ;
     load( clips, this );
-    emit projectLoaded();
 }
 
 void
@@ -80,4 +86,14 @@ Library::saveProject( QXmlStreamWriter& project )
     project.writeStartElement( "clips" );
     save( project );
     project.writeEndElement();
+}
+
+void
+Library::mediaLoaded( const Media* media )
+{
+    disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
+             this, SLOT( mediaLoaded( const Media* ) ) );
+    --m_nbMediaToLoad;
+    if ( m_nbMediaToLoad == 0 )
+        emit projectLoaded();
 }

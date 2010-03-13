@@ -57,8 +57,11 @@ class Library : public MediaContainer, public Singleton<Library>
     Q_DISABLE_COPY( Library );
 
 private:
-    Library(){}
+    Library();
     virtual ~Library(){}
+
+private:
+    quint32     m_nbMediaToLoad;
 
 public slots:
     /**
@@ -69,6 +72,9 @@ public slots:
      *  \brief
      */
     void    saveProject( QXmlStreamWriter& project );
+
+private slots:
+    void    mediaLoaded( const Media* m );
 
 signals:
     /**
