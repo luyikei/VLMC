@@ -305,7 +305,6 @@ Clip::save( QXmlStreamWriter &project )
     else
     {
         project.writeAttribute( "parent", m_parent->uuid() );
-        project.writeAttribute( "rootClip", m_rootClip->uuid() );
         project.writeAttribute( "begin", QString::number( m_begin ) );
         project.writeAttribute( "end", QString::number( m_end ) );
     }
