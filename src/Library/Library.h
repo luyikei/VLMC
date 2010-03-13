@@ -33,13 +33,8 @@
 #include "Singleton.hpp"
 #include "MediaContainer.h"
 
-#include <QHash>
 #include <QObject>
-#include <QUuid>
-#include <QFileInfo>
-#include <QMutex>
-#include <QMutexLocker>
-#include <QProgressDialog>
+#include <QAtomicInt>
 
 class   QXmlStreamWriter;
 class   QDomElement;
@@ -57,11 +52,11 @@ class Library : public MediaContainer, public Singleton<Library>
     Q_DISABLE_COPY( Library );
 
 private:
-    Library();
+    Library() {}
     virtual ~Library(){}
 
 private:
-    quint32     m_nbMediaToLoad;
+    QAtomicInt  m_nbMediaToLoad;
 
 public slots:
     /**
