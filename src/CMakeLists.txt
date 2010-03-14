@@ -123,17 +123,10 @@ SET (VLMC_HDRS
     Gui/MainWindow.h
     Gui/preview/PreviewRuler.h
     Gui/preview/PreviewWidget.h
-    Gui/settings/BoolWidget.h
-    Gui/settings/DoubleWidget.h
-    Gui/settings/IntWidget.h
-    Gui/settings/ISettingsCategorieWidget.h
-    Gui/settings/KeyboardShortcut.h
     Gui/settings/KeyboardShortcutInput.h
-    Gui/settings/LanguageWidget.h
     Gui/settings/Panel.h
     Gui/settings/PreferenceWidget.h
     Gui/settings/Settings.h
-    Gui/settings/StringWidget.h
     Gui/import/TagWidget.h
     Gui/timeline/AbstractGraphicsMediaItem.h
     Gui/timeline/GraphicsAudioItem.h 
@@ -213,7 +206,7 @@ IF (WITH_CRASHHANDLER_GUI)
     ELSE ( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
         LIST( APPEND VLMC_SRCS Tools/Win32BacktraceGenerator.cpp )
     ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-    LIST( APPEND VLMC_HDRS Gui/widgets/CrashHandler.h Tools/BacktraceGenerator.h )
+    LIST( APPEND VLMC_HDRS Gui/widgets/CrashHandler.h )
     LIST( APPEND VLMC_UIS Gui/widgets/CrashHandler.ui )
     
 ENDIF(WITH_CRASHHANDLER_GUI)

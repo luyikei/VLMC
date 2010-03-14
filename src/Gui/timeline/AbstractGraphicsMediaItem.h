@@ -40,6 +40,7 @@ class GraphicsTrack;
 class AbstractGraphicsMediaItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES( QGraphicsItem )
     friend class TracksView;
 public:
     enum From

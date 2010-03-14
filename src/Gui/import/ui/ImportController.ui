@@ -229,7 +229,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>horizontalLayoutWidget</zorder>
   <zorder>buttonBox</zorder>
   <zorder>stackViewContainer</zorder>
  </widget>

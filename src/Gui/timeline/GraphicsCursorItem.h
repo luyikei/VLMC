@@ -35,6 +35,7 @@
 class GraphicsCursorItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES( QGraphicsItem )
 public:
     GraphicsCursorItem( const QPen& pen );
     int                 cursorPos() const { return ( int )pos().x(); }
