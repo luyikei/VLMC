@@ -80,10 +80,10 @@ WorkflowRenderer::~WorkflowRenderer()
 void
 WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
 {
-    char        videoString[512];
-    char        inputSlave[256];
-    char        audioParameters[256];
-    char        callbacks[64];
+    QString     videoString;
+    QString     inputSlave;
+    QString     audioParameters;
+    QString     callbacks;
 
     if ( m_renderVideoFrame != NULL )
         delete m_renderVideoFrame;
@@ -93,23 +93,25 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     //Clean any previous render.
     memset( m_renderVideoFrame, 0, m_width * m_height * Pixel::NbComposantes );
 
-    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:data=%lld:codec=%s:cat=2:caching=0",
-             width, height, "16/9", "30/1",
-             (qint64)m_videoEsHandler, "RV24" );
-    sprintf( audioParameters, "data=%lld:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
-             (qint64)m_audioEsHandler, m_rate, m_nbChannels );
-    strcpy( inputSlave, ":input-slave=imem://" );
-    strcat( inputSlave, audioParameters );
+    QTextStream( &videoString ) << "width=" << width << ":height=" << height <<
+            ":dar=" << "16/9" << ":fps=" << "30/1" << ":data=" <<
+            (qint64)m_videoEsHandler << ":codec=" << "RV24" << ":cat=2:caching=0";
+
+    QTextStream( &audioParameters ) << "data=" << (qint64)m_audioEsHandler <<
+            ":cat=1:codec=f32l:samplerate=" << m_rate << ":channels=" << m_nbChannels <<
+            ":caching=0";
+    inputSlave = ":input-slave=imem://" + audioParameters;
 
     if ( m_media != NULL )
         delete m_media;
-    m_media = new LibVLCpp::Media( "imem://" + QString( videoString ) );
-    m_media->addOption( inputSlave );
+    m_media = new LibVLCpp::Media( "imem://" + videoString );
+    m_media->addOption( inputSlave.toStdString().c_str() );
 
-    sprintf( callbacks, "imem-get=%lld", (qint64)getLockCallback() );
-    m_media->addOption( callbacks );
-    sprintf( callbacks, ":imem-release=%lld", (qint64)getUnlockCallback() );
-    m_media->addOption( callbacks );
+    QTextStream( &callbacks ) << "imem-get=" << (qint64)getLockCallback();
+    m_media->addOption( callbacks.toStdString().c_str() );
+    callbacks = "";
+    QTextStream( &callbacks ) << ":imem-release=" << (qint64)getUnlockCallback();
+    m_media->addOption( callbacks.toStdString().c_str() );
     m_media->addOption( ":text-renderer dummy" );
 }
 
