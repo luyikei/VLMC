@@ -56,6 +56,8 @@ PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::T
         m_settings.push_back( widget );
     }
     setLayout( layout );
+    m_categorie[0] = m_categorie[0].toUpper();
+
 }
 
 ISettingsCategorieWidget*
@@ -83,4 +85,10 @@ PreferenceWidget::save()
 {
     foreach ( ISettingsCategorieWidget* w, m_settings )
         w->save();
+}
+
+const QString&
+PreferenceWidget::categorie() const
+{
+    return m_categorie;
 }

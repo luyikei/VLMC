@@ -42,6 +42,7 @@ class   PreferenceWidget : public QWidget
         virtual ~PreferenceWidget() {}
 
         virtual void    save();
+        const QString   &categorie() const;
     private:
         ISettingsCategorieWidget        *widgetFactory( SettingValue* s );
 

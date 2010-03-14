@@ -165,7 +165,7 @@ void    Settings::switchWidget( int index )
     // This should never happen
     if ( !pWidget )
         return;
-
+    m_title->setText( pWidget->categorie() );
     // If there is already a widget into the QScrollArea take it
     // to avoid its deletion.
     if ( m_configPanel->widget() )
