@@ -91,7 +91,7 @@ void        WorkflowFileRenderer::run()
     m_mainWorkflow->setFullSpeedRender( true );
     m_mainWorkflow->startRender( width, height );
     //Waiting for renderers to preload some frames:
-    sleep( 1 );
+    SleepS( 1 );
     m_mediaPlayer->play();
 }
 

@@ -36,6 +36,12 @@
 #define SleepMS( x ) Sleep( x )
 #endif
 
+#ifdef Q_WS_WIN
+#define SleepS( x ) Sleep( (x) * 1000 )
+#else
+#define SleepS( x ) sleep( x )
+#endif
+
 enum ToolButtons
 {
     TOOL_DEFAULT,
