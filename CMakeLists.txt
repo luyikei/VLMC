@@ -38,6 +38,8 @@ IF(WIN32)
     # Building in release for WIN32
     set(CMAKE_BUILD_TYPE "Release")
     SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELEASE QT_NO_DEBUG)
+    # Use mingw's sprintf instead of windows's
+    ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
 ENDIF(WIN32)
 
 # Optionally allow embedding libvlc into the binary as

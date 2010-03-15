@@ -23,6 +23,8 @@
 #include <QtDebug>
 #include <QThread>
 #include <QWaitCondition>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
 #include "WorkflowRenderer.h"
 #include "timeline/Timeline.h"
@@ -93,10 +95,10 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     //Clean any previous render.
     memset( m_renderVideoFrame, 0, m_width * m_height * Pixel::NbComposantes );
 
-    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:data=%lld:codec=%s:cat=2:caching=0",
+    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:data=%" PRId64 ":codec=%s:cat=2:caching=0",
              width, height, "16/9", "30/1",
              (qint64)m_videoEsHandler, "RV24" );
-    sprintf( audioParameters, "data=%lld:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
+    sprintf( audioParameters, "data=%"PRId64":cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
              (qint64)m_audioEsHandler, m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );
     strcat( inputSlave, audioParameters );
