@@ -4,8 +4,8 @@ SET(CMAKE_SYSTEM_NAME Windows)
 SET(CMAKE_SYSTEM_VERSION 1)
 
 # specify the cross compiler
-SET(CMAKE_C_COMPILER   /usr/bin/i486-mingw32-gcc)
-SET(CMAKE_CXX_COMPILER /usr/bin/i486-mingw32-g++)
+SET(CMAKE_C_COMPILER   i486-mingw32-gcc)
+SET(CMAKE_CXX_COMPILER i486-mingw32-g++)
 
 # where is the target environment 
 SET(CMAKE_FIND_ROOT_PATH  ${CMAKE_SOURCE_DIR}/contribs)
