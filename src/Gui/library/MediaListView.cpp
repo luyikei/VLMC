@@ -38,6 +38,7 @@ MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
              mc, SLOT( removeClip( const QUuid& ) ) );
     connect( mc, SIGNAL( clipRemoved( const QUuid& ) ),
              this, SLOT( __clipRemoved( const QUuid& ) ) );
+    connect( mc, SIGNAL( destroyed() ), this, SLOT( deleteLater() ) );
     foreach ( Clip* clip, mc->clips() )
         newClipLoaded( clip );
 }
