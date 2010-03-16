@@ -105,7 +105,12 @@ void            MediaCellView::setTitle( const QString& title )
 void
 MediaCellView::nbClipUpdated()
 {
-    quint32     nbClips = m_clip->getParent()->getChilds()->count();
+    quint32     nbClips;
+
+    if ( m_clip->isRootClip() == true )
+        nbClips = m_clip->getChilds()->count();
+    else
+        nbClips = m_clip->getParent()->getChilds()->count();
 
     if ( nbClips == 0 )
     {
