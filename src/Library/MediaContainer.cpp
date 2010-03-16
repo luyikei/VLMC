@@ -55,7 +55,7 @@ Clip*
 MediaContainer::clip( const QString &uuid )
 {
     MediaContainer      *mc = this;
-    Clip                *clip;
+    Clip                *clip = NULL;
     QStringList         ids = uuid.split( '/' );
 
     foreach ( QString id, ids )
