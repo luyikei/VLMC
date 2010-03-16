@@ -124,13 +124,14 @@ MainWindow::MainWindow( QWidget *parent ) :
     m_pWizard->setModal( true );
 
 
+#ifdef WITH_CRASHHANDLER
+    if ( restoreSession() == false )
+        return ;
+#endif
     QSettings s;
+
     if ( s.value( "ShowWizardStartup", true ).toBool() )
     {
-#ifdef WITH_CRASHHANDLER
-        if ( restoreSession() == false )
-            return ;
-#endif
         //If a project was opened from the command line: don't show the wizzard.
         if ( qApp->arguments().size() == 1 )
             m_pWizard->show();
