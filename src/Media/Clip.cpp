@@ -87,6 +87,8 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
 Clip::~Clip()
 {
     delete m_childs;
+    if ( isRootClip() == true )
+        delete m_media;
 }
 
 qint64
