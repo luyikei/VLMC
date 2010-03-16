@@ -25,6 +25,7 @@
 #include "ui_TagWidget.h"
 
 #include "Media.h"
+#include "Clip.h"
 
 #include <QPushButton>
 

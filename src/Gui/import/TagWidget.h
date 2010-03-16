@@ -28,7 +28,8 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <QCompleter>
-#include "Clip.h"
+
+class   Clip;
 
 namespace Ui
 {

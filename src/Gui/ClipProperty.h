@@ -26,8 +26,9 @@
 #include <QDialog>
 #include <QStringListModel>
 
-#include "Clip.h"
 #include <QAbstractButton>
+
+class   Clip;
 
 namespace Ui {
     class   ClipProperty;

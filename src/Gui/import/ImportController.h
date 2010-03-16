@@ -30,19 +30,21 @@
 #ifndef IMPORTCONTROLLER_H
 #define IMPORTCONTROLLER_H
 
-#include "Clip.h"
-#include "Media.h"
-#include "PreviewWidget.h"
 #include "StackViewController.h"
-#include "TagWidget.h"
 
 #include <QDialog>
-#include <QFileSystemModel>
-#include <QProgressDialog>
+#include <QUuid>
 
+class   Clip;
+class   Media;
 class   ClipRenderer;
 class   MediaContainer;
 class   MediaListView;
+class   PreviewWidget;
+class   TagWidget;
+
+class   QFileSystemModel;
+class   QModelIndex;
 
 namespace Ui
 {

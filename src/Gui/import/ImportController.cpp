@@ -24,13 +24,18 @@
 
 #include "ui_ImportController.h"
 
+#include "Clip.h"
 #include "ClipRenderer.h"
 #include "ImportController.h"
 #include "Library.h"
-#include "MetaDataManager.h"
+#include "Media.h"
 #include "MediaCellView.h"
 #include "MediaListView.h"
+#include "MetaDataManager.h"
+#include "PreviewWidget.h"
+#include "TagWidget.h"
 
+#include <QFileSystemModel>
 #include <QPalette>
 #include <QSettings>
 #include <QTime>

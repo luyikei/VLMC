@@ -26,6 +26,7 @@
 #include <QTime>
 #include <QFontMetrics>
 
+#include "Clip.h"
 #include "GraphicsMovieItem.h"
 #include "Media.h"
 #include "TracksView.h"
@@ -233,3 +234,9 @@ void GraphicsMovieItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
         setCursor( Qt::OpenHandCursor );
 }
 
+
+const QUuid&
+GraphicsMovieItem::uuid() const
+{
+    return m_clip->uuid();
+}

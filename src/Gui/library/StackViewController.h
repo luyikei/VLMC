@@ -27,7 +27,6 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QDebug>
 #include <QStack>
 
 #include "StackViewNavController.h"

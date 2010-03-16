@@ -24,9 +24,10 @@
 #include "MediaCellView.h"
 #include "ui_MediaCellView.h"
 
+#include "Clip.h"
+#include "ClipProperty.h"
 #include "Media.h"
 #include "Library.h"
-#include "ClipProperty.h"
 
 #include <QTime>
 

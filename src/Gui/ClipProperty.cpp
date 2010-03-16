@@ -24,6 +24,7 @@
 #include "ClipProperty.h"
 #include "ui_ClipProperty.h"
 #include "Media.h"
+#include "Clip.h"
 
 #include <QTime>
 #include <QPushButton>

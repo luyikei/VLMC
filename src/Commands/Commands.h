@@ -29,7 +29,8 @@
 #include <QVector>
 #include "UndoStack.h"
 #include "MainWorkflow.h"
-#include "Clip.h"
+
+class   Clip;
 
 #define NEW_COMMAND(x)      class   x : public QUndoCommand
 
