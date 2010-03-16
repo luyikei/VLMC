@@ -44,7 +44,7 @@ MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
 
 MediaListView::~MediaListView()
 {
-    foreach ( QWidget* cell, m_cells )
+    foreach ( MediaCellView* cell, m_cells )
         delete cell;
     m_cells.clear();
 }
@@ -73,7 +73,7 @@ void    MediaListView::cellSelection( const QUuid& uuid )
     {
         if ( !m_currentUuid.isNull() && m_cells.contains( m_currentUuid ) )
         {
-            QWidget* cell = m_cells.value( m_currentUuid );
+            MediaCellView*  cell = m_cells.value( m_currentUuid );
             cell->setPalette( m_cells.value( uuid )->palette() );
         }
         QPalette p = m_cells.value( uuid )->palette();
@@ -93,7 +93,7 @@ void    MediaListView::removeClip( const Clip* clip )
 void
 MediaListView::__clipRemoved( const QUuid &uuid )
 {
-    QWidget* cell = m_cells.take( uuid );
+    MediaCellView*  cell = m_cells.take( uuid );
     removeCell( cell );
     m_currentUuid = QUuid();
 }
@@ -101,7 +101,7 @@ MediaListView::__clipRemoved( const QUuid &uuid )
 void
 MediaListView::clear()
 {
-    foreach ( QWidget* cell, m_cells.values() )
+    foreach ( MediaCellView* cell, m_cells.values() )
         removeCell( cell );
     m_cells.clear();
 }

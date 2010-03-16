@@ -46,11 +46,11 @@ public:
     virtual ~MediaListView();
 
 private:
-    StackViewController*        m_nav;
-    QUuid                       m_currentUuid;
-    QHash<QUuid, QWidget*>      m_cells;
-    QUuid                       m_lastUuidClipListAsked;
-    MediaContainer*             m_mediaContainer;
+    StackViewController*            m_nav;
+    QUuid                           m_currentUuid;
+    QHash<QUuid, MediaCellView*>    m_cells;
+    QUuid                           m_lastUuidClipListAsked;
+    MediaContainer*                 m_mediaContainer;
 
 public slots:
     void        cellSelection( const QUuid& uuid );
