@@ -34,8 +34,8 @@ MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
 {
     connect( mc, SIGNAL( newClipLoaded(Clip*) ),
              this, SLOT( newClipLoaded( Clip* ) ) );
-    connect( this, SIGNAL( clipRemoved( const Clip* ) ),
-             mc, SLOT( removeClip( const Clip* ) ) );
+    connect( this, SIGNAL( clipRemoved( const QUuid& ) ),
+             mc, SLOT( removeClip( const QUuid& ) ) );
     connect( mc, SIGNAL( clipRemoved( const QUuid& ) ),
              this, SLOT( __clipRemoved( const QUuid& ) ) );
     foreach ( Clip* clip, mc->clips() )
@@ -87,7 +87,7 @@ void    MediaListView::cellSelection( const QUuid& uuid )
 void    MediaListView::removeClip( const Clip* clip )
 {
     __clipRemoved( clip->uuid() );
-    emit clipRemoved( clip );
+    emit clipRemoved( clip->uuid() );
 }
 
 void

@@ -77,7 +77,6 @@ public slots:
      */
     void                    setClip( Clip* clip );
     void                    clipUnloaded( const QUuid& uuid );
-    void                    clipUnloaded( const Clip* clip );
     virtual void            previewWidgetCursorChanged( qint64 newFrame );
     void                    updateInfos( Clip* clip );
 

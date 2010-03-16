@@ -59,6 +59,10 @@ ClipRenderer::~ClipRenderer()
 void
 ClipRenderer::setClip( Clip* clip )
 {
+
+    if ( m_selectedClip != NULL && clip != NULL &&
+         clip->uuid() != m_selectedClip->uuid() )
+        clipUnloaded( m_selectedClip->uuid() );
     if ( clip == NULL )
     {
         m_selectedClip = NULL;
@@ -189,12 +193,6 @@ ClipRenderer::clipUnloaded( const QUuid& uuid )
         m_isRendering = false;
         m_paused = false;
     }
-}
-
-void
-ClipRenderer::clipUnloaded( const Clip *clip )
-{
-    clipUnloaded( clip->uuid() );
 }
 
 qint64

@@ -132,9 +132,8 @@ protected:
 public slots:
     /**
      *  \brief  Delete a Clip from the container
-     *  \param  clip    The clip to remove.
+     *  \param  uuid    The clip to remove's uuid.
      */
-    Clip    *removeClip( const Clip* clip );
     Clip    *removeClip( const QUuid& uuid );
     /**
      *  \brief  Clear the library (remove all the loaded Clip, delete their subclips, and

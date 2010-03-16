@@ -163,12 +163,6 @@ MediaContainer::removeClip( const QUuid &uuid )
     return NULL;
 }
 
-Clip*
-MediaContainer::removeClip( const Clip* clip )
-{
-    return removeClip( clip->uuid() );
-}
-
 const QHash<QUuid, Clip*>&
 MediaContainer::clips() const
 {

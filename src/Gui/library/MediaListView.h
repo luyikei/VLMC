@@ -69,6 +69,6 @@ private slots:
 
 signals:
     void        clipSelected( Clip* );
-    void        clipRemoved( const Clip* );
+    void        clipRemoved( const QUuid& );
 };
 #endif // MEDIALISTVIEW_H

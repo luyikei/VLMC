@@ -97,8 +97,8 @@ ImportController::ImportController(QWidget *parent) :
              m_clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SLOT( clipSelection( Clip* ) ) );
-    connect( m_mediaListView, SIGNAL( clipRemoved( const Clip* ) ),
-             m_clipRenderer, SLOT( clipUnloaded( const Clip* ) ) );
+    connect( m_mediaListView, SIGNAL( clipRemoved( const QUuid& ) ),
+             m_clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     connect( MetaDataManager::getInstance(), SIGNAL( failedToCompute( Media* ) ),
              this, SLOT( failedToLoad( Media* ) ) );
@@ -132,7 +132,6 @@ ImportController::clipSelection( Clip* clip )
     const QUuid& uuid = clip->uuid();
     if ( m_currentUuid == uuid )
         return ;
-    Media*  media = clip->rootClip()->getMedia();
     setUIMetaData( clip->rootClip() );
     m_preview->stop();
     m_currentUuid = uuid;
@@ -323,7 +322,7 @@ ImportController::failedToLoad( Media *media )
     m_ui->errorLabelImg->show();
     m_ui->errorLabel->show();
     QTimer::singleShot( 3000, this, SLOT( hideErrors() ) );
-    delete m_temporaryMedias->removeClip( media->baseClip() );
+    delete m_temporaryMedias->removeClip( media->baseClip()->uuid() );
     delete media;
 }
 
