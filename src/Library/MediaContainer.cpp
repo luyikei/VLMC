@@ -35,6 +35,13 @@ MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
 {
 }
 
+MediaContainer::~MediaContainer()
+{
+    foreach ( Clip* c, m_clips.values() )
+        delete c;
+    m_clips.clear();
+}
+
 Clip*
 MediaContainer::clip( const QUuid& uuid )
 {

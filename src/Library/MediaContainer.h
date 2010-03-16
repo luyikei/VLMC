@@ -39,6 +39,7 @@ class   MediaContainer : public QObject
 
 public:
     MediaContainer( Clip* parent = NULL );
+    ~MediaContainer();
     /**
      *  \brief  returns the clip that match the unique identifier
      *  \param  uuid    the unique identifier of the media
