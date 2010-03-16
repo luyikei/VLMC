@@ -120,7 +120,7 @@ MediaContainer::clear()
 
     while ( it != end )
     {
-        emit clipRemoved( it.value() );
+        emit clipRemoved( it.key() );
         it.value()->clear();
         it.value()->deleteLater();
         ++it;
@@ -136,7 +136,7 @@ MediaContainer::removeAll()
 
     while ( it != end )
     {
-        emit clipRemoved( it.value() );
+        emit clipRemoved( it.key() );
         ++it;
     }
     m_clips.clear();
@@ -150,7 +150,7 @@ MediaContainer::removeClip( const QUuid &uuid )
     {
         Clip* clip = it.value();
         m_clips.remove( uuid );
-        emit clipRemoved( clip );
+        emit clipRemoved( uuid );
         return clip;
     }
     return NULL;

@@ -154,9 +154,11 @@ signals:
     void    newClipLoaded( Clip* );
     /**
      *  \brief This signal should be emiteted when a Clip has been removed
+     *  This signal pass a QUuid as the clip may be deleted when the signal reaches its
+     *  slot.
      *  \param uuid The removed clip uuid
      */
-    void    clipRemoved( const Clip* );
+    void    clipRemoved( const QUuid& );
 };
 
 #endif // MEDIACONTAINER_H

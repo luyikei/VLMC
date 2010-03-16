@@ -81,9 +81,7 @@ public slots:
 private slots:
     void        snapshotUpdated( const Media *media );
     void        metadataUpdated( const Media *media );
-    void        nbClipUpdated( const Clip *clip );
-    void        nbClipUpdated( Clip *clip );
-
+    void        nbClipUpdated();
 };
 
 #endif // MEDIACELLVIEW_H

@@ -32,8 +32,10 @@ MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
 {
     connect( mc, SIGNAL( newClipLoaded(Clip*) ),
              this, SLOT( newClipLoaded( Clip* ) ) );
-    connect( this, SIGNAL( clipDeleted( const QUuid& ) ),
-             mc, SLOT(removeClip( const QUuid& ) ) );
+    connect( this, SIGNAL( clipRemoved( const Clip* ) ),
+             mc, SLOT( removeClip( const Clip* ) ) );
+    connect( mc, SIGNAL( clipRemoved( const QUuid& ) ),
+             this, SLOT( __clipRemoved( const QUuid& ) ) );
     foreach ( Clip* clip, mc->clips() )
         newClipLoaded( clip );
 }
@@ -52,7 +54,7 @@ void        MediaListView::newClipLoaded( Clip *clip )
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );
     connect( cell, SIGNAL ( cellDeleted( const Clip* ) ),
-             this, SLOT( clipRemoved( const Clip* ) ) );
+             this, SLOT( removeClip( const Clip* ) ) );
     connect( cell, SIGNAL( arrowClicked( const QUuid& ) ),
              this, SLOT( showSubClips( const QUuid& ) ) );
     addCell( cell );
@@ -80,14 +82,18 @@ void    MediaListView::cellSelection( const QUuid& uuid )
     }
 }
 
-void    MediaListView::clipRemoved( const Clip* clip )
+void    MediaListView::removeClip( const Clip* clip )
 {
-    QWidget* cell = m_cells.value( clip->uuid() );
+    __clipRemoved( clip->uuid() );
+    emit clipRemoved( clip );
+}
+
+void
+MediaListView::__clipRemoved( const QUuid &uuid )
+{
+    QWidget* cell = m_cells.take( uuid );
     removeCell( cell );
-    m_cells.remove( clip->uuid() );
     m_currentUuid = QUuid();
-    emit clipDeleted( clip->uuid() );
-    delete clip;
 }
 
 void

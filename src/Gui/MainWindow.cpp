@@ -251,8 +251,8 @@ MainWindow::setupLibrary()
     connect( mediaView, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
 
-    connect( Library::getInstance(), SIGNAL( clipRemoved( const Clip* ) ),
-             clipRenderer, SLOT( clipUnloaded( const Clip* ) ) );
+    connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
+             clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 }
 
 void    MainWindow::on_actionSave_triggered()

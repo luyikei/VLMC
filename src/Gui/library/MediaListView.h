@@ -53,11 +53,17 @@ public slots:
     void        clear();
 
 private slots:
-    void        clipRemoved( const Clip* );
+    void        removeClip( const Clip* );
+    /**
+     *  \brief  Called when the media container unload a clip
+     *
+     *  This slot will be triggered when a Clip is removed from the media container.
+     */
+    void        __clipRemoved( const QUuid& );
     void        newClipLoaded( Clip* clip );
 
 signals:
     void        clipSelected( Clip* );
-    void        clipDeleted( const QUuid& );
+    void        clipRemoved( const Clip* );
 };
 #endif // MEDIALISTVIEW_H

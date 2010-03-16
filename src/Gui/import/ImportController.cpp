@@ -92,8 +92,8 @@ ImportController::ImportController(QWidget *parent) :
              m_clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SLOT( clipSelection( Clip* ) ) );
-    connect( m_mediaListView, SIGNAL( clipDeleted( const QUuid& ) ),
-             m_clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
+    connect( m_mediaListView, SIGNAL( clipRemoved( const Clip* ) ),
+             m_clipRenderer, SLOT( clipUnloaded( const Clip* ) ) );
 
     connect( MetaDataManager::getInstance(), SIGNAL( failedToCompute( Media* ) ),
              this, SLOT( failedToLoad( Media* ) ) );

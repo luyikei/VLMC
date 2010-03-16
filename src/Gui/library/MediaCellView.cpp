@@ -45,9 +45,9 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
              SLOT( arrowButtonClicked( QWidget*, QMouseEvent* ) ) );
     m_ui->clipCount->setText( QString::number( clip->getChilds()->count() ) );
     connect( clip->getChilds(), SIGNAL( newClipLoaded( Clip* ) ),
-             this, SLOT( nbClipUpdated( Clip* ) ) );
-    connect( clip->getChilds(), SIGNAL( clipRemoved( const Clip* ) ),
-             this, SLOT( nbClipUpdated( const Clip* ) ) );
+             this, SLOT( nbClipUpdated() ) );
+    connect( clip->getChilds(), SIGNAL( clipRemoved( const QUuid& ) ),
+             this, SLOT( nbClipUpdated() ) );
     if ( clip->getChilds()->count() == 0 )
     {
         m_ui->clipCount->hide();
@@ -103,14 +103,9 @@ void            MediaCellView::setTitle( const QString& title )
 }
 
 void
-MediaCellView::nbClipUpdated( Clip *clip )
+MediaCellView::nbClipUpdated()
 {
-    nbClipUpdated( const_cast<const Clip*>( clip ) );
-}
-
-void            MediaCellView::nbClipUpdated( const Clip *clip )
-{
-    quint32     nbClips = clip->getParent()->getChilds()->count();
+    quint32     nbClips = m_clip->getParent()->getChilds()->count();
 
     if ( nbClips == 0 )
     {

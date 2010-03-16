@@ -72,8 +72,8 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
 
     connect( m_cursorLine, SIGNAL( cursorPositionChanged(qint64) ),
              this, SLOT( ensureCursorVisible() ) );
-    connect( Library::getInstance(), SIGNAL( clipRemoved( const Clip* ) ),
-             this, SLOT( deleteMedia( const Clip* ) ) );
+    connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
+             this, SLOT( deleteMedia( const QUuid& ) ) );
 }
 
 void
@@ -184,7 +184,7 @@ TracksView::clear()
 }
 
 void
-TracksView::deleteMedia( const Clip* clip  )
+TracksView::deleteMedia( const QUuid& uuid  )
 {
     AbstractGraphicsMediaItem *item;
 
@@ -196,7 +196,7 @@ TracksView::deleteMedia( const Clip* clip  )
     foreach( item, items )
     {
         if ( item->clip()->getMedia()->baseClip()->uuid() ==
-             clip->uuid() )
+             uuid )
         {
             // This item needs to be removed.
             // Saving its values
