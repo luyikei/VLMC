@@ -24,13 +24,18 @@
 #ifndef MEDIALISTVIEW_H
 #define MEDIALISTVIEW_H
 
-#include "StackViewController.h"
 #include "ListViewController.h"
-#include "MediaCellView.h"
-#include "Library.h"
-#include "Media.h"
 
+#include <QHash>
+#include <QUuid>
+
+class   Clip;
+class   Media;
 class   MediaContainer;
+class   MediaCellView;
+class   StackViewController;
+
+class   QWidget;
 
 class MediaListView : public ListViewController
 {

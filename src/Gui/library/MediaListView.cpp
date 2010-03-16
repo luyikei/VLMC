@@ -23,7 +23,9 @@
 #include "MediaListView.h"
 
 #include "Clip.h"
+#include "MediaCellView.h"
 #include "MediaContainer.h"
+#include "StackViewController.h"
 
 MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
         ListViewController( nav ),
