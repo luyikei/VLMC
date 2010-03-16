@@ -67,39 +67,8 @@ void    StackViewController::pushViewController( ViewController* viewController,
 }
 
 void
-StackViewController::viewDestroyed()
+StackViewController::restorePrevious()
 {
-    //This should'nt happen.
-    if ( m_controllerStack->isEmpty() )
-        return ;
-    if ( QObject::sender() == m_current )
-    {
-        m_current = m_controllerStack->pop();
-
-        m_nav->setTitle( m_current->title() );
-        m_layout->insertWidget( 1, m_current->view() );
-        m_current->view()->setHidden( false );
-
-        if ( !m_controllerStack->size() )
-            m_nav->previousButton()->setHidden( true );
-        else
-        {
-           m_nav->previousButton()->setText( "< " +
-           m_controllerStack->value( m_controllerStack->size() - 1 )->title() );
-        }
-    }
-}
-
-void        StackViewController::popViewController( bool animated )
-{
-    animated = false;
-
-    if ( !m_controllerStack->size() )
-        return ;
-
-    m_layout->removeWidget( m_current->view() );
-    m_current->view()->hide();
-    delete m_current;
     m_current = m_controllerStack->pop();
 
     m_nav->setTitle( m_current->title() );
@@ -113,6 +82,31 @@ void        StackViewController::popViewController( bool animated )
        m_nav->previousButton()->setText( "< " +
        m_controllerStack->value( m_controllerStack->size() - 1 )->title() );
     }
+}
+
+void
+StackViewController::viewDestroyed()
+{
+    //This should'nt happen.
+    if ( m_controllerStack->isEmpty() )
+        return ;
+    if ( QObject::sender() == m_current )
+    {
+        restorePrevious();
+    }
+}
+
+void        StackViewController::popViewController( bool animated )
+{
+    animated = false;
+
+    if ( !m_controllerStack->size() )
+        return ;
+
+    m_layout->removeWidget( m_current->view() );
+    m_current->view()->hide();
+    delete m_current;
+    restorePrevious();
 }
 
 void        StackViewController::previous()

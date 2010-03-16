@@ -47,6 +47,9 @@ public:
     void                    popViewController( bool animated = false );
 
 private:
+    void                    restorePrevious();
+
+private:
     StackViewNavController*     m_nav;
     QVBoxLayout*                m_layout;
     ViewController*             m_current;
