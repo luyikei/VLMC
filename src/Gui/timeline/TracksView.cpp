@@ -586,9 +586,13 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
 }
 
 void
-TracksView::removeMediaItem( const QUuid &uuid, unsigned int track, MainWorkflow::TrackType trackType )
+TracksView::removeMediaItem( const QUuid &uuid, unsigned int trackId, MainWorkflow::TrackType trackType )
 {
-    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();;
+    GraphicsTrack           *track = getTrack( trackType, trackId );
+
+    if ( track == NULL )
+        return ;
+    QList<QGraphicsItem*> trackItems = track->childItems();;
 
     for ( int i = 0; i < trackItems.size(); ++i )
     {
