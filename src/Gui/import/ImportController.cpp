@@ -170,18 +170,23 @@ ImportController::setUIMetaData( const Clip* clip )
 void
 ImportController::importMedia( const QString &filePath )
 {
-    if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true )
+    if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true ||
+         m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
-    ++m_nbMediaToLoad;
-    m_ui->progressBar->setMaximum( m_nbMediaToLoad );
 
     Media*  media = m_temporaryMedias->addMedia( filePath );
+    if ( media == NULL )
+    {
+        qCritical() << "An error occured while loading media:" << filePath;
+        return ;
+    }
     Clip*   clip = new Clip( media );
     media->setBaseClip( clip );
     m_temporaryMedias->addClip( clip );
-    if ( media )
-        connect( media, SIGNAL( metaDataComputed( const Media* ) ),
-                 this, SLOT( metaDataComputed( const Media* ) ) );
+    ++m_nbMediaToLoad;
+    m_ui->progressBar->setMaximum( m_nbMediaToLoad );
+    connect( media, SIGNAL( metaDataComputed( const Media* ) ),
+             this, SLOT( metaDataComputed( const Media* ) ) );
 }
 
 void
