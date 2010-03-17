@@ -106,7 +106,6 @@ void        StackViewController::popViewController( bool animated )
     m_layout->removeWidget( m_current->view() );
     m_current->view()->hide();
     delete m_current;
-    restorePrevious();
 }
 
 void        StackViewController::previous()
