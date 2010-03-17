@@ -23,6 +23,7 @@
 #include <QtDebug>
 #include <QThread>
 #include <QWaitCondition>
+//Allow PRId64 to be defined:
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
