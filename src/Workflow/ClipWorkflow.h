@@ -210,8 +210,8 @@ class   ClipWorkflow : public QObject
         virtual void            releasePrealocated() = 0;
 
     private:
-        WaitCondition*          m_initWaitCond;
-        WaitCondition*          m_pausingStateWaitCond;
+        WaitCondition           *m_initWaitCond;
+        WaitCondition           *m_pausingStateWaitCond;
         /**
          *  \brief              Used by the trackworkflow to query a clipworkflow resync.
          *
@@ -243,6 +243,7 @@ class   ClipWorkflow : public QObject
         qint64                  m_pauseDuration;
         bool                    m_fullSpeedRender;
         int                     debugType;
+        WaitCondition           *m_renderWaitCond;
 
     private slots:
         void                    loadingComplete();

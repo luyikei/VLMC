@@ -20,12 +20,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "VideoClipWorkflow.h"
+#include "Clip.h"
+#include "LightVideoFrame.h"
 #include "MainWorkflow.h"
 #include "StackedBuffer.hpp"
-#include "LightVideoFrame.h"
-#include "Clip.h"
+#include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
+#include "WaitCondition.hpp"
 
 #include <QReadWriteLock>
 
@@ -113,10 +114,19 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     QMutexLocker    lock( m_renderLock );
     QMutexLocker    lock2( m_computedBuffersMutex );
 
-    if ( preGetOutput() == false )
-        return NULL;
     if ( isEndReached() == true )
         return NULL;
+    if ( preGetOutput() == false )
+    {
+        QMutexLocker    waitLock( m_renderWaitCond->getMutex() );
+        m_computedBuffersMutex->unlock();
+        m_renderLock->unlock();
+
+        m_renderWaitCond->waitLocked();
+
+        m_renderLock->lock();
+        m_computedBuffersMutex->lock();
+    }
     ::StackedBuffer<LightVideoFrame*>* buff;
     if ( mode == ClipWorkflow::Pop )
         buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );
@@ -161,6 +171,8 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     cw->commonUnlock();
     cw->m_renderLock->unlock();
     cw->m_computedBuffersMutex->unlock();
+    QMutexLocker    lock( cw->m_renderWaitCond->getMutex() );
+    cw->m_renderWaitCond->wake();
 }
 
 uint32_t

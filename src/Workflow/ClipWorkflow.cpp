@@ -45,16 +45,18 @@ ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
     m_renderLock = new QMutex;
     m_availableBuffersMutex = new QMutex;
     m_computedBuffersMutex = new QMutex;
+    m_renderWaitCond = new WaitCondition;
 }
 
 ClipWorkflow::~ClipWorkflow()
 {
+    delete m_renderWaitCond;
+    delete m_computedBuffersMutex;
+    delete m_availableBuffersMutex;
     delete m_renderLock;
     delete m_pausingStateWaitCond;
     delete m_initWaitCond;
     delete m_stateLock;
-    delete m_availableBuffersMutex;
-    delete m_computedBuffersMutex;
 }
 
 void    ClipWorkflow::initialize()
