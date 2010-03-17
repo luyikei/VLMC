@@ -35,7 +35,7 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         "--text-renderer", "dummy",
         //"--no-audio",
         //"--plugin-path", VLC_TREE "/modules",
-        "--disable-screensaver",
+        "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
         "--ignore-config", //Don't use VLC's config files
         "--no-overlay",
     };
