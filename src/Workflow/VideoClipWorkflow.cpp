@@ -31,7 +31,6 @@
 
 VideoClipWorkflow::VideoClipWorkflow( Clip *clip ) :
         ClipWorkflow( clip ),
-        m_lastRenderedFrame( NULL ),
         m_width( 0 ),
         m_height( 0 )
 {
@@ -115,11 +114,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     QMutexLocker    lock2( m_computedBuffersMutex );
 
     if ( preGetOutput() == false )
-    {
-        if ( m_lastRenderedFrame != NULL )
-            return new StackedBuffer( m_lastRenderedFrame, NULL, false );
         return NULL;
-    }
     if ( isEndReached() == true )
         return NULL;
     ::StackedBuffer<LightVideoFrame*>* buff;
@@ -128,7 +123,6 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     else if ( mode == ClipWorkflow::Get )
         buff = new StackedBuffer( m_computedBuffers.head(), NULL, false );
     postGetOutput();
-    m_lastRenderedFrame = buff->get();
     return buff;
 }
 
