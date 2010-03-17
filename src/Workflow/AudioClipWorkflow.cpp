@@ -28,6 +28,18 @@
 AudioClipWorkflow::AudioClipWorkflow( Clip *clip ) :
         ClipWorkflow( clip )
 {
+    debugType = 1;
+    m_ptsOffset = 0;
+}
+
+AudioClipWorkflow::~AudioClipWorkflow()
+{
+    releasePrealocated();
+}
+
+void
+AudioClipWorkflow::preallocate()
+{
     for ( quint32 i = 0; i < AudioClipWorkflow::nbBuffers; ++i )
     {
         AudioSample *as = new AudioSample;
@@ -35,16 +47,23 @@ AudioClipWorkflow::AudioClipWorkflow( Clip *clip ) :
         m_availableBuffers.push_back( as );
         as->debugId = i;
     }
-    debugType = 1;
-    m_ptsOffset = 0;
 }
 
-AudioClipWorkflow::~AudioClipWorkflow()
+void
+AudioClipWorkflow::releasePrealocated()
 {
     while ( m_availableBuffers.isEmpty() == false )
-        delete m_availableBuffers.dequeue();
+    {
+        AudioSample *as = m_availableBuffers.takeFirst();
+        delete as->buff;
+        delete as;
+    }
     while ( m_computedBuffers.isEmpty() == false )
-        delete m_computedBuffers.dequeue();
+    {
+        AudioSample *as = m_computedBuffers.takeFirst();
+        delete as->buff;
+        delete as;
+    }
 }
 
 void*
@@ -90,6 +109,7 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 void
 AudioClipWorkflow::initVlcOutput()
 {
+    preallocate();
     m_vlcMedia->addOption( ":no-sout-video" );
     m_vlcMedia->addOption( ":no-video" );
     m_vlcMedia->addOption( ":sout=#transcode{}:smem" );

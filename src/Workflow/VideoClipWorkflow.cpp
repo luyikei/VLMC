@@ -40,6 +40,12 @@ VideoClipWorkflow::VideoClipWorkflow( Clip *clip ) :
 
 VideoClipWorkflow::~VideoClipWorkflow()
 {
+    releasePrealocated();
+}
+
+void
+VideoClipWorkflow::releasePrealocated()
+{
     while ( m_availableBuffers.isEmpty() == false )
         delete m_availableBuffers.dequeue();
     while ( m_computedBuffers.isEmpty() == false )

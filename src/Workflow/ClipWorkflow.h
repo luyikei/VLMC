@@ -204,6 +204,11 @@ class   ClipWorkflow : public QObject
          */
         virtual void            flushComputedBuffers() = 0;
 
+        /**
+         *  \brief  Release the preallocated buffers
+         */
+        virtual void            releasePrealocated() = 0;
+
     private:
         WaitCondition*          m_initWaitCond;
         WaitCondition*          m_pausingStateWaitCond;

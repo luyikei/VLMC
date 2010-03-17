@@ -64,6 +64,7 @@ class   VideoClipWorkflow : public ClipWorkflow
          *  \brief              Pre-allocate some image buffers.
          */
         void                    preallocate();
+        void                    releasePrealocated();
 
     private:
         QQueue<LightVideoFrame*>    m_computedBuffers;

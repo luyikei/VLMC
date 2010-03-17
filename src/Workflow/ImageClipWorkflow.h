@@ -47,6 +47,7 @@ class   ImageClipWorkflow : public ClipWorkflow
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         virtual void            flushComputedBuffers();
+        virtual void            releasePrealocated(){}
     private:
         static void             lock( ImageClipWorkflow* clipWorkflow, void** pp_ret,
                                       int size );

@@ -135,6 +135,7 @@ void            ClipWorkflow::stop()
         setState( Stopped );
         delete m_vlcMedia;
         flushComputedBuffers();
+        releasePrealocated();
     }
     else
         qDebug() << "ClipWorkflow has already been stopped";
