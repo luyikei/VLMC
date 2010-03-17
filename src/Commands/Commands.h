@@ -27,7 +27,6 @@
 #include <QUndoCommand>
 #include <QObject>
 #include <QVector>
-#include "UndoStack.h"
 #include "MainWorkflow.h"
 
 class   Clip;

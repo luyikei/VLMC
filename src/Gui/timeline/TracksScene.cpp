@@ -27,6 +27,7 @@
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
 #include "Timeline.h"
+#include "UndoStack.h"
 
 TracksScene::TracksScene( QObject* parent ) : QGraphicsScene( parent )
 {

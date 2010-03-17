@@ -30,6 +30,7 @@
 #include "GraphicsTrack.h"
 #include "Media.h"
 #include "WorkflowRenderer.h"
+#include "UndoStack.h"
 
 #include <QScrollBar>
 #include <QMouseEvent>
