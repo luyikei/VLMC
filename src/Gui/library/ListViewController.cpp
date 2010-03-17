@@ -30,7 +30,7 @@
 
 ListViewController::ListViewController( StackViewController* nav ) : m_nav( nav )
 {
-    m_title      = new QString( "Media List" );
+    m_title      = tr( "Media List" );
     m_scrollArea = new QScrollArea();
     m_layout     = new QVBoxLayout();
     m_container  = new QWidget();
@@ -47,15 +47,16 @@ ListViewController::ListViewController( StackViewController* nav ) : m_nav( nav 
 
 ListViewController::~ListViewController()
 {
+    delete m_container;
+    delete m_layout;
     delete m_scrollArea;
-    delete m_title;
 }
 
 // ViewController method implementation
 
 const QString&      ListViewController::title() const
 {
-    return *m_title;
+    return m_title;
 }
 
 QWidget*            ListViewController::view() const

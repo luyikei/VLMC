@@ -50,7 +50,7 @@ protected:
     QVBoxLayout*                m_layout;
 
 private:
-    QString*                    m_title;
+    QString                     m_title;
     QScrollArea*                m_scrollArea;
     QWidget*                    m_container;
 
