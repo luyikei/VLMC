@@ -125,7 +125,7 @@ MainWindow::MainWindow( QWidget *parent ) :
 
 
 #ifdef WITH_CRASHHANDLER
-    if ( restoreSession() == false )
+    if ( restoreSession() == true )
         return ;
 #endif
     QSettings s;
