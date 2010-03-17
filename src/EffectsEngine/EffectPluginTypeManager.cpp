@@ -36,6 +36,7 @@ EffectPluginTypeManager::EffectPluginTypeManager( void ) : m_higherFreeId( 2 )
 
     dirs << "effects/";
     dirs << "bin/effects/";
+    dirs << "./";
 
 #ifdef VLMC_EFFECTS_DIR
     dirs << VLMC_EFFECTS_DIR;

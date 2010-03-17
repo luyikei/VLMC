@@ -213,7 +213,6 @@ EffectNodeFactory::createEffectNodeInstance( const QString & typeName )
         m_enById[ instanceId ] = newNode;
         m_nameById[ instanceId ] = instanceName;
         return true;
-        qDebug() << "EffectNode* with typeName[" << typeName << "] created.";
     }
     qDebug() << "Can't create EffectNode* with typeName[" << typeName << "]!";
     return false;
