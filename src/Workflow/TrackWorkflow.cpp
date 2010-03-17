@@ -156,7 +156,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
         cw->initialize();
         cw->waitForCompleteInit();
         //We check for a difference greater than one to avoid false positive when starting.
-        if ( (start - currentFrame > 1) || cw->getClip()->begin() != 0 ) //Clip was not started as its real begining
+        if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClip()->begin() != 0 ) //Clip was not started as its real begining
         {
             adjustClipTime( currentFrame, start, cw );
         }
