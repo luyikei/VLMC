@@ -224,6 +224,7 @@ void        WorkflowRenderer::startPreview()
         m_outputFps = outputFps();
         setupRenderer( m_width, m_height, m_outputFps );
     }
+    m_mediaPlayer->setKeyInput( false );
     m_mediaPlayer->setMedia( m_media );
 
     //Media player part: to update PreviewWidget

@@ -98,6 +98,7 @@ ClipRenderer::startPreview()
         delete m_vlcMedia;
     m_vlcMedia = new LibVLCpp::Media( m_selectedClip->getMedia()->fileInfo()->absoluteFilePath() );
 
+    m_mediaPlayer->setKeyInput( false );
     m_mediaPlayer->setMedia( m_vlcMedia );
 
     m_mediaPlayer->play();

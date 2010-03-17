@@ -63,6 +63,7 @@ namespace   LibVLCpp
         QString                             getLoadedMRL();
         int                                 getNbAudioTrack();
         int                                 getNbVideoTrack();
+        void                                setKeyInput( bool enabled );
 
     private:
         static void                         callbacks( const libvlc_event_t* event, void* self );

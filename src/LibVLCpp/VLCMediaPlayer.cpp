@@ -256,3 +256,9 @@ MediaPlayer::getNbVideoTrack()
     int res = libvlc_video_get_track_count( m_internalPtr );
     return res;
 }
+
+void
+MediaPlayer::setKeyInput( bool enabled )
+{
+    libvlc_video_set_key_input( m_internalPtr, enabled );
+}
