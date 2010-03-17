@@ -242,7 +242,6 @@ class   ClipWorkflow : public QObject
         qint64                  m_beginPausePts;
         qint64                  m_pauseDuration;
         bool                    m_fullSpeedRender;
-        int                     debugType;
         WaitCondition           *m_renderWaitCond;
 
     private slots:

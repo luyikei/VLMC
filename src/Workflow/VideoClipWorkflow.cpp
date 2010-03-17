@@ -35,7 +35,6 @@ VideoClipWorkflow::VideoClipWorkflow( Clip *clip ) :
         m_width( 0 ),
         m_height( 0 )
 {
-    debugType = 2;
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()

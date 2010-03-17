@@ -28,7 +28,6 @@
 AudioClipWorkflow::AudioClipWorkflow( Clip *clip ) :
         ClipWorkflow( clip )
 {
-    debugType = 1;
     m_ptsOffset = 0;
 }
 
