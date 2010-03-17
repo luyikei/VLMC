@@ -138,7 +138,6 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
                                          ClipWorkflow::Pop : ClipWorkflow::Get );
 
     cw->getStateLock()->lockForRead();
-//    qDebug() << "TrackWorkflow::renderClip. currentFrame:" << currentFrame << "trackType:" << m_trackType;
     if ( cw->getState() == ClipWorkflow::Rendering ||
          cw->getState() == ClipWorkflow::Paused ||
          cw->getState() == ClipWorkflow::PauseRequired ||
@@ -288,7 +287,6 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
         //Is the clip supposed to render now ?
-//        qDebug() << "Start:" << start << "Current Frame:" << currentFrame;
         if ( start <= currentFrame && currentFrame <= start + cw->getClip()->length() )
         {
             if ( ret != NULL )
