@@ -24,6 +24,7 @@
 #ifndef METADATAWORKER_H
 #define METADATAWORKER_H
 
+#include "config.h"
 #include "Media.h"
 
 #include <QList>
@@ -48,17 +49,17 @@ class MetaDataWorker : public QObject
     private:
         void                        computeDynamicFileMetaData();
         void                        computeImageMetaData();
-        void                        prepareAudioSpectrumComputing();
-        void                        addAudioValue( int value );
+//        void                        prepareAudioSpectrumComputing();
+//        void                        addAudioValue( int value );
         void                        finalize();
 
     private:
         void                        metaDataAvailable();
-        static void                 lock( MetaDataWorker* metaDataWorker, quint8** pcm_buffer , unsigned int size );
-        static void                 unlock( MetaDataWorker* metaDataWorker, quint8* pcm_buffer,
-                                        unsigned int channels, unsigned int rate,
-                                        unsigned int nb_samples, unsigned int bits_per_sample,
-                                        unsigned int size, int pts );
+//        static void                 lock( MetaDataWorker* metaDataWorker, quint8** pcm_buffer , unsigned int size );
+//        static void                 unlock( MetaDataWorker* metaDataWorker, quint8* pcm_buffer,
+//                                        unsigned int channels, unsigned int rate,
+//                                        unsigned int nb_samples, unsigned int bits_per_sample,
+//                                        unsigned int size, int pts );
 
     private:
         LibVLCpp::MediaPlayer*      m_mediaPlayer;
@@ -71,16 +72,21 @@ class MetaDataWorker : public QObject
         QTime                       m_timer;
 
     private slots:
-        void    renderSnapshot();
-        void    setSnapshot( const char* );
         void    entrypointPlaying();
         void    entrypointLengthChanged( qint64 );
-        void    generateAudioSpectrum();
+//        void    generateAudioSpectrum();
         void    failure();
 
     signals:
         void    computed();
         void    failed( Media* media );
+
+    //GUI Stuff:
+#ifdef WITH_GUI
+    private slots:
+        void    renderSnapshot();
+        void    setSnapshot( const char* );
+#endif
 };
 
 #endif // METADATAWORKER_H

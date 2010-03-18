@@ -21,9 +21,7 @@
  *****************************************************************************/
 
 #include <QtDebug>
-#include <QPainter>
-#include <QLabel>
-#include <QImage>
+
 #include "vlmc.h"
 #include "MetaDataWorker.h"
 #include "Library.h"
@@ -32,8 +30,11 @@
 #include "VLCMedia.h"
 #include "Clip.h"
 
-#include <QThreadPool>
-#include <QRunnable>
+#ifdef WITH_GUI
+# include <QPainter>
+# include <QLabel>
+# include <QImage>
+#endif
 
 MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media ) :
         m_mediaPlayer( mediaPlayer ),
@@ -90,20 +91,6 @@ MetaDataWorker::computeImageMetaData()
 }
 
 void
-MetaDataWorker::prepareAudioSpectrumComputing()
-{
-    m_media->vlcMedia()->addOption( ":no-sout-video" );
-    m_media->vlcMedia()->addOption( ":sout=#transcode{}:smem" );
-    m_media->vlcMedia()->setAudioDataCtx( this );
-    m_media->vlcMedia()->setAudioLockCallback( reinterpret_cast<void*>( lock ) );
-    m_media->vlcMedia()->setAudioUnlockCallback( reinterpret_cast<void*>( unlock ) );
-    m_media->vlcMedia()->addOption( ":sout-transcode-acodec=fl32" );
-    m_media->vlcMedia()->addOption( ":no-sout-smem-time-sync" );
-    m_media->vlcMedia()->addOption( ":no-sout-keep" );
-    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( generateAudioSpectrum() ), Qt::QueuedConnection );
-}
-
-void
 MetaDataWorker::metaDataAvailable()
 {
     m_mediaIsPlaying = false;
@@ -149,6 +136,7 @@ MetaDataWorker::metaDataAvailable()
     m_media->setNbFrames( (m_media->lengthMS() / 1000) * m_media->fps() );
 
     m_media->emitMetaDataComputed();
+#ifdef WITH_GUI
     //Setting time for snapshot :
     if ( m_media->fileType() == Media::Video ||
          m_media->fileType() == Media::Image )
@@ -157,9 +145,11 @@ MetaDataWorker::metaDataAvailable()
         m_mediaPlayer->setTime( m_mediaPlayer->getLength() / 3 );
     }
     else
+#endif
         finalize();
 }
 
+#ifdef WITH_GUI
 void
 MetaDataWorker::renderSnapshot()
 {
@@ -200,6 +190,7 @@ MetaDataWorker::setSnapshot( const char* filename )
     m_media->emitSnapshotComputed();
     finalize();
 }
+#endif
 
 void
 MetaDataWorker::finalize()
@@ -230,72 +221,87 @@ MetaDataWorker::entrypointPlaying()
         metaDataAvailable();
 }
 
-void
-MetaDataWorker::lock( MetaDataWorker* metaDataWorker, uint8_t** pcm_buffer , unsigned int size )
-{
-    if ( metaDataWorker->m_audioBuffer == NULL )
-        metaDataWorker->m_audioBuffer = new unsigned char[size];
-    *pcm_buffer = metaDataWorker->m_audioBuffer;
-}
 
-void
-MetaDataWorker::unlock( MetaDataWorker* metaDataWorker, uint8_t* pcm_buffer,
-                                      unsigned int channels, unsigned int rate,
-                                      unsigned int nb_samples, unsigned int bits_per_sample,
-                                      unsigned int size, int pts )
-{
-    Q_UNUSED( rate );
-    Q_UNUSED( size );
-    Q_UNUSED( pts );
-
-    int bytePerChannelPerSample = bits_per_sample / 8;
-
-    int leftAverage = 0;
-    int rightAverage = 0;
-
-    int it = 0;
-    for ( unsigned int i = 0; i < nb_samples; i++)
-    {
-        int left = 0;
-        int right = 0;
-        for ( int u = 0 ; u < bytePerChannelPerSample; u++, it++ )
-        {
-            int increment = 0;
-            if ( channels == 2 )
-                increment = bytePerChannelPerSample;
-            left <<= 8;
-            left += pcm_buffer[ it ];
-            right <<= 8;
-            right += pcm_buffer[ it + increment ];
-        }
-        leftAverage += left;
-        rightAverage += right;
-    }
-    leftAverage /= nb_samples;
-    metaDataWorker->addAudioValue( leftAverage );
-}
-
-void
-MetaDataWorker::generateAudioSpectrum()
-{
-    disconnect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( generateAudioSpectrum() ) );
-    m_mediaPlayer->stop();
-//    AudioSpectrumHelper* audioSpectrum = new AudioSpectrumHelper( m_media->getAudioValues() );
-//    audioSpectrum->setAutoDelete( true );
-//    QThreadPool::globalInstance()->start( audioSpectrum );
-    m_media->emitAudioSpectrumComuted();
-    delete this;
-}
-
-void
-MetaDataWorker::addAudioValue( int value )
-{
-    m_media->audioValues()->append( value );
-}
-
-void
-MetaDataWorker::failure()
-{
-    emit failed( m_media );
-    deleteLater();
-}
+//void
+//MetaDataWorker::prepareAudioSpectrumComputing()
+//{
+//    m_media->vlcMedia()->addOption( ":no-sout-video" );
+//    m_media->vlcMedia()->addOption( ":sout=#transcode{}:smem" );
+//    m_media->vlcMedia()->setAudioDataCtx( this );
+//    m_media->vlcMedia()->setAudioLockCallback( reinterpret_cast<void*>( lock ) );
+//    m_media->vlcMedia()->setAudioUnlockCallback( reinterpret_cast<void*>( unlock ) );
+//    m_media->vlcMedia()->addOption( ":sout-transcode-acodec=fl32" );
+//    m_media->vlcMedia()->addOption( ":no-sout-smem-time-sync" );
+//    m_media->vlcMedia()->addOption( ":no-sout-keep" );
+//    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( generateAudioSpectrum() ), Qt::QueuedConnection );
+//}
+//
+//void
+//MetaDataWorker::lock( MetaDataWorker* metaDataWorker, uint8_t** pcm_buffer , unsigned int size )
+//{
+//    if ( metaDataWorker->m_audioBuffer == NULL )
+//        metaDataWorker->m_audioBuffer = new unsigned char[size];
+//    *pcm_buffer = metaDataWorker->m_audioBuffer;
+//}
+//
+//void
+//MetaDataWorker::unlock( MetaDataWorker* metaDataWorker, uint8_t* pcm_buffer,
+//                                      unsigned int channels, unsigned int rate,
+//                                      unsigned int nb_samples, unsigned int bits_per_sample,
+//                                      unsigned int size, int pts )
+//{
+//    Q_UNUSED( rate );
+//    Q_UNUSED( size );
+//    Q_UNUSED( pts );
+//
+//    int bytePerChannelPerSample = bits_per_sample / 8;
+//
+//    int leftAverage = 0;
+//    int rightAverage = 0;
+//
+//    int it = 0;
+//    for ( unsigned int i = 0; i < nb_samples; i++)
+//    {
+//        int left = 0;
+//        int right = 0;
+//        for ( int u = 0 ; u < bytePerChannelPerSample; u++, it++ )
+//        {
+//            int increment = 0;
+//            if ( channels == 2 )
+//                increment = bytePerChannelPerSample;
+//            left <<= 8;
+//            left += pcm_buffer[ it ];
+//            right <<= 8;
+//            right += pcm_buffer[ it + increment ];
+//        }
+//        leftAverage += left;
+//        rightAverage += right;
+//    }
+//    leftAverage /= nb_samples;
+//    metaDataWorker->addAudioValue( leftAverage );
+//}
+//
+//void
+//MetaDataWorker::generateAudioSpectrum()
+//{
+//    disconnect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( generateAudioSpectrum() ) );
+//    m_mediaPlayer->stop();
+////    AudioSpectrumHelper* audioSpectrum = new AudioSpectrumHelper( m_media->getAudioValues() );
+////    audioSpectrum->setAutoDelete( true );
+////    QThreadPool::globalInstance()->start( audioSpectrum );
+//    m_media->emitAudioSpectrumComuted();
+//    delete this;
+//}
+//
+//void
+//MetaDataWorker::addAudioValue( int value )
+//{
+//    m_media->audioValues()->append( value );
+//}
+//
+//void
+//MetaDataWorker::failure()
+//{
+//    emit failed( m_media );
+//    deleteLater();
+//}
