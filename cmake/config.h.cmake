@@ -19,4 +19,7 @@
 /* VLMC's version */
 #cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
 
+/* GUI application ? */
+#cmakedefine WITH_GUI
+
 #endif //CONFIG_H

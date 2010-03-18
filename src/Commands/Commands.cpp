@@ -21,16 +21,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QUndoCommand>
-#include "Commands.h"
-#include "UndoStack.h"
-#include "MainWorkflow.h"
+#include "config.h"
 #include "Clip.h"
+#include "Commands.h"
+#include "MainWorkflow.h"
+
+#ifdef WITH_GUI
+# include "UndoStack.h"
 
 void Commands::trigger( QUndoCommand* command )
 {
     UndoStack::getInstance()->push( command );
 }
+#else
+void Commands::trigger( Commands::Generic* command )
+{
+    command->redo();
+}
+#endif
+
+
 
 Commands::MainWorkflow::AddClip::AddClip( Clip* clip,
                                           unsigned int trackNumber, qint64 pos,

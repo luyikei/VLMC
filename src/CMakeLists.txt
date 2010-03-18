@@ -4,9 +4,7 @@
 SUBDIRS(EffectsEngine/Plugins/src)
 
 SET(VLMC_SRCS
-    main.cpp
     Commands/Commands.cpp
-    Commands/KeyboardShortcutHelper.cpp
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
     EffectsEngine/EffectNode.cpp
@@ -53,11 +51,10 @@ SET(VLMC_SRCS
 IF (WIN32)
     LIST ( APPEND VLMC_SRCS winvlmc.cpp )
 ELSE (WIN32)
-    LIST( APPEND VLMC_SRCS vlmc.cpp )
+    LIST( APPEND VLMC_SRCS Main/vlmc.cpp )
 ENDIF(WIN32)
 
 SET (VLMC_HDRS
-    Commands/KeyboardShortcutHelper.h
     Settings/SettingsManager.h
     Settings/SettingValue.h
     Library/Library.h
@@ -123,6 +120,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 #Add GUI stuff if required
 IF (NOT WITH_GUI)
+    LIST (APPEND VLMC_SRCS Main/main.cpp )
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     TARGET_LINK_LIBRARIES(vlmc
       ${QT_QTCORE_LIBRARY} 
@@ -135,6 +133,8 @@ IF (NOT WITH_GUI)
 
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
+        Commands/KeyboardShortcutHelper.cpp
+        Main/guimain.cpp
         Gui/About.cpp
         Gui/AudioSpectrumDrawer.cpp
         Gui/ClickableLabel.cpp
@@ -184,6 +184,7 @@ ELSE(NOT WITH_GUI)
         )
 
     LIST( APPEND VLMC_HDRS
+        Commands/KeyboardShortcutHelper.h
         Gui/About.h
         Gui/ClickableLabel.h
         Gui/ClipProperty.h

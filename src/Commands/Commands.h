@@ -24,18 +24,37 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include <QUndoCommand>
+#include "config.h"
+#ifdef WITH_GUI
+# include <QUndoCommand>
+#endif
 #include <QObject>
 #include <QVector>
 #include "MainWorkflow.h"
 
 class   Clip;
 
-#define NEW_COMMAND(x)      class   x : public QUndoCommand
+#define NEW_COMMAND(x)      class   x : public Generic
 
 namespace Commands
 {
+#ifdef WITH_GUI
+    class       Generic : public QUndoCommand
+#else
+    class       Generic
+#endif
+    {
+        public:
+            virtual void    redo() = 0;
+            virtual void    undo() = 0;
+            void            setText( const QString& ) {}
+    };
+
+#ifdef WITH_GUI
     void        trigger( QUndoCommand* command );
+#else
+    void        trigger( Generic* command );
+#endif
 
     namespace   MainWorkflow
     {

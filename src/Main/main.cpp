@@ -1,9 +1,9 @@
 /*****************************************************************************
- * winvlmc.cpp: VLMC launcher for win32
+ * main.cpp: VLMC main for non GUI mode
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2009 the VLMC team
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,23 +20,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <windows.h>
+#include "config.h"
+#include "ProjectManager.h"
 
-int VLMCmain( int, char** );
+#include <QCoreApplication>
 
-LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *lpExceptionInfo)
+/**
+ *  VLMC Entry point
+ *  \brief this is the VLMC entry point
+ *  \param argc
+ *  \param argv
+ *  \return Return value of vlmc
+ */
+int
+VLMCmain( int argc, char **argv )
 {
-    if(IsDebuggerPresent())
+    QCoreApplication app( argc, argv );
+    app.setApplicationName( "vlmc" );
+    app.setOrganizationName( "vlmc" );
+    app.setOrganizationDomain( "vlmc.org" );
+    app.setApplicationVersion( PROJECT_VERSION );
+
+    if ( argc < 2 )
     {
-        //If a debugger is present, pass the exception to the debugger with EXCEPTION_CONTINUE_SEARCH
-        return EXCEPTION_CONTINUE_SEARCH;
+        qCritical() << "You must provide a project file to render.";
+        return 1;
     }
-    //TODO: get backtrace
-    //TODO: relaunch ?
-    return 0;
+    ProjectManager::getInstance()->loadProject( argv[1] );
+    return app.exec();
 }
 
-int main( int argc, char **argv )
-{
-    return VLMCmain( argc, argv );
-}
