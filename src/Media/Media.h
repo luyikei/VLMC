@@ -29,13 +29,17 @@
 #ifndef MEDIA_H__
 #define MEDIA_H__
 
+#include "config.h"
 #include <QList>
 #include <QString>
-#include <QPixmap>
 #include <QUuid>
 #include <QObject>
 #include <QFileInfo>
 #include <QHash>
+
+#ifdef WITH_GUI
+#include "Media/GUIMedia.h"
+#endif
 
 namespace LibVLCpp
 {
@@ -48,7 +52,11 @@ class   QXmlStreamWriter;
 /**
   * Represents a basic container for media informations.
   */
+#ifdef WITH_GUI
+class       Media : public GUIMedia
+#else
 class       Media : public QObject
+#endif
 {
     Q_OBJECT
 
@@ -82,9 +90,6 @@ public:
     void                        addVolatileParam( const QString& param, const QString& defaultValue );
     void                        flushVolatileParameters();
     LibVLCpp::Media             *vlcMedia() { return m_vlcMedia; }
-
-    void                        setSnapshot( QPixmap* snapshot );
-    const QPixmap               &snapshot() const;
 
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
@@ -130,10 +135,7 @@ public:
     static const QString        streamPrefix;
 
     void                        emitMetaDataComputed();
-    void                        emitSnapshotComputed();
     void                        emitAudioSpectrumComuted();
-
-//    bool                        hasMetadata() const;
 
     QList<int>*                 audioValues() { return m_audioValueList; }
 
@@ -149,11 +151,9 @@ private:
     void                        setFileType();
 
 protected:
-    static QPixmap*             defaultSnapshot;
     LibVLCpp::Media*            m_vlcMedia;
     QString                     m_mrl;
     QList<QString>              m_volatileParameters;
-    QPixmap*                    m_snapshot;
     QFileInfo*                  m_fileInfo;
     qint64                      m_lengthMS;
     qint64                      m_nbFrames;
@@ -171,8 +171,7 @@ protected:
 
 signals:
     void                        metaDataComputed( const Media* );
-    void                        snapshotComputed( const Media* );
     void                        audioSpectrumComputed( const QUuid& );
 };
 
-#endif // CLIP_H__
+#endif // MEDIA_H__

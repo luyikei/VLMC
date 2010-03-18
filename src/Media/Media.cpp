@@ -35,7 +35,6 @@
 #include <QtDebug>
 #include <QUrl>
 
-QPixmap*        Media::defaultSnapshot = NULL;
 const QString   Media::VideoExtensions = "*.mov *.avi *.mkv *.mpg *.mpeg *.wmv *.mp4 *.ogg *.ogv";
 const QString   Media::ImageExtensions = "*.gif *.png *.jpg *.jpeg";
 const QString   Media::AudioExtensions = "*.mp3 *.oga *.flac *.aac *.wav";
@@ -43,7 +42,6 @@ const QString   Media::streamPrefix = "stream://";
 
 Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
     : m_vlcMedia( NULL ),
-    m_snapshot( NULL ),
     m_fileInfo( NULL ),
     m_lengthMS( 0 ),
     m_nbFrames( 0 ),
@@ -85,8 +83,6 @@ Media::~Media()
 {
     if ( m_vlcMedia )
         delete m_vlcMedia;
-    if ( m_snapshot )
-        delete m_snapshot;
     if ( m_fileInfo )
         delete m_fileInfo;
 }
@@ -123,22 +119,6 @@ void        Media::addVolatileParam( const QString& param, const QString& defaul
 void        Media::addConstantParam( const QString& param )
 {
     m_vlcMedia->addOption( param.toStdString().c_str() );
-}
-
-void        Media::setSnapshot( QPixmap* snapshot )
-{
-    if ( m_snapshot != NULL )
-        delete m_snapshot;
-    m_snapshot = snapshot;
-}
-
-const QPixmap&    Media::snapshot() const
-{
-    if ( m_snapshot != NULL )
-        return *m_snapshot;
-    if ( Media::defaultSnapshot == NULL )
-        Media::defaultSnapshot = new QPixmap( ":/images/images/vlmc.png" );
-    return *Media::defaultSnapshot;
 }
 
 const QFileInfo*    Media::fileInfo() const
@@ -198,11 +178,6 @@ void            Media::emitMetaDataComputed()
     m_baseClip->computeLength();
     m_metadataComputed = true;
     emit metaDataComputed( this );
-}
-
-void            Media::emitSnapshotComputed()
-{
-    emit snapshotComputed( this );
 }
 
 void            Media::emitAudioSpectrumComuted()

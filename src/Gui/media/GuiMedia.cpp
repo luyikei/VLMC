@@ -1,9 +1,9 @@
 /*****************************************************************************
- * VLCInstance.h: Binding for libvlc instance
+ * GUIMedia.cpp: Represents the GUI part of a Media
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,35 +20,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLCINSTANCE_H
-#define VLCINSTANCE_H
+#include "GuiMedia.h"
 
-#include "VLCpp.hpp"
-#include "Singleton.hpp"
+QPixmap*        GUIMedia::defaultSnapshot = NULL;
 
-#include <QObject>
-
-struct libvlc_instance_t;
-
-namespace LibVLCpp
+GUIMedia::GUIMedia() :
+    m_snapshot( NULL )
 {
-    /**
-     *  \warning    This class should be released after every other LibVLCpp classes.
-     */
-    class   Instance :  public QObject,
-                        public Internal< libvlc_instance_t >,
-                        public Singleton<Instance>
-    {
-        Q_OBJECT
-    private:
-        Instance( QObject* parent = NULL );
-        Instance( int argc, const char** argv );
-
-        ~Instance();
-
-    private:
-        friend class    Singleton<Instance>;
-    };
 }
 
-#endif // VLCINSTANCE_H
+GUIMedia::~GUIMedia()
+{
+    if ( m_snapshot )
+        delete m_snapshot;
+}
+
+void
+GUIMedia::setSnapshot( QPixmap* snapshot )
+{
+    if ( m_snapshot != NULL )
+        delete m_snapshot;
+    m_snapshot = snapshot;
+}
+
+const QPixmap&
+GUIMedia::snapshot() const
+{
+    if ( m_snapshot != NULL )
+        return *m_snapshot;
+    if ( Media::defaultSnapshot == NULL )
+        Media::defaultSnapshot = new QPixmap( ":/images/images/vlmc.png" );
+    return *Media::defaultSnapshot;
+}
+
+void
+GUIMedia::emitSnapshotComputed()
+{
+    emit snapshotComputed( this );
+}

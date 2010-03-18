@@ -27,7 +27,6 @@
 #include "Media.h"
 
 #include <QList>
-#include <QLabel>
 #include <QTemporaryFile>
 #include <QTime>
 

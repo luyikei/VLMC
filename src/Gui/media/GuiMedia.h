@@ -1,9 +1,9 @@
 /*****************************************************************************
- * VLCInstance.h: Binding for libvlc instance
+ * GUIMedia.h: Represents the GUI part of a Media
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,35 +20,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLCINSTANCE_H
-#define VLCINSTANCE_H
-
-#include "VLCpp.hpp"
-#include "Singleton.hpp"
+#ifndef GUIMEDIA_H
+#define GUIMEDIA_H
 
 #include <QObject>
+#include <QPixmap>
 
-struct libvlc_instance_t;
+class   QPixmap;
 
-namespace LibVLCpp
+class GUIMedia : public QObject
 {
-    /**
-     *  \warning    This class should be released after every other LibVLCpp classes.
-     */
-    class   Instance :  public QObject,
-                        public Internal< libvlc_instance_t >,
-                        public Singleton<Instance>
-    {
-        Q_OBJECT
-    private:
-        Instance( QObject* parent = NULL );
-        Instance( int argc, const char** argv );
+    Q_OBJECT
 
-        ~Instance();
+public:
+    ~GUIMedia();
+    void                        setSnapshot( QPixmap* snapshot );
+    const QPixmap               &snapshot() const;
+    void                        emitSnapshotComputed();
 
-    private:
-        friend class    Singleton<Instance>;
-    };
-}
+protected:
+    //A GUIMedia shouldn't be constructed by something else than a media
+    GUIMedia();
 
-#endif // VLCINSTANCE_H
+    static QPixmap*             defaultSnapshot;
+    QPixmap*                    m_snapshot;
+
+
+signals:
+    void                        snapshotComputed( const GUIMedia* );
+};
+
+#endif // GUIMEDIA_H
