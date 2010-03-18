@@ -46,6 +46,10 @@ ENDIF(WIN32)
 # VLMC requires libVLC
 #SET (WITH_LIBVLC FALSE CACHE BOOL "Compile LibVLC in VLMC")
 
+IF (UNIX)
+    SET(WITH_PROFILING FALSE CACHE BOOL "Build with profiling support" )
+ENDIF(UNIX)
+
 SET(WITH_CRASHBUTTON FALSE CACHE BOOL "Enable the crash button")
 SET(WITH_CRASHHANDLER_GUI TRUE CACHE BOOL "Enable the crash handler GUI (with backtrace and restart capabilities)")
 SET(WITH_CRASHHANDLER TRUE CACHE BOOL "Enable the crash handler")
