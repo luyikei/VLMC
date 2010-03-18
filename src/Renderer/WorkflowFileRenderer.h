@@ -25,7 +25,9 @@
 
 #include "Workflow/MainWorkflow.h"
 #include "WorkflowRenderer.h"
+#ifdef WITH_GUI
 #include "WorkflowFileRendererDialog.h"
+#endif
 
 #include <QTime>
 
@@ -35,8 +37,10 @@ class   WorkflowFileRenderer : public WorkflowRenderer
     Q_DISABLE_COPY( WorkflowFileRenderer )
 
 public:
+#ifdef WITH_GUI
     WorkflowFileRenderer();
     virtual ~WorkflowFileRenderer();
+#endif
 
     static int          lock( void* datas, qint64 *dts, qint64 *pts, quint32 *flags,
                               size_t *bufferSize, void **buffer );
@@ -50,9 +54,11 @@ private:
 
 private:
     QString                     m_outputFileName;
+#ifdef WITH_GUI
     WorkflowFileRendererDialog* m_dialog;
     QImage*                     m_image;
     QTime                       m_time;
+#endif
 
 protected:
     virtual void*               getLockCallback();

@@ -26,10 +26,13 @@
 #include "VLCMedia.h"
 #include "LightVideoFrame.h"
 #include "VLCMediaPlayer.h"
-#include "export/RendererSettings.h"
+#ifdef WITH_GUI
+# include "export/RendererSettings.h"
+#endif
 
 #include <QTime>
 
+#ifdef WITH_GUI
 WorkflowFileRenderer::WorkflowFileRenderer() :
         WorkflowRenderer(),
         m_image( NULL )
@@ -40,6 +43,7 @@ WorkflowFileRenderer::~WorkflowFileRenderer()
 {
     delete m_image;
 }
+#endif
 
 void        WorkflowFileRenderer::run()
 {
@@ -47,6 +51,7 @@ void        WorkflowFileRenderer::run()
 
     m_mainWorkflow->setCurrentFrame( 0, MainWorkflow::Renderer );
 
+#ifdef WITH_GUI
     //Setup dialog box for querying render parameters.
     RendererSettings    *settings = new RendererSettings;
     if ( settings->exec() == QDialog::Rejected )
@@ -61,9 +66,17 @@ void        WorkflowFileRenderer::run()
     quint32     vbitrate = settings->videoBitrate();
     quint32     abitrate = settings->audioBitrate();
     delete settings;
-
+#else
+    quint32     width = VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
+    quint32     height = VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
+    double      fps = VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
+    quint32     vbitrate = 4000;
+    quint32     abitrate = 400;
+#endif
     setupRenderer( width, height, fps );
+#ifdef WITH_GUI
     setupDialog( width, height );
+#endif
 
     //Media as already been created and mainly initialized by the WorkflowRenderer
     QString     transcodeStr = ":sout=#transcode{vcodec=h264,vb=" + QString::number( vbitrate ) +
@@ -100,17 +113,11 @@ void    WorkflowFileRenderer::stop()
     WorkflowRenderer::killRenderer();
 }
 
-void    WorkflowFileRenderer::cancelButtonClicked()
-{
-    stop();
-    disconnect();
-    m_dialog->done( 0 );
-}
-
 void
 WorkflowFileRenderer::__endReached()
 {
-     cancelButtonClicked();
+    stop();
+    disconnect();
 }
 
 float   WorkflowFileRenderer::getFps() const
@@ -126,12 +133,14 @@ WorkflowFileRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flag
     EsHandler*  handler = reinterpret_cast<EsHandler*>( datas );
     WorkflowFileRenderer* self = static_cast<WorkflowFileRenderer*>( handler->self );
 
+#ifdef WITH_GUI
     if ( self->m_time.isValid() == false ||
         self->m_time.elapsed() >= 1000 )
     {
         self->emit imageUpdated( (uchar*)self->m_renderVideoFrame );
         self->m_time.restart();
     }
+#endif
     return ret;
 }
 
@@ -144,7 +153,9 @@ WorkflowFileRenderer::unlock( void *datas, size_t size, void* buff )
 void
 WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedReason )
 {
+#ifdef WITH_GUI
     m_dialog->setProgressBarValue( frame * 100 / m_mainWorkflow->getLengthFrame() );
+#endif
 }
 
 void*
@@ -171,6 +182,7 @@ WorkflowFileRenderer::height() const
     return VLMC_GET_UINT( "video/VideoProjectHeight" );
 }
 
+#ifdef WITH_GUI
 void
 WorkflowFileRenderer::setupDialog( quint32 width, quint32 height )
 {
@@ -184,3 +196,12 @@ WorkflowFileRenderer::setupDialog( quint32 width, quint32 height )
              Qt::QueuedConnection );
     m_dialog->show();
 }
+
+void
+WorkflowFileRenderer::cancelButtonClicked()
+{
+    stop();
+    disconnect();
+    m_dialog->done( 0 );
+}
+#endif

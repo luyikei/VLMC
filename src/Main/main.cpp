@@ -24,6 +24,7 @@
 #include "ProjectManager.h"
 
 #include <QCoreApplication>
+#include <QtDebug>
 
 /**
  *  VLMC Entry point
