@@ -25,14 +25,14 @@
 #ifndef PREFERENCEWIDGET_H
 #define PREFERENCEWIDGET_H
 
-#include <QWidget>
+#include <QScrollArea>
 #include <QString>
 #include "SettingsManager.h"
 
 class   ISettingsCategorieWidget;
 class   SettingValue;
 
-class   PreferenceWidget : public QWidget
+class   PreferenceWidget : public QScrollArea
 {
     Q_OBJECT
     public:

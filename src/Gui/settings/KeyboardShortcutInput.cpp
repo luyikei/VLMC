@@ -42,6 +42,7 @@ KeyboardShortcutInput::KeyboardShortcutInput( const QString& name,
     QKeySequence    ks( initialValue );
     for ( int i = 0; i < 4; ++i )
         m_shortcuts[i] = ks[i];
+    setMaximumWidth( 300 );
 }
 
 void    KeyboardShortcutInput::mousePressEvent( QMouseEvent* )

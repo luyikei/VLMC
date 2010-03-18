@@ -28,13 +28,13 @@
 
 #include <QDialog>
 #include <QString>
-#include <QList>
 
-class QDialogButtonBox;
-class QLabel;
-class QHBoxLayout;
 class QAbstractButton;
+class QDialogButtonBox;
+class QGridLayout;
+class QLabel;
 class QScrollArea;
+class QStackedLayout;
 
 class   Panel;
 class   PreferenceWidget;
@@ -46,24 +46,19 @@ class   Settings : public QDialog
 
     public:
         Settings( SettingsManager::Type type, QWidget* parent = 0, Qt::WindowFlags f = 0 );
-        virtual ~Settings();
 
         void                        addCategorie( const QString& name,
                                                     SettingsManager::Type type,
                                                     const QIcon& icon,
                                                     const QString& label );
-        void                        show();
-
     private:
-        inline QHBoxLayout*         buildLayout();
+        void                        buildLayout();
 
     private:
         QDialogButtonBox*           m_buttons;
-        QList<PreferenceWidget*>    m_pWidgets;
-        PreferenceWidget*           m_currentWidget;
         Panel*                      m_panel;
         QLabel*                     m_title;
-        QScrollArea*                m_configPanel;
+        QStackedLayout              *m_stackedLayout;
         SettingsManager::Type       m_type;
 
     public slots:

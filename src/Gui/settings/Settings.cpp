@@ -27,20 +27,19 @@
 #include "SettingsManager.h"
 #include "Panel.h"
 
+#include <QApplication>
 #include <QDialogButtonBox>
 #include <QAbstractButton>
 #include <QIcon>
 #include <QLabel>
 #include <QScrollArea>
 #include <QHBoxLayout>
+#include <QStackedLayout>
 
 #include <QtDebug>
 
-
-
 Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags f ) :
     QDialog( parent, f ),
-    m_currentWidget( NULL ),
     m_type( type )
 {
     setMinimumHeight( 400 );
@@ -54,16 +53,11 @@ Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags
     connect( m_buttons, SIGNAL( clicked( QAbstractButton* ) ),
              this, SLOT( buttonClicked( QAbstractButton* ) ) );
 
-
     // Create the layout
-    setLayout( buildLayout() );
+    buildLayout();
 
     connect( m_panel, SIGNAL( changePanel( int ) ),
              this, SLOT( switchWidget( int ) ) );
-}
-
-Settings::~Settings()
-{
 }
 
 void        Settings::addCategorie( const QString& name,
@@ -72,63 +66,41 @@ void        Settings::addCategorie( const QString& name,
                                  const QString& label )
 {
     PreferenceWidget    *pWidget = new PreferenceWidget( name, type, this );
-    // We don't want the widget to be visible
-    pWidget->hide();
 
-    // Add the widget to the list
-    m_pWidgets.append( pWidget );
-
+    m_stackedLayout->addWidget( pWidget );
     // Create a button linked to the widget using its index
-    m_panel->addButton( label, icon, m_pWidgets.indexOf( pWidget ) );
-
-    // If this is the first widget, show it by default.
-    if ( m_pWidgets.count() == 1 )
-        switchWidget( 0 );
+    m_panel->addButton( label, icon, m_stackedLayout->count() - 1 );
 }
 
-void        Settings::show()
-{
-    emit loadSettings();
-    switchWidget( 0 );
-    QWidget::show();
-}
-
-QHBoxLayout*    Settings::buildLayout()
+void
+Settings::buildLayout()
 {
     // Create the left panel
     m_panel = new Panel( this );
     m_panel->setMaximumWidth( 130 );
 
     // Create the master layout
-    QHBoxLayout* hLayout = new QHBoxLayout( this );
-    hLayout->addWidget( m_panel );
+    QGridLayout* mLayout = new QGridLayout( this );
+    mLayout->addWidget( m_panel, 0, 0, 2, 1 );
 
-    // Right Sub-layout
-    QVBoxLayout* vLayout = new QVBoxLayout;
     m_title = new QLabel( this );
-    m_configPanel = new QScrollArea( this );
-    m_configPanel->setFrameShape( QFrame::NoFrame );
+    m_stackedLayout = new QStackedLayout;
 
     // Set the font and text of the panel title
-    QFont labelFont = font();
-    labelFont.setPointSize( labelFont.pointSize() + 6 );
-    labelFont.setFamily( "Verdana" );
-    m_title->setFont( labelFont );
-    m_title->setText( "Empty" );
+    QFont titleFont = QApplication::font();
+    titleFont.setPointSize( titleFont.pointSize() + 6 );
+    titleFont.setFamily( "Verdana" );
+    m_title->setFont( titleFont );
 
-    vLayout->addWidget( m_title );
-    vLayout->addWidget( m_configPanel );
-    vLayout->addWidget( m_buttons );
-
-    hLayout->insertLayout( -1, vLayout );
-
-    return hLayout;
+    mLayout->addWidget( m_title, 0, 1, 1, 2 );
+    mLayout->addLayout( m_stackedLayout, 1, 2, 1, 2 );
+    mLayout->addWidget( m_buttons, 2, 2 );
 }
 
 void    Settings::buttonClicked( QAbstractButton* button )
 {
     bool  save = false;
-    bool  hide = false ;
+    bool  hide = false;
 
     switch ( m_buttons->standardButton( button ) )
     {
@@ -148,8 +120,8 @@ void    Settings::buttonClicked( QAbstractButton* button )
     if ( save == true )
     {
         // Ask each widget to save their state
-        for ( int i = 0; i < m_pWidgets.count(); ++i )
-            m_pWidgets.at( i )->save();
+        for ( int i = 0; i < m_stackedLayout->count(); ++i )
+            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save();
         //If we're handling vlmc preferences, save the value in the QSettings
         if ( m_type == SettingsManager::Vlmc )
             SettingsManager::getInstance()->save();
@@ -160,17 +132,11 @@ void    Settings::buttonClicked( QAbstractButton* button )
 
 void    Settings::switchWidget( int index )
 {
-    PreferenceWidget* pWidget = m_pWidgets.at( index );
+    PreferenceWidget* pWidget =
+            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( index ) );
 
-    // This should never happen
-    if ( !pWidget )
-        return;
+    Q_ASSERT( pWidget != NULL );
     m_title->setText( pWidget->categorie() );
-    // If there is already a widget into the QScrollArea take it
-    // to avoid its deletion.
-    if ( m_configPanel->widget() )
-        m_configPanel->takeWidget();
-
-    m_configPanel->setWidget( pWidget );
+    m_stackedLayout->setCurrentIndex( index );
 }
 

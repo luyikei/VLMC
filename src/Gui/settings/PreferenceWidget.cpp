@@ -40,12 +40,14 @@
 
 PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::Type type,
                                     QWidget *parent ) :
-    QWidget( parent ),
+    QScrollArea( parent ),
     m_categorie( categorie )
 {
+    QWidget     *container = new QWidget( this );
     SettingsManager::SettingHash    settings =
             SettingsManager::getInstance()->group( categorie, type );
-    QFormLayout *layout = new QFormLayout( this );
+    QFormLayout *layout = new QFormLayout( container );
+    layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
     foreach ( SettingValue* s, settings.values() )
     {
         ISettingsCategorieWidget    *widget = widgetFactory( s );
@@ -55,9 +57,10 @@ PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::T
         layout->addRow( label, widget->widget() );
         m_settings.push_back( widget );
     }
-    setLayout( layout );
+    setWidget( container );
+    setWidgetResizable( true );
+    setFrameStyle( QFrame::NoFrame );
     m_categorie[0] = m_categorie[0].toUpper();
-
 }
 
 ISettingsCategorieWidget*
