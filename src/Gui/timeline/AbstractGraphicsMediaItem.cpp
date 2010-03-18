@@ -225,9 +225,9 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
         if ( clip()->getMedia()->fileType() != Media::Image )
             if ( clip()->begin() + size > clip()->maxEnd() )
                 return;
-        //FIXME
-//        tracksView()->getRenderer()->resizeClip( clip(), clip()->getBegin(), clip()->getBegin() + size, 0, //This parameter is unused in this case
-//                                                 trackNumber(), mediaType() );
+        MainWorkflow::getInstance()->resizeClip( clip(), clip()->begin(),
+                                                 clip()->begin() + size, 0,
+                                                 trackNumber(), mediaType() );
     }
     else
     {
@@ -245,7 +245,6 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
             MainWorkflow::getInstance()->resizeClip( clip(), qMax( clip()->end() - size, (qint64)0 ), clip()->end(),
                                                      newStart, trackNumber(), mediaType() );
             setStartPos( newStart );
-            //FIXME
         }
         else
         {
