@@ -47,7 +47,6 @@ protected:
     virtual QVariant    itemChange( GraphicsItemChange change, const QVariant& value );
     virtual void        mousePressEvent( QGraphicsSceneMouseEvent* event );
     virtual void        mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
-    virtual void        mouseMoveEvent( QGraphicsSceneMouseEvent *event );
 
 private:
     QPen        m_pen;
@@ -56,6 +55,7 @@ private:
 
 signals:
     void cursorPositionChanged( qint64 pos );
+    void cursorMoved( qint64 pos );
 
 public slots:
     void frameChanged( qint64 position, MainWorkflow::FrameChangedReason );

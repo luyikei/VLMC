@@ -71,7 +71,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
 
     m_scene->addItem( m_cursorLine );
 
-    connect( m_cursorLine, SIGNAL( cursorPositionChanged(qint64) ),
+    connect( m_cursorLine, SIGNAL( cursorMoved(qint64) ),
              this, SLOT( ensureCursorVisible() ) );
     connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
              this, SLOT( deleteMedia( const QUuid& ) ) );

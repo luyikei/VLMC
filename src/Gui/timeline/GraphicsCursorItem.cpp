@@ -21,12 +21,15 @@
  *****************************************************************************/
 
 #include <QtDebug>
+#include <QGraphicsItem>
 #include "GraphicsCursorItem.h"
 
 GraphicsCursorItem::GraphicsCursorItem( const QPen& pen ) :
         m_pen( pen ), m_mouseDown( false )
 {
-    setFlags( QGraphicsItem::ItemIgnoresTransformations | QGraphicsItem::ItemIsMovable );
+    setFlags( QGraphicsItem::ItemIgnoresTransformations |
+              QGraphicsItem::ItemIsMovable |
+              QGraphicsItem::ItemSendsGeometryChanges );
     setCursor( QCursor( Qt::SizeHorCursor ) );
     setZValue( 100 );
 
@@ -47,17 +50,18 @@ void GraphicsCursorItem::paint( QPainter* painter, const QStyleOptionGraphicsIte
 QVariant GraphicsCursorItem::itemChange( GraphicsItemChange change, const QVariant& value )
 {
     //Position is changing :
-    if ( change == ItemPositionChange )
+    if ( change == QGraphicsItem::ItemPositionChange )
     {
         qreal posX = value.toPointF().x();
         if ( posX < 0 ) posX = 0;
         return QPoint( ( int ) posX, ( int ) pos().y() );
     }
     //The position HAS changed, ie we released the slider, or setPos has been called.
-    else if ( change == ItemPositionHasChanged )
+    else if ( change == QGraphicsItem::ItemPositionHasChanged )
     {
         if ( m_mouseDown )
             emit cursorPositionChanged( ( qint64 ) pos().x() );
+        emit cursorMoved( ( qint64 ) pos().x() );
     }
     return QGraphicsItem::itemChange( change, value );
 }
@@ -68,13 +72,6 @@ void GraphicsCursorItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
     event->accept();
     QGraphicsItem::mousePressEvent( event );
-}
-
-void
-GraphicsCursorItem::mouseMoveEvent( QGraphicsSceneMouseEvent *event )
-{
-    QGraphicsItem::mouseMoveEvent( event );
-    setPos( pos().x(), 0.0 );
 }
 
 void GraphicsCursorItem::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
