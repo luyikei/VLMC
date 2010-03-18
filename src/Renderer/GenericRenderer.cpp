@@ -35,9 +35,11 @@ GenericRenderer::~GenericRenderer()
     delete m_mediaPlayer;
 }
 
+#ifdef WITH_GUI
 void
 GenericRenderer::setRenderWidget(QWidget *renderWidget)
 {
     m_mediaPlayer->setDrawable( renderWidget->winId() );
     m_renderWidget = renderWidget;
 }
+#endif

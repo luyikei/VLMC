@@ -23,9 +23,12 @@
 #ifndef GENERICRENDERER_H
 #define GENERICRENDERER_H
 
+#include "config.h"
+
 #include <QObject>
-#include <QWidget>
-class   QLabel;
+#ifdef WITH_GUI
+# include <QWidget>
+#endif
 
 #include "MainWorkflow.h"
 
@@ -49,12 +52,14 @@ public:
     explicit GenericRenderer();
     virtual ~GenericRenderer();
 
+#ifdef WITH_GUI
     /**
      *  \brief  Set the widget used for rendering the output.
      *  \param  renderWidget    The widget to use for render.
      *  \sa     setPreviewLabel( QLabel* )
      */
     void                setRenderWidget( QWidget* renderWidget );
+#endif
     /**
      *  \brief          Play or pause the media.
      *

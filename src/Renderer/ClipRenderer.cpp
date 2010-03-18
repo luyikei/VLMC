@@ -23,7 +23,6 @@
 
 #include <QtDebug>
 #include <QtGlobal>
-#include <QLabel>
 
 #include "Clip.h"
 #include "ClipRenderer.h"
