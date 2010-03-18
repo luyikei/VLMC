@@ -120,6 +120,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 #Add GUI stuff if required
 IF (NOT WITH_GUI)
+    SET( WITH_CRASHHANDLER_GUI FALSE )
     LIST (APPEND VLMC_SRCS Main/main.cpp )
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     TARGET_LINK_LIBRARIES(vlmc
@@ -143,8 +144,6 @@ ELSE(NOT WITH_GUI)
         Gui/LanguageHelper.cpp
         Gui/preview/LCDTimecode.cpp
         Gui/MainWindow.cpp
-        Gui/preview/PreviewRuler.cpp
-        Gui/preview/PreviewWidget.cpp
         Gui/import/TagWidget.cpp
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
@@ -155,6 +154,10 @@ ELSE(NOT WITH_GUI)
         Gui/library/MediaListView.cpp
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
+        Gui/media/GUIMedia.cpp
+        Gui/project/GUIProjectManager.cpp
+        Gui/preview/PreviewRuler.cpp
+        Gui/preview/PreviewWidget.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/DoubleWidget.cpp
         Gui/settings/IntWidget.cpp
@@ -192,7 +195,7 @@ ELSE(NOT WITH_GUI)
         Gui/export/RendererSettings.h
         Gui/import/ImportController.h
         Gui/LanguageHelper.h
-        Gui/preview/LCDTimecode.h
+        Gui/import/TagWidget.h
         Gui/library/ListViewController.h
         Gui/library/MediaCellView.h
         Gui/library/MediaListView.h
@@ -200,13 +203,15 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewNavController.h
         Gui/library/ViewController.h
         Gui/MainWindow.h
+        Gui/media/GUIMedia.h
+        Gui/preview/LCDTimecode.h
         Gui/preview/PreviewRuler.h
         Gui/preview/PreviewWidget.h
+        Gui/project/GUIProjectManager.h
         Gui/settings/KeyboardShortcutInput.h
         Gui/settings/Panel.h
         Gui/settings/PreferenceWidget.h
         Gui/settings/Settings.h
-        Gui/import/TagWidget.h
         Gui/timeline/AbstractGraphicsMediaItem.h
         Gui/timeline/GraphicsAudioItem.h 
         Gui/timeline/GraphicsCursorItem.h
@@ -257,7 +262,6 @@ ELSE(NOT WITH_GUI)
         ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
         LIST( APPEND VLMC_HDRS Gui/widgets/CrashHandler.h )
         LIST( APPEND VLMC_UIS Gui/widgets/CrashHandler.ui )
-        
     ENDIF(WITH_CRASHHANDLER_GUI)
 
     QT4_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})

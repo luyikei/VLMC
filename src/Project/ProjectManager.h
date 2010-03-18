@@ -23,17 +23,24 @@
 #ifndef PROJECTMANAGER_H
 #define PROJECTMANAGER_H
 
+#include "config.h"
 #include <QObject>
 #include <QDomDocument>
 #include <QStringList>
-#include <QTimer>
 
 #include "Singleton.hpp"
 
 class   QFile;
 class   QDomDocument;
 
-class   ProjectManager : public QObject, public Singleton<ProjectManager>
+#ifdef WITH_GUI
+# include "Project/GUIProjectManager.h"
+# define PARENTCLASS GUIProjectManager
+#else
+# define PARENTCLASS QObject
+#endif
+
+class   ProjectManager : public PARENTCLASS, public Singleton<ProjectManager>
 {
     Q_OBJECT
     Q_DISABLE_COPY( ProjectManager );
@@ -42,25 +49,9 @@ public:
     static const QString    unSavedProject;
 
     void            loadProject( const QString& fileName );
-    void            newProject( const QString& projectName );
-    /**
-     *  \brief      Ask the user for the project file she wants to load.
-     *
-     *  \return     The project to load.
-     */
-    QString         acquireProjectFileName();
-    void            saveProject( bool saveAs = false );
     bool            needSave() const;
     QStringList     recentsProjects() const;
-    /**
-     *  \brief      Ask the project manager to close current project.
-     *
-     *  This can fail, as the user will be asked if he wants to save the current project.
-     *  If she selects discard, the project closing procedure is aborted.
-     *  \return     true if the project has been closed. false otherwise.
-     */
-    bool            closeProject();
-    bool            askForSaveIfModified();
+
     bool            loadEmergencyBackup();
 
     static void     signalHandler( int sig );
@@ -86,16 +77,12 @@ private:
 
     ProjectManager();
     ~ProjectManager();
-
-    bool            createNewProjectFile( bool saveAs );
-
 private:
     QFile*          m_projectFile;
     bool            m_needSave;
     QStringList     m_recentsProjects;
     QString         m_projectName;
     QString         m_projectDescription;
-    QTimer*         m_timer;
     QDomDocument    *m_domDocument;
 
     friend class    Singleton<ProjectManager>;
@@ -103,9 +90,6 @@ private:
 private slots:
     void            loadTimeline();
     void            cleanChanged( bool val );
-    void            automaticSaveEnabledChanged( const QVariant& enabled );
-    void            automaticSaveIntervalChanged( const QVariant& interval );
-    void            autoSaveRequired();
     void            projectNameChanged( const QVariant& projectName );
 
 signals:
