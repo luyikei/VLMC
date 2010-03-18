@@ -29,6 +29,8 @@
 #include <QPainter>
 #include <QLinearGradient>
 #include <QTime>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
 
 GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : m_clip( clip )
 {

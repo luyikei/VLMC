@@ -23,14 +23,15 @@
 #ifndef GRAPHICSCURSORITEM_H
 #define GRAPHICSCURSORITEM_H
 
+#include "MainWorkflow.h"
 #include <QObject>
 #include <QGraphicsItem>
 #include <QPen>
-#include <QRectF>
-#include <QPainter>
-#include <QCursor>
-#include <QGraphicsSceneMouseEvent>
-#include "MainWorkflow.h"
+
+class QPen;
+class QRectF;
+class QPainter;
+class QGraphicsSceneMouseEvent;
 
 class GraphicsCursorItem : public QObject, public QGraphicsItem
 {

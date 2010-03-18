@@ -22,6 +22,11 @@
 
 #include <QtDebug>
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
+#include <QPainter>
+#include <QCursor>
+#include <QPen>
+#include <QRectF>
 #include "GraphicsCursorItem.h"
 
 GraphicsCursorItem::GraphicsCursorItem( const QPen& pen ) :

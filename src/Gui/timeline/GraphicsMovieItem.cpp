@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QFontMetrics>
+#include <QGraphicsSceneMouseEvent>
 
 #include "Clip.h"
 #include "GraphicsMovieItem.h"

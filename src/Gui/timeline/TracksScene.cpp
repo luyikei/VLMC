@@ -22,6 +22,7 @@
 
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QGraphicsSceneContextMenuEvent>
 #include "TracksScene.h"
 #include "Commands.h"
 #include "GraphicsMovieItem.h"

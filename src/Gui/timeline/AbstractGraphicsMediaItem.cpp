@@ -22,6 +22,7 @@
 
 #include <QMenu>
 #include <QColorDialog>
+#include <QGraphicsSceneContextMenuEvent>
 #include "AbstractGraphicsMediaItem.h"
 #include "TracksView.h"
 #include "TracksScene.h"
