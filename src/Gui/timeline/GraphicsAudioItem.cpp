@@ -45,7 +45,9 @@ GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : m_clip( clip )
     // Adjust the width
     setWidth( clip->length() );
     // Automatically adjust future changes
-    connect( clip, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( clip, SIGNAL( lengthUpdated() ),
+             this, SLOT( adjustLength() ),
+             Qt::QueuedConnection );
 }
 
 GraphicsAudioItem::~GraphicsAudioItem()

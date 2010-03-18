@@ -47,7 +47,9 @@ GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) : m_clip( clip )
     // Adjust the width
     setWidth( clip->length() );
     // Automatically adjust for future changes
-    connect( clip, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( clip, SIGNAL( lengthUpdated() ),
+             this, SLOT( adjustLength() ),
+             Qt::QueuedConnection );
 }
 
 GraphicsMovieItem::~GraphicsMovieItem()
