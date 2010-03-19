@@ -27,6 +27,8 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QCompleter>
+#include <QDirModel>
 
 RendererSettings::RendererSettings()
 {
@@ -37,6 +39,10 @@ RendererSettings::RendererSettings()
     m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
     m_ui.height->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectHeight" ) );
     m_ui.fps->setValue( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+
+    QCompleter* completer = new QCompleter( this );
+    completer->setModel( new QDirModel( completer ) );
+    m_ui.outputFileName->setCompleter( completer );
 }
 
 void
