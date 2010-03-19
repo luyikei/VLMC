@@ -274,7 +274,7 @@ void AbstractGraphicsMediaItem::adjustLength()
         return ;
     }
     Q_ASSERT( clip() );
-    resize( clip()->length() );
+    setWidth( clip()->length() );
 }
 
 bool AbstractGraphicsMediaItem::resizeZone( const QPointF& position )
