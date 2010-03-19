@@ -86,7 +86,7 @@ bool GeneralPage::validatePage()
     }
 
     QVariant projectName( ui.lineEditName->text() );
-    sManager->setValue( "project/ProjectName", projectName, SettingsManager::Project );
+    sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
 
     return true;
 }
