@@ -142,13 +142,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>FileBrowser</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulár</translation>
-    </message>
-</context>
-<context>
     <name>GeneralPage</name>
     <message>
         <source>WizardPage</source>
@@ -281,38 +274,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LibraryWidget</name>
+    <name>ListViewController</name>
     <message>
-        <source>Form</source>
-        <translation>Formulár</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Zvuk</translation>
-    </message>
-    <message>
-        <source>Videos</source>
-        <translation>Videá</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation>Obrázky</translation>
-    </message>
-    <message>
-        <source>Add Media</source>
-        <translation>Pridať médium</translation>
-    </message>
-    <message>
-        <source>Remove Media</source>
-        <translation>Odstrániť médium</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation>Filter:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
+        <source>Media List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -572,14 +537,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Do you want to save it ?</source>
         <translation>Chcete ho uložiť?</translation>
-    </message>
-    <message>
-        <source>&lt;Unnamed project&gt;</source>
-        <translation>&lt;Nepomenovaný projekt&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;Unsaved project&gt;</source>
-        <translation>&lt;Neuložený projekt&gt;</translation>
     </message>
 </context>
 <context>

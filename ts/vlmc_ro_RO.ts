@@ -35,17 +35,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AudioProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>SampleRate</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ClipProperty</name>
     <message>
         <source>Media Properties</source>
@@ -145,13 +134,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>A crash occured. Signal received: </source>
         <translation>Un accident a avut loc. Semnal primit:</translation>
-    </message>
-</context>
-<context>
-    <name>FileBrowser</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -278,70 +260,19 @@ p, li { white-space: pre-wrap; }
         <translation>proprietati</translation>
     </message>
     <message>
-        <source>Importing files...</source>
-        <translation>Importa fisierele...</translation>
+        <source>TextLabel</source>
+        <translation type="unfinished">Eticheta</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation>Ignora</translation>
-    </message>
-</context>
-<context>
-    <name>LanguagePreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation>Limba</translation>
+        <source>Failed to load %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Library</name>
+    <name>ListViewController</name>
     <message>
-        <source>Import error</source>
-        <translation>Eroare import</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open file :</source>
-        <translatorcomment>Angepast om beter in NL te klinken</translatorcomment>
-        <translation>Nu pot deschide fisierul:</translation>
-    </message>
-</context>
-<context>
-    <name>LibraryWidget</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Videos</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation>Imagini</translation>
-    </message>
-    <message>
-        <source>Add Media</source>
-        <translation>Adauga fisiere media</translation>
-    </message>
-    <message>
-        <source>Remove Media</source>
-        <translation>Sterge fisiere media</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation>Filtru:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
+        <source>Media List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -504,44 +435,16 @@ p, li { white-space: pre-wrap; }
         <translation>Reia operatiunea</translation>
     </message>
     <message>
-        <source>VLMC</source>
-        <translation>VLMC</translation>
-    </message>
-    <message>
         <source>VLMC settings</source>
         <translation>Setari VLMC</translation>
-    </message>
-    <message>
-        <source>Language preferences</source>
-        <translation>Preferinte limba</translation>
-    </message>
-    <message>
-        <source>Language settings</source>
-        <translation>Setari limba</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>Tastatura</translation>
-    </message>
-    <message>
-        <source>Project</source>
-        <translation>Proiect</translation>
     </message>
     <message>
         <source>Project settings</source>
         <translation>Setarile proiectului</translation>
     </message>
     <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
         <source>Video settings</source>
         <translation>Setari video</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -554,10 +457,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>There is nothing to render.</source>
         <translation>Nu este nimic de randat.</translation>
-    </message>
-    <message>
-        <source>Enter the output file name</source>
-        <translation>Alegeti calea fisierului rezultat</translation>
     </message>
 </context>
 <context>
@@ -637,17 +536,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Project name</source>
-        <translation>Numele proiectului</translation>
-    </message>
-</context>
-<context>
     <name>ProjectWizard</name>
     <message>
         <source>Project wizard</source>
@@ -698,10 +586,58 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>RendererSettings</name>
     <message>
-        <source>Preferences: %1</source>
-        <translation>Preferinte: %1</translation>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialog</translation>
+    </message>
+    <message>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Orizontal</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Vertical</translation>
+    </message>
+    <message>
+        <source>FPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H264</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished">Alegeti calea fisierului rezultat</translation>
     </message>
 </context>
 <context>
@@ -849,41 +785,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>VLMCPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Output FPS</source>
-        <translation>Iesire FPS</translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Number of tracks</source>
-        <translation>Numar piste</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Automatic save</source>
-        <translation>Salvare automata</translation>
-    </message>
-    <message>
-        <source>Automatic save interval</source>
-        <translation>Interval salvare automata</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation>minute</translation>
-    </message>
-</context>
-<context>
     <name>VideoPage</name>
     <message>
         <source>WizardPage</source>
@@ -984,29 +885,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Configure Video settings</source>
         <translation>Configurare setari video</translation>
-    </message>
-</context>
-<context>
-    <name>VideoProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source> Frames/Seconds</source>
-        <translation>Cadre/Secunde</translation>
-    </message>
-    <message>
-        <source>Image width</source>
-        <translation>Dimensiune orizontala pentru  imagine</translation>
-    </message>
-    <message>
-        <source>Image height</source>
-        <translation>Dimensiune verticala pentru  imagine</translation>
     </message>
 </context>
 <context>

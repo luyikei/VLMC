@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutVLMC</name>
@@ -35,17 +37,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>License</source>
         <translation>Llicencia</translation>
-    </message>
-</context>
-<context>
-    <name>AudioProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-    <message>
-        <source>SampleRate</source>
-        <translation>Taxa de mostratge</translation>
     </message>
 </context>
 <context>
@@ -151,13 +142,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>FileBrowser</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-</context>
-<context>
     <name>GeneralPage</name>
     <message>
         <source>WizardPage</source>
@@ -237,14 +221,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportController</name>
     <message>
-        <source>Importing files...</source>
-        <translation>Important arxius...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
         <source>properties</source>
         <translation>propietats</translation>
     </message>
@@ -288,62 +264,20 @@ p, li { white-space: pre-wrap; }
         <source>0</source>
         <translation>0</translation>
     </message>
-</context>
-<context>
-    <name>LanguagePreferences</name>
     <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
+        <source>TextLabel</source>
+        <translation type="unfinished">Titol</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation>Llengua</translation>
+        <source>Failed to load %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Library</name>
+    <name>ListViewController</name>
     <message>
-        <source>Import error</source>
-        <translation>Errada d&apos;importacio</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open file :</source>
-        <translation>No es pot obrir l&apos;arxiu:</translation>
-    </message>
-</context>
-<context>
-    <name>LibraryWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Videos</source>
-        <translation>Vídeos</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation>Imatges</translation>
-    </message>
-    <message>
-        <source>Add Media</source>
-        <translation>Afegeix media</translation>
-    </message>
-    <message>
-        <source>Remove Media</source>
-        <translation>Esborra media</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation>Filtre:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
+        <source>Media List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -365,48 +299,20 @@ p, li { white-space: pre-wrap; }
         <translation>Historic</translation>
     </message>
     <message>
-        <source>VLMC</source>
-        <translation>VLMC</translation>
-    </message>
-    <message>
         <source>VLMC settings</source>
         <translation>Prefrencies de VLMC</translation>
-    </message>
-    <message>
-        <source>Language preferences</source>
-        <translation>Preferencies de la llengua</translation>
-    </message>
-    <message>
-        <source>Language settings</source>
-        <translation>Ajustaments de la llengua</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>Teclat</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
         <translation>Preferencies del teclat</translation>
     </message>
     <message>
-        <source>Project</source>
-        <translation>Projecte</translation>
-    </message>
-    <message>
         <source>Project settings</source>
         <translation>Preferencies del projecte</translation>
     </message>
     <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
         <source>Video settings</source>
         <translation>Preferencies de video</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -427,10 +333,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>There is nothing to render.</source>
         <translation>No hi ha res a renderitzar.</translation>
-    </message>
-    <message>
-        <source>Enter the output file name</source>
-        <translation>Escriu el nom de l&apos;arxiu de sortida</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -638,17 +540,6 @@ p, li { white-space: pre-wrap; }(new line)
     </message>
 </context>
 <context>
-    <name>ProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-    <message>
-        <source>Project name</source>
-        <translation>Nom del projecte</translation>
-    </message>
-</context>
-<context>
     <name>ProjectWizard</name>
     <message>
         <source>Project wizard</source>
@@ -699,10 +590,58 @@ p, li { white-space: pre-wrap; }(new line)
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>RendererSettings</name>
     <message>
-        <source>Preferences: %1</source>
-        <translation>Preferencies: %1</translation>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialeg</translation>
+    </message>
+    <message>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Amplada</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Alçada</translation>
+    </message>
+    <message>
+        <source>FPS</source>
+        <translation type="unfinished">FPS</translation>
+    </message>
+    <message>
+        <source>Video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H264</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished">Escriu el nom de l&apos;arxiu de sortida</translation>
     </message>
 </context>
 <context>
@@ -850,41 +789,6 @@ p, li { white-space: pre-wrap; }(new line)
     </message>
 </context>
 <context>
-    <name>VLMCPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-    <message>
-        <source>Output FPS</source>
-        <translation>FPS de sortida</translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation>25</translation>
-    </message>
-    <message>
-        <source>Number of tracks</source>
-        <translation>Nombre de pistes</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation>64</translation>
-    </message>
-    <message>
-        <source>Automatic save</source>
-        <translation>Desat automatic</translation>
-    </message>
-    <message>
-        <source>Automatic save interval</source>
-        <translation>Interval de desat automatic</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation>minuts</translation>
-    </message>
-</context>
-<context>
     <name>VideoPage</name>
     <message>
         <source>WizardPage</source>
@@ -985,29 +889,6 @@ p, li { white-space: pre-wrap; }(new line)
     <message>
         <source>Configure Video settings</source>
         <translation>Configurar preferencies de video</translation>
-    </message>
-</context>
-<context>
-    <name>VideoProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulari</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation>FPS</translation>
-    </message>
-    <message>
-        <source>Image width</source>
-        <translation>Amplada d&apos;imatge</translation>
-    </message>
-    <message>
-        <source>Image height</source>
-        <translation>Alçada d&apos;imatge</translation>
-    </message>
-    <message>
-        <source> Frames/Seconds</source>
-        <translation>Frames/Segons</translation>
     </message>
 </context>
 <context>

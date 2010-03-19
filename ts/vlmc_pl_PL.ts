@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutVLMC</name>
@@ -35,17 +37,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>License</source>
         <translation>Licencja</translation>
-    </message>
-</context>
-<context>
-    <name>AudioProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>SampleRate</source>
-        <translation>Próbkowanie</translation>
     </message>
 </context>
 <context>
@@ -151,13 +142,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>FileBrowser</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-</context>
-<context>
     <name>GeneralPage</name>
     <message>
         <source>New project wizard</source>
@@ -237,14 +221,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportController</name>
     <message>
-        <source>Importing files...</source>
-        <translation>Importowanie plików...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Anuluj</translation>
-    </message>
-    <message>
         <source>properties</source>
         <translation>właściwości</translation>
     </message>
@@ -288,62 +264,20 @@ p, li { white-space: pre-wrap; }
         <source>0</source>
         <translation>0</translation>
     </message>
-</context>
-<context>
-    <name>LanguagePreferences</name>
     <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
+        <source>TextLabel</source>
+        <translation type="unfinished">Etykieta</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation>Język</translation>
+        <source>Failed to load %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Library</name>
+    <name>ListViewController</name>
     <message>
-        <source>Import error</source>
-        <translation>Błąd podczas importu</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open file :</source>
-        <translation>Nie można otworzyć pliku :</translation>
-    </message>
-</context>
-<context>
-    <name>LibraryWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
-    </message>
-    <message>
-        <source>Videos</source>
-        <translation>Wideo</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation>Obrazy</translation>
-    </message>
-    <message>
-        <source>Add Media</source>
-        <translation>Dodaj medium</translation>
-    </message>
-    <message>
-        <source>Remove Media</source>
-        <translation>Usuń medium</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation>Filtr:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
+        <source>Media List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -365,48 +299,20 @@ p, li { white-space: pre-wrap; }
         <translation>Historia</translation>
     </message>
     <message>
-        <source>VLMC</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>VLMC settings</source>
         <translation>Ustawienia VLMC</translation>
-    </message>
-    <message>
-        <source>Language preferences</source>
-        <translation>Preferencje językowe</translation>
-    </message>
-    <message>
-        <source>Language settings</source>
-        <translation>Ustawienia języka</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>Klawiatura</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
         <translation>Ustawienia klawiatury</translation>
     </message>
     <message>
-        <source>Project</source>
-        <translation>Projekt</translation>
-    </message>
-    <message>
         <source>Project settings</source>
         <translation>Ustawienia projektu</translation>
     </message>
     <message>
-        <source>Video</source>
-        <translation>Wideo</translation>
-    </message>
-    <message>
         <source>Video settings</source>
         <translation>Ustawienia wideo</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -427,10 +333,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>There is nothing to render.</source>
         <translation>Nie ma nic do przetworzenia.</translation>
-    </message>
-    <message>
-        <source>Enter the output file name</source>
-        <translation>Wprowadź nazwę pliku wyjściowego</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -636,25 +538,6 @@ p, li { white-space: pre-wrap; }
         <source>Do you want to save it ?</source>
         <translation>Czy chcesz go zapisać ?</translation>
     </message>
-    <message>
-        <source>&lt;Unnamed project&gt;</source>
-        <translation>&lt;Bez nazwy&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;Unsaved project&gt;</source>
-        <translation>&lt;Niezapisany&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>Project name</source>
-        <translation>Nazwa projektu</translation>
-    </message>
 </context>
 <context>
     <name>ProjectWizard</name>
@@ -707,10 +590,58 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>RendererSettings</name>
     <message>
-        <source>Preferences: %1</source>
-        <translation>Właściwości: %1</translation>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Szerokość</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Wysokość</translation>
+    </message>
+    <message>
+        <source>FPS</source>
+        <translation type="unfinished">Klatek na sekundę</translation>
+    </message>
+    <message>
+        <source>Video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H264</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished">Wprowadź nazwę pliku wyjściowego</translation>
     </message>
 </context>
 <context>
@@ -858,41 +789,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>VLMCPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>Output FPS</source>
-        <translation>Klatki na sekundę na wyjściu</translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Number of tracks</source>
-        <translation>Ilość scieżek</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Automatic save</source>
-        <translation>Automatyczny zapis</translation>
-    </message>
-    <message>
-        <source>Automatic save interval</source>
-        <translation>Interwał automatycznego zapisu</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation>minut</translation>
-    </message>
-</context>
-<context>
     <name>VideoPage</name>
     <message>
         <source>New project wizard</source>
@@ -993,29 +889,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>11000 Hz</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>VideoProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation>Klatek na sekundę</translation>
-    </message>
-    <message>
-        <source> Frames/Seconds</source>
-        <translation>Klatek/Sekundę</translation>
-    </message>
-    <message>
-        <source>Image width</source>
-        <translation>Szerokość obrazu</translation>
-    </message>
-    <message>
-        <source>Image height</source>
-        <translation>Wysokość obrazu</translation>
     </message>
 </context>
 <context>

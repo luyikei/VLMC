@@ -35,19 +35,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AudioProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translatorcomment>Later te vertalen - niet duidelijk</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>SampleRate</source>
-        <translatorcomment>Ik laat dit in het Engels omdat bemonsteringsfrequentie veeel te krom klinkt in NL.</translatorcomment>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ClipProperty</name>
     <message>
         <source>Media Properties</source>
@@ -149,13 +136,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>A crash occured. Signal received: </source>
         <translation>Een crash deed zich voor. Signaal ontvangen:</translation>
-    </message>
-</context>
-<context>
-    <name>FileBrowser</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -282,70 +262,18 @@ p, li { white-space: pre-wrap; }
         <translation>eigenschappen</translation>
     </message>
     <message>
-        <source>Importing files...</source>
+        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
+        <source>Failed to load %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>LanguagePreferences</name>
+    <name>ListViewController</name>
     <message>
-        <source>Form</source>
-        <translatorcomment>Ik ken de context niet - later aan te vullen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation>Taal</translation>
-    </message>
-</context>
-<context>
-    <name>Library</name>
-    <message>
-        <source>Import error</source>
-        <translation>Importeer fout</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open file :</source>
-        <translatorcomment>Angepast om beter in NL te klinken</translatorcomment>
-        <translation>Bestand niet herkend:</translation>
-    </message>
-</context>
-<context>
-    <name>LibraryWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="unfinished">Geluid</translation>
-    </message>
-    <message>
-        <source>Videos</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Media</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Media</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
+        <source>Media List</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -510,27 +438,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>VLMC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>VLMC settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Language preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Language settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -538,16 +446,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Video settings</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="unfinished">Geluid</translation>
     </message>
     <message>
         <source>Audio settings</source>
@@ -559,10 +459,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There is nothing to render.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the output file name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -635,17 +531,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Project name</source>
-        <translation>Project naam</translation>
-    </message>
-</context>
-<context>
     <name>ProjectWizard</name>
     <message>
         <source>Project wizard</source>
@@ -697,10 +582,58 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>RendererSettings</name>
     <message>
-        <source>Preferences: %1</source>
-        <translation>Voorkeuren: %1</translation>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialoogvenster</translation>
+    </message>
+    <message>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Breedte</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>FPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H264</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -848,42 +781,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>VLMCPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Output FPS</source>
-        <translation>Uitvoer FPS</translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Number of tracks</source>
-        <translation>Aantal tracks</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Automatic save</source>
-        <translation>Automatisch opslaan</translation>
-    </message>
-    <message>
-        <source>Automatic save interval</source>
-        <translatorcomment>Herwerkt naar NL</translatorcomment>
-        <translation>Tijd tussen automatisch opslaan</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation>minuten</translation>
-    </message>
-</context>
-<context>
     <name>VideoPage</name>
     <message>
         <source>WizardPage</source>
@@ -984,29 +881,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Configure Video settings</source>
         <translation>Video instellingen</translation>
-    </message>
-</context>
-<context>
-    <name>VideoProjectPreferences</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source> Frames/Seconds</source>
-        <translation>Frames/Seconde</translation>
-    </message>
-    <message>
-        <source>Image width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Image height</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -47,32 +47,19 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AudioProjectPreferences</name>
-    <message>
-        <location filename="../src/Gui/settings/ui/AudioProjectPreferences.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/AudioProjectPreferences.ui" line="20"/>
-        <source>SampleRate</source>
-        <translation>采样率</translation>
-    </message>
-</context>
-<context>
     <name>ClipProperty</name>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="46"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="48"/>
         <source>properties</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="101"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="103"/>
         <source>New tags edition</source>
         <translation>新标签版本</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="102"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="104"/>
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
         <translation>输入标签（您可以输入多个标签，用逗号分隔）</translation>
     </message>
@@ -190,48 +177,40 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>FileBrowser</name>
-    <message>
-        <location filename="../src/Gui/ui/FileBrowser.ui" line="20"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-</context>
-<context>
     <name>GeneralPage</name>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="14"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="15"/>
         <source>New project wizard</source>
         <translation>新建项目向导</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="15"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="16"/>
         <source>Set General options</source>
         <translation>设置全局选项</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="74"/>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="81"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="75"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="82"/>
         <source>Form is incomplete</source>
         <translation>表单不完整</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="75"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="76"/>
         <source>The project name must be filled.</source>
         <translation>项目名称必须填写。</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="82"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="83"/>
         <source>The workspace location must be set.</source>
         <translation>必须设置工作空间路径。</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="107"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="108"/>
         <source>Missing workspace location</source>
         <translation>缺工作空间路径</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="121"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="122"/>
         <source>Invalid workspace location</source>
         <translation>工作空间路径无效</translation>
     </message>
@@ -279,7 +258,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsAudioItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="37"/>
+        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="40"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;名称:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;长度:&lt;/b&gt; %2</translation>
     </message>
@@ -287,7 +266,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsMovieItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="37"/>
+        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="41"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;名称:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;长度:&lt;/b&gt; %2</translation>
     </message>
@@ -295,276 +274,164 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportController</name>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="76"/>
-        <source>Importing files...</source>
-        <translation>正在导入文件...</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="77"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="219"/>
-        <location filename="../src/Gui/import/ImportController.cpp" line="245"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="154"/>
         <source>properties</source>
         <translation>属性</translation>
     </message>
     <message>
+        <location filename="../src/Gui/import/ImportController.cpp" line="325"/>
+        <source>Failed to load %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="14"/>
-        <location filename="../src/ui_Import.h" line="168"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="80"/>
-        <location filename="../src/ui_Import.h" line="169"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="71"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">文本标签</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="132"/>
         <source>Media Properties</source>
         <translation>媒体属性</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="86"/>
-        <location filename="../src/ui_Import.h" line="170"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="138"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="93"/>
-        <location filename="../src/ui_Import.h" line="171"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="145"/>
         <source>unnamed</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="100"/>
-        <location filename="../src/ui_Import.h" line="172"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="152"/>
         <source>Duration</source>
         <translation>时长</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="107"/>
-        <location filename="../src/ui_Import.h" line="173"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="159"/>
         <source>0s</source>
         <translation>0s</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="120"/>
-        <location filename="../src/ui_Import.h" line="174"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="172"/>
         <source>Resolution</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="133"/>
-        <location filename="../src/ui_Import.h" line="175"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="185"/>
         <source>0px. x 0px.</source>
         <translation>0px. x 0px.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="146"/>
-        <location filename="../src/ui_Import.h" line="176"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="198"/>
         <source>FPS</source>
         <translation>帧率</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="153"/>
-        <location filename="../src/ui_Import.h" line="177"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="205"/>
         <source>0</source>
         <translation>0</translation>
     </message>
 </context>
 <context>
-    <name>LanguagePreferences</name>
+    <name>ListViewController</name>
     <message>
-        <location filename="../src/Gui/settings/ui/LanguagePreferences.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/LanguagePreferences.ui" line="20"/>
-        <source>Language</source>
-        <translation>语言</translation>
-    </message>
-</context>
-<context>
-    <name>Library</name>
-    <message>
-        <location filename="../src/Library/Library.cpp" line="203"/>
-        <source>Import error</source>
-        <translation>导入出错</translation>
-    </message>
-    <message>
-        <location filename="../src/Library/Library.cpp" line="204"/>
-        <source>Can&apos;t open file :</source>
-        <translation>无法打开文件:</translation>
-    </message>
-</context>
-<context>
-    <name>LibraryWidget</name>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="36"/>
-        <source>Audio</source>
-        <translation>音频</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="74"/>
-        <source>Videos</source>
-        <translation>视频</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="109"/>
-        <source>Images</source>
-        <translation>图片</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="150"/>
-        <source>Add Media</source>
-        <translation>添加媒体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="166"/>
-        <source>Remove Media</source>
-        <translation>移除媒体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="189"/>
-        <source>Filter:</source>
-        <translation>滤镜:</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/LibraryWidget.ui" line="196"/>
-        <source>...</source>
-        <translation>...</translation>
+        <location filename="../src/Gui/library/ListViewController.cpp" line="33"/>
+        <source>Media List</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="175"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="248"/>
         <source>Media Library</source>
         <translation>媒体库</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="287"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="353"/>
         <source>Clip Preview</source>
         <translation>剪辑预览</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="296"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="362"/>
         <source>Project Preview</source>
         <translation>项目预览</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="304"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="370"/>
         <source>History</source>
         <translation>历史</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="316"/>
-        <source>VLMC</source>
-        <translation>VLMC</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="319"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="384"/>
         <source>VLMC settings</source>
         <translation>VLMC 设置</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="320"/>
-        <source>Language preferences</source>
-        <translation>语言首选项</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="323"/>
-        <source>Language settings</source>
-        <translation>语言设置</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="324"/>
-        <source>Keyboard</source>
-        <translation>键盘</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="327"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="387"/>
         <source>Keyboard Settings</source>
         <translation>键盘设置</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="333"/>
-        <source>Project</source>
-        <translation>项目</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="336"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="395"/>
         <source>Project settings</source>
         <translation>项目设置</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="337"/>
-        <source>Video</source>
-        <translation>视频</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="340"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="398"/>
         <source>Video settings</source>
         <translation>视频设置</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="341"/>
-        <source>Audio</source>
-        <translation>音频</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="344"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="401"/>
         <source>Audio settings</source>
         <translation>音频设置</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="367"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="424"/>
         <source>Sorry</source>
         <translation>抱歉</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="368"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="425"/>
         <source>This feature is currently disabled.</source>
         <translation>此功能目前禁用。</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="376"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>VLMC Renderer</source>
         <translation>VLMC 渲染器</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="376"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>There is nothing to render.</source>
         <translation>没有可渲染的数据。</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="380"/>
-        <source>Enter the output file name</source>
-        <translation>输入输出文件名</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="572"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="563"/>
         <source>Crash recovery</source>
         <translation>崩溃恢复</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="572"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="563"/>
         <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project ?</source>
         <translation>VLMC 未正常关闭。是否希望恢复您的项目?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="579"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="570"/>
         <source>Can&apos;t restore project</source>
         <translation>无法恢复项目</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="579"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="570"/>
         <source>VLMC didn&apos;t manage to restore your project. We appology for the inconvenience</source>
         <translation>VLMC 未能够恢复您的项目。对此不便我们非常抱歉</translation>
     </message>
@@ -575,7 +442,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="14"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="464"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="513"/>
         <source>VideoLAN Movie Creator</source>
         <translatorcomment>I think it better that the app name be untranslated.</translatorcomment>
         <translation>VideoLAN Movie Creator</translation>
@@ -622,28 +489,28 @@ p, li { white-space: pre-wrap; }
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="214"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="209"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="214"/>
         <source>Close Project</source>
         <translation>关闭项目</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="224"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="609"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="600"/>
         <source>Crash</source>
         <translation>崩溃</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="233"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
         <source>Undo</source>
         <translation>撤销</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="242"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="237"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
@@ -689,27 +556,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="180"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="185"/>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="196"/>
         <source>Project Preferences</source>
         <translation>项目首选项</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="196"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="191"/>
         <source>Enable effects engine</source>
         <translation>启用特效引擎</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="204"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="199"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="209"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="204"/>
         <source>Project Wizard</source>
         <translation>项目向导</translation>
     </message>
@@ -785,7 +652,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreviewWidget</name>
     <message>
-        <location filename="../src/Gui/ui/PreviewWidget.ui" line="26"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="26"/>
         <source>Preview</source>
         <translation>预览</translation>
     </message>
@@ -793,27 +660,14 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="260"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="264"/>
         <source>The project has been modified.</source>
         <translation>此项目已被修改。</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="261"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="265"/>
         <source>Do you want to save it ?</source>
         <translation>是否希望保存此项目?</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectPreferences</name>
-    <message>
-        <location filename="../src/Gui/settings/ui/ProjectPreferences.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/ProjectPreferences.ui" line="43"/>
-        <source>Project name</source>
-        <translation>项目名称</translation>
     </message>
 </context>
 <context>
@@ -878,11 +732,71 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>RendererSettings</name>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="195"/>
-        <source>Preferences: %1</source>
-        <translation>首选: %</translation>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished">对话框</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="32"/>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="41"/>
+        <source>Width</source>
+        <translation type="unfinished">宽度</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="58"/>
+        <source>Height</source>
+        <translation type="unfinished">高度</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="75"/>
+        <source>FPS</source>
+        <translation type="unfinished">帧率</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="92"/>
+        <source>Video quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="99"/>
+        <source>Audio quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="122"/>
+        <source>Video codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="133"/>
+        <source>H264</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="141"/>
+        <source>Audio codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.ui" line="152"/>
+        <source>AAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="46"/>
+        <source>Enter the output file name</source>
+        <translation type="unfinished">输入输出文件名</translation>
     </message>
 </context>
 <context>
@@ -909,12 +823,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TagWidget</name>
     <message>
-        <location filename="../src/Gui/ui/TagWidget.ui" line="26"/>
+        <location filename="../src/Gui/import/ui/TagWidget.ui" line="26"/>
         <source>Form</source>
         <translation>窗体</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/TagWidget.ui" line="32"/>
+        <location filename="../src/Gui/import/ui/TagWidget.ui" line="32"/>
         <source>Keyword Tags</source>
         <translation>关键词标签</translation>
     </message>
@@ -953,12 +867,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksScene</name>
     <message>
-        <location filename="../src/Gui/timeline/TracksScene.cpp" line="69"/>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="71"/>
         <source>Confirm the deletion of the region ?</source>
         <translation>确实要删除此区域?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/timeline/TracksScene.cpp" line="71"/>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="73"/>
         <source>Confirm the deletion of those regions ?</source>
         <translation>确实要删除这些区域?</translation>
     </message>
@@ -966,7 +880,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksView</name>
     <message>
-        <location filename="../src/Gui/timeline/TracksView.cpp" line="622"/>
+        <location filename="../src/Gui/timeline/TracksView.cpp" line="625"/>
         <source>Action not supported.</source>
         <translation>操作不支持。</translation>
     </message>
@@ -1061,49 +975,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/UndoStack.cpp" line="34"/>
         <source>Nothing to undo</source>
         <translation>无法撤销</translation>
-    </message>
-</context>
-<context>
-    <name>VLMCPreferences</name>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="20"/>
-        <source>Output FPS</source>
-        <translation>输出帧率</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="33"/>
-        <source>25</source>
-        <translation>25</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="43"/>
-        <source>Number of tracks</source>
-        <translation>轨道数</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="56"/>
-        <source>64</source>
-        <translation>64</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="66"/>
-        <source>Automatic save</source>
-        <translation>自动保存</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="89"/>
-        <source>Automatic save interval</source>
-        <translation>自动保存间隔</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VLMCPreferences.ui" line="117"/>
-        <source>minutes</source>
-        <translation>分钟</translation>
     </message>
 </context>
 <context>
@@ -1236,37 +1107,9 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>VideoProjectPreferences</name>
-    <message>
-        <location filename="../src/Gui/settings/ui/VideoProjectPreferences.ui" line="14"/>
-        <source>Form</source>
-        <translation>窗体</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VideoProjectPreferences.ui" line="20"/>
-        <source>FPS</source>
-        <translation>帧率</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VideoProjectPreferences.ui" line="59"/>
-        <source>Image width</source>
-        <translation>画面宽度</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VideoProjectPreferences.ui" line="66"/>
-        <source>Image height</source>
-        <translation>画面高度</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/settings/ui/VideoProjectPreferences.ui" line="27"/>
-        <source> Frames/Seconds</source>
-        <translation>帧/秒</translation>
-    </message>
-</context>
-<context>
     <name>VlmcDebug</name>
     <message>
-        <location filename="../src/Tools/VlmcDebug.cpp" line="45"/>
+        <location filename="../src/Tools/VlmcDebug.cpp" line="46"/>
         <source>Invalid value supplied for argument --logfile</source>
         <translation>提供给参数 --logfile 的值无效</translation>
     </message>
