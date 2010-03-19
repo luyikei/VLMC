@@ -219,7 +219,7 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
 
     if ( clip()->getMedia()->fileType() != Media::Image )
         if ( size > clip()->maxEnd() )
-            return;
+            size = clip()->maxEnd();
 
     if ( from == BEGINNING )
     {
