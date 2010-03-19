@@ -87,16 +87,16 @@ StackViewController::restorePrevious()
 void
 StackViewController::viewDestroyed()
 {
-    //This should'nt happen.
-    if ( m_controllerStack->isEmpty() )
-        return ;
+    Q_ASSERT( m_controllerStack->isEmpty() == false );
+
     if ( QObject::sender() == m_current )
     {
         restorePrevious();
     }
 }
 
-void        StackViewController::popViewController( bool animated )
+void
+StackViewController::popViewController( bool animated )
 {
     animated = false;
 
@@ -108,9 +108,9 @@ void        StackViewController::popViewController( bool animated )
     delete m_current;
 }
 
-void        StackViewController::previous()
+void        
+StackViewController::previous()
 {
     popViewController();
-    emit previousButtonPushed();
 }
 

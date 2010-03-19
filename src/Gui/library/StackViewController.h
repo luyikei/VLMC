@@ -58,10 +58,6 @@ private:
 public slots:
     void                        previous();
     void                        viewDestroyed();
-
-signals:
-    void                        previousButtonPushed();
-
 };
 
 #endif // STACKVIEWCONTROLLER_H
