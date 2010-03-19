@@ -118,7 +118,8 @@ INSTALL (FILES AUTHORS COPYING INSTALL NEWS README TRANSLATORS
 INSTALL (FILES share/vlmc.desktop DESTINATION ${VLMC_DESKTOP_DIR})
 
 # Copy the share directory
-INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR})
+INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
+         PATTERN "*.desktop" EXCLUDE)
 
 #############################################################
 # Enable packaging
