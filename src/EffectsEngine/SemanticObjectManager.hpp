@@ -47,8 +47,8 @@ public:
     {
         if ( m_objectByName.empty() == false )
         {
-            typename QMap<QString, T*>::iterator it = m_objectByName.begin();
-            typename QMap<QString, T*>::iterator end = m_objectByName.end();
+            typename QHash<QString, T*>::iterator it = m_objectByName.begin();
+            typename QHash<QString, T*>::iterator end = m_objectByName.end();
 
             for ( ; it != end; ++it )
                 delete it.value();
@@ -153,7 +153,7 @@ public:
 
     inline bool                        deleteObject( quint32 objectId )
     {
-        typename QMap<quint32, T*>::iterator itid;
+        typename QHash<quint32, T*>::iterator itid;
 
         itid = m_objectById.find( objectId );
 
@@ -200,7 +200,7 @@ public:
 
     inline bool                        deleteObject( const QString & objectName )
     {
-        typename QMap<quint32, T*>::iterator itid;
+        typename QHash<quint32, T*>::iterator itid;
         quint32                     objectId;
 
         itid = m_objectById.find( getObjectIdByObjectName( objectName ) );
@@ -250,7 +250,7 @@ public:
 
     inline T*                          getObject( quint32 objectId ) const
     {
-        typename QMap<quint32, T*>::const_iterator    it = m_objectById.find( objectId );
+        typename QHash<quint32, T*>::const_iterator    it = m_objectById.find( objectId );
 
         if ( it != m_objectById.end() )
             return it.value();
@@ -259,7 +259,7 @@ public:
 
     inline T*                          getObject( const QString & objectName ) const
     {
-        typename QMap<QString, T*>::const_iterator    it = m_objectByName.find( objectName );
+        typename QHash<QString, T*>::const_iterator    it = m_objectByName.find( objectName );
 
         if ( it != m_objectByName.end() )
             return it.value();
@@ -273,9 +273,9 @@ public:
 
 private:
 
-    QMap<quint32, T*>           m_objectById;
-    QMap<QString, T*>           m_objectByName;
-    QMap<quint32, QString>      m_nameById;
+    QHash<quint32, T*>          m_objectById;
+    QHash<QString, T*>          m_objectByName;
+    QHash<quint32, QString>     m_nameById;
     quint32                     m_higherFreeId;
     quint32                     m_mapHoles;
     EffectNode*                 m_father;
