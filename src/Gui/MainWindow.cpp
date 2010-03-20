@@ -461,7 +461,8 @@ void    MainWindow::on_actionRender_triggered()
 
         m_fileRenderer->initializeRenderer();
         m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
-        dialog->show();
+        dialog->exec();
+        delete dialog;
     }
 }
 

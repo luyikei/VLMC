@@ -41,6 +41,7 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_abitrate = 256;
     connect( m_renderer, SIGNAL( frameChanged( qint64 ) ),
              this, SLOT( frameChanged( qint64 ) ) );
+    connect( m_renderer, SIGNAL( renderComplete() ), qApp, SLOT( quit() ) );
 }
 
 void

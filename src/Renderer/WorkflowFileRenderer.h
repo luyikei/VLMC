@@ -70,6 +70,7 @@ private slots:
 signals:
     void                        imageUpdated( const uchar* image );
     void                        frameChanged( qint64 );
+    void                        renderComplete();
 };
 
 #endif // WORKFLOWFILERENDERER_H

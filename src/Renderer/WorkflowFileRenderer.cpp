@@ -86,6 +86,7 @@ void
 WorkflowFileRenderer::__endReached()
 {
     stop();
+    emit renderComplete();
     disconnect();
 }
 
