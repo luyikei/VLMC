@@ -29,6 +29,7 @@
 #include <QMessageBox>
 #include <QCompleter>
 #include <QDirModel>
+#include <QFileInfo>
 
 RendererSettings::RendererSettings()
 {
@@ -57,14 +58,36 @@ RendererSettings::selectOutputFileName()
 void
 RendererSettings::accept()
 {
-    if ( width() <= 0 || height() <= 0 || outputFileName().isEmpty() == true ||
-         fps() <= .0f )
+    if ( width() <= 0 || height() <= 0 || fps() <= .0f )
     {
         QMessageBox::warning( this, tr( "Invalid parameters" ),
                               tr( "Please enter valid rendering parameters" ) );
+        return;
     }
-    else
-        QDialog::accept();
+
+    QFileInfo fileInfo( m_ui.outputFileName->text() );
+
+    if ( outputFileName().isEmpty() || fileInfo.isDir() || !fileInfo.dir().exists() )
+    {
+        QMessageBox::warning( this, tr( "Invalid parameters" ),
+                              tr( "Please provide a valid output file!" ) );
+        m_ui.outputFileName->setFocus();
+        return;
+    }
+
+    if ( fileInfo.isFile() )
+    {
+        QMessageBox::StandardButton b =
+                QMessageBox::question( this, tr( "File already exists!" ),
+                                       tr( "Output file already exists, do you want to "
+                                           "overwrite it ?" ),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No );
+        if ( b == QMessageBox::No )
+            return;
+    }
+
+    QDialog::accept();
 }
 
 quint32
