@@ -27,6 +27,7 @@
 #include <QPixmap>
 
 class   QPixmap;
+class   Media;
 
 class GUIMedia : public QObject
 {
@@ -47,7 +48,7 @@ protected:
 
 
 signals:
-    void                        snapshotComputed( const GUIMedia* );
+    void                        snapshotComputed( const Media* );
 };
 
 #endif // GUIMEDIA_H

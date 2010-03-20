@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "GuiMedia.h"
+#include "Media.h"
 
 QPixmap*        GUIMedia::defaultSnapshot = NULL;
 
@@ -56,5 +57,5 @@ GUIMedia::snapshot() const
 void
 GUIMedia::emitSnapshotComputed()
 {
-    emit snapshotComputed( this );
+    emit snapshotComputed( qobject_cast<const Media*>( this ) );
 }
