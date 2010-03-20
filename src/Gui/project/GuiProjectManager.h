@@ -23,11 +23,11 @@
 #ifndef GUIPROJECTMANAGER_H
 #define GUIPROJECTMANAGER_H
 
-#include <QObject>
+#include "ProjectManager.h"
 
 class   QTimer;
 
-class GUIProjectManager : public QObject
+class GUIProjectManager : public ProjectManager, public Singleton<GUIProjectManager>
 {
     Q_OBJECT
 
@@ -51,6 +51,8 @@ public:
      *  \return     true if the project has been closed. false otherwise.
      */
     bool            closeProject();
+    bool            needSave() const;
+
 private:
     bool            createNewProjectFile( bool saveAs );
 
@@ -58,9 +60,13 @@ private:
     QTimer*         m_timer;
 
 private slots:
+    void            projectNameChanged( const QVariant& projectName );
     void            autoSaveRequired();
+    void            cleanChanged( bool val );
     void            automaticSaveEnabledChanged( const QVariant& enabled );
     void            automaticSaveIntervalChanged( const QVariant& interval );
+
+    friend class    Singleton<GUIProjectManager>;
 };
 
 #endif // GUIPROJECTMANAGER_H

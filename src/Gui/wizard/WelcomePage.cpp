@@ -20,6 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "WelcomePage.h"
+
+#include "project/GuiProjectManager.h"
+
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -27,7 +31,6 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QDebug>
-#include "WelcomePage.h"
 
 QString* WelcomePage::m_projectPath = NULL;
 
@@ -112,7 +115,7 @@ void WelcomePage::cleanupPage()
 void WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
-    ProjectManager* pm = ProjectManager::getInstance();
+    ProjectManager* pm = GUIProjectManager::getInstance();
     QStringList recents = pm->recentsProjects();
 
     for ( int i = 0; i < recents.count(); ++i )
@@ -127,8 +130,7 @@ void WelcomePage::loadRecentsProjects()
 
 void WelcomePage::loadProject()
 {
-    ProjectManager* pm = ProjectManager::getInstance();
-    QString projectPath = pm->acquireProjectFileName();
+    QString projectPath = GUIProjectManager::getInstance()->acquireProjectFileName();
 
     if ( projectPath.isEmpty() ) return;
 

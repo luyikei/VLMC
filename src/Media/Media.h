@@ -38,7 +38,7 @@
 #include <QHash>
 
 #ifdef WITH_GUI
-#include "Media/GUIMedia.h"
+#include "media/GuiMedia.h"
 #endif
 
 namespace LibVLCpp

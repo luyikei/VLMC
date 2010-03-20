@@ -48,9 +48,9 @@ GUIMedia::snapshot() const
 {
     if ( m_snapshot != NULL )
         return *m_snapshot;
-    if ( Media::defaultSnapshot == NULL )
-        Media::defaultSnapshot = new QPixmap( ":/images/images/vlmc.png" );
-    return *Media::defaultSnapshot;
+    if ( GUIMedia::defaultSnapshot == NULL )
+        GUIMedia::defaultSnapshot = new QPixmap( ":/images/images/vlmc.png" );
+    return *GUIMedia::defaultSnapshot;
 }
 
 void

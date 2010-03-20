@@ -120,8 +120,9 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 #Add GUI stuff if required
 IF (NOT WITH_GUI)
-    SET( WITH_CRASHHANDLER_GUI FALSE )
     LIST (APPEND VLMC_SRCS Main/main.cpp )
+    QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
+    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     TARGET_LINK_LIBRARIES(vlmc
       ${QT_QTCORE_LIBRARY} 
@@ -129,8 +130,6 @@ IF (NOT WITH_GUI)
       ${LIBVLC_LIBRARY}
       ${LIBVLCCORE_LIBRARY}
       )
-    QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
-    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
 
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
@@ -154,8 +153,8 @@ ELSE(NOT WITH_GUI)
         Gui/library/MediaListView.cpp
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
-        Gui/media/GUIMedia.cpp
-        Gui/project/GUIProjectManager.cpp
+        Gui/media/GuiMedia.cpp
+        Gui/project/GuiProjectManager.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
         Gui/settings/BoolWidget.cpp
@@ -203,11 +202,11 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewNavController.h
         Gui/library/ViewController.h
         Gui/MainWindow.h
-        Gui/media/GUIMedia.h
+        Gui/media/GuiMedia.h
         Gui/preview/LCDTimecode.h
         Gui/preview/PreviewRuler.h
         Gui/preview/PreviewWidget.h
-        Gui/project/GUIProjectManager.h
+        Gui/project/GuiProjectManager.h
         Gui/settings/KeyboardShortcutInput.h
         Gui/settings/Panel.h
         Gui/settings/PreferenceWidget.h
@@ -278,7 +277,6 @@ ELSE(NOT WITH_GUI)
       ${QT_QTGUI_LIBRARY} 
       ${QT_QTXML_LIBRARY} 
       ${QT_QTSVG_LIBRARY} 
-      ${QT_QTNETWORK_LIBRARY}
       ${LIBVLC_LIBRARY}
       ${LIBVLCCORE_LIBRARY}
       )

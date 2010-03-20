@@ -34,7 +34,6 @@
 #include "config.h"
 #include "Library.h"
 #include "About.h"
-#include "ProjectManager.h"
 #include "VlmcDebug.h"
 
 #include "MainWorkflow.h"
@@ -53,7 +52,7 @@
 #include "UndoStack.h"
 
 /* Settings / Preferences */
-#include "ProjectManager.h"
+#include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "Settings.h"
 #include "SettingsManager.h"
@@ -75,10 +74,10 @@ MainWindow::MainWindow( QWidget *parent ) :
 //    VlmcDebug::getInstance()->setup();
 
     //VLC Instance:
-    LibVLCpp::Instance::getInstance( this );
+    LibVLCpp::Instance::getInstance();
 
     //Creating the project manager first (so it can create all the project variables)
-    ProjectManager::getInstance();
+    GUIProjectManager::getInstance();
 
     //Preferences
     initVlmcPreferences();
@@ -107,7 +106,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( ProjectManager::getInstance(), SIGNAL( projectUpdated( const QString&, bool ) ),
+    connect( GUIProjectManager::getInstance(), SIGNAL( projectUpdated( const QString&, bool ) ),
              this, SLOT( projectUpdated( const QString&, bool ) ) );
 
     // Undo/Redo
@@ -151,6 +150,7 @@ MainWindow::~MainWindow()
     if ( m_fileRenderer )
         delete m_fileRenderer;
     delete m_importController;
+    LibVLCpp::Instance::destroyInstance();
 }
 
 void MainWindow::changeEvent( QEvent *e )
@@ -258,17 +258,17 @@ MainWindow::setupLibrary()
 
 void    MainWindow::on_actionSave_triggered()
 {
-    ProjectManager::getInstance()->saveProject();
+    GUIProjectManager::getInstance()->saveProject();
 }
 
 void    MainWindow::on_actionSave_As_triggered()
 {
-    ProjectManager::getInstance()->saveProject( true );
+    GUIProjectManager::getInstance()->saveProject( true );
 }
 
 void    MainWindow::on_actionLoad_Project_triggered()
 {
-    ProjectManager* pm = ProjectManager::getInstance();
+    GUIProjectManager* pm = GUIProjectManager::getInstance();
     pm->loadProject( pm->acquireProjectFileName() );
 }
 
@@ -502,7 +502,8 @@ void MainWindow::on_actionProject_Preferences_triggered()
 
 void    MainWindow::closeEvent( QCloseEvent* e )
 {
-    if ( ProjectManager::getInstance()->askForSaveIfModified() )
+    GUIProjectManager   *pm = GUIProjectManager::getInstance();
+    if ( pm->askForSaveIfModified() )
         e->accept();
     else
         e->ignore();
@@ -520,7 +521,7 @@ void    MainWindow::projectUpdated( const QString& projectName, bool savedStatus
 
 void    MainWindow::on_actionClose_Project_triggered()
 {
-    ProjectManager::getInstance()->closeProject();
+    GUIProjectManager::getInstance()->closeProject();
 }
 
 void    MainWindow::on_actionUndo_triggered()
@@ -564,7 +565,7 @@ bool    MainWindow::restoreSession()
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
             if ( res == QMessageBox::Yes )
             {
-                if ( ProjectManager::getInstance()->loadEmergencyBackup() == true )
+                if ( GUIProjectManager::getInstance()->loadEmergencyBackup() == true )
                     ret = true;
                 else
                     QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We appology for the inconvenience" ) );

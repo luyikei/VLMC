@@ -23,6 +23,7 @@
 #ifndef WORKFLOWFILERENDERER_H
 #define WORKFLOWFILERENDERER_H
 
+#include "config.h"
 #include "Workflow/MainWorkflow.h"
 #include "WorkflowRenderer.h"
 #ifdef WITH_GUI
@@ -67,7 +68,9 @@ protected:
     virtual quint32             height() const;
 private slots:
     void                        stop();
+#ifdef WITH_GUI
     void                        cancelButtonClicked();
+#endif
     void                        __frameChanged( qint64 frame,
                                                 MainWorkflow::FrameChangedReason reason );
     void                        __endReached();

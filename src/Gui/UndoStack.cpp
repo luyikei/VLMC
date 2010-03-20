@@ -25,7 +25,7 @@
 #include <QUndoCommand>
 
 #include "UndoStack.h"
-#include "ProjectManager.h"
+#include "project/GuiProjectManager.h"
 #include "SettingsManager.h"
 #include "KeyboardShortcutHelper.h"
 
@@ -36,14 +36,14 @@ UndoStack::UndoStack( QWidget* parent ) : QUndoView( parent )
     m_undoStack = new QUndoStack( this );
     setStack( m_undoStack );
     connect( m_undoStack, SIGNAL( cleanChanged( bool ) ),
-             ProjectManager::getInstance(), SLOT( cleanChanged( bool ) ) );
-    connect( ProjectManager::getInstance(), SIGNAL( projectSaved() ),
+             GUIProjectManager::getInstance(), SLOT( cleanChanged( bool ) ) );
+    connect( GUIProjectManager::getInstance(), SIGNAL( projectSaved() ),
              m_undoStack, SLOT( setClean() ) );
 
     connect( m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
     connect( m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool) ) );
 
-    connect( ProjectManager::getInstance(), SIGNAL( projectClosed() ), this, SLOT( clear() ) );
+    connect( GUIProjectManager::getInstance(), SIGNAL( projectClosed() ), this, SLOT( clear() ) );
 }
 
 void    UndoStack::push( QUndoCommand* command )

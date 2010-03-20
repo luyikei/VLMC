@@ -24,7 +24,7 @@
 #include <QString>
 #include <QMessageBox>
 #include <QWizardPage>
-#include "ProjectManager.h"
+#include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "SettingsManager.h"
 #include "WelcomePage.h"
@@ -95,7 +95,7 @@ void    ProjectWizard::accept()
 {
     if ( currentId() == Page_Video )
     {
-        ProjectManager::getInstance()->newProject( field( "projectName" ).toString() );
+        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString() );
         SettingsManager::getInstance()->commit( SettingsManager::Project );
         SettingsManager::getInstance()->commit( SettingsManager::Vlmc );
     }

@@ -32,7 +32,6 @@
 
 GUIProjectManager::GUIProjectManager()
 {
-
     connect( this, SIGNAL( projectClosed() ), Library::getInstance(), SLOT( clear() ) );
     connect( this, SIGNAL( projectClosed() ), MainWorkflow::getInstance(), SLOT( clear() ) );
 
@@ -120,9 +119,7 @@ GUIProjectManager::saveProject( bool saveAs /*= true*/ )
     //save the project with a new name
     if ( createNewProjectFile( saveAs ) == false )
         return ;
-    __saveProject( m_projectFile->fileName() );
-    emit projectSaved();
-    emit projectUpdated( projectName(), true );
+    ProjectManager::saveProject( saveAs );
 }
 
 bool
@@ -130,17 +127,7 @@ GUIProjectManager::closeProject()
 {
     if ( askForSaveIfModified() == false )
         return false;
-    if ( m_projectFile != NULL )
-    {
-        delete m_projectFile;
-        m_projectFile = NULL;
-    }
-    m_projectName = QString();
-    //This one is for the mainwindow, to update the title bar
-    emit projectUpdated( projectName(), true );
-    //This one is for every part that need to clean something when the project is closed.
-    emit projectClosed();
-    return true;
+    return ProjectManager::closeProject();
 }
 
 void
@@ -183,4 +170,25 @@ GUIProjectManager::automaticSaveIntervalChanged( const QVariant& val )
     if ( enabled == false )
         return ;
     m_timer->start( val.toInt() * 1000 * 60 );
+}
+
+bool
+GUIProjectManager::needSave() const
+{
+    return m_needSave;
+}
+
+void
+GUIProjectManager::cleanChanged( bool val )
+{
+    m_needSave = !val;
+    emit projectUpdated( projectName(), val );
+}
+
+
+void
+GUIProjectManager::projectNameChanged( const QVariant& name )
+{
+    m_projectName = name.toString();
+    emit projectUpdated( m_projectName, !m_needSave );
 }

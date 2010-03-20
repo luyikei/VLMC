@@ -33,6 +33,7 @@
 
 #include "Library.h"
 #include "MainWorkflow.h"
+#include "project/GuiProjectManager.h"
 #include "ProjectManager.h"
 #include "SettingsManager.h"
 
@@ -49,7 +50,11 @@ void    ProjectManager::signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
+#ifdef WITH_GUI
+    GUIProjectManager::getInstance()->emergencyBackup();
+#else
     ProjectManager::getInstance()->emergencyBackup();
+#endif
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );
@@ -98,20 +103,10 @@ ProjectManager::~ProjectManager()
         delete m_projectFile;
 }
 
-bool    ProjectManager::needSave() const
-{
-    return m_needSave;
-}
 
 QStringList ProjectManager::recentsProjects() const
 {
     return m_recentsProjects;
-}
-
-void    ProjectManager::cleanChanged( bool val )
-{
-    m_needSave = !val;
-    emit projectUpdated( projectName(), val );
 }
 
 void    ProjectManager::loadTimeline()
@@ -129,18 +124,17 @@ void    ProjectManager::loadProject( const QString& fileName )
     if ( fileName.isEmpty() == true )
         return;
 
-#ifdef WITH_GUI
     if ( closeProject() == false )
         return ;
-#endif
     m_projectFile = new QFile( fileName );
     m_projectFile->open( QFile::ReadOnly );
     m_projectFile->close();
 
     m_domDocument = new QDomDocument;
     m_domDocument->setContent( m_projectFile );
+#ifdef WITH_GUI
     m_needSave = false;
-
+#endif
     if ( ProjectManager::isBackupFile( fileName ) == false )
         appendToRecentProject( QFileInfo( *m_projectFile ).absoluteFilePath() );
     else
@@ -176,12 +170,6 @@ void    ProjectManager::__saveProject( const QString &fileName )
     project.writeEndDocument();
 }
 
-void    ProjectManager::projectNameChanged( const QVariant& name )
-{
-    m_projectName = name.toString();
-    emit projectUpdated( m_projectName, !m_needSave );
-}
-
 void    ProjectManager::emergencyBackup()
 {
     QString     name;
@@ -200,19 +188,6 @@ void    ProjectManager::emergencyBackup()
     QSettings   s;
     s.setValue( "EmergencyBackup", name );
     s.sync();
-}
-
-bool    ProjectManager::loadEmergencyBackup()
-{
-    QSettings   s;
-    QString lastProject = s.value( "EmergencyBackup" ).toString();
-    if ( QFile::exists( lastProject ) == true )
-    {
-        loadProject(  lastProject );
-        m_needSave = true;
-        return true;
-    }
-    return false;
 }
 
 bool    ProjectManager::isBackupFile( const QString& projectFile )
@@ -244,4 +219,42 @@ QString ProjectManager::projectName() const
         return ProjectManager::unSavedProject;
     }
     return m_projectName;
+}
+
+bool
+ProjectManager::closeProject()
+{
+    if ( m_projectFile != NULL )
+    {
+        delete m_projectFile;
+        m_projectFile = NULL;
+    }
+    m_projectName = QString();
+    //This one is for the mainwindow, to update the title bar
+    emit projectUpdated( projectName(), true );
+    //This one is for every part that need to clean something when the project is closed.
+    emit projectClosed();
+    return true;
+}
+
+void
+ProjectManager::saveProject( bool )
+{
+    __saveProject( m_projectFile->fileName() );
+    emit projectSaved();
+    emit projectUpdated( projectName(), true );
+}
+
+bool
+ProjectManager::loadEmergencyBackup()
+{
+    QSettings   s;
+    QString lastProject = s.value( "EmergencyBackup" ).toString();
+    if ( QFile::exists( lastProject ) == true )
+    {
+        loadProject(  lastProject );
+        m_needSave = true;
+        return true;
+    }
+    return false;
 }

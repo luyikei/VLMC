@@ -28,7 +28,7 @@
 
 #include "config.h"
 #include "MainWindow.h"
-#include "ProjectManager.h"
+#include "project/GuiProjectManager.h"
 
 #include <QApplication>
 #include <QColor>
@@ -88,7 +88,7 @@ VLMCmain( int argc, char **argv )
 
     MainWindow w;
     if ( argc > 1 )
-        ProjectManager::getInstance()->loadProject( argv[argc - 1] );
+        GUIProjectManager::getInstance()->loadProject( argv[argc - 1] );
     w.show();
     return app.exec();
 }

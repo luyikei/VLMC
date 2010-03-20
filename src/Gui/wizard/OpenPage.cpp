@@ -22,7 +22,7 @@
 
 #include <QDebug>
 #include "OpenPage.h"
-#include "ProjectManager.h"
+#include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "WelcomePage.h"
 
@@ -51,7 +51,7 @@ void OpenPage::changeEvent( QEvent *e )
 
 bool OpenPage::validatePage()
 {
-    ProjectManager* pm = ProjectManager::getInstance();
+    ProjectManager* pm = GUIProjectManager::getInstance();
 
     if ( !WelcomePage::projectPath().isEmpty() )
         pm->loadProject( WelcomePage::projectPath() );

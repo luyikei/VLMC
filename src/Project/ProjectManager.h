@@ -34,13 +34,10 @@ class   QFile;
 class   QDomDocument;
 
 #ifdef WITH_GUI
-# include "Project/GUIProjectManager.h"
-# define PARENTCLASS GUIProjectManager
+class   ProjectManager : public QObject
 #else
-# define PARENTCLASS QObject
+class   ProjectManager : public QObject , public Singleton<ProjectManager>
 #endif
-
-class   ProjectManager : public PARENTCLASS, public Singleton<ProjectManager>
 {
     Q_OBJECT
     Q_DISABLE_COPY( ProjectManager );
@@ -49,14 +46,14 @@ public:
     static const QString    unSavedProject;
 
     void            loadProject( const QString& fileName );
-    bool            needSave() const;
     QStringList     recentsProjects() const;
-
+    virtual bool    closeProject();
+    virtual void    saveProject( bool saveAs = false );
     bool            loadEmergencyBackup();
 
     static void     signalHandler( int sig );
 
-private:
+protected:
     /**
      *  This shouldn't be call directly.
      *  It's only purpose it to write the project for very specific cases.
@@ -75,22 +72,22 @@ private:
      */
     QString         projectName() const;
 
+protected:
     ProjectManager();
     ~ProjectManager();
-private:
+
+protected:
     QFile*          m_projectFile;
-    bool            m_needSave;
     QStringList     m_recentsProjects;
     QString         m_projectName;
     QString         m_projectDescription;
     QDomDocument    *m_domDocument;
+    bool            m_needSave;
 
     friend class    Singleton<ProjectManager>;
 
-private slots:
+protected slots:
     void            loadTimeline();
-    void            cleanChanged( bool val );
-    void            projectNameChanged( const QVariant& projectName );
 
 signals:
     /**

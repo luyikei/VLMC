@@ -221,6 +221,13 @@ MetaDataWorker::entrypointPlaying()
         metaDataAvailable();
 }
 
+void
+MetaDataWorker::failure()
+{
+    emit failed( m_media );
+    deleteLater();
+}
+
 
 //void
 //MetaDataWorker::prepareAudioSpectrumComputing()
@@ -299,9 +306,3 @@ MetaDataWorker::entrypointPlaying()
 //    m_media->audioValues()->append( value );
 //}
 //
-//void
-//MetaDataWorker::failure()
-//{
-//    emit failed( m_media );
-//    deleteLater();
-//}
