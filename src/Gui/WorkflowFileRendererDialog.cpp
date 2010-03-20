@@ -23,15 +23,22 @@
 
 #include "vlmc.h"
 #include "WorkflowFileRendererDialog.h"
+#include "WorkflowFileRenderer.h"
 
-WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height ) :
+WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* renderer,
+                                                        quint32 width, quint32 height ) :
         m_width( width ),
-        m_height( height )
+        m_height( height ),
+        m_renderer( renderer )
 {
     m_ui.setupUi( this );
     m_workflow = MainWorkflow::getInstance();
-    connect( m_workflow, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ),
-             this, SLOT( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ) );
+    connect( m_ui.cancelButton, SIGNAL( clicked() ), m_renderer, SLOT( stop() ) );
+    connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( close() ) );
+    connect( m_renderer, SIGNAL( frameChanged( qint64 ) ), this, SLOT( frameChanged( qint64 ) ) );
+    connect( m_renderer, SIGNAL( imageUpdated( const uchar* ) ),
+             this, SLOT( updatePreview( const uchar* ) ),
+             Qt::QueuedConnection );
 }
 
 void    WorkflowFileRendererDialog::setOutputFileName( const QString& outputFileName )
@@ -53,9 +60,8 @@ void    WorkflowFileRendererDialog::updatePreview( const uchar* buff )
                                         QImage::Format_RGB888 ).rgbSwapped() ) );
 }
 
-void    WorkflowFileRendererDialog::frameChanged( qint64 frame, MainWorkflow::FrameChangedReason reason )
+void    WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
-    if ( reason == MainWorkflow::Renderer )
-        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
-                                                                QString::number(m_workflow->getLengthFrame() ) ) );
+    m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
+                                    QString::number(m_workflow->getLengthFrame() ) ) );
 }

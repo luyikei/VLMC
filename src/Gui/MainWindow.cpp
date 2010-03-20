@@ -454,8 +454,14 @@ void    MainWindow::on_actionRender_triggered()
         quint32     vbitrate = settings->videoBitrate();
         quint32     abitrate = settings->audioBitrate();
         delete settings;
+
+        WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
+        dialog->setModal( true );
+        dialog->setOutputFileName( outputFileName );
+
         m_fileRenderer->initializeRenderer();
         m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
+        dialog->show();
     }
 }
 

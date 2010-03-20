@@ -46,26 +46,17 @@ void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 wi
                                        quint32 height, double fps, quint32 vbitrate,
                                        quint32 abitrate )
 {
-//    char        buffer[256];
-
-    m_outputFileName = outputFileName;
     m_mainWorkflow->setCurrentFrame( 0, MainWorkflow::Renderer );
 
     setupRenderer( width, height, fps );
-#ifdef WITH_GUI
-    setupDialog( width, height );
-#endif
 
     //Media as already been created and mainly initialized by the WorkflowRenderer
     QString     transcodeStr = ":sout=#transcode{vcodec=h264,vb=" + QString::number( vbitrate ) +
                                ",acodec=a52,ab=" + QString::number( abitrate ) +
                                ",no-hurry-up}"
                                ":standard{access=file,mux=ps,dst=\""
-                          + m_outputFileName + "\"}";
+                          + outputFileName + "\"}";
     m_media->addOption( transcodeStr.toStdString().c_str() );
-
-//    sprintf( buffer, ":sout-transcode-fps=%f", m_outputFps );
-//    m_media->addOption( buffer );
 
     m_mediaPlayer->setMedia( m_media );
 
@@ -131,19 +122,7 @@ WorkflowFileRenderer::unlock( void *datas, size_t size, void* buff )
 void
 WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedReason )
 {
-#ifdef WITH_GUI
-    m_dialog->setProgressBarValue( frame * 100 / m_mainWorkflow->getLengthFrame() );
-#else
-    static int      percent = 0;
-    int             newPercent;
-
-    newPercent = frame * 100 / m_mainWorkflow->getLengthFrame();
-    if ( newPercent != percent )
-    {
-        percent = newPercent;
-        qDebug() << percent << "%";
-    }
-#endif
+    emit frameChanged( frame );
 }
 
 void*
@@ -169,27 +148,3 @@ WorkflowFileRenderer::height() const
 {
     return VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
 }
-
-#ifdef WITH_GUI
-void
-WorkflowFileRenderer::setupDialog( quint32 width, quint32 height )
-{
-    m_dialog = new WorkflowFileRendererDialog( width, height );
-    m_dialog->setModal( true );
-    m_dialog->setOutputFileName( m_outputFileName );
-    connect( m_dialog->m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( cancelButtonClicked() ) );
-    connect( m_dialog, SIGNAL( finished(int) ), this, SLOT( stop() ) );
-    connect( this, SIGNAL( imageUpdated( const uchar* ) ),
-             m_dialog, SLOT( updatePreview( const uchar* ) ),
-             Qt::QueuedConnection );
-    m_dialog->show();
-}
-
-void
-WorkflowFileRenderer::cancelButtonClicked()
-{
-    stop();
-    disconnect();
-    m_dialog->done( 0 );
-}
-#endif

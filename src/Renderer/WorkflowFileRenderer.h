@@ -45,20 +45,13 @@ public:
     void                        run(const QString& outputFileName, quint32 width,
                                     quint32 height, double fps, quint32 vbitrate,
                                     quint32 abitrate);
-
     static int                  lock( void* datas, qint64 *dts, qint64 *pts,
                                       quint32 *flags, size_t *bufferSize, void **buffer );
     static void                 unlock( void* datas, size_t size, void* buff );
-
     virtual float               getFps() const;
 
 private:
-    void                        setupDialog( quint32 width, quint32 height );
-
-private:
-    QString                     m_outputFileName;
 #ifdef WITH_GUI
-    WorkflowFileRendererDialog* m_dialog;
     QImage*                     m_image;
     QTime                       m_time;
 #endif
@@ -70,15 +63,13 @@ protected:
     virtual quint32             height() const;
 private slots:
     void                        stop();
-#ifdef WITH_GUI
-    void                        cancelButtonClicked();
-#endif
     void                        __frameChanged( qint64 frame,
                                                 MainWorkflow::FrameChangedReason reason );
     void                        __endReached();
 
 signals:
     void                        imageUpdated( const uchar* image );
+    void                        frameChanged( qint64 );
 };
 
 #endif // WORKFLOWFILERENDERER_H

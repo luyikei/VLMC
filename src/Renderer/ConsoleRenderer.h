@@ -38,6 +38,9 @@ public:
 public slots:
     void        startRender();
 
+private slots:
+    void        frameChanged( qint64 frame ) const;
+
 private:
     WorkflowFileRenderer    *m_renderer;
     QString                 m_outputFileName;

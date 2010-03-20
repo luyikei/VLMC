@@ -39,6 +39,22 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_fps = VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
     m_vbitrate = 4000;
     m_abitrate = 256;
+    connect( m_renderer, SIGNAL( frameChanged( qint64 ) ),
+             this, SLOT( frameChanged( qint64 ) ) );
+}
+
+void
+ConsoleRenderer::frameChanged( qint64 frame ) const
+{
+    static int      percent = 0;
+    int             newPercent;
+
+    newPercent = frame * 100 / MainWorkflow::getInstance()->getLengthFrame();
+    if ( newPercent != percent )
+    {
+        percent = newPercent;
+        qDebug().nospace() << percent << "%";
+    }
 }
 
 void
