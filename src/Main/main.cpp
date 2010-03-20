@@ -50,7 +50,7 @@ VLMCmain( int argc, char **argv )
     qRegisterMetaType<MainWorkflow::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
 
-    if ( argc < 3 )
+    if ( app.arguments().count() < 3 )
     {
         qCritical() << "Usage: ./vlmc project.vlmc output_file";
         return 1;
@@ -59,7 +59,7 @@ VLMCmain( int argc, char **argv )
     ConsoleRenderer renderer;
 
     QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
-    pm->loadProject( argv[1] );
+    pm->loadProject( app.arguments()[1] );
     return app.exec();
 }
 
