@@ -50,7 +50,7 @@ RendererSettings::selectOutputFileName()
 {
     QString outputFileName =
             QFileDialog::getSaveFileName( NULL, tr ( "Enter the output file name" ),
-                                          QDir::currentPath(), "Videos(*.avi *.mpg)" );
+                                          QDir::currentPath(), tr( "Videos(*.avi *.mpg)" ) );
     m_ui.outputFileName->setText( outputFileName );
 }
 
@@ -60,8 +60,8 @@ RendererSettings::accept()
     if ( width() <= 0 || height() <= 0 || outputFileName().isEmpty() == true ||
          fps() <= .0f )
     {
-        QMessageBox::warning( this, "Invalid parameters",
-                              "Please enter valid rendering parameters" );
+        QMessageBox::warning( this, tr( "Invalid parameters" ),
+                              tr( "Please enter valid rendering parameters" ) );
     }
     else
         QDialog::accept();
