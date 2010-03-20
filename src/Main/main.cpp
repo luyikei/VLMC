@@ -21,10 +21,14 @@
  *****************************************************************************/
 
 #include "config.h"
+#include "ConsoleRenderer.h"
 #include "ProjectManager.h"
+#include "WorkflowFileRenderer.h"
 
 #include <QCoreApplication>
 #include <QtDebug>
+#include <QMetaType>
+#include <QVariant>
 
 /**
  *  VLMC Entry point
@@ -42,12 +46,20 @@ VLMCmain( int argc, char **argv )
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
-    if ( argc < 2 )
+    qRegisterMetaType<MainWorkflow::TrackType>( "MainWorkflow::TrackType" );
+    qRegisterMetaType<MainWorkflow::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
+
+    if ( argc < 3 )
     {
-        qCritical() << "You must provide a project file to render.";
+        qCritical() << "Usage: ./vlmc project.vlmc output_file";
         return 1;
     }
-    ProjectManager::getInstance()->loadProject( argv[1] );
+    ProjectManager  *pm = ProjectManager::getInstance();
+    ConsoleRenderer renderer;
+
+    QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
+    pm->loadProject( argv[1] );
     return app.exec();
 }
 

@@ -120,7 +120,8 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 #Add GUI stuff if required
 IF (NOT WITH_GUI)
-    LIST (APPEND VLMC_SRCS Main/main.cpp )
+    LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
+    LIST (APPEND VLMC_HDRS Renderer/ConsoleRenderer.h)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})

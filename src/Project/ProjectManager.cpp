@@ -114,8 +114,9 @@ void    ProjectManager::loadTimeline()
     QDomElement     root = m_domDocument->documentElement();
 
     MainWorkflow::getInstance()->loadProject( root );
-    emit projectUpdated( projectName(), true );
     SettingsManager::getInstance()->load( root );
+    emit projectUpdated( projectName(), true );
+    emit projectLoaded();
     delete m_domDocument;
 }
 

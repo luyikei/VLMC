@@ -37,6 +37,7 @@
 #include "VlmcDebug.h"
 
 #include "MainWorkflow.h"
+#include "export/RendererSettings.h"
 #include "WorkflowFileRenderer.h"
 #include "WorkflowRenderer.h"
 #include "ClipRenderer.h"
@@ -439,8 +440,22 @@ void    MainWindow::on_actionRender_triggered()
         if ( m_fileRenderer )
             delete m_fileRenderer;
         m_fileRenderer = new WorkflowFileRenderer();
+        //Setup dialog box for querying render parameters.
+        RendererSettings    *settings = new RendererSettings;
+        if ( settings->exec() == QDialog::Rejected )
+        {
+            delete settings;
+            return ;
+        }
+        QString     outputFileName = settings->outputFileName();
+        quint32     width = settings->width();
+        quint32     height = settings->height();
+        double      fps = settings->fps();
+        quint32     vbitrate = settings->videoBitrate();
+        quint32     abitrate = settings->audioBitrate();
+        delete settings;
         m_fileRenderer->initializeRenderer();
-        m_fileRenderer->run();
+        m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
     }
 }
 

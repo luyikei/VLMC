@@ -26,9 +26,6 @@
 #include "VLCMedia.h"
 #include "LightVideoFrame.h"
 #include "VLCMediaPlayer.h"
-#ifdef WITH_GUI
-# include "export/RendererSettings.h"
-#endif
 
 #include <QTime>
 
@@ -45,34 +42,15 @@ WorkflowFileRenderer::~WorkflowFileRenderer()
 }
 #endif
 
-void        WorkflowFileRenderer::run()
+void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
+                                       quint32 height, double fps, quint32 vbitrate,
+                                       quint32 abitrate )
 {
 //    char        buffer[256];
 
+    m_outputFileName = outputFileName;
     m_mainWorkflow->setCurrentFrame( 0, MainWorkflow::Renderer );
 
-#ifdef WITH_GUI
-    //Setup dialog box for querying render parameters.
-    RendererSettings    *settings = new RendererSettings;
-    if ( settings->exec() == QDialog::Rejected )
-    {
-        delete settings;
-        return ;
-    }
-    m_outputFileName = settings->outputFileName();
-    quint32     width = settings->width();
-    quint32     height = settings->height();
-    double      fps = settings->fps();
-    quint32     vbitrate = settings->videoBitrate();
-    quint32     abitrate = settings->audioBitrate();
-    delete settings;
-#else
-    quint32     width = VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
-    quint32     height = VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
-    double      fps = VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
-    quint32     vbitrate = 4000;
-    quint32     abitrate = 400;
-#endif
     setupRenderer( width, height, fps );
 #ifdef WITH_GUI
     setupDialog( width, height );
@@ -155,6 +133,16 @@ WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedRe
 {
 #ifdef WITH_GUI
     m_dialog->setProgressBarValue( frame * 100 / m_mainWorkflow->getLengthFrame() );
+#else
+    static int      percent = 0;
+    int             newPercent;
+
+    newPercent = frame * 100 / m_mainWorkflow->getLengthFrame();
+    if ( newPercent != percent )
+    {
+        percent = newPercent;
+        qDebug() << percent << "%";
+    }
 #endif
 }
 
@@ -173,13 +161,13 @@ WorkflowFileRenderer::getUnlockCallback()
 quint32
 WorkflowFileRenderer::width() const
 {
-    return VLMC_GET_UINT( "video/VideoProjectWidth" );
+    return VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
 }
 
 quint32
 WorkflowFileRenderer::height() const
 {
-    return VLMC_GET_UINT( "video/VideoProjectHeight" );
+    return VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
 }
 
 #ifdef WITH_GUI

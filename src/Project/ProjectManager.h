@@ -104,6 +104,7 @@ signals:
      */
     void            projectSaved();
     void            projectClosed();
+    void            projectLoaded();
 };
 
 #endif // PROJECTMANAGER_H
