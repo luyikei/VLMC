@@ -119,11 +119,6 @@ void    ClipWorkflow::clipEndReached()
     setState( EndReached );
 }
 
-Clip*     ClipWorkflow::getClip()
-{
-    return m_clip;
-}
-
 void            ClipWorkflow::stop()
 {
     if ( m_mediaPlayer )

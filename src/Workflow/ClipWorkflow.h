@@ -132,7 +132,11 @@ class   ClipWorkflow : public QObject
                                 uppon, so that you can query information on it.
             \return             A pointer to a constant clip instance.
         */
-        Clip*                   getClip();
+        inline Clip*            getClip()
+        {
+            return m_clip;
+        }
+
         /**
             \brief  Stop this workflow.
         */
