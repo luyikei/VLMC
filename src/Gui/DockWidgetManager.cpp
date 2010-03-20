@@ -41,7 +41,7 @@ QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
     if ( m_dockWidgets.contains( qs_name ) )
         return  0;
 
-    QDockWidget* dock = new QDockWidget( tr( qs_name.toStdString().c_str() ), m_mainWin );
+    QDockWidget* dock = new QDockWidget( qs_name.toStdString().c_str(), m_mainWin );
 
     m_dockWidgets.insert(qs_name, dock);
     dock->setWidget( widget );
