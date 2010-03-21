@@ -31,6 +31,7 @@
 #include "project/GuiProjectManager.h"
 
 #include <QApplication>
+#include <QFile>
 #include <QColor>
 #include <QPalette>
 

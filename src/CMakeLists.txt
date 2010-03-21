@@ -49,7 +49,7 @@ SET(VLMC_SRCS
   )
 
 IF (WIN32)
-    LIST ( APPEND VLMC_SRCS winvlmc.cpp )
+    LIST ( APPEND VLMC_SRCS Main/winvlmc.cpp )
 ELSE (WIN32)
     LIST( APPEND VLMC_SRCS Main/vlmc.cpp )
 ENDIF(WIN32)
