@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QString>
 #include <QPlainTextEdit>
+#include <QtGlobal>
 #include "About.h"
 
 About::About( QWidget *parent ) :
@@ -36,6 +37,9 @@ About::About( QWidget *parent ) :
     setText( ":/text/COPYING", m_ui.plainTextEditLicense );
     m_ui.labelVersion->setText(
             m_ui.labelVersion->text().arg( qApp->applicationVersion() )
+            );
+    m_ui.labelQtVersion->setText(
+            m_ui.labelQtVersion->text().arg( qVersion(), QT_VERSION_STR )
             );
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( deleteLater() ) );
 }
