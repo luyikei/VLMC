@@ -119,12 +119,6 @@ WorkflowFileRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flag
 }
 
 void
-WorkflowFileRenderer::unlock( void *datas, size_t size, void* buff )
-{
-    WorkflowRenderer::unlock( datas, size, buff );
-}
-
-void
 WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedReason )
 {
     emit frameChanged( frame );
@@ -139,7 +133,7 @@ WorkflowFileRenderer::getLockCallback()
 void*
 WorkflowFileRenderer::getUnlockCallback()
 {
-    return (void*)&WorkflowFileRenderer::unlock;
+    return (void*)&WorkflowRenderer::unlock;
 }
 
 quint32

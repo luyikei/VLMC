@@ -47,7 +47,6 @@ public:
                                     quint32 abitrate);
     static int                  lock( void* datas, qint64 *dts, qint64 *pts,
                                       quint32 *flags, size_t *bufferSize, void **buffer );
-    static void                 unlock( void* datas, size_t size, void* buff );
     virtual float               getFps() const;
 
 private:
