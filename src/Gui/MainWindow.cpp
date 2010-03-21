@@ -437,9 +437,6 @@ void    MainWindow::on_actionRender_triggered()
     else
     {
         m_renderer->killRenderer();
-        if ( m_fileRenderer )
-            delete m_fileRenderer;
-        m_fileRenderer = new WorkflowFileRenderer();
         //Setup dialog box for querying render parameters.
         RendererSettings    *settings = new RendererSettings;
         if ( settings->exec() == QDialog::Rejected )
@@ -455,6 +452,9 @@ void    MainWindow::on_actionRender_triggered()
         quint32     abitrate = settings->audioBitrate();
         delete settings;
 
+        if ( m_fileRenderer )
+            delete m_fileRenderer;
+        m_fileRenderer = new WorkflowFileRenderer();
         WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
         dialog->setModal( true );
         dialog->setOutputFileName( outputFileName );
