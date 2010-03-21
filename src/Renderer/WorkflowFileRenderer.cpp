@@ -107,7 +107,7 @@ WorkflowFileRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flag
     if ( self->m_time.isValid() == false ||
         self->m_time.elapsed() >= 1000 )
     {
-        self->emit imageUpdated( (uchar*)self->m_renderVideoFrame );
+        self->emit imageUpdated( (uchar*)*buffer );
         self->m_time.restart();
     }
 #endif

@@ -45,7 +45,6 @@ WorkflowRenderer::WorkflowRenderer() :
             m_videoEsHandler( NULL ),
             m_audioEsHandler( NULL ),
             m_oldLength( 0 ),
-            m_renderVideoFrame( NULL ),
             m_media( NULL ),
             m_width( 0 ),
             m_height( 0 ),
@@ -83,6 +82,8 @@ WorkflowRenderer::~WorkflowRenderer()
         delete m_audioEsHandler;
     if ( m_media )
         delete m_media;
+    if ( m_silencedAudioBuffer )
+        delete m_silencedAudioBuffer;
 }
 
 void
@@ -93,13 +94,9 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     char        audioParameters[256];
     char        callbacks[64];
 
-    if ( m_renderVideoFrame != NULL )
-        delete m_renderVideoFrame;
-    m_renderVideoFrame = new unsigned char[width * height * Pixel::NbComposantes];
     m_audioEsHandler->fps = fps;
     m_videoEsHandler->fps = fps;
     //Clean any previous render.
-    memset( m_renderVideoFrame, 0, m_width * m_height * Pixel::NbComposantes );
 
     sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:data=%" PRId64 ":codec=%s:cat=2:caching=0",
              width, height, "16/9", "30/1",
@@ -151,15 +148,12 @@ WorkflowRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flags,
 int
 WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, void **buffer )
 {
-    qint64 ptsDiff = 0;
+    qint64                          ptsDiff = 0;
+    MainWorkflow::OutputBuffers*    ret;
 
     if ( m_stopping == false )
     {
-        MainWorkflow::OutputBuffers* ret =
-                m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
-        memcpy( m_renderVideoFrame,
-                (*(ret->video))->frame.octets,
-                (*(ret->video))->nboctets );
+        ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
         m_videoBuffSize = (*(ret->video))->nboctets;
         ptsDiff = (*(ret->video))->ptsDiff;
     }
@@ -171,7 +165,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
         ptsDiff = 1000000 / handler->fps;
     }
     m_pts = *pts = ptsDiff + m_pts;
-    *buffer = m_renderVideoFrame;
+    *buffer = (*(ret->video))->frame.octets;
     *bufferSize = m_videoBuffSize;
     return 0;
 }

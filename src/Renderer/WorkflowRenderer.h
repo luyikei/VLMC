@@ -257,7 +257,6 @@ class   WorkflowRenderer : public GenericRenderer
         LibVLCpp::Media*    m_media;
         bool                m_stopping;
         float               m_outputFps;
-        unsigned char*	    m_renderVideoFrame;
         /**
          *  \brief          This isn't exactly the current PTS.
          *                  It's the number of frame rendered since the render has started.
