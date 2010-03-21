@@ -64,4 +64,5 @@ void    WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
     m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
                                     QString::number(m_workflow->getLengthFrame() ) ) );
+    setProgressBarValue( frame * 100 / m_workflow->getLengthFrame() );
 }
