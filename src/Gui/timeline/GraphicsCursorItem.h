@@ -36,7 +36,11 @@ class QGraphicsSceneMouseEvent;
 class GraphicsCursorItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+
+#if QT_VERSION >= 0x40600
     Q_INTERFACES( QGraphicsItem )
+#endif
+
 public:
     GraphicsCursorItem( const QPen& pen );
     int                 cursorPos() const { return ( int )pos().x(); }

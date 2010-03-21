@@ -40,7 +40,11 @@ class GraphicsTrack;
 class AbstractGraphicsMediaItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+
+#if QT_VERSION >= 0x40600
     Q_INTERFACES( QGraphicsItem )
+#endif
+
     friend class TracksView;
 public:
     enum From
