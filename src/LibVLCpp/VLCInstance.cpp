@@ -42,6 +42,8 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
     int argc = sizeof( argv ) / sizeof( *argv );
 
     m_internalPtr = libvlc_new( argc, argv );
+    Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",
+                "Can't launch VLMC without a valid LibVLC instance. Please check your VLC installation" );
 }
 
 Instance::~Instance()
