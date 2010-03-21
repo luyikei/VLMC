@@ -32,6 +32,7 @@
 #ifdef WITH_GUI
 WorkflowFileRenderer::WorkflowFileRenderer() :
         WorkflowRenderer(),
+        m_renderVideoFrame( NULL ),
         m_image( NULL )
 {
 }
@@ -107,7 +108,10 @@ WorkflowFileRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flag
     if ( self->m_time.isValid() == false ||
         self->m_time.elapsed() >= 1000 )
     {
-        self->emit imageUpdated( (uchar*)*buffer );
+        if ( self->m_renderVideoFrame == NULL )
+            self->m_renderVideoFrame = new quint8[*bufferSize];
+        memcpy( self->m_renderVideoFrame, (uchar*)(*buffer), *bufferSize );
+        self->emit imageUpdated( self->m_renderVideoFrame );
         self->m_time.restart();
     }
 #endif

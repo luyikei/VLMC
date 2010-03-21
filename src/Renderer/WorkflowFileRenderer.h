@@ -51,6 +51,7 @@ public:
     virtual float               getFps() const;
 
 private:
+    quint8                      *m_renderVideoFrame;
 #ifdef WITH_GUI
     QImage*                     m_image;
     QTime                       m_time;
