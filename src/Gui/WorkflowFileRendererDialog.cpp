@@ -35,6 +35,7 @@ WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* re
     m_workflow = MainWorkflow::getInstance();
     connect( m_ui.cancelButton, SIGNAL( clicked() ), m_renderer, SLOT( stop() ) );
     connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( close() ) );
+    connect( m_renderer, SIGNAL( renderComplete() ), this, SLOT( accept() ) );
     connect( m_renderer, SIGNAL( frameChanged( qint64 ) ), this, SLOT( frameChanged( qint64 ) ) );
     connect( m_renderer, SIGNAL( imageUpdated( const uchar* ) ),
              this, SLOT( updatePreview( const uchar* ) ),
