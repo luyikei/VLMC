@@ -42,6 +42,8 @@ WorkflowRenderer::WorkflowRenderer() :
             m_mainWorkflow( MainWorkflow::getInstance() ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
+            m_videoEsHandler( NULL ),
+            m_audioEsHandler( NULL ),
             m_oldLength( 0 ),
             m_renderVideoFrame( NULL ),
             m_media( NULL ),
@@ -75,9 +77,12 @@ WorkflowRenderer::~WorkflowRenderer()
 {
     killRenderer();
 
-    delete m_videoEsHandler;
-    delete m_audioEsHandler;
-    delete m_media;
+    if ( m_videoEsHandler )
+        delete m_videoEsHandler;
+    if ( m_audioEsHandler )
+        delete m_audioEsHandler;
+    if ( m_media )
+        delete m_media;
 }
 
 void
