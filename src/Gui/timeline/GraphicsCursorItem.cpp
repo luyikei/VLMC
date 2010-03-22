@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include <QtDebug>
+#include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -57,6 +58,11 @@ QVariant GraphicsCursorItem::itemChange( GraphicsItemChange change, const QVaria
     //Position is changing :
     if ( change == QGraphicsItem::ItemPositionChange )
     {
+        // When the cursor is moving fast, the viewport buffer
+        // is not correctly updated, forcing it now.
+        scene()->update( pos().x(), pos().y(), m_boundingRect.width(), m_boundingRect.height() );
+
+        // Keep the y axis in-place.
         qreal posX = value.toPointF().x();
         if ( posX < 0 ) posX = 0;
         return QPoint( ( int ) posX, ( int ) pos().y() );
