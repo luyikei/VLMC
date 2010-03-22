@@ -120,6 +120,7 @@ TracksView::addVideoTrack()
     m_scene->invalidate(); // Redraw the background
     m_numVideoTrack++;
     emit videoTrackAdded( track );
+    updateDuration();
 }
 
 void
@@ -133,6 +134,7 @@ TracksView::addAudioTrack()
     m_scene->invalidate(); // Redraw the background
     m_numAudioTrack++;
     emit audioTrackAdded( track );
+    updateDuration();
 }
 
 void
