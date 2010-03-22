@@ -742,9 +742,9 @@ TracksView::drawBackground( QPainter *painter, const QRectF &rect )
 
         QRectF trackRect = track->mapRectToScene( track->boundingRect() );
         if ( track->mediaType() == MainWorkflow::VideoTrack )
-            painter->drawLine( rect.left(), trackRect.top(), rect.right(), trackRect.top() );
+            painter->drawLine( rect.left(), trackRect.top(), rect.right() + 1, trackRect.top() );
         else
-            painter->drawLine( rect.left(), trackRect.bottom(), rect.right(), trackRect.bottom() );
+            painter->drawLine( rect.left(), trackRect.bottom(), rect.right() + 1, trackRect.bottom() );
     }
 
     // Audio/Video separator
