@@ -726,7 +726,8 @@ TracksView::resizeEvent( QResizeEvent *event )
 void
 TracksView::drawBackground( QPainter *painter, const QRectF &rect )
 {
-    painter->setWorldMatrixEnabled( false );
+    // Fill the background
+    painter->fillRect( rect, QBrush( palette().base() ) );
 
     // Draw the tracks separators
     painter->setPen( QPen( QColor( 72, 72, 72 ) ) );
@@ -739,17 +740,12 @@ TracksView::drawBackground( QPainter *painter, const QRectF &rect )
 
         QRectF trackRect = track->mapRectToScene( track->boundingRect() );
         if ( track->mediaType() == MainWorkflow::VideoTrack )
-            painter->drawLine( trackRect.left(), trackRect.top(), rect.right(), trackRect.top() );
+            painter->drawLine( rect.left(), trackRect.top(), rect.right(), trackRect.top() );
         else
-            painter->drawLine( trackRect.left(), trackRect.bottom(), rect.right(), trackRect.bottom() );
+            painter->drawLine( rect.left(), trackRect.bottom(), rect.right(), trackRect.bottom() );
     }
 
     // Audio/Video separator
-    QRectF r = rect;
-    r.setWidth( r.width() + 1 );
-
-    painter->setWorldMatrixEnabled( false );
-
     QLinearGradient g( 0, m_separator->y(), 0, m_separator->y() + m_separator->boundingRect().height() );
     QColor base = palette().window().color();
     QColor end = palette().dark().color();
@@ -760,10 +756,11 @@ TracksView::drawBackground( QPainter *painter, const QRectF &rect )
 
     painter->setBrush( QBrush( g ) );
     painter->setPen( Qt::transparent );
-    painter->drawRect( 0,
+    painter->drawRect( rect.left(),
                        (int) m_separator->y(),
-                       (int) r.right(),
+                       (int) rect.right(),
                        (int) m_separator->boundingRect().height() );
+
 }
 
 void
