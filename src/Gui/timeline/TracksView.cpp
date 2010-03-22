@@ -760,7 +760,7 @@ TracksView::drawBackground( QPainter *painter, const QRectF &rect )
     painter->setPen( Qt::transparent );
     painter->drawRect( rect.left(),
                        (int) m_separator->y(),
-                       (int) rect.right(),
+                       (int) rect.right() + 1,
                        (int) m_separator->boundingRect().height() );
 
 }
