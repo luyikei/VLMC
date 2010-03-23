@@ -508,7 +508,7 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
             {
                 // Collision with an item of the same type
                 itemCollision = true;
-                if ( currentItem->trackNumber() >= track )
+                if ( currentItem->trackNumber() > track )
                 {
                     if ( track < 1 )
                     {
@@ -518,7 +518,7 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
                     }
                     track -= 1;
                 }
-                else if ( currentItem->trackNumber() < track )
+                else if ( currentItem->trackNumber() <= track )
                 {
                     if ( track >= m_numVideoTrack - 1 )
                     {
