@@ -381,8 +381,8 @@ TracksView::moveMediaItem( const QUuid &uuid, unsigned int track, qint64 time )
 void
 TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
 {
-    static GraphicsTrack *lastKnownTrack = NULL;
     GraphicsTrack *track = NULL;
+    static GraphicsTrack *lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
 
     QList<QGraphicsItem*> list = items( 0, position.y() );
     for ( int i = 0; i < list.size(); ++i )
@@ -397,7 +397,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
         // use the last known track.
         // This avoids "breaks" when moving a rush
         if ( !lastKnownTrack )
-            lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
+            return;
         track = lastKnownTrack;
     }
 
