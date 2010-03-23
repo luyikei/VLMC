@@ -54,6 +54,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_numVideoTrack = 0;
     m_dragVideoItem = NULL;
     m_dragAudioItem = NULL;
+    m_lastKnownTrack = NULL;
     m_actionMove = false;
     m_actionResize = false;
     m_actionRelativeX = -1;
@@ -382,7 +383,9 @@ void
 TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
 {
     GraphicsTrack *track = NULL;
-    static GraphicsTrack *lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
+
+    if ( !m_lastKnownTrack )
+        m_lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
 
     QList<QGraphicsItem*> list = items( 0, position.y() );
     for ( int i = 0; i < list.size(); ++i )
@@ -396,12 +399,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
         // When the mouse pointer is not on a track,
         // use the last known track.
         // This avoids "breaks" when moving a rush
-        if ( !lastKnownTrack )
+        if ( !m_lastKnownTrack )
             return;
-        track = lastKnownTrack;
+        track = m_lastKnownTrack;
     }
 
-    lastKnownTrack = track;
+    m_lastKnownTrack = track;
 
     qreal time = ( mapToScene( position ).x() + 0.5 );
     moveMediaItem( item, track->trackNumber(), (qint64)time);
@@ -696,6 +699,8 @@ TracksView::dropEvent( QDropEvent *event )
     }
 
     UndoStack::getInstance()->endMacro();
+
+    m_lastKnownTrack = NULL;
 }
 
 void
@@ -951,6 +956,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionItem->oldPosition = m_actionItem->startPos();
         m_actionRelativeX = -1;
         m_actionItem = NULL;
+        m_lastKnownTrack = NULL;
     }
     else if ( m_actionResize )
     {

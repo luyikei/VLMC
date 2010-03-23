@@ -332,6 +332,7 @@ private:
     int                     m_actionRelativeX;
     AbstractGraphicsMediaItem::From m_actionResizeType;
     AbstractGraphicsMediaItem       *m_actionItem;
+    GraphicsTrack           *m_lastKnownTrack;
 
 signals:
     /**
