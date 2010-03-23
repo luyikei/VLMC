@@ -232,6 +232,11 @@ private slots:
      * \brief Ensure that the cursor is visible.
      */
     void                    ensureCursorVisible();
+
+    /**
+     * \brief Return the visible area of the viewport.
+     */
+    QRectF                  visibleRect();
     /**
      * \brief Update the global duration of the project.
      * This method should be called when an item is inserted, moved or removed to ensure

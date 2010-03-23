@@ -1061,11 +1061,20 @@ TracksView::ensureCursorVisible()
 {
     if ( horizontalScrollBar()->isVisible() )
     {
-        QRectF r( m_cursorLine->boundingRect().width() / 2,
-                  m_cursorLine->boundingRect().height() / 2,
-                  1, 1 );
-        m_cursorLine->ensureVisible( r, 150, 50 );
+        QRectF visibleArea = visibleRect();
+        ensureVisible( cursorPos(),
+                       visibleArea.y() + ( visibleArea.height() / 2 ),
+                       1, 1, 150, 0 );
     }
+}
+
+QRectF
+TracksView::visibleRect()
+{
+    QPointF topLeft( horizontalScrollBar()->value(), verticalScrollBar()->value() );
+    QPointF bottomRight( topLeft + viewport()->rect().bottomRight() );
+    QMatrix reverted = matrix().inverted();
+    return reverted.mapRect( QRectF( topLeft, bottomRight ) );
 }
 
 void
