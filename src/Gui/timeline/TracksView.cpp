@@ -396,7 +396,8 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
         // When the mouse pointer is not on a track,
         // use the last known track.
         // This avoids "breaks" when moving a rush
-        if ( !lastKnownTrack ) return;
+        if ( !lastKnownTrack )
+            lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
         track = lastKnownTrack;
     }
 
