@@ -52,7 +52,9 @@ GUIProjectManager::GUIProjectManager()
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
     automaticSaveEnabledChanged( VLMC_GET_BOOL( "general/AutomaticBackup" ) );
-
+    SettingsManager::getInstance()->watchValue( "general/ProjectName", this,
+                                                SLOT(projectNameChanged(QVariant) ),
+                                                SettingsManager::Project );
 }
 
 bool

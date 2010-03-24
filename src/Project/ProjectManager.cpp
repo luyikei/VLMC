@@ -87,10 +87,6 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_STRING( "general/VLMCWorkspace", QDir::homePath(), "Workspace location", "The place where all project's videos will be stored" );
 
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject, "Project name", "The project name" );
-    SettingsManager::getInstance()->watchValue( "general/ProjectName", this,
-                                                SLOT(projectNameChanged(QVariant) ),
-                                                SettingsManager::Project );
-
 }
 
 ProjectManager::~ProjectManager()
