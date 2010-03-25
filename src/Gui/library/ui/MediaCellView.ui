@@ -118,7 +118,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Media Title</string>
+          <string notr="true">Media Title</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -155,7 +155,7 @@
               </font>
              </property>
              <property name="text">
-              <string>0</string>
+              <string notr="true">0</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -185,7 +185,7 @@
               </font>
              </property>
              <property name="text">
-              <string>0</string>
+              <string notr="true">0</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -92,6 +92,8 @@ void MediaCellView::changeEvent( QEvent *e )
     {
     case QEvent::LanguageChange:
         m_ui->retranslateUi( this );
+        nbClipUpdated();
+        setLength( m_clip->lengthSecond() * 1000 );
         break;
     default:
         break;
@@ -118,15 +120,15 @@ MediaCellView::nbClipUpdated()
         m_ui->clipCount->hide();
         m_ui->clipCountLabel->hide();
         m_ui->arrow->hide();
-        m_ui->clipCount->setText( "0" );
     }
     else
     {
         m_ui->clipCount->show();
         m_ui->clipCountLabel->show();
         m_ui->arrow->show();
-        m_ui->clipCount->setText( QString::number( nbClips ) );
     }
+    //Use QString::number in any case, so we use the current locale.
+    m_ui->clipCount->setText( QString::number( nbClips ) );
 }
 
 void
