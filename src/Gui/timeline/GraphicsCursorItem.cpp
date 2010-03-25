@@ -34,8 +34,11 @@ GraphicsCursorItem::GraphicsCursorItem( const QPen& pen ) :
         m_pen( pen ), m_mouseDown( false )
 {
     setFlags( QGraphicsItem::ItemIgnoresTransformations |
-              QGraphicsItem::ItemIsMovable |
-              QGraphicsItem::ItemSendsGeometryChanges );
+              QGraphicsItem::ItemIsMovable );
+#if QT_VERSION >= 0x040600
+    setFlag( QGraphicsItem::ItemSendsGeometryChanges );
+#endif
+
     setCursor( QCursor( Qt::SizeHorCursor ) );
     setZValue( 100 );
 
