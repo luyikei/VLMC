@@ -52,7 +52,7 @@ MediaListView::~MediaListView()
 
 void        MediaListView::newClipLoaded( Clip *clip )
 {
-    MediaCellView* cell = new MediaCellView( clip );
+    MediaCellView* cell = new MediaCellView( clip, m_container );
 
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );

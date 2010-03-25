@@ -37,7 +37,6 @@ class ListViewController : public ViewController
     Q_OBJECT
 
 public:
-    ListViewController() {}
     ListViewController( StackViewController* nav );
     ~ListViewController();
 
@@ -48,11 +47,11 @@ public:
 
 protected:
     QVBoxLayout*                m_layout;
+    QWidget*                    m_container;
 
 private:
     QString                     m_title;
     QScrollArea*                m_scrollArea;
-    QWidget*                    m_container;
 
     StackViewController*        m_nav;
 };

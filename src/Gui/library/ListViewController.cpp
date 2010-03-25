@@ -27,13 +27,14 @@
 #include "ListViewController.h"
 #include "MediaCellView.h"
 #include "Library.h"
+#include "StackViewController.h"
 
 ListViewController::ListViewController( StackViewController* nav ) : m_nav( nav )
 {
     m_title      = tr( "Media List" );
     m_scrollArea = new QScrollArea();
     m_layout     = new QVBoxLayout();
-    m_container  = new QWidget();
+    m_container  = new QWidget( nav );
 
     m_layout->setAlignment( Qt::AlignTop );
     m_layout->setSpacing( 0 );
