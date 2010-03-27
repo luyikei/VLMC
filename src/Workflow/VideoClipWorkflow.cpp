@@ -126,6 +126,10 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
         m_renderLock->lock();
         m_computedBuffersMutex->lock();
     }
+    //FIXME
+    //TODO: This is a nasty work arround. The race condition needs to be fixed !
+    if ( m_computedBuffers.isEmpty() == true )
+        return NULL;
     ::StackedBuffer<LightVideoFrame*>* buff;
     if ( mode == ClipWorkflow::Pop )
         buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );
