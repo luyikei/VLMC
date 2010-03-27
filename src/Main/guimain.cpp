@@ -29,6 +29,7 @@
 #include "config.h"
 #include "MainWindow.h"
 #include "project/GuiProjectManager.h"
+#include "IntroDialog.h"
 
 #include <QApplication>
 #include <QFile>
@@ -85,6 +86,12 @@ VLMCmain( int argc, char **argv )
     p.setColor( QPalette::WindowText,       QColor( 255, 255, 255, 255 ) );
     p.setColor( QPalette::Link,             QColor( 177, 202, 0,   255 ) );
     p.setColor( QPalette::LinkVisited,      QColor( 177, 202, 0,   255 ) );
+
+#ifndef QT_DEBUG
+    IntroDialog d;
+    d.exec();
+#endif
+
     app.setPalette( p );
 
     MainWindow w;

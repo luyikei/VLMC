@@ -141,6 +141,7 @@ ELSE(NOT WITH_GUI)
         Gui/ClickableLabel.cpp
         Gui/ClipProperty.cpp
         Gui/DockWidgetManager.cpp
+        Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
         Gui/preview/LCDTimecode.cpp
         Gui/MainWindow.cpp
@@ -194,6 +195,7 @@ ELSE(NOT WITH_GUI)
         Gui/DockWidgetManager.h
         Gui/export/RendererSettings.h
         Gui/import/ImportController.h
+        Gui/IntroDialog.h
         Gui/LanguageHelper.h
         Gui/import/TagWidget.h
         Gui/library/ListViewController.h
@@ -240,6 +242,7 @@ ELSE(NOT WITH_GUI)
         Gui/library/ui/StackViewNavController.ui
         Gui/ui/About.ui
         Gui/ui/ClipProperty.ui
+        Gui/ui/IntroDialog.ui
         Gui/ui/MainWindow.ui
         Gui/preview/ui/PreviewWidget.ui
         Gui/import/ui/TagWidget.ui
