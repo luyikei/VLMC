@@ -27,8 +27,9 @@
 
 #include <QObject>
 
-class   QReadWriteLock;
 class   QMutex;
+class   QReadWriteLock;
+class   QWaitCondition;
 
 class   Clip;
 class   WaitCondition;
@@ -241,12 +242,10 @@ class   ClipWorkflow : public QObject
          *          the clipworkflow hasn't generate a frame yet,
          *          while the renderer asks for one.
          */
-        QMutex*                 m_computedBuffersMutex;
-        QMutex*                 m_availableBuffersMutex;
+        QWaitCondition          *m_renderWaitCond;
         qint64                  m_beginPausePts;
         qint64                  m_pauseDuration;
         bool                    m_fullSpeedRender;
-        WaitCondition           *m_renderWaitCond;
 
     private slots:
         void                    loadingComplete();

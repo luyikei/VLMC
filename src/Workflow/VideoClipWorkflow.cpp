@@ -111,25 +111,11 @@ void*
 VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
-    QMutexLocker    lock2( m_computedBuffersMutex );
 
     if ( isEndReached() == true )
         return NULL;
     if ( preGetOutput() == false )
-    {
-        QMutexLocker    waitLock( m_renderWaitCond->getMutex() );
-        m_computedBuffersMutex->unlock();
-        m_renderLock->unlock();
-
-        m_renderWaitCond->waitLocked();
-
-        m_renderLock->lock();
-        m_computedBuffersMutex->lock();
-    }
-    //FIXME
-    //TODO: This is a nasty work arround. The race condition needs to be fixed !
-    if ( m_computedBuffers.isEmpty() == true )
-        return NULL;
+        m_renderWaitCond->wait( m_renderLock );
     ::StackedBuffer<LightVideoFrame*>* buff;
     if ( mode == ClipWorkflow::Pop )
         buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );
@@ -143,11 +129,9 @@ void
 VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
 {
     Q_UNUSED( size );
-    QMutexLocker        lock( cw->m_availableBuffersMutex );
     LightVideoFrame*    lvf = NULL;
 
     cw->m_renderLock->lock();
-    cw->m_computedBuffersMutex->lock();
     if ( cw->m_availableBuffers.isEmpty() == true )
     {
         lvf = new LightVideoFrame( cw->m_width, cw->m_height );
@@ -172,10 +156,8 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     LightVideoFrame     *lvf = cw->m_computedBuffers.last();
     (*(lvf))->ptsDiff = cw->m_currentPts - cw->m_previousPts;
     cw->commonUnlock();
+    cw->m_renderWaitCond->wakeAll();
     cw->m_renderLock->unlock();
-    cw->m_computedBuffersMutex->unlock();
-    QMutexLocker    lock( cw->m_renderWaitCond->getMutex() );
-    cw->m_renderWaitCond->wake();
 }
 
 uint32_t
@@ -193,15 +175,15 @@ VideoClipWorkflow::getMaxComputedBuffers() const
 void
 VideoClipWorkflow::releaseBuffer( LightVideoFrame *lvf )
 {
-    QMutexLocker    lock( m_availableBuffersMutex );
+    QMutexLocker    lock( m_renderLock );
+
     m_availableBuffers.enqueue( lvf );
 }
 
 void
 VideoClipWorkflow::flushComputedBuffers()
 {
-    QMutexLocker    lock( m_computedBuffersMutex );
-    QMutexLocker    lock2( m_availableBuffersMutex );
+    QMutexLocker    lock( m_renderLock );
 
     while ( m_computedBuffers.isEmpty() == false )
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );

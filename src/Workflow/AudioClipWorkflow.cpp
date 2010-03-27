@@ -81,7 +81,6 @@ void*
 AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
-    QMutexLocker    lock2( m_computedBuffersMutex );
 
     if ( preGetOutput() == false )
         return NULL;
@@ -138,9 +137,7 @@ AudioClipWorkflow::createBuffer( size_t size )
 void
 AudioClipWorkflow::lock( AudioClipWorkflow *cw, quint8 **pcm_buffer , quint32 size )
 {
-    QMutexLocker    lock( cw->m_availableBuffersMutex );
     cw->m_renderLock->lock();
-    cw->m_computedBuffersMutex->lock();
 
     AudioSample     *as = NULL;
     if ( cw->m_availableBuffers.isEmpty() == true )
@@ -192,7 +189,6 @@ AudioClipWorkflow::unlock( AudioClipWorkflow *cw, quint8 *pcm_buffer,
     }
     cw->commonUnlock();
     cw->m_renderLock->unlock();
-    cw->m_computedBuffersMutex->unlock();
 }
 
 void
@@ -229,15 +225,14 @@ AudioClipWorkflow::getMaxComputedBuffers() const
 void
 AudioClipWorkflow::releaseBuffer( AudioSample *sample )
 {
-    QMutexLocker    lock( m_availableBuffersMutex );
+    QMutexLocker    lock( m_renderLock );
     m_availableBuffers.enqueue( sample );
 }
 
 void
 AudioClipWorkflow::flushComputedBuffers()
 {
-    QMutexLocker    lock( m_availableBuffersMutex );
-    QMutexLocker    lock2( m_computedBuffersMutex );
+    QMutexLocker        lock( m_renderLock );
 
     while ( m_computedBuffers.isEmpty() == false )
     {
