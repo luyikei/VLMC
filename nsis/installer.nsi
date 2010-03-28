@@ -1,6 +1,6 @@
 Name "VideoLAN Movie Creator"
 
-OutFile "@PROJECT_NAME@.exe"
+OutFile "@NSIS_OUTPUT_FILE@"
 
 InstallDir "$PROGRAMFILES\@PROJECT_NAME_SHORT@"
 InstallDirRegKey HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir"

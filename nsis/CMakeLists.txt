@@ -1,4 +1,7 @@
 
+# Output file name
+SET(NSIS_OUTPUT_FILE "${PROJECT_NAME}.exe")
+
 # NSIS is only available for Win32 builds (native or cross compilation)
 IF(WIN32)
     
@@ -17,7 +20,9 @@ IF(WIN32)
         # Copy and configure the nsis script file
         CONFIGURE_FILE(installer.nsi "${CMAKE_BINARY_DIR}/bin/installer.nsi" @ONLY)
 
-        ADD_CUSTOM_TARGET(installer makensis "${CMAKE_BINARY_DIR}/bin/installer.nsi"
+        ADD_CUSTOM_TARGET(installer
+            ${CMAKE_COMMAND} -E remove "${CMAKE_BINARY_DIR}/bin/${NSIS_OUTPUT_FILE}"
+            COMMAND makensis "${CMAKE_BINARY_DIR}/bin/installer.nsi"
             WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/bin/"
             )
 
