@@ -1,26 +1,59 @@
+; VideoLAN Movie Creator
+;
+; NSIS Script by:
+; Ludovic Fauvet <etix@l0cal.com>
+
+;--------------------------------
+; General
+
+; Name
 Name "VideoLAN Movie Creator"
 
+; Output file
 OutFile "@NSIS_OUTPUT_FILE@"
 
-InstallDir "$PROGRAMFILES\@PROJECT_NAME_SHORT@"
+; Get installation folder from registry if available
 InstallDirRegKey HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir"
 
+; Install directory
+InstallDir "$PROGRAMFILES\@PROJECT_NAME_SHORT@"
+
+; Request admin permissions for Vista and higher
 RequestExecutionLevel admin
 
+
+;--------------------------------
+; Interface
+
+; Warn the user if he try to close the installer
+!define MUI_ABORTWARNING
+
+LicenseText "License"
+LicenseData "COPYING"
+
+;--------------------------------
+; Pages
+
+; Install
+Page license
 Page components
 Page directory
 Page instfiles
 
+; Uninstall
 UninstPage uninstConfirm
 UninstPage instfiles
+
+;--------------------------------
+; Installer sections
 
 Section "@PROJECT_NAME_SHORT@ (required)"
 
   SectionIn RO
-  
+
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
-  
+
   ; Put file there
   File "libvlc.dll"
   File "libvlccore.dll"
@@ -34,17 +67,17 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   File "@CMAKE_SOURCE_DIR@/share/vlmc.ico"
   File /r "plugins"
   File /r "effects"
-  
+
   ; Write the installation path into the registry
   WriteRegStr HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir" "$INSTDIR"
-  
+
   ; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@" "DisplayName" "@PROJECT_NAME_LONG@"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
-  
+
 SectionEnd
 
 Section "Start Menu Shortcuts"
@@ -52,11 +85,15 @@ Section "Start Menu Shortcuts"
   CreateDirectory "$SMPROGRAMS\@PROJECT_NAME_LONG@"
   CreateShortCut "$SMPROGRAMS\@PROJECT_NAME_LONG@\@PROJECT_NAME_SHORT@.lnk" "$INSTDIR\vlmc.exe" "" "$INSTDIR\vlmc.ico" 0
   CreateShortCut "$SMPROGRAMS\@PROJECT_NAME_LONG@\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  
+
 SectionEnd
 
+
+;--------------------------------
+; Uninstaller sections
+
 Section "Uninstall"
-  
+
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@"
   DeleteRegKey HKLM "Software\@PROJECT_NAME_SHORT@"
@@ -76,7 +113,7 @@ Section "Uninstall"
   Delete "$INSTDIR\effects\*.*"
   RMDir "$INSTDIR\plugins"
   RMDir "$INSTDIR\effects"
-  
+
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\@PROJECT_NAME_LONG@\*.*"
