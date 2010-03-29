@@ -29,7 +29,7 @@ RequestExecutionLevel admin
 !define MUI_ABORTWARNING
 
 LicenseText "License"
-LicenseData "COPYING"
+LicenseData "@CMAKE_SOURCE_DIR@/COPYING"
 
 ;--------------------------------
 ; Pages
@@ -65,6 +65,10 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   File "QtXml4.dll"
   File "vlmc.exe"
   File "@CMAKE_SOURCE_DIR@/share/vlmc.ico"
+  File "@CMAKE_SOURCE_DIR@/COPYING"
+  File "@CMAKE_SOURCE_DIR@/AUTHORS"
+  File "@CMAKE_SOURCE_DIR@/TRANSLATORS"
+  File "@CMAKE_SOURCE_DIR@/NEWS"
   File /r "plugins"
   File /r "effects"
 
@@ -105,15 +109,19 @@ Section "Uninstall"
   Delete "$INSTDIR\libvlc.dll"
   Delete "$INSTDIR\libvlccore.dll"
   Delete "$INSTDIR\mingwm10.dll"
+  Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtSvg4.dll"
   Delete "$INSTDIR\QtXml4.dll"
+  Delete "$INSTDIR/COPYING"
+  Delete "$INSTDIR/AUTHORS"
+  Delete "$INSTDIR/TRANSLATORS"
+  Delete "$INSTDIR/NEWS"
   Delete "$INSTDIR\plugins\*.*"
   Delete "$INSTDIR\effects\*.*"
   RMDir "$INSTDIR\plugins"
   RMDir "$INSTDIR\effects"
-
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\@PROJECT_NAME_LONG@\*.*"
