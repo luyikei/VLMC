@@ -21,6 +21,9 @@ void StackViewNavController::changeEvent( QEvent *e )
     {
     case QEvent::LanguageChange:
         m_ui->retranslateUi( this );
+        // This is a quick and dirty fix.
+        // But the title won't be translated anyway.
+        setTitle( m_title );
         break;
     default:
         break;
@@ -29,6 +32,7 @@ void StackViewNavController::changeEvent( QEvent *e )
 
 void    StackViewNavController::setTitle( const QString& title )
 {
+    m_title = title;
     m_ui->title->setText( title );
 }
 

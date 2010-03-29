@@ -24,6 +24,7 @@ protected:
 
 private:
     Ui::StackViewNavController *m_ui;
+    QString m_title;
 };
 
 #endif // STACKVIEWNAVCONTROLLER_H
