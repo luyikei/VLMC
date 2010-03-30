@@ -243,6 +243,18 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
         }
     }
 
+    // Is the clip already existing in the timeline ?
+    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();
+    for ( int i = 0; i < trackItems.size(); ++i )
+    {
+        AbstractGraphicsMediaItem *item =
+                dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
+        if ( !item || item->uuid() != clip->uuid() ) continue;
+        // Item already exists in the timeline, exit now.
+        qWarning() << QString( "A clip with the same UUID (%1) already exists in the timeline!").arg( item->uuid() );
+        return;
+    }
+
     AbstractGraphicsMediaItem *item = 0;
     if ( trackType == MainWorkflow::VideoTrack )
     {
