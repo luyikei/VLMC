@@ -121,7 +121,6 @@ TracksView::addVideoTrack()
     m_scene->invalidate(); // Redraw the background
     m_numVideoTrack++;
     emit videoTrackAdded( track );
-    updateDuration();
 }
 
 void
@@ -135,7 +134,6 @@ TracksView::addAudioTrack()
     m_scene->invalidate(); // Redraw the background
     m_numAudioTrack++;
     emit audioTrackAdded( track );
-    updateDuration();
 }
 
 void
@@ -224,41 +222,36 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
 {
     Q_ASSERT( clip );
 
-    // If there is not enough tracks to insert
-    // the clip do it now.
-    if ( trackType == MainWorkflow::VideoTrack )
-    {
-        if ( track >= m_numVideoTrack )
-        {
-            unsigned int nbTrackToAdd = track - m_numVideoTrack + 1;
-            for ( unsigned int i = 0; i < nbTrackToAdd; ++i )
-                addVideoTrack();
-        }
-        // Add the empty upper track
-        if ( track + 1 == m_numVideoTrack )
-            addVideoTrack();
-    }
-    else if ( trackType == MainWorkflow::AudioTrack )
-    {
-        if ( track >= m_numAudioTrack )
-        {
-            unsigned int nbTrackToAdd = track - m_numAudioTrack + 1;
-            for ( unsigned int i = 0; i < nbTrackToAdd; ++i )
-                addAudioTrack();
-        }
-        // Add the empty upper track
-        if ( track + 1 == m_numAudioTrack )
-            addAudioTrack();
-    }
     // Is the clip already existing in the timeline ?
-    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();;
+    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();
     for ( int i = 0; i < trackItems.size(); ++i )
     {
         AbstractGraphicsMediaItem *item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
         if ( !item || item->uuid() != clip->uuid() ) continue;
-        // Item already exist: goodbye!
+        // Item already exists in the timeline, exit now.
         return;
+    }
+
+    // If there is not enough tracks to insert
+    // the clip do it now.
+    if ( trackType == MainWorkflow::VideoTrack )
+    {
+        if ( track + 1 >= m_numVideoTrack )
+        {
+            int nbTrackToAdd = ( track + 2 ) - m_numVideoTrack;
+            for ( int i = 0; i < nbTrackToAdd; ++i )
+                addVideoTrack();
+        }
+    }
+    else if ( trackType == MainWorkflow::AudioTrack )
+    {
+        if ( track + 1 >= m_numAudioTrack )
+        {
+            int nbTrackToAdd = ( track + 2 ) - m_numAudioTrack;
+            for ( int i = 0; i < nbTrackToAdd; ++i )
+                addAudioTrack();
+        }
     }
 
     AbstractGraphicsMediaItem *item = 0;
