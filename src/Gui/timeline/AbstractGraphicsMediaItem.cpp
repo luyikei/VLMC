@@ -80,7 +80,9 @@ quint32 AbstractGraphicsMediaItem::trackNumber()
         if ( graphicsTrack )
             return graphicsTrack->trackNumber();
     }
-    return -1;
+    //FIXME We should probably return a negative number here (using a signed type!)
+    qWarning( "Things can go wrong beyond that point!" );
+    return 0;
 }
 
 void AbstractGraphicsMediaItem::setTrack( GraphicsTrack* track )
