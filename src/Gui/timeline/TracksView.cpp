@@ -222,17 +222,6 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
 {
     Q_ASSERT( clip );
 
-    // Is the clip already existing in the timeline ?
-    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();
-    for ( int i = 0; i < trackItems.size(); ++i )
-    {
-        AbstractGraphicsMediaItem *item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != clip->uuid() ) continue;
-        // Item already exists in the timeline, exit now.
-        return;
-    }
-
     // If there is not enough tracks to insert
     // the clip do it now.
     if ( trackType == MainWorkflow::VideoTrack )
