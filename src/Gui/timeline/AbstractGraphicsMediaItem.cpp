@@ -83,6 +83,16 @@ quint32 AbstractGraphicsMediaItem::trackNumber()
     return -1;
 }
 
+void AbstractGraphicsMediaItem::setTrack( GraphicsTrack* track )
+{
+    setParentItem( track );
+}
+
+GraphicsTrack* AbstractGraphicsMediaItem::track()
+{
+    return qgraphicsitem_cast<GraphicsTrack*>( parentItem() );
+}
+
 void AbstractGraphicsMediaItem::group( AbstractGraphicsMediaItem* item )
 {
     Q_ASSERT( item );

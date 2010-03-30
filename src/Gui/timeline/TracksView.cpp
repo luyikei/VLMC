@@ -277,7 +277,7 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
 
     item->m_tracksView = this;
     item->setHeight( tracksHeight() );
-    item->setParentItem( getTrack( trackType, track ) );
+    item->setTrack( getTrack( trackType, track ) );
     item->setStartPos( start );
     item->oldTrackNumber = track;
     item->oldPosition = start;
@@ -310,7 +310,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
         m_dragAudioItem = new GraphicsAudioItem( audioClip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( tracksHeight() );
-        m_dragAudioItem->setParentItem( getTrack( m_dragAudioItem->mediaType(), 0 ) );
+        m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->mediaType(), 0 ) );
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
@@ -322,7 +322,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
         m_dragVideoItem = new GraphicsMovieItem( videoClip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( tracksHeight() );
-        m_dragVideoItem->setParentItem( getTrack( m_dragVideoItem->mediaType(), 0 ) );
+        m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->mediaType(), 0 ) );
         connect( m_dragVideoItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
@@ -469,11 +469,11 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
             // We've found a valid position that fit for the two items.
             // Move the primary item to the target destination.
             item->setStartPos( p.time() );
-            item->setParentItem( getTrack( item->mediaType(), p.track() ) );
+            item->setTrack( getTrack( item->mediaType(), p.track() ) );
 
             // Move the linked item to the target destination.
             item->groupItem()->setStartPos( p2.time() );
-            item->groupItem()->setParentItem( getTrack( item->groupItem()->mediaType(), p2.track() ) );
+            item->groupItem()->setTrack( getTrack( item->groupItem()->mediaType(), p2.track() ) );
         }
     }
     else
@@ -481,7 +481,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         if ( p.isValid() )
         {
             item->setStartPos( p.time() );
-            item->setParentItem( getTrack( item->mediaType(), p.track() ) );
+            item->setTrack( getTrack( item->mediaType(), p.track() ) );
         }
     }
 }

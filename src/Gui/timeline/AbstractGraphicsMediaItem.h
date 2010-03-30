@@ -89,6 +89,12 @@ public:
     /// Return the current track of the item
     quint32 trackNumber();
 
+    /// Set the item's parent track
+    void setTrack( GraphicsTrack* track );
+
+    /// Return the item's parent track
+    GraphicsTrack* track();
+
     /// Set the position of the item (in frames) for the x-axis.
     void setStartPos( qint64 position );
 
