@@ -50,8 +50,7 @@ public:
     virtual bool    closeProject();
     virtual void    saveProject( bool saveAs = false );
     bool            loadEmergencyBackup();
-
-    static void     signalHandler( int sig );
+    void            emergencyBackup();
 
 protected:
     /**
@@ -59,7 +58,6 @@ protected:
      *  It's only purpose it to write the project for very specific cases.
      */
     void            __saveProject( const QString& fileName );
-    void            emergencyBackup();
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
     /**

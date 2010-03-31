@@ -22,15 +22,6 @@
 
 #include "config.h"
 
-#ifdef WITH_GUI
-# ifdef WITH_CRASHHANDLER_GUI
-#  include "CrashHandler.h"
-# endif
-#else
-//We shouldn't have to do this.
-#undef WITH_CRASHHANDLER_GUI
-#endif
-
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "project/GuiProjectManager.h"
@@ -45,26 +36,6 @@
 #include <errno.h>
 #include <signal.h>
 
-#ifdef WITH_CRASHHANDLER
-void    ProjectManager::signalHandler( int sig )
-{
-    signal( sig, SIG_DFL );
-
-#ifdef WITH_GUI
-    GUIProjectManager::getInstance()->emergencyBackup();
-#else
-    ProjectManager::getInstance()->emergencyBackup();
-#endif
-
-    #ifdef WITH_CRASHHANDLER_GUI
-        CrashHandler* ch = new CrashHandler( sig );
-        ::exit( ch->exec() );
-    #else
-        ::exit( 1 );
-    #endif
-}
-#endif
-
 const QString   ProjectManager::unNamedProject = tr( "<Unnamed project>" );
 const QString   ProjectManager::unSavedProject = tr( "<Unsaved project>" );
 
@@ -72,13 +43,6 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 {
     QSettings s;
     m_recentsProjects = s.value( "RecentsProjects" ).toStringList();
-
-#ifdef WITH_CRASHHANDLER
-    signal( SIGSEGV, ProjectManager::signalHandler );
-    signal( SIGFPE, ProjectManager::signalHandler );
-    signal( SIGABRT, ProjectManager::signalHandler );
-    signal( SIGILL, ProjectManager::signalHandler );
-#endif
 
     VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97, "Output video FPS", "Frame Per Second used when previewing and rendering the project" );
     VLMC_CREATE_PROJECT_INT( "video/VideoProjectWidth", 480, "Video width", "Width resolution of the output video" );

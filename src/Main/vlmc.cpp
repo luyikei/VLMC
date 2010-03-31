@@ -29,6 +29,36 @@
 
 int VLMCmain( int , char** );
 
+#if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
+
+# ifdef WITH_GUI
+#  include "project/GuiProjectManager.h"
+#  ifdef WITH_CRASHHANDLER_GUI
+#   include "CrashHandler.h"
+#  endif
+# else
+#  include "ProjectManager.h"
+#endif
+
+void    signalHandler( int sig )
+{
+    signal( sig, SIG_DFL );
+
+#ifdef WITH_GUI
+    GUIProjectManager::getInstance()->emergencyBackup();
+#else
+    ProjectManager::getInstance()->emergencyBackup();
+#endif
+
+    #ifdef WITH_CRASHHANDLER_GUI
+        CrashHandler* ch = new CrashHandler( sig );
+        ::exit( ch->exec() );
+    #else
+        ::exit( 1 );
+    #endif
+}
+#endif
+
 int     main( int argc, char **argv )
 {
 #ifdef WITH_CRASHHANDLER
@@ -38,7 +68,13 @@ int     main( int argc, char **argv )
         if ( pid < 0 )
             qFatal("Can't fork to launch VLMC. Exiting.");
         if ( pid == 0 )
+        {
+            signal( SIGSEGV, signalHandler );
+            signal( SIGFPE, signalHandler );
+            signal( SIGABRT, signalHandler );
+            signal( SIGILL, signalHandler );
             return VLMCmain( argc, argv );
+        }
         else
         {
             int     status;
