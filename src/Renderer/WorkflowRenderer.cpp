@@ -42,8 +42,7 @@ WorkflowRenderer::WorkflowRenderer() :
             m_mainWorkflow( MainWorkflow::getInstance() ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
-            m_videoEsHandler( NULL ),
-            m_audioEsHandler( NULL ),
+            m_esHandler( NULL ),
             m_oldLength( 0 ),
             m_media( NULL ),
             m_width( 0 ),
@@ -54,12 +53,8 @@ WorkflowRenderer::WorkflowRenderer() :
 
 void    WorkflowRenderer::initializeRenderer()
 {
-    m_videoEsHandler = new EsHandler;
-    m_videoEsHandler->self = this;
-    m_videoEsHandler->type = Video;
-    m_audioEsHandler = new EsHandler;
-    m_audioEsHandler->self = this;
-    m_audioEsHandler->type = Audio;
+    m_esHandler = new EsHandler;
+    m_esHandler->self = this;
 
     m_nbChannels = 2;
     m_rate = 48000;
@@ -76,10 +71,8 @@ WorkflowRenderer::~WorkflowRenderer()
 {
     killRenderer();
 
-    if ( m_videoEsHandler )
-        delete m_videoEsHandler;
-    if ( m_audioEsHandler )
-        delete m_audioEsHandler;
+    if ( m_esHandler )
+        delete m_esHandler;
     if ( m_media )
         delete m_media;
     if ( m_silencedAudioBuffer )
@@ -92,17 +85,15 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     char        videoString[512];
     char        inputSlave[256];
     char        audioParameters[256];
-    char        callbacks[64];
+    char        buffer[64];
 
-    m_audioEsHandler->fps = fps;
-    m_videoEsHandler->fps = fps;
+    m_esHandler->fps = fps;
     //Clean any previous render.
 
-    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:data=%" PRId64 ":codec=%s:cat=2:caching=0",
-             width, height, "16/9", "30/1",
-             (qint64)m_videoEsHandler, "RV24" );
-    sprintf( audioParameters, "data=%"PRId64":cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
-             (qint64)m_audioEsHandler, m_rate, m_nbChannels );
+    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:cookie=0:codec=%s:cat=2:caching=0",
+             width, height, "16/9", "30/1", "RV24" );
+    sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
+                m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );
     strcat( inputSlave, audioParameters );
 
@@ -111,16 +102,18 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     m_media = new LibVLCpp::Media( "imem://" + QString( videoString ) );
     m_media->addOption( inputSlave );
 
-    sprintf( callbacks, "imem-get=%lld", (qint64)getLockCallback() );
-    m_media->addOption( callbacks );
-    sprintf( callbacks, ":imem-release=%lld", (qint64)getUnlockCallback() );
-    m_media->addOption( callbacks );
+    sprintf( buffer, "imem-get=%"PRId64, (qint64)getLockCallback() );
+    m_media->addOption( buffer );
+    sprintf( buffer, ":imem-release=%"PRId64, (qint64)getUnlockCallback() );
+    m_media->addOption( buffer );
+    sprintf( buffer, ":imem-data=%"PRId64, (qint64)m_esHandler );
+    m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
 }
 
 int
-WorkflowRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flags,
-                        size_t *bufferSize, void **buffer )
+WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pts,
+                        quint32 *flags, size_t *bufferSize, void **buffer )
 {
     int             ret = 1;
     EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
@@ -128,20 +121,26 @@ WorkflowRenderer::lock( void *datas, qint64 *dts, qint64 *pts, quint32 *flags,
 
     *dts = -1;
     *flags = 0;
-    if ( handler->type == Video )
+    if ( cookie == NULL || ( cookie[0] != WorkflowRenderer::VideoCookie &&
+                             cookie[0] != WorkflowRenderer::AudioCookie ) )
+    {
+        qCritical() << "Invalid imem input cookie";
+        return ret;
+    }
+    if ( cookie[0] == WorkflowRenderer::VideoCookie )
     {
         ret = handler->self->lockVideo( handler, pts, bufferSize, buffer );
         if ( paused == false )
             handler->self->m_mainWorkflow->nextFrame( MainWorkflow::VideoTrack );
     }
-    else if ( handler->type == Audio )
+    else if ( cookie[0] == WorkflowRenderer::AudioCookie )
     {
         ret = handler->self->lockAudio( handler, pts, bufferSize, buffer );
         if ( paused == false )
             handler->self->m_mainWorkflow->nextFrame( MainWorkflow::AudioTrack );
     }
     else
-        qCritical() << "Invalid ES type";
+        qCritical() << "Invalid imem cookie";
     return ret;
 }
 

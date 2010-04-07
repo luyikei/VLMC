@@ -53,6 +53,8 @@ class   WorkflowRenderer : public GenericRenderer
             Video, ///< Video type
             Subtitle ///< This is clearly not used by VLMC, but it fits imem module's model
         };
+        static const quint8     VideoCookie = '0';
+        static const quint8     AudioCookie = '1';
         /**
          *  \brief  This struct will be the type of the callback parameter
          *          in the lock / unlock callbacks
@@ -60,7 +62,7 @@ class   WorkflowRenderer : public GenericRenderer
         struct  EsHandler
         {
             WorkflowRenderer*   self; ///< The 'this' pointer will be passed in this field
-            EsType              type; ///< The elementary stream type
+            //Fixme: this should go away I guess...
             double              fps; ///< The fps to use for this rendering session.
         };
 
@@ -178,13 +180,14 @@ class   WorkflowRenderer : public GenericRenderer
          *
          *  This callback will query the MainWorkflow for a frame or an audio sample
          *  \param  data        The callback data, this is most likely to be an EsHandler
+         *  \param  cookie      The input identifier.
          *  \param  dts         Unused, but provided by imem
          *  \param  pts         The pts for the buffer that will be provided
          *  \param  flags       Unused but provided by imem
          *  \param  bufferSize  The size of the buffer that will be provided
          *  \param  buffer      The buffer itself.
          */
-        static int          lock( void *data, qint64 *dts, qint64 *pts,
+        static int          lock( void *data, const char* cookie, qint64 *dts, qint64 *pts,
                                 quint32 *flags, size_t *bufferSize, void **buffer );
         /**
          *  \brief  "Subcallback", for video frame injection
@@ -273,8 +276,7 @@ class   WorkflowRenderer : public GenericRenderer
          */
         quint8              *m_silencedAudioBuffer;
         size_t              m_videoBuffSize;
-        EsHandler*          m_videoEsHandler;
-        EsHandler*          m_audioEsHandler;
+        EsHandler*          m_esHandler;
         quint32             m_nbChannels;
         quint32             m_rate;
         /**
