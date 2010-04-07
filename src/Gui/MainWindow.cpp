@@ -505,15 +505,15 @@ void    MainWindow::toolButtonClicked( int id )
     emit toolChanged( (ToolButtons)id );
 }
 
-void MainWindow::on_actionBypass_effects_engine_toggled(bool toggled)
+void MainWindow::on_actionBypass_effects_engine_toggled(bool)
 {
-    EffectsEngine*  ee;
-
-    ee = MainWorkflow::getInstance()->getEffectsEngine();
-    if (toggled)
-        ee->enable();
-    else
-       ee->disable();
+//    EffectsEngine*  ee;
+//
+//    ee = MainWorkflow::getInstance()->getEffectsEngine();
+//    if (toggled)
+//        ee->enable();
+//    else
+//       ee->disable();
     return ;
 }
 

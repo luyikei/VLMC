@@ -31,12 +31,10 @@
 
 LightVideoFrame* TrackHandler::nullOutput = NULL;
 
-TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType,
-                            EffectsEngine* effectsEngine ) :
+TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
         m_trackType( trackType ),
-        m_length( 0 ),
-        m_effectEngine( effectsEngine )
+        m_length( 0 )
 {
     TrackHandler::nullOutput = new LightVideoFrame();
 
@@ -113,29 +111,23 @@ TrackHandler::getLength() const
     return m_length;
 }
 
-void
+void*
 TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 {
-    m_tmpAudioBuffer = NULL;
-    for ( unsigned int i = 0; i < m_trackCount; ++i )
+    for ( int i = m_trackCount - 1; i >= 0; --i )
     {
         if ( m_trackType == MainWorkflow::VideoTrack )
         {
             if ( m_tracks[i].activated() == false )
-            {
-                m_effectEngine->setVideoInput( i + 1, *TrackHandler::nullOutput );
-            }
+                continue ;
             else
             {
                 void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
+                StackedBuffer<LightVideoFrame*>   *buff = reinterpret_cast<StackedBuffer<LightVideoFrame*>*>( ret );
                 if ( ret == NULL )
-                    m_effectEngine->setVideoInput( i + 1, *TrackHandler::nullOutput );
+                    continue ;
                 else
-                {
-                    StackedBuffer<LightVideoFrame*>* stackedBuffer =
-                        reinterpret_cast<StackedBuffer<LightVideoFrame*>*>( ret );
-                    m_effectEngine->setVideoInput( i + 1, *( stackedBuffer->get() ) );
-                }
+                    return buff->get();
             }
         }
         else
@@ -150,10 +142,11 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                 StackedBuffer<AudioClipWorkflow::AudioSample*>* stackedBuffer =
                     reinterpret_cast<StackedBuffer<AudioClipWorkflow::AudioSample*>*> ( ret );
                 if ( stackedBuffer != NULL )
-                    m_tmpAudioBuffer = stackedBuffer->get();
+                    return stackedBuffer->get();
             }
         }
     }
+    return NULL;
 }
 
 void

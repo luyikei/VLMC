@@ -47,16 +47,13 @@ MainWorkflow::MainWorkflow( int trackCount ) :
     m_currentFrameLock = new QReadWriteLock;
     m_renderStartedMutex = new QMutex;
 
-    m_effectEngine = new EffectsEngine;
-    m_effectEngine->disable();
-
     m_tracks = new TrackHandler*[MainWorkflow::NbTrackType];
     m_currentFrame = new qint64[MainWorkflow::NbTrackType];
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
     {
         MainWorkflow::TrackType trackType =
                 (i == 0 ? MainWorkflow::VideoTrack : MainWorkflow::AudioTrack );
-        m_tracks[i] = new TrackHandler( trackCount, trackType, m_effectEngine );
+        m_tracks[i] = new TrackHandler( trackCount, trackType );
         connect( m_tracks[i], SIGNAL( tracksEndReached() ),
                  this, SLOT( tracksEndReached() ) );
         m_currentFrame[i] = 0;
@@ -66,19 +63,12 @@ MainWorkflow::MainWorkflow( int trackCount ) :
 
 MainWorkflow::~MainWorkflow()
 {
-    delete m_effectEngine;
     delete m_renderStartedMutex;
     delete m_currentFrameLock;
     delete m_currentFrame;
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
         delete m_tracks[i];
     delete[] m_tracks;
-}
-
-EffectsEngine*
-MainWorkflow::getEffectsEngine()
-{
-    return m_effectEngine;
 }
 
 void
@@ -134,21 +124,19 @@ MainWorkflow::getOutput( TrackType trackType, bool paused )
     {
         QReadLocker         lock2( m_currentFrameLock );
 
-        m_tracks[trackType]->getOutput( m_currentFrame[VideoTrack],
+        void*   ret = m_tracks[trackType]->getOutput( m_currentFrame[VideoTrack],
                                         m_currentFrame[trackType], paused );
         if ( trackType == MainWorkflow::VideoTrack )
         {
-            m_effectEngine->render();
-            const LightVideoFrame &tmp = m_effectEngine->getVideoOutput( 1 );
-            if ( tmp->nboctets == 0 )
-                m_outputBuffers->video = blackOutput;
+            LightVideoFrame*    frame = static_cast<LightVideoFrame*>( ret );
+            if ( frame == NULL )
+                m_outputBuffers->video = MainWorkflow::blackOutput;
             else
-                m_outputBuffers->video = &tmp;
+                m_outputBuffers->video = frame;
         }
         else
         {
-            m_outputBuffers->audio =
-                    m_tracks[MainWorkflow::AudioTrack]->getTmpAudioBuffer();
+            m_outputBuffers->audio = static_cast<AudioClipWorkflow::AudioSample*>( ret );
         }
     }
     return m_outputBuffers;

@@ -27,10 +27,6 @@
 #include "Toggleable.hpp"
 #include "MainWorkflow.h"
 
-//TEMPORARY:
-#include "AudioClipWorkflow.h"
-
-class   EffectEngine;
 class   TrackWorkflow;
 
 class   QXmlStreamWriter;
@@ -39,7 +35,7 @@ class   TrackHandler : public QObject
 {
     Q_OBJECT
     public:
-        TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType, EffectsEngine* effectsEngine );
+        TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType );
         ~TrackHandler();
 
         void                    addClip( Clip* clip, unsigned int trackId, qint64 start );
@@ -56,7 +52,7 @@ class   TrackHandler : public QObject
          *                              track, it will be different.
          *  \param      paused          The renderer paused state
          */
-        void                    getOutput( qint64 currentFrame, qint64 subFrame,
+        void                    *getOutput( qint64 currentFrame, qint64 subFrame,
                                            bool paused );
         void                    activateAll();
         qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
@@ -68,9 +64,6 @@ class   TrackHandler : public QObject
         void                    unmuteTrack( unsigned int trackId );
         Clip*                   getClip( const QUuid& uuid, unsigned int trackId );
         void                    clear();
-
-        //FIXME: remove this. This should go by the effect engine.
-        AudioClipWorkflow::AudioSample* getTmpAudioBuffer() { return m_tmpAudioBuffer; }
 
         bool                    endIsReached() const;
 
@@ -109,8 +102,6 @@ class   TrackHandler : public QObject
         qint64                          m_length;
         unsigned int                    m_highestTrackNumber;
         bool                            m_endReached;
-        EffectsEngine*                  m_effectEngine;
-        AudioClipWorkflow::AudioSample* m_tmpAudioBuffer;
 
 
     private slots:

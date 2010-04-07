@@ -124,13 +124,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         OutputBuffers*          getOutput( TrackType trackType, bool paused );
         /**
-         *  \brief  Returns the effect engine instance used by the workflow
-         *
-         *  \return The effect engine instance used by the workflow
-         */
-        EffectsEngine*          getEffectsEngine();
-
-        /**
          *  \brief              Set the workflow position by the desired frame
          *  \param              currentFrame: The desired frame to render from
          *  \param              reason: The program part which required this frame change
@@ -386,8 +379,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         /// Pre-allocated buffer, that will contain every computed outputs.
         OutputBuffers*                  m_outputBuffers;
 
-        /// Effect engine instance.
-        EffectsEngine*                  m_effectEngine;
         /// Width used for the render
         quint32                         m_width;
         /// Height used for the render
