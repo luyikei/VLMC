@@ -69,6 +69,7 @@ MainWorkflow::~MainWorkflow()
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
         delete m_tracks[i];
     delete[] m_tracks;
+    delete MainWorkflow::blackOutput;
 }
 
 void

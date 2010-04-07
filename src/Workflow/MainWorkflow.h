@@ -339,9 +339,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         void                    unsplit( Clip* origin, Clip* splitted, quint32 trackId,
                                          MainWorkflow::TrackType trackType );
 
-        /// Pre-filled buffer used when there's nothing to render
-        static LightVideoFrame*         blackOutput;
-
     private:
         MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();
@@ -383,6 +380,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                         m_width;
         /// Height used for the render
         quint32                         m_height;
+
+        /// Pre-filled buffer used when there's nothing to render
+        static LightVideoFrame*         blackOutput;
 
         friend class                    Singleton<MainWorkflow>;
 
