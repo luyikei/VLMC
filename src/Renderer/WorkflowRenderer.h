@@ -43,19 +43,6 @@ class   WorkflowRenderer : public GenericRenderer
 
     public:
         /**
-         *  \brief      Describes the different types of elementary streams
-         *              that can be handled by the imem.
-         */
-        enum    EsType
-        {
-            Unknown, ///< Unknown type. Should never happen
-            Audio, ///< Audio type
-            Video, ///< Video type
-            Subtitle ///< This is clearly not used by VLMC, but it fits imem module's model
-        };
-        static const quint8     VideoCookie = '0';
-        static const quint8     AudioCookie = '1';
-        /**
          *  \brief  This struct will be the type of the callback parameter
          *          in the lock / unlock callbacks
          */
@@ -285,6 +272,8 @@ class   WorkflowRenderer : public GenericRenderer
          */
         qint64              m_oldLength;
 
+        static const quint8     VideoCookie = '0';
+        static const quint8     AudioCookie = '1';
 
     public slots:
         /**
