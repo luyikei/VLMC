@@ -206,7 +206,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="99"/>
         <source>Workspace directory</source>
-        <translation>Priečinok prac. prostredia</translation>
+        <translation>Pracovní adresář</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="115"/>
@@ -410,7 +410,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
         <location filename="../src/Gui/MainWindow.cpp" line="248"/>
         <source>Media Library</source>
-        <translation>Knižnica médií</translation>
+        <translation>Knihovna médií</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="142"/>
@@ -811,13 +811,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/library/StackViewNavController.ui" line="20"/>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="20"/>
         <source>Previous</source>
-        <translation>Dozadu</translation>
+        <translation>Předchozí</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/StackViewNavController.ui" line="33"/>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="33"/>
         <source>TextLabel</source>
-        <translation>Textový popisek</translation>
+        <translation>TextovýPopisek</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ui/TagWidget.ui" line="32"/>
         <source>Keyword Tags</source>
-        <translation>Tagy s klíčovými slovy</translation>
+        <translation>Tagy klíčových slov</translation>
     </message>
 </context>
 <context>
@@ -851,7 +851,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/TrackControls.ui" line="57"/>
         <source>TextLabel</source>
-        <translation>Textový popisek</translation>
+        <translation>TextovýPopisek</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/TrackControls.cpp" line="46"/>
@@ -1209,7 +1209,7 @@ Potom klikněte na tlačítko Další...</translation>
     <message>
         <location filename="../src/Gui/ui/WorkflowFileRendererDialog.ui" line="73"/>
         <source>TextLabel</source>
-        <translation>Textový Popisek</translation>
+        <translation>TextovýPopisek</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/WorkflowFileRendererDialog.ui" line="93"/>
