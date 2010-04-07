@@ -41,7 +41,6 @@ ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
 {
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new WaitCondition;
-    m_pausingStateWaitCond = new WaitCondition;
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
 }
@@ -50,7 +49,6 @@ ClipWorkflow::~ClipWorkflow()
 {
     delete m_renderWaitCond;
     delete m_renderLock;
-    delete m_pausingStateWaitCond;
     delete m_initWaitCond;
     delete m_stateLock;
 }

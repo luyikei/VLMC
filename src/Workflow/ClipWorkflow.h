@@ -216,7 +216,6 @@ class   ClipWorkflow : public QObject
 
     private:
         WaitCondition           *m_initWaitCond;
-        WaitCondition           *m_pausingStateWaitCond;
         /**
          *  \brief              Used by the trackworkflow to query a clipworkflow resync.
          *
