@@ -82,7 +82,7 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
 
-    if ( preGetOutput() == false )
+    if ( getNbComputedBuffers() == 0 )
         return NULL;
     if ( isEndReached() == true )
         return NULL;

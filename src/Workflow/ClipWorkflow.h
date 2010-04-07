@@ -97,7 +97,6 @@ class   ClipWorkflow : public QObject
          *  of the rendering process advancement.
          */
         virtual void*           getOutput( ClipWorkflow::GetMode mode ) = 0;
-        bool                    preGetOutput();
         void                    postGetOutput();
         virtual void            initVlcOutput() = 0;
         void                    initialize();

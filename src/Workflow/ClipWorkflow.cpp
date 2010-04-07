@@ -172,14 +172,6 @@ LibVLCpp::MediaPlayer*       ClipWorkflow::getMediaPlayer()
     return m_mediaPlayer;
 }
 
-bool        ClipWorkflow::preGetOutput()
-{
-    //Computed buffer mutex is already locked by underlying clipworkflow getoutput method
-    if ( getNbComputedBuffers() == 0 )
-        return false;
-    return true;
-}
-
 void        ClipWorkflow::postGetOutput()
 {
     //If we're running out of computed buffers, refill our stack.
