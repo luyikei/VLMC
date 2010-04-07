@@ -281,7 +281,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="71"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TextovýPopisek</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="132"/>
@@ -336,7 +336,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="325"/>
         <source>Failed to load %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se načíst %1</translation>
     </message>
 </context>
 <context>
@@ -344,7 +344,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/ListViewController.cpp" line="33"/>
         <source>Media List</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam médií</translation>
     </message>
 </context>
 <context>
@@ -517,7 +517,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="384"/>
         <source>VLMC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="387"/>
@@ -527,17 +527,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="395"/>
         <source>Project settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="398"/>
         <source>Video settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení videa</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="401"/>
         <source>Audio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení audia</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="424"/>
@@ -552,12 +552,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>VLMC Renderer</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslovač VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>There is nothing to render.</source>
-        <translation type="unfinished"></translation>
+        <translation>Není co vykreslit.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="563"/>
@@ -727,7 +727,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Tools/Win32BacktraceGenerator.cpp" line="31"/>
         <source>Unable to get backtrace</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I am kinda developer so i am not sure if backtrace is word for translating in our language.</translatorcomment>
+        <translation type="unfinished">Nebylo možné získat backtrace</translation>
     </message>
 </context>
 <context>
@@ -735,67 +736,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
         <source>Output file</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="32"/>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat...</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="41"/>
         <source>Width</source>
-        <translation type="unfinished">Šírka</translation>
+        <translation>Šírka</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="58"/>
         <source>Height</source>
-        <translation type="unfinished">Výška</translation>
+        <translation>Výška</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="75"/>
         <source>FPS</source>
-        <translation type="unfinished">FPS</translation>
+        <translation>FPS</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="92"/>
         <source>Video quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalita videa</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="99"/>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalita audia</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="122"/>
         <source>Video codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodek videa</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="133"/>
         <source>H264</source>
-        <translation type="unfinished"></translation>
+        <translation>H264</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="141"/>
         <source>Audio codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodek audia</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="152"/>
         <source>AAC</source>
-        <translation type="unfinished"></translation>
+        <translation>AAC</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="46"/>
         <source>Enter the output file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložte název výstupního souboru</translation>
     </message>
 </context>
 <context>
