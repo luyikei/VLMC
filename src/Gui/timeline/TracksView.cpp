@@ -407,14 +407,21 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
 void
 TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint64 time )
 {
-    if ( item->mediaType() == MainWorkflow::VideoTrack )
-        track = qMin( track, m_numVideoTrack - 1 );
-    else if ( item->mediaType() == MainWorkflow::AudioTrack )
-        track = qMin( track, m_numAudioTrack - 1 );
+    // Add missing tracks
+    if ( item->mediaType() == MainWorkflow::AudioTrack )
+    {
+        while ( track >= m_numAudioTrack )
+            addAudioTrack();
+    }
+    else if ( item->mediaType() == MainWorkflow::VideoTrack )
+    {
+        while ( track >= m_numVideoTrack )
+            addVideoTrack();
+    }
 
     ItemPosition p = findPosition( item, track, time );
 
-    if ( item->groupItem() )
+    if ( p.isValid() && item->groupItem() )
     {
         bool validPosFound = false;
 
@@ -432,6 +439,18 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
 
         // Search a position for the linked item
         ItemPosition p2 = findPosition( item->groupItem(), track, time );
+
+        // Add missing tracks for the source
+        if ( item->mediaType() == MainWorkflow::AudioTrack )
+        {
+            while ( p2.track() >= m_numAudioTrack )
+                addAudioTrack();
+        }
+        else if ( item->mediaType() == MainWorkflow::VideoTrack )
+        {
+            while ( p2.track() >= m_numVideoTrack )
+                addVideoTrack();
+        }
 
         if ( p.time() == p2.time() &&  p.track() == p2.track() )
             validPosFound = true;
@@ -517,7 +536,13 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
                 }
                 else if ( currentItem->trackNumber() <= track )
                 {
-                    if ( track >= m_numVideoTrack - 1 )
+                    int higherTrack = 0;
+                    if ( item->mediaType() == MainWorkflow::VideoTrack )
+                        higherTrack = m_numVideoTrack;
+                    else if ( item->mediaType() == MainWorkflow::AudioTrack )
+                        higherTrack = m_numAudioTrack;
+
+                    if ( track >= higherTrack - 1 )
                     {
                         chkItem->setParentItem( oldParent );
                         continueSearch = false;
@@ -576,11 +601,13 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
 
     GraphicsTrack *t = static_cast<GraphicsTrack*>( chkItem->parentItem() );
 
-    Q_ASSERT( t );
-
     ItemPosition p;
-    p.setTrack( t->trackNumber() );
     p.setTime( chkItem->pos().x() );
+
+    if ( t )
+        p.setTrack( t->trackNumber() );
+    else
+        p.setTrack( -1 ); // Return in valid position
 
     delete chkItem;
     return p;
