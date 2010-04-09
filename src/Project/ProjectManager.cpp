@@ -79,6 +79,8 @@ void    ProjectManager::loadTimeline()
     SettingsManager::getInstance()->load( root );
     emit projectUpdated( projectName(), true );
     emit projectLoaded();
+    if ( m_projectFile != NULL )
+        appendToRecentProject( m_projectFile->fileName() );
     delete m_domDocument;
 }
 
@@ -98,9 +100,7 @@ void    ProjectManager::loadProject( const QString& fileName )
 #ifdef WITH_GUI
     m_needSave = false;
 #endif
-    if ( ProjectManager::isBackupFile( fileName ) == false )
-        appendToRecentProject( QFileInfo( *m_projectFile ).absoluteFilePath() );
-    else
+    if ( ProjectManager::isBackupFile( fileName ) == true )
     {
         //Delete the project file representation, so the next time the user
         //saves its project, vlmc will ask him where to save it.
