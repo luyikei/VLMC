@@ -107,6 +107,7 @@ SET (VLMC_DATA_DIR    ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/vlmc/)
 SET (VLMC_DOC_DIR     ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/doc/vlmc/)
 SET (VLMC_EFFECTS_DIR ${CMAKE_INSTALL_PREFIX}/${VLMC_LIB_SUBDIR}/vlmc/effects/)
 SET (VLMC_DESKTOP_DIR ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/applications/)
+SET (VLMC_PIXMAPS_DIR ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/pixmaps/)
 
 # manual page - makes sense only on unix systems
 IF (UNIX)
@@ -127,10 +128,14 @@ INSTALL (FILES AUTHORS COPYING INSTALL NEWS README TRANSLATORS
 # Copy .desktop file
 INSTALL (FILES share/vlmc.desktop DESTINATION ${VLMC_DESKTOP_DIR})
 
+# Copy the VLMC pixmap
+INSTALL (FILES share/vlmc.png DESTINATION ${VLMC_PIXMAPS_DIR})
+
 # Copy the share directory
 INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
          PATTERN "*.desktop" EXCLUDE
-         PATTERN "*.ico" EXCLUDE)
+         PATTERN "*.ico" EXCLUDE
+         PATTERN "vlmc.png" EXCLUDE)
 
 #############################################################
 # Enable packaging
