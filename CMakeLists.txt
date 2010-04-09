@@ -129,7 +129,8 @@ INSTALL (FILES share/vlmc.desktop DESTINATION ${VLMC_DESKTOP_DIR})
 
 # Copy the share directory
 INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
-         PATTERN "*.desktop" EXCLUDE)
+         PATTERN "*.desktop" EXCLUDE
+         PATTERN "*.ico" EXCLUDE)
 
 #############################################################
 # Enable packaging
