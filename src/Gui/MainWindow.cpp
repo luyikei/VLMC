@@ -574,7 +574,7 @@ bool    MainWindow::restoreSession()
     fileCreated = s.contains( "VlmcVersion" );
     if ( fileCreated == true )
     {
-        bool        cleanQuit = s.value( "CleanQuit", false ).toBool();
+        bool        cleanQuit = s.value( "CleanQuit", true ).toBool();
 
         // Restore the geometry
         restoreGeometry( s.value( "MainWindowGeometry" ).toByteArray() );
