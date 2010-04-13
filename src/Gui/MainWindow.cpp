@@ -93,10 +93,6 @@ MainWindow::MainWindow( QWidget *parent ) :
     setupCrashTester();
 #endif
 
-    // Translations
-    connect( this, SIGNAL( translateDockWidgetTitle() ),
-             DockWidgetManager::getInstance(), SLOT( transLateWidgetTitle() ) );
-
     // Zoom
     connect( m_zoomSlider, SIGNAL( valueChanged( int ) ),
              m_timeline, SLOT( changeZoom( int ) ) );
@@ -160,7 +156,6 @@ void MainWindow::changeEvent( QEvent *e )
     {
     case QEvent::LanguageChange:
         m_ui.retranslateUi( this );
-        emit translateDockWidgetTitle();
         break;
     default:
         break;

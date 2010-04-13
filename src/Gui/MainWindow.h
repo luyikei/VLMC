@@ -116,7 +116,6 @@ private slots:
     void                    canRedoChanged( bool canRedo );
 
 signals:
-    void                    translateDockWidgetTitle();
     void                    toolChanged( ToolButtons );
 
 };
