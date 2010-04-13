@@ -46,9 +46,6 @@ class DockWidgetManager : public QObject, public QSingleton<DockWidgetManager>
                               QDockWidget::DockWidgetFeature features,
                               Qt::DockWidgetArea startArea );
 
-    protected:
-        //virtual void changeEvent( QEvent *e );
-
     private:
         explicit DockWidgetManager( QObject *parent = 0 );
         virtual ~DockWidgetManager();

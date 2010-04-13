@@ -27,6 +27,24 @@
 #include "DockWidgetManager.h"
 #include "MainWindow.h"
 
+DockWidgetManager::DockWidgetManager( QObject *parent )
+    : QObject( parent )
+{
+    QObject::connect( qApp,
+                      SIGNAL( aboutToQuit() ),
+                      this,
+                      SLOT( deleteLater() ) );
+}
+
+DockWidgetManager::~DockWidgetManager()
+{
+    QList<QDockWidget*> widgets = m_dockWidgets.values();
+    QDockWidget* dockWidget;
+
+    foreach( dockWidget, widgets )
+        delete dockWidget;
+}
+
 void DockWidgetManager::setMainWindow( MainWindow *mainWin )
 {
     m_mainWin = mainWin;
@@ -52,23 +70,4 @@ QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
     m_mainWin->registerWidgetInWindowMenu( dock );
     widget->show();
     return dock;
-}
-
-
-DockWidgetManager::DockWidgetManager( QObject *parent )
-    : QObject( parent )
-{
-    QObject::connect( qApp,
-                      SIGNAL( aboutToQuit() ),
-                      this,
-                      SLOT( deleteLater() ) );
-}
-
-DockWidgetManager::~DockWidgetManager()
-{
-    QList<QDockWidget*> widgets = m_dockWidgets.values();
-    QDockWidget* dockWidget;
-
-    foreach( dockWidget, widgets )
-        delete dockWidget;
 }
