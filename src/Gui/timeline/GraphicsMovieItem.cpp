@@ -33,7 +33,7 @@
 #include "TracksView.h"
 #include "Timeline.h"
 
-GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) : m_clip( clip )
+GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) : AbstractGraphicsMediaItem( clip )
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
 

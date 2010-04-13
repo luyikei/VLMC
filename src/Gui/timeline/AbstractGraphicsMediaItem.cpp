@@ -32,12 +32,13 @@
 #include "Commands.h"
 #include "Media.h"
 
-AbstractGraphicsMediaItem::AbstractGraphicsMediaItem() :
-        oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),
+AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
+        oldTrackNumber( -1 ), oldPosition( -1 ), m_clip( clip ), m_tracksView( NULL ),
         m_group( NULL ), m_width( 0 ), m_height( 0 ), m_resizeExpected( false ),
         m_muted( false )
 {
-
+    connect( clip, SIGNAL( unloaded( Clip* ) ),
+             this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
 }
 
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
@@ -307,4 +308,11 @@ bool AbstractGraphicsMediaItem::resizeZone( const QPointF& position )
 QColor AbstractGraphicsMediaItem::itemColor()
 {
     return m_itemColor;
+}
+
+void
+AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
+{
+    if ( m_tracksView != NULL )
+        m_tracksView->removeClip( clip->uuid() );
 }

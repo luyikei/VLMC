@@ -100,3 +100,4 @@ Library::mediaLoaded( const Media* media )
     if ( m_nbMediaToLoad == 0 )
         emit projectLoaded();
 }
+

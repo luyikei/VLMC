@@ -32,7 +32,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 
-GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : m_clip( clip )
+GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : AbstractGraphicsMediaItem( clip )
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
 

@@ -53,7 +53,7 @@ public:
         END
     };
 
-    AbstractGraphicsMediaItem();
+    AbstractGraphicsMediaItem( Clip* clip );
     virtual ~AbstractGraphicsMediaItem();
 
     /// Defines the outer bounds of the item as a rectangle
@@ -124,6 +124,11 @@ protected:
     qint64 oldPosition;
 
     /**
+     *  \brief  The Clip this AbstractGraphicsMediaItem is based upon.
+     */
+    Clip*       m_clip;
+
+    /**
      * \brief Return a pointer to the linked item.
      * \details This method will return NULL if there is no linked item.
      */
@@ -156,6 +161,9 @@ protected slots:
     bool resizeZone( const QPointF& position );
 
     QColor itemColor();
+
+private slots:
+    void    clipDestroyed( Clip* clip );
 
 private:
     /// This pointer will be set when inserted in the tracksView.

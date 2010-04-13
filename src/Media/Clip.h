@@ -195,6 +195,10 @@ class   Clip : public QObject
 
     signals:
         void                lengthUpdated();
+        /**
+         *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
+         */
+        void                unloaded( Clip* );
 };
 
 #endif //CLIP_H__

@@ -174,6 +174,11 @@ public:
      * \deprecated Do not use, will be removed soon.
      */
     bool                    setItemOldTrack( const QUuid &uuid, quint32 oldTrackNumber );
+    /**
+     * \brief Remove a Clip from the timeline (and from the backend).
+     * \param uuid The unique identifier of the Media.
+     */
+    void                    removeClip( const QUuid& uuid );
 
 public slots:
     /**
@@ -181,11 +186,6 @@ public slots:
      * \sa Timeline::clear
      */
     void                    clear();
-    /**
-     * \brief Remove a Media from the timeline (and from the backend).
-     * \param uuid The unique identifier of the Media.
-     */
-    void                    deleteMedia( const QUuid& uuid );
     /**
      * \brief Insert an item into the timeline.
      * \param clip Clip to insert.

@@ -74,9 +74,6 @@ protected:
     virtual void        mousePressEvent( QGraphicsSceneMouseEvent* event );
     virtual void        mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
 
-private:
-    Clip*               m_clip;
-
 signals:
     /**
      * \brief Emitted when the item detect a cut request.
