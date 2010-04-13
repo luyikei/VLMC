@@ -156,6 +156,8 @@ void MainWindow::changeEvent( QEvent *e )
     {
     case QEvent::LanguageChange:
         m_ui.retranslateUi( this );
+        DockWidgetManager::getInstance()->retranslateUi();
+        qDebug() << "Retranslation";
         break;
     default:
         break;
@@ -241,7 +243,7 @@ MainWindow::setupLibrary()
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
 
-    DockWidgetManager::getInstance()->addDockedWidget( libraryWidget, tr( "Media Library" ),
+    DockWidgetManager::getInstance()->addDockedWidget( libraryWidget, QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
@@ -346,7 +348,7 @@ void MainWindow::initializeDockWidgets( void )
 
     m_clipPreview = new PreviewWidget( new ClipRenderer, this );
     dockManager->addDockedWidget( m_clipPreview,
-                                  tr( "Clip Preview" ),
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Clip Preview" ),
                                   Qt::AllDockWidgetAreas,
                                   QDockWidget::AllDockWidgetFeatures,
                                   Qt::TopDockWidgetArea );
@@ -355,7 +357,7 @@ void MainWindow::initializeDockWidgets( void )
 
     m_projectPreview = new PreviewWidget( m_renderer, this );
     dockManager->addDockedWidget( m_projectPreview,
-                                  tr( "Project Preview" ),
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Project Preview" ),
                                   Qt::AllDockWidgetAreas,
                                   QDockWidget::AllDockWidgetFeatures,
                                   Qt::TopDockWidgetArea );
@@ -363,7 +365,7 @@ void MainWindow::initializeDockWidgets( void )
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
 
     QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
-                                  tr( "History" ),
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                   Qt::AllDockWidgetAreas,
                                   QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );

@@ -22,6 +22,7 @@
 #include <QtDebug>
 #include <QApplication>
 #include <QMap>
+#include <QMapIterator>
 #include <QDockWidget>
 
 #include "DockWidgetManager.h"
@@ -51,7 +52,7 @@ void DockWidgetManager::setMainWindow( MainWindow *mainWin )
 }
 
 QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
-                                       const QString &qs_name,
+                                       const char *qs_name,
                                        Qt::DockWidgetAreas areas,
                                        QDockWidget::DockWidgetFeature features,
                                        Qt::DockWidgetArea startArea)
@@ -59,15 +60,25 @@ QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
     if ( m_dockWidgets.contains( qs_name ) )
         return 0;
 
-    QDockWidget* dock = new QDockWidget( qs_name, m_mainWin );
+    QDockWidget* dock = new QDockWidget( tr( qs_name ), m_mainWin );
 
     m_dockWidgets.insert( qs_name, dock );
     dock->setWidget( widget );
     dock->setAllowedAreas( areas );
     dock->setFeatures( features );
-    dock->setObjectName( qs_name );
     m_mainWin->addDockWidget( startArea, dock );
     m_mainWin->registerWidgetInWindowMenu( dock );
     widget->show();
     return dock;
+}
+
+void DockWidgetManager::retranslateUi()
+{
+    QMapIterator<const char*, QDockWidget*> i( m_dockWidgets );
+
+    while ( i.hasNext() )
+    {
+        i.next();
+        i.value()->setWindowTitle( tr( i.key() ) );
+    }
 }
