@@ -442,79 +442,6 @@ EffectNode::connectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 n
 }
 
 //
-// SLOTS DISCONNECTION
-//
-
-bool
-EffectNode::disconnectStaticVideoOutput( quint32 nodeId )
-{
-    QWriteLocker                        wl( &m_rwl );
-    OutSlot<LightVideoFrame>*  out;
-    InSlot<LightVideoFrame>*   in;
-    EffectNode*                father;
-
-    if ( ( out = m_staticVideosOutputs.getObject( nodeId ) ) == NULL )
-        return false;
-
-    in = out->getInSlotPtr();
-    if ( out->disconnect() == false )
-        return false;
-    if ( m_connectedStaticVideosOutputs.delObjectReference( out->getId() ) == false )
-        return false;
-    father = in->getPrivateFather();
-    if ( father == m_father )
-    {
-        if ( father->dereferenceInternalStaticVideoInputAsConnected( in->getId() ) == false )
-            return false;
-    }
-    else if ( father == this )
-    {
-        if ( m_connectedStaticVideosInputs.delObjectReference( in->getId() ) == false )
-            return false;
-    }
-    else
-    {
-        if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
-            return false;
-    }
-    return true;
-}
-
-bool
-EffectNode::disconnectStaticVideoOutput( const QString & nodeName )
-{
-    QWriteLocker                        wl( &m_rwl );
-    OutSlot<LightVideoFrame>*  out;
-    InSlot<LightVideoFrame>*   in;
-    EffectNode*                father;
-
-    if ( ( out = m_staticVideosOutputs.getObject( nodeName ) ) == NULL )
-        return false;
-    in = out->getInSlotPtr();
-    if ( out->disconnect() == false )
-        return false;
-    if ( m_connectedStaticVideosOutputs.delObjectReference( out->getId() ) == false )
-        return false;
-    father = in->getPrivateFather();
-    if ( father == m_father )
-    {
-        if ( father->dereferenceInternalStaticVideoInputAsConnected( in->getId() ) == false )
-            return false;
-    }
-    else if ( father == this )
-    {
-        if ( m_connectedStaticVideosInputs.delObjectReference( in->getId() ) == false)
-            return false;
-    }
-    else
-    {
-        if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
-            return false;
-    }
-    return true;
-}
-
-//
 // CHILD TO PARENT / PARENT TO CHILD CONNECTION
 //
 
@@ -684,6 +611,107 @@ EffectNode::connectChildStaticVideoInputToParentStaticVideoOutput( quint32 child
 }
 
 //
+// PRIMITIVE DISCONNECTION
+//
+
+bool
+EffectNode::primitiveDisconnection( quint32 nodeId,
+                                    const QString & nodeName,
+                                    bool internal )
+{
+    OutSlot<LightVideoFrame>*           out;
+    InSlot<LightVideoFrame>*            in;
+    EffectNode*                         father;
+
+
+    if ( nodeId == 0 && nodeName.size() != 0 )
+    {
+        if ( ( out = m_staticVideosOutputs.getObject( nodeName ) ) == NULL )
+            return false;
+    }
+    else if ( nodeId != 0 && nodeName.size() == 0 )
+    {
+        if ( ( out = m_staticVideosOutputs.getObject( nodeId ) ) == NULL )
+            return false;
+    }
+    else
+        return false;
+
+    if ( internal == true )
+    {
+        if ( m_connectedStaticVideosOutputs.delObjectReference( out->getId() ) == false )
+            return false;
+    }
+    else
+    {
+        if ( m_connectedInternalsStaticVideosOutputs.delObjectReference( out->getId() ) == false )
+            return false;
+    }
+
+    in = out->getInSlotPtr();
+
+    father = in->getPrivateFather();
+
+    if ( internal == true )
+    {
+        if ( father == this )
+        {
+            if ( m_connectedInternalsStaticVideosInputs.delObjectReference( in->getId() ) == false )
+                return false;
+        }
+        else
+        {
+            if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
+                return false;
+        }
+    }
+    else
+    {
+        if ( father == m_father )
+        {
+            if ( father->dereferenceInternalStaticVideoInputAsConnected( in->getId() ) == false )
+                return false;
+        }
+        else if ( father == this )
+        {
+            if ( m_connectedStaticVideosInputs.delObjectReference( in->getId() ) == false )
+                return false;
+        }
+        else
+        {
+            if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
+                return false;
+        }
+    }
+
+    if ( out->disconnect() == false )
+        return false;
+
+    return true;
+
+}
+
+//
+// SLOTS DISCONNECTION
+//
+
+bool
+EffectNode::disconnectStaticVideoOutput( quint32 nodeId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveDisconnection( nodeId, "", false );
+}
+
+bool
+EffectNode::disconnectStaticVideoOutput( const QString & nodeName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveDisconnection( 0, nodeName, false );
+}
+
+//
 // INTERNALS SLOTS DISCONNECTION
 //
 
@@ -691,42 +719,16 @@ bool
 EffectNode::disconnectInternalStaticVideoOutput( quint32 nodeId )
 {
     QWriteLocker                        wl( &m_rwl );
-    OutSlot<LightVideoFrame>*  out;
-    InSlot<LightVideoFrame>*   in;
-    EffectNode*                father;
 
-    if ( ( out = m_internalsStaticVideosOutputs.getObject( nodeId ) ) == NULL )
-        return false;
-    in = out->getInSlotPtr();
-    if ( out->disconnect() == false )
-        return false;
-    if ( m_connectedInternalsStaticVideosOutputs.delObjectReference( out->getId() ) == false )
-        return false;
-    father = in->getPrivateFather();
-    if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
-        return false;
-    return true;
+    return primitiveDisconnection( nodeId, "", true );
 }
 
 bool
 EffectNode::disconnectInternalStaticVideoOutput( const QString & nodeName )
 {
     QWriteLocker                        wl( &m_rwl );
-    OutSlot<LightVideoFrame>*  out;
-    InSlot<LightVideoFrame>*   in;
-    EffectNode*                father;
 
-    if ( ( out = m_internalsStaticVideosOutputs.getObject( nodeName ) ) == NULL )
-        return false;
-    in = out->getInSlotPtr();
-    if ( out->disconnect() == false )
-        return false;
-    if ( m_connectedInternalsStaticVideosOutputs.delObjectReference( out->getId() ) == false )
-        return false;
-    father = in->getPrivateFather();
-    if ( father->dereferenceStaticVideoInputAsConnected( in->getId() ) == false )
-        return false;
-    return true;
+    return primitiveDisconnection( 0, nodeName, true );
 }
 
 

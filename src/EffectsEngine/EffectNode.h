@@ -323,7 +323,7 @@ class	EffectNode : public IEffectNode
     //     bool                areDynamicControlsOutputsEnabled( void ) const;
 
     //--------------------------------------------------------------------//
-    //      NORMALS CONNECT/DISCONNECT & BIND/UNBIND DYN/STAT SLOTS       //
+    //                    NORMALS CONNECT DYN/STAT SLOTS                  //
     //--------------------------------------------------------------------//
 
     // ----------------  CONNECT STATIC TO STATIC -------------------
@@ -367,14 +367,8 @@ class	EffectNode : public IEffectNode
     /* bool        connectDynamicVideoOutputToDynamicVideoInput( QString const & nodeName ); */
     /* bool        connectDynamicVideoOutputToDynamicVideoInput( quint32 nodeId ); */
 
-    // ----------------  DISCONNECT -------------------
-
-    /* bool        disconnectDynamicVideoOutput( void ); */
-    bool        disconnectStaticVideoOutput( quint32 nodeId );
-    bool        disconnectStaticVideoOutput( const QString & nodeName );
-
     //-------------------------------------------------------------------------//
-    //      CONNECT/DISCONNECT & BIND/UNBIND DYN/STAT SLOTS TO PARENTS         //
+    //                        CONNECT SLOTS TO PARENTS                         //
     //-------------------------------------------------------------------------//
 
     // ----------------  CONNECT STATIC TO STATIC -------------------
@@ -402,6 +396,21 @@ public:
 
 
     // ----------------  CONNECT DYNAMIC TO DYNAMIC -------------------
+
+    //-------------------------------------------------------------------------//
+    //                             DISCONNECTIONS                              //
+    //-------------------------------------------------------------------------//
+
+ private:
+    // ---------------- PRIMITIVE DISCONNECTION --------------------
+
+    bool        primitiveDisconnection( quint32 nodeId, const QString & nodeName, bool internal );
+
+ public:
+    // ---------------- EXTERNAL SLOTS DISCONNECTS --------------------
+
+    bool        disconnectStaticVideoOutput( quint32 nodeId );
+    bool        disconnectStaticVideoOutput( const QString & nodeName );
 
     // ---------------- INTERNALS SLOTS DISCONNECTS --------------------
 
