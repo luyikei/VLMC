@@ -135,6 +135,11 @@ class   Clip : public QObject
          */
         QString             fullId() const;
 
+        /**
+         *  \return         true if the clip is a child of the given clip uuid
+         */
+        bool                isChild( const QUuid& uuid ) const;
+
     private:
         Media               *m_media;
         /**

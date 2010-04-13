@@ -334,3 +334,17 @@ Clip::fullId() const
     }
     return id;
 }
+
+bool
+Clip::isChild( const QUuid &uuid) const
+{
+    Clip*   c = m_parent;
+
+    while ( c != NULL )
+    {
+        if ( c->m_uuid == uuid )
+            return true;
+        c = c->m_parent;
+    }
+    return false;
+}
