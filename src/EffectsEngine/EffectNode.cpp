@@ -250,241 +250,99 @@ EffectNode::wasItVisited( void ) const
 //============================================================================================//
 
 
-//
-// BROTHER TO BROTHER CONNECTION
-//
 
 bool
-EffectNode::primitiveConnectStaticVideoOutputToStaticVideoInput( quint32 outId,
-                                                                 quint32 nodeId,
-                                                                 quint32 inId,
-                                                                 const QString &outName,
-                                                                 const QString &nodeName,
-                                                                 const QString &inName )
+EffectNode::primitiveConnection( quint32 outId,
+                                 const QString &outName,
+                                 bool outInternal,
+                                 quint32 inId,
+                                 const QString &inName,
+                                 bool inInternal,
+                                 quint32 nodeId,
+                                 const QString &nodeName )
 {
-    OutSlot<LightVideoFrame>*  out;
-    EffectNode*                brother;
-    InSlot<LightVideoFrame>*  in;
+    OutSlot<LightVideoFrame>*   out;
+    EffectNode*                 dest;
+    InSlot<LightVideoFrame>*    in;
 
-    if ( outId == 0 && outName.isEmpty() == false )
+    /**
+     * Get output, destination node and input
+     */
+
+    if ( outInternal == true )
     {
-        if ( ( out = m_staticVideosOutputs.getObject( outName ) ) == NULL )
-            return false;
-    }
-    else if ( outId != 0 && outName.isEmpty() == true )
-    {
-        if ( ( out = m_staticVideosOutputs.getObject( outId ) ) == NULL )
-            return false;
-    }
-    else
-        return false;
-    if ( m_father == NULL )
-        return false;
-    if ( nodeId == 0 && nodeName.isEmpty() == false )
-    {
-        if ( ( brother = m_father->getChild( nodeName ) ) == NULL )
-            return false;
-    }
-    else if ( nodeId != 0 && nodeName.isEmpty() == true )
-    {
-        if ( ( brother = m_father->getChild( nodeId ) ) == NULL )
-            return false;
-    }
-    else
-        return false;
-    if ( brother == this )
-    {
-        if ( inId == 0 && inName.isEmpty() == false )
-        {
-            if ( ( in = m_staticVideosInputs.getObject( inName ) ) == NULL )
-                return false;
-        }
-        else if ( inId != 0 && inName.isEmpty() == true )
-        {
-            if ( ( in = m_staticVideosInputs.getObject( inId ) ) == NULL )
-                return false;
-        }
-        else
-            return false;
-        if ( out->connect( *in ) == false )
-            return false;
-        if ( m_connectedStaticVideosOutputs.addObjectReference( out ) == false )
-            return false;
-        if ( m_connectedStaticVideosInputs.addObjectReference( in ) == false )
-            return false;
-    }
-    else
-    {
-        if ( inId == 0 && inName.isEmpty() == false )
-        {
-            if ( ( in = brother->getStaticVideoInput( inName ) ) == NULL )
-                return false;
-        }
-        else if ( inId != 0 && inName.isEmpty() == true )
-        {
-            if ( ( in = brother->getStaticVideoInput( inId ) ) == NULL )
-                return false;
-        }
-        else
-            return false;
-        if ( out->connect( *in ) == false )
-            return false;
-        if ( m_connectedStaticVideosOutputs.addObjectReference( out ) == false )
-            return false;
-        if ( brother->referenceStaticVideoInputAsConnected( in ) == false )
-            return false;
-    }
-    return true;
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( const QString &outName, const QString &nodeName, const QString &inName )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( 0,
-                                                                  0,
-                                                                  0,
-                                                                  outName,
-                                                                  nodeName,
-                                                                  inName ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( const QString &outName, const QString &nodeName, quint32 inId )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( 0,
-                                                                  0,
-                                                                  inId,
-                                                                  outName,
-                                                                  nodeName,
-                                                                  "" ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( const QString &outName, quint32 nodeId, const QString &inName )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( 0,
-                                                                  nodeId,
-                                                                  0,
-                                                                  outName,
-                                                                  "",
-                                                                  inName ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( const QString &outName, quint32 nodeId, quint32 inId )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( 0,
-                                                                  nodeId,
-                                                                  inId,
-                                                                  outName,
-                                                                  "",
-                                                                  "" ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( quint32 outId, const QString &nodeName, const QString &inName )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( outId,
-                                                                  0,
-                                                                  0,
-                                                                  "",
-                                                                  nodeName,
-                                                                  inName ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( quint32 outId, const QString &nodeName, quint32 inId )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( outId,
-                                                                  0,
-                                                                  inId,
-                                                                  "",
-                                                                  nodeName,
-                                                                  "" ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 nodeId, const QString &inName )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( outId,
-                                                                  nodeId,
-                                                                  0,
-                                                                  "",
-                                                                  "",
-                                                                  inName ) );
-}
-
-bool
-EffectNode::connectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 nodeId, quint32 inId )
-{
-    QWriteLocker                        wl( &m_rwl );
-
-    return ( primitiveConnectStaticVideoOutputToStaticVideoInput( outId,
-                                                                  nodeId,
-                                                                  inId,
-                                                                  "",
-                                                                  "",
-                                                                  "" ) );
-}
-
-//
-// CHILD TO PARENT / PARENT TO CHILD CONNECTION
-//
-
-bool
-EffectNode::primitiveConnectChildAndParentTogether( quint32 outId,
-                                                    quint32 inId,
-                                                    const QString &outName,
-                                                    const QString &inName,
-                                                    bool PTC )
-{
-    OutSlot<LightVideoFrame>*  out;
-    InSlot<LightVideoFrame>*  in;
-
-
-    if ( PTC == true )
-    {
-        if ( inId == 0 && inName.isEmpty() == false )
-        {
-            if ( ( in = m_staticVideosInputs.getObject( inName ) ) == NULL )
-                return false;
-        }
-        else if ( inId != 0 && inName.isEmpty() == true )
-        {
-            if ( ( in = m_staticVideosInputs.getObject( inId ) ) == NULL )
-                return false;
-        }
-        else
-            return false;
-        if ( m_father == NULL )
-            return false;
-
         if ( outId == 0 && outName.isEmpty() == false )
         {
-            if ( ( out = m_father->getInternalStaticVideoOutput( outName ) ) == NULL )
+            if ( ( out = m_internalsStaticVideosOutputs.getObject( outName ) ) == NULL )
                 return false;
         }
         else if ( outId != 0 && outName.isEmpty() == true )
         {
-            if ( ( out = m_father->getInternalStaticVideoOutput( outId ) ) == NULL )
+            if ( ( out = m_internalsStaticVideosOutputs.getObject( outId ) ) == NULL )
                 return false;
         }
         else
             return false;
+
+        if ( inInternal == true )
+        {
+
+            /**
+             * Connection internal to internal
+             */
+
+            dest = this;
+
+            if ( nodeId != 0 || nodeName.size() != 0 )
+                return false;
+
+            if ( inId == 0 && inName.size() != 0 )
+            {
+                if ( ( in = m_internalsStaticVideosInputs.getObject( inName ) ) == NULL )
+                    return false;
+            }
+            else if ( inId != 0 && inName.size() == 0 )
+            {
+                if ( ( in = m_internalsStaticVideosInputs.getObject( inId ) ) == NULL )
+                    return false;
+            }
+            else
+                return false;
+        }
+        else
+        {
+
+            /**
+             * Connection internal to external ( so parent to child )
+             */
+
+            if ( nodeId == 0 && nodeName.size() != 0 )
+            {
+                if ( ( dest = m_enf.getEffectNodeInstance( nodeName ) ) == NULL )
+                    return false;
+            }
+            else if ( nodeId != 0 && nodeName.size() == 0 )
+            {
+                if ( ( dest = m_enf.getEffectNodeInstance( nodeId ) ) == NULL )
+                    return false;
+            }
+            else
+                return false;
+
+            if ( inId == 0 && inName.size() != 0 )
+            {
+                if ( ( in = dest->getStaticVideoInput( inName ) ) == NULL )
+                    return false;
+            }
+            else if ( inId != 0 && inName.size() == 0 )
+            {
+                if ( ( in = dest->getStaticVideoInput( inId ) ) == NULL )
+                    return false;
+            }
+            else
+                return false;
+        }
+
     }
     else
     {
@@ -504,110 +362,509 @@ EffectNode::primitiveConnectChildAndParentTogether( quint32 outId,
         if ( m_father == NULL )
             return false;
 
-        if ( inId == 0 && inName.isEmpty() == false )
+        if ( inInternal == true )
         {
-            if ( ( in = m_father->getInternalStaticVideoInput( inName ) ) == NULL )
+
+            /**
+             * Connection external to internal ( so child to parent )
+             */
+
+            dest = m_father;
+
+            if ( nodeId != 0 || nodeName.size() != 0 )
                 return false;
-        }
-        else if ( inId != 0 && inName.isEmpty() == true )
-        {
-            if ( ( in = m_father->getInternalStaticVideoInput( inId ) ) == NULL )
+
+            if ( inId == 0 && inName.size() != 0 )
+            {
+                if ( ( in = m_father->getInternalStaticVideoInput( inName ) ) == NULL )
+                    return false;
+            }
+            else if ( inId != 0 && inName.size() == 0 )
+            {
+                if ( ( in = m_father->getInternalStaticVideoInput( inId ) ) == NULL )
+                    return false;
+            }
+            else
                 return false;
         }
         else
-            return false;
+        {
+
+            /**
+             * Connection external to external ( so brother to brother )
+             */
+
+            if ( nodeId == 0 && nodeName.size() != 0 )
+            {
+                if ( ( dest = m_father->getChild( nodeName ) ) == NULL )
+                    return false;
+            }
+            else if ( nodeId != 0 && nodeName.size() == 0 )
+            {
+                if ( ( dest = m_father->getChild( nodeId ) ) == NULL )
+                    return false;
+            }
+            else
+                return false;
+
+            if ( inId == 0 && inName.size() != 0 )
+            {
+                if ( dest != this )
+                {
+                    if ( ( in = dest->getStaticVideoInput( inName ) ) == NULL )
+                        return false;
+                }
+                else
+                {
+                    if ( ( in = m_staticVideosInputs.getObject( inName ) ) == NULL )
+                        return false;
+                }
+            }
+            else if ( inId != 0 && inName.size() == 0 )
+            {
+                if ( dest != this )
+                {
+                    if ( ( in = dest->getStaticVideoInput( inId ) ) == NULL )
+                        return false;
+                }
+                else
+                {
+                    if ( ( in = m_staticVideosInputs.getObject( inId ) ) == NULL )
+                        return false;
+                }
+            }
+            else
+                return false;
+
+        }
+
     }
+
+    /**
+     * Connect the output on the input
+     */
 
     if ( out->connect( *in ) == false )
         return false;
 
-    if ( PTC == true )
+    /**
+     * Reference the output and the input as connected
+     */
+
+    if ( outInternal == true )
     {
-        if ( m_connectedStaticVideosInputs.addObjectReference( in ) == false )
-            return false;
-        if ( m_father->referenceInternalStaticVideoOutputAsConnected( out ) == false )
-            return false;
+         if ( m_connectedInternalsStaticVideosOutputs.addObjectReference( out ) == false )
+             return false;
     }
     else
     {
-        if ( m_connectedStaticVideosOutputs.addObjectReference( out ) == false )
-            return false;
-        if ( m_father->referenceInternalStaticVideoInputAsConnected( in ) == false )
-            return false;
+         if ( m_connectedStaticVideosOutputs.addObjectReference( out ) == false )
+             return false;
     }
 
+    if ( inInternal == true )
+    {
+        if ( dest != this )
+        {
+            if ( dest->referenceInternalStaticVideoInputAsConnected( in ) == false )
+                return false;
+        }
+        else
+        {
+            if ( m_connectedInternalsStaticVideosInputs.addObjectReference( in ) == false )
+                return false;
+        }
+    }
+    else
+    {
+        if ( dest != this )
+        {
+            if ( dest->referenceStaticVideoInputAsConnected( in ) == false )
+                return false;
+        }
+        else
+        {
+            if ( m_connectedStaticVideosInputs.addObjectReference( in ) == false )
+                return false;
+        }
+    }
     return true;
 }
 
+/**
+ * Brother to brother connection
+ */
+
 bool
-EffectNode::connectChildStaticVideoOutputToParentStaticVideoInput( const QString & childOutName,  const QString & fatherInName )
+EffectNode::connectBrotherToBrother( const QString &outName, const QString &nodeName, const QString &inName )
 {
     QWriteLocker                        wl( &m_rwl );
 
-    return primitiveConnectChildAndParentTogether( 0, 0, childOutName, fatherInName, false );
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                0,
+                                inName,
+                                false,
+                                0,
+                                nodeName );
 }
 
 bool
-EffectNode::connectChildStaticVideoOutputToParentStaticVideoInput( const QString & childOutName, quint32 fatherInId )
+EffectNode::connectBrotherToBrother( const QString &outName, const QString &nodeName, quint32 inId )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( 0, fatherInId, childOutName, "", false );
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                inId,
+                                "",
+                                false,
+                                0,
+                                nodeName );
 }
 
 bool
-EffectNode::connectChildStaticVideoOutputToParentStaticVideoInput( quint32 childOutId, const QString & fatherInName )
+EffectNode::connectBrotherToBrother( const QString &outName, quint32 nodeId, const QString &inName )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( childOutId, 0, "", fatherInName, false );
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                0,
+                                inName,
+                                false,
+                                nodeId,
+                                "" );
 }
 
 bool
-EffectNode::connectChildStaticVideoOutputToParentStaticVideoInput( quint32 childOutId, quint32 fatherInId )
+EffectNode::connectBrotherToBrother( const QString &outName, quint32 nodeId, quint32 inId )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( childOutId, fatherInId, "", "", false );
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                inId,
+                                "",
+                                false,
+                                nodeId,
+                                "" );
 }
 
 bool
-EffectNode::connectChildStaticVideoInputToParentStaticVideoOutput( const QString & childInName,  const QString & fatherOutName )
+EffectNode::connectBrotherToBrother( quint32 outId, const QString &nodeName, const QString &inName )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( 0, 0, fatherOutName, childInName, true );
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                0,
+                                inName,
+                                false,
+                                0,
+                                nodeName );
 }
 
 bool
-EffectNode::connectChildStaticVideoInputToParentStaticVideoOutput( const QString & childInName, quint32 fatherOutId )
+EffectNode::connectBrotherToBrother( quint32 outId, const QString &nodeName, quint32 inId )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( fatherOutId, 0, "", childInName, true );
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                inId,
+                                "",
+                                false,
+                                0,
+                                nodeName );
 }
 
 bool
-EffectNode::connectChildStaticVideoInputToParentStaticVideoOutput( quint32 childInId, const QString & fatherOutName )
+EffectNode::connectBrotherToBrother( quint32 outId, quint32 nodeId, const QString &inName )
 {
     QWriteLocker                        wl( &m_rwl );
 
-
-    return primitiveConnectChildAndParentTogether( 0, childInId, fatherOutName, "", true );
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                0,
+                                inName,
+                                false,
+                                nodeId,
+                                "" );
 }
 
 bool
-EffectNode::connectChildStaticVideoInputToParentStaticVideoOutput( quint32 childInId, quint32 fatherOutId )
+EffectNode::connectBrotherToBrother( quint32 outId, quint32 nodeId, quint32 inId )
 {
     QWriteLocker                        wl( &m_rwl );
 
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                inId,
+                                "",
+                                false,
+                                nodeId,
+                                "" );
+}
 
-    return primitiveConnectChildAndParentTogether( fatherOutId, childInId, "", "", true );
+/**
+ * Parent to child connection
+ */
+
+bool
+EffectNode::connectParentToChild( const QString & outName, const QString & nodeName, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                0,
+                                inName,
+                                false,
+                                0,
+                                nodeName );
+}
+
+bool
+EffectNode::connectParentToChild( const QString & outName, const QString & nodeName, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                inId,
+                                "",
+                                false,
+                                0,
+                                nodeName );
+}
+
+bool
+EffectNode::connectParentToChild( quint32 outId, const QString & nodeName, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                0,
+                                inName,
+                                false,
+                                0,
+                                nodeName );
+}
+
+bool
+EffectNode::connectParentToChild( quint32 outId, const QString & nodeName, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                inId,
+                                "",
+                                false,
+                                0,
+                                nodeName );
+}
+
+bool
+EffectNode::connectParentToChild( const QString & outName, quint32 nodeId, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                0,
+                                inName,
+                                false,
+                                nodeId,
+                                "" );
+}
+
+bool
+EffectNode::connectParentToChild( const QString & outName, quint32 nodeId, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                inId,
+                                "",
+                                false,
+                                nodeId,
+                                "" );
+}
+
+bool
+EffectNode::connectParentToChild( quint32 outId, quint32 nodeId, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                0,
+                                inName,
+                                false,
+                                nodeId,
+                                "" );
+}
+
+bool
+EffectNode::connectParentToChild( quint32 outId, quint32 nodeId, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                inId,
+                                "",
+                                false,
+                                nodeId,
+                                "" );
+}
+
+/**
+ * Child to parent connection
+ */
+
+bool
+EffectNode::connectChildToParent( const QString & outName, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                0,
+                                inName,
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectChildToParent( const QString & outName, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                false,
+                                inId,
+                                "",
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectChildToParent( quint32 outId, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                0,
+                                inName,
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectChildToParent( quint32 outId, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                false,
+                                inId,
+                                "",
+                                true,
+                                0,
+                                "" );
+}
+
+/**
+ * Internal bridge connection
+ */
+
+bool
+EffectNode::connectInternalBridge( const QString & outName, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                0,
+                                inName,
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectInternalBridge( const QString & outName, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( 0,
+                                outName,
+                                true,
+                                inId,
+                                "",
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectInternalBridge( quint32 outId, const QString & inName )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                0,
+                                inName,
+                                true,
+                                0,
+                                "" );
+}
+
+bool
+EffectNode::connectInternalBridge( quint32 outId, quint32 inId )
+{
+    QWriteLocker                        wl( &m_rwl );
+
+    return primitiveConnection( outId,
+                                "",
+                                true,
+                                inId,
+                                "",
+                                true,
+                                0,
+                                "" );
 }
 
 //

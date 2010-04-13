@@ -323,96 +323,86 @@ class	EffectNode : public IEffectNode
     //     bool                areDynamicControlsOutputsEnabled( void ) const;
 
     //--------------------------------------------------------------------//
-    //                    NORMALS CONNECT DYN/STAT SLOTS                  //
+    //                            CONNECTION                              //
     //--------------------------------------------------------------------//
-
-    // ----------------  CONNECT STATIC TO STATIC -------------------
 
  private:
 
-    // Primitive
-
-    bool        primitiveConnectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 nodeId, quint32 inId,
-                                                                      const QString & outName, const QString & nodeName, const QString & inName );
-
+    bool        primitiveConnection( quint32 outId,
+                                     const QString &outName,
+                                     bool outInternal,
+                                     quint32 inId,
+                                     const QString &inName,
+                                     bool inInternal,
+                                     quint32 nodeId,
+                                     const QString &nodeName );
  public:
 
-    // Overloaded methods
+    /**
+     * Connect brother to brother
+     */
 
-    bool        connectStaticVideoOutputToStaticVideoInput( const QString & outName, const QString & nodeName, const QString & inName );
-    bool        connectStaticVideoOutputToStaticVideoInput( const QString & outName, const QString & nodeName, quint32 inId );
-    bool        connectStaticVideoOutputToStaticVideoInput( const QString & outName, quint32 nodeId, const QString & inName );
-    bool        connectStaticVideoOutputToStaticVideoInput( const QString & outName, quint32 nodeId, quint32 inId );
-    bool        connectStaticVideoOutputToStaticVideoInput( quint32 outId, const QString & nodeName, const QString & inName );
-    bool        connectStaticVideoOutputToStaticVideoInput( quint32 outId, const QString & nodeName, quint32 inId );
-    bool        connectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 nodeId, const QString & inName );
-    bool        connectStaticVideoOutputToStaticVideoInput( quint32 outId, quint32 nodeId, quint32 inId );
+    bool        connectBrotherToBrother( const QString & outName, const QString & nodeName, const QString & inName );
+    bool        connectBrotherToBrother( const QString & outName, const QString & nodeName, quint32 inId );
+    bool        connectBrotherToBrother( const QString & outName, quint32 nodeId, const QString & inName );
+    bool        connectBrotherToBrother( const QString & outName, quint32 nodeId, quint32 inId );
+    bool        connectBrotherToBrother( quint32 outId, const QString & nodeName, const QString & inName );
+    bool        connectBrotherToBrother( quint32 outId, const QString & nodeName, quint32 inId );
+    bool        connectBrotherToBrother( quint32 outId, quint32 nodeId, const QString & inName );
+    bool        connectBrotherToBrother( quint32 outId, quint32 nodeId, quint32 inId );
 
-    // ----------------  CONNECT STATIC TO DYNAMIC -------------------
+    /**
+     * Connect child to parent
+     */
 
-    /* bool        connectStaticVideoOutputToDynamicVideoInput( QString const & outName, quint32 nodeId ); */
-    /* bool        connectStaticVideoOutputToDynamicVideoInput( QString const & outName, QString const & nodeName ); */
-    /* bool        connectStaticVideoOutputToDynamicVideoInput( quint32 outId, QString const & nodeName ); */
-    /* bool        connectStaticVideoOutputToDynamicVideoInput( quint32 outId, quint32 nodeId ); */
+    bool        connectChildToParent( const QString & outName, const QString & inName );
+    bool        connectChildToParent( const QString & outName, quint32 inId );
+    bool        connectChildToParent( quint32 outId, const QString & inName );
+    bool        connectChildToParent( quint32 outId, quint32 inId );
 
-    // ----------------  CONNECT DYNAMIC TO STATIC -------------------
+    /**
+     * Connect parent to child
+     */
 
-    /* bool        connectDynamicVideoOutputToStaticVideoInput( QString const & nodeName, QString const & inName ); */
-    /* bool        connectDynamicVideoOutputToStaticVideoInput( QString const & nodeName, quint32 inId ); */
-    /* bool        connectDynamicVideoOutputToStaticVideoInput( quint32 nodeId, QString const & inName ); */
-    /* bool        connectDynamicVideoOutputToStaticVideoInput( quint32 nodeId, quint32 inId ); */
+    bool        connectParentToChild( const QString & outName, const QString & nodeName, const QString & inName );
+    bool        connectParentToChild( const QString & outName, const QString & nodeName, quint32 inId );
+    bool        connectParentToChild( quint32 outId, const QString & nodeName, const QString & inName );
+    bool        connectParentToChild( quint32 outId, const QString & nodeName, quint32 inId );
 
-    // ----------------  CONNECT DYNAMIC TO DYNAMIC -------------------
+    bool        connectParentToChild( const QString & outName, quint32 nodeId, const QString & inName );
+    bool        connectParentToChild( const QString & outName, quint32 nodeId, quint32 inId );
+    bool        connectParentToChild( quint32 outId, quint32 nodeId, const QString & inName );
+    bool        connectParentToChild( quint32 outId, quint32 nodeId, quint32 inId );
 
-    /* bool        connectDynamicVideoOutputToDynamicVideoInput( QString const & nodeName ); */
-    /* bool        connectDynamicVideoOutputToDynamicVideoInput( quint32 nodeId ); */
+    /**
+     * Connect internal bridge
+     */
 
-    //-------------------------------------------------------------------------//
-    //                        CONNECT SLOTS TO PARENTS                         //
-    //-------------------------------------------------------------------------//
-
-    // ----------------  CONNECT STATIC TO STATIC -------------------
-
-private:
-
-    bool        primitiveConnectChildAndParentTogether( quint32 outId, quint32 inId, const QString &outName, const QString &inName, bool PTC );
-
-public:
-
-    bool        connectChildStaticVideoOutputToParentStaticVideoInput( const QString & childOutName, const QString & fatherInName );
-    bool        connectChildStaticVideoOutputToParentStaticVideoInput( const QString & childOutName, quint32 fatherInId );
-    bool        connectChildStaticVideoOutputToParentStaticVideoInput( quint32 childOutId,  const QString & fatherInName );
-    bool        connectChildStaticVideoOutputToParentStaticVideoInput( quint32 childOutId, quint32 fatherInId );
-
-    bool        connectChildStaticVideoInputToParentStaticVideoOutput( const QString & childInName, const QString & fatherOutName );
-    bool        connectChildStaticVideoInputToParentStaticVideoOutput( const QString & childInName, quint32 fatherOutId );
-    bool        connectChildStaticVideoInputToParentStaticVideoOutput( quint32 childInId, const QString & fatherOutName );
-    bool        connectChildStaticVideoInputToParentStaticVideoOutput( quint32 childInId, quint32 fatherOutId );
-
-    // ----------------  CONNECT STATIC TO DYNAMIC -------------------
-
-
-    // ----------------  CONNECT DYNAMIC TO STATIC -------------------
-
-
-    // ----------------  CONNECT DYNAMIC TO DYNAMIC -------------------
+    bool        connectInternalBridge( const QString & outName, const QString & inName );
+    bool        connectInternalBridge( const QString & outName, quint32 inId );
+    bool        connectInternalBridge( quint32 outId, const QString & inName );
+    bool        connectInternalBridge( quint32 outId, quint32 inId );
 
     //-------------------------------------------------------------------------//
     //                             DISCONNECTIONS                              //
     //-------------------------------------------------------------------------//
 
  private:
-    // ---------------- PRIMITIVE DISCONNECTION --------------------
 
     bool        primitiveDisconnection( quint32 nodeId, const QString & nodeName, bool internal );
 
  public:
-    // ---------------- EXTERNAL SLOTS DISCONNECTS --------------------
+
+    /**
+     * External slot disconnection
+     */
 
     bool        disconnectStaticVideoOutput( quint32 nodeId );
     bool        disconnectStaticVideoOutput( const QString & nodeName );
 
-    // ---------------- INTERNALS SLOTS DISCONNECTS --------------------
+    /**
+     * Internal slot disconnection
+     */
 
     bool         disconnectInternalStaticVideoOutput( quint32 nodeId );
     bool         disconnectInternalStaticVideoOutput( const QString & nodeName );
