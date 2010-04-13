@@ -33,6 +33,10 @@ p, li { white-space: pre-wrap; }
         <source>License</source>
         <translation>Licenta</translation>
     </message>
+    <message>
+        <source>Runtime Qt version: %1 (compiled against %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ClipProperty</name>
@@ -134,6 +138,36 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>A crash occured. Signal received: </source>
         <translation>Un accident a avut loc. Semnal primit:</translation>
+    </message>
+</context>
+<context>
+    <name>DockWidgetManager</name>
+    <message>
+        <source>Media Library</source>
+        <translation type="unfinished">Biblioteca media</translation>
+    </message>
+    <message>
+        <source>Clip Preview</source>
+        <translation type="unfinished">Previzualizare clip</translation>
+    </message>
+    <message>
+        <source>Project Preview</source>
+        <translation type="unfinished">Previzualizare proiect</translation>
+    </message>
+    <message>
+        <source>History</source>
+        <translation type="unfinished">Istoric</translation>
+    </message>
+</context>
+<context>
+    <name>GUIProjectManager</name>
+    <message>
+        <source>The project has been modified.</source>
+        <translation type="unfinished">Proiectul a fost modificat.</translation>
+    </message>
+    <message>
+        <source>Do you want to save it ?</source>
+        <translation type="unfinished">Doriţi să îl salvaţi?</translation>
     </message>
 </context>
 <context>
@@ -269,6 +303,31 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>IntroDialog</name>
+    <message>
+        <source>VideoLAN Movie Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software and is not ready for prime-time. Many key features are &lt;span style=&quot; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;, or even &lt;span style=&quot; font-weight:600;&quot;&gt;buggy&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I understand</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ListViewController</name>
     <message>
         <source>Media List</source>
@@ -387,18 +446,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>Clip Preview</source>
-        <translation>Previzualizare clip</translation>
-    </message>
-    <message>
-        <source>Project Preview</source>
-        <translation>Previzualizare proiect</translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation>Istoric</translation>
-    </message>
-    <message>
         <source>Keyboard Settings</source>
         <translation>Setari tastatura</translation>
     </message>
@@ -466,16 +513,8 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>Media Title</source>
-        <translation>Titlul fisierului</translation>
-    </message>
-    <message>
         <source>clip count</source>
         <translation>numar clipuri</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation></translation>
     </message>
     <message>
         <source>length</source>
@@ -522,17 +561,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Preview</source>
         <translation>Previzualizare</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectManager</name>
-    <message>
-        <source>The project has been modified.</source>
-        <translation>Proiectul a fost modificat.</translation>
-    </message>
-    <message>
-        <source>Do you want to save it ?</source>
-        <translation>Doriţi să îl salvaţi?</translation>
     </message>
 </context>
 <context>
@@ -588,10 +616,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RendererSettings</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
-    </message>
-    <message>
         <source>Output file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -638,6 +662,34 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Enter the output file name</source>
         <translation type="unfinished">Alegeti calea fisierului rezultat</translation>
+    </message>
+    <message>
+        <source>Render settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Videos(*.avi *.mpg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter valid rendering parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please provide a valid output file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output file already exists, do you want to overwrite it ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
