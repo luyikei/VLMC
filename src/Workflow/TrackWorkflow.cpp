@@ -402,7 +402,7 @@ void    TrackWorkflow::save( QXmlStreamWriter& project ) const
     for ( ; it != end ; ++it )
     {
         project.writeStartElement( "clip" );
-        project.writeAttribute( "uuid", it.value()->getClip()->getParent()->fullId() );
+        project.writeAttribute( "uuid", it.value()->getClip()->fullId() );
         project.writeAttribute( "startFrame", QString::number( it.key() ) );
         project.writeAttribute( "begin", QString::number( it.value()->getClip()->begin() ) );
         project.writeAttribute( "end", QString::number( it.value()->getClip()->end() ) );
