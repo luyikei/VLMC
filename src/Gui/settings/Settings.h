@@ -45,12 +45,12 @@ class   Settings : public QDialog
     Q_DISABLE_COPY( Settings )
 
     public:
-        Settings( SettingsManager::Type type, QWidget* parent = 0, Qt::WindowFlags f = 0 );
+        Settings( SettingsManager::Type type, QWidget *parent = 0, Qt::WindowFlags f = 0 );
 
-        void                        addCategory( const char* name,
+        void                        addCategory( const char *name,
                                                  SettingsManager::Type type,
-                                                 const QIcon& icon,
-                                                 const QString& label );
+                                                 const QIcon &icon,
+                                                 const QString &label );
 
     protected:
         void                        changeEvent( QEvent *e );
@@ -59,9 +59,9 @@ class   Settings : public QDialog
         void                        retranslateUi();
 
     private:
-        QDialogButtonBox*           m_buttons;
-        Panel*                      m_panel;
-        QLabel*                     m_title;
+        QDialogButtonBox            *m_buttons;
+        Panel                       *m_panel;
+        QLabel                      *m_title;
         QStackedLayout              *m_stackedLayout;
         SettingsManager::Type       m_type;
 
@@ -69,7 +69,7 @@ class   Settings : public QDialog
         void    switchWidget( int index );
 
     private slots:
-        void    buttonClicked( QAbstractButton* button );
+        void    buttonClicked( QAbstractButton *button );
 
     signals:
         void    loadSettings();

@@ -38,7 +38,7 @@
 
 #include <QtDebug>
 
-Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags f ) :
+Settings::Settings( SettingsManager::Type type, QWidget *parent, Qt::WindowFlags f ) :
     QDialog( parent, f ),
     m_type( type )
 {
@@ -60,10 +60,11 @@ Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags
              this, SLOT( switchWidget( int ) ) );
 }
 
-void        Settings::addCategory( const char* name,
-                                   SettingsManager::Type type,
-                                   const QIcon& icon,
-                                   const QString& label )
+void
+Settings::addCategory( const char *name,
+                       SettingsManager::Type type,
+                       const QIcon &icon,
+                       const QString &label )
 {
     PreferenceWidget    *pWidget = new PreferenceWidget( name, type, this );
 
@@ -83,7 +84,7 @@ Settings::buildLayout()
     m_panel->setMaximumWidth( 130 );
 
     // Create the master layout
-    QGridLayout* mLayout = new QGridLayout( this );
+    QGridLayout *mLayout = new QGridLayout( this );
     mLayout->addWidget( m_panel, 0, 0, 2, 1 );
 
     m_title = new QLabel( this );
@@ -100,21 +101,22 @@ Settings::buildLayout()
     mLayout->addWidget( m_buttons, 2, 2 );
 }
 
-void    Settings::buttonClicked( QAbstractButton* button )
+void
+Settings::buttonClicked( QAbstractButton *button )
 {
     bool  save = false;
     bool  hide = false;
 
     switch ( m_buttons->standardButton( button ) )
     {
-        case QDialogButtonBox::Ok :
+        case QDialogButtonBox::Ok:
             save = true;
             hide = true;
             break;
-        case QDialogButtonBox::Cancel :
+        case QDialogButtonBox::Cancel:
             hide = true;
             break;
-        case QDialogButtonBox::Apply :
+        case QDialogButtonBox::Apply:
             save = true;
             break;
         default :
@@ -133,7 +135,8 @@ void    Settings::buttonClicked( QAbstractButton* button )
         setVisible( false );
 }
 
-void    Settings::switchWidget( int index )
+void
+Settings::switchWidget( int index )
 {
     m_stackedLayout->setCurrentIndex( index );
 
@@ -141,7 +144,8 @@ void    Settings::switchWidget( int index )
     retranslateUi();
 }
 
-void    Settings::changeEvent( QEvent *e )
+void
+Settings::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -153,10 +157,11 @@ void    Settings::changeEvent( QEvent *e )
     }
 }
 
-void    Settings::retranslateUi()
+void
+Settings::retranslateUi()
 {
-    PreferenceWidget* pWidget =
-            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( m_stackedLayout->currentIndex() ) );
+    PreferenceWidget *pWidget = qobject_cast<PreferenceWidget*>(
+            m_stackedLayout->widget( m_stackedLayout->currentIndex() ) );
     Q_ASSERT( pWidget != NULL );
 
     // Translate the category name using the current locale
