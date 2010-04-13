@@ -57,8 +57,6 @@ class DockWidgetManager : public QObject, public QSingleton<DockWidgetManager>
 
         MainWindow *m_mainWin;
         QMap<QString, QDockWidget*> m_dockWidgets;
-    public slots:
-        void transLateWidgetTitle();
 
         friend  class   QSingleton<DockWidgetManager>;
 };

@@ -39,11 +39,11 @@ QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
                                        Qt::DockWidgetArea startArea)
 {
     if ( m_dockWidgets.contains( qs_name ) )
-        return  0;
+        return 0;
 
-    QDockWidget* dock = new QDockWidget( qs_name.toStdString().c_str(), m_mainWin );
+    QDockWidget* dock = new QDockWidget( qs_name, m_mainWin );
 
-    m_dockWidgets.insert(qs_name, dock);
+    m_dockWidgets.insert( qs_name, dock );
     dock->setWidget( widget );
     dock->setAllowedAreas( areas );
     dock->setFeatures( features );
@@ -67,23 +67,8 @@ DockWidgetManager::DockWidgetManager( QObject *parent )
 DockWidgetManager::~DockWidgetManager()
 {
     QList<QDockWidget*> widgets = m_dockWidgets.values();
-    QDockWidget* widget;
+    QDockWidget* dockWidget;
 
-    foreach(widget, widgets)
-    {
-        delete widget;
-    }
-}
-
-void DockWidgetManager::transLateWidgetTitle()
-{
-    QMap<QString, QDockWidget*>::iterator ed = m_dockWidgets.end();
-    QMap<QString, QDockWidget*>::iterator it;
-
-    for ( it = m_dockWidgets.begin() ; it != ed ; ++it )
-    {
-        QDockWidget *widget = it.value();
-        widget->setWindowTitle( QApplication::translate( "MainWindow",
-                                                         it.key().toStdString().c_str() ) );
-    }
+    foreach( dockWidget, widgets )
+        delete dockWidget;
 }
