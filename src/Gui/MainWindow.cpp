@@ -157,7 +157,6 @@ void MainWindow::changeEvent( QEvent *e )
     case QEvent::LanguageChange:
         m_ui.retranslateUi( this );
         DockWidgetManager::getInstance()->retranslateUi();
-        qDebug() << "Retranslation";
         break;
     default:
         break;
