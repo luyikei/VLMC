@@ -30,9 +30,10 @@
 #include "MainWindow.h"
 #include "project/GuiProjectManager.h"
 #include "IntroDialog.h"
+#include "LanguageHelper.h"
 
 #include <QApplication>
-#include <QTranslator>
+#include <QSettings>
 #include <QFile>
 #include <QColor>
 #include <QPalette>
@@ -53,9 +54,9 @@ VLMCmain( int argc, char **argv )
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
-    QTranslator appTranslator;
-    appTranslator.load( "vlmc_" + QLocale::system().name(), ":/ts/" );
-    app.installTranslator( &appTranslator );
+    QSettings s;
+    LanguageHelper::getInstance()->languageChanged(
+            s.value( "general/VLMCLang", "default" ) );
 
 #ifdef Q_OS_WIN
 

@@ -34,15 +34,15 @@ class   LanguageHelper : public QObject, public Singleton<LanguageHelper>
     Q_OBJECT
     Q_DISABLE_COPY( LanguageHelper );
 
-    public slots:
-        void        languageChanged( const QVariant& lang );
-    private:
-        LanguageHelper();
-        ~LanguageHelper();
-        QTranslator             *m_translator;
+public slots:
+    void        languageChanged( const QVariant &lang );
+    void        languageChanged( const QString &lang );
+private:
+    LanguageHelper();
+    ~LanguageHelper();
+    QTranslator             *m_translator;
 
-        friend class    Singleton<LanguageHelper>;
-
+    friend class    Singleton<LanguageHelper>;
 };
 
 #endif // LANGUAGEHELPER_H

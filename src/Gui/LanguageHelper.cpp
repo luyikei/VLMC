@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QVariant>
+#include <QLocale>
 
 #define TS_PREFIX "vlmc_"
 
@@ -42,17 +43,25 @@ LanguageHelper::~LanguageHelper()
 void
 LanguageHelper::languageChanged( const QVariant &vLang )
 {
-    QString     lang = vLang.toString();
-    if ( !lang.isEmpty() )
+    languageChanged( vLang.toString() );
+}
+
+void
+LanguageHelper::languageChanged( const QString &lang  )
+{
+    if ( m_translator != NULL )
     {
-        if ( m_translator != NULL )
-        {
-            qApp->removeTranslator( m_translator );
-            delete m_translator;
-            m_translator = NULL;
-        }
-        m_translator = new QTranslator();
-        m_translator->load( TS_PREFIX + lang, ":/ts/" );
-        qApp->installTranslator( m_translator );
+        qApp->removeTranslator( m_translator );
+        delete m_translator;
+        m_translator = NULL;
     }
+
+    m_translator = new QTranslator();
+
+    if ( lang.isEmpty() || lang == "default" )
+        m_translator->load( TS_PREFIX + QLocale::system().name(), ":/ts/" );
+    else
+        m_translator->load( TS_PREFIX + lang, ":/ts/" );
+
+    qApp->installTranslator( m_translator );
 }
