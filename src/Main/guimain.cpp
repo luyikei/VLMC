@@ -32,6 +32,7 @@
 #include "IntroDialog.h"
 
 #include <QApplication>
+#include <QTranslator>
 #include <QFile>
 #include <QColor>
 #include <QPalette>
@@ -51,6 +52,10 @@ VLMCmain( int argc, char **argv )
     app.setOrganizationName( "vlmc" );
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
+
+    QTranslator appTranslator;
+    appTranslator.load( "vlmc_" + QLocale::system().name(), ":/ts/" );
+    app.installTranslator( &appTranslator );
 
 #ifdef Q_OS_WIN
 
