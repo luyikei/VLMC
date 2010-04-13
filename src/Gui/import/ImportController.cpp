@@ -328,7 +328,7 @@ ImportController::failedToLoad( Media *media )
     m_ui->errorLabelImg->show();
     m_ui->errorLabel->show();
     QTimer::singleShot( 3000, this, SLOT( hideErrors() ) );
-    delete m_temporaryMedias->removeClip( media->baseClip()->uuid() );
+    m_temporaryMedias->deleteClip( media->baseClip()->uuid() );
 }
 
 void

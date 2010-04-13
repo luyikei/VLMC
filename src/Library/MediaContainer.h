@@ -91,7 +91,7 @@ public:
      *  \param  clip    The clip to be added.
      *  \return true if the Clip has been added.
      */
-    bool        addClip( Clip* clip );
+    virtual bool    addClip( Clip* clip );
 
     /**
      *  \brief  Save the contained media to the given XML stream
@@ -131,10 +131,11 @@ protected:
 
 public slots:
     /**
-     *  \brief  Delete a Clip from the container
+     *  \brief  Removes a Clip from the container and delete it
+     *
      *  \param  uuid    The clip to remove's uuid.
      */
-    Clip    *removeClip( const QUuid& uuid );
+    void    deleteClip( const QUuid& uuid );
     /**
      *  \brief  Clear the library (remove all the loaded Clip, delete their subclips, and
      *          delete them)

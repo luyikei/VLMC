@@ -25,6 +25,7 @@
 #include <QUuid>
 
 #include "Clip.h"
+#include "Library.h"
 #include "MediaContainer.h"
 #include "Media.h"
 #include "MetaDataManager.h"
@@ -149,8 +150,8 @@ MediaContainer::removeAll()
     m_clips.clear();
 }
 
-Clip*
-MediaContainer::removeClip( const QUuid &uuid )
+void
+MediaContainer::deleteClip( const QUuid &uuid )
 {
     QHash<QUuid, Clip*>::iterator  it = m_clips.find( uuid );
     if ( it != m_clips.end() )
@@ -158,9 +159,8 @@ MediaContainer::removeClip( const QUuid &uuid )
         Clip* clip = it.value();
         m_clips.remove( uuid );
         emit clipRemoved( uuid );
-        return clip;
+        delete clip;
     }
-    return NULL;
 }
 
 const QHash<QUuid, Clip*>&
