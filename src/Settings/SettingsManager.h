@@ -52,8 +52,8 @@ class QDomElement;
 
 
 #define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc )  \
-SettingsManager::getInstance()->createVar( type, key, defaultValue, QObject::tr( name ), \
-                                           QObject::tr(desc), SettingsManager::Project );
+SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
+                                           desc, SettingsManager::Project );
 
 #define VLMC_CREATE_PROJECT_INT( key, defaultValue, name, desc )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::Int, key, defaultValue, name, desc )
@@ -65,8 +65,8 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, QObject::tr(
         VLMC_CREATE_PROJECT_VAR( SettingValue::Bool, key, defaultValue, name, desc )
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc )  \
-SettingsManager::getInstance()->createVar( type, key, defaultValue, QObject::tr( name ),  \
-                                           QObject::tr(desc), SettingsManager::Vlmc );
+SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
+                                           desc, SettingsManager::Vlmc );
 
 #define VLMC_CREATE_PREFERENCE_INT( key, defaultValue, name, desc )  \
         VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, name, desc )
@@ -106,7 +106,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
 
         void                        createVar( SettingValue::Type type, const QString &key,
                                                const QVariant &defaultValue,
-                                               const QString &name, const QString &desc,
+                                               const char *name, const char *desc,
                                                Type varType = Vlmc );
         bool                        watchValue( const QString &key,
                                                 QObject* receiver,

@@ -37,6 +37,9 @@
 #include <QtDebug>
 #include <QWidget>
 #include <QLabel>
+#include <QHash>
+#include <QHashIterator>
+#include <QEvent>
 
 PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::Type type,
                                     QWidget *parent ) :
@@ -48,15 +51,18 @@ PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::T
             SettingsManager::getInstance()->group( categorie, type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
+
     foreach ( SettingValue* s, settings.values() )
     {
         ISettingsCategorieWidget    *widget = widgetFactory( s );
-        QLabel                      *label = new QLabel( s->name(), this );
-        label->setToolTip( s->description() );
+        QLabel                      *label = new QLabel( tr( s->name() ), this );
+        label->setToolTip( tr( s->description() ) );
+        m_labels.insert( s, label );
         widget->widget()->setToolTip( s->description() );
         layout->addRow( label, widget->widget() );
         m_settings.push_back( widget );
     }
+
     setWidget( container );
     setWidgetResizable( true );
     setFrameStyle( QFrame::NoFrame );
@@ -94,4 +100,30 @@ const QString&
 PreferenceWidget::categorie() const
 {
     return m_categorie;
+}
+
+void
+PreferenceWidget::changeEvent( QEvent *e )
+{
+    switch ( e->type() )
+    {
+    case QEvent::LanguageChange:
+        retranslateUi();
+        break;
+    default:
+        break;
+    }
+}
+
+void
+PreferenceWidget::retranslateUi()
+{
+    QHashIterator<SettingValue*, QLabel*> i( m_labels );
+
+    while ( i.hasNext() )
+    {
+        i.next();
+        i.value()->setText( tr( i.key()->name() ) );
+        i.value()->setToolTip( tr( i.key()->description() ) );
+    }
 }

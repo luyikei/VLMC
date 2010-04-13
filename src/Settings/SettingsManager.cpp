@@ -255,8 +255,8 @@ SettingsManager::commit( SettingsManager::Type type )
 
 void
 SettingsManager::createVar( SettingValue::Type type, const QString &key,
-                            const QVariant &defaultValue, const QString &name,
-                            const QString &desc, SettingsManager::Type varType /*= Vlmc*/ )
+                            const QVariant &defaultValue, const char *name,
+                            const char *desc, SettingsManager::Type varType /*= Vlmc*/ )
 {
     QWriteLocker    wlock( &m_rwLock );
 

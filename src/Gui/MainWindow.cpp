@@ -172,26 +172,69 @@ void
 MainWindow::initVlmcPreferences()
 {
 
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/defaultmode", "n", "Select mode", "Select the selection tool in the timeline" );
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/cutmode", "x", "Cut mode", "Select the cut/razor tool in the timeline" );
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/mediapreview", "Ctrl+Return", "Media preview", "Preview the selected media, or pause the current preview" );
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/renderpreview", "Space", "Render preview", "Preview the project, or pause the current preview" );
+    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/defaultmode", "n",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select mode" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the selection tool in the timeline" ) );
+    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/cutmode", "x",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Cut mode" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ) );
+    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/mediapreview", "Ctrl+Return",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Media preview" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Preview the selected media, or pause the current preview" ) );
+    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/renderpreview", "Space",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Render preview" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Preview the project, or pause the current preview" ) );
     //A bit nasty, but we better use what Qt's providing as default shortcut
-    CREATE_MENU_SHORTCUT( "keyboard/undo", QKeySequence( QKeySequence::Undo ).toString().toLocal8Bit(), "Undo", "Undo the last action", actionUndo );
-    CREATE_MENU_SHORTCUT( "keyboard/redo", QKeySequence( QKeySequence::Redo ).toString().toLocal8Bit(), "Redo", "Redo the last action", actionRedo );
-    CREATE_MENU_SHORTCUT( "keyboard/help", QKeySequence( QKeySequence::HelpContents ).toString().toLocal8Bit(), "Help", "Toggle the help page", actionHelp );
-    CREATE_MENU_SHORTCUT( "keyboard/quit", "Ctrl+Q", "Quit", "Quit VLMC", actionQuit );
-    CREATE_MENU_SHORTCUT( "keyboard/preferences", "Alt+P", "Preferences", "Open VLMC preferences", actionPreferences );
-    CREATE_MENU_SHORTCUT( "keyboard/fullscreen", "F", "Fullscreen", "Switch to fullscreen mode", actionFullscreen );
-    CREATE_MENU_SHORTCUT( "keyboard/newproject", QKeySequence( QKeySequence::New ).toString().toLocal8Bit(), "New project", "Open the new project wizzard", actionNew_Project );
-    CREATE_MENU_SHORTCUT( "keyboard/openproject", QKeySequence( QKeySequence::Open ).toString().toLocal8Bit(), "Open a project", "Open an existing project", actionLoad_Project );
-    CREATE_MENU_SHORTCUT( "keyboard/save", QKeySequence( QKeySequence::Save ).toString().toLocal8Bit(), "Save", "Save the current project", actionSave );
-    CREATE_MENU_SHORTCUT( "keyboard/saveas", "Ctrl+Shift+S", "Save as", "Save the current project to a new file", actionSave_As );
-    CREATE_MENU_SHORTCUT( "keyboard/closeproject", QKeySequence( QKeySequence::Close ).toString().toLocal8Bit(), "Close the project", "Close the current project", actionClose_Project );
-    CREATE_MENU_SHORTCUT( "keyboard/importmedia", "Ctrl+I", "Import media", "Open the import window", actionImport );
-    CREATE_MENU_SHORTCUT( "keyboard/renderproject", "Ctrl+R", "Render the project", "Render the project to a file", actionRender );
+    CREATE_MENU_SHORTCUT( "keyboard/undo",
+                          QKeySequence( QKeySequence::Undo ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Undo" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Undo the last action" ), actionUndo );
+    CREATE_MENU_SHORTCUT( "keyboard/redo",
+                          QKeySequence( QKeySequence::Redo ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Redo" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Redo the last action" ), actionRedo );
+    CREATE_MENU_SHORTCUT( "keyboard/help",
+                          QKeySequence( QKeySequence::HelpContents ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Help" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Toggle the help page" ), actionHelp );
+    CREATE_MENU_SHORTCUT( "keyboard/quit", "Ctrl+Q",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Quit" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Quit VLMC" ), actionQuit );
+    CREATE_MENU_SHORTCUT( "keyboard/preferences", "Alt+P",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Preferences" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open VLMC preferences" ), actionPreferences );
+    CREATE_MENU_SHORTCUT( "keyboard/fullscreen", "F",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Fullscreen" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Switch to fullscreen mode" ), actionFullscreen );
+    CREATE_MENU_SHORTCUT( "keyboard/newproject",
+                          QKeySequence( QKeySequence::New ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "New project" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the new project wizzard" ), actionNew_Project );
+    CREATE_MENU_SHORTCUT( "keyboard/openproject",
+                          QKeySequence( QKeySequence::Open ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open a project" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open an existing project" ), actionLoad_Project );
+    CREATE_MENU_SHORTCUT( "keyboard/save",
+                          QKeySequence( QKeySequence::Save ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Save" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Save the current project" ), actionSave );
+    CREATE_MENU_SHORTCUT( "keyboard/saveas", "Ctrl+Shift+S",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Save as" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Save the current project to a new file" ), actionSave_As );
+    CREATE_MENU_SHORTCUT( "keyboard/closeproject",
+                          QKeySequence( QKeySequence::Close ).toString().toLocal8Bit(),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Close the project" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Close the current project" ), actionClose_Project );
+    CREATE_MENU_SHORTCUT( "keyboard/importmedia", "Ctrl+I",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Import media" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the import window" ), actionImport );
+    CREATE_MENU_SHORTCUT( "keyboard/renderproject", "Ctrl+R",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project to a file" ), actionRender );
 
-    VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default", "Langage", "The VLMC's UI language" );
+    VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Langage" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
     SettingsManager::getInstance()->watchValue( "general/VLMCLang",
                                                 LanguageHelper::getInstance(),
                                                 SLOT( languageChanged( const QVariant& ) ),

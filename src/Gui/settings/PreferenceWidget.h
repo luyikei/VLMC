@@ -27,10 +27,13 @@
 
 #include <QScrollArea>
 #include <QString>
+#include <QHash>
 #include "SettingsManager.h"
 
 class   ISettingsCategorieWidget;
 class   SettingValue;
+class   QLabel;
+class   QEvent;
 
 class   PreferenceWidget : public QScrollArea
 {
@@ -43,12 +46,17 @@ class   PreferenceWidget : public QScrollArea
 
         virtual void    save();
         const QString   &categorie() const;
-    private:
-        ISettingsCategorieWidget        *widgetFactory( SettingValue* s );
+    protected:
+        void            changeEvent( QEvent *e );
 
     private:
-        QString         m_categorie;
-        SettingsList    m_settings;
+        ISettingsCategorieWidget        *widgetFactory( SettingValue* s );
+        void            retranslateUi();
+
+    private:
+        QString                     m_categorie;
+        SettingsList                m_settings;
+        QHash<SettingValue*, QLabel*>  m_labels;
 };
 
 #endif

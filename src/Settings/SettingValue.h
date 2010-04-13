@@ -52,8 +52,8 @@ class   SettingValue : public QObject
          *  \param      defaultValue    The setting default value.
          *  \param      desc            The setting description
          */
-        SettingValue( Type type, const QVariant& defaultValue, const QString& name,
-                      const QString& desc );
+        SettingValue( Type type, const QVariant& defaultValue, const char* name,
+                      const char* desc );
 
         /**
          * \brief setter for the m_val member
@@ -69,13 +69,13 @@ class   SettingValue : public QObject
         /**
          *  \return The setting's description
          */
-        const QString   &description() const;
+        const char      *description() const;
         /**
          *   \brief     Set the setting to its default value.
          */
         void            restoreDefault();
 
-        const QString   &name() const;
+        const char      *name() const;
         Type            type() const;
 
     private:
@@ -84,8 +84,8 @@ class   SettingValue : public QObject
          */
         QVariant        m_val;
         QVariant        m_defaultVal;
-        QString         m_name;
-        QString         m_desc;
+        const char*     m_name;
+        const char*     m_desc;
         Type            m_type;
     signals:
         /**

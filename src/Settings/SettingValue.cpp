@@ -24,7 +24,7 @@
 #include <QtDebug>
 
 SettingValue::SettingValue( SettingValue::Type type, const QVariant& defaultValue,
-                            const QString &name, const QString& desc ) :
+                            const char* name, const char* desc ) :
         m_val( defaultValue ),
         m_defaultVal( defaultValue ),
         m_name( name ),
@@ -49,7 +49,7 @@ SettingValue::get() const
     return m_val;
 }
 
-const QString&
+const char*
 SettingValue::description() const
 {
     return m_desc;
@@ -61,7 +61,7 @@ SettingValue::restoreDefault()
     set( m_defaultVal );
 }
 
-const QString&
+const char*
 SettingValue::name() const
 {
     return m_name;

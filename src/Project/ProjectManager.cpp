@@ -44,13 +44,25 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     QSettings s;
     m_recentsProjects = s.value( "RecentsProjects" ).toStringList();
 
-    VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97, "Output video FPS", "Frame Per Second used when previewing and rendering the project" );
-    VLMC_CREATE_PROJECT_INT( "video/VideoProjectWidth", 480, "Video width", "Width resolution of the output video" );
-    VLMC_CREATE_PROJECT_INT( "video/VideoProjectHeight", 300, "Video height", "Height resolution of the output video" );
-    VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0, "Audio samplerate", "Output project audio samplerate" );
-    VLMC_CREATE_PROJECT_STRING( "general/VLMCWorkspace", QDir::homePath(), "Workspace location", "The place where all project's videos will be stored" );
+    VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97,
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ) );
+    VLMC_CREATE_PROJECT_INT( "video/VideoProjectWidth", 480,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ) );
+    VLMC_CREATE_PROJECT_INT( "video/VideoProjectHeight", 300,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ) );
+    VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );
+    VLMC_CREATE_PROJECT_STRING( "general/VLMCWorkspace", QDir::homePath(),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Workspace location" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's videos will be stored" ) );
 
-    VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject, "Project name", "The project name" );
+    VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
 
     connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
 }

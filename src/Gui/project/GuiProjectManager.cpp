@@ -38,15 +38,19 @@ GUIProjectManager::GUIProjectManager()
     //Automatic save part :
     m_timer = new QTimer( this );
     connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-    VLMC_CREATE_PREFERENCE_BOOL( "general/AutomaticBackup", false, "Automatic save",
-                            "When this option is activated,"
-                            "VLMC will automatically save your project at a specified interval" );
+    VLMC_CREATE_PREFERENCE_BOOL( "general/AutomaticBackup", false,
+                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
+                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
+                                             "VLMC will automatically save your project "
+                                             "at a specified interval" ) );
     SettingsManager::getInstance()->watchValue( "general/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
-    VLMC_CREATE_PREFERENCE_INT( "general/AutomaticBackupInterval", 5, "Automatic save interval",
-                            "This is the interval that VLMC will wait between two automatic save" );
+    VLMC_CREATE_PREFERENCE_INT( "general/AutomaticBackupInterval", 5,
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
+                                            "between two automatic save" ) );
     SettingsManager::getInstance()->watchValue( "general/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
