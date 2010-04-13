@@ -74,12 +74,14 @@ MainWorkflow::~MainWorkflow()
 
 const QUuid&
 MainWorkflow::addClip( Clip *clip, unsigned int trackId,
-                                        qint64 start, MainWorkflow::TrackType trackType )
+                                        qint64 start, MainWorkflow::TrackType trackType,
+                                        bool informGui )
 {
     const QUuid&    uuid = m_tracks[trackType]->addClip( clip, trackId, start );
     computeLength();
     //Inform the GUI
-    emit clipAdded( clip, trackId, start, trackType );
+    if ( informGui == true )
+        emit clipAdded( clip, trackId, start, trackType );
     return uuid;
 }
 
@@ -325,7 +327,7 @@ MainWorkflow::loadProject( const QDomElement &root )
             if ( c != NULL )
             {
                 addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
-                         trackId, startFrame.toLongLong(), type );
+                         trackId, startFrame.toLongLong(), type, true );
             }
             clip = clip.nextSibling().toElement();
         }
@@ -416,7 +418,7 @@ MainWorkflow::split( Clip* toSplit, Clip* newClip, quint32 trackId, qint64 newCl
         newClip = new Clip( toSplit, newClipBegin, toSplit->end() );
 
     toSplit->setEnd( newClipBegin, true );
-    addClip( newClip, trackId, newClipPos, trackType );
+    addClip( newClip, trackId, newClipPos, trackType, true );
     return newClip;
 }
 

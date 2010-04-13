@@ -44,11 +44,13 @@ void Commands::trigger( Commands::Generic* command )
 
 Commands::MainWorkflow::AddClip::AddClip( Clip* clip,
                                           unsigned int trackNumber, qint64 pos,
-                                          ::MainWorkflow::TrackType trackType ) :
+                                          ::MainWorkflow::TrackType trackType,
+                                          bool undoRedoAction /*= false*/ ) :
         m_clip( clip ),
         m_trackNumber( trackNumber ),
         m_pos( pos ),
-        m_trackType( trackType )
+        m_trackType( trackType ),
+        m_undoRedoAction( undoRedoAction )
 {
     setText( QObject::tr( "Adding clip to track %1" ).arg( QString::number( trackNumber ) ) );
 }
@@ -59,7 +61,8 @@ Commands::MainWorkflow::AddClip::~AddClip()
 
 void Commands::MainWorkflow::AddClip::redo()
 {
-    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType );
+    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, m_undoRedoAction );
+    m_undoRedoAction = false;
 }
 
 void Commands::MainWorkflow::AddClip::undo()
@@ -116,7 +119,7 @@ void Commands::MainWorkflow::RemoveClip::redo()
 }
 void Commands::MainWorkflow::RemoveClip::undo()
 {
-    ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType );
+    ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true );
 }
 
 Commands::MainWorkflow::ResizeClip::ResizeClip( const QUuid& uuid,

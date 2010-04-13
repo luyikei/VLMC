@@ -97,12 +97,14 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param      trackId The number of the track (starting at 0)
          *  \param      start   The clip's starting position
          *  \param      type    The track type (audio or video)
+         *  \param      informGui  Will be false if the action is queried by the GUI.
+         *                              true otherwise.
          *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
          *  \return     The newly inserted ClipWorkflow's UUID.
          */
         const QUuid&            addClip( Clip* clip, unsigned int trackId, qint64 start,
-                                         TrackType type );
+                                         TrackType type, bool informGui );
 
         /**
          *  \brief      Initialize the workflow for the render.

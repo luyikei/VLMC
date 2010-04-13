@@ -62,7 +62,7 @@ namespace Commands
         {
             public:
                 AddClip( Clip* clip, unsigned int trackNumber, qint64 pos,
-                         ::MainWorkflow::TrackType trackType );
+                         ::MainWorkflow::TrackType trackType, bool undoRedoAction = false );
                 virtual ~AddClip();
                 virtual void    redo();
                 virtual void    undo();
@@ -73,6 +73,7 @@ namespace Commands
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
                 QUuid                       m_uuid;
+                bool                        m_undoRedoAction;
         };
 
         NEW_COMMAND( MoveClip )
