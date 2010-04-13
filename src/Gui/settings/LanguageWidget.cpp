@@ -66,10 +66,15 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
                 QLocale::languageToString( locale.language() ),
                 QLocale::countryToString( locale.country() ) ), countryCode );
     }
-    m_list->addItem( "English (UnitedStates)",    "en_US" );
+    // Add the built-in us_US locale.
+    m_list->addItem( "English (UnitedStates)", "en_US" );
 
     // Sort the combobox
     m_list->model()->sort( 0 );
+
+    // Add the system default option (auto-detection of the locale)
+    m_list->insertItem( 0, "System Locale (autodetect)", "default" );
+
     QString lang = VLMC_GET_STRING( "general/VLMCLang" );
     int idx = m_list->findData( lang );
     if ( idx != -1 )

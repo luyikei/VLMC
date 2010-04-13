@@ -195,7 +195,7 @@ MainWindow::initVlmcPreferences()
     CREATE_MENU_SHORTCUT( "keyboard/importmedia", "Ctrl+I", "Import media", "Open the import window", actionImport );
     CREATE_MENU_SHORTCUT( "keyboard/renderproject", "Ctrl+R", "Render the project", "Render the project to a file", actionRender );
 
-    VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "en_US", "Langage", "The VLMC's UI language" );
+    VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default", "Langage", "The VLMC's UI language" );
     SettingsManager::getInstance()->watchValue( "general/VLMCLang",
                                                 LanguageHelper::getInstance(),
                                                 SLOT( languageChanged( const QVariant& ) ),
