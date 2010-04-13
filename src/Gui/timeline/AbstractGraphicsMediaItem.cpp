@@ -158,13 +158,13 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
 
         if ( ( m_muted = muteAction->isChecked() ) )
         {
-            tracksView()->m_mainWorkflow->muteClip( clip()->uuid(),
+            tracksView()->m_mainWorkflow->muteClip( uuid(),
                                                     trackNumber(),
                                                     mediaType() );
         }
         else
         {
-            tracksView()->m_mainWorkflow->unmuteClip( clip()->uuid(),
+            tracksView()->m_mainWorkflow->unmuteClip( uuid(),
                                                     trackNumber(),
                                                     mediaType() );
         }
@@ -190,7 +190,7 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
         {
             item1->group( this );
             tracksView()->moveMediaItem( item1, item1->trackNumber(), startPos() );
-            MainWorkflow::getInstance()->moveClip( item1->clip()->uuid(), item1->trackNumber(),
+            MainWorkflow::getInstance()->moveClip( item1->uuid(), item1->trackNumber(),
                                                    trackNumber(), startPos(),
                                                    item1->mediaType() );
         }

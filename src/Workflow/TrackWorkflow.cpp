@@ -112,7 +112,7 @@ qint64              TrackWorkflow::getClipPosition( const QUuid& uuid ) const
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == uuid )
+        if ( it.value()->uuid() == uuid )
             return it.key();
         ++it;
     }
@@ -126,7 +126,7 @@ Clip*               TrackWorkflow::getClip( const QUuid& uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == uuid )
+        if ( it.value()->uuid() == uuid )
             return it.value()->getClip();
         ++it;
     }
@@ -326,7 +326,7 @@ void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == id )
+        if ( it.value()->uuid() == id )
         {
             ClipWorkflow* cw = it.value();
             m_clips.erase( it );
@@ -350,7 +350,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == id )
+        if ( it.value()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             Clip*           clip = cw->getClip();
@@ -359,6 +359,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             computeLength();
             cw->disconnect();
             delete cw;
+            qDebug() << "Deleted clipworkflow";
             if ( m_length == 0 )
                 emit trackEndReached( m_trackId );
             return clip;
@@ -377,7 +378,7 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == id )
+        if ( it.value()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             cw->disconnect();
@@ -459,7 +460,7 @@ TrackWorkflow::muteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == uuid )
+        if ( it.value()->uuid() == uuid )
         {
             it.value()->mute();
             return ;
@@ -480,7 +481,7 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClip()->uuid() == uuid )
+        if ( it.value()->uuid() == uuid )
         {
             it.value()->unmute();
             return ;

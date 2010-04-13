@@ -454,12 +454,12 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                            MainWorkflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip is removed
-         *  \param  clip        The clip that has been removed.
+         *  \param  uuid        The clip that has been removed's uuid.
          *  \param  trackId     The track that was containing the clip
          *  \param  trackType   The type of the track that was containing the clip
          *  \sa     removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          */
-        void                    clipRemoved( Clip* clip, unsigned int trackId,
+        void                    clipRemoved( const QUuid& uuid, unsigned int trackId,
                                              MainWorkflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip has been moved

@@ -99,7 +99,7 @@ namespace Commands
         NEW_COMMAND( RemoveClip )
         {
             public:
-                RemoveClip( Clip* clip, unsigned int trackNumber,
+                RemoveClip( Clip* clip, const QUuid& uuid, unsigned int trackNumber,
                             qint64 pos, ::MainWorkflow::TrackType trackType );
                 virtual void redo();
                 virtual void undo();
@@ -109,6 +109,7 @@ namespace Commands
                 unsigned int                m_trackNumber;
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
+                QUuid                       m_uuid;
         };
 
         /**

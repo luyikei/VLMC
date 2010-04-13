@@ -91,7 +91,7 @@ public slots:
      * \param uuid The Universally Unique Identifier of the item.
      * \param track The current track of the item.
      */
-    void actionRemoveClip( Clip* clip, unsigned int track, MainWorkflow::TrackType trackType );
+    void actionRemoveClip( const QUuid& uuid, unsigned int track, MainWorkflow::TrackType trackType );
 
 protected:
     virtual void changeEvent( QEvent *e );

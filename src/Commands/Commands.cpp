@@ -105,21 +105,22 @@ void Commands::MainWorkflow::MoveClip::undo()
     m_undoRedoAction = true;
 }
 
-Commands::MainWorkflow::RemoveClip::RemoveClip( Clip* clip, quint32 trackNumber,
+Commands::MainWorkflow::RemoveClip::RemoveClip( Clip* clip, const QUuid& uuid, quint32 trackNumber,
                                                 qint64 pos, ::MainWorkflow::TrackType trackType ) :
         m_clip( clip ), m_trackNumber( trackNumber ),
-        m_pos( pos ), m_trackType( trackType )
+        m_pos( pos ), m_trackType( trackType ),
+        m_uuid( uuid )
 {
     setText( QObject::tr( "Remove clip" ) );
 }
 
 void Commands::MainWorkflow::RemoveClip::redo()
 {
-    ::MainWorkflow::getInstance()->removeClip( m_clip->uuid(), m_trackNumber, m_trackType );
+    ::MainWorkflow::getInstance()->removeClip( m_uuid, m_trackNumber, m_trackType );
 }
 void Commands::MainWorkflow::RemoveClip::undo()
 {
-    ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true );
+    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true );
 }
 
 Commands::MainWorkflow::ResizeClip::ResizeClip( const QUuid& uuid,

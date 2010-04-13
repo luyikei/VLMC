@@ -60,7 +60,8 @@ void TracksScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     //TODO Event not handled, create and show a menu here.
 }
 
-void TracksScene::askRemoveSelectedItems()
+void
+TracksScene::askRemoveSelectedItems()
 {
     TracksView* tv = Timeline::getInstance()->tracksView();
 
@@ -86,10 +87,11 @@ void TracksScene::askRemoveSelectedItems()
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
     {
-        GraphicsMovieItem* item = qgraphicsitem_cast<GraphicsMovieItem*>( items.at(i) );
+        AbstractGraphicsMediaItem* item = qgraphicsitem_cast<AbstractGraphicsMediaItem*>( items.at(i) );
         if ( !item ) return;
 
         Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clip(),
+                                                                   item->uuid(),
                                                                    item->trackNumber(),
                                                                    item->startPos(),
                                                                    item->mediaType() ) );

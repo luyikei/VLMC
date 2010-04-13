@@ -84,8 +84,8 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
              this, SLOT( actionAddClip(Clip*,uint,qint64,MainWorkflow::TrackType ) ) );
     connect( m_mainWorkflow, SIGNAL( clipMoved(QUuid, uint, qint64,MainWorkflow::TrackType ) ),
              this, SLOT( actionMoveClip(QUuid,uint,qint64,MainWorkflow::TrackType ) ) );
-    connect( m_mainWorkflow, SIGNAL( clipRemoved(Clip*,uint,MainWorkflow::TrackType ) ),
-             this, SLOT( actionRemoveClip(Clip*,uint,MainWorkflow::TrackType )) );
+    connect( m_mainWorkflow, SIGNAL( clipRemoved(const QUuid&,uint,MainWorkflow::TrackType ) ),
+             this, SLOT( actionRemoveClip(const QUuid&,uint,MainWorkflow::TrackType )) );
 
     // Clear / reset
     connect( m_mainWorkflow, SIGNAL( cleared() ), m_tracksControls, SLOT( clear() ) );
@@ -171,7 +171,7 @@ void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 tim
     tracksRuler()->update();
 }
 
-void Timeline::actionRemoveClip( Clip* clip, unsigned int track, MainWorkflow::TrackType trackType )
+void Timeline::actionRemoveClip( const QUuid &uuid, unsigned int track, MainWorkflow::TrackType trackType )
 {
-    tracksView()->removeMediaItem( clip->uuid(), track, trackType );
+    tracksView()->removeMediaItem( uuid, track, trackType );
 }
