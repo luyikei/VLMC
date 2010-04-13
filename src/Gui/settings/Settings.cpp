@@ -60,16 +60,19 @@ Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags
              this, SLOT( switchWidget( int ) ) );
 }
 
-void        Settings::addCategory( const QString& name,
-                                    SettingsManager::Type type,
-                                 const QIcon& icon,
-                                 const QString& label )
+void        Settings::addCategory( const char* name,
+                                   SettingsManager::Type type,
+                                   const QIcon& icon,
+                                   const QString& label )
 {
     PreferenceWidget    *pWidget = new PreferenceWidget( name, type, this );
 
     m_stackedLayout->addWidget( pWidget );
+
     // Create a button linked to the widget using its index
     m_panel->addButton( label, icon, m_stackedLayout->count() - 1 );
+
+    switchWidget( 0 );
 }
 
 void
@@ -132,11 +135,34 @@ void    Settings::buttonClicked( QAbstractButton* button )
 
 void    Settings::switchWidget( int index )
 {
-    PreferenceWidget* pWidget =
-            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( index ) );
-
-    Q_ASSERT( pWidget != NULL );
-    m_title->setText( pWidget->category() );
     m_stackedLayout->setCurrentIndex( index );
+
+    // Reload the translated title
+    retranslateUi();
 }
 
+void    Settings::changeEvent( QEvent *e )
+{
+    switch ( e->type() )
+    {
+    case QEvent::LanguageChange:
+        retranslateUi();
+        break;
+    default:
+        break;
+    }
+}
+
+void    Settings::retranslateUi()
+{
+    PreferenceWidget* pWidget =
+            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( m_stackedLayout->currentIndex() ) );
+    Q_ASSERT( pWidget != NULL );
+
+    // Translate the category name using the current locale
+    QString text = tr( pWidget->category() );
+
+    if ( text.length() >= 1 )
+        text[0] = text[0].toUpper();
+    m_title->setText( text );
+}

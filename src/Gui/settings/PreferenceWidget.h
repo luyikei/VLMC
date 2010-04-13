@@ -40,12 +40,12 @@ class   PreferenceWidget : public QScrollArea
     Q_OBJECT
     public:
         typedef QList<ISettingsCategoryWidget*>    SettingsList;
-        PreferenceWidget( const QString& category, SettingsManager::Type type,
+        PreferenceWidget( const char* category, SettingsManager::Type type,
                           QWidget* parent = 0 );
         virtual ~PreferenceWidget() {}
 
         virtual void    save();
-        const QString   &category() const;
+        const char      *category() const;
     protected:
         void            changeEvent( QEvent *e );
 
@@ -54,7 +54,7 @@ class   PreferenceWidget : public QScrollArea
         void            retranslateUi();
 
     private:
-        QString                     m_category;
+        const char                  *m_category;
         SettingsList                m_settings;
         QHash<SettingValue*, QLabel*>  m_labels;
 };

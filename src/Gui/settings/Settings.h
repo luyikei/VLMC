@@ -47,12 +47,16 @@ class   Settings : public QDialog
     public:
         Settings( SettingsManager::Type type, QWidget* parent = 0, Qt::WindowFlags f = 0 );
 
-        void                        addCategory( const QString& name,
-                                                    SettingsManager::Type type,
-                                                    const QIcon& icon,
-                                                    const QString& label );
+        void                        addCategory( const char* name,
+                                                 SettingsManager::Type type,
+                                                 const QIcon& icon,
+                                                 const QString& label );
+
+    protected:
+        void                        changeEvent( QEvent *e );
     private:
         void                        buildLayout();
+        void                        retranslateUi();
 
     private:
         QDialogButtonBox*           m_buttons;

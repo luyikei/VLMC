@@ -41,14 +41,14 @@
 #include <QHashIterator>
 #include <QEvent>
 
-PreferenceWidget::PreferenceWidget( const QString &category, SettingsManager::Type type,
+PreferenceWidget::PreferenceWidget( const char *category, SettingsManager::Type type,
                                     QWidget *parent ) :
     QScrollArea( parent ),
     m_category( category )
 {
     QWidget     *container = new QWidget( this );
     SettingsManager::SettingHash    settings =
-            SettingsManager::getInstance()->group( category, type );
+            SettingsManager::getInstance()->group( QString( category ), type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 
@@ -66,7 +66,6 @@ PreferenceWidget::PreferenceWidget( const QString &category, SettingsManager::Ty
     setWidget( container );
     setWidgetResizable( true );
     setFrameStyle( QFrame::NoFrame );
-    m_category[0] = m_category[0].toUpper();
 }
 
 ISettingsCategoryWidget*
@@ -96,7 +95,7 @@ PreferenceWidget::save()
         w->save();
 }
 
-const QString&
+const char*
 PreferenceWidget::category() const
 {
     return m_category;
