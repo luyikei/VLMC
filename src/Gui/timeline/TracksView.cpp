@@ -694,10 +694,12 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragAudioItem->oldTrackNumber = m_dragAudioItem->trackNumber();
         m_dragAudioItem->oldPosition = (qint64)mappedXPos;
 
-        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clip(),
-                                                                m_dragAudioItem->trackNumber(),
-                                                                (qint64)mappedXPos,
-                                                                MainWorkflow::AudioTrack ) );
+        Commands::MainWorkflow::AddClip*
+                clip = new Commands::MainWorkflow::AddClip( m_dragAudioItem->clip(),
+                                                            m_dragAudioItem->trackNumber(),
+                                                            (qint64)mappedXPos,
+                                                            MainWorkflow::AudioTrack );
+        Commands::trigger( clip );
 
         m_dragAudioItem = NULL;
     }
@@ -712,10 +714,12 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragVideoItem->oldTrackNumber = m_dragVideoItem->trackNumber();
         m_dragVideoItem->oldPosition = (qint64)mappedXPos;
 
-        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clip(),
-                                                                m_dragVideoItem->trackNumber(),
-                                                                (qint64)mappedXPos,
-                                                                MainWorkflow::VideoTrack ) );
+        Commands::MainWorkflow::AddClip*
+                clip = new Commands::MainWorkflow::AddClip( m_dragVideoItem->clip(),
+                                                            m_dragVideoItem->trackNumber(),
+                                                            (qint64)mappedXPos,
+                                                            MainWorkflow::VideoTrack );
+        Commands::trigger( clip );
         m_dragVideoItem = NULL;
     }
 

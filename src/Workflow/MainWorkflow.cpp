@@ -72,14 +72,15 @@ MainWorkflow::~MainWorkflow()
     delete MainWorkflow::blackOutput;
 }
 
-void
+const QUuid&
 MainWorkflow::addClip( Clip *clip, unsigned int trackId,
                                         qint64 start, MainWorkflow::TrackType trackType )
 {
-    m_tracks[trackType]->addClip( clip, trackId, start );
+    const QUuid&    uuid = m_tracks[trackType]->addClip( clip, trackId, start );
     computeLength();
     //Inform the GUI
     emit clipAdded( clip, trackId, start, trackType );
+    return uuid;
 }
 
 void

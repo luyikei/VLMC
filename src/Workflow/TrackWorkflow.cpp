@@ -62,7 +62,8 @@ TrackWorkflow::~TrackWorkflow()
     delete m_renderOneFrameMutex;
 }
 
-void    TrackWorkflow::addClip( Clip* clip, qint64 start )
+const QUuid&
+TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
     ClipWorkflow* cw;
     if ( m_trackType == MainWorkflow::VideoTrack )
@@ -75,9 +76,11 @@ void    TrackWorkflow::addClip( Clip* clip, qint64 start )
     else
         cw = new AudioClipWorkflow( clip );
     addClip( cw, start );
+    return cw->uuid();
 }
 
-void    TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
+void
+TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 {
     QWriteLocker    lock( m_clipsLock );
     m_clips.insert( start, cw );
@@ -85,7 +88,8 @@ void    TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 }
 
 //Must be called from a thread safe method (m_clipsLock locked)
-void                TrackWorkflow::computeLength()
+void
+TrackWorkflow::computeLength()
 {
     if ( m_clips.count() == 0 )
     {

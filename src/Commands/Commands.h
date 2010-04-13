@@ -66,11 +66,13 @@ namespace Commands
                 virtual ~AddClip();
                 virtual void    redo();
                 virtual void    undo();
+                const QUuid     &uuid() const;
             private:
                 Clip*                       m_clip;
                 unsigned int                m_trackNumber;
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
+                QUuid                       m_uuid;
         };
 
         NEW_COMMAND( MoveClip )

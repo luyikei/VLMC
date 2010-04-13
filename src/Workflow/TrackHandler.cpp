@@ -58,13 +58,13 @@ TrackHandler::~TrackHandler()
     delete[] m_tracks;
 }
 
-void
+const QUuid&
 TrackHandler::addClip( Clip* clip, unsigned int trackId, qint64 start )
 {
     Q_ASSERT_X( trackId < m_trackCount, "MainWorkflow::addClip",
                 "The specified trackId isn't valid, for it's higher than the number of tracks");
 
-    m_tracks[trackId]->addClip( clip, start );
+    const QUuid&    uuid = m_tracks[trackId]->addClip( clip, start );
 
     //Now check if this clip addition has changed something about the workflow's length
     if ( m_tracks[trackId]->getLength() > m_length )
@@ -73,6 +73,7 @@ TrackHandler::addClip( Clip* clip, unsigned int trackId, qint64 start )
     //if the track is deactivated, we need to reactivate it.
     if ( m_tracks[trackId].deactivated() == true )
         activateTrack( trackId );
+    return uuid;
 }
 
 void

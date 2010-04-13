@@ -60,12 +60,18 @@ Commands::MainWorkflow::AddClip::~AddClip()
 
 void Commands::MainWorkflow::AddClip::redo()
 {
-    ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType );
+    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType );
 }
 
 void Commands::MainWorkflow::AddClip::undo()
 {
     ::MainWorkflow::getInstance()->removeClip( m_clip->uuid(), m_trackNumber, m_trackType );
+}
+
+const QUuid&
+Commands::MainWorkflow::AddClip::uuid() const
+{
+    return m_uuid;
 }
 
 Commands::MainWorkflow::MoveClip::MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,

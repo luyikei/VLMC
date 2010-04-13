@@ -38,7 +38,15 @@ class   TrackHandler : public QObject
         TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType );
         ~TrackHandler();
 
-        void                    addClip( Clip* clip, unsigned int trackId, qint64 start );
+        /**
+         *  \brief      Insert a clip in the workflow.
+         *
+         *  This will instantiate a new ClipWorkflow and returns its uuid.
+         *  \param      clip        The clip to insert.
+         *  \param      trackId     The track identifier.
+         *  \param      start       The new clip starting position.
+         */
+        const QUuid             &addClip( Clip* clip, unsigned int trackId, qint64 start );
         /**
          *  Returns the number of tracks in this handler
          */

@@ -170,6 +170,8 @@ private:
 
     //FIXME: this is a nasty forest boolean
     bool    m_resizeExpected;
+
+    QUuid   m_uuid;
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

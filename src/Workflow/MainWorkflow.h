@@ -99,8 +99,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param      type    The track type (audio or video)
          *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
+         *  \return     The newly inserted ClipWorkflow's UUID.
          */
-        void                    addClip( Clip* clip, unsigned int trackId, qint64 start,
+        const QUuid&            addClip( Clip* clip, unsigned int trackId, qint64 start,
                                          TrackType type );
 
         /**

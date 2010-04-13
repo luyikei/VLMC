@@ -63,8 +63,6 @@ ImportController::ImportController(QWidget *parent) :
             << Media::VideoExtensions.split(' ', QString::SkipEmptyParts)
             << Media::ImageExtensions.split(' ', QString::SkipEmptyParts);
     m_filesModel->setFilter( QDir::AllDirs | QDir::AllEntries | QDir::NoDotAndDotDot );
-    m_filesModel->sort( 2, Qt::AscendingOrder );
-    m_filesModel->sort( 0, Qt::AscendingOrder );
     m_filesModel->setNameFilters( filters );
     m_filesModel->setRootPath( "/" );
     m_filesModel->setNameFilterDisables( false );
@@ -80,6 +78,9 @@ ImportController::ImportController(QWidget *parent) :
     m_ui->treeView->setColumnHidden( 1, true );
     m_ui->treeView->setColumnHidden( 2, true );
     m_ui->treeView->setColumnHidden( 3, true );
+    for ( int i = 0; i < m_filesModel->columnCount(); ++i )
+        m_ui->treeView->sortByColumn( i );
+
     m_ui->forwardButton->setEnabled( true );
 
     m_ui->progressBar->setHidden( true );
