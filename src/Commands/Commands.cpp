@@ -55,7 +55,6 @@ Commands::MainWorkflow::AddClip::AddClip( Clip* clip,
 
 Commands::MainWorkflow::AddClip::~AddClip()
 {
-    delete m_clip;
 }
 
 void Commands::MainWorkflow::AddClip::redo()

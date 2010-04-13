@@ -69,7 +69,10 @@ public:
     virtual bool moveable() const = 0;
 
     /// Should return the unique uid of the contained media.
-    virtual const QUuid& uuid() const = 0;
+    virtual const QUuid& uuid() const
+    {
+        return m_uuid;
+    }
 
     /// Clip contained in the item
     virtual Clip* clip() const = 0;

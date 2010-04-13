@@ -234,10 +234,3 @@ void GraphicsMovieItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
     if ( tracksView()->tool() == TOOL_DEFAULT )
         setCursor( Qt::OpenHandCursor );
 }
-
-
-const QUuid&
-GraphicsMovieItem::uuid() const
-{
-    return m_clip->uuid();
-}

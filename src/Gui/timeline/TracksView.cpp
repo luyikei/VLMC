@@ -243,18 +243,6 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
         }
     }
 
-    // Is the clip already existing in the timeline ?
-    QList<QGraphicsItem*> trackItems = getTrack( trackType, track )->childItems();
-    for ( int i = 0; i < trackItems.size(); ++i )
-    {
-        AbstractGraphicsMediaItem *item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != clip->uuid() ) continue;
-        // Item already exists in the timeline, exit now.
-        qWarning() << QString( "A clip with the same UUID (%1) already exists in the timeline!").arg( item->uuid() );
-        return;
-    }
-
     AbstractGraphicsMediaItem *item = 0;
     if ( trackType == MainWorkflow::VideoTrack )
     {
@@ -292,16 +280,10 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
          clip->getMedia()->hasVideoTrack() == false )
         return ;
 
-    Clip *audioClip = NULL;
-    Clip *videoClip = NULL;
-    //FIXME: Creating a new clip leaks, but at least we have independant clips.
-
     if ( clip->getMedia()->hasAudioTrack() == true )
     {
-        audioClip = new Clip( clip );
-
         if ( m_dragAudioItem ) delete m_dragAudioItem;
-        m_dragAudioItem = new GraphicsAudioItem( audioClip );
+        m_dragAudioItem = new GraphicsAudioItem( clip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( tracksHeight() );
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->mediaType(), 0 ) );
@@ -310,10 +292,8 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     }
     if ( clip->getMedia()->hasVideoTrack() == true )
     {
-        videoClip = new Clip( clip );
-
         if ( m_dragVideoItem ) delete m_dragVideoItem;
-        m_dragVideoItem = new GraphicsMovieItem( videoClip );
+        m_dragVideoItem = new GraphicsMovieItem( clip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( tracksHeight() );
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->mediaType(), 0 ) );
@@ -321,9 +301,10 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
     // Group the items together
-    if ( audioClip != NULL && videoClip != NULL )
+    if ( clip->getMedia()->hasAudioTrack() == true &&
+         clip->getMedia()->hasVideoTrack() == true  )
         m_dragVideoItem->group( m_dragAudioItem );
-    if ( videoClip == NULL )
+    if ( clip->getMedia()->hasVideoTrack() == false )
         moveMediaItem( m_dragAudioItem, event->pos() );
     else
         moveMediaItem( m_dragVideoItem, event->pos() );
@@ -700,7 +681,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                             (qint64)mappedXPos,
                                                             MainWorkflow::AudioTrack );
         Commands::trigger( clip );
-
+        m_dragAudioItem->m_uuid = clip->uuid();
         m_dragAudioItem = NULL;
     }
 
@@ -720,6 +701,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                             (qint64)mappedXPos,
                                                             MainWorkflow::VideoTrack );
         Commands::trigger( clip );
+        m_dragVideoItem->m_uuid = clip->uuid();
         m_dragVideoItem = NULL;
     }
 
@@ -955,7 +937,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
         Commands::trigger( new Commands::MainWorkflow::MoveClip( m_mainWorkflow,
-                                                                 m_actionItem->clip()->uuid(),
+                                                                 m_actionItem->uuid(),
                                                                  m_actionItem->oldTrackNumber,
                                                                  m_actionItem->trackNumber(),
                                                                  m_actionItem->startPos(),
@@ -965,7 +947,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( m_actionItem->groupItem() )
         {
             Commands::trigger( new Commands::MainWorkflow::MoveClip( m_mainWorkflow,
-                                                                     m_actionItem->groupItem()->clip()->uuid(),
+                                                                     m_actionItem->groupItem()->uuid(),
                                                                      m_actionItem->groupItem()->oldTrackNumber,
                                                                      m_actionItem->groupItem()->trackNumber(),
                                                                      m_actionItem->groupItem()->startPos(),
@@ -988,7 +970,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         Clip *clip = m_actionItem->clip();
         //This is a "pointless action". The resize already occured. However, by doing this
         //we can have an undo action.
-        Commands::trigger( new Commands::MainWorkflow::ResizeClip( clip->uuid(), clip->begin(),
+        Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->uuid(), clip->begin(),
                                                                    clip->end(), m_actionResizeOldBegin, m_actionResizeOldBegin + m_actionResizeBase,
                                                                    m_actionItem->pos().x(), m_actionResizeStart, m_actionItem->trackNumber(), m_actionItem->mediaType() ) );
         updateDuration();

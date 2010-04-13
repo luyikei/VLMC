@@ -50,7 +50,6 @@ public:
     virtual int type() const { return Type; }
     virtual bool expandable() const { return false; }
     virtual bool moveable() const { return true; }
-    virtual const QUuid& uuid() const { return m_clip->uuid(); }
     virtual MainWorkflow::TrackType mediaType() const;
     virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0 );
 
