@@ -23,14 +23,14 @@
 #ifndef DOUBLEWIDGET_H
 #define DOUBLEWIDGET_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   SettingValue;
 
 class   QDoubleSpinBox;
 
-class   DoubleWidget : public ISettingsCategorieWidget
+class   DoubleWidget : public ISettingsCategoryWidget
 {
     public:
         DoubleWidget( SettingValue *s, QWidget *parent = NULL );

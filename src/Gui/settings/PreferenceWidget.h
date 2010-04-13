@@ -30,7 +30,7 @@
 #include <QHash>
 #include "SettingsManager.h"
 
-class   ISettingsCategorieWidget;
+class   ISettingsCategoryWidget;
 class   SettingValue;
 class   QLabel;
 class   QEvent;
@@ -39,22 +39,22 @@ class   PreferenceWidget : public QScrollArea
 {
     Q_OBJECT
     public:
-        typedef QList<ISettingsCategorieWidget*>    SettingsList;
-        PreferenceWidget( const QString& categorie, SettingsManager::Type type,
+        typedef QList<ISettingsCategoryWidget*>    SettingsList;
+        PreferenceWidget( const QString& category, SettingsManager::Type type,
                           QWidget* parent = 0 );
         virtual ~PreferenceWidget() {}
 
         virtual void    save();
-        const QString   &categorie() const;
+        const QString   &category() const;
     protected:
         void            changeEvent( QEvent *e );
 
     private:
-        ISettingsCategorieWidget        *widgetFactory( SettingValue* s );
+        ISettingsCategoryWidget        *widgetFactory( SettingValue* s );
         void            retranslateUi();
 
     private:
-        QString                     m_categorie;
+        QString                     m_category;
         SettingsList                m_settings;
         QHash<SettingValue*, QLabel*>  m_labels;
 };

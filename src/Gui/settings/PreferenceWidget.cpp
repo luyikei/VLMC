@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include "PreferenceWidget.h"
 #include "SettingsManager.h"
 
@@ -41,20 +41,20 @@
 #include <QHashIterator>
 #include <QEvent>
 
-PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::Type type,
+PreferenceWidget::PreferenceWidget( const QString &category, SettingsManager::Type type,
                                     QWidget *parent ) :
     QScrollArea( parent ),
-    m_categorie( categorie )
+    m_category( category )
 {
     QWidget     *container = new QWidget( this );
     SettingsManager::SettingHash    settings =
-            SettingsManager::getInstance()->group( categorie, type );
+            SettingsManager::getInstance()->group( category, type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 
     foreach ( SettingValue* s, settings.values() )
     {
-        ISettingsCategorieWidget    *widget = widgetFactory( s );
+        ISettingsCategoryWidget    *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
         label->setToolTip( tr( s->description() ) );
         m_labels.insert( s, label );
@@ -66,10 +66,10 @@ PreferenceWidget::PreferenceWidget( const QString &categorie, SettingsManager::T
     setWidget( container );
     setWidgetResizable( true );
     setFrameStyle( QFrame::NoFrame );
-    m_categorie[0] = m_categorie[0].toUpper();
+    m_category[0] = m_category[0].toUpper();
 }
 
-ISettingsCategorieWidget*
+ISettingsCategoryWidget*
 PreferenceWidget::widgetFactory( SettingValue *s )
 {
     switch ( s->type() )
@@ -92,14 +92,14 @@ PreferenceWidget::widgetFactory( SettingValue *s )
 void
 PreferenceWidget::save()
 {
-    foreach ( ISettingsCategorieWidget* w, m_settings )
+    foreach ( ISettingsCategoryWidget* w, m_settings )
         w->save();
 }
 
 const QString&
-PreferenceWidget::categorie() const
+PreferenceWidget::category() const
 {
-    return m_categorie;
+    return m_category;
 }
 
 void

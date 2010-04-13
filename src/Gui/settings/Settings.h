@@ -47,7 +47,7 @@ class   Settings : public QDialog
     public:
         Settings( SettingsManager::Type type, QWidget* parent = 0, Qt::WindowFlags f = 0 );
 
-        void                        addCategorie( const QString& name,
+        void                        addCategory( const QString& name,
                                                     SettingsManager::Type type,
                                                     const QIcon& icon,
                                                     const QString& label );

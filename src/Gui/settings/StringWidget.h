@@ -23,14 +23,14 @@
 #ifndef STRINGWIDGET_H
 #define STRINGWIDGET_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   SettingValue;
 
 class   QLineEdit;
 
-class   StringWidget : public ISettingsCategorieWidget
+class   StringWidget : public ISettingsCategoryWidget
 {
     public:
         StringWidget( SettingValue *s, QWidget *parent = NULL );

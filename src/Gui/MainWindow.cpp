@@ -419,10 +419,10 @@ void MainWindow::initializeDockWidgets( void )
 void        MainWindow::createGlobalPreferences()
 {
     m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
-    m_globalPreferences->addCategorie( "general", SettingsManager::Vlmc,
+    m_globalPreferences->addCategory( "general", SettingsManager::Vlmc,
                                    QIcon( ":/images/images/vlmc.png" ),
                                    tr ( "VLMC settings" ) );
-    m_globalPreferences->addCategorie( "keyboard", SettingsManager::Vlmc,
+    m_globalPreferences->addCategory( "keyboard", SettingsManager::Vlmc,
                                      QIcon( ":/images/keyboard" ),
                                      tr( "Keyboard Settings" ) );
 }
@@ -430,13 +430,13 @@ void        MainWindow::createGlobalPreferences()
 void    MainWindow::createProjectPreferences()
 {
     m_projectPreferences = new Settings( SettingsManager::Project, this );
-    m_projectPreferences->addCategorie( "general", SettingsManager::Project,
+    m_projectPreferences->addCategory( "general", SettingsManager::Project,
                                    QIcon( ":/images/images/vlmc.png" ),
                                    tr ( "Project settings" ) );
-    m_projectPreferences->addCategorie( "video", SettingsManager::Project,
+    m_projectPreferences->addCategory( "video", SettingsManager::Project,
                                    QIcon( ":/images/images/video.png" ),
                                    tr ( "Video settings" ) );
-    m_projectPreferences->addCategorie( "audio", SettingsManager::Project,
+    m_projectPreferences->addCategory( "audio", SettingsManager::Project,
                                    QIcon( ":/images/images/audio.png" ),
                                    tr ( "Audio settings" ) );
 }

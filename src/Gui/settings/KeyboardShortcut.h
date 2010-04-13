@@ -23,13 +23,13 @@
 #ifndef KEYBOARDSHORTCUT_H
 #define KEYBOARDSHORTCUT_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   KeyboardShortcutInput;
 class   SettingValue;
 
-class   KeyboardShortcut : public ISettingsCategorieWidget
+class   KeyboardShortcut : public ISettingsCategoryWidget
 {
     public:
         KeyboardShortcut( SettingValue *s, QWidget *parent = NULL );

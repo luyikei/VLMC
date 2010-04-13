@@ -23,14 +23,14 @@
 #ifndef INTWIDGET_H
 #define INTWIDGET_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   SettingValue;
 
 class   QSpinBox;
 
-class   IntWidget : public ISettingsCategorieWidget
+class   IntWidget : public ISettingsCategoryWidget
 {
     public:
         IntWidget( SettingValue *s, QWidget *parent = NULL );

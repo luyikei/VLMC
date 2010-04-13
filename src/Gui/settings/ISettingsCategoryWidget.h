@@ -21,17 +21,17 @@
  *****************************************************************************/
 
 
-#ifndef ISETTINGSCATEGORIEWIDGET_H
-#define ISETTINGSCATEGORIEWIDGET_H
+#ifndef ISETTINGSCATEGORYWIDGET_H
+#define ISETTINGSCATEGORYWIDGET_H
 
 class   QVariant;
 class   QWidget;
 
-class   ISettingsCategorieWidget
+class   ISettingsCategoryWidget
 {
     public:
         virtual QWidget*        widget() = 0;
         virtual void            save() = 0;
 };
 
-#endif // ISETTINGSCATEGORIEWIDGET_H
+#endif // ISETTINGSCATEGORYWIDGET_H

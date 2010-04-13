@@ -60,7 +60,7 @@ Settings::Settings( SettingsManager::Type type, QWidget* parent, Qt::WindowFlags
              this, SLOT( switchWidget( int ) ) );
 }
 
-void        Settings::addCategorie( const QString& name,
+void        Settings::addCategory( const QString& name,
                                     SettingsManager::Type type,
                                  const QIcon& icon,
                                  const QString& label )
@@ -136,7 +136,7 @@ void    Settings::switchWidget( int index )
             qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( index ) );
 
     Q_ASSERT( pWidget != NULL );
-    m_title->setText( pWidget->categorie() );
+    m_title->setText( pWidget->category() );
     m_stackedLayout->setCurrentIndex( index );
 }
 

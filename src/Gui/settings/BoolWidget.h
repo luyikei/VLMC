@@ -23,14 +23,14 @@
 #ifndef BOOLWIDGET_H
 #define BOOLWIDGET_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   SettingValue;
 
 class   QCheckBox;
 
-class   BoolWidget : public ISettingsCategorieWidget
+class   BoolWidget : public ISettingsCategoryWidget
 {
     public:
         BoolWidget( SettingValue *s, QWidget *parent = NULL );

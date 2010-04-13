@@ -23,14 +23,14 @@
 #ifndef LANGUAGEWIDGET_H
 #define LANGUAGEWIDGET_H
 
-#include "ISettingsCategorieWidget.h"
+#include "ISettingsCategoryWidget.h"
 #include <stddef.h>
 
 class   SettingValue;
 
 class   QComboBox;
 
-class   LanguageWidget : public ISettingsCategorieWidget
+class   LanguageWidget : public ISettingsCategoryWidget
 {
     public:
         LanguageWidget( SettingValue *s, QWidget *parent = NULL );
