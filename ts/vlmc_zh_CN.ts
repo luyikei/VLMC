@@ -33,7 +33,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/About.ui" line="105"/>
         <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>运行期 Qt 版本: %1 (根据 %2 编译)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="113"/>
@@ -186,22 +186,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="245"/>
         <source>Media Library</source>
-        <translation type="unfinished">媒体库</translation>
+        <translation>媒体库</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="350"/>
         <source>Clip Preview</source>
-        <translation type="unfinished">剪辑预览</translation>
+        <translation>剪辑预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="359"/>
         <source>Project Preview</source>
-        <translation type="unfinished">项目预览</translation>
+        <translation>项目预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="367"/>
         <source>History</source>
-        <translation type="unfinished">历史</translation>
+        <translation>历史</translation>
     </message>
 </context>
 <context>
@@ -209,12 +209,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="66"/>
         <source>The project has been modified.</source>
-        <translation type="unfinished">此项目已被修改。</translation>
+        <translation>此项目已被修改。</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="67"/>
         <source>Do you want to save it ?</source>
-        <translation type="unfinished">是否希望保存此项目?</translation>
+        <translation>是否希望保存此项目?</translation>
     </message>
 </context>
 <context>
@@ -322,7 +322,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="325"/>
         <source>Failed to load %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载 %1</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="14"/>
@@ -332,7 +332,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="71"/>
         <source>TextLabel</source>
-        <translation type="unfinished">文本标签</translation>
+        <translation>文本标签</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ui/ImportController.ui" line="132"/>
@@ -385,7 +385,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="20"/>
         <source>VideoLAN Movie Creator</source>
-        <translation type="unfinished">VideoLAN Movie Creator</translation>
+        <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="32"/>
@@ -400,12 +400,22 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;请注意&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator 为 &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; 软件，尚未进入发布阶段。很多关键功能仍 &lt;span style=&quot; font-weight:600;&quot;&gt;暂缺&lt;/span&gt;，或者甚至 &lt;span style=&quot; font-weight:600;&quot;&gt;还有问题&lt;/span&gt;。&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;我们团队由志愿者组成，他们正努力为您奉上最佳的视频编辑体验。&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;了解更多&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="79"/>
         <source>I understand</source>
-        <translation type="unfinished"></translation>
+        <translation>我知道了</translation>
     </message>
 </context>
 <context>
@@ -413,7 +423,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/ListViewController.cpp" line="34"/>
         <source>Media List</source>
-        <translation type="unfinished"></translation>
+        <translation>媒体列表</translation>
     </message>
 </context>
 <context>
@@ -765,98 +775,98 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
         <source>Render settings</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染设置</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
         <source>Output file</source>
-        <translation type="unfinished"></translation>
+        <translation>输出文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="32"/>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>选择...</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="41"/>
         <source>Width</source>
-        <translation type="unfinished">宽度</translation>
+        <translation>宽度</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="58"/>
         <source>Height</source>
-        <translation type="unfinished">高度</translation>
+        <translation>高度</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="75"/>
         <source>FPS</source>
-        <translation type="unfinished">帧率</translation>
+        <translation>帧率</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="92"/>
         <source>Video quality</source>
-        <translation type="unfinished"></translation>
+        <translation>视频质量</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="99"/>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>音频质量</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="122"/>
         <source>Video codec</source>
-        <translation type="unfinished"></translation>
+        <translation>视频编解码器</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="133"/>
         <source>H264</source>
-        <translation type="unfinished"></translation>
+        <translation>H264</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="141"/>
         <source>Audio codec</source>
-        <translation type="unfinished"></translation>
+        <translation>音频编解码器</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="152"/>
         <source>AAC</source>
-        <translation type="unfinished"></translation>
+        <translation>AAC</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="53"/>
         <source>Enter the output file name</source>
-        <translation type="unfinished">输入输出文件名</translation>
+        <translation>输入输出文件名</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="54"/>
         <source>Videos(*.avi *.mpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>视频(*.avi *.mpg)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="63"/>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="72"/>
         <source>Invalid parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>无效参数</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="64"/>
         <source>Please enter valid rendering parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入有效的渲染参数</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="73"/>
         <source>Please provide a valid output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>请提供有效的输出文件!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="81"/>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>文件已存在!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="82"/>
         <source>Output file already exists, do you want to overwrite it ?</source>
-        <translation type="unfinished"></translation>
+        <translation>输出文件已存在，是否覆写?</translation>
     </message>
 </context>
 <context>
