@@ -69,9 +69,9 @@ TracksScene::askRemoveSelectedItems()
 
     QString message;
     if ( selectedItems().size() == 1 )
-        message = tr("Confirm the deletion of the region ?");
+        message = tr("Confirm the deletion of the region?");
     else
-        message = tr("Confirm the deletion of those regions ?");
+        message = tr("Confirm the deletion of those regions?");
 
     QMessageBox::StandardButton b =
     QMessageBox::warning( tv, "Object deletion",

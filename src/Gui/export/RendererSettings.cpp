@@ -80,7 +80,7 @@ RendererSettings::accept()
         QMessageBox::StandardButton b =
                 QMessageBox::question( this, tr( "File already exists!" ),
                                        tr( "Output file already exists, do you want to "
-                                           "overwrite it ?" ),
+                                           "overwrite it?" ),
                                        QMessageBox::Yes | QMessageBox::No,
                                        QMessageBox::No );
         if ( b == QMessageBox::No )
