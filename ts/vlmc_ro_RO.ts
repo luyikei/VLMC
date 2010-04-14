@@ -35,7 +35,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Runtime versiunea Qt: %1 (compilat cu %2)</translation>
     </message>
 </context>
 <context>
@@ -144,30 +144,30 @@ p, li { white-space: pre-wrap; }
     <name>DockWidgetManager</name>
     <message>
         <source>Media Library</source>
-        <translation type="unfinished">Biblioteca media</translation>
+        <translation>Biblioteca media</translation>
     </message>
     <message>
         <source>Clip Preview</source>
-        <translation type="unfinished">Previzualizare clip</translation>
+        <translation>Previzualizare clip</translation>
     </message>
     <message>
         <source>Project Preview</source>
-        <translation type="unfinished">Previzualizare proiect</translation>
+        <translation>Previzualizare proiect</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished">Istoric</translation>
+        <translation>Istoric</translation>
     </message>
 </context>
 <context>
     <name>GUIProjectManager</name>
     <message>
         <source>The project has been modified.</source>
-        <translation type="unfinished">Proiectul a fost modificat.</translation>
+        <translation>Proiectul a fost modificat.</translation>
     </message>
     <message>
         <source>Do you want to save it ?</source>
-        <translation type="unfinished">Doriţi să îl salvaţi?</translation>
+        <translation>Doriţi să îl salvaţi?</translation>
     </message>
 </context>
 <context>
@@ -295,18 +295,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>TextLabel</source>
-        <translation type="unfinished">Eticheta</translation>
+        <translation>Eticheta</translation>
     </message>
     <message>
         <source>Failed to load %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu am putut încărca %1</translation>
     </message>
 </context>
 <context>
     <name>IntroDialog</name>
     <message>
         <source>VideoLAN Movie Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -320,18 +320,28 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Atentie&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator este program &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;si nu este o versiune stabila. Multe facilitati &lt;span style=&quot; font-weight:600;&quot;&gt;lipsesc&lt;/span&gt;,sau chiar au &lt;span style=&quot; font-weight:600;&quot;&gt;bugg-uri&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Echipa noastra de voluntari lucreaza din greu pentru a va oferi un soft de editare video cat mai bun.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>I understand</source>
-        <translation type="unfinished"></translation>
+        <translation>Am înţeles</translation>
     </message>
 </context>
 <context>
     <name>ListViewController</name>
     <message>
         <source>Media List</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista media</translation>
     </message>
 </context>
 <context>
@@ -342,11 +352,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>File</source>
-        <translation>Fisier</translation>
+        <translation>Fişier</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editeaza</translation>
+        <translation>Editează</translation>
     </message>
     <message>
         <source>View</source>
@@ -362,7 +372,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Window</source>
-        <translation>Fereastra</translation>
+        <translation>Fereastră</translation>
     </message>
     <message>
         <source>Help</source>
@@ -370,7 +380,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Quit</source>
-        <translation>Iesire</translation>
+        <translation>Ieşire</translation>
     </message>
     <message>
         <source>About</source>
@@ -378,7 +388,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Preferences</source>
-        <translation>Preferinte</translation>
+        <translation>Preferinţe</translation>
     </message>
     <message>
         <source>Media Library</source>
@@ -390,7 +400,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Transcode</source>
-        <translatorcomment>Niet zeker</translatorcomment>
         <translation>Codare</translation>
     </message>
     <message>
@@ -407,19 +416,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load Project</source>
-        <translation>Incarca proiectul</translation>
+        <translation>Încarcă proiectul</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salveaza</translation>
+        <translation>Salvează</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importa</translation>
+        <translation>Importă</translation>
     </message>
     <message>
         <source>Project Preferences</source>
-        <translation>Preferintele proiectului</translation>
+        <translation>Preferinţele proiectului</translation>
     </message>
     <message>
         <source>Enable effects engine</source>
@@ -431,7 +440,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Project Wizard</source>
-        <translation>Indrumator proiect</translation>
+        <translation>Îndrumător proiect</translation>
     </message>
     <message>
         <source>Save As</source>
@@ -447,7 +456,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation>Setari tastatura</translation>
+        <translation>Setări tastatură</translation>
     </message>
     <message>
         <source>Sorry</source>
@@ -475,27 +484,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Undo</source>
-        <translation>Anulare operatiune</translation>
+        <translation>Anulare operaţiune</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Reia operatiunea</translation>
+        <translation>Reia operaţiunea</translation>
     </message>
     <message>
         <source>VLMC settings</source>
-        <translation>Setari VLMC</translation>
+        <translation>Setări VLMC</translation>
     </message>
     <message>
         <source>Project settings</source>
-        <translation>Setarile proiectului</translation>
+        <translation>Setările proiectului</translation>
     </message>
     <message>
         <source>Video settings</source>
-        <translation>Setari video</translation>
+        <translation>Setări video</translation>
     </message>
     <message>
         <source>Audio settings</source>
-        <translation>Setari audio</translation>
+        <translation>Setări audio</translation>
     </message>
     <message>
         <source>VLMC Renderer</source>
@@ -560,211 +569,211 @@ p, li { white-space: pre-wrap; }
     <name>PreferenceWidget</name>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectaţi modul</translation>
     </message>
     <message>
         <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectaţi instrumentul de selecţie</translation>
     </message>
     <message>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod de tăiat</translation>
     </message>
     <message>
         <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectaţi instrumentul taiere/radere</translation>
     </message>
     <message>
         <source>Media preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizare media</translation>
     </message>
     <message>
         <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizează fişierul media selectat sau &quot;pauza&quot; pentru previzualizarea curentă</translation>
     </message>
     <message>
         <source>Render preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizarea randarii</translation>
     </message>
     <message>
         <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizează proiectul sau &quot;pauza&quot; pentru previzualizarea curentă</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Anulare operatiune</translation>
+        <translation>Anulare operaţiune</translation>
     </message>
     <message>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulează ultima operaţiune</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Reia operatiunea</translation>
+        <translation>Reia operaţiunea</translation>
     </message>
     <message>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Reia ultima operaţiune</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished">Ajutor</translation>
+        <translation>Ajutor</translation>
     </message>
     <message>
         <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
+        <translation>Comutare catre pagina de ajutor</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Iesire</translation>
+        <translation>Ieşire</translation>
     </message>
     <message>
         <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieşire VLMC</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">Preferinte</translation>
+        <translation>Preferinţe</translation>
     </message>
     <message>
         <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide preferinţele VLMC</translation>
     </message>
     <message>
         <source>Fullscreen</source>
-        <translation type="unfinished">Tot ecranul</translation>
+        <translation>Tot ecranul</translation>
     </message>
     <message>
         <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Schimbă în modul &quot;Tot ecranul&quot;</translation>
     </message>
     <message>
         <source>New project</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiect nou</translation>
     </message>
     <message>
         <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide îndrumătorul de proiect nou</translation>
     </message>
     <message>
         <source>Open a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide un proiect</translation>
     </message>
     <message>
         <source>Open an existing project</source>
-        <translation type="unfinished">Deschide un proiect existent</translation>
+        <translation>Deschide un proiect existent</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salveaza</translation>
+        <translation>Salvează</translation>
     </message>
     <message>
         <source>Save the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează proiectul curent</translation>
     </message>
     <message>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează ca</translation>
     </message>
     <message>
         <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează proiectul curent în fişierul nou</translation>
     </message>
     <message>
         <source>Close the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide proiectul</translation>
     </message>
     <message>
         <source>Close the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide proiectul curent</translation>
     </message>
     <message>
         <source>Import media</source>
-        <translation type="unfinished"></translation>
+        <translation>Importă fişiere media</translation>
     </message>
     <message>
         <source>Open the import window</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide fereastra de import</translation>
     </message>
     <message>
         <source>Render the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Randează proiectul</translation>
     </message>
     <message>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Randează proiectul catre fişierul</translation>
     </message>
     <message>
         <source>Langage</source>
-        <translation type="unfinished"></translation>
+        <translation>Limbă</translation>
     </message>
     <message>
         <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
+        <translation>Limba interfeţei programului VLMC</translation>
     </message>
     <message>
         <source>Automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvare automată</translation>
     </message>
     <message>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Când această opţine este activată ,VLMC va salva automat proiectul tău la un interval de timp specificat</translation>
     </message>
     <message>
         <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvare automată la un interval de</translation>
     </message>
     <message>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesta este intervalul de timp în care VLMC va aştepta între două salvări automate</translation>
     </message>
     <message>
         <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS-ul fişierului rezultat</translation>
     </message>
     <message>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadru pe secunda utilizat când previzualizezi şi randezi proiectul</translation>
     </message>
     <message>
         <source>Video width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lăţime video</translation>
     </message>
     <message>
         <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Cu rezoluţia fişierului video rezultat</translation>
     </message>
     <message>
         <source>Video height</source>
-        <translation type="unfinished"></translation>
+        <translation>Înălţime video</translation>
     </message>
     <message>
         <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezoluţia  înaltă a fişierului rezultat</translation>
     </message>
     <message>
         <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio samplerate</translation>
     </message>
     <message>
         <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieşire proiect audio samplerate</translation>
     </message>
     <message>
         <source>Workspace location</source>
-        <translation type="unfinished"></translation>
+        <translation>Locaţia de lucru</translation>
     </message>
     <message>
         <source>The place where all project&apos;s videos will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>Locul în care toate proiectele vor fi depozitate</translation>
     </message>
     <message>
         <source>Project name</source>
-        <translation type="unfinished">Numele proiectului</translation>
+        <translation>Numele proiectului</translation>
     </message>
     <message>
         <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Numele proiectului</translation>
     </message>
 </context>
 <context>
@@ -828,98 +837,98 @@ p, li { white-space: pre-wrap; }
     <name>RendererSettings</name>
     <message>
         <source>Output file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul rezultat</translation>
     </message>
     <message>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează...</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished">Orizontal</translation>
+        <translation>Orizontal</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Vertical</translation>
+        <translation>Vertical</translation>
     </message>
     <message>
         <source>FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS</translation>
     </message>
     <message>
         <source>Video quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitatea video</translation>
     </message>
     <message>
         <source>Audio quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitatea audio</translation>
     </message>
     <message>
         <source>Video codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec video</translation>
     </message>
     <message>
         <source>H264</source>
-        <translation type="unfinished"></translation>
+        <translation>H264</translation>
     </message>
     <message>
         <source>Audio codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec audio</translation>
     </message>
     <message>
         <source>AAC</source>
-        <translation type="unfinished"></translation>
+        <translation>AAC</translation>
     </message>
     <message>
         <source>Enter the output file name</source>
-        <translation type="unfinished">Alegeti calea fisierului rezultat</translation>
+        <translation>Alegeţi calea fişierului rezultat</translation>
     </message>
     <message>
         <source>Render settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Setările de randare</translation>
     </message>
     <message>
         <source>Videos(*.avi *.mpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Video(*.avi *.mpg)</translation>
     </message>
     <message>
         <source>Invalid parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri invalizi</translation>
     </message>
     <message>
         <source>Please enter valid rendering parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Vă rog să introduceţi parametrii de randare</translation>
     </message>
     <message>
         <source>Please provide a valid output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vă rog indicaţi un fişier rezultat valid!</translation>
     </message>
     <message>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul există deja!</translation>
     </message>
     <message>
         <source>Output file already exists, do you want to overwrite it ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul rezultat deja există,vreţi să-l suprascriu?</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>general</translation>
     </message>
     <message>
         <source>keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>tastatură</translation>
     </message>
     <message>
         <source>video</source>
-        <translation type="unfinished"></translation>
+        <translation>video</translation>
     </message>
     <message>
         <source>audio</source>
-        <translation type="unfinished"></translation>
+        <translation>audio</translation>
     </message>
 </context>
 <context>
@@ -1238,7 +1247,7 @@ Apoi faceţi clic pe Next pentru a continua ......</translation>
     </message>
     <message>
         <source>Do not show at startup.</source>
-        <translation>Nu arata la startup</translation>
+        <translation>Nu arăta la startup.</translation>
     </message>
 </context>
 <context>
