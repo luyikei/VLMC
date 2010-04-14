@@ -561,6 +561,217 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>PreferenceWidget</name>
+    <message>
+        <source>Select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the selection tool in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the cut/razor tool in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview the selected media, or pause the current preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Render preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview the project, or pause the current preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Undo the last action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Dopredu</translation>
+    </message>
+    <message>
+        <source>Redo the last action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished">Pomocník</translation>
+    </message>
+    <message>
+        <source>Toggle the help page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished">Koniec</translation>
+    </message>
+    <message>
+        <source>Quit VLMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished">Vlastnosti</translation>
+    </message>
+    <message>
+        <source>Open VLMC preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fullscreen</source>
+        <translation type="unfinished">Celoobrazovkový režim</translation>
+    </message>
+    <message>
+        <source>Switch to fullscreen mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the new project wizzard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open an existing project</source>
+        <translation type="unfinished">Otvoriť existujúci projekt</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Uložiť</translation>
+    </message>
+    <message>
+        <source>Save the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the current project to a new file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close the project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import media</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the import window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Render the project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Render the project to a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Langage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The VLMC&apos;s UI language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic save interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the interval that VLMC will wait between two automatic save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output video FPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame Per Second used when previewing and rendering the project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width resolution of the output video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height resolution of the output video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio samplerate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output project audio samplerate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Workspace location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The place where all project&apos;s videos will be stored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project name</source>
+        <translation type="unfinished">Názov projektu</translation>
+    </message>
+    <message>
+        <source>The project name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PreviewWidget</name>
     <message>
         <source>Preview</source>
@@ -588,7 +799,7 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QObject</name>
-    <message>
+    <message id="false">
         <source>Adding clip to track %1</source>
         <translation>Pridávanie klipu k stope %1</translation>
     </message>
@@ -693,6 +904,25 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Output file already exists, do you want to overwrite it ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Settings</name>
+    <message>
+        <source>general</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
