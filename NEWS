@@ -1,1 +1,12 @@
-One day this file will contain a changelog.
+Changes between 0.1.0 and 0.1.1:
+
+Timeline:
+* Fixed clip deletion problems
+
+General:
+* Do not consider VLMC crashed last time when launched the first time
+* Fixing a marker refresh bug
+* Corrected next/previous frame icons
+* Corrected many typo/untranslated strings
+
+
