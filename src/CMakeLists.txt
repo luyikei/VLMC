@@ -1,5 +1,8 @@
-#CMakeQt by Rohit Yadav<rohityadav89@gmail.com>
-#CMake Build System for Qt
+#
+# VLMC build system
+# Authors: Rohit Yadav <rohityadav89@gmail.com>
+#          Ludovic Fauvet <etix@vlmc.org>
+#
 
 SUBDIRS(EffectsEngine/Plugins/src)
 

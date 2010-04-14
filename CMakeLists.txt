@@ -1,6 +1,8 @@
-#Forking CMakeQt by Rohit Yadav<rohityadav89@gmail.com>
-#CMake Build System for Qt Project: VLMC
-#Edit as per needs...
+#
+# VLMC build system
+# Authors: Rohit Yadav <rohityadav89@gmail.com>
+#          Ludovic Fauvet <etix@vlmc.org>
+#
 
 #Project Info
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")

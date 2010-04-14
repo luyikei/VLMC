@@ -1,3 +1,8 @@
+#
+# VLMC build system
+# Authors: Ludovic Fauvet <etix@vlmc.org>
+#
+
 # this one is important
 SET(CMAKE_SYSTEM_NAME Windows)
 #this one not so much

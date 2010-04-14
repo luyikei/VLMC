@@ -1,3 +1,8 @@
+#
+# VLMC modules build system
+# Authors: Ludovic Fauvet <etix@vlmc.org>
+#
+
 PROJECT(BlitInRectangleEffectPlugin)
 
 INCLUDE(${QT_USE_FILE})

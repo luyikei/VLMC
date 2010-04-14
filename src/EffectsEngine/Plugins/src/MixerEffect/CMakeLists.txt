@@ -1,3 +1,8 @@
+#
+# VLMC modules build system
+# Authors: Ludovic Fauvet <etix@vlmc.org>
+#
+
 PROJECT(MixerEffectPlugin)
 
 INCLUDE(${QT_USE_FILE})

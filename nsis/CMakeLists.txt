@@ -1,3 +1,7 @@
+#
+# VLMC NSIS builder
+# Authors: Ludovic Fauvet <etix@vlmc.org>
+#
 
 # Output file name
 SET(NSIS_OUTPUT_FILE "${PROJECT_NAME}.exe")
