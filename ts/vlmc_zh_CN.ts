@@ -706,262 +706,262 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="176"/>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>选择模式</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="177"/>
         <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>选择时间轴中的选取工具</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="179"/>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>切割模式</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="180"/>
         <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>选择时间轴中的切割/剔除工具</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="182"/>
         <source>Media preview</source>
-        <translation type="unfinished"></translation>
+        <translation>媒体预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="183"/>
         <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>预览所选媒体，或者暂停当前预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="185"/>
         <source>Render preview</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="186"/>
         <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>预览项目，或者暂停当前预览</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="190"/>
         <source>Undo</source>
-        <translation type="unfinished">撤销</translation>
+        <translation>撤销</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="191"/>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>撤销上一个操作</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="194"/>
         <source>Redo</source>
-        <translation type="unfinished">重做</translation>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="195"/>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>重做上一个操作</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="198"/>
         <source>Help</source>
-        <translation type="unfinished">帮助</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="199"/>
         <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
+        <translation>切换至帮助页面</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="201"/>
         <source>Quit</source>
-        <translation type="unfinished">退出</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="202"/>
         <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>退出 VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="204"/>
         <source>Preferences</source>
-        <translation type="unfinished">首选项</translation>
+        <translation>首选项</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="205"/>
         <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 VLMC 首选项</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="207"/>
         <source>Fullscreen</source>
-        <translation type="unfinished">全屏</translation>
+        <translation>全屏</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="208"/>
         <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>切换至全屏模式</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="211"/>
         <source>New project</source>
-        <translation type="unfinished"></translation>
+        <translation>新建项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="212"/>
         <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
+        <translation>打开新建项目向导</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="215"/>
         <source>Open a project</source>
-        <translation type="unfinished"></translation>
+        <translation>打开项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="216"/>
         <source>Open an existing project</source>
-        <translation type="unfinished">打开已有项目</translation>
+        <translation>打开现有项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="219"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="220"/>
         <source>Save the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>保存当前项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="222"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>另存</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="223"/>
         <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>将当前项目另存为新文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="226"/>
         <source>Close the project</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="227"/>
         <source>Close the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭当前项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="229"/>
         <source>Import media</source>
-        <translation type="unfinished"></translation>
+        <translation>导入媒体</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="230"/>
         <source>Open the import window</source>
-        <translation type="unfinished"></translation>
+        <translation>打开导入窗口</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="232"/>
         <source>Render the project</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="233"/>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>将项目渲染为文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Langage</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="237"/>
         <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 的界面语言</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="42"/>
         <source>Automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="43"/>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
+        <translation>当此选项处于激活状态时，VLMC 将依指定的时间间隔自动保存您的项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="51"/>
         <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存间隔</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="52"/>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>这是 VLMC 在两次自动保存之间等待的时间间隔</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="48"/>
         <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>输出视频帧率</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="49"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
+        <translation>预览及渲染项目时所用帧率</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="51"/>
         <source>Video width</source>
-        <translation type="unfinished"></translation>
+        <translation>视频宽度</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="52"/>
         <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>输出视频分辨率中的宽度</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="54"/>
         <source>Video height</source>
-        <translation type="unfinished"></translation>
+        <translation>视频高度</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="55"/>
         <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>输出视频分辨率中的高度</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="57"/>
         <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>音频采样率</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="58"/>
         <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>输出项目音频采样率</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="60"/>
         <source>Workspace location</source>
-        <translation type="unfinished"></translation>
+        <translation>工作空间路径</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="61"/>
         <source>The place where all project&apos;s videos will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>项目的所有视频所储存的地方</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Project name</source>
-        <translation type="unfinished">项目名称</translation>
+        <translation>项目名称</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="65"/>
         <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>项目的名称</translation>
     </message>
 </context>
 <context>
@@ -1138,22 +1138,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/MainWindow.cpp" line="422"/>
         <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>全局</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="425"/>
         <source>keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>键盘</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="436"/>
         <source>video</source>
-        <translation type="unfinished"></translation>
+        <translation>视频</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="439"/>
         <source>audio</source>
-        <translation type="unfinished"></translation>
+        <translation>音频</translation>
     </message>
 </context>
 <context>
