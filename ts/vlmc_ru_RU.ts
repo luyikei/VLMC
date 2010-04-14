@@ -400,7 +400,17 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ВидеоРедактор VideoLAN является &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; программой и не готов для основного использования. Многие ключевые возможности &lt;span style=&quot; font-weight:600;&quot;&gt;просто отсутствуют&lt;/span&gt; или даже &lt;span style=&quot; font-weight:600;&quot;&gt;неисправны&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Наша команда состоит из добровольцев, усердно работающих над предоставлением вам лучшего опыта редактирования видео.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="79"/>
@@ -451,7 +461,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="464"/>
         <source>Sorry</source>
-        <translation>Сожалею</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="465"/>
@@ -461,7 +471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="473"/>
         <source>VLMC Renderer</source>
-        <translation>Вывод VLMC</translation>
+        <translation>Вывод из VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="473"/>
@@ -594,7 +604,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="165"/>
         <source>Render</source>
-        <translation>Выполнить</translation>
+        <translation>Вывести</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="170"/>
@@ -604,7 +614,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="175"/>
         <source>Save</source>
-        <translation>Записать</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="180"/>
@@ -695,262 +705,262 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="176"/>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим выделения</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="177"/>
         <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать инструмент &quot;выделение&quot; на шкале времени</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="179"/>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим обрезки</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="180"/>
         <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать инструмент &quot;обрезка/бритва&quot; на шкале времени</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="182"/>
         <source>Media preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр медиа</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="183"/>
         <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Осуществить предпросмотр выбранного медиа или приостановить его</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="185"/>
         <source>Render preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр вывода</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="186"/>
         <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр проекта и его приостановка</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="190"/>
         <source>Undo</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="191"/>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить последнее действие</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="194"/>
         <source>Redo</source>
-        <translation type="unfinished">Повторить</translation>
+        <translation>Повторить</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="195"/>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторить последнее действие</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="198"/>
         <source>Help</source>
-        <translation type="unfinished">Помощь</translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="199"/>
         <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать справку</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="201"/>
         <source>Quit</source>
-        <translation type="unfinished">Выход</translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="202"/>
         <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="204"/>
         <source>Preferences</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="205"/>
         <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть настройки VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="207"/>
         <source>Fullscreen</source>
-        <translation type="unfinished">На весь экран</translation>
+        <translation>На весь экран</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="208"/>
         <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключиться в полноэкранный режим</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="211"/>
         <source>New project</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="212"/>
         <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть помощник проектов</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="215"/>
         <source>Open a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="216"/>
         <source>Open an existing project</source>
-        <translation type="unfinished">Открыть существующий проект</translation>
+        <translation>Открыть существующий проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="219"/>
         <source>Save</source>
-        <translation type="unfinished">Записать</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="220"/>
         <source>Save the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить текущий проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="222"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить как</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="223"/>
         <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить текущий проект в новом файле</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="226"/>
         <source>Close the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="227"/>
         <source>Close the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть текущий проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="229"/>
         <source>Import media</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать медиа</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="230"/>
         <source>Open the import window</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть окно импортирования</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="232"/>
         <source>Render the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Вывести проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="233"/>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вывести проект в файл</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Langage</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="237"/>
         <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык интерфейса VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="42"/>
         <source>Automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматическое сохранение</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="43"/>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Когда эта настройка включена, VLMC будет автоматически сохранять проект через указанные промежутки времени</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="51"/>
         <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Промежуток автосохранения</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="52"/>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Промежуток времени между двумя автоматическими сохранениями</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="48"/>
         <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота кадров видео на выходе</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="49"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Число кадров в секунду, используемое при предпросмотре и выводе данного проекта</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="51"/>
         <source>Video width</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина видео</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="52"/>
         <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешение видео на выходе по ширине</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="54"/>
         <source>Video height</source>
-        <translation type="unfinished"></translation>
+        <translation>Высота видео</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="55"/>
         <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешение видео на выходе по высоте</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="57"/>
         <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота дискретизации звука</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="58"/>
         <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходная частота дискретизации звука</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="60"/>
         <source>Workspace location</source>
-        <translation type="unfinished"></translation>
+        <translation>Рабочий путь</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="61"/>
         <source>The place where all project&apos;s videos will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>Место хранения всех видео проекта</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Project name</source>
-        <translation type="unfinished">Название проекта</translation>
+        <translation>Название проекта</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="65"/>
         <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название проекта</translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1029,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Tools/Win32BacktraceGenerator.cpp" line="31"/>
         <source>Unable to get backtrace</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось получить сведения об ошибке</translation>
     </message>
 </context>
 <context>
@@ -1127,22 +1137,22 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/MainWindow.cpp" line="422"/>
         <location filename="../src/Gui/MainWindow.cpp" line="433"/>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>общие</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="425"/>
         <source>keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>клавиатура</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="436"/>
         <source>video</source>
-        <translation type="unfinished"></translation>
+        <translation>видео</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="439"/>
         <source>audio</source>
-        <translation type="unfinished"></translation>
+        <translation>звук</translation>
     </message>
 </context>
 <context>
@@ -1302,7 +1312,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/Transcode.cpp" line="181"/>
         <source>Warning</source>
-        <translation type="unfinished">Предупреждение</translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <location filename="../src/Gui/Transcode.cpp" line="182"/>
@@ -1525,7 +1535,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="98"/>
         <source>Sorry</source>
-        <translation type="unfinished">Сожалею</translation>
+        <translatorcomment>Не лучший заголовок окна, просьба переименовать во что-то более уместное. = Not the best title of the window, please rename to something more appropriate.</translatorcomment>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="99"/>
