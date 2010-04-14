@@ -128,7 +128,7 @@ MainWindow::MainWindow( QWidget *parent ) :
 
     if ( s.value( "ShowWizardStartup", true ).toBool() )
     {
-        //If a project was opened from the command line: don't show the wizzard.
+        //If a project was opened from the command line: don't show the wizard.
         if ( qApp->arguments().size() == 1 )
             m_pWizard->show();
     }
@@ -209,7 +209,7 @@ MainWindow::initVlmcPreferences()
     CREATE_MENU_SHORTCUT( "keyboard/newproject",
                           QKeySequence( QKeySequence::New ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "New project" ),
-                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the new project wizzard" ), actionNew_Project );
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the new project wizard" ), actionNew_Project );
     CREATE_MENU_SHORTCUT( "keyboard/openproject",
                           QKeySequence( QKeySequence::Open ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open a project" ),

@@ -73,7 +73,7 @@ private:
     /**
      *  \brief  Will check if vlmc closed nicely or crashed.
      *          If so, the emergency backup will be opened.
-     *  \return true if a project was restored. If so, the wizzard should
+     *  \return true if a project was restored. If so, the wizard should
      *          not be opened.
      */
     bool        restoreSession();
