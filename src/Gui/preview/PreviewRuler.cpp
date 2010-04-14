@@ -258,6 +258,7 @@ void PreviewRuler::setMarker( Marker m )
         m_markerStart = m_frame;
     else
         m_markerStop = m_frame;
+    update();
 }
 
 qint64 PreviewRuler::getMarker( Marker m ) const
