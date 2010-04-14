@@ -87,6 +87,7 @@ bool GeneralPage::validatePage()
 
     QVariant projectName( ui.lineEditName->text() );
     sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
+    sManager->setValue( "general/VLMCWorkspace", ui.lineEditWorkspace->text(), SettingsManager::Project );
 
     return true;
 }
