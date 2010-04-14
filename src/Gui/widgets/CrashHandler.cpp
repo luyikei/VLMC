@@ -52,7 +52,7 @@ CrashHandler::CrashHandler( int sig, QWidget *parent ) :
         sigName = "SIGILL (Illegal Instruction)";
     else
         sigName = "Unknown";
-    ui->crashDescriptionLabel->setText( tr("A crash occured. Signal received: ") + sigName );
+    ui->crashDescriptionLabel->setText( tr("A crash occurred. Signal received: ") + sigName );
 }
 
 CrashHandler::~CrashHandler()
