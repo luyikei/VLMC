@@ -67,7 +67,7 @@ void VideoPage::initializePage()
     int sampleRate = 44000;
 
     ui.comboBoxVideoPresets->setCurrentIndex( 0 );
-    ui.comboBoxAudioPresets->setCurrentIndex( 0 );
+    ui.comboBoxAudioPresets->setCurrentIndex( 1 );
     ui.spinBoxVideoWidth->setValue( projectWidth );
     ui.spinBoxVideoHeight->setValue( projectHeight );
     ui.doubleSpinBoxVideoFPS->setValue( projectFps );
