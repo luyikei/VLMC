@@ -233,7 +233,7 @@ MainWindow::initVlmcPreferences()
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project to a file" ), actionRender );
 
     VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Langage" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Language" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
     SettingsManager::getInstance()->watchValue( "general/VLMCLang",
                                                 LanguageHelper::getInstance(),
