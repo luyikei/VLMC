@@ -21,8 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
 #include "PreviewWidget.h"
+#include "PreviewRuler.h"
 #include "ui_PreviewWidget.h"
 #include "ClipRenderer.h"
 #include "Clip.h"
