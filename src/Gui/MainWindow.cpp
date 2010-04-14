@@ -629,7 +629,7 @@ bool    MainWindow::restoreSession()
                 if ( GUIProjectManager::getInstance()->loadEmergencyBackup() == true )
                     ret = true;
                 else
-                    QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We appology for the inconvenience" ) );
+                    QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
             }
         }
     }
