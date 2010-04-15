@@ -359,7 +359,6 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             computeLength();
             cw->disconnect();
             delete cw;
-            qDebug() << "Deleted clipworkflow";
             if ( m_length == 0 )
                 emit trackEndReached( m_trackId );
             return clip;

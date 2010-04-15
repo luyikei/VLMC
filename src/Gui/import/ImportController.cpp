@@ -200,7 +200,7 @@ ImportController::importDir( const QString &path )
     foreach ( QFileInfo fInfo, files )
     {
         if ( fInfo.isDir() == true )
-            importDir( fInfo.absolutePath() );
+            importDir( fInfo.absoluteFilePath() );
         else
         {
             QString ext = fInfo.suffix();
