@@ -56,7 +56,9 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         m_ui->arrow->hide();
     }
     if ( clip->getMedia()->isMetadataComputed() == false )
-        setEnabled( false );
+    {
+        m_ui->thumbnail->setEnabled( false );
+    }
     connect( clip->getMedia(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
     connect( clip->getMedia(), SIGNAL( snapshotComputed(const Media*) ),
@@ -76,7 +78,7 @@ void
 MediaCellView::metadataUpdated( const Media *media )
 {
     setLength( media->lengthMS() );
-    setEnabled( true );
+    m_ui->thumbnail->setEnabled( true );
 }
 
 void
