@@ -85,6 +85,7 @@ class ImportController : public QDialog
         quint32                     m_nbMediaToLoad;
         quint32                     m_nbMediaLoaded;
         ClipRenderer*               m_clipRenderer;
+        QStringList                 m_nameFilters;
 
     public slots:
         void        accept();

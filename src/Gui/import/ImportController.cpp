@@ -58,12 +58,11 @@ ImportController::ImportController(QWidget *parent) :
     m_filesModel = new QFileSystemModel( this );
     m_stackNav->pushViewController( m_mediaListView );
 
-    QStringList filters;
-    filters << Media::AudioExtensions.split(' ', QString::SkipEmptyParts)
+    m_nameFilters << Media::AudioExtensions.split(' ', QString::SkipEmptyParts)
             << Media::VideoExtensions.split(' ', QString::SkipEmptyParts)
             << Media::ImageExtensions.split(' ', QString::SkipEmptyParts);
     m_filesModel->setFilter( QDir::AllDirs | QDir::AllEntries | QDir::NoDotAndDotDot );
-    m_filesModel->setNameFilters( filters );
+    m_filesModel->setNameFilters( m_nameFilters );
     m_filesModel->setRootPath( "/" );
     m_filesModel->setNameFilterDisables( false );
 
@@ -194,7 +193,7 @@ void
 ImportController::importDir( const QString &path )
 {
     QDir            dir( path );
-    QFileInfoList   files = dir.entryInfoList( QDir::NoDotAndDotDot | QDir::Readable
+    QFileInfoList   files = dir.entryInfoList( m_nameFilters, QDir::NoDotAndDotDot | QDir::Readable
                                                | QDir::AllEntries );
 
     foreach ( QFileInfo fInfo, files )
@@ -202,16 +201,7 @@ ImportController::importDir( const QString &path )
         if ( fInfo.isDir() == true )
             importDir( fInfo.absoluteFilePath() );
         else
-        {
-            QString ext = fInfo.suffix();
-
-            if ( Media::AudioExtensions.contains( ext ) ||
-                 Media::VideoExtensions.contains( ext ) ||
-                 Media::ImageExtensions.contains( ext ) )
-            {
-                importMedia( fInfo.absoluteFilePath() );
-            }
-        }
+            importMedia( fInfo.absoluteFilePath() );
     }
 }
 
