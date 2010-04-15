@@ -41,7 +41,8 @@ MetaDataManager::~MetaDataManager()
         delete m_mediaPlayer;
 }
 
-void    MetaDataManager::launchComputing( Media *media )
+void
+MetaDataManager::launchComputing( Media *media )
 {
     m_computeInProgress = true;
     m_mediaPlayer = new LibVLCpp::MediaPlayer;
@@ -55,7 +56,8 @@ void    MetaDataManager::launchComputing( Media *media )
     worker->compute();
 }
 
-void    MetaDataManager::computingCompleted()
+void
+MetaDataManager::computingCompleted()
 {
     QMutexLocker lock( m_computingMutex );
 
@@ -79,6 +81,8 @@ MetaDataManager::computeMediaMetadata( Media *media )
 {
     QMutexLocker lock( m_computingMutex );
 
+    connect( media, SIGNAL( destroyed( QObject* ) ),
+             this, SLOT( mediaDestroyed( QObject*) ), Qt::DirectConnection );
     if ( m_computeInProgress == true )
     {
         m_mediaToCompute.enqueue( media );
@@ -87,4 +91,14 @@ MetaDataManager::computeMediaMetadata( Media *media )
     {
         launchComputing( media );
     }
+}
+
+void
+MetaDataManager::mediaDestroyed( QObject *sender )
+{
+    QMutexLocker    lock( m_computingMutex );
+
+    Media*  media = reinterpret_cast<Media*>( sender );
+    if ( m_mediaToCompute.contains( media ) )
+        m_mediaToCompute.removeAll( media );
 }

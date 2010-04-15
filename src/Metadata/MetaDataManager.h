@@ -57,6 +57,7 @@ class MetaDataManager : public QObject, public Singleton<MetaDataManager>
     private slots:
         void                    computingCompleted();
         void                    computingFailed( Media* media );
+        void                    mediaDestroyed( QObject* sender );
 
     signals:
         void                    failedToCompute( Media* );
