@@ -152,7 +152,7 @@ ClipRenderer::togglePlayPause( bool forcePause )
 void
 ClipRenderer::nextFrame()
 {
-    if ( m_isRendering == true && m_paused == true )
+    if ( m_isRendering == true )
     {
         m_mediaPlayer->nextFrame();
     }
@@ -161,8 +161,10 @@ ClipRenderer::nextFrame()
 void
 ClipRenderer::previousFrame()
 {
-    if ( m_isRendering == true && m_paused == true )
+    if ( m_isRendering == true )
     {
+        if ( m_paused == false )
+            togglePlayPause( true );
         qint64   interval =  static_cast<qint64>( (1.0f / m_mediaPlayer->getFps()) * 1000.0f );
         m_mediaPlayer->setTime( m_mediaPlayer->getTime() - interval );
     }
