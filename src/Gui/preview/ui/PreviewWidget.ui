@@ -54,11 +54,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Go to the previous frame</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/images/previous_frame.png</normaloff>:/images/images/previous_frame.png</iconset>
        </property>
        <property name="iconSize">
@@ -89,11 +92,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Play / Pause</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/play</normaloff>:/images/play</iconset>
        </property>
        <property name="iconSize">
@@ -124,11 +130,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Go to the next frame</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/images/next_frame.png</normaloff>:/images/images/next_frame.png</iconset>
        </property>
        <property name="iconSize">
@@ -159,11 +168,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Set marker A</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/marker_start</normaloff>:/images/marker_start</iconset>
        </property>
        <property name="iconSize">
@@ -194,11 +206,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Set marker B</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/marker_stop</normaloff>:/images/marker_stop</iconset>
        </property>
        <property name="iconSize">
@@ -229,11 +244,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Cut at markers position</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/editcut</normaloff>:/images/editcut</iconset>
        </property>
       </widget>
@@ -271,11 +289,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="statusTip">
+        <string>Stop the playback</string>
+       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../ressources.qrc">
+        <iconset resource="../../../../ressources.qrc">
          <normaloff>:/images/images/stop.png</normaloff>:/images/images/stop.png</iconset>
        </property>
        <property name="iconSize">
@@ -343,7 +364,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../ressources.qrc"/>
+  <include location="../../../../ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -319,6 +319,7 @@ void MainWindow::createStatusBar()
     mouseTool->setAutoRaise( true );
     mouseTool->setCheckable( true );
     mouseTool->setIcon( QIcon( ":/images/mouse" ) );
+    mouseTool->setStatusTip( tr( "Use the mouse tool to manipulate regions in the timeline" ) );
     m_ui.statusbar->addPermanentWidget( mouseTool );
 
     // Cut/Split tool
@@ -326,6 +327,7 @@ void MainWindow::createStatusBar()
     splitTool->setAutoRaise( true );
     splitTool->setCheckable( true );
     splitTool->setIcon( QIcon( ":/images/editcut" ) );
+    splitTool->setStatusTip( tr( "Use the scissors to cut regions in the timeline" ) );
     m_ui.statusbar->addPermanentWidget( splitTool );
 
     // Group the two previous buttons
@@ -352,6 +354,7 @@ void MainWindow::createStatusBar()
     // Zoom Out
     QToolButton* zoomOutButton = new QToolButton( this );
     zoomOutButton->setIcon( QIcon( ":/images/zoomout" ) );
+    zoomOutButton->setStatusTip( tr( "Zoom out" ) );
     m_ui.statusbar->addPermanentWidget( zoomOutButton );
     connect( zoomOutButton, SIGNAL( clicked() ),
              this, SLOT( zoomOut() ) );
@@ -372,6 +375,7 @@ void MainWindow::createStatusBar()
     // Zoom IN
     QToolButton* zoomInButton = new QToolButton( this );
     zoomInButton->setIcon( QIcon( ":/images/zoomin" ) );
+    zoomInButton->setStatusTip( tr( "Zoom in" ) );
     m_ui.statusbar->addPermanentWidget( zoomInButton );
     connect( zoomInButton, SIGNAL( clicked() ),
              this, SLOT( zoomIn() ) );
