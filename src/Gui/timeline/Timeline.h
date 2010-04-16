@@ -78,7 +78,7 @@ public slots:
      * \param start The position in frames.
      * \param
      */
-    void actionAddClip( Clip* clip, unsigned int track, qint64 start, MainWorkflow::TrackType trackType );
+    void actionAddClip( ClipHelper* clip, unsigned int track, qint64 start, MainWorkflow::TrackType trackType );
     /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.

@@ -33,10 +33,15 @@
 #include "Media.h"
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
-        oldTrackNumber( -1 ), oldPosition( -1 ), m_clip( clip ), m_tracksView( NULL ),
+        oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),
         m_group( NULL ), m_width( 0 ), m_height( 0 ), m_resizeExpected( false ),
         m_muted( false )
 {
+    m_clipHelper = new ClipHelper( clip );
+    // Adjust the width
+    setWidth( clip->length() );
+    // Automatically adjust future changes
+    connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
 }
@@ -225,58 +230,59 @@ qint64 AbstractGraphicsMediaItem::startPos()
 
 void AbstractGraphicsMediaItem::resize( qint64 size, From from )
 {
-    Q_ASSERT( clip() );
+    Q_ASSERT( clipHelper() );
 
     if ( size < 1 )
         return;
 
-    if ( clip()->getMedia()->fileType() != Media::Image )
-        if ( size > clip()->maxEnd() )
-            size = clip()->maxEnd();
+    if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
+        if ( size > clipHelper()->clip()->end() )
+            size = clipHelper()->clip()->end();
 
     if ( from == BEGINNING )
     {
-        if ( clip()->getMedia()->fileType() != Media::Image )
-            if ( clip()->begin() + size > clip()->maxEnd() )
+        if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
+            if ( clipHelper()->begin() + size > clipHelper()->end() )
                 return;
-        MainWorkflow::getInstance()->resizeClip( clip(), clip()->begin(),
-                                                 clip()->begin() + size, 0,
+        MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_clipHelper->begin(),
+                                                 m_clipHelper->begin() + size, 0,
                                                  trackNumber(), mediaType() );
     }
     else
     {
-        if ( clip()->getMedia()->fileType() != Media::Image )
+        if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
         {
-            qint64 newBegin = qMax( clip()->end() - size, (qint64)0 );
-            if ( clip()->maxBegin() > newBegin )
+            qint64 newBegin = qMax( m_clipHelper->end() - size, (qint64)0 );
+            if ( m_clipHelper->clip()->begin() > newBegin )
                 return;
 
             m_resizeExpected = true;
-            qint64 oldLength = clip()->length();
+            qint64 oldLength = m_clipHelper->length();
             qint64  newStart = startPos() + ( oldLength - size );
             if ( newStart < 0 )
                 return ;
-            MainWorkflow::getInstance()->resizeClip( clip(), qMax( clip()->end() - size, (qint64)0 ), clip()->end(),
+            MainWorkflow::getInstance()->resizeClip( m_clipHelper, qMax( m_clipHelper->end() - size,
+                                                                         (qint64)0 ), m_clipHelper->end(),
                                                      newStart, trackNumber(), mediaType() );
             setStartPos( newStart );
         }
         else
         {
             m_resizeExpected = true;
-            qint64 oldLength = clip()->length();
+            qint64 oldLength = m_clipHelper->length();
 //            Commands::trigger( new Commands::MainWorkflow::ResizeClip( clip()->getUuid(),
 //                                                                       0, size, startPos(),
 //                                                                       startPos() + oldLength,
 //                                                                       startPos() + ( oldLength - size ),
 //
 //                                                                       ))
-            MainWorkflow::getInstance()->resizeClip( clip(), 0, size, startPos() + ( oldLength - size ),
+            MainWorkflow::getInstance()->resizeClip( m_clipHelper, 0, size, startPos() + ( oldLength - size ),
                                                      trackNumber(), mediaType() );
             setStartPos( startPos() + ( oldLength - size ) );
         }
     }
 
-    setWidth( clip()->length() );
+    setWidth( m_clipHelper->length() );
 }
 
 void AbstractGraphicsMediaItem::adjustLength()
@@ -286,8 +292,8 @@ void AbstractGraphicsMediaItem::adjustLength()
         m_resizeExpected = false;
         return ;
     }
-    Q_ASSERT( clip() );
-    setWidth( clip()->length() );
+    Q_ASSERT( m_clipHelper );
+    setWidth( m_clipHelper->length() );
 }
 
 bool AbstractGraphicsMediaItem::resizeZone( const QPointF& position )
@@ -315,4 +321,10 @@ AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
 {
     if ( m_tracksView != NULL )
         m_tracksView->removeClip( clip->uuid() );
+}
+
+ClipHelper*
+AbstractGraphicsMediaItem::clipHelper()
+{
+    return m_clipHelper;
 }

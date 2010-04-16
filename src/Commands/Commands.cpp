@@ -42,15 +42,15 @@ void Commands::trigger( Commands::Generic* command )
 
 
 
-Commands::MainWorkflow::AddClip::AddClip( Clip* clip,
+Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch,
                                           unsigned int trackNumber, qint64 pos,
                                           ::MainWorkflow::TrackType trackType,
                                           bool undoRedoAction /*= false*/ ) :
-        m_clip( clip ),
         m_trackNumber( trackNumber ),
         m_pos( pos ),
         m_trackType( trackType ),
-        m_undoRedoAction( undoRedoAction )
+        m_undoRedoAction( undoRedoAction ),
+        m_clipHelper( ch )
 {
     setText( QObject::tr( "Adding clip to track %1" ).arg( QString::number( trackNumber ) ) );
 }
@@ -61,19 +61,13 @@ Commands::MainWorkflow::AddClip::~AddClip()
 
 void Commands::MainWorkflow::AddClip::redo()
 {
-    m_clipHelper = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, m_undoRedoAction );
+    ::MainWorkflow::getInstance()->addClip( m_clipHelper, m_trackNumber, m_pos, m_trackType, m_undoRedoAction );
     m_undoRedoAction = false;
 }
 
 void Commands::MainWorkflow::AddClip::undo()
 {
     ::MainWorkflow::getInstance()->removeClip( m_clipHelper->uuid(), m_trackNumber, m_trackType );
-}
-
-ClipHelper*
-Commands::MainWorkflow::AddClip::clipHelper()
-{
-    return m_clipHelper;
 }
 
 Commands::MainWorkflow::MoveClip::MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,
@@ -105,31 +99,29 @@ void Commands::MainWorkflow::MoveClip::undo()
     m_undoRedoAction = true;
 }
 
-Commands::MainWorkflow::RemoveClip::RemoveClip( Clip* clip, const QUuid& uuid, quint32 trackNumber,
+Commands::MainWorkflow::RemoveClip::RemoveClip( ClipHelper* ch, quint32 trackNumber,
                                                 qint64 pos, ::MainWorkflow::TrackType trackType ) :
-        m_clip( clip ), m_trackNumber( trackNumber ),
-        m_pos( pos ), m_trackType( trackType ),
-        m_uuid( uuid )
+        m_clipHelper( ch ), m_trackNumber( trackNumber ),
+        m_pos( pos ), m_trackType( trackType )
 {
     setText( QObject::tr( "Remove clip" ) );
 }
 
 void Commands::MainWorkflow::RemoveClip::redo()
 {
-    ::MainWorkflow::getInstance()->removeClip( m_uuid, m_trackNumber, m_trackType );
+    ::MainWorkflow::getInstance()->removeClip( m_clipHelper->uuid(), m_trackNumber, m_trackType );
 }
 void Commands::MainWorkflow::RemoveClip::undo()
 {
-    m_uuid = (::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true ))->uuid();
+    ::MainWorkflow::getInstance()->addClip( m_clipHelper, m_trackNumber, m_pos, m_trackType, true );
 }
 
-Commands::MainWorkflow::ResizeClip::ResizeClip( const QUuid& uuid,
+Commands::MainWorkflow::ResizeClip::ResizeClip( ClipHelper* clipHelper,
                                                 qint64 newBegin, qint64 newEnd,
                                                 qint64 oldBegin, qint64 oldEnd,
                                                 qint64 newPos, qint64 oldPos,
                                                 quint32 trackId,
                                                 ::MainWorkflow::TrackType trackType ) :
-    m_uuid( uuid ),
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
     m_oldBegin( oldBegin ),
@@ -137,16 +129,16 @@ Commands::MainWorkflow::ResizeClip::ResizeClip( const QUuid& uuid,
     m_newPos( newPos ),
     m_oldPos( oldPos ),
     m_trackId( trackId ),
+    m_clipHelper( clipHelper ),
     m_trackType( trackType ),
     m_undoRedoAction( false )
 {
-    m_clip = ::MainWorkflow::getInstance()->getClip( uuid, trackId, m_trackType );
     setText( QObject::tr( "Resizing clip" ) );
 }
 
 void Commands::MainWorkflow::ResizeClip::redo()
 {
-    ::MainWorkflow::getInstance()->resizeClip( m_clip, m_newBegin, m_newEnd, m_newPos, m_trackId, m_trackType, m_undoRedoAction );
+    ::MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_newBegin, m_newEnd, m_newPos, m_trackId, m_trackType, m_undoRedoAction );
     m_undoRedoAction = true;
 }
 
@@ -157,16 +149,16 @@ void Commands::MainWorkflow::ResizeClip::undo()
     //In the other cases, we need to move, then resize.
     if ( m_oldBegin == m_newBegin )
     {
-        ::MainWorkflow::getInstance()->resizeClip( m_clip, m_oldBegin, m_oldEnd, m_oldPos, m_trackId, m_trackType, m_undoRedoAction );
+        ::MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_oldBegin, m_oldEnd, m_oldPos, m_trackId, m_trackType, m_undoRedoAction );
     }
     else
     {
-        m_clip->setBoundaries( m_oldBegin, m_oldEnd );
-        ::MainWorkflow::getInstance()->moveClip( m_clip->uuid(), m_trackId, m_trackId, m_oldPos, m_trackType, m_undoRedoAction );
+        m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
+        ::MainWorkflow::getInstance()->moveClip( m_clipHelper->uuid(), m_trackId, m_trackId, m_oldPos, m_trackType, m_undoRedoAction );
     }
 }
 
-Commands::MainWorkflow::SplitClip::SplitClip( Clip* toSplit, quint32 trackId,
+Commands::MainWorkflow::SplitClip::SplitClip( ClipHelper* toSplit, quint32 trackId,
                            qint64 newClipPos, qint64 newClipBegin, ::MainWorkflow::TrackType trackType ) :
     m_toSplit( toSplit ),
     m_newClip( NULL ),

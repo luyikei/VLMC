@@ -90,8 +90,7 @@ TracksScene::askRemoveSelectedItems()
         AbstractGraphicsMediaItem* item = qgraphicsitem_cast<AbstractGraphicsMediaItem*>( items.at(i) );
         if ( !item ) return;
 
-        Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clip(),
-                                                                   item->uuid(),
+        Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clipHelper(),
                                                                    item->trackNumber(),
                                                                    item->startPos(),
                                                                    item->mediaType() ) );

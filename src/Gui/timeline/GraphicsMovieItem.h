@@ -44,7 +44,7 @@ public:
      * \brief See http://doc.trolltech.com/4.5/qgraphicsitem.html#type
      */
     enum { Type = UserType + 1 };
-    GraphicsMovieItem( Clip* clip );
+    GraphicsMovieItem( Clip* clipHelper );
     virtual ~GraphicsMovieItem();
 
     virtual int type() const { return Type; }
@@ -52,8 +52,6 @@ public:
     virtual bool moveable() const { return true; }
     virtual MainWorkflow::TrackType mediaType() const;
     virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0 );
-
-    virtual Clip* clip() const;
 
 protected:
     /**

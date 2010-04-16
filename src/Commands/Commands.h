@@ -62,14 +62,12 @@ namespace Commands
         NEW_COMMAND( AddClip )
         {
             public:
-                AddClip( Clip* clip, unsigned int trackNumber, qint64 pos,
+                AddClip( ClipHelper* ch, unsigned int trackNumber, qint64 pos,
                          ::MainWorkflow::TrackType trackType, bool undoRedoAction = false );
                 virtual ~AddClip();
                 virtual void    redo();
                 virtual void    undo();
-                ClipHelper      *clipHelper();
             private:
-                Clip*                       m_clip;
                 unsigned int                m_trackNumber;
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
@@ -100,17 +98,16 @@ namespace Commands
         NEW_COMMAND( RemoveClip )
         {
             public:
-                RemoveClip( Clip* clip, const QUuid& uuid, unsigned int trackNumber,
+                RemoveClip( ClipHelper* clip, unsigned int trackNumber,
                             qint64 pos, ::MainWorkflow::TrackType trackType );
                 virtual void redo();
                 virtual void undo();
 
             private:
-                Clip*                       m_clip;
+                ClipHelper*                 m_clipHelper;
                 unsigned int                m_trackNumber;
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
-                QUuid                       m_uuid;
         };
 
         /**
@@ -127,14 +124,13 @@ namespace Commands
         NEW_COMMAND( ResizeClip )
         {
             public:
-                ResizeClip( const QUuid& uuid,
+                ResizeClip( ClipHelper* clipHelper,
                             qint64 newBegin, qint64 newEnd, qint64 oldBegin,
                             qint64 oldEnd, qint64 newPos, qint64 oldPos,
                             quint32 trackId, ::MainWorkflow::TrackType trackType );
                 virtual void    redo();
                 virtual void    undo();
             private:
-                QUuid                       m_uuid;
                 qint64                      m_newBegin;
                 qint64                      m_newEnd;
                 qint64                      m_oldBegin;
@@ -142,7 +138,7 @@ namespace Commands
                 qint64                      m_newPos;
                 qint64                      m_oldPos;
                 quint32                     m_trackId;
-                Clip*                       m_clip;
+                ClipHelper*                 m_clipHelper;
                 ::MainWorkflow::TrackType   m_trackType;
                 bool                        m_undoRedoAction;
         };
@@ -150,14 +146,14 @@ namespace Commands
         NEW_COMMAND( SplitClip )
         {
             public:
-                SplitClip( Clip* toSplit, quint32 trackId,
-                           qint64 newClipPos, qint64 newClipBegin, ::MainWorkflow::TrackType trackType );
+                SplitClip( ClipHelper* toSplit, quint32 trackId, qint64 newClipPos,
+                           qint64 newClipBegin, ::MainWorkflow::TrackType trackType );
                 ~SplitClip();
                 virtual void    redo();
                 virtual void    undo();
             private:
-                Clip*                       m_toSplit;
-                Clip*                       m_newClip;
+                ClipHelper*                 m_toSplit;
+                ClipHelper*                 m_newClip;
                 quint32                     m_trackId;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;

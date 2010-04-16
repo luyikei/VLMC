@@ -65,12 +65,21 @@ class   Clip : public QObject
         Clip( Clip *creator, qint64 begin = -1, qint64 end = -1, const QString& uuid = QString() );
         virtual ~Clip();
 
-        qint64              begin() const;
-        qint64              end() const;
+        /**
+         *  \return         The clip beginning, in frame, starting at 0
+         */
+        qint64              begin() const
+        {
+            return m_begin;
+        }
 
-        void                setBegin( qint64 begin, bool updateMax = false );
-        void                setEnd( qint64 end, bool updateMax = false );
-        void                setBoundaries( qint64 newBegin, qint64 newEnd, bool updateMax = false );
+        /**
+         *  \return         The clip end, in frame, starting at 0.
+         */
+        qint64              end() const
+        {
+            return m_end;
+        }
 
         /**
             \return         Returns the clip length in frame.
@@ -108,9 +117,6 @@ class   Clip : public QObject
 
         const QString       &notes() const;
         void                setNotes( const QString &notes );
-
-        qint64              maxBegin() const;
-        qint64              maxEnd() const;
 
         void                computeLength();
 
@@ -171,18 +177,6 @@ class   Clip : public QObject
         QString             m_notes;
 
         /**
-         *  This is used for the resize. The clip won't be abble to be resized beyond this value.
-         *  ie this clip won't start before m_maxBegin.
-         */
-        qint64              m_maxBegin;
-
-        /**
-         *  This is used for the resize. The clip won't be abble to be resized beyond this value
-         *  ie this clip won't end before m_maxEnd.
-         */
-        qint64              m_maxEnd;
-
-        /**
          *  \brief          Return the root clip.
          *
          *  The root clip is the base clip for the parent media.
@@ -193,12 +187,16 @@ class   Clip : public QObject
 
         Clip*               m_parent;
 
+    private slots:
+        void                mediaMetadataUpdated( const Media* media );
+
     signals:
-        void                lengthUpdated();
         /**
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
+
+        friend class    ClipHelper;
 };
 
 #endif //CLIP_H__

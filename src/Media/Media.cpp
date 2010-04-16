@@ -174,9 +174,6 @@ Media::FileType     Media::fileType() const
 
 void            Media::emitMetaDataComputed()
 {
-    m_baseClip->setBegin( 0 );
-    m_baseClip->setEnd( m_nbFrames );
-    m_baseClip->computeLength();
     m_metadataComputed = true;
     emit metaDataComputed( this );
 }

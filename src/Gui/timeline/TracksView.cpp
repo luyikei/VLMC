@@ -195,7 +195,8 @@ TracksView::removeClip( const QUuid& uuid  )
     // is the one we would like to remove.
     foreach( item, items )
     {
-        if ( item->clip()->uuid() == uuid || item->clip()->isChild( uuid ) == true )
+        if ( item->clipHelper()->uuid() == uuid ||
+             item->clipHelper()->clip()->isChild( uuid ) == true ) //This is probably useless now
         {
             // This item needs to be removed.
             // Saving its values
@@ -215,9 +216,9 @@ TracksView::removeClip( const QUuid& uuid  )
 }
 
 void
-TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackType trackType, qint64 start )
+TracksView::addMediaItem( ClipHelper *ch, unsigned int track, MainWorkflow::TrackType trackType, qint64 start )
 {
-    Q_ASSERT( clip );
+    Q_ASSERT( ch );
 
     // If there is not enough tracks to insert
     // the clip do it now.
@@ -243,13 +244,13 @@ TracksView::addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackTyp
     AbstractGraphicsMediaItem *item = 0;
     if ( trackType == MainWorkflow::VideoTrack )
     {
-        item = new GraphicsMovieItem( clip );
+        item = new GraphicsMovieItem( ch->clip() );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
     else if ( trackType == MainWorkflow::AudioTrack )
     {
-        item = new GraphicsAudioItem( clip );
+        item = new GraphicsAudioItem( ch->clip() );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
@@ -281,6 +282,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragAudioItem ) delete m_dragAudioItem;
         m_dragAudioItem = new GraphicsAudioItem( clip );
+        m_dragAudioItem->m_clipHelper = new ClipHelper( clip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( tracksHeight() );
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->mediaType(), 0 ) );
@@ -291,6 +293,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragVideoItem ) delete m_dragVideoItem;
         m_dragVideoItem = new GraphicsMovieItem( clip );
+        m_dragVideoItem->m_clipHelper = new ClipHelper( clip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( tracksHeight() );
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->mediaType(), 0 ) );
@@ -672,13 +675,10 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragAudioItem->oldTrackNumber = m_dragAudioItem->trackNumber();
         m_dragAudioItem->oldPosition = (qint64)mappedXPos;
 
-        Commands::MainWorkflow::AddClip*
-                clip = new Commands::MainWorkflow::AddClip( m_dragAudioItem->clip(),
-                                                            m_dragAudioItem->trackNumber(),
-                                                            (qint64)mappedXPos,
-                                                            MainWorkflow::AudioTrack );
-        Commands::trigger( clip );
-        m_dragAudioItem->m_clipHelper = clip->clipHelper();
+        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
+                                                                m_dragAudioItem->trackNumber(),
+                                                                (qint64)mappedXPos,
+                                                                MainWorkflow::AudioTrack ) );
         m_dragAudioItem = NULL;
     }
 
@@ -692,13 +692,10 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragVideoItem->oldTrackNumber = m_dragVideoItem->trackNumber();
         m_dragVideoItem->oldPosition = (qint64)mappedXPos;
 
-        Commands::MainWorkflow::AddClip*
-                clip = new Commands::MainWorkflow::AddClip( m_dragVideoItem->clip(),
-                                                            m_dragVideoItem->trackNumber(),
-                                                            (qint64)mappedXPos,
-                                                            MainWorkflow::VideoTrack );
-        Commands::trigger( clip );
-        m_dragVideoItem->m_clipHelper = clip->clipHelper();
+        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
+                                                                m_dragVideoItem->trackNumber(),
+                                                                (qint64)mappedXPos,
+                                                                MainWorkflow::VideoTrack ) );
         m_dragVideoItem = NULL;
     }
 
@@ -869,8 +866,8 @@ TracksView::mousePressEvent( QMouseEvent *event )
                 m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
             m_actionResize = true;
             m_actionResizeStart = mapToScene( event->pos() ).x();
-            m_actionResizeBase = item->clip()->length();
-            m_actionResizeOldBegin = item->clip()->begin();
+            m_actionResizeBase = item->clipHelper()->length();
+            m_actionResizeOldBegin = item->clipHelper()->begin();
             m_actionItem = item;
         }
         else if ( item->moveable() )
@@ -964,12 +961,14 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     }
     else if ( m_actionResize )
     {
-        Clip *clip = m_actionItem->clip();
+        ClipHelper *ch = m_actionItem->clipHelper();
         //This is a "pointless action". The resize already occured. However, by doing this
         //we can have an undo action.
-        Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->uuid(), clip->begin(),
-                                                                   clip->end(), m_actionResizeOldBegin, m_actionResizeOldBegin + m_actionResizeBase,
-                                                                   m_actionItem->pos().x(), m_actionResizeStart, m_actionItem->trackNumber(), m_actionItem->mediaType() ) );
+        Commands::trigger( new Commands::MainWorkflow::ResizeClip( ch, ch->begin(),
+                                                                   ch->end(),
+                                                                   m_actionResizeOldBegin, m_actionResizeOldBegin + m_actionResizeBase,
+                                                                   m_actionItem->pos().x(), m_actionResizeStart,
+                                                                   m_actionItem->trackNumber(), m_actionItem->mediaType() ) );
         updateDuration();
     }
 
@@ -1187,7 +1186,7 @@ TracksView::split( AbstractGraphicsMediaItem *item, qint64 frame )
     //item->startPos() is the position of the splitted clip (in frame)
     //therefore, the position of the newly created clip is
     //the splitted clip pos + the splitting point (ie startPos() + frame)
-    Commands::trigger( new Commands::MainWorkflow::SplitClip( item->clip(), item->trackNumber(),
-                                                              item->startPos() + frame, frame + item->clip()->begin(),
+    Commands::trigger( new Commands::MainWorkflow::SplitClip( item->clipHelper(), item->trackNumber(),
+                                                              item->startPos() + frame, frame + item->clipHelper()->begin(),
                                                               item->mediaType() ) );
 }

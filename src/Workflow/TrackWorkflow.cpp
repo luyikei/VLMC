@@ -65,21 +65,20 @@ TrackWorkflow::~TrackWorkflow()
     delete m_renderOneFrameMutex;
 }
 
-ClipHelper*
-TrackWorkflow::addClip( Clip* clip, qint64 start )
+void
+TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
 {
     ClipWorkflow* cw;
     if ( m_trackType == MainWorkflow::VideoTrack )
     {
-        if ( clip->getMedia()->fileType() == Media::Video )
-            cw = new VideoClipWorkflow( clip );
+        if ( ch->clip()->getMedia()->fileType() == Media::Video )
+            cw = new VideoClipWorkflow( ch );
         else
-            cw = new ImageClipWorkflow( clip );
+            cw = new ImageClipWorkflow( ch );
     }
     else
-        cw = new AudioClipWorkflow( clip );
+        cw = new AudioClipWorkflow( ch );
     addClip( cw, start );
-    return cw->getClipHelper();
 }
 
 void

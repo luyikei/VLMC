@@ -102,9 +102,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                              true otherwise.
          *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
-         *  \return     A ClipHelper, based on the newly inserted Clip.
          */
-        ClipHelper*     addClip( Clip* clip, unsigned int trackId, qint64 start,
+        void            addClip( ClipHelper* clipHelper, unsigned int trackId, qint64 start,
                                          TrackType type, bool informGui );
 
         /**
@@ -331,16 +330,16 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    setFullSpeedRender( bool val );
 
-        Clip*                   split( Clip* toSplit, Clip* newClip, quint32 trackId,
+        ClipHelper*             split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
                                        qint64 newClipPos, qint64 newClipBegin,
                                        MainWorkflow::TrackType trackType );
 
-        void                    resizeClip( Clip* clip, qint64 newBegin, qint64 newEnd,
+        void                    resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd,
                                           qint64 newPos, quint32 trackId,
                                           MainWorkflow::TrackType trackType,
                                           bool undoRedoAction = false );
 
-        void                    unsplit( Clip* origin, Clip* splitted, quint32 trackId,
+        void                    unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
                                          MainWorkflow::TrackType trackType );
 
     private:
@@ -451,8 +450,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of the clip that has been added
          *  \sa                 addClip( Clip*, unsigned int, qint64, TrackType )
          */
-        void                    clipAdded( Clip* clip, unsigned int trackId, qint64 pos,
-                                           MainWorkflow::TrackType trackType );
+        void                    clipAdded( ClipHelper* clip, unsigned int trackId,
+                                           qint64 pos, MainWorkflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip is removed
          *  \param  uuid        The clip that has been removed's uuid.

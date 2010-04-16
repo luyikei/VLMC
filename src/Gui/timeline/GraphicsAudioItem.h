@@ -53,8 +53,6 @@ public:
     virtual MainWorkflow::TrackType mediaType() const;
     virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0 );
 
-    virtual Clip* clip() const;
-
 protected:
     /**
      * \brief Paint the item's rectangle.

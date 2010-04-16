@@ -30,8 +30,8 @@
 
 #include <QReadWriteLock>
 
-VideoClipWorkflow::VideoClipWorkflow( Clip *clip ) :
-        ClipWorkflow( clip ),
+VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
+        ClipWorkflow( ch ),
         m_width( 0 ),
         m_height( 0 )
 {

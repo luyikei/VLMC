@@ -25,8 +25,8 @@
 #include "AudioClipWorkflow.h"
 #include "VLCMedia.h"
 
-AudioClipWorkflow::AudioClipWorkflow( Clip *clip ) :
-        ClipWorkflow( clip )
+AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
+        ClipWorkflow( ch )
 {
     m_ptsOffset = 0;
 }

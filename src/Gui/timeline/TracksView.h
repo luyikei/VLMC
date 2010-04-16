@@ -193,7 +193,8 @@ public slots:
      * \param trackType The type of the track (Audio or Video)
      * \param start The position in frames.
      */
-    void                    addMediaItem( Clip *clip, unsigned int track, MainWorkflow::TrackType trackType, qint64 start );
+    void                    addMediaItem( ClipHelper *clipHelper, unsigned int track,
+                                          MainWorkflow::TrackType trackType, qint64 start );
     /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.

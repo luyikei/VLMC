@@ -72,17 +72,16 @@ MainWorkflow::~MainWorkflow()
     delete MainWorkflow::blackOutput;
 }
 
-ClipHelper*
-MainWorkflow::addClip( Clip *clip, unsigned int trackId,
+void
+MainWorkflow::addClip( ClipHelper *clipHelper, unsigned int trackId,
                                         qint64 start, MainWorkflow::TrackType trackType,
                                         bool informGui )
 {
-    ClipHelper *ch = m_tracks[trackType]->addClip( clip, trackId, start );
+    m_tracks[trackType]->addClip( clipHelper, trackId, start );
     computeLength();
     //Inform the GUI
     if ( informGui == true )
-        emit clipAdded( clip, trackId, start, trackType );
-    return ch;
+        emit clipAdded( clipHelper, trackId, start, trackType );
 }
 
 void
@@ -326,8 +325,9 @@ MainWorkflow::loadProject( const QDomElement &root )
             Clip* c = Library::getInstance()->clip( uuid );
             if ( c != NULL )
             {
-                addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
-                         trackId, startFrame.toLongLong(), type, true );
+                //FIXME: ticket http://trac.videolan.org/vlmc/ticket/41
+//                addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
+//                         trackId, startFrame.toLongLong(), type, true );
             }
             clip = clip.nextSibling().toElement();
         }
@@ -409,39 +409,40 @@ MainWorkflow::setFullSpeedRender( bool val )
         m_tracks[i]->setFullSpeedRender( val );
 }
 
-Clip*
-MainWorkflow::split( Clip* toSplit, Clip* newClip, quint32 trackId, qint64 newClipPos, qint64 newClipBegin, MainWorkflow::TrackType trackType )
+ClipHelper*
+MainWorkflow::split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
+                     qint64 newClipPos, qint64 newClipBegin, MainWorkflow::TrackType trackType )
 {
     QMutexLocker    lock( m_renderStartedMutex );
 
     if ( newClip == NULL )
-        newClip = new Clip( toSplit, newClipBegin, toSplit->end() );
+        newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
 
-    toSplit->setEnd( newClipBegin, true );
+    toSplit->setEnd( newClipBegin );
     addClip( newClip, trackId, newClipPos, trackType, true );
     return newClip;
 }
 
 void
-MainWorkflow::resizeClip( Clip* clip, qint64 newBegin, qint64 newEnd, qint64 newPos,
+MainWorkflow::resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd, qint64 newPos,
                           quint32 trackId, MainWorkflow::TrackType trackType,
                                       bool undoRedoAction /*= false*/ )
 {
     QMutexLocker    lock( m_renderStartedMutex );
 
-    if ( newBegin != clip->begin() )
+    if ( newBegin != clipHelper->begin() )
     {
-        moveClip( clip->uuid(), trackId, trackId, newPos, trackType, undoRedoAction );
+        moveClip( clipHelper->uuid(), trackId, trackId, newPos, trackType, undoRedoAction );
     }
-    clip->setBoundaries( newBegin, newEnd );
+    clipHelper->setBoundaries( newBegin, newEnd );
 }
 
 void
-MainWorkflow::unsplit( Clip* origin, Clip* splitted, quint32 trackId,
+MainWorkflow::unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
                        MainWorkflow::TrackType trackType )
 {
     QMutexLocker    lock( m_renderStartedMutex );
 
     removeClip( splitted->uuid(), trackId, trackType );
-    origin->setEnd( splitted->end(), true );
+    origin->setEnd( splitted->end() );
 }

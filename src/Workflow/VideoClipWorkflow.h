@@ -46,7 +46,7 @@ class   VideoClipWorkflow : public ClipWorkflow
                 QPointer<VideoClipWorkflow>     m_poolHandler;
         };
 
-        VideoClipWorkflow( Clip* clip );
+        VideoClipWorkflow( ClipHelper* ch );
         ~VideoClipWorkflow();
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;

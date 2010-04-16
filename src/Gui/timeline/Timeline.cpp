@@ -80,8 +80,8 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
     connect( m_tracksView, SIGNAL( durationChanged(int) ), this, SLOT( setDuration(int) ) );
 
     // Clip actions
-    connect( m_mainWorkflow, SIGNAL( clipAdded(Clip*,uint,qint64,MainWorkflow::TrackType ) ),
-             this, SLOT( actionAddClip(Clip*,uint,qint64,MainWorkflow::TrackType ) ) );
+    connect( m_mainWorkflow, SIGNAL( clipAdded(ClipHelper*,uint,qint64,MainWorkflow::TrackType ) ),
+             this, SLOT( actionAddClip(ClipHelper*,uint,qint64,MainWorkflow::TrackType ) ) );
     connect( m_mainWorkflow, SIGNAL( clipMoved(QUuid, uint, qint64,MainWorkflow::TrackType ) ),
              this, SLOT( actionMoveClip(QUuid,uint,qint64,MainWorkflow::TrackType ) ) );
     connect( m_mainWorkflow, SIGNAL( clipRemoved(const QUuid&,uint,MainWorkflow::TrackType ) ),
@@ -158,9 +158,9 @@ void Timeline::setTool( ToolButtons button )
     tracksView()->setTool( button );
 }
 
-void Timeline::actionAddClip( Clip* clip, unsigned int track, qint64 start, MainWorkflow::TrackType trackType )
+void Timeline::actionAddClip( ClipHelper* clipHelper, unsigned int track, qint64 start, MainWorkflow::TrackType trackType )
 {
-    tracksView()->addMediaItem( clip, track, trackType, start );
+    tracksView()->addMediaItem( clipHelper, track, trackType, start );
 }
 
 void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, MainWorkflow::TrackType )

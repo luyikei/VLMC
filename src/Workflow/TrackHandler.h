@@ -47,7 +47,7 @@ class   TrackHandler : public QObject
          *  \param      trackId     The track identifier.
          *  \param      start       The new clip starting position.
          */
-        ClipHelper              *addClip( Clip* clip, unsigned int trackId, qint64 start );
+        void            addClip( ClipHelper* clip, unsigned int trackId, qint64 start );
         /**
          *  Returns the number of tracks in this handler
          */

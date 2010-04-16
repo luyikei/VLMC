@@ -35,15 +35,15 @@
 #include <QWaitCondition>
 #include <QtDebug>
 
-ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
+ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
                 m_mediaPlayer(NULL),
-                m_state( ClipWorkflow::Stopped )
+                m_state( ClipWorkflow::Stopped ),
+                m_clipHelper( ch )
 {
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new WaitCondition;
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
-    m_clipHelper = new ClipHelper( clip );
 }
 
 ClipWorkflow::~ClipWorkflow()

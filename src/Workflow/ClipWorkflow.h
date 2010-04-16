@@ -90,7 +90,7 @@ class   ClipWorkflow : public QObject
             Get,
         };
 
-        ClipWorkflow( Clip* clip );
+        ClipWorkflow( ClipHelper* clip );
         virtual ~ClipWorkflow();
 
         /**

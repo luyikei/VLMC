@@ -37,7 +37,7 @@ class   ImageClipWorkflow : public ClipWorkflow
                 StackedBuffer( LightVideoFrame* lvf );
                 virtual void    release();
         };
-        ImageClipWorkflow( Clip* clip );
+        ImageClipWorkflow( ClipHelper* ch );
 
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;

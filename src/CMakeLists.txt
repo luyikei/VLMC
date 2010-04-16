@@ -77,6 +77,7 @@ SET (VLMC_HDRS
     Tools/VlmcDebug.h
     Workflow/AudioClipWorkflow.h 
     Workflow/ClipWorkflow.h
+    Workflow/ClipHelper.h
     Workflow/ImageClipWorkflow.h
     Workflow/MainWorkflow.h
     Workflow/TrackHandler.h

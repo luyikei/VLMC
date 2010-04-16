@@ -32,7 +32,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 
-GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : AbstractGraphicsMediaItem( clip )
+GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
+        AbstractGraphicsMediaItem( clip )
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
 
@@ -43,11 +44,6 @@ GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) : AbstractGraphicsMediaItem( 
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
     setAcceptHoverEvents( true );
-
-    // Adjust the width
-    setWidth( clip->length() );
-    // Automatically adjust future changes
-    connect( clip, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
 }
 
 GraphicsAudioItem::~GraphicsAudioItem()
@@ -68,11 +64,6 @@ void GraphicsAudioItem::paint( QPainter* painter, const QStyleOptionGraphicsItem
     painter->save();
     paintTitle( painter, option );
     painter->restore();
-}
-
-Clip* GraphicsAudioItem::clip() const
-{
-    return m_clip;
 }
 
 void GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
@@ -160,7 +151,7 @@ void GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphic
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = m_clip->getMedia()->fileName();
+    QString text = m_clipHelper->clip()->getMedia()->fileName();
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::getInstance()->tracksView()->viewportTransform();

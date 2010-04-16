@@ -53,7 +53,7 @@ class   AudioClipWorkflow : public ClipWorkflow
                 QPointer<AudioClipWorkflow>     m_poolHandler;
         };
 
-        AudioClipWorkflow( Clip* clip );
+        AudioClipWorkflow( ClipHelper* ch );
         ~AudioClipWorkflow();
         void                        *getLockCallback() const;
         void                        *getUnlockCallback() const;

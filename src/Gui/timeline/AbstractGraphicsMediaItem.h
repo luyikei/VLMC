@@ -74,9 +74,6 @@ public:
         return m_clipHelper->uuid();
     }
 
-    /// Clip contained in the item
-    virtual Clip* clip() const = 0;
-
     /// Return a pointer to the TracksScene
     TracksScene* scene();
 
@@ -107,6 +104,8 @@ public:
     /// Resize an item from its beginning or from its end.
     void resize( qint64 size, From from = BEGINNING );
 
+    ClipHelper  *clipHelper();
+
 protected:
     /**
      * \details Returns a pointer to the tracksView which contains the item,
@@ -123,10 +122,7 @@ protected:
      */
     qint64 oldPosition;
 
-    /**
-     *  \brief  The Clip this AbstractGraphicsMediaItem is based upon.
-     */
-    Clip*       m_clip;
+    ClipHelper* m_clipHelper;
 
     /**
      * \brief Return a pointer to the linked item.
@@ -181,8 +177,6 @@ private:
 
     //FIXME: this is a nasty forest boolean
     bool    m_resizeExpected;
-
-    ClipHelper* m_clipHelper;
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

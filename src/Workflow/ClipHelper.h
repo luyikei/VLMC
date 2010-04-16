@@ -25,11 +25,13 @@
 
 class   Clip;
 
-#include <QtGlobal>
+#include <QObject>
 #include <QUuid>
 
-class   ClipHelper
+class   ClipHelper : public QObject
 {
+    Q_OBJECT
+
     public:
         ClipHelper( Clip* clip, qint64 begin = -1, qint64 end = -1 );
 
@@ -48,6 +50,7 @@ class   ClipHelper
             return m_end;
         }
         void        setEnd( qint64 end );
+        void        setBoundaries( qint64 begin, qint64 end );
         /**
          *  \return The length in frames
          */
@@ -62,6 +65,9 @@ class   ClipHelper
         qint64      m_begin;
         qint64      m_end;
         QUuid       m_uuid;
+
+    signals:
+        void        lengthUpdated();
 };
 
 #endif // CLIPHELPER_H

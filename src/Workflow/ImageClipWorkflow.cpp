@@ -29,8 +29,8 @@
 #include "VLCMedia.h"
 #include "Media.h"
 
-ImageClipWorkflow::ImageClipWorkflow( Clip *clip ) :
-        ClipWorkflow( clip ),
+ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
+        ClipWorkflow( ch ),
         m_buffer( NULL ),
         m_stackedBuffer( NULL )
 {
