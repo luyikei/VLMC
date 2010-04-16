@@ -43,7 +43,6 @@ ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
     m_initWaitCond = new WaitCondition;
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
-    m_uuid = QUuid::createUuid();
     m_clipHelper = new ClipHelper( clip );
 }
 

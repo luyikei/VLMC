@@ -33,6 +33,7 @@ ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/ )
         m_begin = clip->begin();
     if ( end == -1 )
         m_end = clip->end();
+    m_uuid = QUuid::createUuid();
 }
 
 void

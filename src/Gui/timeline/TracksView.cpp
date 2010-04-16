@@ -678,7 +678,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                             (qint64)mappedXPos,
                                                             MainWorkflow::AudioTrack );
         Commands::trigger( clip );
-        m_dragAudioItem->m_uuid = clip->uuid();
+        m_dragAudioItem->m_clipHelper = clip->clipHelper();
         m_dragAudioItem = NULL;
     }
 
@@ -698,7 +698,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                             (qint64)mappedXPos,
                                                             MainWorkflow::VideoTrack );
         Commands::trigger( clip );
-        m_dragVideoItem->m_uuid = clip->uuid();
+        m_dragVideoItem->m_clipHelper = clip->clipHelper();
         m_dragVideoItem = NULL;
     }
 

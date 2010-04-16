@@ -27,6 +27,7 @@
 #include "Toggleable.hpp"
 #include "MainWorkflow.h"
 
+class   ClipHelper;
 class   TrackWorkflow;
 
 class   QXmlStreamWriter;
@@ -46,7 +47,7 @@ class   TrackHandler : public QObject
          *  \param      trackId     The track identifier.
          *  \param      start       The new clip starting position.
          */
-        const QUuid             &addClip( Clip* clip, unsigned int trackId, qint64 start );
+        ClipHelper              *addClip( Clip* clip, unsigned int trackId, qint64 start );
         /**
          *  Returns the number of tracks in this handler
          */

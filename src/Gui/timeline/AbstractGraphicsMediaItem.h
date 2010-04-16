@@ -71,7 +71,7 @@ public:
     /// Should return the unique uid of the contained media.
     virtual const QUuid& uuid() const
     {
-        return m_uuid;
+        return m_clipHelper->uuid();
     }
 
     /// Clip contained in the item
@@ -182,7 +182,7 @@ private:
     //FIXME: this is a nasty forest boolean
     bool    m_resizeExpected;
 
-    QUuid   m_uuid;
+    ClipHelper* m_clipHelper;
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

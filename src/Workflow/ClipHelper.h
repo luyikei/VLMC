@@ -26,6 +26,7 @@
 class   Clip;
 
 #include <QtGlobal>
+#include <QUuid>
 
 class   ClipHelper
 {
@@ -51,11 +52,16 @@ class   ClipHelper
          *  \return The length in frames
          */
         qint64      length() const;
+        const QUuid&    uuid() const
+        {
+            return m_uuid;
+        }
 
     private:
         Clip*       m_clip;
         qint64      m_begin;
         qint64      m_end;
+        QUuid       m_uuid;
 };
 
 #endif // CLIPHELPER_H

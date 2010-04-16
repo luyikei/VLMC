@@ -65,7 +65,7 @@ TrackWorkflow::~TrackWorkflow()
     delete m_renderOneFrameMutex;
 }
 
-const QUuid&
+ClipHelper*
 TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
     ClipWorkflow* cw;
@@ -79,7 +79,7 @@ TrackWorkflow::addClip( Clip* clip, qint64 start )
     else
         cw = new AudioClipWorkflow( clip );
     addClip( cw, start );
-    return cw->uuid();
+    return cw->getClipHelper();
 }
 
 void
@@ -115,7 +115,7 @@ qint64              TrackWorkflow::getClipPosition( const QUuid& uuid ) const
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == uuid )
+        if ( it.value()->getClipHelper()->uuid() == uuid )
             return it.key();
         ++it;
     }
@@ -129,7 +129,7 @@ Clip*               TrackWorkflow::getClip( const QUuid& uuid )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == uuid )
+        if ( it.value()->getClipHelper()->uuid() == uuid )
             return it.value()->clip();
         ++it;
     }
@@ -329,7 +329,7 @@ void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == id )
+        if ( it.value()->getClipHelper()->uuid() == id )
         {
             ClipWorkflow* cw = it.value();
             m_clips.erase( it );
@@ -353,7 +353,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == id )
+        if ( it.value()->getClipHelper()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             Clip*           clip = cw->clip();
@@ -380,7 +380,7 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == id )
+        if ( it.value()->getClipHelper()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             cw->disconnect();
@@ -462,7 +462,7 @@ TrackWorkflow::muteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == uuid )
+        if ( it.value()->getClipHelper()->uuid() == uuid )
         {
             it.value()->mute();
             return ;
@@ -483,7 +483,7 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->uuid() == uuid )
+        if ( it.value()->getClipHelper()->uuid() == uuid )
         {
             it.value()->unmute();
             return ;

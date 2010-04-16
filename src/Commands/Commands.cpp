@@ -61,19 +61,19 @@ Commands::MainWorkflow::AddClip::~AddClip()
 
 void Commands::MainWorkflow::AddClip::redo()
 {
-    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, m_undoRedoAction );
+    m_clipHelper = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, m_undoRedoAction );
     m_undoRedoAction = false;
 }
 
 void Commands::MainWorkflow::AddClip::undo()
 {
-    ::MainWorkflow::getInstance()->removeClip( m_clip->uuid(), m_trackNumber, m_trackType );
+    ::MainWorkflow::getInstance()->removeClip( m_clipHelper->uuid(), m_trackNumber, m_trackType );
 }
 
-const QUuid&
-Commands::MainWorkflow::AddClip::uuid() const
+ClipHelper*
+Commands::MainWorkflow::AddClip::clipHelper()
 {
-    return m_uuid;
+    return m_clipHelper;
 }
 
 Commands::MainWorkflow::MoveClip::MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,
@@ -120,7 +120,7 @@ void Commands::MainWorkflow::RemoveClip::redo()
 }
 void Commands::MainWorkflow::RemoveClip::undo()
 {
-    m_uuid = ::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true );
+    m_uuid = (::MainWorkflow::getInstance()->addClip( m_clip, m_trackNumber, m_pos, m_trackType, true ))->uuid();
 }
 
 Commands::MainWorkflow::ResizeClip::ResizeClip( const QUuid& uuid,

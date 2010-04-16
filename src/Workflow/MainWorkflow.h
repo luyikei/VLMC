@@ -34,6 +34,7 @@ class   QReadWriteLock;
 class   QXmlStreamWriter;
 
 class   Clip;
+class   ClipHelper;
 class   EffectsEngine;
 class   LightVideoFrame;
 class   TrackHandler;
@@ -101,9 +102,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                              true otherwise.
          *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
-         *  \return     The newly inserted ClipWorkflow's UUID.
+         *  \return     A ClipHelper, based on the newly inserted Clip.
          */
-        const QUuid&            addClip( Clip* clip, unsigned int trackId, qint64 start,
+        ClipHelper*     addClip( Clip* clip, unsigned int trackId, qint64 start,
                                          TrackType type, bool informGui );
 
         /**

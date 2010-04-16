@@ -33,6 +33,7 @@
 #include "MainWorkflow.h"
 
 class   Clip;
+class   ClipHelper;
 
 #define NEW_COMMAND(x)      class   x : public Generic
 
@@ -66,13 +67,13 @@ namespace Commands
                 virtual ~AddClip();
                 virtual void    redo();
                 virtual void    undo();
-                const QUuid     &uuid() const;
+                ClipHelper      *clipHelper();
             private:
                 Clip*                       m_clip;
                 unsigned int                m_trackNumber;
                 qint64                      m_pos;
                 ::MainWorkflow::TrackType   m_trackType;
-                QUuid                       m_uuid;
+                ClipHelper                  *m_clipHelper;
                 bool                        m_undoRedoAction;
         };
 

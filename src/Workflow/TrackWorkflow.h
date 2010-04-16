@@ -60,7 +60,7 @@ class   TrackWorkflow : public QObject
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         Clip*                                   removeClip( const QUuid& id );
         ClipWorkflow*                           removeClipWorkflow( const QUuid& id );
-        const QUuid                             &addClip( Clip*, qint64 start );
+        ClipHelper                              *addClip( Clip*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
         Clip*                                   getClip( const QUuid& uuid );

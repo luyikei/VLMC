@@ -193,18 +193,6 @@ class   ClipWorkflow : public QObject
          */
         bool                    isResyncRequired();
 
-        /**
-         *  \return     The ClipWorkflow's UUID
-         *
-         *  This is not to be confused with the clip's uuid. Many ClipWorkflow can base
-         *  themselves on the same clip, and would have different uuid, though calling
-         *  clip()->uuid() on them would return the same result.
-         */
-        inline const QUuid      &uuid() const
-        {
-            return m_uuid;
-        }
-
     private:
         void                    setState( State state );
         void                    adjustBegin();
@@ -262,7 +250,6 @@ class   ClipWorkflow : public QObject
         qint64                  m_beginPausePts;
         qint64                  m_pauseDuration;
         bool                    m_fullSpeedRender;
-        QUuid                   m_uuid;
 
     private slots:
         void                    loadingComplete();
