@@ -92,6 +92,11 @@ Section "Start Menu Shortcuts"
 
 SectionEnd
 
+Section "Desktop Shortcut"
+
+  CreateShortCut "$DESKTOP\@PROJECT_NAME_LONG@.lnk" "$INSTDIR\vlmc.exe" "" "$INSTDIR\vlmc.ico" 0
+
+SectionEnd
 
 ;--------------------------------
 ; Uninstaller sections
@@ -125,6 +130,7 @@ Section "Uninstall"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\@PROJECT_NAME_LONG@\*.*"
+  Delete "$DESKTOP\@PROJECT_NAME_LONG@.lnk"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\@PROJECT_NAME_LONG@"
