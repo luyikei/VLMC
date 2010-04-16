@@ -22,6 +22,7 @@
 
 #include "vlmc.h"
 #include "Clip.h"
+#include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "LightVideoFrame.h"
 #include "Media.h"
@@ -36,7 +37,6 @@
 
 ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
                 m_mediaPlayer(NULL),
-                m_clip( clip ),
                 m_state( ClipWorkflow::Stopped )
 {
     m_stateLock = new QReadWriteLock;
@@ -44,6 +44,7 @@ ClipWorkflow::ClipWorkflow( Clip::Clip* clip ) :
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
     m_uuid = QUuid::createUuid();
+    m_clipHelper = new ClipHelper( clip );
 }
 
 ClipWorkflow::~ClipWorkflow()
@@ -58,7 +59,7 @@ void    ClipWorkflow::initialize()
 {
     setState( ClipWorkflow::Initializing );
 
-    m_vlcMedia = new LibVLCpp::Media( m_clip->getMedia()->mrl() );
+    m_vlcMedia = new LibVLCpp::Media( m_clipHelper->clip()->getMedia()->mrl() );
     m_currentPts = -1;
     m_previousPts = -1;
     m_pauseDuration = -1;
@@ -84,11 +85,11 @@ void    ClipWorkflow::loadingComplete()
 
 void    ClipWorkflow::adjustBegin()
 {
-    if ( m_clip->getMedia()->fileType() == Media::Video ||
-         m_clip->getMedia()->fileType() == Media::Audio )
+    if ( m_clipHelper->clip()->getMedia()->fileType() == Media::Video ||
+         m_clipHelper->clip()->getMedia()->fileType() == Media::Audio )
     {
-        m_mediaPlayer->setTime( m_clip->begin() /
-                                m_clip->getMedia()->fps() * 1000 );
+        m_mediaPlayer->setTime( m_clipHelper->begin() /
+                                m_clipHelper->clip()->getMedia()->fps() * 1000 );
     }
 }
 

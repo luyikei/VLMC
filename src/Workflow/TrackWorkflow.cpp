@@ -20,20 +20,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
 
-#include "vlmc.h"
 #include "TrackWorkflow.h"
-#include "VideoClipWorkflow.h"
-#include "ImageClipWorkflow.h"
+
 #include "AudioClipWorkflow.h"
 #include "Clip.h"
+#include "ClipHelper.h"
+#include "ImageClipWorkflow.h"
 #include "Media.h"
+#include "VideoClipWorkflow.h"
+#include "vlmc.h"
 
 #include <QReadWriteLock>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QXmlStreamWriter>
+
+#include <QtDebug>
 
 TrackWorkflow::TrackWorkflow( unsigned int trackId, MainWorkflow::TrackType type  ) :
         m_trackId( trackId ),
@@ -97,7 +100,7 @@ TrackWorkflow::computeLength()
         return ;
     }
     QMap<qint64, ClipWorkflow*>::const_iterator it = m_clips.end() - 1;
-    m_length = (it.key() + it.value()->getClip()->length() );
+    m_length = (it.key() + it.value()->getClipHelper()->length() );
 }
 
 qint64              TrackWorkflow::getLength() const
@@ -127,7 +130,7 @@ Clip*               TrackWorkflow::getClip( const QUuid& uuid )
     while ( it != end )
     {
         if ( it.value()->uuid() == uuid )
-            return it.value()->getClip();
+            return it.value()->clip();
         ++it;
     }
     return NULL;
@@ -159,7 +162,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
         cw->initialize();
         cw->waitForCompleteInit();
         //We check for a difference greater than one to avoid false positive when starting.
-        if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClip()->begin() != 0 )
+        if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClipHelper()->begin() != 0 )
         {
             //Clip was not started as its real begining: adjust the position
             adjustClipTime( currentFrame, start, cw );
@@ -215,7 +218,7 @@ bool                TrackWorkflow::checkEnd( qint64 currentFrame ) const
     //This is the last video by chronological order :
     QMap<qint64, ClipWorkflow*>::const_iterator   it = m_clips.end() - 1;
     //If it ends before the current frame, we reached end.
-    return ( it.value()->getClip()->length() + it.key() < currentFrame );
+    return ( it.value()->getClipHelper()->length() + it.key() < currentFrame );
 }
 
 void
@@ -292,7 +295,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
         //Is the clip supposed to render now ?
-        if ( start <= currentFrame && currentFrame <= start + cw->getClip()->length() )
+        if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
         {
             if ( ret != NULL )
                 qCritical() << "There's more than one clip to render here. Undefined behaviour !";
@@ -353,7 +356,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
         if ( it.value()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
-            Clip*           clip = cw->getClip();
+            Clip*           clip = cw->clip();
             m_clips.erase( it );
             stopClipWorkflow( cw );
             computeLength();
@@ -401,10 +404,10 @@ void    TrackWorkflow::save( QXmlStreamWriter& project ) const
     for ( ; it != end ; ++it )
     {
         project.writeStartElement( "clip" );
-        project.writeAttribute( "uuid", it.value()->getClip()->fullId() );
+        project.writeAttribute( "uuid", it.value()->clip()->fullId() );
         project.writeAttribute( "startFrame", QString::number( it.key() ) );
-        project.writeAttribute( "begin", QString::number( it.value()->getClip()->begin() ) );
-        project.writeAttribute( "end", QString::number( it.value()->getClip()->end() ) );
+        project.writeAttribute( "begin", QString::number( it.value()->getClipHelper()->begin() ) );
+        project.writeAttribute( "end", QString::number( it.value()->getClipHelper()->end() ) );
         project.writeEndElement();
     }
 }
@@ -427,8 +430,8 @@ void    TrackWorkflow::clear()
 
 void    TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw )
 {
-    qint64  nbMs = ( currentFrame - start ) / cw->getClip()->getMedia()->fps() * 1000;
-    qint64  beginInMs = cw->getClip()->begin() / cw->getClip()->getMedia()->fps() * 1000;
+    qint64  nbMs = ( currentFrame - start ) / cw->clip()->getMedia()->fps() * 1000;
+    qint64  beginInMs = cw->getClipHelper()->begin() / cw->clip()->getMedia()->fps() * 1000;
     qint64  startFrame = beginInMs + nbMs;
     cw->setTime( startFrame );
 }

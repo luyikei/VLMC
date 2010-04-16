@@ -43,6 +43,7 @@ SET(VLMC_SRCS
     Tools/WaitCondition.hpp
     Workflow/AudioClipWorkflow.cpp 
     Workflow/ClipWorkflow.cpp
+    Workflow/ClipHelper.cpp
     Workflow/ImageClipWorkflow.cpp
     Workflow/MainWorkflow.cpp
     Workflow/StackedBuffer.hpp

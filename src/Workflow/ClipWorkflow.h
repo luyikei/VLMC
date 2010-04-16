@@ -24,6 +24,7 @@
 #define CLIPWORKFLOW_H
 
 #include "mdate.h"
+#include "ClipHelper.h"
 
 #include <QObject>
 #include <QUuid>
@@ -129,13 +130,17 @@ class   ClipWorkflow : public QObject
         State                   getState() const;
 
         /**
-            \brief              Returns the Clip this workflow instance is based
+            \brief              Returns the ClipHelper this workflow instance is based
                                 uppon, so that you can query information on it.
-            \return             A pointer to a constant clip instance.
+            \return             A pointer to a ClipHelper instance.
         */
-        inline Clip*            getClip()
+        inline ClipHelper*      getClipHelper()
         {
-            return m_clip;
+            return m_clipHelper;
+        }
+        inline Clip*            clip()
+        {
+            return m_clipHelper->clip();
         }
 
         /**
@@ -238,7 +243,7 @@ class   ClipWorkflow : public QObject
 
     protected:
         LibVLCpp::MediaPlayer*  m_mediaPlayer;
-        Clip*                   m_clip;
+        ClipHelper*             m_clipHelper;
         QMutex*                 m_renderLock;
         QReadWriteLock*         m_stateLock;
         State                   m_state;

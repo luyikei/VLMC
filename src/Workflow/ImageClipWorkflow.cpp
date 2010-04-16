@@ -22,6 +22,7 @@
 
 #include "ImageClipWorkflow.h"
 #include "Clip.h"
+#include "ClipHelper.h"
 #include "LightVideoFrame.h"
 #include "MainWorkflow.h"
 #include "VLCMediaPlayer.h"
@@ -63,7 +64,7 @@ ImageClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":fake-duration=%d", 1000 );
     m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":fake-fps=%f", m_clip->getMedia()->fps() );
+    sprintf( buffer, ":fake-fps=%f", m_clipHelper->clip()->getMedia()->fps() );
     m_vlcMedia->addOption( buffer );
 }
 
