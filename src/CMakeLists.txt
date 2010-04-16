@@ -274,6 +274,15 @@ ELSE(NOT WITH_GUI)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
 
+    IF(MINGW)
+        # resource compilation for MinGW
+        ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icon.o
+            COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/cmake/icon.rc
+            -o ${CMAKE_CURRENT_BINARY_DIR}/icon.o )
+        SET(VLMC_SRCS ${VLMC_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/icon.o)
+        SET(LINK_FLAGS -Wl,-subsystem,windows)
+    ENDIF(MINGW)
+
     IF(WIN32)
         SET( GUI_TYPE WIN32 )
     ENDIF( WIN32 )
