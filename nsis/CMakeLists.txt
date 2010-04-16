@@ -25,6 +25,7 @@ IF(WIN32)
 
         # Copy and configure the nsis script file
         CONFIGURE_FILE(installer.nsi "${NSIS_OUTPUT_DIR}/installer.nsi" @ONLY)
+        CONFIGURE_FILE(FileAssociation.nsh "${NSIS_OUTPUT_DIR}/FileAssociation.nsh" COPYONLY)
 
         ADD_CUSTOM_TARGET(installer
             ${CMAKE_COMMAND} -E remove "${NSIS_OUTPUT_DIR}${NSIS_OUTPUT_FILE}"

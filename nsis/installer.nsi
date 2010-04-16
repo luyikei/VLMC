@@ -3,6 +3,8 @@
 ; NSIS Script by:
 ; Ludovic Fauvet <etix@l0cal.com>
 
+!include "FileAssociation.nsh"
+
 ;--------------------------------
 ; General
 
@@ -20,7 +22,6 @@ InstallDir "$PROGRAMFILES\VideoLAN\@PROJECT_NAME_SHORT@"
 
 ; Request admin permissions for Vista and higher
 RequestExecutionLevel admin
-
 
 ;--------------------------------
 ; Interface
@@ -82,6 +83,9 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\@PROJECT_NAME_SHORT@" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
 
+  ; File association
+  ${registerExtension} "$INSTDIR\vlmc.exe" ".vlmc" "VLMC Project"
+
 SectionEnd
 
 Section "Start Menu Shortcuts"
@@ -135,5 +139,8 @@ Section "Uninstall"
   ; Remove directories used
   RMDir "$SMPROGRAMS\@PROJECT_NAME_LONG@"
   RMDir "$INSTDIR"
+
+  ; Remove file association
+  ${unregisterExtension} ".vlmc" "VLMC Project"
 
 SectionEnd
