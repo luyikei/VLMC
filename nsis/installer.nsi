@@ -16,7 +16,7 @@ OutFile "@NSIS_OUTPUT_FILE@"
 InstallDirRegKey HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir"
 
 ; Install directory
-InstallDir "$PROGRAMFILES\@PROJECT_NAME_SHORT@"
+InstallDir "$PROGRAMFILES\VideoLAN\@PROJECT_NAME_SHORT@"
 
 ; Request admin permissions for Vista and higher
 RequestExecutionLevel admin
