@@ -242,7 +242,7 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
     if ( from == BEGINNING )
     {
         if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
-            if ( clipHelper()->begin() + size > clipHelper()->end() )
+            if ( clipHelper()->begin() + size > clipHelper()->clip()->end() )
                 return;
         MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_clipHelper->begin(),
                                                  m_clipHelper->begin() + size, 0,

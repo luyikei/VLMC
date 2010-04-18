@@ -59,7 +59,7 @@ ClipHelper::setBoundaries( qint64 begin, qint64 end )
 {
     if ( begin >= m_clip->m_begin )
         m_begin = begin;
-    if ( end <= m_end )
+    if ( end <= m_clip->m_end )
         m_end = end;
     emit lengthUpdated();
 }
