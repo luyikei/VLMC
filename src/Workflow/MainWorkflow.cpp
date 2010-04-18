@@ -325,9 +325,8 @@ MainWorkflow::loadProject( const QDomElement &root )
             Clip* c = Library::getInstance()->clip( uuid );
             if ( c != NULL )
             {
-                //FIXME: ticket http://trac.videolan.org/vlmc/ticket/41
-//                addClip( new Clip( c, begin.toLongLong(), end.toLongLong() ),
-//                         trackId, startFrame.toLongLong(), type, true );
+                ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(), end.toLongLong() );
+                addClip( ch, trackId, startFrame.toLongLong(), type, true );
             }
             clip = clip.nextSibling().toElement();
         }
