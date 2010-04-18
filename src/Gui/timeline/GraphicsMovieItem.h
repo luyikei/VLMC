@@ -45,6 +45,8 @@ public:
      */
     enum { Type = UserType + 1 };
     GraphicsMovieItem( Clip* clipHelper );
+    /// The same CTOR, but this one won't create a new ClipHelper.
+    GraphicsMovieItem( ClipHelper* clipHelper );
     virtual ~GraphicsMovieItem();
 
     virtual int type() const { return Type; }

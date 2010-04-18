@@ -244,13 +244,13 @@ TracksView::addMediaItem( ClipHelper *ch, unsigned int track, MainWorkflow::Trac
     AbstractGraphicsMediaItem *item = 0;
     if ( trackType == MainWorkflow::VideoTrack )
     {
-        item = new GraphicsMovieItem( ch->clip() );
+        item = new GraphicsMovieItem( ch );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
     else if ( trackType == MainWorkflow::AudioTrack )
     {
-        item = new GraphicsAudioItem( ch->clip() );
+        item = new GraphicsAudioItem( ch );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }

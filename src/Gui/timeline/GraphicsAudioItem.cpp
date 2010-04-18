@@ -46,6 +46,20 @@ GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
     setAcceptHoverEvents( true );
 }
 
+GraphicsAudioItem::GraphicsAudioItem( ClipHelper* ch ) :
+        AbstractGraphicsMediaItem( ch )
+{
+    setFlags( QGraphicsItem::ItemIsSelectable );
+
+    QTime length = QTime().addMSecs( ch->clip()->getMedia()->lengthMS() );
+    QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
+                     "<br><b>Length:</b> %2" )
+                     .arg( ch->clip()->getMedia()->fileName() )
+                     .arg( length.toString("hh:mm:ss.zzz") ) );
+    setToolTip( tooltip );
+    setAcceptHoverEvents( true );
+}
+
 GraphicsAudioItem::~GraphicsAudioItem()
 {
 }

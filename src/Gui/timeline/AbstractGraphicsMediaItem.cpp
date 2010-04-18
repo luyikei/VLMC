@@ -46,6 +46,19 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
 }
 
+AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
+        oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),
+        m_group( NULL ), m_width( 0 ), m_height( 0 ), m_resizeExpected( false ),
+        m_muted( false ), m_clipHelper( ch )
+{
+    // Adjust the width
+    setWidth( ch->length() );
+    // Automatically adjust future changes
+    connect( ch, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( ch->clip(), SIGNAL( unloaded( Clip* ) ),
+             this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
+}
+
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
 {
     ungroup();

@@ -54,6 +54,7 @@ public:
     };
 
     AbstractGraphicsMediaItem( Clip* clip );
+    AbstractGraphicsMediaItem( ClipHelper* ch );
     virtual ~AbstractGraphicsMediaItem();
 
     /// Defines the outer bounds of the item as a rectangle
