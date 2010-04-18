@@ -42,46 +42,45 @@ class MediaCellView : public QWidget
     Q_OBJECT
 
 public:
-    MediaCellView( Clip* clip, QWidget *parent = 0 );
+    MediaCellView( Clip *clip, QWidget *parent = 0 );
     ~MediaCellView();
 
-    void                    setTitle( const QString& title );
-    void                    setThumbnail( const QPixmap& pixmap );
-    const QPixmap*          getThumbnail() const;
+    void                setTitle( const QString &title );
+    void                setThumbnail( const QPixmap &pixmap );
+    const QPixmap       *getThumbnail() const;
     /**
      *  \brief  Set the length displayed in the cell
      *  \param  length  The media length, in ms.
      */
-    void                    setLength( qint64 length, bool mSecs = true );
-    QString                 title() const;
-    const QUuid&            uuid() const;
-
-protected:
-    void                    changeEvent( QEvent *e );
+    void                setLength( qint64 length, bool mSecs = true );
+    QString             title() const;
+    const QUuid         &uuid() const;
 
 private:
-    Ui::MediaCellView*  m_ui;
-    Clip*               m_clip;
+    Ui::MediaCellView   *m_ui;
+    Clip                *m_clip;
     QPoint              m_dragStartPos;
 
 protected:
-    void        mouseDoubleClickEvent( QMouseEvent* );
-    void        mousePressEvent( QMouseEvent* );
-    void        mouseMoveEvent( QMouseEvent* );
-
-signals:
-    void        cellSelected( const QUuid& uuid );
-    void        arrowClicked( const QUuid& uuid );
-    void        cellDeleted( const Clip* );
+    void                changeEvent( QEvent *e );
+    void                mouseDoubleClickEvent( QMouseEvent* );
+    void                mousePressEvent( QMouseEvent* );
+    void                mouseMoveEvent( QMouseEvent* );
 
 public slots:
-    void        deleteButtonClicked( QWidget* sender, QMouseEvent* event );
-    void        arrowButtonClicked( QWidget* sender, QMouseEvent* event );
+    void                deleteButtonClicked( QWidget *sender, QMouseEvent *event );
+    void                arrowButtonClicked( QWidget *sender, QMouseEvent *event );
 
 private slots:
-    void        snapshotUpdated( const Media *media );
-    void        metadataUpdated( const Media *media );
-    void        nbClipUpdated();
+    void                snapshotUpdated( const Media *media );
+    void                metadataUpdated( const Media *media );
+    void                nbClipUpdated();
+
+signals:
+    void                cellSelected( const QUuid& uuid );
+    void                arrowClicked( const QUuid& uuid );
+    void                cellDeleted( const Clip* );
+
 };
 
 #endif // MEDIACELLVIEW_H
