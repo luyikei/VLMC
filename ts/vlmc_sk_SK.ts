@@ -40,7 +40,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzia Qt Runtime: %1.(kompilované: %2)</translation>
     </message>
 </context>
 <context>
@@ -141,38 +141,38 @@ p, li { white-space: pre-wrap; }
         <translation>Neznámy signál</translation>
     </message>
     <message>
-        <source>A crash occured. Signal received: </source>
-        <translation>Nastala chyba. Prijatý signál:</translation>
+        <source>A crash occurred. Signal received: </source>
+        <translation type="unfinished">Nastala chyba. Bol prijatý signál: </translation>
     </message>
 </context>
 <context>
     <name>DockWidgetManager</name>
     <message>
         <source>Media Library</source>
-        <translation type="unfinished">Knižnica médií</translation>
+        <translation>Knižnica médií</translation>
     </message>
     <message>
         <source>Clip Preview</source>
-        <translation type="unfinished">Náhľad klipu</translation>
+        <translation>Náhľad klipu</translation>
     </message>
     <message>
         <source>Project Preview</source>
-        <translation type="unfinished">Náhľad projektu</translation>
+        <translation>Náhľad projektu</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished">História</translation>
+        <translation>História</translation>
     </message>
 </context>
 <context>
     <name>GUIProjectManager</name>
     <message>
         <source>The project has been modified.</source>
-        <translation type="unfinished">Projekt bol upravený.</translation>
+        <translation>Projekt bol upravený.</translation>
     </message>
     <message>
-        <source>Do you want to save it ?</source>
-        <translation type="unfinished">Chcete ho uložiť?</translation>
+        <source>Do you want to save it?</source>
+        <translation>Chcete ho uložiť?</translation>
     </message>
 </context>
 <context>
@@ -188,10 +188,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Project name</source>
         <translation>Názov projektu</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation>Bez názvu</translation>
     </message>
     <message>
         <source>Description</source>
@@ -311,7 +307,7 @@ p, li { white-space: pre-wrap; }
     <name>IntroDialog</name>
     <message>
         <source>VideoLAN Movie Creator</source>
-        <translation type="unfinished">VideoLAN Movie Creator</translation>
+        <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -325,18 +321,28 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Pamätajte prosím na to, že:&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Program VideoLAN Movie Creator je softvérom vo verzii &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; a nie je ešte určený na hlavné nasadenie. Hlavné kľúčové vlastnosti tohto programu môžu ešte &lt;span style=&quot; font-weight:600;&quot;&gt;chýbať&lt;/span&gt;, alebo obsahujú aj &lt;span style=&quot; font-weight:600;&quot;&gt;chyby&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Náš tím sa skladá z dobrovoľníkov, ktorí tvrdo pracujú na tom, aby sa úprava videa pre vás stala tím najlepším zážitkom.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;Zistiť viac&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>I understand</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozumiem</translation>
     </message>
 </context>
 <context>
     <name>ListViewController</name>
     <message>
         <source>Media List</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam médií</translation>
     </message>
 </context>
 <context>
@@ -346,44 +352,12 @@ p, li { white-space: pre-wrap; }
         <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation>Súbor</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Úpravy</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>Zobraziť</translation>
-    </message>
-    <message>
         <source>Effects</source>
         <translation>Efekty</translation>
     </message>
     <message>
-        <source>Tools</source>
-        <translation>Nástroje</translation>
-    </message>
-    <message>
-        <source>Window</source>
-        <translation>Okno</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Pomocník</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Koniec</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>O programe</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation>Vlastnosti</translation>
     </message>
     <message>
         <source>Media Library</source>
@@ -398,32 +372,8 @@ p, li { white-space: pre-wrap; }
         <translation>Prekódovať</translation>
     </message>
     <message>
-        <source>New Project</source>
-        <translation>Nový projekt</translation>
-    </message>
-    <message>
-        <source>Fullscreen</source>
-        <translation>Celoobrazovkový režim</translation>
-    </message>
-    <message>
-        <source>Render</source>
-        <translation>Renderovanie</translation>
-    </message>
-    <message>
-        <source>Load Project</source>
-        <translation>Načítať projekt</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Uložiť</translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation>Importovať</translation>
-    </message>
-    <message>
-        <source>Project Preferences</source>
-        <translation>Vlastnosti projektu</translation>
     </message>
     <message>
         <source>Enable effects engine</source>
@@ -436,14 +386,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Project Wizard</source>
         <translation>Sprievodca projektom</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation>Uložiť ako</translation>
-    </message>
-    <message>
-        <source>Close Project</source>
-        <translation>Zatvoriť projekt</translation>
     </message>
     <message>
         <source>Crash</source>
@@ -466,16 +408,8 @@ p, li { white-space: pre-wrap; }
         <translation>Obnova po páde</translation>
     </message>
     <message>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project ?</source>
-        <translation>Program VLMC nebol správne ukončený. Chcete obnoviť svoj projekt?</translation>
-    </message>
-    <message>
         <source>Can&apos;t restore project</source>
         <translation>Projekt nemožno obnoviť</translation>
-    </message>
-    <message>
-        <source>VLMC didn&apos;t manage to restore your project. We appology for the inconvenience</source>
-        <translation>Program VLMC nedokáže obnoviť Váš projekt. Ospravedlňujeme sa za spôsobené nepríjemnosti</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -508,6 +442,114 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>There is nothing to render.</source>
         <translation>Nie je čo vykresľovať.</translation>
+    </message>
+    <message>
+        <source>Use the mouse tool to manipulate regions in the timeline</source>
+        <translation>Použiť nástroj myši na manipuláciu s regiónmi na časovej osi</translation>
+    </message>
+    <message>
+        <source>Use the scissors to cut regions in the timeline</source>
+        <translation>Použiť nožnice na vystrihnutie regiónov na časovej osi</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation>Oddialiť</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation>Priblížiť</translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
+        <translation>Program VLMC nebol korektne ukončený. Chcete obnoviť svoj posledný projekt?</translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
+        <translation>Program VLMC nedokázal obnoviť váš projekt. Ospravedlňujeme sa za spôsobené neprítomnosti</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>Ú&amp;pravy</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>Zo&amp;braziť</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation>&amp;Nástroje</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Okno</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>Po&amp;mocník</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Súbor</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation>Kon&amp;iec</translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation>O p&amp;rograme</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation>N&amp;astavenia</translation>
+    </message>
+    <message>
+        <source>&amp;New Project</source>
+        <translation>&amp;Nový projekt</translation>
+    </message>
+    <message>
+        <source>Open the wizard to create a new project</source>
+        <translation>Otvoriť sprievodcu vytvorením nového projektu</translation>
+    </message>
+    <message>
+        <source>&amp;Fullscreen</source>
+        <translation>&amp;Celoobrazovkový režim</translation>
+    </message>
+    <message>
+        <source>&amp;Render</source>
+        <translation>Vy&amp;resľovač</translation>
+    </message>
+    <message>
+        <source>Render your project</source>
+        <translation>Vykreslite váš projekt</translation>
+    </message>
+    <message>
+        <source>&amp;Load Project</source>
+        <translation>N&amp;ačítať projekt</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Uložiť</translation>
+    </message>
+    <message>
+        <source>&amp;Import</source>
+        <translation>&amp;Import</translation>
+    </message>
+    <message>
+        <source>Import new medias into the current project</source>
+        <translation>Importovať nové médiá do aktuálneho projektu</translation>
+    </message>
+    <message>
+        <source>Proj&amp;ect Preferences</source>
+        <translation>Na&amp;stavenia projektu</translation>
+    </message>
+    <message>
+        <source>Save &amp;As</source>
+        <translation>Uložiť a&amp;ko</translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation>&amp;Zatvoriť projekt</translation>
     </message>
 </context>
 <context>
@@ -564,211 +606,211 @@ p, li { white-space: pre-wrap; }
     <name>PreferenceWidget</name>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte režim</translation>
     </message>
     <message>
         <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte nástroj na výber na časovej osi</translation>
     </message>
     <message>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim vystrihovania</translation>
     </message>
     <message>
         <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte si nástroj na vystrihnutie na časovej osi</translation>
     </message>
     <message>
         <source>Media preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhľad média</translation>
     </message>
     <message>
         <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozrieť si vybrané médium alebo prerušiť aktuálne prehliadanie</translation>
     </message>
     <message>
         <source>Render preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykresliť náhľad</translation>
     </message>
     <message>
         <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhľad projektu, alebo prerušenie aktuálneho náhľadu</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Späť</translation>
+        <translation>Späť</translation>
     </message>
     <message>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrátiť poslednú akciu späť</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Dopredu</translation>
+        <translation>Dopredu</translation>
     </message>
     <message>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť o jednu akciu dopredu</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished">Pomocník</translation>
+        <translation>Pomocník</translation>
     </message>
     <message>
         <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
+        <translation>Prepnúť na stránku pomocníka</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Koniec</translation>
+        <translation>Koniec</translation>
     </message>
     <message>
         <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončiť program VLMC</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">Vlastnosti</translation>
+        <translation>Vlastnosti</translation>
     </message>
     <message>
         <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť nastavenia programu VLMC</translation>
     </message>
     <message>
         <source>Fullscreen</source>
-        <translation type="unfinished">Celoobrazovkový režim</translation>
+        <translation>Celoobrazovkový režim</translation>
     </message>
     <message>
         <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Prepnúť do celoobrazovkového režimu</translation>
     </message>
     <message>
         <source>New project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový projekt</translation>
     </message>
     <message>
         <source>Open a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť projekt</translation>
     </message>
     <message>
         <source>Open an existing project</source>
-        <translation type="unfinished">Otvoriť existujúci projekt</translation>
+        <translation>Otvoriť existujúci projekt</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Uložiť</translation>
+        <translation>Uložiť</translation>
     </message>
     <message>
         <source>Save the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť aktuálny projekt</translation>
     </message>
     <message>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť ako</translation>
     </message>
     <message>
         <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť aktuálny projekt do nového súboru</translation>
     </message>
     <message>
         <source>Close the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvoriť projekt</translation>
     </message>
     <message>
         <source>Close the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvoriť aktuálny projekt</translation>
     </message>
     <message>
         <source>Import media</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovať médium</translation>
     </message>
     <message>
         <source>Open the import window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť okno pre import</translation>
     </message>
     <message>
         <source>Render the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykresliť projekt</translation>
     </message>
     <message>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Langage</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykresliť projekt do súboru</translation>
     </message>
     <message>
         <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk programu VLMC</translation>
     </message>
     <message>
         <source>Automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky uložiť</translation>
     </message>
     <message>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Ak je táto voľba aktivovaná, program VLMC automaticky uloží váš projekt v zadaných časových intervaloch</translation>
     </message>
     <message>
         <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Interval automatického ukladania</translation>
     </message>
     <message>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto je časový interval, ktorý uplynie medzi dvomi automatickými uloženiami programom VLMC</translation>
     </message>
     <message>
         <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet snímkov (FPS) výstupného videa</translation>
     </message>
     <message>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet snímkov použiť pri náhľade a vykresľovaní projektu</translation>
     </message>
     <message>
         <source>Video width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šírka videa</translation>
     </message>
     <message>
         <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Šírka rozlíšenia výstupného videa</translation>
     </message>
     <message>
         <source>Video height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška videa</translation>
     </message>
     <message>
         <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška rozlíšenia výstupného videa</translation>
     </message>
     <message>
         <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzorkovacia frekvencia zvuku</translation>
     </message>
     <message>
         <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzorkovacia frekvencia zvuku vo výstupnom projekte</translation>
     </message>
     <message>
         <source>Workspace location</source>
-        <translation type="unfinished"></translation>
+        <translation>Umiestnenie pracovného priestoru</translation>
     </message>
     <message>
         <source>The place where all project&apos;s videos will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>Mieste, kam sa ukladajú všetky videá projektu</translation>
     </message>
     <message>
         <source>Project name</source>
-        <translation type="unfinished">Názov projektu</translation>
+        <translation>Názov projektu</translation>
     </message>
     <message>
         <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Názov projektu</translation>
+    </message>
+    <message>
+        <source>Open the new project wizard</source>
+        <translation>Otvoriť sprievodcu projektom</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Jazyk</translation>
     </message>
 </context>
 <context>
@@ -776,6 +818,45 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Preview</source>
         <translation>Náhľad</translation>
+    </message>
+    <message>
+        <source>Go to the previous frame</source>
+        <translation>Prejsť na predchádzajúcu snímku</translation>
+    </message>
+    <message>
+        <source>Play / Pause</source>
+        <translation>Prehrať / pozastaviť</translation>
+    </message>
+    <message>
+        <source>Go to the next frame</source>
+        <translation>Prejsť na ďalšiu snímku</translation>
+    </message>
+    <message>
+        <source>Set marker A</source>
+        <translation>Nastaviť značku A</translation>
+    </message>
+    <message>
+        <source>Set marker B</source>
+        <translation>Nastaviť značku B</translation>
+    </message>
+    <message>
+        <source>Cut at markers position</source>
+        <translation>Orezať na pozícii značiek</translation>
+    </message>
+    <message>
+        <source>Stop the playback</source>
+        <translation>Zastaviť prehrávanie</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>&lt;Unnamed project&gt;</source>
+        <translation>&lt;Nepomenovaný projekt&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;Unsaved project&gt;</source>
+        <translation>&lt;Neuložený projekt&gt;</translation>
     </message>
 </context>
 <context>
@@ -880,50 +961,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Render settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavenia vykresľovania</translation>
     </message>
     <message>
         <source>Videos(*.avi *.mpg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Videá (*.avi, *.mpg)</translation>
     </message>
     <message>
         <source>Invalid parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné parametre</translation>
     </message>
     <message>
         <source>Please enter valid rendering parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte prosím platné parametre vykresľovania</translation>
     </message>
     <message>
         <source>Please provide a valid output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadajte prosím platný súbor s výstupom!</translation>
     </message>
     <message>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor už existuje!</translation>
     </message>
     <message>
-        <source>Output file already exists, do you want to overwrite it ?</source>
-        <translation type="unfinished"></translation>
+        <source>Output file already exists, do you want to overwrite it?</source>
+        <translation>Výstupný súbor už existuje, chcete ho prepísať?</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>všeobecné</translation>
     </message>
     <message>
         <source>keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>klávesnica</translation>
     </message>
     <message>
         <source>video</source>
-        <translation type="unfinished"></translation>
+        <translation>video</translation>
     </message>
     <message>
         <source>audio</source>
-        <translation type="unfinished"></translation>
+        <translation>audio</translation>
     </message>
 </context>
 <context>
@@ -981,11 +1062,11 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksScene</name>
     <message>
-        <source>Confirm the deletion of the region ?</source>
+        <source>Confirm the deletion of the region?</source>
         <translation>Potvrdiť vymazanie regiónu?</translation>
     </message>
     <message>
-        <source>Confirm the deletion of those regions ?</source>
+        <source>Confirm the deletion of those regions?</source>
         <translation>Potvrdiť vymazanie týchto regiónov?</translation>
     </message>
 </context>
