@@ -27,7 +27,6 @@
 #include <QWidget>
 #include <QUuid>
 #include <QMouseEvent>
-#include "ClickableLabel.h"
 
 class   Clip;
 class   Media;
