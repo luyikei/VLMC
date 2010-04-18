@@ -73,6 +73,7 @@ public slots:
 
 private slots:
     void                snapshotUpdated( const Media *media );
+    void                metadataComputingStarted( const Media *media );
     void                metadataUpdated( const Media *media );
     void                nbClipUpdated();
 

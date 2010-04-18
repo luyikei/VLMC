@@ -61,6 +61,7 @@ class MetaDataManager : public QObject, public Singleton<MetaDataManager>
 
     signals:
         void                    failedToCompute( Media* );
+        void                    startingComputing( const Media* );
 };
 
 #endif //METADATAMANAGER_H

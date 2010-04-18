@@ -44,6 +44,7 @@ MetaDataManager::~MetaDataManager()
 void
 MetaDataManager::launchComputing( Media *media )
 {
+    emit startingComputing( media );
     m_computeInProgress = true;
     m_mediaPlayer = new LibVLCpp::MediaPlayer;
     MetaDataWorker* worker = new MetaDataWorker( m_mediaPlayer, media );

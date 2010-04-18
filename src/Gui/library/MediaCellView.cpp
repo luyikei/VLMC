@@ -26,8 +26,9 @@
 
 #include "Clip.h"
 #include "ClipProperty.h"
-#include "Media.h"
 #include "Library.h"
+#include "Media.h"
+#include "MetaDataManager.h"
 
 #include <QTime>
 
@@ -58,6 +59,8 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     if ( clip->getMedia()->isMetadataComputed() == false )
     {
         m_ui->thumbnail->setEnabled( false );
+        connect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),
+                 this, SLOT( metadataComputingStarted( const Media* ) ), Qt::DirectConnection );
     }
     connect( clip->getMedia(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
@@ -75,16 +78,33 @@ MediaCellView::~MediaCellView()
 }
 
 void
+MediaCellView::metadataComputingStarted( const Media *media )
+{
+    if ( media != m_clip->getMedia() )
+        return ;
+    //Disable the delete button to avoid deleting the media while metadata are computed.
+    m_ui->delLabel->setEnabled( false );
+    //We don't need this event anymore now.
+    disconnect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),
+             this, SLOT( metadataComputingStarted( const Media* ) ) );
+}
+
+void
 MediaCellView::metadataUpdated( const Media *media )
 {
     setLength( media->lengthMS() );
     m_ui->thumbnail->setEnabled( true );
+    //If the media is a Video or an Image, we must wait for the snapshot to be computer
+    //before allowing deletion.
+    if ( media->fileType() == Media::Audio )
+        m_ui->delLabel->setEnabled( true );
 }
 
 void
 MediaCellView::snapshotUpdated( const Media *media )
 {
     setThumbnail( media->snapshot() );
+    m_ui->delLabel->setEnabled( true );
 }
 
 void MediaCellView::changeEvent( QEvent *e )
