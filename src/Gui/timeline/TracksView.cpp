@@ -282,7 +282,6 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragAudioItem ) delete m_dragAudioItem;
         m_dragAudioItem = new GraphicsAudioItem( clip );
-        m_dragAudioItem->m_clipHelper = new ClipHelper( clip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( tracksHeight() );
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->mediaType(), 0 ) );
@@ -293,7 +292,6 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragVideoItem ) delete m_dragVideoItem;
         m_dragVideoItem = new GraphicsMovieItem( clip );
-        m_dragVideoItem->m_clipHelper = new ClipHelper( clip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( tracksHeight() );
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->mediaType(), 0 ) );
