@@ -195,7 +195,7 @@ TracksView::removeClip( const QUuid& uuid  )
     // is the one we would like to remove.
     foreach( item, items )
     {
-        if ( item->clipHelper()->uuid() == uuid ||
+        if ( item->clipHelper()->clip()->uuid() == uuid ||
              item->clipHelper()->clip()->isChild( uuid ) == true ) //This is probably useless now
         {
             // This item needs to be removed.
