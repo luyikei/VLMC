@@ -274,17 +274,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                           MainWorkflow::TrackType trackType );
 
         /**
-         * \param   uuid : The clip's uuid.
-         *              Please note that the UUID must be the "timeline uuid"
-         *              and note the clip's uuid, or else nothing would match.
-         *  \param  trackId : the track id
-         *  \param  trackType : the track type (audio or video)
-         *  \returns    The clip that matches the given UUID.
-         */
-        Clip*                   getClip( const QUuid& uuid, unsigned int trackId,
-                                         MainWorkflow::TrackType trackType );
-
-        /**
          *  \brief              Get the number of track for a specific type
          *
          *  \param  trackType   The type of the tracks to count
@@ -353,6 +342,17 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  This method will update the attribute m_lengthFrame
          */
         void                    computeLength();
+
+        /**
+         * \param   uuid : The clip's uuid.
+         *              Please note that the UUID must be the "timeline uuid"
+         *              and note the clip's uuid, or else nothing would match.
+         *  \param  trackId : the track id
+         *  \param  trackType : the track type (audio or video)
+         *  \returns    The clip that matches the given UUID.
+         */
+        Clip*                   getClip( const QUuid& uuid, unsigned int trackId,
+                                         MainWorkflow::TrackType trackType );
 
     private:
         /// Lock for the m_currentFrame atribute.
