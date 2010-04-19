@@ -70,7 +70,7 @@ GUIProjectManager::askForSaveIfModified()
         msgBox.setText( tr( "The project has been modified." ) );
         msgBox.setInformativeText( tr( "Do you want to save it?" ) );
         msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
-        msgBox.setDefaultButton(QMessageBox::Save);
+        msgBox.setDefaultButton( QMessageBox::Save );
         int     ret = msgBox.exec();
 
         switch ( ret )

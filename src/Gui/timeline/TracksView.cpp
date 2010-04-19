@@ -32,12 +32,13 @@
 #include "WorkflowRenderer.h"
 #include "UndoStack.h"
 
-#include <QScrollBar>
-#include <QMouseEvent>
-#include <QWheelEvent>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>
 #include <QGraphicsRectItem>
+#include <QMouseEvent>
+#include <QScrollBar>
+#include <QWheelEvent>
+
 #include <QtDebug>
 
 TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
@@ -186,7 +187,7 @@ TracksView::clear()
 void
 TracksView::removeClip( const QUuid& uuid  )
 {
-    AbstractGraphicsMediaItem *item;
+    AbstractGraphicsMediaItem*      item;
 
     // Get the list of all items in the timeline
     QList<AbstractGraphicsMediaItem*> items = mediaItems();

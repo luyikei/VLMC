@@ -29,7 +29,9 @@
 #include "Library.h"
 #include "Media.h"
 #include "MetaDataManager.h"
+#include "MainWorkflow.h"
 
+#include <QMessageBox>
 #include <QTime>
 
 MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
@@ -212,6 +214,24 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
 
 void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
+    if ( MainWorkflow::getInstance()->contains( m_clip->uuid() ) == true )
+    {
+        QMessageBox msgBox;
+        msgBox.setText( tr( "This clip or some of its children are contained in the timeline." ) );
+        msgBox.setInformativeText( tr( "Removing it will delete it from the timeline. Do you want to proceed ?" ) );
+        msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::Cancel );
+        msgBox.setDefaultButton( QMessageBox::Ok );
+        int     ret = msgBox.exec();
+
+        switch ( ret )
+        {
+            case QMessageBox::Ok:
+                break ;
+            case QMessageBox::Cancel:
+            default:
+                return ;
+        }
+    }
     emit cellDeleted( m_clip );
 }
 

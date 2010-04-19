@@ -99,6 +99,8 @@ class   TrackHandler : public QObject
         void                    muteClip( const QUuid& uuid, quint32 trackId );
         void                    unmuteClip( const QUuid& uuid, quint32 trackId );
 
+        bool                    contains( const QUuid& uuid ) const;
+
     private:
         void                    computeLength();
         void                    activateTrack( unsigned int tracKId );

@@ -316,3 +316,12 @@ TrackHandler::unmuteClip( const QUuid &uuid, quint32 trackId )
 {
     m_tracks[trackId]->unmuteClip( uuid );
 }
+
+bool
+TrackHandler::contains( const QUuid &uuid ) const
+{
+    for ( unsigned int i = 0; i < m_trackCount; ++i )
+        if ( m_tracks[i]->contains( uuid ) == true )
+            return true;
+    return false;
+}

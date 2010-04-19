@@ -128,7 +128,7 @@ Clip*               TrackWorkflow::getClip( const QUuid& uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
+        if ( it.value()->getClipHelper()->clip()->uuid() == uuid )
             return it.value()->clip();
         ++it;
     }
@@ -508,4 +508,20 @@ TrackWorkflow::preload()
             preloadClip( cw );
         ++it;
     }
+}
+
+bool
+TrackWorkflow::contains( const QUuid &uuid ) const
+{
+    QMap<qint64, ClipWorkflow*>::const_iterator       it = m_clips.begin();
+    QMap<qint64, ClipWorkflow*>::const_iterator       end = m_clips.end();
+
+    while ( it != end )
+    {
+        if ( it.value()->getClipHelper()->clip()->uuid() == uuid ||
+             it.value()->getClipHelper()->clip()->isChild( uuid ) )
+            return true;
+        ++it;
+    }
+    return false;
 }

@@ -331,6 +331,14 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         void                    unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
                                          MainWorkflow::TrackType trackType );
 
+        /**
+         *  \return     true if the current workflow contains the clip which the uuid was
+         *              passed. Falsed otherwise.
+         *
+         *  \param      uuid    The Clip uuid, not the ClipHelper's.
+         */
+        bool                    contains( const QUuid& uuid ) const;
+
     private:
         MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();
@@ -345,11 +353,11 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
         /**
          * \param   uuid : The clip's uuid.
-         *              Please note that the UUID must be the "timeline uuid"
-         *              and note the clip's uuid, or else nothing would match.
+         *              Please note that the UUID must be the real clip's uuid,
+         *              and not the timeline (ClipHelper) uuid, or else nothing would match.
          *  \param  trackId : the track id
          *  \param  trackType : the track type (audio or video)
-         *  \returns    The clip that matches the given UUID.
+         *  \returns    The clip that matches the given UUID, or NULL.
          */
         Clip*                   getClip( const QUuid& uuid, unsigned int trackId,
                                          MainWorkflow::TrackType trackType );

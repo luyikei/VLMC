@@ -445,3 +445,12 @@ MainWorkflow::unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId
     removeClip( splitted->uuid(), trackId, trackType );
     origin->setEnd( splitted->end() );
 }
+
+bool
+MainWorkflow::contains( const QUuid &uuid ) const
+{
+    for ( qint32 type = 0; type < NbTrackType; ++type )
+        if ( m_tracks[type]->contains( uuid ) == true )
+            return true;
+    return false;
+}
