@@ -33,9 +33,18 @@ p, li { white-space: pre-wrap; }
         <source>License</source>
         <translation>Licentie</translation>
     </message>
+</context>
+<context>
+    <name>AudioProjectPreferences</name>
     <message>
-        <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
+        <source>Form</source>
+        <translatorcomment>Later te vertalen - niet duidelijk</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>SampleRate</source>
+        <translatorcomment>Ik laat dit in het Engels omdat bemonsteringsfrequentie veeel te krom klinkt in NL.</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -103,11 +112,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Number of video tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal videosporen</translation>
     </message>
     <message>
         <source>Number of audio tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal audiosporen</translation>
     </message>
 </context>
 <context>
@@ -143,33 +152,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>DockWidgetManager</name>
+    <name>FileBrowser</name>
     <message>
-        <source>Media Library</source>
-        <translation type="unfinished">Media bibliotheek</translation>
-    </message>
-    <message>
-        <source>Clip Preview</source>
-        <translation type="unfinished">Clip voorbeeld</translation>
-    </message>
-    <message>
-        <source>Project Preview</source>
-        <translation type="unfinished">Project voorbeeld</translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation type="unfinished">Geschiedenis</translation>
-    </message>
-</context>
-<context>
-    <name>GUIProjectManager</name>
-    <message>
-        <source>The project has been modified.</source>
-        <translation type="unfinished">Gewijzigd project.</translation>
-    </message>
-    <message>
-        <source>Do you want to save it ?</source>
-        <translation type="unfinished">Wil je het opslaan?</translation>
+        <source>Form</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -239,7 +225,8 @@ p, li { white-space: pre-wrap; }
     <name>GraphicsAudioItem</name>
     <message>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
-        <translation></translation>
+        <translatorcomment>Heel die tag gekopieërd &amp; aangepast</translatorcomment>
+        <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Naam:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Lengte:&lt;/b&gt; %2</translation>
     </message>
 </context>
 <context>
@@ -296,44 +283,71 @@ p, li { white-space: pre-wrap; }
         <translation>eigenschappen</translation>
     </message>
     <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <source>Importing files...</source>
+        <translation>Importeren...</translation>
     </message>
     <message>
-        <source>Failed to load %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>IntroDialog</name>
-    <message>
-        <source>VideoLAN Movie Creator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software and is not ready for prime-time. Many key features are &lt;span style=&quot; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;, or even &lt;span style=&quot; font-weight:600;&quot;&gt;buggy&lt;/span&gt;.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I understand</source>
-        <translation type="unfinished"></translation>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
-    <name>ListViewController</name>
+    <name>LanguagePreferences</name>
     <message>
-        <source>Media List</source>
-        <translation type="unfinished"></translation>
+        <source>Form</source>
+        <translatorcomment>Ik ken de context niet - later aan te vullen</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Taal</translation>
+    </message>
+</context>
+<context>
+    <name>Library</name>
+    <message>
+        <source>Import error</source>
+        <translation>Importeer fout</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open file :</source>
+        <translatorcomment>Angepast om beter in NL te klinken</translatorcomment>
+        <translation>Bestand niet herkend:</translation>
+    </message>
+</context>
+<context>
+    <name>LibraryWidget</name>
+    <message>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Geluid</translation>
+    </message>
+    <message>
+        <source>Videos</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation>Afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Add Media</source>
+        <translation>Media toevoegen</translation>
+    </message>
+    <message>
+        <source>Remove Media</source>
+        <translation>Media verwijderen</translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -449,6 +463,18 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
+        <source>Clip Preview</source>
+        <translation>Clip voorbeeld</translation>
+    </message>
+    <message>
+        <source>Project Preview</source>
+        <translation>Project voorbeeld</translation>
+    </message>
+    <message>
+        <source>History</source>
+        <translation>Geschiedenis</translation>
+    </message>
+    <message>
         <source>Keyboard Settings</source>
         <translation>Toetsenbordinstellingen</translation>
     </message>
@@ -462,7 +488,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Crash recovery</source>
-        <translation></translation>
+        <translation>Crashherstel</translation>
     </message>
     <message>
         <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project ?</source>
@@ -478,35 +504,68 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Zoals Word het doet</translatorcomment>
+        <translation>Opnieuw</translation>
+    </message>
+    <message>
+        <source>VLMC</source>
+        <translation></translation>
     </message>
     <message>
         <source>VLMC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC instellingen</translation>
+    </message>
+    <message>
+        <source>Language preferences</source>
+        <translation>Taal voorkeuren</translation>
+    </message>
+    <message>
+        <source>Language settings</source>
+        <translation>Taal instellingen</translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation>Toetsenbord</translation>
+    </message>
+    <message>
+        <source>Project</source>
+        <translation></translation>
     </message>
     <message>
         <source>Project settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Project instellingen</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation></translation>
     </message>
     <message>
         <source>Video settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Video instellingen</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio instellingen</translation>
     </message>
     <message>
         <source>VLMC Renderer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>There is nothing to render.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen materiaal om te renderen.</translation>
+    </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation>Geef het uitvoerbestand in</translation>
     </message>
 </context>
 <context>
@@ -516,8 +575,16 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
+        <source>Media Title</source>
+        <translation>Media titel</translation>
+    </message>
+    <message>
         <source>clip count</source>
         <translation>aantal clips</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation></translation>
     </message>
     <message>
         <source>length</source>
@@ -548,218 +615,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ready to load this project</source>
-        <translation>Gereed om het project te laden</translation>
-    </message>
-</context>
-<context>
-    <name>PreferenceWidget</name>
-    <message>
-        <source>Select mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cut mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Render preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="unfinished">Help</translation>
-    </message>
-    <message>
-        <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="unfinished">Afsluiten</translation>
-    </message>
-    <message>
-        <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation type="unfinished">Opties</translation>
-    </message>
-    <message>
-        <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fullscreen</source>
-        <translation type="unfinished">Volledig scherm</translation>
-    </message>
-    <message>
-        <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open a project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open an existing project</source>
-        <translation type="unfinished">Open een project</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Opslaan</translation>
-    </message>
-    <message>
-        <source>Save the current project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close the project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close the current project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import media</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open the import window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Render the project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Langage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Workspace location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The place where all project&apos;s videos will be stored</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project name</source>
-        <translation type="unfinished">Project naam</translation>
-    </message>
-    <message>
-        <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaar om project te laden</translation>
     </message>
 </context>
 <context>
@@ -767,6 +623,28 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Preview</source>
         <translation>Voorbeeld</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>The project has been modified.</source>
+        <translation>Gewijzigd project.</translation>
+    </message>
+    <message>
+        <source>Do you want to save it ?</source>
+        <translation>Wil je het opslaan?</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectPreferences</name>
+    <message>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Project name</source>
+        <translation>Project naam</translation>
     </message>
 </context>
 <context>
@@ -791,7 +669,7 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QObject</name>
-    <message id="false">
+    <message>
         <source>Adding clip to track %1</source>
         <translation>Voeg clip aan track %1 toe</translation>
     </message>
@@ -817,105 +695,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unable to get backtrace</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RendererSettings</name>
-    <message>
-        <source>Output file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished">Breedte</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished">Hoogte</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video codec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>H264</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio codec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the output file name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Render settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Videos(*.avi *.mpg)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter valid rendering parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please provide a valid output file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File already exists!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output file already exists, do you want to overwrite it ?</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Developper</translatorcomment>
+        <translation>Kon geen backtrace krijgen</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
-        <source>general</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>keyboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>audio</source>
-        <translation type="unfinished"></translation>
+        <source>Preferences: %1</source>
+        <translation>Voorkeuren: %1</translation>
     </message>
 </context>
 <context>
@@ -963,11 +751,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Video #%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Audio #%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1008,51 +796,52 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>H264 + AAC</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Dirac + AAC</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Theora + Vorbis</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Theora + Flac</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Mpeg4 + AAC</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>WMV + WMA</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose File to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een bestand om te openen</translation>
     </message>
     <message>
         <source>Video files (*.avi *.mkv *.ogg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Video bestanden (*.avi *.mkv *.ogg)</translation>
     </message>
     <message>
         <source>Transcode in progress</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Puntjes toegevoegd, staat beter</translatorcomment>
+        <translation>Transcoderen...</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <source>Choose a video to transcode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een bestand om te transcoderen</translation>
     </message>
     <message>
         <source>Choose File to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een bestand om op te slaan</translation>
     </message>
 </context>
 <context>
@@ -1060,6 +849,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Nothing to undo</source>
         <translation>Niets om omgedaan te maken</translation>
+    </message>
+</context>
+<context>
+    <name>VLMCPreferences</name>
+    <message>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Output FPS</source>
+        <translation>Uitvoer FPS</translation>
+    </message>
+    <message>
+        <source>25</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Number of tracks</source>
+        <translation>Aantal tracks</translation>
+    </message>
+    <message>
+        <source>64</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Automatic save</source>
+        <translation>Automatisch opslaan</translation>
+    </message>
+    <message>
+        <source>Automatic save interval</source>
+        <translatorcomment>Herwerkt naar NL</translatorcomment>
+        <translation>Tijd tussen automatisch opslaan</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation>minuten</translation>
     </message>
 </context>
 <context>
@@ -1166,6 +991,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>VideoProjectPreferences</name>
+    <message>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>FPS</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source> Frames/Seconds</source>
+        <translation>Frames/Seconde</translation>
+    </message>
+    <message>
+        <source>Image width</source>
+        <translation>Afbeelding breedte</translation>
+    </message>
+    <message>
+        <source>Image height</source>
+        <translation>Afbeelding hoogte</translation>
+    </message>
+</context>
+<context>
     <name>VlmcDebug</name>
     <message>
         <source>Invalid value supplied for argument --logfile</source>
@@ -1223,7 +1071,7 @@ Then click next to continue...</source>
     </message>
     <message>
         <source>Do not show at startup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon niet bij het starten.</translation>
     </message>
 </context>
 <context>
