@@ -41,10 +41,6 @@ class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
 
-#ifndef MAX_TRACKS
-#define MAX_TRACKS 64
-#endif
-
 class   TrackWorkflow : public QObject
 {
     Q_OBJECT
