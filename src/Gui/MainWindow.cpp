@@ -240,7 +240,7 @@ MainWindow::initVlmcPreferences()
                                                 SLOT( languageChanged( const QVariant& ) ),
                                                 SettingsManager::Vlmc );
     VLMC_CREATE_PREFERENCE_BOOL( "general/ConfirmDeletion", true,
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm deletion"),
+                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Ask for confirmation before deleting a clip from the timeline" ) );
 
     //Load saved preferences :
