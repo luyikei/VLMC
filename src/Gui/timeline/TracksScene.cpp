@@ -20,15 +20,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QMessageBox>
-#include <QKeyEvent>
-#include <QGraphicsSceneContextMenuEvent>
 #include "TracksScene.h"
+
 #include "Commands.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
+#include "SettingsManager.h"
 #include "Timeline.h"
 #include "UndoStack.h"
+
+#include <QMessageBox>
+#include <QKeyEvent>
+#include <QGraphicsSceneContextMenuEvent>
 
 TracksScene::TracksScene( QObject* parent ) : QGraphicsScene( parent )
 {
@@ -67,20 +70,23 @@ TracksScene::askRemoveSelectedItems()
 
     if ( !tv ) return;
 
-    QString message;
-    if ( selectedItems().size() == 1 )
-        message = tr("Confirm the deletion of the region?");
-    else
-        message = tr("Confirm the deletion of those regions?");
+    if ( VLMC_GET_BOOL( "general/ConfirmDeletion" ) == true )
+    {
+        QString message;
+        if ( selectedItems().size() == 1 )
+            message = tr("Confirm the deletion of the region?");
+        else
+            message = tr("Confirm the deletion of those regions?");
 
-    QMessageBox::StandardButton b =
-    QMessageBox::warning( tv, "Object deletion",
-                          message,
-                          QMessageBox::Yes | QMessageBox::No,
-                          QMessageBox::No );
+        QMessageBox::StandardButton b =
+        QMessageBox::warning( tv, "Object deletion",
+                              message,
+                              QMessageBox::Yes | QMessageBox::No,
+                              QMessageBox::No );
 
-    // Skip the deletion process
-    if ( b == QMessageBox::No ) return;
+        // Skip the deletion process
+        if ( b == QMessageBox::No ) return;
+    }
 
     UndoStack::getInstance()->beginMacro( "Remove clip(s)" );
 
