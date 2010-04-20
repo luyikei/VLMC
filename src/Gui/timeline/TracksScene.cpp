@@ -32,6 +32,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QGraphicsSceneContextMenuEvent>
+#include <QPushButton>
 
 TracksScene::TracksScene( QObject* parent ) : QGraphicsScene( parent )
 {
@@ -78,14 +79,22 @@ TracksScene::askRemoveSelectedItems()
         else
             message = tr("Confirm the deletion of those regions?");
 
-        QMessageBox::StandardButton b =
-        QMessageBox::warning( tv, "Object deletion",
-                              message,
-                              QMessageBox::Yes | QMessageBox::No,
-                              QMessageBox::No );
+        QMessageBox msgBox;
+        msgBox.setText( message );
+        msgBox.addButton( tr( "Yes" ), QMessageBox::YesRole );
+        QAbstractButton     *always = msgBox.addButton( tr( "Yes, don't ask me again" ),
+                                                        QMessageBox::YesRole );
+        QAbstractButton     *no = msgBox.addButton( tr( "No" ), QMessageBox::NoRole );
+        msgBox.exec();
+        QAbstractButton*    clicked = msgBox.clickedButton();
 
-        // Skip the deletion process
-        if ( b == QMessageBox::No ) return;
+        if ( clicked == no )
+            return ;
+        if ( clicked == always )
+        {
+            SettingsManager::getInstance()->setImmediateValue( "general/ConfirmDeletion",
+                                                                   false, SettingsManager::Vlmc );
+        }
     }
 
     UndoStack::getInstance()->beginMacro( "Remove clip(s)" );
