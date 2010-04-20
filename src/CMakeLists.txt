@@ -215,7 +215,15 @@ ELSE(NOT WITH_GUI)
         Gui/preview/PreviewRuler.h
         Gui/preview/PreviewWidget.h
         Gui/project/GuiProjectManager.h
+        Gui/settings/KeyboardShortcut.h
         Gui/settings/KeyboardShortcutInput.h
+        Gui/settings/BoolWidget.h
+        Gui/settings/DoubleWidget.h
+        Gui/settings/IntWidget.h
+        Gui/settings/ISettingsCategoryWidget.h
+        Gui/settings/LanguageWidget.h
+        Gui/settings/PreferenceWidget.h
+        Gui/settings/StringWidget.h
         Gui/settings/Panel.h
         Gui/settings/PreferenceWidget.h
         Gui/settings/Settings.h

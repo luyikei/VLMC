@@ -29,7 +29,9 @@ IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         m_setting( s )
 {
     m_spinbox = new QSpinBox( parent );
-    m_spinbox->setValue( s->get().toInt() );
+    connect( s, SIGNAL( changed( const QVariant& ) ),
+             this, SLOT( changed( const QVariant& ) ) );
+    changed( s->get() );
 }
 
 QWidget*
@@ -42,4 +44,10 @@ void
 IntWidget::save()
 {
     m_setting->set( m_spinbox->value() );
+}
+
+void
+IntWidget::changed( const QVariant &val )
+{
+    m_spinbox->setValue( val.toInt() );
 }

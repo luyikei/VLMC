@@ -75,10 +75,9 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     // Add the system default option (auto-detection of the locale)
     m_list->insertItem( 0, "System Locale (autodetect)", "default" );
 
-    QString lang = VLMC_GET_STRING( "general/VLMCLang" );
-    int idx = m_list->findData( lang );
-    if ( idx != -1 )
-        m_list->setCurrentIndex( idx );
+    connect( s, SIGNAL( changed( const QVariant& ) ),
+             this, SLOT( changed( const QVariant& ) ) );
+    changed( s->get() );
 }
 
 QWidget*
@@ -92,4 +91,12 @@ LanguageWidget::save()
 {
     QString     lang = m_list->itemData( m_list->currentIndex() ).toString();
     m_setting->set( lang );
+}
+
+void
+LanguageWidget::changed( const QVariant &val )
+{
+    int idx = m_list->findData( val.toString() );
+    if ( idx != -1 )
+        m_list->setCurrentIndex( idx );
 }

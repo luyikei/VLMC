@@ -29,7 +29,9 @@ BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         m_setting( s )
 {
     m_checkbox = new QCheckBox( parent );
-    m_checkbox->setChecked( s->get().toBool() );
+    connect( s, SIGNAL( changed( const QVariant& ) ),
+             this, SLOT( changed( const QVariant& ) ) );
+    changed( s->get() );
 }
 
 QWidget*
@@ -42,4 +44,10 @@ void
 BoolWidget::save()
 {
     m_setting->set( m_checkbox->isChecked() );
+}
+
+void
+BoolWidget::changed( const QVariant &val )
+{
+    m_checkbox->setChecked( val.toBool() );
 }

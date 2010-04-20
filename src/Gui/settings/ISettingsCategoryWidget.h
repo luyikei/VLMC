@@ -27,11 +27,18 @@
 class   QVariant;
 class   QWidget;
 
-class   ISettingsCategoryWidget
+#include <QObject>
+
+class   ISettingsCategoryWidget : public QObject
 {
+    Q_OBJECT
+
     public:
         virtual QWidget*        widget() = 0;
         virtual void            save() = 0;
+
+    protected slots:
+        virtual void            changed( const QVariant& ) = 0;
 };
 
 #endif // ISETTINGSCATEGORYWIDGET_H

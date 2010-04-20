@@ -29,7 +29,9 @@ StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         m_setting( s )
 {
     m_lineEdit = new QLineEdit( parent );
-    m_lineEdit->setText( s->get().toString() );
+    connect( s, SIGNAL( changed( const QVariant& ) ),
+             this, SLOT( changed( const QVariant& ) ) );
+    changed( s->get() );
 }
 
 QWidget*
@@ -42,4 +44,9 @@ void
 StringWidget::save()
 {
     m_setting->set( m_lineEdit->text() );
+}
+void
+StringWidget::changed( const QVariant &val )
+{
+    m_lineEdit->setText( val.toString() );
 }

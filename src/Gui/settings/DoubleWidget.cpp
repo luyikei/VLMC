@@ -29,7 +29,9 @@ DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         m_setting( s )
 {
     m_spinbox = new QDoubleSpinBox( parent );
-    m_spinbox->setValue( s->get().toDouble() );
+    changed( s->get() );
+    connect( s, SIGNAL( changed( const QVariant& ) ),
+             this, SLOT( changed( const QVariant& ) ) );
 }
 
 QWidget*
@@ -42,4 +44,10 @@ void
 DoubleWidget::save()
 {
     m_setting->set( m_spinbox->value() );
+}
+
+void
+DoubleWidget::changed( const QVariant &val )
+{
+    m_spinbox->setValue( val.toDouble() );
 }

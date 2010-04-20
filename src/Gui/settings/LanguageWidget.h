@@ -32,10 +32,15 @@ class   QComboBox;
 
 class   LanguageWidget : public ISettingsCategoryWidget
 {
+    Q_OBJECT
+
     public:
         LanguageWidget( SettingValue *s, QWidget *parent = NULL );
         QWidget*                widget();
         void                    save();
+
+    private slots:
+        virtual void            changed( const QVariant& );
 
     private:
         SettingValue            *m_setting;
