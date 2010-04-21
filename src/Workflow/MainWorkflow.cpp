@@ -310,11 +310,13 @@ MainWorkflow::loadProject( const QDomElement &root )
             QString                     begin;
             QString                     end;
             QString                     startFrame;
+            QString                     chUuid;
 
             uuid = clip.attribute( "uuid" );
             begin = clip.attribute( "begin" );
             end = clip.attribute( "end" );
             startFrame = clip.attribute( "startFrame" );
+            chUuid = clip.attribute( "helper" );
 
             if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
             {
@@ -325,7 +327,8 @@ MainWorkflow::loadProject( const QDomElement &root )
             Clip* c = Library::getInstance()->clip( uuid );
             if ( c != NULL )
             {
-                ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(), end.toLongLong() );
+                ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),
+                                                  end.toLongLong(), chUuid );
                 addClip( ch, trackId, startFrame.toLongLong(), type, true );
             }
             clip = clip.nextSibling().toElement();

@@ -115,7 +115,6 @@ MetaDataWorker::metaDataAvailable()
 
         quint32     width, height;
         m_mediaPlayer->getSize( &width, &height );
-        qDebug() << width << height;
         m_media->setWidth( width );
         m_media->setHeight( height );
         m_media->setFps( m_mediaPlayer->getFps() );

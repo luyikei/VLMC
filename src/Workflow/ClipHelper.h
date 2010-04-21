@@ -33,7 +33,8 @@ class   ClipHelper : public QObject
     Q_OBJECT
 
     public:
-        ClipHelper( Clip* clip, qint64 begin = -1, qint64 end = -1 );
+        ClipHelper( Clip* clip, qint64 begin = -1, qint64 end = -1,
+                    const QString& uuid = QString() );
 
         Clip*       clip()
         {

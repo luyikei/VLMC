@@ -24,7 +24,8 @@
 
 #include "Clip.h"
 
-ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/ ) :
+ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
+                        const QString& uuid /*= QString()*/ ) :
         m_clip( clip ),
         m_begin( begin ),
         m_end( end )
@@ -33,7 +34,10 @@ ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/ )
         m_begin = clip->begin();
     if ( end == -1 )
         m_end = clip->end();
-    m_uuid = QUuid::createUuid();
+    if ( uuid.isEmpty() == true )
+        m_uuid = QUuid::createUuid();
+    else
+        m_uuid = QUuid( uuid );
 }
 
 void
