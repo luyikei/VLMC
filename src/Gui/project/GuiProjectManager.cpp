@@ -200,3 +200,9 @@ GUIProjectManager::projectNameChanged( const QVariant& name )
     m_projectName = name.toString();
     emit projectUpdated( m_projectName, !m_needSave );
 }
+
+void
+GUIProjectManager::failedToLoad( const QString &reason ) const
+{
+    QMessageBox::warning( NULL, tr( "Failed to load project file" ), reason );
+}

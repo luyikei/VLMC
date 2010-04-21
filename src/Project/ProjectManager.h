@@ -70,6 +70,8 @@ protected:
      */
     QString         projectName() const;
 
+    virtual void    failedToLoad( const QString& reason ) const;
+
 protected:
     ProjectManager();
     ~ProjectManager();

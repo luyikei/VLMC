@@ -99,12 +99,19 @@ void    ProjectManager::loadTimeline()
 void    ProjectManager::loadProject( const QString& fileName )
 {
     if ( fileName.isEmpty() == true )
-        return;
+    {
+        failedToLoad( tr( "Invalid project file name." ) );
+        return ;
+    }
 
     if ( closeProject() == false )
         return ;
     m_projectFile = new QFile( fileName );
-    m_projectFile->open( QFile::ReadOnly );
+    if ( m_projectFile->open( QFile::ReadOnly ) == false )
+    {
+        failedToLoad( tr( "Can't open project file. (%1)" ).arg( m_projectFile->errorString() ) );
+        return ;
+    }
     m_projectFile->close();
 
     m_domDocument = new QDomDocument;
@@ -234,4 +241,12 @@ ProjectManager::loadEmergencyBackup()
         return true;
     }
     return false;
+}
+
+void
+ProjectManager::failedToLoad( const QString &reason ) const
+{
+    //When running in server mode, we can't do anything without a project file.
+    qCritical() << tr( "Failed to load the project file: %1. Aborting." ).arg( reason );
+    abort();
 }

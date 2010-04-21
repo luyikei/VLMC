@@ -53,6 +53,9 @@ public:
     bool            closeProject();
     bool            needSave() const;
 
+protected:
+    virtual void    failedToLoad( const QString &reason ) const;
+
 private:
     bool            createNewProjectFile( bool saveAs );
 
