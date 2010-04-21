@@ -127,10 +127,9 @@ void    ProjectManager::loadProject( const QString& fileName )
 
 void    ProjectManager::__saveProject( const QString &fileName )
 {
-    QFile               file( fileName );
-    file.open( QFile::WriteOnly );
+    QByteArray          projectString;
 
-    QXmlStreamWriter    project( &file );
+    QXmlStreamWriter    project( &projectString );
 
     project.setAutoFormatting( true );
     project.writeStartDocument();
@@ -142,6 +141,10 @@ void    ProjectManager::__saveProject( const QString &fileName )
 
     project.writeEndElement();
     project.writeEndDocument();
+
+    QFile               file( fileName );
+    file.open( QFile::WriteOnly );
+    file.write( projectString );
 }
 
 void    ProjectManager::emergencyBackup()
