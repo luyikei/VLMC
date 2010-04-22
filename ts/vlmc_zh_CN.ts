@@ -152,7 +152,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.cpp" line="55"/>
         <source>A crash occurred. Signal received: </source>
-        <translation type="unfinished"></translation>
+        <translation>崩溃了。所收到的信号: </translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="14"/>
@@ -214,12 +214,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="71"/>
         <source>Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>是否储存?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="207"/>
         <source>Failed to load project file</source>
-        <translation type="unfinished"></translation>
+        <translation>载入项目文件失败</translation>
     </message>
 </context>
 <context>
@@ -438,22 +438,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="325"/>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>使用鼠标工具在时间轴中操作区域</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="333"/>
         <source>Use the scissors to cut regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>使用剪刀工具在时间轴中进行切割</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="360"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>缩小</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="381"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>放大</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="431"/>
@@ -508,12 +508,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="632"/>
         <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 未正常关闭。是否希望恢复项目?</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="639"/>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 未能恢复您的项目。对由此造成的不便我们非常抱歉</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="639"/>
@@ -545,107 +545,107 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="35"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="45"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>视图(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="60"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>工具(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="66"/>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>窗口(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="71"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="79"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="104"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>退出(&amp;Q)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="109"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="123"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>首选项(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="152"/>
         <source>&amp;New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>新建项目(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
         <source>Open the wizard to create a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>打开创建新项目向导</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>全屏(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="168"/>
         <source>&amp;Render</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
         <source>Render your project</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染您的项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
         <source>&amp;Load Project</source>
-        <translation type="unfinished"></translation>
+        <translation>载入项目(&amp;Load)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="181"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>导入(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="189"/>
         <source>Import new medias into the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>将新媒体导入到当前项目中</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="205"/>
         <source>Proj&amp;ect Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>项目首选项(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="218"/>
         <source>Save &amp;As</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="223"/>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭项目(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
@@ -709,12 +709,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="220"/>
         <source>This clip or some of its children are contained in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>此剪辑或其子集已包含在时间轴中。</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="221"/>
         <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
+        <translation>移除操作会将它从时间轴中删除。您是否希望这样处理?</translation>
     </message>
 </context>
 <context>
@@ -866,22 +866,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="212"/>
         <source>Open the new project wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>打开新建项目向导</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="243"/>
         <source>Confirm clip deletion</source>
-        <translation type="unfinished"></translation>
+        <translation>确认剪辑删除</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="244"/>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>从时间轴中删除剪辑前确认</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="215"/>
@@ -1039,37 +1039,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="58"/>
         <source>Go to the previous frame</source>
-        <translation type="unfinished"></translation>
+        <translation>前往前一帧</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="96"/>
         <source>Play / Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>播放 / 暂停</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="134"/>
         <source>Go to the next frame</source>
-        <translation type="unfinished"></translation>
+        <translation>前往后一帧</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="172"/>
         <source>Set marker A</source>
-        <translation type="unfinished"></translation>
+        <translation>设置标记 A</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="210"/>
         <source>Set marker B</source>
-        <translation type="unfinished"></translation>
+        <translation>设置标记 B</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="248"/>
         <source>Cut at markers position</source>
-        <translation type="unfinished"></translation>
+        <translation>在标记处切割</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="293"/>
         <source>Stop the playback</source>
-        <translation type="unfinished"></translation>
+        <translation>停止回放</translation>
     </message>
 </context>
 <context>
@@ -1077,17 +1077,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="103"/>
         <source>Invalid project file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效项目文件名。</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="112"/>
         <source>Can&apos;t open project file. (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开项目文件。(%1)</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="250"/>
         <source>Failed to load the project file: %1. Aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法载入项目文件: %1。正在中止。</translation>
     </message>
 </context>
 <context>
@@ -1247,7 +1247,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="82"/>
         <source>Output file already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>输出文件已存在，是否覆写?</translation>
     </message>
 </context>
 <context>
@@ -1344,27 +1344,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="78"/>
         <source>Confirm the deletion of the region?</source>
-        <translation type="unfinished"></translation>
+        <translation>确认区域删除?</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="80"/>
         <source>Confirm the deletion of those regions?</source>
-        <translation type="unfinished"></translation>
+        <translation>确认多区域删除?</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="84"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="85"/>
         <source>Yes, don&apos;t ask me again</source>
-        <translation type="unfinished"></translation>
+        <translation>是，不再询问</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="87"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>否</translation>
     </message>
 </context>
 <context>
