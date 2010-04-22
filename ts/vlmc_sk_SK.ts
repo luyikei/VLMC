@@ -174,6 +174,10 @@ p, li { white-space: pre-wrap; }
         <source>Do you want to save it?</source>
         <translation>Chcete ho uložiť?</translation>
     </message>
+    <message>
+        <source>Failed to load project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -566,6 +570,14 @@ p, li { white-space: pre-wrap; }
         <source>length</source>
         <translation>Dĺžka</translation>
     </message>
+    <message>
+        <source>This clip or some of its children are contained in the timeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpenPage</name>
@@ -812,6 +824,14 @@ p, li { white-space: pre-wrap; }
         <source>Language</source>
         <translation>Jazyk</translation>
     </message>
+    <message>
+        <source>Confirm clip deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask for confirmation before deleting a clip from the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreviewWidget</name>
@@ -851,12 +871,16 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ProjectManager</name>
     <message>
-        <source>&lt;Unnamed project&gt;</source>
-        <translation>&lt;Nepomenovaný projekt&gt;</translation>
+        <source>Invalid project file name.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;Unsaved project&gt;</source>
-        <translation>&lt;Neuložený projekt&gt;</translation>
+        <source>Can&apos;t open project file. (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load the project file: %1. Aborting.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1068,6 +1092,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Confirm the deletion of those regions?</source>
         <translation>Potvrdiť vymazanie týchto regiónov?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes, don&apos;t ask me again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

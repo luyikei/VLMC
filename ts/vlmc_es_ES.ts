@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutVLMC</name>
@@ -119,10 +121,6 @@ p, li { white-space: pre-wrap; }(new line)
         <translation>Señal desconocida</translation>
     </message>
     <message>
-        <source>A crash occured. Signal received: </source>
-        <translation>Ha ocurrido un fallo. Señal recivida:</translation>
-    </message>
-    <message>
         <source>VLMC Crash handler</source>
         <translation>El control de VLMC ha fallado</translation>
     </message>
@@ -141,6 +139,10 @@ p, li { white-space: pre-wrap; }(new line)
     <message>
         <source>Crash_Description</source>
         <translation>Descripción del fallo</translation>
+    </message>
+    <message>
+        <source>A crash occurred. Signal received: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -169,8 +171,12 @@ p, li { white-space: pre-wrap; }(new line)
         <translation>El proyecto ha sido modificado.</translation>
     </message>
     <message>
-        <source>Do you want to save it ?</source>
-        <translation>¿Desea guardar el proyecto?</translation>
+        <source>Do you want to save it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load project file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -214,10 +220,6 @@ p, li { white-space: pre-wrap; }(new line)
     <message>
         <source>Project name</source>
         <translation>Nombre del Proyecto</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Description</source>
@@ -384,16 +386,8 @@ p, li { white-space: pre-wrap; }
         <translation>Falló la recuperación</translation>
     </message>
     <message>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project ?</source>
-        <translation>VLMC se ha cerrado incorrectamente. ¿Deseas recuperar tu proyecto?</translation>
-    </message>
-    <message>
         <source>Can&apos;t restore project</source>
         <translation>No se puede restaurar el Proyecto</translation>
-    </message>
-    <message>
-        <source>VLMC didn&apos;t manage to restore your project. We appology for the inconvenience</source>
-        <translation>VLMC no logró restaurar su proyecto. Nos disculpamos por las molestias ocacionadas.</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -404,88 +398,24 @@ p, li { white-space: pre-wrap; }
         <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation>Archivo</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Edición</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>Vista</translation>
-    </message>
-    <message>
         <source>Effects</source>
         <translation>Efectos</translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation>Herramientas</translation>
-    </message>
-    <message>
-        <source>Window</source>
-        <translation>Ventana</translation>
     </message>
     <message>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>Quit</source>
-        <translation>Salir</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation>Guardar Como</translation>
-    </message>
-    <message>
-        <source>Close Project</source>
-        <translation>Cerrar Proyecto</translation>
-    </message>
-    <message>
         <source>Crash</source>
         <translation>Fallo:</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>A propósito de</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation>Preferencias</translation>
     </message>
     <message>
         <source>Transcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New Project</source>
-        <translation>Nuevo Proyecto</translation>
-    </message>
-    <message>
-        <source>Fullscreen</source>
-        <translation>Pantalla completa</translation>
-    </message>
-    <message>
-        <source>Render</source>
-        <translation>Renderizar</translation>
-    </message>
-    <message>
-        <source>Load Project</source>
-        <translation>Abrir Proyecto</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Guardar</translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation>Importar</translation>
-    </message>
-    <message>
-        <source>Project Preferences</source>
-        <translation>Preferencias del Proyecto</translation>
     </message>
     <message>
         <source>Enable effects engine</source>
@@ -507,6 +437,114 @@ p, li { white-space: pre-wrap; }
         <source>Redo</source>
         <translation>Rehacer</translation>
     </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the wizard to create a new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Render</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Render your project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Load Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import new medias into the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proj&amp;ect Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save &amp;As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the mouse tool to manipulate regions in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the scissors to cut regions in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MediaCellView</name>
@@ -521,6 +559,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>length</source>
         <translation type="unfinished">duración</translation>
+    </message>
+    <message>
+        <source>This clip or some of its children are contained in the timeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -637,10 +683,6 @@ p, li { white-space: pre-wrap; }
         <translation>Nuevo Proyecto</translation>
     </message>
     <message>
-        <source>Open the new project wizzard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open a project</source>
         <translation>Abrir un proyecto</translation>
     </message>
@@ -687,10 +729,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Render the project to a file</source>
         <translation>Renderizar el proyecto a un archivo</translation>
-    </message>
-    <message>
-        <source>Langage</source>
-        <translation>Idioma</translation>
     </message>
     <message>
         <source>The VLMC&apos;s UI language</source>
@@ -760,12 +798,71 @@ p, li { white-space: pre-wrap; }
         <source>The project name</source>
         <translation>El nombre del Proyecto</translation>
     </message>
+    <message>
+        <source>Open the new project wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm clip deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask for confirmation before deleting a clip from the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreviewWidget</name>
     <message>
         <source>Preview</source>
         <translation>Vista previa</translation>
+    </message>
+    <message>
+        <source>Go to the previous frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play / Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to the next frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set marker A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set marker B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut at markers position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop the playback</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <source>Invalid project file name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t open project file. (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load the project file: %1. Aborting.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -789,7 +886,7 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QObject</name>
-    <message>
+    <message id="false">
         <source>Adding clip to track %1</source>
         <translation>Agregando clip a a pista $1</translation>
     </message>
@@ -893,8 +990,8 @@ p, li { white-space: pre-wrap; }
         <translation>El archivo ya existe!</translation>
     </message>
     <message>
-        <source>Output file already exists, do you want to overwrite it ?</source>
-        <translation>El archivo ya existe. ¿Desea sobreescribirlo?</translation>
+        <source>Output file already exists, do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -920,7 +1017,7 @@ p, li { white-space: pre-wrap; }
     <name>StackViewNavController</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulario</translation>
     </message>
     <message>
         <source>Previous</source>
@@ -935,7 +1032,7 @@ p, li { white-space: pre-wrap; }
     <name>TagWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulario</translation>
     </message>
     <message>
         <source>Keyword Tags</source>
@@ -946,14 +1043,14 @@ p, li { white-space: pre-wrap; }
     <name>Timeline</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulario</translation>
     </message>
 </context>
 <context>
     <name>TrackControls</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulario</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -971,12 +1068,24 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksScene</name>
     <message>
-        <source>Confirm the deletion of the region ?</source>
-        <translation type="unfinished">Confirme la eliminación de la región</translation>
+        <source>Confirm the deletion of the region?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Confirm the deletion of those regions ?</source>
-        <translation type="unfinished">Confirme la eliminación de esas regiones</translation>
+        <source>Confirm the deletion of those regions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes, don&apos;t ask me again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1192,7 +1301,7 @@ Luego precione siguiente para continuar...</translation>
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulario</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;

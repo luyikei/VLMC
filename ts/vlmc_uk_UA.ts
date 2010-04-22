@@ -177,29 +177,29 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.cpp" line="55"/>
-        <source>A crash occured. Signal received: </source>
-        <translation>Трапився крах. Одержано сигнал: </translation>
+        <source>A crash occurred. Signal received: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DockWidgetManager</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="288"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="291"/>
         <source>Media Library</source>
         <translation type="unfinished">Медіабібліотека</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="393"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="400"/>
         <source>Clip Preview</source>
         <translation type="unfinished">Перегляд обрізу</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="402"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="409"/>
         <source>Project Preview</source>
         <translation type="unfinished">Перегляд проекту</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="410"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="417"/>
         <source>History</source>
         <translation type="unfinished">Журнал</translation>
     </message>
@@ -213,8 +213,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="71"/>
-        <source>Do you want to save it ?</source>
-        <translation type="unfinished">Бажаєте це зберегти?</translation>
+        <source>Do you want to save it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="207"/>
+        <source>Failed to load project file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -235,27 +240,22 @@ p, li { white-space: pre-wrap; }
         <translation>Назва проекту</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="59"/>
-        <source>Untitled</source>
-        <translation>Безіменний</translation>
-    </message>
-    <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="69"/>
         <source>Description</source>
         <translation>Опис</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="99"/>
+        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="112"/>
         <source>Workspace directory</source>
         <translation>Робоча тека</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="115"/>
+        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="132"/>
         <source>Browse...</source>
         <translation>Огляд…</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="128"/>
+        <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="145"/>
         <source>Project location</source>
         <translation>Місцерозміщення проекту</translation>
     </message>
@@ -286,12 +286,12 @@ p, li { white-space: pre-wrap; }
         <translation>Робочий простір потрібно вказати.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="108"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="109"/>
         <source>Missing workspace location</source>
         <translation>Нема робочого простору</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="122"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="123"/>
         <source>Invalid workspace location</source>
         <translation>Неправильний робочий простір</translation>
     </message>
@@ -299,7 +299,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsAudioItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="40"/>
+        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="41"/>
+        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="55"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Назва:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Довжина:&lt;/b&gt; %2</translation>
     </message>
@@ -307,7 +308,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsMovieItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="41"/>
+        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="42"/>
+        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="56"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Назва:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Довжина:&lt;/b&gt; %2</translation>
     </message>
@@ -315,12 +317,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportController</name>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="155"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="154"/>
         <source>properties</source>
         <translation>властивості</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="326"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="316"/>
         <source>Failed to load %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -424,69 +426,89 @@ p, li { white-space: pre-wrap; }
         <translation>Медіабібліотека</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="424"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="325"/>
+        <source>Use the mouse tool to manipulate regions in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="333"/>
+        <source>Use the scissors to cut regions in the timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="360"/>
+        <source>Zoom out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="381"/>
+        <source>Zoom in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="431"/>
         <source>VLMC settings</source>
         <translation>Налаштування VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="427"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="434"/>
         <source>Keyboard Settings</source>
         <translation>Налаштування клавіатури</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="435"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="442"/>
         <source>Project settings</source>
         <translation>Налаштування проекту</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="438"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="445"/>
         <source>Video settings</source>
         <translation>Налаштування відео</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="441"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="448"/>
         <source>Audio settings</source>
         <translation>Налаштування аудіо</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="464"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="471"/>
         <source>Sorry</source>
         <translation>Вибачте</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="465"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="472"/>
         <source>This feature is currently disabled.</source>
         <translation>Поки що цю властивість вимкнено.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="473"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="480"/>
         <source>VLMC Renderer</source>
         <translation>Відтворення VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="473"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="480"/>
         <source>There is nothing to render.</source>
         <translation>Нема що відтворювати.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="625"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
         <source>Crash recovery</source>
         <translation>Відновлення після краху</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="625"/>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project ?</source>
-        <translation>VLMC невдало закрили. Відновити ваш проект?</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
+        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="639"/>
+        <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="639"/>
         <source>Can&apos;t restore project</source>
         <translation>Неможливо відновити проект</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
-        <source>VLMC didn&apos;t manage to restore your project. We appology for the inconvenience</source>
-        <translation>На привеликий жаль, VLMC не може відновити ваш проект</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="142"/>
@@ -495,86 +517,140 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="14"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="575"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="582"/>
         <source>VideoLAN Movie Creator</source>
         <translation>Кінотворець VideoLAN</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="35"/>
-        <source>File</source>
-        <translation>Файл</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="51"/>
-        <source>Edit</source>
-        <translation>Правка</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="61"/>
-        <source>View</source>
-        <translation>Огляд</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="70"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="54"/>
         <source>Effects</source>
         <translation>Впливи</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="76"/>
-        <source>Tools</source>
-        <translation>Інструменти</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="82"/>
-        <source>Window</source>
-        <translation>Вікно</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="87"/>
         <location filename="../src/Gui/ui/MainWindow.ui" line="114"/>
         <source>Help</source>
         <translation>Довідка</translation>
     </message>
     <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="35"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="45"/>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="60"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="66"/>
+        <source>&amp;Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="71"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="79"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="104"/>
-        <source>Quit</source>
-        <translation>Вийти</translation>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="209"/>
-        <source>Save As</source>
-        <translation>Зберегти як</translation>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="109"/>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="214"/>
-        <source>Close Project</source>
-        <translation>Закрити проект</translation>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="123"/>
+        <source>&amp;Preferences</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="662"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="152"/>
+        <source>&amp;New Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
+        <source>Open the wizard to create a new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
+        <source>&amp;Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="168"/>
+        <source>&amp;Render</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
+        <source>Render your project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
+        <source>&amp;Load Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="181"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
+        <source>&amp;Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="189"/>
+        <source>Import new medias into the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="205"/>
+        <source>Proj&amp;ect Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="218"/>
+        <source>Save &amp;As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="223"/>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="669"/>
         <source>Crash</source>
         <translation>Крах</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="237"/>
         <source>Undo</source>
         <translation>Повернути</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="237"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="246"/>
         <source>Redo</source>
         <translation>Повторити</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="109"/>
-        <source>About</source>
-        <translation>Про програму</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="123"/>
-        <source>Preferences</source>
-        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="147"/>
@@ -582,53 +658,22 @@ p, li { white-space: pre-wrap; }
         <translation>Перекодувати</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="152"/>
-        <source>New Project</source>
-        <translation>Новий проект</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="160"/>
-        <source>Fullscreen</source>
-        <translation>В увесь екран</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="165"/>
-        <source>Render</source>
-        <translation>Перетворити</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="170"/>
-        <source>Load Project</source>
-        <translation>Завантажити проект</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="175"/>
-        <source>Save</source>
-        <translation>Зберегти</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="180"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="276"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="279"/>
         <source>Import</source>
         <translation>Імпортувати</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="196"/>
-        <source>Project Preferences</source>
-        <translation>Налаштування проекту</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="191"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="200"/>
         <source>Enable effects engine</source>
         <translation>Увімкнути рушій впливів</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="199"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="208"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="204"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="213"/>
         <source>Project Wizard</source>
         <translation>Майстер проектів</translation>
     </message>
@@ -649,6 +694,16 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/library/ui/MediaCellView.ui" line="173"/>
         <source>length</source>
         <translation>довжина</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="220"/>
+        <source>This clip or some of its children are contained in the timeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="221"/>
+        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -799,7 +854,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="212"/>
-        <source>Open the new project wizzard</source>
+        <source>Open the new project wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="243"/>
+        <source>Confirm clip deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="244"/>
+        <source>Ask for confirmation before deleting a clip from the timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -860,11 +930,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="233"/>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
-        <source>Langage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -960,6 +1025,59 @@ p, li { white-space: pre-wrap; }
         <source>Preview</source>
         <translation>Перегляд</translation>
     </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="58"/>
+        <source>Go to the previous frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="96"/>
+        <source>Play / Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="134"/>
+        <source>Go to the next frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="172"/>
+        <source>Set marker A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="210"/>
+        <source>Set marker B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="248"/>
+        <source>Cut at markers position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="293"/>
+        <source>Stop the playback</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProjectManager</name>
+    <message>
+        <location filename="../src/Project/ProjectManager.cpp" line="103"/>
+        <source>Invalid project file name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Project/ProjectManager.cpp" line="112"/>
+        <source>Can&apos;t open project file. (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Project/ProjectManager.cpp" line="250"/>
+        <source>Failed to load the project file: %1. Aborting.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProjectWizard</name>
@@ -992,27 +1110,27 @@ p, li { white-space: pre-wrap; }
         <translation>Долучення обрізу до доріжки %1</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="86"/>
+        <location filename="../src/Commands/Commands.cpp" line="80"/>
         <source>Moving clip from track %1 to %2</source>
         <translation>Переміщення обрізу з доріжки %1 на %2</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="89"/>
+        <location filename="../src/Commands/Commands.cpp" line="83"/>
         <source>Moving clip</source>
         <translation>Переміщення обрізу</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="114"/>
+        <location filename="../src/Commands/Commands.cpp" line="107"/>
         <source>Remove clip</source>
         <translation>Вилучення обрізу</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="144"/>
+        <location filename="../src/Commands/Commands.cpp" line="136"/>
         <source>Resizing clip</source>
         <translation>Зміна розміру обрізу</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="178"/>
+        <location filename="../src/Commands/Commands.cpp" line="170"/>
         <source>Splitting clip</source>
         <translation>Розщеплення обрізу</translation>
     </message>
@@ -1117,30 +1235,30 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="82"/>
-        <source>Output file already exists, do you want to overwrite it ?</source>
+        <source>Output file already exists, do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="422"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="433"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="429"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="440"/>
         <source>general</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="425"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="432"/>
         <source>keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="436"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="443"/>
         <source>video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="439"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="446"/>
         <source>audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1213,20 +1331,35 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksScene</name>
     <message>
-        <location filename="../src/Gui/timeline/TracksScene.cpp" line="72"/>
-        <source>Confirm the deletion of the region ?</source>
-        <translation>Підтвердити вилучення місцевості ?</translation>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="78"/>
+        <source>Confirm the deletion of the region?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/timeline/TracksScene.cpp" line="74"/>
-        <source>Confirm the deletion of those regions ?</source>
-        <translation>Підтвердити вилучення тих місцевостей ?</translation>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="80"/>
+        <source>Confirm the deletion of those regions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="84"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="85"/>
+        <source>Yes, don&apos;t ask me again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/timeline/TracksScene.cpp" line="87"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TracksView</name>
     <message>
-        <location filename="../src/Gui/timeline/TracksView.cpp" line="630"/>
+        <location filename="../src/Gui/timeline/TracksView.cpp" line="632"/>
         <source>Action not supported.</source>
         <translation>Дія не підтримується.</translation>
     </message>
