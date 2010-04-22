@@ -110,6 +110,13 @@ public:
     QColor  itemColor();
     void    setColor( const QColor& color );
 
+    /**
+     * \brief Return a pointer to the linked item.
+     * \details This method will return NULL if there is no linked item.
+     */
+    AbstractGraphicsMediaItem* groupItem();
+
+
 protected:
     /**
      * \details Returns a pointer to the tracksView which contains the item,
@@ -127,12 +134,6 @@ protected:
     qint64 oldPosition;
 
     ClipHelper* m_clipHelper;
-
-    /**
-     * \brief Return a pointer to the linked item.
-     * \details This method will return NULL if there is no linked item.
-     */
-    AbstractGraphicsMediaItem* groupItem();
 
     /**
      * \brief Set the width of the item.

@@ -194,6 +194,14 @@ Timeline::save( QXmlStreamWriter &project ) const
         project.writeStartElement( "item" );
         project.writeAttribute( "uuid", item->clipHelper()->uuid().toString() );
         project.writeAttribute( "color", item->itemColor().name() );
+        if ( item->groupItem() != NULL )
+        {
+            project.writeStartElement( "linkedTo" );
+                project.writeStartElement( "item" );
+                    project.writeAttribute( "uuid", item->groupItem()->uuid() );
+                project.writeEndElement();
+            project.writeEndElement();
+        }
         project.writeEndElement();
     }
     project.writeEndDocument();
