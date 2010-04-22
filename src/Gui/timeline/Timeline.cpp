@@ -20,9 +20,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QHBoxLayout>
-#include <QScrollBar>
-#include <QtDebug>
 #include "Timeline.h"
 #include "TracksView.h"
 #include "TracksScene.h"
@@ -30,6 +27,12 @@
 #include "TracksRuler.h"
 #include "WorkflowRenderer.h"
 #include "Clip.h"
+
+#include <QHBoxLayout>
+#include <QScrollBar>
+#include <QXmlStreamWriter>
+
+#include <QtDebug>
 
 Timeline*   Timeline::m_instance = NULL;
 
@@ -174,4 +177,23 @@ void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 tim
 void Timeline::actionRemoveClip( const QUuid &uuid, unsigned int track, MainWorkflow::TrackType trackType )
 {
     tracksView()->removeMediaItem( uuid, track, trackType );
+}
+
+void
+Timeline::save( QXmlStreamWriter &project ) const
+{
+    project.writeStartElement( "timeline" );
+    for ( int i = 0; i < tracksView()->m_scene->items().size(); ++i )
+    {
+        AbstractGraphicsMediaItem* item =
+                dynamic_cast<AbstractGraphicsMediaItem*>( tracksView()->m_scene->items().at( i ) );
+
+        if ( item == NULL )
+            continue ;
+        project.writeStartElement( "item" );
+        project.writeAttribute( "uuid", item->clipHelper()->uuid().toString() );
+        project.writeAttribute( "color", item->itemColor().name() );
+        project.writeEndElement();
+    }
+    project.writeEndDocument();
 }

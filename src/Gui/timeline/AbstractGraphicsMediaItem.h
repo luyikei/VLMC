@@ -107,6 +107,8 @@ public:
 
     ClipHelper  *clipHelper();
 
+    QColor itemColor();
+
 protected:
     /**
      * \details Returns a pointer to the tracksView which contains the item,
@@ -156,8 +158,6 @@ protected slots:
      * \return Returns True if the point is in a resize zone.
      */
     bool resizeZone( const QPointF& position );
-
-    QColor itemColor();
 
 private slots:
     void    clipDestroyed( Clip* clip );

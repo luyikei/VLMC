@@ -145,6 +145,7 @@ void    ProjectManager::__saveProject( const QString &fileName )
     Library::getInstance()->saveProject( project );
     MainWorkflow::getInstance()->saveProject( project );
     SettingsManager::getInstance()->save( project );
+    saveTimeline( project );
 
     project.writeEndElement();
     project.writeEndDocument();

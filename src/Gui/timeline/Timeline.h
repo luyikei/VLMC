@@ -45,12 +45,16 @@ public:
     virtual ~Timeline();
     /// Return a pointer to the TracksView instance.
     TracksView*         tracksView() { return m_tracksView; }
+    /// Returns a const pointer to the TracksView instance
+    const TracksView*   tracksView() const { return m_tracksView; }
     /// Return a pointer to the TracksScene instance.
     TracksScene*        tracksScene() { return m_tracksScene; }
     /// Return a pointer to the TracksRuler instance.
     TracksRuler*        tracksRuler() { return m_tracksRuler; }
     /// Return a pointer to the Timeline instance (singleton).
     static Timeline*    getInstance() { return m_instance; }
+
+    void                save( QXmlStreamWriter& project ) const;
 
 public slots:
     /**

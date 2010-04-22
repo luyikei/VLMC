@@ -29,6 +29,7 @@
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
+#include "Timeline.h"
 
 GUIProjectManager::GUIProjectManager()
 {
@@ -205,4 +206,10 @@ void
 GUIProjectManager::failedToLoad( const QString &reason ) const
 {
     QMessageBox::warning( NULL, tr( "Failed to load project file" ), reason );
+}
+
+void
+GUIProjectManager::saveTimeline( QXmlStreamWriter &project )
+{
+    Timeline::getInstance()->save( project );
 }

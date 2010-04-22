@@ -277,7 +277,7 @@ MainWorkflow::getClip( const QUuid &uuid, unsigned int trackId,
 void
 MainWorkflow::loadProject( const QDomElement &root )
 {
-    QDomElement     project = root.firstChildElement( "timeline" );
+    QDomElement     project = root.firstChildElement( "workflow" );
     if ( project.isNull() == true )
         return ;
 
@@ -340,7 +340,7 @@ MainWorkflow::loadProject( const QDomElement &root )
 void
 MainWorkflow::saveProject( QXmlStreamWriter& project ) const
 {
-    project.writeStartElement( "timeline" );
+    project.writeStartElement( "workflow" );
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
     {
         m_tracks[i]->save( project );

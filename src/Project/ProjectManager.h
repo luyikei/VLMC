@@ -32,6 +32,7 @@
 
 class   QFile;
 class   QDomDocument;
+class   QXmlStreamWriter;
 
 #ifdef WITH_GUI
 class   ProjectManager : public QObject
@@ -58,6 +59,12 @@ protected:
      *  It's only purpose it to write the project for very specific cases.
      */
     void            __saveProject( const QString& fileName );
+    /**
+     *  \brief      Save the timline.
+     *
+     *  In non GUI mode, this does nothing.
+     */
+    virtual void    saveTimeline( QXmlStreamWriter& ){};
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
     /**
@@ -72,7 +79,6 @@ protected:
 
     virtual void    failedToLoad( const QString& reason ) const;
 
-protected:
     ProjectManager();
     ~ProjectManager();
 
