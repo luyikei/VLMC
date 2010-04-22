@@ -227,6 +227,20 @@ Timeline::load( const QDomElement &root )
         {
             QString     color = elem.attribute( "color" );
             item->setColor( color );
+
+            QDomElement links = elem.firstChildElement( "linkedTo" );
+            if ( links.isNull() == false )
+            {
+                QDomElement linkedItem = links.firstChild().toElement();
+                while ( linkedItem.isNull() == false )
+                {
+                    QString     linkedUuid = linkedItem.attribute( "uuid" );
+                    AbstractGraphicsMediaItem   *li = tracksView()->item( linkedUuid );
+                    if ( li != NULL )
+                        item->group( li );
+                    linkedItem = linkedItem.nextSibling().toElement();
+                }
+            }
         }
         else
             qWarning() << "No such timeline item:" << uuid;
