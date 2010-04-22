@@ -98,11 +98,9 @@ void    ProjectManager::loadTimeline()
 
 void    ProjectManager::loadProject( const QString& fileName )
 {
+    //Don't print an error. The user most likely canceled the open project dialog.
     if ( fileName.isEmpty() == true )
-    {
-        failedToLoad( tr( "Invalid project file name." ) );
         return ;
-    }
 
     if ( closeProject() == false )
         return ;
