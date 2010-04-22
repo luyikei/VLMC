@@ -56,6 +56,7 @@ public:
 protected:
     virtual void    failedToLoad( const QString &reason ) const;
     virtual void    saveTimeline( QXmlStreamWriter &project );
+    virtual void    loadTimeline( const QDomElement& root );
 
 private:
     bool            createNewProjectFile( bool saveAs );

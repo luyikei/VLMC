@@ -1189,3 +1189,18 @@ TracksView::split( AbstractGraphicsMediaItem *item, qint64 frame )
                                                               item->startPos() + frame, frame + item->clipHelper()->begin(),
                                                               item->mediaType() ) );
 }
+
+AbstractGraphicsMediaItem*
+TracksView::item( const QUuid &uuid )
+{
+    for ( int i = 0; i < m_scene->items().size(); ++i )
+    {
+        AbstractGraphicsMediaItem* item =
+                dynamic_cast<AbstractGraphicsMediaItem*>( m_scene->items().at( i ) );
+        if ( item == NULL )
+            continue ;
+        if ( item->uuid() == uuid )
+            return item;
+    }
+    return NULL;
+}

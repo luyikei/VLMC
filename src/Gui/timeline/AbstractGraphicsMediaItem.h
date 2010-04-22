@@ -107,7 +107,8 @@ public:
 
     ClipHelper  *clipHelper();
 
-    QColor itemColor();
+    QColor  itemColor();
+    void    setColor( const QColor& color );
 
 protected:
     /**

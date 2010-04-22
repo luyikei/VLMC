@@ -213,3 +213,9 @@ GUIProjectManager::saveTimeline( QXmlStreamWriter &project )
 {
     Timeline::getInstance()->save( project );
 }
+
+void
+GUIProjectManager::loadTimeline( const QDomElement &root )
+{
+    Timeline::getInstance()->load( root );
+}

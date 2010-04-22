@@ -55,6 +55,7 @@ public:
     static Timeline*    getInstance() { return m_instance; }
 
     void                save( QXmlStreamWriter& project ) const;
+    void                load( const QDomElement &root );
 
 public slots:
     /**

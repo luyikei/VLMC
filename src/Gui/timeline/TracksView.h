@@ -180,6 +180,13 @@ public:
      */
     void                    removeClip( const QUuid& uuid );
 
+    /**
+     *  \returns            The AbstractGraphicsMediaItem identified by the given uuid.
+     *                      or NULL if there's no such item.
+     *  \param              uuid    The ClipHelper's uuid
+     */
+    AbstractGraphicsMediaItem*  item( const QUuid& uuid );
+
 public slots:
     /**
      * \brief Remove all items from the timeline.

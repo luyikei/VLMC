@@ -324,9 +324,16 @@ bool AbstractGraphicsMediaItem::resizeZone( const QPointF& position )
     return false;
 }
 
-QColor AbstractGraphicsMediaItem::itemColor()
+QColor
+AbstractGraphicsMediaItem::itemColor()
 {
     return m_itemColor;
+}
+
+void
+AbstractGraphicsMediaItem::setColor( const QColor &color )
+{
+    m_itemColor = color;
 }
 
 void

@@ -64,7 +64,8 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
 
-    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadTimeline() ) );
+    //We have to wait for the library to be loaded before loading the workflow
+    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
 }
 
 ProjectManager::~ProjectManager()
@@ -83,11 +84,12 @@ QStringList ProjectManager::recentsProjects() const
     return m_recentsProjects;
 }
 
-void    ProjectManager::loadTimeline()
+void    ProjectManager::loadWorkflow()
 {
     QDomElement     root = m_domDocument->documentElement();
 
     MainWorkflow::getInstance()->loadProject( root );
+    loadTimeline( root );
     SettingsManager::getInstance()->load( root );
     emit projectUpdated( projectName(), true );
     emit projectLoaded();

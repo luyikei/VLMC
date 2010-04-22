@@ -29,6 +29,7 @@
 #include "Clip.h"
 
 #include <QHBoxLayout>
+#include <QDomElement>
 #include <QScrollBar>
 #include <QXmlStreamWriter>
 
@@ -196,4 +197,31 @@ Timeline::save( QXmlStreamWriter &project ) const
         project.writeEndElement();
     }
     project.writeEndDocument();
+}
+
+void
+Timeline::load( const QDomElement &root )
+{
+    QDomElement     project = root.firstChildElement( "timeline" );
+    if ( project.isNull() == true )
+    {
+        qCritical() << "No timeline node in the project file";
+        return ;
+    }
+
+    QDomElement elem = project.firstChild().toElement();
+    while ( elem.isNull() == false )
+    {
+        QString uuid = elem.attribute( "uuid" );
+
+        AbstractGraphicsMediaItem   *item = tracksView()->item( uuid );
+        if ( item != NULL )
+        {
+            QString     color = elem.attribute( "color" );
+            item->setColor( color );
+        }
+        else
+            qWarning() << "No such timeline item:" << uuid;
+        elem = elem.nextSibling().toElement();
+    }
 }

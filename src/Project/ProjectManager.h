@@ -78,6 +78,7 @@ protected:
     QString         projectName() const;
 
     virtual void    failedToLoad( const QString& reason ) const;
+    virtual void    loadTimeline( const QDomElement& ){};
 
     ProjectManager();
     ~ProjectManager();
@@ -93,7 +94,7 @@ protected:
     friend class    Singleton<ProjectManager>;
 
 protected slots:
-    void            loadTimeline();
+    void            loadWorkflow();
 
 signals:
     /**
