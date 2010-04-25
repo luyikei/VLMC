@@ -33,9 +33,9 @@ public:
     enum SampleRate
     {
         HZ_48000,
-        HZ_44000,
-        HZ_22000,
-        HZ_11000
+        HZ_44100,
+        HZ_22050,
+        HZ_11025
     };
 
     enum VideoPresets

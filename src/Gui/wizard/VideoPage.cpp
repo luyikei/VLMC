@@ -78,14 +78,14 @@ void VideoPage::initializePage()
         ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_48000 );
         break;
     case 22000:
-        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_22000 );
+        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_22050 );
         break;
     case 11000:
-        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_11000 );
+        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_11025 );
         break;
     case 44000:
     default:
-        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_44000 );
+        ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_44100 );
         break;
     }
 
