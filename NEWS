@@ -2,6 +2,8 @@ Changes between 0.1.0 and 0.1.1:
 
 Timeline:
 * Fixed clip deletion problems
+* The confirmation for clip deletion can be deactivated.
+* Fixed trim/resize bug at maximum zoom
 
 Interface:
 * Corrected next/previous frame icons
@@ -9,8 +11,13 @@ Interface:
 * Fix a marker refresh bug
 * Add status tips on some widgets
 * New menu accelerators
+* Ask for confirmation when deleting a clip used in the timeline
 
 General:
 * Do not consider VLMC crashed last time when launched the first time
 * Auto-detect the user's locale at startup
+* Save link between clips when saving a project
+* Associating .vlmc files with VLMC on Windows
+* Fixed crash when importing a hierarchy of 2+ directories
+* Adding missing extensions
 
