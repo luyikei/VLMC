@@ -17,7 +17,9 @@ General:
 * Do not consider VLMC crashed last time when launched the first time
 * Auto-detect the user's locale at startup
 * Save link between clips when saving a project
-* Associating .vlmc files with VLMC on Windows
 * Fixed crash when importing a hierarchy of 2+ directories
 * Adding missing extensions
 
+Installer:
+* Associates *.vlmc files on Windows
+* Add desktop shortcut on Windows
