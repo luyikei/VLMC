@@ -23,6 +23,9 @@ InstallDir "$PROGRAMFILES\VideoLAN\@PROJECT_NAME_SHORT@"
 ; Request admin permissions for Vista and higher
 RequestExecutionLevel admin
 
+; Compression method
+SetCompressor lzma
+
 ;--------------------------------
 ; Interface
 
