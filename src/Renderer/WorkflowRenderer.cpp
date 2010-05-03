@@ -173,7 +173,7 @@ int
 WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize, void **buffer )
 {
     qint64                              ptsDiff;
-    uint32_t                            nbSample;
+    quint32                             nbSample;
     AudioClipWorkflow::AudioSample      *renderAudioSample;
 
     if ( m_stopping == false && m_paused == false )
@@ -207,7 +207,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
     return 0;
 }
 
-void    WorkflowRenderer::unlock( void*, size_t, void* )
+void    WorkflowRenderer::unlock( void*, const char*, size_t, void* )
 {
 }
 

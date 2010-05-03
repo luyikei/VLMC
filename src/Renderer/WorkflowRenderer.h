@@ -198,10 +198,11 @@ class   WorkflowRenderer : public GenericRenderer
          *  \brief  unlock callback for the imem module
          *
          *  \param  data        The callback data, this is most likely to be an EsHandler
+         *  \param  cookie      The imem cookie.
          *  \param  buffSize    The size of the buffer
          *  \param  buffer      The buffer to be released
          */
-        static void         unlock( void *data, size_t buffSize, void *buffer );
+        static void         unlock( void *data, const char* cookie, size_t buffSize, void *buffer );
         /**
          *  \brief  Return the renderer specific width
          *
