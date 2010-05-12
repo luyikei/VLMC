@@ -339,6 +339,14 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         bool                    contains( const QUuid& uuid ) const;
 
+        /**
+         *  \brief      Stop the frame computing process.
+         *
+         *  This will stop all the currently running ClipWorkflow.
+         *  This is meant to be called just before the stop() method.
+         */
+        void                    stopFrameComputing();
+
     private:
         MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();

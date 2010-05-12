@@ -116,6 +116,9 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
         m_renderWaitCond->wait( m_renderLock );
+    //Recheck again, as the WaitCondition may have been awaken when stopping.
+    if ( getNbComputedBuffers() == 0 )
+        return NULL;
     ::StackedBuffer<LightVideoFrame*>* buff;
     if ( mode == ClipWorkflow::Pop )
         buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );

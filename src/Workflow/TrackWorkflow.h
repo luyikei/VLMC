@@ -87,6 +87,8 @@ class   TrackWorkflow : public QObject
 
         bool                                    contains( const QUuid& uuid ) const;
 
+        void                                    stopFrameComputing();
+
     private:
         void                                    computeLength();
         void*                                   renderClip( ClipWorkflow* cw, qint64 currentFrame,

@@ -101,6 +101,8 @@ class   TrackHandler : public QObject
 
         bool                    contains( const QUuid& uuid ) const;
 
+        void                    stopFrameComputing();
+
     private:
         void                    computeLength();
         void                    activateTrack( unsigned int tracKId );

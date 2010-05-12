@@ -196,6 +196,13 @@ MainWorkflow::stop()
 }
 
 void
+MainWorkflow::stopFrameComputing()
+{
+    for ( qint32 type = 0; type < NbTrackType; ++type )
+        m_tracks[type]->stopFrameComputing();
+}
+
+void
 MainWorkflow::moveClip( const QUuid &clipUuid, unsigned int oldTrack,
                         unsigned int newTrack, qint64 startingFrame,
                         MainWorkflow::TrackType trackType,

@@ -193,6 +193,13 @@ class   ClipWorkflow : public QObject
          */
         bool                    isResyncRequired();
 
+        /**
+         *  \brief              Stop the renderer part of the ClipWorkflow
+         *
+         *  IE. just stop the VLC thread, and do not flush anything.
+         */
+        void                    stopRenderer();
+
     private:
         void                    setState( State state );
         void                    adjustBegin();

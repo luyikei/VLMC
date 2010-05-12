@@ -526,3 +526,27 @@ TrackWorkflow::contains( const QUuid &uuid ) const
     }
     return false;
 }
+
+void
+TrackWorkflow::stopFrameComputing()
+{
+    QMap<qint64, ClipWorkflow*>::const_iterator       it = m_clips.begin();
+    QMap<qint64, ClipWorkflow*>::const_iterator       end = m_clips.end();
+
+    while ( it != end )
+    {
+        ClipWorkflow*   cw = it.value();
+
+        cw->getStateLock()->lockForRead();
+
+        if ( cw->getState() == ClipWorkflow::Stopped ||
+             cw->getState() == ClipWorkflow::Muted )
+        {
+            cw->getStateLock()->unlock();
+            return ;
+        }
+        cw->getStateLock()->unlock();
+        cw->stopRenderer();
+        ++it;
+    }
+}

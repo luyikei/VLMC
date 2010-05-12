@@ -299,6 +299,7 @@ WorkflowRenderer::killRenderer()
     m_isRendering = false;
     m_paused = false;
     m_stopping = true;
+    m_mainWorkflow->stopFrameComputing();
     m_mediaPlayer->stop();
     m_mainWorkflow->stop();
     delete[] m_silencedAudioBuffer;

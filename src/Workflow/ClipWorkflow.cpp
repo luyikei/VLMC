@@ -114,18 +114,28 @@ void    ClipWorkflow::clipEndReached()
     setState( EndReached );
 }
 
-void            ClipWorkflow::stop()
+void
+ClipWorkflow::stop()
+{
+    flushComputedBuffers();
+    releasePrealocated();
+}
+
+void
+ClipWorkflow::stopRenderer()
 {
     if ( m_mediaPlayer )
     {
+        {
+            QMutexLocker    lock( m_renderLock );
+            m_renderWaitCond->wakeAll();
+        }
         m_mediaPlayer->stop();
         disconnect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( clipEndReached() ) );
         MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
         m_mediaPlayer = NULL;
-        setState( Stopped );
         delete m_vlcMedia;
-        flushComputedBuffers();
-        releasePrealocated();
+        setState( Stopped );
     }
 }
 

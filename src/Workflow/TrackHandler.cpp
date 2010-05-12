@@ -325,3 +325,15 @@ TrackHandler::contains( const QUuid &uuid ) const
             return true;
     return false;
 }
+
+void
+TrackHandler::stopFrameComputing()
+{
+    for ( unsigned int i = 0; i < m_trackCount; ++i )
+    {
+        //First stop the frame computing
+        m_tracks[i]->stopFrameComputing();
+        //then deactivate the track to avoid the generation to be resumed.
+        m_tracks[i].deactivate();
+    }
+}
