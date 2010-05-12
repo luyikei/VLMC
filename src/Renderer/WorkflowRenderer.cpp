@@ -150,7 +150,9 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     qint64                          ptsDiff = 0;
     MainWorkflow::OutputBuffers*    ret;
 
-    if ( m_stopping == false )
+    if ( m_stopping == true )
+        return 1;
+    else
     {
         ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
         m_videoBuffSize = (*(ret->video))->nboctets;
