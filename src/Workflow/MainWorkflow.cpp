@@ -181,9 +181,11 @@ MainWorkflow::getClipPosition( const QUuid& uuid, unsigned int trackId,
 void
 MainWorkflow::stop()
 {
-    QMutexLocker    lock( m_renderStartedMutex );
-    QWriteLocker    lock2( m_currentFrameLock );
-
+    /*
+        Assume the method can be called without locking anything, since the workflow won't
+        be queried by the renderer (When stopping the renderer, it stops its media player
+        before stopping the mainworkflow.
+    */
     m_renderStarted = false;
     for (unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i)
     {
