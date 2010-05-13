@@ -42,19 +42,19 @@ class MediaListView : public ListViewController
     Q_OBJECT
 
 public:
-    MediaListView( StackViewController* nav, MediaContainer* mc );
+    MediaListView( StackViewController *nav, MediaContainer *mc );
     virtual ~MediaListView();
 
 private:
-    StackViewController*            m_nav;
+    StackViewController             *m_nav;
     QUuid                           m_currentUuid;
     QHash<QUuid, MediaCellView*>    m_cells;
     QUuid                           m_lastUuidClipListAsked;
-    MediaContainer*                 m_mediaContainer;
+    MediaContainer                  *m_mediaContainer;
 
 public slots:
-    void        cellSelection( const QUuid& uuid );
-    void        showSubClips( const QUuid& uuid );
+    void        cellSelection( const QUuid &uuid );
+    void        showSubClips( const QUuid &uuid );
     void        clear();
 
 private slots:
@@ -65,7 +65,7 @@ private slots:
      *  This slot will be triggered when a Clip is removed from the media container.
      */
     void        __clipRemoved( const QUuid& );
-    void        newClipLoaded( Clip* clip );
+    void        newClipLoaded( Clip *clip );
 
 signals:
     void        clipSelected( Clip* );

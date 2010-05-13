@@ -27,19 +27,19 @@
 #include "MediaContainer.h"
 #include "StackViewController.h"
 
-MediaListView::MediaListView( StackViewController* nav, MediaContainer* mc ) :
+MediaListView::MediaListView( StackViewController *nav, MediaContainer *mc ) :
         ListViewController( nav ),
         m_nav( nav ),
         m_mediaContainer( mc )
 {
-    connect( mc, SIGNAL( newClipLoaded(Clip*) ),
+    connect( mc, SIGNAL( newClipLoaded( Clip* ) ),
              this, SLOT( newClipLoaded( Clip* ) ) );
     connect( this, SIGNAL( clipRemoved( const QUuid& ) ),
              mc, SLOT( deleteClip( const QUuid& ) ) );
     connect( mc, SIGNAL( clipRemoved( const QUuid& ) ),
              this, SLOT( __clipRemoved( const QUuid& ) ) );
     connect( mc, SIGNAL( destroyed() ), this, SLOT( deleteLater() ) );
-    foreach ( Clip* clip, mc->clips() )
+    foreach ( Clip *clip, mc->clips() )
         newClipLoaded( clip );
 }
 
@@ -50,9 +50,10 @@ MediaListView::~MediaListView()
     m_cells.clear();
 }
 
-void        MediaListView::newClipLoaded( Clip *clip )
+void
+MediaListView::newClipLoaded( Clip *clip )
 {
-    MediaCellView* cell = new MediaCellView( clip, m_container );
+    MediaCellView   *cell = new MediaCellView( clip, m_container );
 
     connect( cell, SIGNAL ( cellSelected( QUuid ) ),
              this, SLOT ( cellSelection( QUuid ) ) );
@@ -65,19 +66,19 @@ void        MediaListView::newClipLoaded( Clip *clip )
     cellSelection( clip->uuid() );
 }
 
-void    MediaListView::cellSelection( const QUuid& uuid )
+void
+MediaListView::cellSelection( const QUuid &uuid )
 {
     if ( m_currentUuid == uuid )
         return;
-
     if ( m_cells.contains( uuid ) )
     {
         if ( !m_currentUuid.isNull() && m_cells.contains( m_currentUuid ) )
         {
-            MediaCellView*  cell = m_cells.value( m_currentUuid );
+            MediaCellView   *cell = m_cells.value( m_currentUuid );
             cell->setPalette( m_cells.value( uuid )->palette() );
         }
-        QPalette p = m_cells.value( uuid )->palette();
+        QPalette    p = m_cells.value( uuid )->palette();
         p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
         m_cells.value( uuid )->setPalette( p );
         m_currentUuid = uuid;
@@ -85,7 +86,8 @@ void    MediaListView::cellSelection( const QUuid& uuid )
     }
 }
 
-void    MediaListView::removeClip( const Clip* clip )
+void
+MediaListView::removeClip( const Clip *clip )
 {
     __clipRemoved( clip->uuid() );
     emit clipRemoved( clip->uuid() );
@@ -107,8 +109,9 @@ MediaListView::clear()
     m_cells.clear();
 }
 
-void    MediaListView::showSubClips( const QUuid& uuid )
+void
+MediaListView::showSubClips( const QUuid &uuid )
 {
-    Clip*   clip = m_mediaContainer->clip( uuid );
+    Clip    *clip = m_mediaContainer->clip( uuid );
     m_nav->pushViewController( new MediaListView( m_nav, clip->getChilds() ) );
 }
