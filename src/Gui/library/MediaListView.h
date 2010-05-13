@@ -42,13 +42,17 @@ class MediaListView : public ListViewController
     Q_OBJECT
 
 public:
+    typedef     QHash<QUuid, MediaCellView*>    MediaList;
+
     MediaListView( StackViewController *nav, MediaContainer *mc );
     virtual ~MediaListView();
+
+    const MediaList                 &mediaList() const;
 
 private:
     StackViewController             *m_nav;
     QUuid                           m_currentUuid;
-    QHash<QUuid, MediaCellView*>    m_cells;
+    MediaList                       m_cells;
     QUuid                           m_lastUuidClipListAsked;
     MediaContainer                  *m_mediaContainer;
 

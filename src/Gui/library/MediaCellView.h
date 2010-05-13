@@ -54,6 +54,7 @@ public:
     void                setLength( qint64 length, bool mSecs = true );
     QString             title() const;
     const QUuid         &uuid() const;
+    const Clip*         clip() const;
 
 private:
     Ui::MediaCellView   *m_ui;

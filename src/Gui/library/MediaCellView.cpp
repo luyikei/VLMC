@@ -255,3 +255,9 @@ MediaCellView::uuid() const
 {
     return m_clip->uuid();
 }
+
+const Clip*
+MediaCellView::clip() const
+{
+    return m_clip;
+}

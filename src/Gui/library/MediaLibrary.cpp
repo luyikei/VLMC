@@ -22,7 +22,10 @@
 
 #include "MediaLibrary.h"
 
+#include "Clip.h"
 #include "Library.h"
+#include "Media.h"
+#include "MediaCellView.h"
 #include "MediaListView.h"
 #include "StackViewController.h"
 
@@ -33,12 +36,12 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
 {
     m_ui->setupUi( this );
     StackViewController *nav = new StackViewController( m_ui->mediaListContainer );
-    MediaListView       *mediaListView = new MediaListView( nav, Library::getInstance() );
-    nav->pushViewController( mediaListView );
+    m_mediaListView = new MediaListView( nav, Library::getInstance() );
+    nav->pushViewController( m_mediaListView );
 
     connect( m_ui->importButton, SIGNAL( clicked() ),
              this, SIGNAL( importRequired() ) );
-    connect( mediaListView, SIGNAL( clipSelected( Clip* ) ),
+    connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SIGNAL( clipSelected( Clip* ) ) );
     connect( m_ui->filterInput, SIGNAL( textChanged( const QString& ) ),
              this, SLOT( filterUpdated( const QString& ) ) );
@@ -49,11 +52,33 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
 void
 MediaLibrary::filterUpdated( const QString &filter )
 {
-    qDebug() << "Filter updated:" << filter;
+    const MediaListView::MediaList  &medias = m_mediaListView->mediaList();
+    MediaListView::MediaList::const_iterator        it = medias.begin();
+    MediaListView::MediaList::const_iterator        ite = medias.end();
+
+    while ( it != ite )
+    {
+        MediaCellView  *mcv = it.value();
+
+        mcv->setVisible( currentFilter()( mcv->clip(), filter ) );
+        ++it;
+    }
 }
 
 void
 MediaLibrary::clearFilter()
 {
     m_ui->filterInput->setText( "" );
+}
+
+MediaLibrary::Filter
+MediaLibrary::currentFilter()
+{
+    return &filterByName;
+}
+
+bool
+MediaLibrary::filterByName( const Clip *clip, const QString &filter )
+{
+    return ( clip->getMedia()->fileName().contains( filter, Qt::CaseInsensitive ) );
 }

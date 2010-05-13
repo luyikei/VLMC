@@ -27,6 +27,7 @@
 
 #include "ui_MediaLibrary.h"
 class   Clip;
+class   MediaListView;
 
 class MediaLibrary : public QWidget
 {
@@ -34,10 +35,24 @@ class MediaLibrary : public QWidget
     Q_DISABLE_COPY( MediaLibrary );
 
     public:
+        typedef bool    (*Filter)( const Clip*, const QString& filter );
         explicit MediaLibrary( QWidget *parent = 0);
 
     private:
+        /**
+         *  \return     The appropriate filter function
+         *
+         *  This will evaluate the currently selected filter, and return the appropriate
+         *  function.
+         */
+        Filter              currentFilter();
+
+    //Filters list :
+        static bool         filterByName( const Clip *clip, const QString &filter );
+
+    private:
         Ui::MediaLibrary    *m_ui;
+        MediaListView       *m_mediaListView;
 
     private slots:
         void                filterUpdated( const QString &filter );
