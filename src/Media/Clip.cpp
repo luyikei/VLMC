@@ -140,7 +140,7 @@ Clip::matchMetaTag( const QString &tag ) const
 {
     if ( tag.length() == 0 )
         return true;
-    if ( m_parent->matchMetaTag( tag ) == true )
+    if ( m_parent && m_parent->matchMetaTag( tag ) == true )
         return true;
     QString metaTag;
     foreach ( metaTag, m_metaTags )
