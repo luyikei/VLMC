@@ -65,6 +65,7 @@ class MediaLibrary : public QWidget
          *  A view is changed when the user goes through the clips hierarchy.
          */
         void                viewChanged( ViewController* view );
+        void                filterTypeChanged();
 
     signals:
         void                importRequired();

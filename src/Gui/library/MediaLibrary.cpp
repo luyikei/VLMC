@@ -50,6 +50,8 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SLOT( clearFilter() ) );
     connect( nav, SIGNAL( viewChanged( ViewController* ) ),
              this, SLOT( viewChanged( ViewController* ) ) );
+    connect( m_ui->filterType, SIGNAL( currentIndexChanged( int ) ),
+             this, SLOT( filterTypeChanged() ) );
 }
 
 void
@@ -110,4 +112,10 @@ bool
 MediaLibrary::filterByTags( const Clip *clip, const QString &filter )
 {
     return ( clip->matchMetaTag( filter ) );
+}
+
+void
+MediaLibrary::filterTypeChanged()
+{
+    filterUpdated( m_ui->filterInput->text() );
 }
