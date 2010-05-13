@@ -28,6 +28,7 @@
 #include "MediaCellView.h"
 #include "MediaListView.h"
 #include "StackViewController.h"
+#include "ViewController.h"
 
 #include <QtDebug>
 
@@ -47,6 +48,8 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SLOT( filterUpdated( const QString& ) ) );
     connect( m_ui->clearButton, SIGNAL( clicked() ),
              this, SLOT( clearFilter() ) );
+    connect( nav, SIGNAL( viewChanged( ViewController* ) ),
+             this, SLOT( viewChanged( ViewController* ) ) );
 }
 
 void
@@ -75,6 +78,18 @@ MediaLibrary::Filter
 MediaLibrary::currentFilter()
 {
     return &filterByName;
+}
+
+void
+MediaLibrary::viewChanged( ViewController *view )
+{
+    MediaListView   *mlv = qobject_cast<MediaListView*>( view );
+
+    if ( mlv == NULL )
+        return ;
+    m_mediaListView = mlv;
+    //Force an update as the media has changed
+    filterUpdated( m_ui->filterInput->text() );
 }
 
 bool

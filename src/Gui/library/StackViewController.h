@@ -58,6 +58,9 @@ private:
 public slots:
     void                        previous();
     void                        viewDestroyed();
+
+signals:
+    void                        viewChanged( ViewController* );
 };
 
 #endif // STACKVIEWCONTROLLER_H

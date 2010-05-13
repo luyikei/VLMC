@@ -64,6 +64,7 @@ void    StackViewController::pushViewController( ViewController* viewController,
     m_layout->insertWidget( 1, m_current->view() );
     if ( m_current->view()->isHidden() )
         m_current->view()->show();
+    emit viewChanged( viewController );
 }
 
 void
@@ -82,6 +83,7 @@ StackViewController::restorePrevious()
        m_nav->previousButton()->setText( "< " +
        m_controllerStack->value( m_controllerStack->size() - 1 )->title() );
     }
+    emit viewChanged( m_current );
 }
 
 void
@@ -108,7 +110,7 @@ StackViewController::popViewController( bool animated )
     delete m_current;
 }
 
-void        
+void
 StackViewController::previous()
 {
     popViewController();

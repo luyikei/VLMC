@@ -28,6 +28,7 @@
 #include "ui_MediaLibrary.h"
 class   Clip;
 class   MediaListView;
+class   ViewController;
 
 class MediaLibrary : public QWidget
 {
@@ -57,6 +58,12 @@ class MediaLibrary : public QWidget
     private slots:
         void                filterUpdated( const QString &filter );
         void                clearFilter();
+        /**
+         *  \brief          Used to update the filters when the view is changed.
+         *
+         *  A view is changed when the user goes through the clips hierarchy.
+         */
+        void                viewChanged( ViewController* view );
 
     signals:
         void                importRequired();
