@@ -29,6 +29,7 @@
 #include <QTime>
 #include <QPushButton>
 #include <QInputDialog>
+#include <QRegExp>
 
 ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     QDialog( parent ),
@@ -106,7 +107,8 @@ void    ClipProperty::addTagsRequired()
     if ( ok == true && newTags.length() > 0 )
     {
         QStringList         list = m_model->stringList();
-        QStringList         toAdd = newTags.split( ",", QString::SkipEmptyParts );
+        QRegExp             regexp( "\\s*,\\s*" );
+        QStringList         toAdd = newTags.split( regexp, QString::SkipEmptyParts );
         list.append( toAdd );
         m_model->setStringList( list );
     }
