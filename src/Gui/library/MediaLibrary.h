@@ -39,6 +39,10 @@ class MediaLibrary : public QWidget
     private:
         Ui::MediaLibrary    *m_ui;
 
+    private slots:
+        void                filterUpdated( const QString &filter );
+        void                clearFilter();
+
     signals:
         void                importRequired();
         void                clipSelected( Clip* );

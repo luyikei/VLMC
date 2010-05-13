@@ -26,6 +26,8 @@
 #include "MediaListView.h"
 #include "StackViewController.h"
 
+#include <QtDebug>
+
 MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
     m_ui( new Ui::MediaLibrary() )
 {
@@ -38,4 +40,20 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SIGNAL( importRequired() ) );
     connect( mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SIGNAL( clipSelected( Clip* ) ) );
+    connect( m_ui->filterInput, SIGNAL( textChanged( const QString& ) ),
+             this, SLOT( filterUpdated( const QString& ) ) );
+    connect( m_ui->clearButton, SIGNAL( clicked() ),
+             this, SLOT( clearFilter() ) );
+}
+
+void
+MediaLibrary::filterUpdated( const QString &filter )
+{
+    qDebug() << "Filter updated:" << filter;
+}
+
+void
+MediaLibrary::clearFilter()
+{
+    m_ui->filterInput->setText( "" );
 }
