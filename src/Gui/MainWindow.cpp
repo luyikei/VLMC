@@ -4,7 +4,7 @@
  * Copyright (C) 2008-2010 VideoLAN
  *
  * Authors: Ludovic Fauvet <etix@l0cal.com>
- *          Hugo Beauzee-Luyssen <beauze.h@gmail.com>
+ *          Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +46,7 @@
 /* Widgets */
 #include "DockWidgetManager.h"
 #include "ImportController.h"
-#include "MediaListView.h"
+#include "MediaLibrary.h"
 #include "PreviewWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
@@ -272,29 +272,20 @@ MainWindow::loadVlmcPreferences( const QString &subPart )
 void
 MainWindow::setupLibrary()
 {
-    //GUI part :
-    QWidget     *libraryWidget = new QWidget( this );
-    libraryWidget->setMinimumWidth( 280 );
-
-    QPushButton *button = new QPushButton( tr( "Import" ), this );
-    connect( button, SIGNAL( clicked() ), this, SLOT( on_actionImport_triggered() ) );
-
-    StackViewController *nav = new StackViewController( libraryWidget );
-    MediaListView   *mediaView = new MediaListView( nav, Library::getInstance() );
-    nav->pushViewController( mediaView );
-    libraryWidget->layout()->addWidget( button );
-
     m_importController = new ImportController();
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
 
-    DockWidgetManager::getInstance()->addDockedWidget( libraryWidget, QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
+    MediaLibrary    *mediaLibrary = new MediaLibrary();
+
+    DockWidgetManager::getInstance()->addDockedWidget( mediaLibrary, QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures,
                                                     Qt::LeftDockWidgetArea );
-    connect( mediaView, SIGNAL( clipSelected( Clip* ) ),
+    connect( mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
-
+    connect( mediaLibrary, SIGNAL( importRequired() ),
+             this, SLOT( on_actionImport_triggered() ) );
     connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 }

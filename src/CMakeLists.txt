@@ -157,6 +157,7 @@ ELSE(NOT WITH_GUI)
         Gui/import/ImportController.cpp
         Gui/library/ListViewController.cpp
         Gui/library/MediaCellView.cpp
+        Gui/library/MediaLibrary.cpp
         Gui/library/MediaListView.cpp
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
@@ -205,6 +206,7 @@ ELSE(NOT WITH_GUI)
         Gui/import/TagWidget.h
         Gui/library/ListViewController.h
         Gui/library/MediaCellView.h
+        Gui/library/MediaLibrary.h
         Gui/library/MediaListView.h
         Gui/library/StackViewController.h
         Gui/library/StackViewNavController.h
@@ -252,6 +254,7 @@ ELSE(NOT WITH_GUI)
         Gui/import/ui/ImportController.ui
         Gui/library/StackViewNavController.ui
         Gui/library/ui/MediaCellView.ui
+        Gui/library/ui/MediaLibrary.ui
         Gui/library/ui/StackViewNavController.ui
         Gui/ui/About.ui
         Gui/ui/ClipProperty.ui
