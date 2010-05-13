@@ -77,7 +77,15 @@ MediaLibrary::clearFilter()
 MediaLibrary::Filter
 MediaLibrary::currentFilter()
 {
-    return &filterByName;
+    switch ( m_ui->filterType->currentIndex() )
+    {
+    case 0:
+        return &filterByName;
+    case 1:
+        return &filterByTags;
+    default:
+        return &filterByName;
+    }
 }
 
 void
@@ -96,4 +104,10 @@ bool
 MediaLibrary::filterByName( const Clip *clip, const QString &filter )
 {
     return ( clip->getMedia()->fileName().contains( filter, Qt::CaseInsensitive ) );
+}
+
+bool
+MediaLibrary::filterByTags( const Clip *clip, const QString &filter )
+{
+    return ( clip->matchMetaTag( filter ) );
 }

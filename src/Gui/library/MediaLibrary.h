@@ -50,6 +50,7 @@ class MediaLibrary : public QWidget
 
     //Filters list :
         static bool         filterByName( const Clip *clip, const QString &filter );
+        static bool         filterByTags( const Clip *clip, const QString &filter );
 
     private:
         Ui::MediaLibrary    *m_ui;
