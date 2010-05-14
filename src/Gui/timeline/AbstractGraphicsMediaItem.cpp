@@ -33,9 +33,14 @@
 #include "Media.h"
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
-        oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),
-        m_group( NULL ), m_width( 0 ), m_height( 0 ), m_resizeExpected( false ),
-        m_muted( false )
+        oldTrackNumber( -1 ),
+        oldPosition( -1 ),
+        m_tracksView( NULL ),
+        m_group( NULL ),
+        m_width( 0 ),
+        m_height( 0 ),
+        m_muted( false ),
+        m_resizeExpected( false )
 {
     m_clipHelper = new ClipHelper( clip );
     // Adjust the width
@@ -47,9 +52,15 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
 }
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
-        oldTrackNumber( -1 ), oldPosition( -1 ), m_tracksView( NULL ),
-        m_group( NULL ), m_width( 0 ), m_height( 0 ), m_resizeExpected( false ),
-        m_muted( false ), m_clipHelper( ch )
+        oldTrackNumber( -1 ),
+        oldPosition( -1 ),
+        m_clipHelper( ch ),
+        m_tracksView( NULL ),
+        m_group( NULL ),
+        m_width( 0 ),
+        m_height( 0 ),
+        m_muted( false ),
+        m_resizeExpected( false )
 {
     // Adjust the width
     setWidth( ch->length() );

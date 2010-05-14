@@ -59,8 +59,6 @@ int VideoPage::nextId() const
 
 void VideoPage::initializePage()
 {
-    SettingsManager* sManager = SettingsManager::getInstance();
-
     int projectFps = 30;
     int projectHeight = 300;
     int projectWidth = 480;
@@ -88,7 +86,6 @@ void VideoPage::initializePage()
         ui.comboBoxAudioSamplerate->setCurrentIndex( HZ_44100 );
         break;
     }
-
 }
 
 bool VideoPage::validatePage()

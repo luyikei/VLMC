@@ -136,7 +136,7 @@ void GeneralPage::updateProjectLocation()
     }
 }
 
-void GeneralPage::setWorkspaceStatus( bool valid )
+void GeneralPage::setWorkspaceStatus( bool /*valid*/ )
 {
 
 }

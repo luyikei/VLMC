@@ -63,12 +63,12 @@ void    UndoStack::endMacro()
 
 bool    UndoStack::canUndo()
 {
-    m_undoStack->canUndo();
+    return m_undoStack->canUndo();
 }
 
 bool    UndoStack::canRedo()
 {
-    m_undoStack->canRedo();
+    return m_undoStack->canRedo();
 }
 
 void    UndoStack::clear()

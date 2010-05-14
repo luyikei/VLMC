@@ -33,7 +33,6 @@
 
 RendererSettings::RendererSettings()
 {
-    SettingsManager::Type xml = SettingsManager::Project;
     m_ui.setupUi( this );
     connect( m_ui.outputFileNameButton, SIGNAL(clicked() ),
              this, SLOT(selectOutputFileName() ) );

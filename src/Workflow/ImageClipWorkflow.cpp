@@ -103,7 +103,7 @@ ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int size )
 }
 
 void
-ImageClipWorkflow::unlock(ImageClipWorkflow *cw, void *buffer, int width, int height, int bpp, int size, qint64 pts)
+ImageClipWorkflow::unlock(ImageClipWorkflow *cw, void*, int, int, int, int, qint64 )
 {
     cw->m_renderLock->unlock();
     cw->emit computedFinished();

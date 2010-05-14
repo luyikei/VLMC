@@ -164,9 +164,9 @@ void MainWindow::changeEvent( QEvent *e )
 }
 
 //use this helper when the shortcut is binded to a menu action
-#define CREATE_MENU_SHORTCUT( key, defaultValue, name, desc, actionInstance  )       \
-        VLMC_CREATE_PREFERENCE_KEYBOARD( key, defaultValue, name, desc );    \
-        KeyboardShortcutHelper  *helper##actionInstance = new KeyboardShortcutHelper( key, m_ui.actionInstance, this );
+#define CREATE_MENU_SHORTCUT( key, defaultValue, name, desc, actionInstance  )      \
+        VLMC_CREATE_PREFERENCE_KEYBOARD( key, defaultValue, name, desc );           \
+        new KeyboardShortcutHelper( key, m_ui.actionInstance, this );
 
 void
 MainWindow::initVlmcPreferences()

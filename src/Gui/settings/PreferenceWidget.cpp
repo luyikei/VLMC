@@ -85,6 +85,8 @@ PreferenceWidget::widgetFactory( SettingValue *s )
         return new DoubleWidget( s, this );
     case SettingValue::Bool:
         return new BoolWidget( s, this );
+    default:
+        return NULL;
     }
 }
 
