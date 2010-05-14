@@ -36,8 +36,9 @@
 #include <QUuid>
 
 class   Clip;
-class   Media;
+class   ClipMetadataDisplayer;
 class   ClipRenderer;
+class   Media;
 class   MediaContainer;
 class   MediaListView;
 class   PreviewWidget;
@@ -62,7 +63,6 @@ class ImportController : public QDialog
     public:
         ImportController(QWidget *parent = 0);
         ~ImportController();
-        void    setUIMetaData( const Clip *clip );
 
     protected:
         void changeEvent( QEvent *e );
@@ -86,6 +86,7 @@ class ImportController : public QDialog
         quint32                     m_nbMediaLoaded;
         ClipRenderer*               m_clipRenderer;
         QStringList                 m_nameFilters;
+        ClipMetadataDisplayer       *m_metadataDisplayer;
 
     public slots:
         void        accept();
@@ -99,7 +100,6 @@ class ImportController : public QDialog
         void        mediaLoaded();
         void        failedToLoad( Media* media );
         void        hideErrors();
-        void        metaDataComputed( const Media* media );
 
     signals:
         void        clipSelected( Clip* );

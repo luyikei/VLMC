@@ -22,11 +22,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "ImportController.h"
 #include "ui_ImportController.h"
 
 #include "Clip.h"
+#include "ClipMetadataDisplayer.h"
 #include "ClipRenderer.h"
-#include "ImportController.h"
 #include "Library.h"
 #include "Media.h"
 #include "MediaCellView.h"
@@ -56,6 +57,7 @@ ImportController::ImportController(QWidget *parent) :
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
     m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
+    m_metadataDisplayer = new ClipMetadataDisplayer( NULL, m_ui->metadataContainer );
     m_stackNav->pushViewController( m_mediaListView );
 
     m_nameFilters << Media::AudioExtensions.split(' ', QString::SkipEmptyParts)
@@ -132,39 +134,11 @@ ImportController::clipSelection( Clip* clip )
     const QUuid& uuid = clip->uuid();
     if ( m_currentUuid == uuid )
         return ;
-    setUIMetaData( clip->rootClip() );
+    m_metadataDisplayer->setWatchedClip( clip );
     m_preview->stop();
     m_currentUuid = uuid;
     m_tag->clipSelected( clip );
     emit clipSelected( clip );
-}
-
-void
-ImportController::setUIMetaData( const Clip* clip )
-{
-    if ( clip != NULL )
-    {
-        //Duration
-        QTime   duration;
-        duration = duration.addSecs( clip->lengthSecond() );
-        m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
-        //Filename || title
-        m_ui->nameValueLabel->setText( clip->getMedia()->fileInfo()->fileName() );
-        m_ui->nameValueLabel->setWordWrap( true );
-        setWindowTitle( clip->getMedia()->fileInfo()->fileName() + " " + tr( "properties" ) );
-        //Resolution
-        m_ui->resolutionValueLabel->setText( QString::number( clip->getMedia()->width() )
-                                        + " x " + QString::number( clip->getMedia()->height() ) );
-        //FPS
-        m_ui->fpsValueLabel->setText( QString::number( clip->getMedia()->fps() ) );
-    }
-    else
-    {
-        m_ui->durationValueLabel->setText( "--:--:--" );
-        m_ui->nameValueLabel->setText( "none" );
-        m_ui->resolutionValueLabel->setText( "-- x --" );
-        m_ui->fpsValueLabel->setText( "--" );
-    }
 }
 
 void
@@ -185,8 +159,6 @@ ImportController::importMedia( const QString &filePath )
     m_temporaryMedias->addClip( clip );
     ++m_nbMediaToLoad;
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
-    connect( media, SIGNAL( metaDataComputed( const Media* ) ),
-             this, SLOT( metaDataComputed( const Media* ) ) );
 }
 
 void
@@ -326,10 +298,4 @@ ImportController::hideErrors()
 {
     m_ui->errorLabelImg->hide();
     m_ui->errorLabel->hide();
-}
-
-void
-ImportController::metaDataComputed( const Media *media )
-{
-    setUIMetaData( media->baseClip() );
 }
