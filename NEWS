@@ -1,3 +1,14 @@
+Changes between 0.1.1 and 0.1.2:
+
+Interface:
+* Do not display video informations when an audio file is displayed
+* Adding a filter by name/tags feature
+
+General:
+* Fixed crash (deadlock) with very short videos. 
+
+
+-------------------------------------------------------------------------------
 Changes between 0.1.0 and 0.1.1:
 
 Timeline:
