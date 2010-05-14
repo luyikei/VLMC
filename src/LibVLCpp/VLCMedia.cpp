@@ -50,28 +50,28 @@ void                    Media::addOption( const char* opt )
 void                    Media::setVideoLockCallback( void* callback )
 {
     char    param[64];
-    sprintf( param, ":sout-smem-video-prerender-callback=%"PRId64, (qint64)(intptr_t)callback );
+    sprintf( param, ":sout-smem-video-prerender-callback=%"PRId64, (intptr_t)callback );
     addOption(param);
 }
 
 void                    Media::setVideoUnlockCallback( void* callback )
 {
     char    param[64];
-    sprintf( param, ":sout-smem-video-postrender-callback=%"PRId64, (qint64)(intptr_t)callback );
+    sprintf( param, ":sout-smem-video-postrender-callback=%"PRId64, (intptr_t)callback );
     addOption( param );
 }
 
 void                    Media::setAudioLockCallback( void* callback )
 {
     char    param[64];
-    sprintf( param, ":sout-smem-audio-prerender-callback=%"PRId64, (qint64)(intptr_t)callback );
+    sprintf( param, ":sout-smem-audio-prerender-callback=%"PRId64, (intptr_t)callback );
     addOption(param);
 }
 
 void                    Media::setAudioUnlockCallback( void* callback )
 {
     char    param[64];
-    sprintf( param, ":sout-smem-audio-postrender-callback=%"PRId64, (qint64)(intptr_t)callback );
+    sprintf( param, ":sout-smem-audio-postrender-callback=%"PRId64, (intptr_t)callback );
     addOption( param );
 }
 
@@ -79,7 +79,7 @@ void                    Media::setVideoDataCtx( void* dataCtx )
 {
     char    param[64];
 
-    sprintf( param, ":sout-smem-video-data=%"PRId64, (qint64)(intptr_t)dataCtx );
+    sprintf( param, ":sout-smem-video-data=%"PRId64, (intptr_t)dataCtx );
     addOption( param );
 }
 
@@ -87,7 +87,7 @@ void                    Media::setAudioDataCtx( void* dataCtx )
 {
     char    param[64];
 
-    sprintf( param, ":sout-smem-audio-data=%"PRId64, (qint64)(intptr_t)dataCtx );
+    sprintf( param, ":sout-smem-audio-data=%"PRId64, (intptr_t)dataCtx );
     addOption( param );
 }
 

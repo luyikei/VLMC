@@ -218,7 +218,7 @@ SettingsManager::load( const QDomElement &root )
     return true;
 }
 
-bool
+void
 SettingsManager::commit( SettingsManager::Type type )
 {
     {

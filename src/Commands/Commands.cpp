@@ -49,8 +49,8 @@ Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch,
         m_trackNumber( trackNumber ),
         m_pos( pos ),
         m_trackType( trackType ),
-        m_undoRedoAction( undoRedoAction ),
-        m_clipHelper( ch )
+        m_clipHelper( ch ),
+        m_undoRedoAction( undoRedoAction )
 {
     setText( QObject::tr( "Adding clip to track %1" ).arg( QString::number( trackNumber ) ) );
 }

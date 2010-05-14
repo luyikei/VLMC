@@ -268,7 +268,7 @@ class   WorkflowRenderer : public GenericRenderer
         quint32             m_nbChannels;
         quint32             m_rate;
         /**
-         *  \brief          Used in permanent rendering mode, to know is some operations
+         *  \brief          Used in permanent rendering mode, to know if some operations
          *                  has to be performed.
          */
         qint64              m_oldLength;

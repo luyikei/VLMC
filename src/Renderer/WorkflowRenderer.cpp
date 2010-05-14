@@ -43,11 +43,11 @@ WorkflowRenderer::WorkflowRenderer() :
             m_stopping( false ),
             m_outputFps( 0.0f ),
             m_esHandler( NULL ),
-            m_oldLength( 0 ),
             m_media( NULL ),
             m_width( 0 ),
             m_height( 0 ),
-            m_silencedAudioBuffer( NULL )
+            m_silencedAudioBuffer( NULL ),
+            m_oldLength( 0 )
 {
 }
 
@@ -102,11 +102,11 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     m_media = new LibVLCpp::Media( "imem://" + QString( videoString ) );
     m_media->addOption( inputSlave );
 
-    sprintf( buffer, "imem-get=%"PRId64, (qint64)getLockCallback() );
+    sprintf( buffer, "imem-get=%"PRId64, (intptr_t)getLockCallback() );
     m_media->addOption( buffer );
-    sprintf( buffer, ":imem-release=%"PRId64, (qint64)getUnlockCallback() );
+    sprintf( buffer, ":imem-release=%"PRId64, (intptr_t)getUnlockCallback() );
     m_media->addOption( buffer );
-    sprintf( buffer, ":imem-data=%"PRId64, (qint64)m_esHandler );
+    sprintf( buffer, ":imem-data=%"PRId64, (intptr_t)m_esHandler );
     m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
 }

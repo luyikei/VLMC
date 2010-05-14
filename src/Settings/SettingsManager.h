@@ -117,7 +117,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         void                        save( QXmlStreamWriter& project ) const;
         bool                        load( const QDomElement &element );
 
-        bool                        commit( SettingsManager::Type type );
+        void                        commit( SettingsManager::Type type );
         void                        flush();
 
     private:
