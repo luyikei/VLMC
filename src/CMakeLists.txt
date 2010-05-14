@@ -106,6 +106,7 @@ INCLUDE_DIRECTORIES(
   Gui
   Gui/import
   Gui/library
+  Gui/media
   Gui/preview
   Gui/settings
   Gui/timeline
@@ -162,6 +163,7 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
         Gui/media/GuiMedia.cpp
+        Gui/media/ClipMetadataDisplayer.cpp
         Gui/project/GuiProjectManager.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
@@ -212,6 +214,7 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewNavController.h
         Gui/library/ViewController.h
         Gui/MainWindow.h
+        Gui/media/ClipMetadataDisplayer.h
         Gui/media/GuiMedia.h
         Gui/preview/LCDTimecode.h
         Gui/preview/PreviewRuler.h
@@ -260,6 +263,7 @@ ELSE(NOT WITH_GUI)
         Gui/ui/ClipProperty.ui
         Gui/ui/IntroDialog.ui
         Gui/ui/MainWindow.ui
+        Gui/media/ui/ClipMetadataDisplayer.ui
         Gui/preview/ui/PreviewWidget.ui
         Gui/import/ui/TagWidget.ui
         Gui/ui/Timeline.ui

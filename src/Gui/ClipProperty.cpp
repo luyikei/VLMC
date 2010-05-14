@@ -20,15 +20,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-
 #include "ClipProperty.h"
 #include "ui_ClipProperty.h"
-#include "Media.h"
-#include "Clip.h"
 
-#include <QTime>
-#include <QPushButton>
+#include "Clip.h"
+#include "ClipMetadataDisplayer.h"
+#include "Media.h"
+
 #include <QInputDialog>
+#include <QPushButton>
 #include <QRegExp>
 
 ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
@@ -36,29 +36,13 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     ui( new Ui::ClipProperty ),
     m_clip( clip )
 {
-    QTime   duration;
-    duration = duration.addSecs( m_clip->lengthSecond() );
-
     ui->setupUi(this);
     connect( this, SIGNAL( accepted() ), this, SLOT( deleteLater() ) );
     connect( this, SIGNAL( rejected() ), this, SLOT( deleteLater() ) );
-    //Duration
-    ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
-    //Filename || title
-    ui->nameValueLabel->setText( m_clip->getMedia()->fileInfo()->fileName() );
+
     setWindowTitle( m_clip->getMedia()->fileInfo()->fileName() + " " + tr( "properties" ) );
-    //Resolution
-    ui->resolutionValueLabel->setText( QString::number( m_clip->getMedia()->width() )
-                                       + " x " + QString::number( m_clip->getMedia()->height() ) );
-    //FPS
-    ui->fpsValueLabel->setText( QString::number( m_clip->getMedia()->fps() ) );
     //Snapshot
     ui->snapshotLabel->setPixmap( m_clip->getMedia()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
-    //nb tracks :
-    ui->nbVideoTracksValueLabel->setText(
-            QString::number( m_clip->getMedia()->nbVideoTracks() ) );
-    ui->nbAudioTracksValueLabel->setText(
-            QString::number( m_clip->getMedia()->nbAudioTracks() ) );
     //Metatags
     const QPushButton* button = ui->buttonBox->button( QDialogButtonBox::Apply );
     Q_ASSERT( button != NULL);
@@ -72,6 +56,8 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
 
     connect( ui->addTagsButton, SIGNAL( clicked() ), this, SLOT( addTagsRequired() ) );
     connect( ui->deleteTagsButton, SIGNAL( clicked() ), this, SLOT( removeTagsRequired() ) );
+
+    new ClipMetadataDisplayer( clip, ui->metadataContainer );
 }
 
 ClipProperty::~ClipProperty()
@@ -79,7 +65,8 @@ ClipProperty::~ClipProperty()
     delete ui;
 }
 
-void ClipProperty::changeEvent( QEvent *e )
+void
+ClipProperty::changeEvent( QEvent *e )
 {
     QDialog::changeEvent( e );
     switch ( e->type() )
@@ -92,13 +79,15 @@ void ClipProperty::changeEvent( QEvent *e )
     }
 }
 
-void    ClipProperty::apply()
+void
+ClipProperty::apply()
 {
     m_clip->setNotes( ui->annotationInput->toPlainText() );
     m_clip->setMetaTags( m_model->stringList() );
 }
 
-void    ClipProperty::addTagsRequired()
+void
+ClipProperty::addTagsRequired()
 {
     bool                ok;
     QString             newTags = QInputDialog::getText( this, tr( "New tags edition" ),
@@ -114,9 +103,10 @@ void    ClipProperty::addTagsRequired()
     }
 }
 
-void    ClipProperty::removeTagsRequired()
+void
+ClipProperty::removeTagsRequired()
 {
-    QItemSelectionModel*    selected = ui->metaTagsView->selectionModel();
+    QItemSelectionModel     *selected = ui->metaTagsView->selectionModel();
     QModelIndexList         listSelected = selected->selectedIndexes();
     QStringList             list = m_model->stringList();
     while ( listSelected.empty() == false )

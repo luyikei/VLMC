@@ -89,7 +89,7 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
 }
 
 void
-ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int size )
+ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int )
 {
     cw->m_renderLock->lock();
     if ( cw->m_buffer == NULL )
@@ -109,7 +109,7 @@ ImageClipWorkflow::unlock(ImageClipWorkflow *cw, void*, int, int, int, int, qint
     cw->emit computedFinished();
 }
 
-uint32_t
+quint32
 ImageClipWorkflow::getNbComputedBuffers() const
 {
     QMutexLocker    lock( m_renderLock );
@@ -119,7 +119,7 @@ ImageClipWorkflow::getNbComputedBuffers() const
     return 0;
 }
 
-uint32_t
+quint32
 ImageClipWorkflow::getMaxComputedBuffers() const
 {
     return 1;
