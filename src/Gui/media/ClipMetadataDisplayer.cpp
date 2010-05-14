@@ -43,6 +43,7 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
+    updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
@@ -72,4 +73,13 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
         connect( m_watchedMedia, SIGNAL( metaDataComputed(const Media*) ),
                  this, SLOT( metadataUpdated( const Media*) ) );
     }
+}
+
+void
+ClipMetadataDisplayer::updateInterface()
+{
+    m_ui->fpsLabel->setVisible( m_watchedMedia->hasVideoTrack() );
+    m_ui->fpsValueLabel->setVisible( m_watchedMedia->hasVideoTrack() );
+    m_ui->resolutionLabel->setVisible( m_watchedMedia->hasVideoTrack() );
+    m_ui->resolutionValueLabel->setVisible( m_watchedMedia->hasVideoTrack() );
 }

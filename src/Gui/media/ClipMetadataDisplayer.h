@@ -41,6 +41,12 @@ class ClipMetadataDisplayer : public QWidget
         void                            setWatchedClip( const Clip *clip );
 
     private:
+        /**
+         *  \brief      Will update the interface depending on the currently displayed
+         *              file type.
+         */
+        void                            updateInterface();
+    private:
         Ui::ClipMetadataDisplayer       *m_ui;
         const Clip                      *m_watchedClip;
         const Media                     *m_watchedMedia;
