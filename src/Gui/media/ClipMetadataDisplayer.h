@@ -36,12 +36,14 @@ class ClipMetadataDisplayer : public QWidget
     Q_DISABLE_COPY(ClipMetadataDisplayer);
 
     public:
-        explicit ClipMetadataDisplayer( Clip* clip, QWidget *parent = 0 );
+        explicit ClipMetadataDisplayer( const Clip* clip, QWidget *parent = 0 );
+
+        void                            setWatchedClip( const Clip *clip );
 
     private:
         Ui::ClipMetadataDisplayer       *m_ui;
-        Clip                            *m_watchedClip;
-        Media                           *m_watchedMedia;
+        const Clip                      *m_watchedClip;
+        const Media                     *m_watchedMedia;
 
     private slots:
         void                            metadataUpdated( const Media *media );

@@ -27,20 +27,14 @@
 
 #include <QTime>
 
-ClipMetadataDisplayer::ClipMetadataDisplayer( Clip *clip, QWidget *parent /*= NULL*/ ) :
+ClipMetadataDisplayer::ClipMetadataDisplayer( const Clip *clip, QWidget *parent /*= NULL*/ ) :
     QWidget( parent ),
     m_ui( new Ui::ClipMetadataDisplayer ),
     m_watchedClip( clip )
 {
     m_ui->setupUi( this );
-    m_watchedMedia = clip->getMedia();
-    if ( m_watchedMedia->isMetadataComputed() == true )
-        metadataUpdated( m_watchedMedia );
-    else
-    {
-        connect( m_watchedMedia, SIGNAL( metaDataComputed(const Media*) ),
-                 this, SLOT( metadataUpdated( const Media*) ) );
-    }
+    if ( clip != NULL )
+        setWatchedClip( clip );
 }
 
 void
@@ -61,4 +55,21 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
     //nb tracks :
     m_ui->nbVideoTracksValueLabel->setText( QString::number( media->nbVideoTracks() ) );
     m_ui->nbAudioTracksValueLabel->setText( QString::number( media->nbAudioTracks() ) );
+}
+
+void
+ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
+{
+    if ( m_watchedMedia )
+        disconnect( m_watchedMedia );
+
+    m_watchedClip = clip;
+    m_watchedMedia = clip->getMedia();
+    if ( m_watchedMedia->isMetadataComputed() == true )
+        metadataUpdated( m_watchedMedia );
+    else
+    {
+        connect( m_watchedMedia, SIGNAL( metaDataComputed(const Media*) ),
+                 this, SLOT( metadataUpdated( const Media*) ) );
+    }
 }
