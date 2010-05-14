@@ -41,7 +41,6 @@
 #include "WorkflowFileRenderer.h"
 #include "WorkflowRenderer.h"
 #include "ClipRenderer.h"
-#include "EffectsEngine.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"

@@ -25,7 +25,6 @@
 
 #include "vlmc.h"
 #include "Clip.h"
-#include "EffectsEngine.h"
 #include "Library.h"
 #include "LightVideoFrame.h"
 #include "MainWorkflow.h"

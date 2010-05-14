@@ -4,22 +4,11 @@
 #          Ludovic Fauvet <etix@vlmc.org>
 #
 
-SUBDIRS(EffectsEngine/Plugins/src)
-
 SET(VLMC_SRCS
     Commands/Commands.cpp
+    EffectsEngine/PluginsAPI/LightVideoFrame.cpp
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
-    EffectsEngine/EffectNode.cpp
-    EffectsEngine/EffectNodeFactory.cpp
-    EffectsEngine/EffectPluginTypeLoader.cpp
-    EffectsEngine/EffectPluginTypeManager.cpp
-    EffectsEngine/EffectsEngine.cpp
-    EffectsEngine/SemanticObjectManager.hpp
-    EffectsEngine/SimpleObjectsReferencer.hpp
-    EffectsEngine/PluginsAPI/InSlot.hpp
-    EffectsEngine/PluginsAPI/LightVideoFrame.cpp
-    EffectsEngine/PluginsAPI/OutSlot.hpp
     Library/Library.cpp
     Library/MediaContainer.cpp
     LibVLCpp/VLCInstance.cpp
@@ -100,9 +89,8 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
   Commands
-  Settings 
-  EffectsEngine
   EffectsEngine/PluginsAPI
+  Settings 
   Gui
   Gui/import
   Gui/library
