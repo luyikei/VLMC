@@ -77,7 +77,7 @@ MediaContainer::addMedia( Media *media )
 }
 
 Media*
-MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
+MediaContainer::addMedia( const QFileInfo& fileInfo )
 {
     if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
         return NULL;
@@ -86,7 +86,7 @@ MediaContainer::addMedia( const QFileInfo& fileInfo, const QString& uuid )
         if ( it->getMedia()->fileInfo()->filePath() == fileInfo.filePath() )
             return NULL;
     }
-    Media* media = new Media( fileInfo.filePath(), uuid );
+    Media* media = new Media( fileInfo.filePath() );
     MetaDataManager::getInstance()->computeMediaMetadata( media );
     return media;
 }

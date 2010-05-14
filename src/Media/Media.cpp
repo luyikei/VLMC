@@ -41,7 +41,7 @@ const QString   Media::ImageExtensions = "*.gif *.png *.jpg *.jpeg";
 const QString   Media::AudioExtensions = "*.mp3 *.oga *.flac *.aac *.wav";
 const QString   Media::streamPrefix = "stream://";
 
-Media::Media( const QString& filePath, const QString& uuid /*= QString()*/ )
+Media::Media( const QString& filePath )
     : m_vlcMedia( NULL ),
     m_fileInfo( NULL ),
     m_lengthMS( 0 ),

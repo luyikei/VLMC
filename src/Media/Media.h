@@ -76,7 +76,7 @@ public:
         File,
         Stream
     };
-    Media( const QString& filePath, const QString& uuid = QString() );
+    Media( const QString& filePath );
     virtual ~Media();
 
     /**

@@ -55,9 +55,9 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
 
 Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
             const QString &uuid /*= QString()*/ ) :
+        m_media( parent->getMedia() ),
         m_begin( begin ),
         m_end( end ),
-        m_media( parent->getMedia() ),
         m_rootClip( parent->rootClip() ),
         m_parent( parent )
 {

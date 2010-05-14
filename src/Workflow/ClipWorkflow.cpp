@@ -37,8 +37,8 @@
 
 ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
                 m_mediaPlayer(NULL),
-                m_state( ClipWorkflow::Stopped ),
-                m_clipHelper( ch )
+                m_clipHelper( ch ),
+                m_state( ClipWorkflow::Stopped )
 {
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new WaitCondition;

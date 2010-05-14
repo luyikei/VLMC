@@ -75,7 +75,7 @@ public:
      *  \sa     media( const QUuid& uuid)
      *  \sa     clip( const QUuid& uuid )
      */
-    Media*      addMedia( const QFileInfo& fileInfo, const QString& uuid = QString() );
+    Media*      addMedia( const QFileInfo& fileInfo );
     /**
      *  \brief  Check if a file has already been loaded into library.
      *  \param  fileInfo    The file infos
