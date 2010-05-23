@@ -44,7 +44,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ClipProperty</name>
+    <name>ClipMetadataDisplayer</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulár</translation>
+    </message>
     <message>
         <source>Media Properties</source>
         <translation>Vlastnosti média</translation>
@@ -62,32 +66,39 @@ p, li { white-space: pre-wrap; }
         <translation>Trvanie</translation>
     </message>
     <message>
-        <source>0s</source>
-        <translation>0 sekúnd</translation>
+        <source>---</source>
+        <translation>---</translation>
     </message>
     <message>
         <source>Resolution</source>
         <translation>Rozlíšenie</translation>
     </message>
     <message>
-        <source>0px. x 0px.</source>
-        <translation></translation>
+        <source>FPS</source>
+        <translation>FPS (snímkov/sek.)</translation>
     </message>
     <message>
-        <source>FPS</source>
-        <translation>Snímky za sekundu</translation>
+        <source>Number of video tracks</source>
+        <translation>Počet stôp s videom</translation>
+    </message>
+    <message>
+        <source>Number of audio tracks</source>
+        <translation>Počet stôp so zvukom</translation>
     </message>
     <message>
         <source>0</source>
         <translation>0</translation>
     </message>
+</context>
+<context>
+    <name>ClipProperty</name>
     <message>
         <source>Metatags :</source>
         <translation>Metatagy :</translation>
     </message>
     <message>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Annotations :</source>
@@ -104,14 +115,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
         <translation>Zadajte tagy (môžete zadať viac tagov oddelených čiarkou</translation>
-    </message>
-    <message>
-        <source>Number of video tracks</source>
-        <translation>Počet stôp s videom</translation>
-    </message>
-    <message>
-        <source>Number of audio tracks</source>
-        <translation>Počet stôp so zvukom</translation>
     </message>
 </context>
 <context>
@@ -142,7 +145,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>A crash occurred. Signal received: </source>
-        <translation type="unfinished">Nastala chyba. Bol prijatý signál: </translation>
+        <translation>Nastala chyba. Bol prijatý signál: </translation>
     </message>
 </context>
 <context>
@@ -176,7 +179,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Failed to load project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa načítať projekt</translation>
     </message>
 </context>
 <context>
@@ -259,46 +262,6 @@ p, li { white-space: pre-wrap; }
         <translation>Import</translation>
     </message>
     <message>
-        <source>Media Properties</source>
-        <translation>Vlastnosti médií</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Názov</translation>
-    </message>
-    <message>
-        <source>unnamed</source>
-        <translation>bez názvu</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Trvanie</translation>
-    </message>
-    <message>
-        <source>0s</source>
-        <translation>0 sekúnd</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Rozlíšenie</translation>
-    </message>
-    <message>
-        <source>0px. x 0px.</source>
-        <translation>0px. x 0px.</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation>Snímky/sekundu</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <source>properties</source>
-        <translation>vlastnosti</translation>
-    </message>
-    <message>
         <source>Failed to load %1</source>
         <translation>Nepodarilo sa načítať %1</translation>
     </message>
@@ -374,10 +337,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Transcode</source>
         <translation>Prekódovať</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importovať</translation>
     </message>
     <message>
         <source>Enable effects engine</source>
@@ -572,11 +531,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>This clip or some of its children are contained in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento klip alebo niektoré jeho súčasti sú obsiahnuté na časovej osi.</translation>
     </message>
     <message>
         <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstránením ho môžete vymazať z časovej osi. Chcete pokračovať?</translation>
+    </message>
+</context>
+<context>
+    <name>MediaLibrary</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulár</translation>
+    </message>
+    <message>
+        <source>Filter:</source>
+        <translation>Filter:</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Názov</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagy</translation>
+    </message>
+    <message>
+        <source>Filter by</source>
+        <translation>Filtrovať podľa</translation>
+    </message>
+    <message>
+        <source>clear</source>
+        <translation>vyčistiť</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Import</translation>
     </message>
 </context>
 <context>
@@ -826,11 +816,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Confirm clip deletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdenie vymazania klipu</translation>
     </message>
     <message>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Pred vymazaním klipu z časovej osi vyžadovať potvrdenie tejto akcie</translation>
     </message>
 </context>
 <context>
@@ -871,16 +861,20 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ProjectManager</name>
     <message>
-        <source>Invalid project file name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Can&apos;t open project file. (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno otvoriť súbor s projektom. (%1)</translation>
     </message>
     <message>
         <source>Failed to load the project file: %1. Aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa načítať súbor s projektom: %1. Akcia bola prerušená.</translation>
+    </message>
+    <message>
+        <source>&lt;Unnamed project&gt;</source>
+        <translation>&lt;Nepomenovaný projekt&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;Unsaved project&gt;</source>
+        <translation>&lt;Neuložený projekt&gt;</translation>
     </message>
 </context>
 <context>
@@ -1095,15 +1089,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Áno</translation>
     </message>
     <message>
         <source>Yes, don&apos;t ask me again</source>
-        <translation type="unfinished"></translation>
+        <translation>Áno, už sa viac nepýtať</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie</translation>
     </message>
 </context>
 <context>
@@ -1270,24 +1264,24 @@ p, li { white-space: pre-wrap; }
         <translation>48000 Hz</translation>
     </message>
     <message>
-        <source>44000 Hz</source>
-        <translation>44000 Hz</translation>
-    </message>
-    <message>
-        <source>22000 Hz</source>
-        <translation>22000 Hz</translation>
-    </message>
-    <message>
-        <source>11000 Hz</source>
-        <translation>11000 Hz</translation>
-    </message>
-    <message>
         <source>New project wizard</source>
         <translation>Sprievodca novým projektom</translation>
     </message>
     <message>
         <source>Configure Video settings</source>
         <translation>Konfigurácia nastavení videa</translation>
+    </message>
+    <message>
+        <source>44100 Hz</source>
+        <translation>44 100 Hz</translation>
+    </message>
+    <message>
+        <source>22050 Hz</source>
+        <translation>22 050 Hz</translation>
+    </message>
+    <message>
+        <source>11025 Hz</source>
+        <translation>11 025 Hz</translation>
     </message>
 </context>
 <context>
