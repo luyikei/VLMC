@@ -65,6 +65,11 @@ void    WorkflowRenderer::initializeRenderer()
              this, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ) );
     connect( m_mainWorkflow, SIGNAL( lengthChanged( qint64 ) ),
              this, SLOT(mainWorkflowLenghtChanged(qint64) ) );
+    //Media player part: to update PreviewWidget
+    connect( m_mediaPlayer, SIGNAL( playing() ),    this,   SIGNAL( playing() ), Qt::DirectConnection );
+    connect( m_mediaPlayer, SIGNAL( paused() ),     this,   SIGNAL( paused() ), Qt::DirectConnection );
+    //FIXME:: check if this doesn't require Qt::QueuedConnection
+    connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( endReached() ) );
 }
 
 WorkflowRenderer::~WorkflowRenderer()
@@ -224,14 +229,9 @@ void        WorkflowRenderer::startPreview()
         m_outputFps = outputFps();
         setupRenderer( m_width, m_height, m_outputFps );
     }
+    //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );
     m_mediaPlayer->setMedia( m_media );
-
-    //Media player part: to update PreviewWidget
-    connect( m_mediaPlayer, SIGNAL( playing() ),    this,   SIGNAL( playing() ), Qt::DirectConnection );
-    connect( m_mediaPlayer, SIGNAL( paused() ),     this,   SIGNAL( paused() ), Qt::DirectConnection );
-    //FIXME:: check if this doesn't require Qt::QueuedConnection
-    connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( endReached() ) );
 
     m_mainWorkflow->setFullSpeedRender( false );
     m_mainWorkflow->startRender( m_width, m_height );
