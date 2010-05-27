@@ -27,6 +27,8 @@
 #include "ClipRenderer.h"
 #include "Clip.h"
 
+#include <QMessageBox>
+
 PreviewWidget::PreviewWidget( GenericRenderer* genericRenderer, QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::PreviewWidget ),
@@ -69,6 +71,7 @@ PreviewWidget::PreviewWidget( GenericRenderer* genericRenderer, QWidget *parent 
     connect( m_renderer,     SIGNAL( endReached() ),            this,       SLOT( endReached() ) );
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
+    connect( m_renderer, SIGNAL( error() ), this, SLOT( error() ) );
 
     connect( m_ui->pushButtonMarkerStart, SIGNAL( clicked() ), this, SLOT( markerStartClicked() ) );
     connect( m_ui->pushButtonMarkerStop, SIGNAL( clicked() ), this, SLOT( markerStopClicked() ) );
@@ -211,4 +214,12 @@ void        PreviewWidget::createNewClipFromMarkers()
     //Adding the newly created clip to the media
     if ( clip->addSubclip( part ) == false )
         delete part;
+}
+
+void
+PreviewWidget::error()
+{
+    QMessageBox::warning( this, tr( "Rendering error" ),
+                          tr( "An error occured while rendering.\nPlease check your VLC installation"
+                              " before reporting the issue.") );
 }
