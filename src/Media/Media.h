@@ -36,6 +36,7 @@
 #include <QObject>
 #include <QFileInfo>
 #include <QHash>
+#include <QXmlStreamWriter>
 
 #ifdef WITH_GUI
 #include "media/GuiMedia.h"
@@ -46,8 +47,6 @@ namespace LibVLCpp
     class   Media;
 }
 class Clip;
-
-class   QXmlStreamWriter;
 
 /**
   * Represents a basic container for media informations.

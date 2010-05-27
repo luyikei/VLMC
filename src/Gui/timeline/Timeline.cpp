@@ -31,7 +31,6 @@
 #include <QHBoxLayout>
 #include <QDomElement>
 #include <QScrollBar>
-#include <QXmlStreamWriter>
 
 #include <QtDebug>
 

@@ -26,7 +26,6 @@
 
 #include <QDomDocument>
 #include <QDomElement>
-#include <QXmlStreamWriter>
 
 LightVideoFrame* TrackHandler::nullOutput = NULL;
 

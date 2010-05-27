@@ -33,7 +33,6 @@
 #include "SettingsManager.h"
 
 #include <QDomElement>
-#include <QXmlStreamWriter>
 
 LightVideoFrame     *MainWorkflow::blackOutput = NULL;
 

@@ -23,6 +23,7 @@
 #ifndef GUIPROJECTMANAGER_H
 #define GUIPROJECTMANAGER_H
 
+#include <QXmlStreamWriter>
 #include "ProjectManager.h"
 
 class   QTimer;

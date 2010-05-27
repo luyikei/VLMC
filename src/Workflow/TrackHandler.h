@@ -24,13 +24,12 @@
 #define TRACKHANDLER_H
 
 #include <QObject>
+#include <QXmlStreamWriter>
 #include "Toggleable.hpp"
 #include "MainWorkflow.h"
 
 class   ClipHelper;
 class   TrackWorkflow;
-
-class   QXmlStreamWriter;
 
 class   TrackHandler : public QObject
 {

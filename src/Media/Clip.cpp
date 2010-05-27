@@ -30,8 +30,6 @@
 #include "Library.h"
 #include "Media.h"
 
-#include <QXmlStreamWriter>
-
 const int   Clip::DefaultFPS = 30;
 
 Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString& uuid /*= QString()*/ ) :

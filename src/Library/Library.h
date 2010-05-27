@@ -35,8 +35,8 @@
 
 #include <QObject>
 #include <QAtomicInt>
+#include <QXmlStreamWriter>
 
-class   QXmlStreamWriter;
 class   QDomElement;
 
 class Clip;

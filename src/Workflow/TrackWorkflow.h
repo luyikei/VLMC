@@ -27,6 +27,7 @@
 #include "StackedBuffer.hpp"
 
 #include <QObject>
+#include <QXmlStreamWriter>
 
 class   ClipWorkflow;
 class   LightVideoFrame;

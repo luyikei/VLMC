@@ -26,6 +26,7 @@
 #include "vlmc.h"
 #include "ui_Timeline.h"
 #include "Workflow/MainWorkflow.h"
+#include <QXmlStreamWriter>
 
 class TracksScene;
 class TracksView;

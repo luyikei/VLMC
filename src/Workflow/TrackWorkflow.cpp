@@ -34,7 +34,6 @@
 #include <QReadWriteLock>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QXmlStreamWriter>
 
 #include <QtDebug>
 

@@ -31,11 +31,10 @@
 #include <QObject>
 #include <QStringList>
 #include <QUuid>
+#include <QXmlStreamWriter>
 
 class   MediaContainer;
 class   Media;
-
-class   QXmlStreamWriter;
 
 class   Clip : public QObject
 {

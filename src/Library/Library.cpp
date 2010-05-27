@@ -36,7 +36,6 @@
 #include <QDomElement>
 #include <QHash>
 #include <QUuid>
-#include <QXmlStreamWriter>
 
 void
 Library::loadProject( const QDomElement& doc )

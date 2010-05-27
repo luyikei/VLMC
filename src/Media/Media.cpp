@@ -31,7 +31,6 @@
 #include "VLCMedia.h"
 #include "Clip.h"
 
-#include <QXmlStreamWriter>
 #include <QtDebug>
 #include <QUrl>
 

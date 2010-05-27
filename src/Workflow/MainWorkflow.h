@@ -26,12 +26,12 @@
 
 #include "Singleton.hpp"
 #include "AudioClipWorkflow.h"
+#include <QXmlStreamWriter>
 
 class   QDomDocument;
 class   QDomElement;
 class   QMutex;
 class   QReadWriteLock;
-class   QXmlStreamWriter;
 
 class   Clip;
 class   ClipHelper;

@@ -26,11 +26,11 @@
 #include <QHash>
 #include <QObject>
 #include <QUuid>
+#include <QXmlStreamWriter>
 
 class   Media;
 class   Clip;
 class   QFileInfo;
-class   QXmlStreamWriter;
 class   QDomElement;
 
 class   MediaContainer : public QObject

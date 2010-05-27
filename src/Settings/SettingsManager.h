@@ -31,9 +31,9 @@
 #include <QObject>
 #include <QReadWriteLock>
 #include <QVariant>
+#include <QXmlStreamWriter>
 
 class SettingValue;
-class QXmlStreamWriter;
 class QDomElement;
 
 
