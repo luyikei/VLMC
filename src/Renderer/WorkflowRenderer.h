@@ -304,6 +304,13 @@ class   WorkflowRenderer : public GenericRenderer
          */
         void                mainWorkflowLenghtChanged( qint64 newLength );
 
+        /**
+         *  \brief          Used to catch an error in the rendering part
+         *
+         *  Most likely, this will be called if the required codec aren't found.
+         *  This will stop the render and emit the error() signal.
+         */
+        void                errorEncountered();
 };
 
 #endif // WORKFLOWRENDERER_H

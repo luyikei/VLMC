@@ -212,6 +212,15 @@ signals:
      *  \sa     stopped();
      */
     void                            endReached();
+
+    /**
+     *  \brief  Emited when something went wrong with the render.
+     *
+     *  The cause may vary depending on the underlying renderer, though this will
+     *  almost always be caused by a missing codec.
+     */
+    void                error();
+
 };
 
 #endif // GENERICRENDERER_H

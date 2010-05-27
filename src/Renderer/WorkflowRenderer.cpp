@@ -68,6 +68,7 @@ void    WorkflowRenderer::initializeRenderer()
     //Media player part: to update PreviewWidget
     connect( m_mediaPlayer, SIGNAL( playing() ),    this,   SIGNAL( playing() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( paused() ),     this,   SIGNAL( paused() ), Qt::DirectConnection );
+    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
     //FIXME:: check if this doesn't require Qt::QueuedConnection
     connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( endReached() ) );
 }
@@ -408,4 +409,11 @@ WorkflowRenderer::mainWorkflowLenghtChanged( qint64 /*newLength*/ )
 //        stop();
 //    }
 //    m_oldLength = newLength;
+}
+
+void
+WorkflowRenderer::errorEncountered()
+{
+    stop();
+    emit error();
 }
