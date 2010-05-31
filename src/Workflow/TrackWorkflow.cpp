@@ -102,12 +102,14 @@ TrackWorkflow::computeLength()
     m_length = (it.key() + it.value()->getClipHelper()->length() );
 }
 
-qint64              TrackWorkflow::getLength() const
+qint64
+TrackWorkflow::getLength() const
 {
     return m_length;
 }
 
-qint64              TrackWorkflow::getClipPosition( const QUuid& uuid ) const
+qint64
+TrackWorkflow::getClipPosition( const QUuid& uuid ) const
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
@@ -121,7 +123,8 @@ qint64              TrackWorkflow::getClipPosition( const QUuid& uuid ) const
     return -1;
 }
 
-Clip*               TrackWorkflow::getClip( const QUuid& uuid )
+Clip*
+TrackWorkflow::getClip( const QUuid& uuid )
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
@@ -185,7 +188,8 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     return NULL;
 }
 
-void                TrackWorkflow::preloadClip( ClipWorkflow* cw )
+void
+TrackWorkflow::preloadClip( ClipWorkflow* cw )
 {
     cw->getStateLock()->lockForRead();
 
@@ -198,7 +202,8 @@ void                TrackWorkflow::preloadClip( ClipWorkflow* cw )
     cw->getStateLock()->unlock();
 }
 
-void                TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
+void
+TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 {
 //    qDebug() << "Stopping clip workflow";
     cw->getStateLock()->lockForRead();
@@ -214,14 +219,22 @@ void                TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
     cw->stop();
 }
 
-bool                TrackWorkflow::checkEnd( qint64 currentFrame ) const
+bool
+TrackWorkflow::checkEnd( qint64 currentFrame ) const
 {
     if ( m_clips.size() == 0 )
         return true;
     //This is the last video by chronological order :
     QMap<qint64, ClipWorkflow*>::const_iterator   it = m_clips.end() - 1;
+    ClipWorkflow* cw = it.value();
+    //Check if the Clip is in error state. If so, don't bother checking anything else.
+    {
+        QReadLocker     lock( cw->getStateLock() );
+        if ( cw->getState() == ClipWorkflow::Error )
+            return true;
+    }
     //If it ends before the current frame, we reached end.
-    return ( it.value()->getClipHelper()->length() + it.key() < currentFrame );
+    return ( cw->getClipHelper()->length() + it.key() < currentFrame );
 }
 
 void
