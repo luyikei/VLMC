@@ -88,14 +88,20 @@ QStringList ProjectManager::recentsProjects() const
 void    ProjectManager::loadWorkflow()
 {
     QDomElement     root = m_domDocument->documentElement();
+    bool            needSave;
 
     MainWorkflow::getInstance()->loadProject( root );
     loadTimeline( root );
     SettingsManager::getInstance()->load( root );
-    emit projectUpdated( projectName(), true );
-    emit projectLoaded();
     if ( m_projectFile != NULL )
+    {
         appendToRecentProject( m_projectFile->fileName() );
+        needSave = false;
+    }
+    else
+        needSave = true;
+    emit projectUpdated( projectName(), needSave );
+
     delete m_domDocument;
 }
 
@@ -126,6 +132,7 @@ void    ProjectManager::loadProject( const QString& fileName )
         //saves its project, vlmc will ask him where to save it.
         delete m_projectFile;
         m_projectFile = NULL;
+        m_needSave = true;
     }
 
     QDomElement     root = m_domDocument->documentElement();
