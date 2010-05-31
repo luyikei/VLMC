@@ -65,6 +65,7 @@ MetaDataWorker::compute()
     connect( m_mediaPlayer, SIGNAL( playing() ),
              this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ) );
+    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
     m_mediaPlayer->play();
     m_media->flushVolatileParameters();
 }
@@ -96,11 +97,9 @@ MetaDataWorker::metaDataAvailable()
     m_mediaIsPlaying = false;
     m_lengthHasChanged = false;
 
-    //In order to wait for the VOUT to be ready:
-    //Until we have a way of knowing when it is, both getWidth and getHeight method
-    //will trigger exception... so we shut it up.
     if ( m_media->fileType() != Media::Audio )
     {
+        //In order to wait for the VOUT to be ready:
         m_timer.restart();
         while ( m_mediaPlayer->hasVout() == false &&
                 m_timer.elapsed() < 3000 )
@@ -196,6 +195,7 @@ void
 MetaDataWorker::finalize()
 {
     m_media->disconnect( this );
+    m_mediaPlayer->disconnect( this );
     emit    computed();
     delete this;
 }
