@@ -23,7 +23,9 @@
 #include "WelcomePage.h"
 
 #include "project/GuiProjectManager.h"
+#include "SettingsManager.h"
 
+#include <QFileDialog>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -130,7 +132,10 @@ void WelcomePage::loadRecentsProjects()
 
 void WelcomePage::loadProject()
 {
-    QString projectPath = GUIProjectManager::getInstance()->acquireProjectFileName();
+    QString projectPath =
+            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
+                                          VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" ),
+                                          "VLMC project file(*.vlmc)" );
 
     if ( projectPath.isEmpty() ) return;
 

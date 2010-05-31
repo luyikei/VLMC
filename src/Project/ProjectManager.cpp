@@ -38,6 +38,7 @@
 
 const QString   ProjectManager::unNamedProject = tr( "<Unnamed project>" );
 const QString   ProjectManager::unSavedProject = tr( "<Unsaved project>" );
+const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 {
@@ -100,6 +101,7 @@ void    ProjectManager::loadWorkflow()
 
 void    ProjectManager::loadProject( const QString& fileName )
 {
+    //FIXME:this is probably useless, as this is handled by the gui part now.
     //Don't print an error. The user most likely canceled the open project dialog.
     if ( fileName.isEmpty() == true )
         return ;
@@ -110,15 +112,14 @@ void    ProjectManager::loadProject( const QString& fileName )
     if ( m_projectFile->open( QFile::ReadOnly ) == false )
     {
         failedToLoad( tr( "Can't open project file. (%1)" ).arg( m_projectFile->errorString() ) );
+        delete m_projectFile;
+        m_projectFile = NULL;
         return ;
     }
     m_projectFile->close();
 
     m_domDocument = new QDomDocument;
     m_domDocument->setContent( m_projectFile );
-#ifdef WITH_GUI
-    m_needSave = false;
-#endif
     if ( ProjectManager::isBackupFile( fileName ) == true )
     {
         //Delete the project file representation, so the next time the user
@@ -160,16 +161,10 @@ void    ProjectManager::emergencyBackup()
     QString     name;
 
     if ( m_projectFile != NULL )
-    {
-        name = m_projectFile->fileName();
-        name += "backup";
-        __saveProject( name );
-    }
+        name = createAutoSaveOutputFileName( m_projectFile->fileName() );
     else
-    {
-       name = QDir::currentPath() + "/unsavedproject.vlmcbackup";
-        __saveProject( name );
-    }
+       name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
+    __saveProject( name );
     QSettings   s;
     s.setValue( "EmergencyBackup", name );
     s.sync();
@@ -177,8 +172,15 @@ void    ProjectManager::emergencyBackup()
 
 bool    ProjectManager::isBackupFile( const QString& projectFile )
 {
-    return projectFile.endsWith( "backup" );
+    return projectFile.endsWith( ProjectManager::backupSuffix );
 }
+
+QString
+ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
+{
+    return baseName + ProjectManager::backupSuffix;
+}
+
 
 void    ProjectManager::appendToRecentProject( const QString& projectFile )
 {

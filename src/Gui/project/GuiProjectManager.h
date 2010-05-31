@@ -37,12 +37,6 @@ public:
     bool            askForSaveIfModified();
     void            newProject( const QString& projectName );
     /**
-     *  \brief      Ask the user for the project file she wants to load.
-     *
-     *  \return     The project to load.
-     */
-    QString         acquireProjectFileName();
-    /**
      *  \brief      Save the project using the current project file.
      */
     void            saveProject( bool saveAs = false );
@@ -55,6 +49,13 @@ public:
      */
     bool            closeProject();
     bool            needSave() const;
+    /**
+     *  \brief      Display the open file name dialog, and call the actual project loading
+     *              method.
+     *
+     *  \warning    This is not an overload for the ProjectManager::loadProject() method.
+     */
+    void            loadProject();
 
 protected:
     virtual void    failedToLoad( const QString &reason ) const;
@@ -63,7 +64,6 @@ protected:
 
 private:
     bool            createNewProjectFile( bool saveAs );
-    QString         createAutoSaveOutputFileName() const;
 
 private:
     QTimer*         m_timer;

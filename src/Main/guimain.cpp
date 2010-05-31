@@ -102,7 +102,7 @@ VLMCmain( int argc, char **argv )
 
     MainWindow w;
     if ( argc > 1 )
-        GUIProjectManager::getInstance()->loadProject( argv[argc - 1] );
+        GUIProjectManager::getInstance()->ProjectManager::loadProject( argv[argc - 1] );
     w.show();
     return app.exec();
 }

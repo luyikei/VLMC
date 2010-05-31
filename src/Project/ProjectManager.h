@@ -45,6 +45,7 @@ class   ProjectManager : public QObject , public Singleton<ProjectManager>
 public:
     static const QString    unNamedProject;
     static const QString    unSavedProject;
+    static const QString    backupSuffix;
 
     void            loadProject( const QString& fileName );
     QStringList     recentsProjects() const;
@@ -80,6 +81,7 @@ protected:
 
     virtual void    failedToLoad( const QString& reason ) const;
     virtual void    loadTimeline( const QDomElement& ){};
+    QString         createAutoSaveOutputFileName( const QString& baseName ) const;
 
     ProjectManager();
     ~ProjectManager();

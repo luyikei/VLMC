@@ -22,6 +22,7 @@
 
 #include "GuiProjectManager.h"
 
+#include <QDateTime>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -89,16 +90,6 @@ GUIProjectManager::askForSaveIfModified()
     return true;
 }
 
-QString
-GUIProjectManager::acquireProjectFileName()
-{
-    QString fileName =
-            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
-                                          VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" ),
-                                          "VLMC project file(*.vlmc)" );
-    return fileName;
-}
-
 bool
 GUIProjectManager::createNewProjectFile( bool saveAs )
 {
@@ -154,7 +145,7 @@ GUIProjectManager::autoSaveRequired()
 {
     if ( m_projectFile == NULL )
         return ;
-    ProjectManager::__saveProject( createAutoSaveOutputFileName() );
+    ProjectManager::__saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
 }
 
 void
@@ -220,8 +211,47 @@ GUIProjectManager::loadTimeline( const QDomElement &root )
     Timeline::getInstance()->load( root );
 }
 
-QString
-GUIProjectManager::createAutoSaveOutputFileName() const
+void
+GUIProjectManager::loadProject()
 {
-    return m_projectFile->fileName() + "~";
+    QString fileName =
+            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
+                                          VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" ),
+                                          "VLMC project file(*.vlmc)" );
+    if ( fileName.length() <= 0 ) //If the user canceled.
+        return ;
+    QFile   projectFile( fileName );
+    //If for some reason this happens... better safe than sorry
+    if ( projectFile.exists() == false )
+        return ;
+
+    QString backupFilename = createAutoSaveOutputFileName( fileName );
+    QFile   autoBackup( backupFilename );
+    if ( autoBackup.exists() == true )
+    {
+        QFileInfo       projectFileInfo( projectFile );
+        QFileInfo       autobackupFileInfo( autoBackup );
+
+        if ( autobackupFileInfo.lastModified() > projectFileInfo.lastModified() )
+        {
+            if ( QMessageBox::question( NULL, tr( "Backup file" ),
+                                        tr( "A backup file exists for this project. "
+                                        "Do you want to load it ?" ),
+                                        QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
+            {
+                fileName = backupFilename;
+            }
+        }
+        else
+        {
+            if ( QMessageBox::question( NULL, tr( "Backup file" ),
+                                        tr( "An outdated backup file was found. "
+                                       "Do you want to erase it ?" ),
+                                        QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
+            {
+                autoBackup.remove();
+            }
+        }
+    }
+    ProjectManager::loadProject( fileName );
 }

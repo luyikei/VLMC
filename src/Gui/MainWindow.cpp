@@ -301,8 +301,7 @@ void    MainWindow::on_actionSave_As_triggered()
 
 void    MainWindow::on_actionLoad_Project_triggered()
 {
-    GUIProjectManager* pm = GUIProjectManager::getInstance();
-    pm->loadProject( pm->acquireProjectFileName() );
+    GUIProjectManager::getInstance()->loadProject();
 }
 
 void MainWindow::createStatusBar()
