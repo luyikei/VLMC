@@ -69,6 +69,7 @@ class   ClipHelper : public QObject
 
     signals:
         void        lengthUpdated();
+        void        error();
 };
 
 #endif // CLIPHELPER_H

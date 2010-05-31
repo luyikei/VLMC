@@ -40,6 +40,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
                 m_clipHelper( ch ),
                 m_state( ClipWorkflow::Stopped )
 {
+    connect( this, SIGNAL( error() ), ch, SIGNAL( error() ) );
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new WaitCondition;
     m_renderLock = new QMutex;
@@ -54,7 +55,8 @@ ClipWorkflow::~ClipWorkflow()
     delete m_stateLock;
 }
 
-void    ClipWorkflow::initialize()
+void
+ClipWorkflow::initialize()
 {
     setState( ClipWorkflow::Initializing );
 
