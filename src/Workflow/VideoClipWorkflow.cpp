@@ -112,7 +112,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
 
-    if ( isEndReached() == true )
+    if ( shouldRender() == false )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
         m_renderWaitCond->wait( m_renderLock );

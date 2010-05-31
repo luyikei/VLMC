@@ -76,7 +76,9 @@ class   ClipWorkflow : public QObject
             ///         because of a sufficient number of computed buffers
             Paused,             //7
             /// \brief  This state means a clip is mutted and must not be restarted
-            Muted,
+            Muted,              //8
+            /// \brief  An error was encountered, this ClipWorkflow must not be used anymore.
+            Error,              //9
         };
 
         /**
@@ -104,22 +106,12 @@ class   ClipWorkflow : public QObject
         void                    initialize();
 
         /**
-         *  Return true ONLY if the state is equal to EndReached.
-         *  In any other cases, this will return false.
+         *  \return             true if the ClipWorkflow is able to, and should render
+         *                      a frame.
+         *
+         *  This is true when the state is not stopped, stopping, nor rendering.
          */
-        bool                    isEndReached() const;
-
-        /**
-         *  Return true ONLY if the state is equal to Stopped.
-         *  In any other cases, this will return false.
-         */
-        bool                    isStopped() const;
-
-        /**
-         *  Return true ONLY if the state is equal to Rendering.
-         *  In any other cases, this will return false.
-         */
-        bool                    isRendering() const;
+        bool                    shouldRender() const;
 
         /**
          *  Returns the current workflow state.
@@ -169,7 +161,7 @@ class   ClipWorkflow : public QObject
          */
         QReadWriteLock*         getStateLock();
 
-        void                    waitForCompleteInit();
+        bool                    waitForCompleteInit();
 
         virtual void*           getLockCallback() const = 0;
         virtual void*           getUnlockCallback() const = 0;
@@ -264,6 +256,10 @@ class   ClipWorkflow : public QObject
         void                    mediaPlayerPaused();
         void                    mediaPlayerUnpaused();
         void                    resyncClipWorkflow();
+        void                    errorEncountered();
+
+    signals:
+        void                    error();
 };
 
 #endif // CLIPWORKFLOW_H

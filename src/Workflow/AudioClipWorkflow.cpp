@@ -84,7 +84,7 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 
     if ( getNbComputedBuffers() == 0 )
         return NULL;
-    if ( isEndReached() == true )
+    if ( shouldRender() == false )
         return NULL;
     if ( mode == ClipWorkflow::Get )
         qCritical() << "A sound buffer should never be asked with 'Get' mode";

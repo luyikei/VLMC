@@ -159,7 +159,9 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     {
         cw->getStateLock()->unlock();
         cw->initialize();
-        cw->waitForCompleteInit();
+        //If the init failed, don't even try to call getOutput.
+        if ( cw->waitForCompleteInit() == false )
+            return NULL;
         //We check for a difference greater than one to avoid false positive when starting.
         if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClipHelper()->begin() != 0 )
         {
@@ -169,7 +171,8 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
         return cw->getOutput( mode );
     }
     else if ( cw->getState() == ClipWorkflow::EndReached ||
-              cw->getState() == ClipWorkflow::Muted )
+              cw->getState() == ClipWorkflow::Muted ||
+              cw->getState() == ClipWorkflow::Error )
     {
         cw->getStateLock()->unlock();
         //The stopClipWorkflow() method will take care of that.
@@ -201,7 +204,8 @@ void                TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
     cw->getStateLock()->lockForRead();
 
     if ( cw->getState() == ClipWorkflow::Stopped ||
-         cw->getState() == ClipWorkflow::Muted )
+         cw->getState() == ClipWorkflow::Muted ||
+         cw->getState() == ClipWorkflow::Error )
     {
         cw->getStateLock()->unlock();
         return ;
@@ -540,7 +544,8 @@ TrackWorkflow::stopFrameComputing()
         cw->getStateLock()->lockForRead();
 
         if ( cw->getState() == ClipWorkflow::Stopped ||
-             cw->getState() == ClipWorkflow::Muted )
+             cw->getState() == ClipWorkflow::Muted ||
+             cw->getState() == ClipWorkflow::Error )
         {
             cw->getStateLock()->unlock();
             return ;
