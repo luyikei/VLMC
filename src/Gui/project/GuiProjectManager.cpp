@@ -122,13 +122,13 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
 }
 
 void
-GUIProjectManager::saveProject( bool saveAs /*= true*/ )
+GUIProjectManager::saveProject( bool saveAs /* = false */ )
 {
     //If the project is still unsaved, or if we want to
     //save the project with a new name
     if ( createNewProjectFile( saveAs ) == false )
         return ;
-    ProjectManager::saveProject( saveAs );
+    ProjectManager::saveProject( outputFileName() );
 }
 
 bool
@@ -154,7 +154,7 @@ GUIProjectManager::autoSaveRequired()
 {
     if ( m_projectFile == NULL )
         return ;
-    saveProject( false );
+    ProjectManager::__saveProject( createAutoSaveOutputFileName() );
 }
 
 void
@@ -218,4 +218,10 @@ void
 GUIProjectManager::loadTimeline( const QDomElement &root )
 {
     Timeline::getInstance()->load( root );
+}
+
+QString
+GUIProjectManager::createAutoSaveOutputFileName() const
+{
+    return m_projectFile->fileName() + "~";
 }

@@ -223,9 +223,9 @@ ProjectManager::closeProject()
 }
 
 void
-ProjectManager::saveProject( bool )
+ProjectManager::saveProject( const QString &outputFileName )
 {
-    __saveProject( m_projectFile->fileName() );
+    __saveProject( outputFileName );
     emit projectSaved();
     emit projectUpdated( projectName(), true );
 }
@@ -250,4 +250,10 @@ ProjectManager::failedToLoad( const QString &reason ) const
     //When running in server mode, we can't do anything without a project file.
     qCritical() << tr( "Failed to load the project file: %1. Aborting." ).arg( reason );
     abort();
+}
+
+QString
+ProjectManager::outputFileName() const
+{
+    return m_projectFile->fileName();
 }

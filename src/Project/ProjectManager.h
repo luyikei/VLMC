@@ -49,7 +49,7 @@ public:
     void            loadProject( const QString& fileName );
     QStringList     recentsProjects() const;
     virtual bool    closeProject();
-    virtual void    saveProject( bool saveAs = false );
+    virtual void    saveProject( const QString &outputFileName );
     bool            loadEmergencyBackup();
     void            emergencyBackup();
 
@@ -76,6 +76,7 @@ protected:
      *  \return     The project name.
      */
     QString         projectName() const;
+    virtual QString outputFileName() const;
 
     virtual void    failedToLoad( const QString& reason ) const;
     virtual void    loadTimeline( const QDomElement& ){};

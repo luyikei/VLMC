@@ -42,6 +42,9 @@ public:
      *  \return     The project to load.
      */
     QString         acquireProjectFileName();
+    /**
+     *  \brief      Save the project using the current project file.
+     */
     void            saveProject( bool saveAs = false );
     /**
      *  \brief      Ask the project manager to close current project.
@@ -60,6 +63,7 @@ protected:
 
 private:
     bool            createNewProjectFile( bool saveAs );
+    QString         createAutoSaveOutputFileName() const;
 
 private:
     QTimer*         m_timer;
