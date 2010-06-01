@@ -215,19 +215,14 @@ GUIProjectManager::loadTimeline( const QDomElement &root )
 }
 
 void
-GUIProjectManager::loadProject()
+GUIProjectManager::loadProject( const QString &fileName )
 {
-    QString fileName =
-            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
-                                          VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" ),
-                                          "VLMC project file(*.vlmc)" );
-    if ( fileName.length() <= 0 ) //If the user canceled.
-        return ;
     QFile   projectFile( fileName );
     //If for some reason this happens... better safe than sorry
     if ( projectFile.exists() == false )
         return ;
 
+    QString fileToLoad = fileName;
     QString backupFilename = createAutoSaveOutputFileName( fileName );
     QFile   autoBackup( backupFilename );
     if ( autoBackup.exists() == true )
@@ -242,7 +237,7 @@ GUIProjectManager::loadProject()
                                         "Do you want to load it ?" ),
                                         QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
             {
-                fileName = backupFilename;
+                fileToLoad = backupFilename;
             }
         }
         else
@@ -256,5 +251,17 @@ GUIProjectManager::loadProject()
             }
         }
     }
-    ProjectManager::loadProject( fileName );
+    ProjectManager::loadProject( fileToLoad );
+}
+
+void
+GUIProjectManager::loadProject()
+{
+    QString fileName =
+            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
+                                          VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" ),
+                                          "VLMC project file(*.vlmc)" );
+    if ( fileName.length() <= 0 ) //If the user canceled.
+        return ;
+    loadProject( fileName );
 }

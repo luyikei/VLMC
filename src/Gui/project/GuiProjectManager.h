@@ -52,10 +52,17 @@ public:
     /**
      *  \brief      Display the open file name dialog, and call the actual project loading
      *              method.
-     *
-     *  \warning    This is not an overload for the ProjectManager::loadProject() method.
      */
     void            loadProject();
+    /**
+     *  \brief      Check for a project backup file, and load the appropriate file,
+     *              according to the user input.
+     *
+     *  if an outdated project backup is found, the used is asked if she wants to delete
+     *  it.
+     *  This is handled here as there's no use for this in non-GUI mode.
+     */
+    void            loadProject( const QString& fileName );
 
 protected:
     virtual void    failedToLoad( const QString &reason ) const;
