@@ -88,7 +88,7 @@ QStringList ProjectManager::recentsProjects() const
 void    ProjectManager::loadWorkflow()
 {
     QDomElement     root = m_domDocument->documentElement();
-    bool            needSave;
+    bool            savedState;
 
     MainWorkflow::getInstance()->loadProject( root );
     loadTimeline( root );
@@ -96,11 +96,11 @@ void    ProjectManager::loadWorkflow()
     if ( m_projectFile != NULL )
     {
         appendToRecentProject( m_projectFile->fileName() );
-        needSave = false;
+        savedState = true;
     }
     else
-        needSave = true;
-    emit projectUpdated( projectName(), needSave );
+        savedState = false;
+    emit projectUpdated( projectName(), savedState );
 
     delete m_domDocument;
 }
