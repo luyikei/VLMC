@@ -127,7 +127,10 @@ GUIProjectManager::closeProject()
 {
     if ( askForSaveIfModified() == false )
         return false;
-    return ProjectManager::closeProject();
+    bool ret = ProjectManager::closeProject();
+    //This one is for the mainwindow, to update the title bar
+    emit projectUpdated( projectName(), true );
+    return ret;
 }
 
 void
