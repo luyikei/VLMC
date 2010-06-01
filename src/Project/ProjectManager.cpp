@@ -223,6 +223,7 @@ ProjectManager::closeProject()
         delete m_projectFile;
         m_projectFile = NULL;
     }
+    m_needSave = false;
     m_projectName = QString();
     //This one is for every part that need to clean something when the project is closed.
     emit projectClosed();
