@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">
@@ -78,6 +78,14 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menu_Export">
+     <property name="title">
+      <string>&amp;Export</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionRender"/>
+     <addaction name="actionShare_On_Youtube"/>
+    </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionLoad_Project"/>
     <addaction name="actionClose_Project"/>
@@ -86,7 +94,7 @@
     <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="actionImport"/>
-    <addaction name="actionRender"/>
+    <addaction name="menu_Export"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -165,10 +173,13 @@
   </action>
   <action name="actionRender">
    <property name="text">
-    <string>&amp;Render</string>
+    <string>As a &amp;file</string>
+   </property>
+   <property name="toolTip">
+    <string>Render as a file</string>
    </property>
    <property name="statusTip">
-    <string>Render your project</string>
+    <string>Render your project as a file</string>
    </property>
   </action>
   <action name="actionLoad_Project">
@@ -244,6 +255,14 @@
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionShare_On_Youtube">
+   <property name="text">
+    <string>Share on &amp;Youtube</string>
+   </property>
+   <property name="statusTip">
+    <string>Share your project on youtube</string>
    </property>
   </action>
  </widget>
