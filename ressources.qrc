@@ -32,6 +32,8 @@
         <file alias="redo">resources/images/redo.png</file>
         <file alias="configure">resources/images/configure.png</file>
         <file alias="error">resources/images/error.png</file>
+        <file alias="youtube">resources/images/youtube.png</file>
+        <file alias="network">resources/images/network.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>
@@ -42,5 +44,6 @@
         <file alias="audio-scalable">resources/images/scalable/audio.svg</file>
         <file alias="image-scalable">resources/images/scalable/image.svg</file>
         <file alias="video-scalable">resources/images/scalable/video.svg</file>
+        <file alias="youtube-scalable">resources/images/scalable/youtube.svg</file>
     </qresource>
 </RCC>
