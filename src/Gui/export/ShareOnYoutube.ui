@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ShareOnYoutube</class>
+ <widget class="QDialog" name="ShareOnYoutube">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Share On Youtube</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../ressources.qrc">
+    <normaloff>:/images/youtube</normaloff>:/images/youtube</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Username</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="username"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="password"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="category">
+     <item>
+      <property name="text">
+       <string>Autos &amp; Vehicles</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Comedy</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Education</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Entertainment</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Film &amp; Animation</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Gaming</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Howto &amp; Style</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Music</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>News &amp; Politics</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Nonprofits &amp; Activism</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>People &amp; Blogs</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pets &amp; Animals</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Science &amp; Technology</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sports</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Travel &amp; Events</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Title</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="title"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Description</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPlainTextEdit" name="description">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="backgroundVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Tags</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="tags"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Video Size</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QComboBox" name="videoSize">
+     <item>
+      <property name="text">
+       <string>Small (480 x 272)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Medium (640 x 360)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Large (960 x 540)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>HD (1280 x 720)</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="2">
+    <widget class="QCheckBox" name="videoPrivacy">
+     <property name="text">
+      <string>Make this video public (Default: private)</string>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Category</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../ressources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ShareOnYoutube</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>542</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>282</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ShareOnYoutube</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>542</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>282</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
