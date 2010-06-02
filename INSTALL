@@ -24,6 +24,44 @@ Running VLMC
 
 	./vlmc
 
+Building and Packaging on Mac OS
+================================
+
+Download and unzip (libVLC) contribs for Mac OSX (i386), in /contribs:
+#FIXME: Arrange for hosting on videolan.org
+  http://rohityadav.in/projects/videolan/vlmc/contribs/
+
+On Mac OS:
+  mkdir build && cd build
+  cmake ..
+  make
+
+This will by default create a Mac Bundle, vlmc.app
+To create a dmg image:
+ Uncomment #dmg in /src/CMakeLists.txt, at the end of the file.
+ and follow the build process, the dmg will be created in /build/bin
+
+Packaging
+=========
+
+On Linux, an easy way to make package is:
+   cmake .
+   make package
+
+But this by default will search for available pkg builders and build accordingly.
+To force building deb:
+   cpack -G DEB
+To force building rpm:
+   cpack -G RPM
+   
+Installing
+==========
+
+If you have the deb/rpm pkg, install it!
+To remove:
+apt-get remove vlmc
+rpm remove vlmc
+
 Issues
 ======
 

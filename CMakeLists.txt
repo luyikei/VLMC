@@ -41,7 +41,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 
 IF(WIN32)
     # Building in release for WIN32
-    set(CMAKE_BUILD_TYPE "Release")
+    SET(CMAKE_BUILD_TYPE "Release")
     SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELEASE QT_NO_DEBUG)
     # Use mingw's sprintf instead of windows's
     ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
@@ -55,10 +55,20 @@ IF (UNIX)
     SET(WITH_PROFILING FALSE CACHE BOOL "Build with profiling support" )
 ENDIF(UNIX)
 
-SET(WITH_CRASHBUTTON FALSE CACHE BOOL "Enable the crash button")
-SET(WITH_CRASHHANDLER_GUI TRUE CACHE BOOL "Enable the crash handler GUI (with backtrace and restart capabilities)")
-SET(WITH_CRASHHANDLER TRUE CACHE BOOL "Enable the crash handler")
 SET(WITH_GUI TRUE CACHE BOOL "Enable the VLMC's GUI")
+SET(WITH_CRASHBUTTON FALSE CACHE BOOL "Enable the crash button")
+
+IF(NOT APPLE)
+    SET(WITH_CRASHHANDLER_GUI TRUE CACHE BOOL "Enable the crash handler GUI (with backtrace and restart capabilities)")
+    SET(WITH_CRASHHANDLER TRUE CACHE BOOL "Enable the crash handler")
+ELSE(NOT APPLE)
+    #FIXME: Mac OS port does n't start if crash handler is enabled.
+    SET(WITH_CRASHHANDLER_GUI FALSE CACHE BOOL "Disable crash handler gui...")
+    SET(WITH_CRASHHANDLER False CACHE BOOL "Disable the crash handler")
+    SET(CMAKE_BUILD_TYPE "Release")
+    SET(CMAKE_OSX_ARCHITECTURES i386 )
+#   SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}")
+ENDIF(NOT APPLE)
 
 FIND_PACKAGE(LIBVLC)
   IF (NOT LIBVLC_FOUND)
@@ -113,10 +123,10 @@ SET (VLMC_PIXMAPS_DIR ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/pixmaps/)
 
 # manual page - makes sense only on unix systems
 IF (UNIX)
-  SET (DEFAULT_MANUAL_SUBDIR  man)
-  SET (VLMC_MANUAL_SUBDIR  ${DEFAULT_MANUAL_SUBDIR}  CACHE STRING "Subdirectory where manual files will be installed")
-  MARK_AS_ADVANCED (VLMC_MANUAL_SUBDIR)
-  SET (VLMC_MANUAL_DIR  ${CMAKE_INSTALL_PREFIX}/${VLMC_MANUAL_SUBDIR})
+    SET (DEFAULT_MANUAL_SUBDIR  man)
+    SET (VLMC_MANUAL_SUBDIR  ${DEFAULT_MANUAL_SUBDIR}  CACHE STRING "Subdirectory where manual files will be installed")
+    MARK_AS_ADVANCED (VLMC_MANUAL_SUBDIR)
+    SET (VLMC_MANUAL_DIR  ${CMAKE_INSTALL_PREFIX}/${VLMC_MANUAL_SUBDIR})
 ENDIF (UNIX)
 
 SUBDIRS(ts)
@@ -144,28 +154,66 @@ INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
 
 INCLUDE(InstallRequiredSystemLibraries)
 
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "VLMC")
+SET(CPACK_SYSTEM_NAME ${CMAKE_SYSTEM_NAME})
+SET(CPACK_PACKAGE_NAME ${PROJECT_NAME_SHORT})
+SET(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "VideoLan Movie Creator")
+SET(CPACK_PACKAGE_DESCRIPTION "VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.")
 SET(CPACK_PACKAGE_VENDOR "VLMC Team")
+SET(CPACK_PACKAGE_CONTACT "vlmc-devel@videolan.org")
 SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY "VLMC ${COMPLETE_VERSION}")
-IF(WIN32 AND NOT UNIX)
-  # There is a bug in NSI that does not handle full unix paths properly. Make
-  # sure there is at least one set of four (4) backslashes.
-  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share\\\\vlmc.png")
-  SET(CPACK_NSIS_INSTALLED_ICON_NAME "\\\\vlmc.exe")
-  SET(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} VLMC")
-  SET(CPACK_NSIS_HELP_LINK "http:\\\\\\\\vlmc.org")
-  SET(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\vlmc.org")
-  SET(CPACK_NSIS_CONTACT "vlmc-devel@vlmc.org")
-  SET(CPACK_NSIS_MODIFY_PATH ON)
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 
-#  SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "  !include \\\"${CMAKE_SOURCE_DIR}\\\\win_build\\\\extra.nsh\\\"")
+IF(WIN32 AND NOT UNIX)
+    # There is a bug in NSI that does not handle full unix paths properly. Make
+    # sure there is at least one set of four (4) backslashes.
+    SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share\\\\vlmc.png")
+    SET(CPACK_NSIS_INSTALLED_ICON_NAME "\\\\vlmc.exe")
+    SET(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} VLMC")
+    SET(CPACK_NSIS_HELP_LINK "http:\\\\\\\\vlmc.org")
+    SET(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\vlmc.org")
+    SET(CPACK_NSIS_CONTACT "vlmc-devel@vlmc.org")
+    SET(CPACK_NSIS_MODIFY_PATH ON)
+    #SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "  !include \\\"${CMAKE_SOURCE_DIR}\\\\win_build\\\\extra.nsh\\\"")
 ELSE(WIN32 AND NOT UNIX)
-  #SET(CPACK_STRIP_FILES "VLMC")
-  #SET(CPACK_SOURCE_STRIP_FILES "")
+    #SET(CPACK_STRIP_FILES "VLMC")
+    #SET(CPACK_SOURCE_STRIP_FILES "")
 ENDIF(WIN32 AND NOT UNIX)
+
+# RPM packages
+INCLUDE ( ${CMAKE_MODULE_PATH}/RpmBuild.cmake )
+IF ( RPMBUILD_FOUND )
+    SET(CPACK_GENERATOR "RPM")
+    SET(CPACK_SET_DESTDIR TRUE)
+ENDIF ( RPMBUILD_FOUND )
+
+#Mac
+IF( APPLE )
+    SET(CPACK_GENERATOR "DragNDrop")
+    SET(CPACK_PACKAGE_FILE_NAME "VLMC")
+
+    #Libraries are bundled directly
+    SET(CPACK_COMPONENT_LIBRARIES_HIDDEN TRUE)
+
+    # Bundle Properties
+    SET(MACOSX_BUNDLE_BUNDLE_NAME vlmc)
+    SET(MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION})
+    SET(MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION})
+    SET(MACOSX_BUNDLE_LONG_VERSION_STRING "Version ${PROJECT_VERSION}")
+
+    #SET(CPACK_STRIP_FILES TRUE)
+ENDIF( APPLE )
+
+# Debian packages
+INCLUDE ( ${CMAKE_MODULE_PATH}/DpkgBuild.cmake )
+IF ( DPKG_FOUND )
+    SET(CPACK_GENERATOR "DEB")
+    SET(CPACK_SET_DESTDIR TRUE)
+    SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386) #change to your architecture here
+    # FIXME: Check stuff: libvlc2 etc. in future as VLC 1.1+ releases
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
+ENDIF ( DPKG_FOUND )
+
 SET(CPACK_PACKAGE_EXECUTABLES "vlmc" "VLMC")
 INCLUDE(CPack)
-
-
