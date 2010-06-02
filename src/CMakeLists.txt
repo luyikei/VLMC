@@ -143,6 +143,7 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
         Gui/export/RendererSettings.cpp
+        Gui/export/ShareOnYoutube.cpp
         Gui/import/ImportController.cpp
         Gui/library/ListViewController.cpp
         Gui/library/MediaCellView.cpp
@@ -190,6 +191,7 @@ ELSE(NOT WITH_GUI)
         Gui/ClipProperty.h
         Gui/DockWidgetManager.h
         Gui/export/RendererSettings.h
+        Gui/export/ShareOnYoutube.h
         Gui/import/ImportController.h
         Gui/IntroDialog.h
         Gui/LanguageHelper.h
@@ -242,6 +244,7 @@ ELSE(NOT WITH_GUI)
      
     SET(VLMC_UIS
         Gui/export/RendererSettings.ui
+        Gui/export/ShareOnYoutube.ui
         Gui/import/ui/ImportController.ui
         Gui/library/StackViewNavController.ui
         Gui/library/ui/MediaCellView.ui
@@ -279,20 +282,28 @@ ELSE(NOT WITH_GUI)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
 
-    IF(MINGW)
+    IF( MINGW )
         # resource compilation for MinGW
         ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icon.o
             COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/cmake/icon.rc
             -o ${CMAKE_CURRENT_BINARY_DIR}/icon.o )
         SET(VLMC_SRCS ${VLMC_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/icon.o)
         SET(LINK_FLAGS -Wl,-subsystem,windows)
-    ENDIF(MINGW)
+    ENDIF( MINGW )
 
-    IF(WIN32)
+    IF( WIN32 )
         SET( GUI_TYPE WIN32 )
     ENDIF( WIN32 )
 
-    ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS})
+    IF( APPLE )
+        SET( GUI_TYPE MACOSX_BUNDLE )
+        SET(VLMC_SRCS ${VLMC_SRCS} ../share/VLMC.icns)
+        SET_SOURCE_FILES_PROPERTIES(../share/VLMC.icns PROPERTIES
+            MACOSX_PACKAGE_LOCATION Resources)
+        SET(MACOSX_BUNDLE_ICON_FILE VLMC.icns)
+    ENDIF( APPLE )
+
+    ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES(vlmc
       ${QT_QTCORE_LIBRARY} 
       ${QT_QTGUI_LIBRARY} 
@@ -302,11 +313,13 @@ ELSE(NOT WITH_GUI)
       ${LIBVLCCORE_LIBRARY}
       )
 
-ENDIF(NOT WITH_GUI)
+ENDIF( NOT WITH_GUI )
 
-ADD_DEPENDENCIES(vlmc translations)
+ADD_DEPENDENCIES( vlmc translations )
 
-INSTALL(TARGETS vlmc RUNTIME DESTINATION ${VLMC_BIN_DIR})
+INSTALL(TARGETS vlmc 
+        BUNDLE  DESTINATION ${VLMC_BIN_DIR}
+        RUNTIME DESTINATION ${VLMC_BIN_DIR})
 
 ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_SOURCE_DIR}/bin/vlmc
@@ -323,3 +336,18 @@ IF(UNIX)
     ENDIF(WITH_PROFILING)
 ENDIF(UNIX)
 
+IF( APPLE )
+    ADD_CUSTOM_COMMAND(
+        TARGET vlmc
+        POST_BUILD
+        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/* ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+    )
+
+    ADD_CUSTOM_COMMAND(
+        TARGET vlmc
+        POST_BUILD
+        COMMAND macdeployqt ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app -no-plugins #-dmg
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Deploying the Qt Framework onto the bundle"
+    )
+ENDIF( APPLE )
