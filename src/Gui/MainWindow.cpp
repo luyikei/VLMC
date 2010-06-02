@@ -29,6 +29,8 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QSettings>
+#include <QDebug>
+#include <QTemporaryFile>
 
 #include "MainWindow.h"
 #include "config.h"
@@ -38,6 +40,7 @@
 
 #include "MainWorkflow.h"
 #include "export/RendererSettings.h"
+#include "export/ShareOnYoutube.h"
 #include "WorkflowFileRenderer.h"
 #include "WorkflowRenderer.h"
 #include "ClipRenderer.h"
@@ -149,7 +152,8 @@ MainWindow::~MainWindow()
     LibVLCpp::Instance::destroyInstance();
 }
 
-void MainWindow::changeEvent( QEvent *e )
+void 
+MainWindow::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -170,77 +174,123 @@ void MainWindow::changeEvent( QEvent *e )
 void
 MainWindow::initVlmcPreferences()
 {
-
+    //Setup VLMC Keyboard Preference...
     VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/defaultmode", "n",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Select mode" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the selection tool in the timeline" ) );
+
     VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/cutmode", "x",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Cut mode" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ) );
+
     VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/mediapreview", "Ctrl+Return",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Media preview" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Preview the selected media, or pause the current preview" ) );
+
     VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/renderpreview", "Space",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Render preview" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Preview the project, or pause the current preview" ) );
+
     //A bit nasty, but we better use what Qt's providing as default shortcut
     CREATE_MENU_SHORTCUT( "keyboard/undo",
                           QKeySequence( QKeySequence::Undo ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Undo" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Undo the last action" ), actionUndo );
+
     CREATE_MENU_SHORTCUT( "keyboard/redo",
                           QKeySequence( QKeySequence::Redo ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Redo" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Redo the last action" ), actionRedo );
+
     CREATE_MENU_SHORTCUT( "keyboard/help",
                           QKeySequence( QKeySequence::HelpContents ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Help" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Toggle the help page" ), actionHelp );
+
     CREATE_MENU_SHORTCUT( "keyboard/quit", "Ctrl+Q",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Quit" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Quit VLMC" ), actionQuit );
+
     CREATE_MENU_SHORTCUT( "keyboard/preferences", "Alt+P",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Preferences" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open VLMC preferences" ), actionPreferences );
+
     CREATE_MENU_SHORTCUT( "keyboard/fullscreen", "F",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Fullscreen" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Switch to fullscreen mode" ), actionFullscreen );
+
     CREATE_MENU_SHORTCUT( "keyboard/newproject",
                           QKeySequence( QKeySequence::New ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "New project" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the new project wizard" ), actionNew_Project );
+
     CREATE_MENU_SHORTCUT( "keyboard/openproject",
                           QKeySequence( QKeySequence::Open ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open a project" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open an existing project" ), actionLoad_Project );
+
     CREATE_MENU_SHORTCUT( "keyboard/save",
                           QKeySequence( QKeySequence::Save ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Save" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Save the current project" ), actionSave );
+
     CREATE_MENU_SHORTCUT( "keyboard/saveas", "Ctrl+Shift+S",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Save as" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Save the current project to a new file" ), actionSave_As );
+
     CREATE_MENU_SHORTCUT( "keyboard/closeproject",
                           QKeySequence( QKeySequence::Close ).toString().toLocal8Bit(),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Close the project" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Close the current project" ), actionClose_Project );
+
     CREATE_MENU_SHORTCUT( "keyboard/importmedia", "Ctrl+I",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Import media" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the import window" ), actionImport );
+
     CREATE_MENU_SHORTCUT( "keyboard/renderproject", "Ctrl+R",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project to a file" ), actionRender );
 
+    //Setup VLMC Lang. Preferences...
     VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Language" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
+
     SettingsManager::getInstance()->watchValue( "general/VLMCLang",
                                                 LanguageHelper::getInstance(),
                                                 SLOT( languageChanged( const QVariant& ) ),
                                                 SettingsManager::Vlmc );
+
     VLMC_CREATE_PREFERENCE_BOOL( "general/ConfirmDeletion", true,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Ask for confirmation before deleting a clip from the timeline" ) );
+
+    //Setup VLMC Youtube Preference...
+    VLMC_CREATE_PREFERENCE_STRING( "youtube/DeveloperKey", "AI39si7FOtp165Vq644xVkuka84TVQNbztQmQ1dC9stheBfh3-33RZaTu7eJkYJzvxp6XNbvlr4M6-ULjXDERFl62WIo6AQIEQ",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Developer Key" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The Youtube Developer Key" ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "youtube/Username", "username",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Username" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "VLMC won't store your passwords..." ) );
+
+    //Setup VLMC Proxy Settings
+    //FIXME: The widgets get sorted...
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUrl", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy " ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyPort", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Port" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Port" ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUsername", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Username" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Username" ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyPassword", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Password" ) );
 
     //Load saved preferences :
     QSettings       s;
@@ -250,6 +300,8 @@ MainWindow::initVlmcPreferences()
     {
         loadVlmcPreferences( "keyboard" );
         loadVlmcPreferences( "general" );
+        loadVlmcPreferences( "youtube" );
+        loadVlmcPreferences( "network" );
     }
     s.setValue( "VlmcVersion", PROJECT_VERSION );
 }
@@ -289,22 +341,27 @@ MainWindow::setupLibrary()
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 }
 
-void    MainWindow::on_actionSave_triggered()
+void
+MainWindow::on_actionSave_triggered()
 {
     GUIProjectManager::getInstance()->saveProject();
 }
 
-void    MainWindow::on_actionSave_As_triggered()
+void    
+MainWindow::on_actionSave_As_triggered()
 {
     GUIProjectManager::getInstance()->saveProject( true );
 }
 
-void    MainWindow::on_actionLoad_Project_triggered()
+void    
+MainWindow::on_actionLoad_Project_triggered()
 {
-    GUIProjectManager::getInstance()->loadProject();
+    GUIProjectManager* pm = GUIProjectManager::getInstance();
+    pm->loadProject( pm->acquireProjectFileName() );
 }
 
-void MainWindow::createStatusBar()
+void 
+MainWindow::createStatusBar()
 {
     // Mouse (default) tool
     QToolButton* mouseTool = new QToolButton( this );
@@ -373,7 +430,8 @@ void MainWindow::createStatusBar()
              this, SLOT( zoomIn() ) );
 }
 
-void MainWindow::initializeDockWidgets( void )
+void 
+MainWindow::initializeDockWidgets( void )
 {
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
@@ -412,18 +470,26 @@ void MainWindow::initializeDockWidgets( void )
     setupLibrary();
 }
 
-void        MainWindow::createGlobalPreferences()
+void
+MainWindow::createGlobalPreferences()
 {
     m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
     m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Vlmc,
-                                   QIcon( ":/images/images/vlmc.png" ),
-                                   tr ( "VLMC settings" ) );
+                                     QIcon( ":/images/images/vlmc.png" ),
+                                     tr ( "VLMC settings" ) );
     m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "keyboard" ), SettingsManager::Vlmc,
                                      QIcon( ":/images/keyboard" ),
                                      tr( "Keyboard Settings" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "youtube" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/youtube" ),
+                                     tr( "Youtube Settings" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "network" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/network" ),
+                                     tr( "Network Settings" ) );
 }
 
-void    MainWindow::createProjectPreferences()
+void
+MainWindow::createProjectPreferences()
 {
     m_projectPreferences = new Settings( SettingsManager::Project, this );
     m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Project,
@@ -440,36 +506,64 @@ void    MainWindow::createProjectPreferences()
 
 //Private slots definition
 
-void MainWindow::on_actionQuit_triggered()
+void 
+MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
 }
 
-void MainWindow::on_actionPreferences_triggered()
+void 
+MainWindow::on_actionPreferences_triggered()
 {
    m_globalPreferences->show();
 }
 
-void MainWindow::on_actionAbout_triggered()
+void 
+MainWindow::on_actionAbout_triggered()
 {
     About::getInstance()->exec();
 }
 
-void MainWindow::on_actionTranscode_triggered()
+void 
+MainWindow::on_actionTranscode_triggered()
 {
     QMessageBox::information( this, tr( "Sorry" ),
                               tr( "This feature is currently disabled." ) );
     //Transcode::instance( this )->exec();
 }
 
-void    MainWindow::on_actionRender_triggered()
+bool
+MainWindow::checkVideoLength()
 {
     if ( MainWorkflow::getInstance()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( NULL, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
-        return ;
+        return false;
     }
-    else
+    return true;
+}
+
+void 
+MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height, double fps, quint32 vbitrate, quint32 abitrate )
+{
+    if ( m_fileRenderer )
+        delete m_fileRenderer;
+    m_fileRenderer = new WorkflowFileRenderer();
+ 
+    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
+    dialog->setModal( true );
+    dialog->setOutputFileName( outputFileName );
+
+    m_fileRenderer->initializeRenderer();
+    m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
+    dialog->exec();
+    delete dialog;
+}
+
+void 
+MainWindow::on_actionRender_triggered()
+{
+    if ( checkVideoLength() )
     {
         m_renderer->killRenderer();
         //Setup dialog box for querying render parameters.
@@ -480,49 +574,86 @@ void    MainWindow::on_actionRender_triggered()
             return ;
         }
         QString     outputFileName = settings->outputFileName();
-        quint32     width = settings->width();
-        quint32     height = settings->height();
-        double      fps = settings->fps();
-        quint32     vbitrate = settings->videoBitrate();
-        quint32     abitrate = settings->audioBitrate();
+        quint32     width          = settings->width();
+        quint32     height         = settings->height();
+        double      fps            = settings->fps();
+        quint32     vbitrate       = settings->videoBitrate();
+        quint32     abitrate       = settings->audioBitrate();
         delete settings;
 
-        if ( m_fileRenderer )
-            delete m_fileRenderer;
-        m_fileRenderer = new WorkflowFileRenderer();
-        WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
-        dialog->setModal( true );
-        dialog->setOutputFileName( outputFileName );
-
-        m_fileRenderer->initializeRenderer();
-        m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
-        dialog->exec();
-        delete dialog;
+        renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
     }
 }
 
-void MainWindow::on_actionNew_Project_triggered()
+void 
+MainWindow::on_actionShare_On_Youtube_triggered()
+{
+    if ( checkVideoLength() )
+    {
+        m_renderer->killRenderer();
+        //Setup dialog box for querying youtube export parameters.
+        ShareOnYoutube *exportToYoutube = new ShareOnYoutube;
+
+        if ( exportToYoutube->exec() == QDialog::Rejected )
+        {
+            delete exportToYoutube;
+            return ;
+        }
+
+        QString username     = exportToYoutube->username();
+        QString password     = exportToYoutube->password();
+        QString title        = exportToYoutube->title();
+        QString category     = exportToYoutube->category();
+        QString description  = exportToYoutube->description();
+        QString tags         = exportToYoutube->tags();
+        quint32 width        = exportToYoutube->width();
+        quint32 height       = exportToYoutube->height();
+        bool    videoPrivacy = exportToYoutube->videoPrivacy();
+
+        delete exportToYoutube;
+
+        qDebug()<< username << password << title << category << description << tags << width << height << videoPrivacy;
+
+        //here add code to render video using WorkflowFileRenderer... to a temp folder, using QTemporaryFolder
+        QTemporaryFile tmp( "vlmc-youtube.avi" );
+        tmp.setAutoRemove( false );
+        tmp.open();
+
+        qDebug()<< tmp.fileTemplate() << tmp.fileName() << QDir::tempPath();
+
+        renderVideo( tmp.fileName(), width, height, 30.0, 4000, 256 );
+
+        //Add code here to init Youtube Uploader with the file, do stuff :D...
+    }
+}
+
+void 
+MainWindow::on_actionNew_Project_triggered()
 {
     m_pWizard->restart();
     m_pWizard->show();
 }
 
-void    MainWindow::on_actionHelp_triggered()
+void    
+MainWindow::on_actionHelp_triggered()
 {
     QDesktopServices::openUrl( QUrl( "http://vlmc.org" ) );
 }
 
-void    MainWindow::zoomIn()
+void    
+MainWindow::zoomIn()
 {
     m_zoomSlider->setValue( m_zoomSlider->value() - 1 );
 }
 
-void    MainWindow::zoomOut()
+void    
+MainWindow::zoomOut()
 {
     m_zoomSlider->setValue( m_zoomSlider->value() + 1 );
 }
 
-void    MainWindow::on_actionFullscreen_triggered( bool checked )
+void    
+MainWindow::on_actionFullscreen_triggered( bool checked )
 {
     if ( checked )
         showFullScreen();
@@ -530,17 +661,20 @@ void    MainWindow::on_actionFullscreen_triggered( bool checked )
         showNormal();
 }
 
-void    MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
+void    
+MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
 {
     m_ui.menuWindow->addAction( widget->toggleViewAction() );
 }
 
-void    MainWindow::toolButtonClicked( int id )
+void    
+MainWindow::toolButtonClicked( int id )
 {
     emit toolChanged( (ToolButtons)id );
 }
 
-void MainWindow::on_actionBypass_effects_engine_toggled(bool)
+void 
+MainWindow::on_actionBypass_effects_engine_toggled(bool)
 {
 //    EffectsEngine*  ee;
 //
@@ -552,12 +686,14 @@ void MainWindow::on_actionBypass_effects_engine_toggled(bool)
     return ;
 }
 
-void MainWindow::on_actionProject_Preferences_triggered()
+void 
+MainWindow::on_actionProject_Preferences_triggered()
 {
   m_projectPreferences->show();
 }
 
-void    MainWindow::closeEvent( QCloseEvent* e )
+void    
+MainWindow::closeEvent( QCloseEvent* e )
 {
     GUIProjectManager   *pm = GUIProjectManager::getInstance();
     if ( pm->askForSaveIfModified() )
@@ -566,7 +702,8 @@ void    MainWindow::closeEvent( QCloseEvent* e )
         e->ignore();
 }
 
-void    MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
+void   
+MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
 {
     QString title = tr( "VideoLAN Movie Creator" );
     title += " - ";
@@ -576,22 +713,26 @@ void    MainWindow::projectUpdated( const QString& projectName, bool savedStatus
     setWindowTitle( title );
 }
 
-void    MainWindow::on_actionClose_Project_triggered()
+void   
+MainWindow::on_actionClose_Project_triggered()
 {
     GUIProjectManager::getInstance()->closeProject();
 }
 
-void    MainWindow::on_actionUndo_triggered()
+void    
+MainWindow::on_actionUndo_triggered()
 {
     UndoStack::getInstance( this )->undo();
 }
 
-void    MainWindow::on_actionRedo_triggered()
+void    
+MainWindow::on_actionRedo_triggered()
 {
     UndoStack::getInstance( this )->redo();
 }
 
-void    MainWindow::on_actionCrash_triggered()
+void    
+MainWindow::on_actionCrash_triggered()
 {
     //WARNING: read this part at your own risk !!
     //I'm not responsible if you puke while reading this :D
@@ -600,7 +741,8 @@ void    MainWindow::on_actionCrash_triggered()
     Q_UNUSED( test );
 }
 
-bool    MainWindow::restoreSession()
+bool    
+MainWindow::restoreSession()
 {
     QSettings   s;
     bool        fileCreated = false;
@@ -634,23 +776,27 @@ bool    MainWindow::restoreSession()
     return ret;
 }
 
-void    MainWindow::on_actionImport_triggered()
+void    
+MainWindow::on_actionImport_triggered()
 {
     m_importController->exec();
 }
 
-void    MainWindow::canUndoChanged( bool canUndo )
+void    
+MainWindow::canUndoChanged( bool canUndo )
 {
     m_ui.actionUndo->setEnabled( canUndo );
 }
 
-void    MainWindow::canRedoChanged( bool canRedo )
+void    
+MainWindow::canRedoChanged( bool canRedo )
 {
     m_ui.actionRedo->setEnabled( canRedo );
 }
 
 #ifdef WITH_CRASHBUTTON
-void    MainWindow::setupCrashTester()
+void
+MainWindow::setupCrashTester()
 {
     QAction* actionCrash = new QAction( this );
     actionCrash->setObjectName( QString::fromUtf8( "actionCrash" ) );

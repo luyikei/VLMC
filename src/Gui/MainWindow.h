@@ -78,6 +78,21 @@ private:
      */
     bool        restoreSession();
 
+    /**
+     *  \brief  Will check if there is any video on the Project Timeline.
+     *  \return true, if ( MainWorkflow::getInstance()->getLengthFrame() > 0 )
+     *          else false
+     */
+    bool        checkVideoLength();
+
+    /**
+     *  \brief  Renders video by the parameters: outputFileName, width, height,
+     *          fps, vbitrate, abitrate
+     *          Also, displays a rendering dialog with snapshots and progress.
+     */
+    void        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
+                             double fps, quint32 vbitrate, quint32 abitrate );
+
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
@@ -99,6 +114,7 @@ private slots:
     void                    on_actionPreferences_triggered();
     void                    on_actionTranscode_triggered();
     void                    on_actionRender_triggered();
+    void                    on_actionShare_On_Youtube_triggered();
     void                    on_actionNew_Project_triggered();
     void                    on_actionLoad_Project_triggered();
     void                    on_actionSave_triggered();
