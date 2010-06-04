@@ -60,7 +60,7 @@ void    WorkflowRenderer::initializeRenderer()
     m_rate = 48000;
 
      //Workflow part
-    connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( __endReached() ) );
+    connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( __endReached() ), Qt::QueuedConnection );
     connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ),
              this, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ) );
     connect( m_mainWorkflow, SIGNAL( lengthChanged( qint64 ) ),
