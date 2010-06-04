@@ -112,6 +112,7 @@ ClipWorkflow::clipEndReached()
 void
 ClipWorkflow::stop()
 {
+    stopRenderer();
     flushComputedBuffers();
     releasePrealocated();
 }
