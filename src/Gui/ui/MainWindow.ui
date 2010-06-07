@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">
@@ -46,25 +46,11 @@
     </property>
     <addaction name="actionFullscreen"/>
    </widget>
-   <widget class="QMenu" name="menuEffets">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="title">
-     <string>Effects</string>
-    </property>
-    <addaction name="actionBypass_effects_engine"/>
-   </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionTranscode"/>
-   </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>&amp;Window</string>
-    </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -98,10 +84,14 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
-   <addaction name="menuEffets"/>
    <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
@@ -173,10 +163,10 @@
   </action>
   <action name="actionRender">
    <property name="text">
-    <string>As a &amp;file</string>
+    <string>&amp;To a file</string>
    </property>
    <property name="toolTip">
-    <string>Render as a file</string>
+    <string>Render your project as a file</string>
    </property>
    <property name="statusTip">
     <string>Render your project as a file</string>
