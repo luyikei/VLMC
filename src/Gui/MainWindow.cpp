@@ -152,7 +152,7 @@ MainWindow::~MainWindow()
     LibVLCpp::Instance::destroyInstance();
 }
 
-void 
+void
 MainWindow::changeEvent( QEvent *e )
 {
     switch ( e->type() )
@@ -347,20 +347,19 @@ MainWindow::on_actionSave_triggered()
     GUIProjectManager::getInstance()->saveProject();
 }
 
-void    
+void
 MainWindow::on_actionSave_As_triggered()
 {
     GUIProjectManager::getInstance()->saveProject( true );
 }
 
-void    
+void
 MainWindow::on_actionLoad_Project_triggered()
 {
-    GUIProjectManager* pm = GUIProjectManager::getInstance();
-    pm->loadProject( pm->acquireProjectFileName() );
+    GUIProjectManager::getInstance()->loadProject();
 }
 
-void 
+void
 MainWindow::createStatusBar()
 {
     // Mouse (default) tool
@@ -430,7 +429,7 @@ MainWindow::createStatusBar()
              this, SLOT( zoomIn() ) );
 }
 
-void 
+void
 MainWindow::initializeDockWidgets( void )
 {
     m_renderer = new WorkflowRenderer();
@@ -506,25 +505,25 @@ MainWindow::createProjectPreferences()
 
 //Private slots definition
 
-void 
+void
 MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
 }
 
-void 
+void
 MainWindow::on_actionPreferences_triggered()
 {
    m_globalPreferences->show();
 }
 
-void 
+void
 MainWindow::on_actionAbout_triggered()
 {
     About::getInstance()->exec();
 }
 
-void 
+void
 MainWindow::on_actionTranscode_triggered()
 {
     QMessageBox::information( this, tr( "Sorry" ),
@@ -543,13 +542,13 @@ MainWindow::checkVideoLength()
     return true;
 }
 
-void 
+void
 MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height, double fps, quint32 vbitrate, quint32 abitrate )
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
     m_fileRenderer = new WorkflowFileRenderer();
- 
+
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
@@ -560,7 +559,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
     delete dialog;
 }
 
-void 
+void
 MainWindow::on_actionRender_triggered()
 {
     if ( checkVideoLength() )
@@ -585,7 +584,7 @@ MainWindow::on_actionRender_triggered()
     }
 }
 
-void 
+void
 MainWindow::on_actionShare_On_Youtube_triggered()
 {
     if ( checkVideoLength() )
@@ -627,32 +626,32 @@ MainWindow::on_actionShare_On_Youtube_triggered()
     }
 }
 
-void 
+void
 MainWindow::on_actionNew_Project_triggered()
 {
     m_pWizard->restart();
     m_pWizard->show();
 }
 
-void    
+void
 MainWindow::on_actionHelp_triggered()
 {
     QDesktopServices::openUrl( QUrl( "http://vlmc.org" ) );
 }
 
-void    
+void
 MainWindow::zoomIn()
 {
     m_zoomSlider->setValue( m_zoomSlider->value() - 1 );
 }
 
-void    
+void
 MainWindow::zoomOut()
 {
     m_zoomSlider->setValue( m_zoomSlider->value() + 1 );
 }
 
-void    
+void
 MainWindow::on_actionFullscreen_triggered( bool checked )
 {
     if ( checked )
@@ -661,19 +660,19 @@ MainWindow::on_actionFullscreen_triggered( bool checked )
         showNormal();
 }
 
-void    
+void
 MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
 {
     m_ui.menuWindow->addAction( widget->toggleViewAction() );
 }
 
-void    
+void
 MainWindow::toolButtonClicked( int id )
 {
     emit toolChanged( (ToolButtons)id );
 }
 
-void 
+void
 MainWindow::on_actionBypass_effects_engine_toggled(bool)
 {
 //    EffectsEngine*  ee;
@@ -686,13 +685,13 @@ MainWindow::on_actionBypass_effects_engine_toggled(bool)
     return ;
 }
 
-void 
+void
 MainWindow::on_actionProject_Preferences_triggered()
 {
   m_projectPreferences->show();
 }
 
-void    
+void
 MainWindow::closeEvent( QCloseEvent* e )
 {
     GUIProjectManager   *pm = GUIProjectManager::getInstance();
@@ -702,7 +701,7 @@ MainWindow::closeEvent( QCloseEvent* e )
         e->ignore();
 }
 
-void   
+void
 MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
 {
     QString title = tr( "VideoLAN Movie Creator" );
@@ -713,25 +712,25 @@ MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
     setWindowTitle( title );
 }
 
-void   
+void
 MainWindow::on_actionClose_Project_triggered()
 {
     GUIProjectManager::getInstance()->closeProject();
 }
 
-void    
+void
 MainWindow::on_actionUndo_triggered()
 {
     UndoStack::getInstance( this )->undo();
 }
 
-void    
+void
 MainWindow::on_actionRedo_triggered()
 {
     UndoStack::getInstance( this )->redo();
 }
 
-void    
+void
 MainWindow::on_actionCrash_triggered()
 {
     //WARNING: read this part at your own risk !!
@@ -741,7 +740,7 @@ MainWindow::on_actionCrash_triggered()
     Q_UNUSED( test );
 }
 
-bool    
+bool
 MainWindow::restoreSession()
 {
     QSettings   s;
@@ -776,19 +775,19 @@ MainWindow::restoreSession()
     return ret;
 }
 
-void    
+void
 MainWindow::on_actionImport_triggered()
 {
     m_importController->exec();
 }
 
-void    
+void
 MainWindow::canUndoChanged( bool canUndo )
 {
     m_ui.actionUndo->setEnabled( canUndo );
 }
 
-void    
+void
 MainWindow::canRedoChanged( bool canRedo )
 {
     m_ui.actionRedo->setEnabled( canRedo );
