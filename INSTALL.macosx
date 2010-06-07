@@ -18,9 +18,9 @@ Download and unzip (libVLC) contribs for Mac OSX (i386), in /contribs from:
   http://rohityadav.in/projects/videolan/vlmc/contribs/
 
 On Mac OS:
-  $mkdir build && cd build
-  $cmake ..
-  $make
+  mkdir build && cd build
+  cmake ..
+  make
 
 This will by default create a Mac Bundle, vlmc.app in /build/bin
 

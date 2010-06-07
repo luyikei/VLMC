@@ -9,43 +9,43 @@ Dependencies
 Get the sources
 ===============
 
-  $git clone git://git.videolan.org/vlmc.git
+  git clone git://git.videolan.org/vlmc.git
 
 Building and packaging VLMC on Linux
 ====================================
 
 A typical way to build VLMC is:
-  $mkdir build && cd build
+  mkdir build && cd build
 
 To set install path: (optional)
-  $cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+  cmake -DCMAKE_INSTALL_PREFIX=/usr ..
 
 Else:
-  $cmake ..
+  cmake ..
 
 Build:
-  $make
+  make
 
 To package:
-  $make package
+  make package
 
 But this by default will search for available pkg builders and build accordingly.
 
 To force building deb:
-  $cpack -G DEB
+  cpack -G DEB
 To force building rpm:
-  $cpack -G RPM
+  cpack -G RPM
    
 Installing on Linux
 ===================
 
 On Linux:
-  $dpkg -i <deb package>
-  $rpm -i <rpm package>
+  dpkg -i <deb package>
+  rpm -i <rpm package>
 
 To remove:
-  $dpkg -r vlmc
-  $rpm -e vlmc
+  dpkg -r vlmc
+  rpm -e vlmc
 
 
 Running VLMC
