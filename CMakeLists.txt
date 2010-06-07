@@ -159,7 +159,8 @@ SET(CPACK_SYSTEM_NAME ${CMAKE_SYSTEM_NAME})
 SET(CPACK_PACKAGE_NAME ${PROJECT_NAME_SHORT})
 SET(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "VideoLan Movie Creator")
-SET(CPACK_PACKAGE_DESCRIPTION "VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.")
+SET(CPACK_PACKAGE_DESCRIPTION 
+"VLMC \n VideoLAN Movie Creator is a cross-platform, non-linear video editing software based on the VLC Media Player.")
 SET(CPACK_PACKAGE_VENDOR "VLMC Team")
 SET(CPACK_PACKAGE_CONTACT "vlmc-devel@videolan.org")
 SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
@@ -189,6 +190,18 @@ IF ( RPMBUILD_FOUND )
     SET(CPACK_SET_DESTDIR TRUE)
 ENDIF ( RPMBUILD_FOUND )
 
+# Debian packages
+INCLUDE ( ${CMAKE_MODULE_PATH}/DpkgBuild.cmake )
+IF ( DPKG_FOUND )
+    SET(CPACK_GENERATOR "DEB")
+    SET(CPACK_SET_DESTDIR TRUE)
+    SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
+    SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${CPACK_PACKAGE_DESCRIPTION_SUMMARY})
+    SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386) #change to your architecture here
+    # FIXME: Check stuff: libvlc2 etc. in future as VLC 1.1+ releases
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
+ENDIF ( DPKG_FOUND )
+
 #Mac
 IF( APPLE )
     SET(CPACK_GENERATOR "DragNDrop")
@@ -205,16 +218,6 @@ IF( APPLE )
 
     #SET(CPACK_STRIP_FILES TRUE)
 ENDIF( APPLE )
-
-# Debian packages
-INCLUDE ( ${CMAKE_MODULE_PATH}/DpkgBuild.cmake )
-IF ( DPKG_FOUND )
-    SET(CPACK_GENERATOR "DEB")
-    SET(CPACK_SET_DESTDIR TRUE)
-    SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE i386) #change to your architecture here
-    # FIXME: Check stuff: libvlc2 etc. in future as VLC 1.1+ releases
-    SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
-ENDIF ( DPKG_FOUND )
 
 SET(CPACK_PACKAGE_EXECUTABLES "vlmc" "VLMC")
 INCLUDE(CPack)
