@@ -12,7 +12,8 @@ CMakeLists.txt     - Root CMake config file.
 COPYING            - The GPL license.
 ChangeLog          - One day, VLMC will have this file.
 HACKING            - Hacking VLMC.
-INSTALL            - Installation instructions.
+INSTALL            - General Installation instructions.
+INSTALL.macosx     - Installation instructions for Mac OSX version of VLMC.
 INSTALL.win32      - Installation instructions for the Win32 version of VLMC.
 NEWS               - Important modifications between the releases.
 README             - This file.
