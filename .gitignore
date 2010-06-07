@@ -4,6 +4,10 @@
 /qtc-gdbmacros
 Makefile*
 /include
+/contribs
+
+.DS_Store
+Thumbs.db
 
 *.pro.user
 moc_*.cpp
