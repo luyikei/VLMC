@@ -188,22 +188,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>DockWidgetManager</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="280"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="332"/>
         <source>Media Library</source>
         <translation>Медиабиблиотека</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="389"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="446"/>
         <source>Clip Preview</source>
         <translation>Предпросмотр клипа</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="398"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="455"/>
         <source>Project Preview</source>
         <translation>Предпросмотр проекта</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="406"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="463"/>
         <source>History</source>
         <translation>Журнал</translation>
     </message>
@@ -401,103 +401,114 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="139"/>
         <source>Media Library</source>
         <translation>Медиабиблиотека</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="314"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="370"/>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
         <translation>Используйте мышь для управления отрезками шкалы времени</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="322"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="378"/>
         <source>Use the scissors to cut regions in the timeline</source>
         <translation>Используйте ножницы для вырезания отрезков на шкале времени</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="349"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="405"/>
         <source>Zoom out</source>
         <translation>Уменьшить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="370"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="426"/>
         <source>Zoom in</source>
         <translation>Увеличить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="420"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="478"/>
         <source>VLMC settings</source>
-        <translation>Настройки VLMC</translation>
+        <translatorcomment>везде повторять слово &quot;настройки&quot; не будем</translatorcomment>
+        <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="423"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="481"/>
         <source>Keyboard Settings</source>
-        <translation>Настройки клавиатуры</translation>
+        <translation>Клавиатура</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="431"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="484"/>
+        <source>Youtube Settings</source>
+        <translation>Youtube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="487"/>
+        <source>Network Settings</source>
+        <translation>Сеть</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="496"/>
         <source>Project settings</source>
         <translation>Настройки проекта</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="434"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="499"/>
         <source>Video settings</source>
         <translation>Настройки видео</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="437"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="502"/>
         <source>Audio settings</source>
         <translation>Настройки звука</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="460"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="529"/>
         <source>Sorry</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="461"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="530"/>
         <source>This feature is currently disabled.</source>
         <translation>Эта возможность в настоящее время отключена.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="469"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="539"/>
         <source>VLMC Renderer</source>
         <translation>Вывод из VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="469"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="539"/>
         <source>There is nothing to render.</source>
         <translation>Нечего выводить.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="621"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="762"/>
         <source>Crash recovery</source>
         <translation>Восстановление после сбоя</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="621"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="762"/>
         <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
         <translation>VLMC завершился неудачно. Восстановить проект?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="628"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="769"/>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
         <translation>VLMC не смог восстановить проект. Приносим извинения за доставленные неудобства</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="628"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="769"/>
         <source>Can&apos;t restore project</source>
         <translation>Не удалось восстановить проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="142"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="150"/>
         <source>Preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="14"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="571"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="707"/>
         <source>VideoLAN Movie Creator</source>
         <translation>ВидеоРедактор VideoLAN</translation>
     </message>
@@ -507,7 +518,7 @@ p, li { white-space: pre-wrap; }
         <translation>Эффекты</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="114"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="122"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
@@ -542,113 +553,141 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="104"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="83"/>
+        <source>&amp;Export</source>
+        <translation>&amp;Экспорт</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="112"/>
         <source>&amp;Quit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="109"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="117"/>
         <source>&amp;About</source>
         <translation>О программе &amp;VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="123"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="152"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="160"/>
         <source>&amp;New Project</source>
         <translation>Созд&amp;ать проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
         <source>Open the wizard to create a new project</source>
         <translation>Открыть помощник создания новых проектов</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
-        <source>&amp;Fullscreen</source>
-        <translation>На весь &amp;экран</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="168"/>
-        <source>&amp;Render</source>
-        <translation>Выв&amp;ести</translation>
-    </message>
-    <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
-        <source>Render your project</source>
-        <translation>Вывести проект</translation>
+        <source>&amp;Fullscreen</source>
+        <translation>На весь экран</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="262"/>
+        <source>Share on &amp;Youtube</source>
+        <translation>Выложить на &amp;Youtube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="265"/>
+        <source>Share your project on youtube</source>
+        <translation>Выложить проект на youtube</translation>
+    </message>
+    <message>
+        <source>&amp;Render</source>
+        <translation type="obsolete">Выв&amp;ести</translation>
+    </message>
+    <message>
+        <source>Render your project</source>
+        <translation type="obsolete">Вывести проект</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="187"/>
         <source>&amp;Load Project</source>
         <translation>&amp;Загрузить проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="181"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="192"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="197"/>
         <source>&amp;Import</source>
         <translation>И&amp;мпорт</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="189"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="200"/>
         <source>Import new medias into the current project</source>
         <translation>Импортировать новые медиа в текущий проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="205"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="216"/>
         <source>Proj&amp;ect Preferences</source>
         <translation>Настройки п&amp;роекта</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="218"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="229"/>
         <source>Save &amp;As</source>
         <translation>Сохранить &amp;как</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="223"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="234"/>
         <source>&amp;Close Project</source>
         <translation>Закры&amp;ть проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="658"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="239"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="803"/>
         <source>Crash</source>
         <translation>Сбой</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="237"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="248"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="246"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="257"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="147"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
         <source>Transcode</source>
         <translation>Пережатие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="200"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
+        <source>As a &amp;file</source>
+        <translation>Как файл</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="179"/>
+        <source>Render as a file</source>
+        <translation>Вывести в файл</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="182"/>
+        <source>Render your project as a file</source>
+        <translation>Вывести проект в файл</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="211"/>
         <source>Enable effects engine</source>
         <translation>Включить механизм эффектов</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="208"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="213"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="224"/>
         <source>Project Wizard</source>
         <translation>Помощник проектов</translation>
     </message>
@@ -761,192 +800,252 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreferenceWidget</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="175"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="179"/>
         <source>Select mode</source>
         <translation>Режим выделения</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="176"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="180"/>
         <source>Select the selection tool in the timeline</source>
         <translation>Выбрать инструмент &quot;выделение&quot; на шкале времени</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="178"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="183"/>
         <source>Cut mode</source>
         <translation>Режим обрезки</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="179"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="184"/>
         <source>Select the cut/razor tool in the timeline</source>
         <translation>Выбрать инструмент &quot;обрезка/бритва&quot; на шкале времени</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="181"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="187"/>
         <source>Media preview</source>
         <translation>Предпросмотр медиа</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="182"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="188"/>
         <source>Preview the selected media, or pause the current preview</source>
         <translation>Осуществить предпросмотр выбранного медиа или приостановить его</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="184"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="191"/>
         <source>Render preview</source>
         <translation>Предпросмотр вывода</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="185"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="192"/>
         <source>Preview the project, or pause the current preview</source>
         <translation>Предпросмотр проекта и его приостановка</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="189"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="197"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="190"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="198"/>
         <source>Undo the last action</source>
         <translation>Отменить последнее действие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="193"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="202"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="194"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="203"/>
         <source>Redo the last action</source>
         <translation>Повторить последнее действие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="197"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="207"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="198"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="208"/>
         <source>Toggle the help page</source>
         <translation>Показать справку</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="200"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="211"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="201"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="212"/>
         <source>Quit VLMC</source>
         <translation>Выйти из VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="203"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="215"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="204"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="216"/>
         <source>Open VLMC preferences</source>
         <translation>Открыть настройки VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="206"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="219"/>
         <source>Fullscreen</source>
         <translation>На весь экран</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="207"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="220"/>
         <source>Switch to fullscreen mode</source>
         <translation>Переключиться в полноэкранный режим</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="210"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="224"/>
         <source>New project</source>
         <translation>Новый проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="211"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="225"/>
         <source>Open the new project wizard</source>
         <translation>Открыть помощник проектов</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="235"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="256"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="242"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="265"/>
         <source>Confirm clip deletion</source>
         <translation>Подтвердите удаление клипа</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="243"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="266"/>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
         <translation>Спрашивать подтверждение перед удалением клипа со школы времени</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="214"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="270"/>
+        <source>Youtube Developer Key</source>
+        <translation>Ключ разработчика YouTube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="271"/>
+        <source>The Youtube Developer Key</source>
+        <translation>Ключ разработчика YouTube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="274"/>
+        <source>Youtube Username</source>
+        <translation>Имя пользователя Youtube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="275"/>
+        <source>VLMC won&apos;t store your passwords...</source>
+        <translation>VLMC не будет хранить пароли...</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="280"/>
+        <source>Proxy</source>
+        <translation>Прокси</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="281"/>
+        <source>The HTTP Proxy </source>
+        <translation>HTPP прокси-сервер</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="284"/>
+        <source>Proxy Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="285"/>
+        <source>The HTTP Proxy Port</source>
+        <translation>Порт HTTP прокси-сервера</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="288"/>
+        <source>Proxy Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="289"/>
+        <source>The HTTP Proxy Username</source>
+        <translation>Имя пользователя на прокси-сервере</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="292"/>
+        <source>Proxy Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="293"/>
+        <source>The HTTP Proxy Password</source>
+        <translation>Пароль для HTTP прокси-сервера</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="229"/>
         <source>Open a project</source>
         <translation>Открыть проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="215"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="230"/>
         <source>Open an existing project</source>
         <translation>Открыть существующий проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="218"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="234"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="219"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="235"/>
         <source>Save the current project</source>
         <translation>Сохранить текущий проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="221"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="238"/>
         <source>Save as</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="222"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="239"/>
         <source>Save the current project to a new file</source>
         <translation>Сохранить текущий проект в новом файле</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="225"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="243"/>
         <source>Close the project</source>
         <translation>Закрыть проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="226"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="244"/>
         <source>Close the current project</source>
         <translation>Закрыть текущий проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="228"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="247"/>
         <source>Import media</source>
         <translation>Импортировать медиа</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="229"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="248"/>
         <source>Open the import window</source>
         <translation>Открыть окно импортирования</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="231"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="251"/>
         <source>Render the project</source>
         <translation>Вывести проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="232"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="252"/>
         <source>Render the project to a file</source>
         <translation>Вывести проект в файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="257"/>
         <source>The VLMC&apos;s UI language</source>
         <translation>Язык интерфейса VLMC</translation>
     </message>
@@ -1262,25 +1361,179 @@ Please check your VLC installation before reporting the issue.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="418"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="429"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="476"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="494"/>
         <source>general</source>
         <translation>общие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="421"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="479"/>
         <source>keyboard</source>
         <translation>клавиатура</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="432"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="482"/>
+        <source>youtube</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="485"/>
+        <source>network</source>
+        <translation>Сеть</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="497"/>
         <source>video</source>
         <translation>видео</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="435"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="500"/>
         <source>audio</source>
         <translation>звук</translation>
+    </message>
+</context>
+<context>
+    <name>ShareOnYoutube</name>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="14"/>
+        <source>Share On Youtube</source>
+        <translation>Выложить на Youtube</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="24"/>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="34"/>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="45"/>
+        <source>Autos &amp; Vehicles</source>
+        <translation>Авто и транспорт</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="50"/>
+        <source>Comedy</source>
+        <translation>Юмор</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="55"/>
+        <source>Education</source>
+        <translation>Образование</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="60"/>
+        <source>Entertainment</source>
+        <translation>Кино и ТВ</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="65"/>
+        <source>Film &amp; Animation</source>
+        <translation>Фильмы и анимация</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="70"/>
+        <source>Gaming</source>
+        <translation>Компьютерные игры</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="75"/>
+        <source>Howto &amp; Style</source>
+        <translation>Обучение и стиль</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="80"/>
+        <source>Music</source>
+        <translation>Музыка</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="85"/>
+        <source>News &amp; Politics</source>
+        <translation>Новости и политика</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="90"/>
+        <source>Nonprofits &amp; Activism</source>
+        <translation>Общественные акции</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="95"/>
+        <source>People &amp; Blogs</source>
+        <translation>Люди и блоги</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="100"/>
+        <source>Pets &amp; Animals</source>
+        <translation>Животные</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="105"/>
+        <source>Science &amp; Technology</source>
+        <translation>Наука и техника</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="110"/>
+        <source>Sports</source>
+        <translation>Спорт</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="115"/>
+        <source>Travel &amp; Events</source>
+        <translation>Путешествия и события</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="123"/>
+        <source>Title</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="133"/>
+        <source>Description</source>
+        <translation>Описание</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="153"/>
+        <source>Tags</source>
+        <translation>Метки</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="163"/>
+        <source>Video Size</source>
+        <translatorcomment>или &quot;разрешение&quot;</translatorcomment>
+        <translation>Размер изображения</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="171"/>
+        <source>Small (480 x 272)</source>
+        <translation>Малый (480 x 272)</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="176"/>
+        <source>Medium (640 x 360)</source>
+        <translation>Средний (640 x 360)</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="181"/>
+        <source>Large (960 x 540)</source>
+        <translation>Большой (960 x 540)</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="186"/>
+        <source>HD (1280 x 720)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="194"/>
+        <source>Make this video public (Default: private)</source>
+        <translation>Сделать видео общедоступным (По умолчанию: &quot;Для избранных&quot;)</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="214"/>
+        <source>Category</source>
+        <translation>Раздел</translation>
     </message>
 </context>
 <context>
