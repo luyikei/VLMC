@@ -147,6 +147,7 @@ INSTALL (FILES share/vlmc.png DESTINATION ${VLMC_PIXMAPS_DIR})
 INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
          PATTERN "*.desktop" EXCLUDE
          PATTERN "*.ico" EXCLUDE
+         PATTERN "*.icns" EXCLUDE
          PATTERN "vlmc.png" EXCLUDE)
 
 #############################################################
