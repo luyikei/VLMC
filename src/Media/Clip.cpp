@@ -278,7 +278,7 @@ Clip::isChild( const QUuid &uuid) const
 void
 Clip::mediaMetadataUpdated( const Media *media )
 {
-    Q_ASSERT ( isRootClip() == true );
+    Q_ASSERT ( isRootClip() == true && m_media == media );
     if ( m_end == 0 )
     {
         m_begin = 0;
