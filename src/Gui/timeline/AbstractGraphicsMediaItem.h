@@ -70,10 +70,7 @@ public:
     virtual bool moveable() const = 0;
 
     /// Should return the unique uid of the contained media.
-    virtual const QUuid& uuid() const
-    {
-        return m_clipHelper->uuid();
-    }
+    virtual const QUuid& uuid() const;
 
     /// Return a pointer to the TracksScene
     TracksScene* scene();

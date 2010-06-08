@@ -27,7 +27,6 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
-#include "AudioClipWorkflow.h"
 #include "Clip.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"

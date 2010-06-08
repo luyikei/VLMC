@@ -22,6 +22,7 @@
 
 #include "TracksView.h"
 
+#include "ClipHelper.h"
 #include "Commands.h"
 #include "Library.h"
 #include "GraphicsMovieItem.h"

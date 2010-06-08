@@ -20,18 +20,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Clip.h"
+#include "ClipHelper.h"
+#include "GraphicsMovieItem.h"
+#include "Media.h"
+#include "TracksView.h"
+#include "Timeline.h"
+
 #include <QPainter>
 #include <QLinearGradient>
 #include <QDebug>
 #include <QTime>
 #include <QFontMetrics>
 #include <QGraphicsSceneMouseEvent>
-
-#include "Clip.h"
-#include "GraphicsMovieItem.h"
-#include "Media.h"
-#include "TracksView.h"
-#include "Timeline.h"
 
 GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )

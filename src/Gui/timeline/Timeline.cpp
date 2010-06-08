@@ -21,12 +21,14 @@
  *****************************************************************************/
 
 #include "Timeline.h"
+
+#include "Clip.h"
+#include "ClipHelper.h"
 #include "TracksView.h"
 #include "TracksScene.h"
 #include "TracksControls.h"
 #include "TracksRuler.h"
 #include "WorkflowRenderer.h"
-#include "Clip.h"
 
 #include <QHBoxLayout>
 #include <QDomElement>

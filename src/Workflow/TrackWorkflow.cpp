@@ -23,9 +23,9 @@
 
 #include "TrackWorkflow.h"
 
-#include "AudioClipWorkflow.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "AudioClipWorkflow.h"
 #include "ImageClipWorkflow.h"
 #include "Media.h"
 #include "VideoClipWorkflow.h"

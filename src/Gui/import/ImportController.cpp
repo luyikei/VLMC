@@ -42,6 +42,8 @@
 #include <QTime>
 #include <QTimer>
 
+#include <QtDebug>
+
 ImportController::ImportController(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::ImportController),

@@ -23,7 +23,6 @@
 #ifndef WORKFLOWRENDERER_H
 #define WORKFLOWRENDERER_H
 
-#include "AudioClipWorkflow.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
 
@@ -35,6 +34,11 @@ class   QWidget;
 class   QWaitCondition;
 class   QMutex;
 class   QUuid;
+
+namespace LibVLCpp
+{
+    class   Media;
+}
 
 class   WorkflowRenderer : public GenericRenderer
 {

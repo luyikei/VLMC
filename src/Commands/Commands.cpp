@@ -25,6 +25,7 @@
 #include "Clip.h"
 #include "Commands.h"
 #include "MainWorkflow.h"
+#include "ClipHelper.h"
 
 #ifdef WITH_GUI
 # include "UndoStack.h"

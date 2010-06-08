@@ -22,6 +22,8 @@
  *****************************************************************************/
 
 #include "GraphicsAudioItem.h"
+
+#include "ClipHelper.h"
 #include "Media.h"
 #include "TracksView.h"
 #include "Timeline.h"

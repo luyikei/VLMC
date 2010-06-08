@@ -25,7 +25,6 @@
 #define MAINWORKFLOW_H
 
 #include "Singleton.hpp"
-#include "AudioClipWorkflow.h"
 #include <QXmlStreamWriter>
 
 class   QDomDocument;

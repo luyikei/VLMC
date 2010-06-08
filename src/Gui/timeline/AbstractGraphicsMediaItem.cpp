@@ -20,17 +20,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QMenu>
-#include <QColorDialog>
-#include <QGraphicsSceneContextMenuEvent>
 #include "AbstractGraphicsMediaItem.h"
 #include "TracksView.h"
 #include "TracksScene.h"
 #include "GraphicsTrack.h"
 
 #include "Clip.h"
+#include "ClipHelper.h"
 #include "Commands.h"
 #include "Media.h"
+
+#include <QMenu>
+#include <QColorDialog>
+#include <QGraphicsSceneContextMenuEvent>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         oldTrackNumber( -1 ),
@@ -358,4 +360,10 @@ ClipHelper*
 AbstractGraphicsMediaItem::clipHelper()
 {
     return m_clipHelper;
+}
+
+const QUuid&
+AbstractGraphicsMediaItem::uuid() const
+{
+    return m_clipHelper->uuid();
 }

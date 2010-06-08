@@ -25,6 +25,7 @@
 
 #include "vlmc.h"
 #include "Clip.h"
+#include "ClipHelper.h"
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
