@@ -20,21 +20,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "LightVideoFrame.h"
 #include "TrackHandler.h"
 #include "TrackWorkflow.h"
+#include "Workflow/Types.h"
 
 #include <QDomDocument>
 #include <QDomElement>
 
-LightVideoFrame* TrackHandler::nullOutput = NULL;
+Workflow::Frame     *TrackHandler::nullOutput = NULL;
 
 TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
         m_trackType( trackType ),
         m_length( 0 )
 {
-    TrackHandler::nullOutput = new LightVideoFrame();
+    //FIXME -> This should be a NULL pointer.
+    TrackHandler::nullOutput = new Workflow::Frame( 0, 0);
 
     m_tracks = new Toggleable<TrackWorkflow*>[nbTracks];
     for ( unsigned int i = 0; i < nbTracks; ++i )
@@ -121,7 +122,7 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             else
             {
                 void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-                StackedBuffer<LightVideoFrame*>   *buff = reinterpret_cast<StackedBuffer<LightVideoFrame*>*>( ret );
+                StackedBuffer<Workflow::Frame*>   *buff = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
                 if ( ret == NULL )
                     continue ;
                 else

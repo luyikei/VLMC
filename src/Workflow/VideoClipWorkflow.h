@@ -36,10 +36,10 @@ class   VideoClipWorkflow : public ClipWorkflow
     Q_OBJECT
 
     public:
-        class   StackedBuffer : public ::StackedBuffer<LightVideoFrame*>
+        class   StackedBuffer : public ::StackedBuffer<Workflow::Frame*>
         {
             public:
-                StackedBuffer( LightVideoFrame* lvf, VideoClipWorkflow* poolHandler,
+                StackedBuffer( Workflow::Frame* frame, VideoClipWorkflow* poolHandler,
                                     bool mustBeReleased = true);
                 virtual void    release();
             private:
@@ -58,7 +58,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
-        void                    releaseBuffer( LightVideoFrame* lvf );
+        void                    releaseBuffer( Workflow::Frame* frame );
         void                    flushComputedBuffers();
         /**
          *  \brief              Pre-allocate some image buffers.
@@ -67,8 +67,8 @@ class   VideoClipWorkflow : public ClipWorkflow
         void                    releasePrealocated();
 
     private:
-        QQueue<LightVideoFrame*>    m_computedBuffers;
-        QQueue<LightVideoFrame*>    m_availableBuffers;
+        QQueue<Workflow::Frame*>    m_computedBuffers;
+        QQueue<Workflow::Frame*>    m_availableBuffers;
         static void                 lock( VideoClipWorkflow* clipWorkflow, void** pp_ret,
                                       int size );
         static void                 unlock( VideoClipWorkflow* clipWorkflow, void* buffer,

@@ -21,12 +21,12 @@
  *****************************************************************************/
 
 #include "Clip.h"
-#include "LightVideoFrame.h"
 #include "MainWorkflow.h"
 #include "StackedBuffer.hpp"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
 #include "WaitCondition.hpp"
+#include "Workflow/Types.h"
 
 #include <QReadWriteLock>
 
@@ -64,7 +64,7 @@ VideoClipWorkflow::preallocate()
             delete m_availableBuffers.dequeue();
         for ( unsigned int i = 0; i < VideoClipWorkflow::nbBuffers; ++i )
         {
-            m_availableBuffers.enqueue( new LightVideoFrame( newWidth, newHeight ) );
+            m_availableBuffers.enqueue( new Workflow::Frame( newWidth, newHeight ) );
         }
     }
 }
@@ -119,7 +119,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     //Recheck again, as the WaitCondition may have been awaken when stopping.
     if ( getNbComputedBuffers() == 0 )
         return NULL;
-    ::StackedBuffer<LightVideoFrame*>* buff;
+    ::StackedBuffer<Workflow::Frame*>* buff;
     if ( mode == ClipWorkflow::Pop )
         buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );
     else if ( mode == ClipWorkflow::Get )
@@ -132,17 +132,17 @@ void
 VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
 {
     Q_UNUSED( size );
-    LightVideoFrame*    lvf = NULL;
+    Workflow::Frame*    frame = NULL;
 
     cw->m_renderLock->lock();
     if ( cw->m_availableBuffers.isEmpty() == true )
     {
-        lvf = new LightVideoFrame( cw->m_width, cw->m_height );
+        frame = new Workflow::Frame( cw->m_width, cw->m_height );
     }
     else
-        lvf = cw->m_availableBuffers.dequeue();
-    cw->m_computedBuffers.enqueue( lvf );
-    *pp_ret = (*(lvf))->frame.octets;
+        frame = cw->m_availableBuffers.dequeue();
+    cw->m_computedBuffers.enqueue( frame );
+    *pp_ret = frame->buffer();
 }
 
 void
@@ -156,31 +156,31 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     Q_UNUSED( size );
 
     cw->computePtsDiff( pts );
-    LightVideoFrame     *lvf = cw->m_computedBuffers.last();
-    (*(lvf))->ptsDiff = cw->m_currentPts - cw->m_previousPts;
+    Workflow::Frame     *frame = cw->m_computedBuffers.last();
+    frame->ptsDiff = cw->m_currentPts - cw->m_previousPts;
     cw->commonUnlock();
     cw->m_renderWaitCond->wakeAll();
     cw->m_renderLock->unlock();
 }
 
-uint32_t
+quint32
 VideoClipWorkflow::getNbComputedBuffers() const
 {
     return m_computedBuffers.count();
 }
 
-uint32_t
+quint32
 VideoClipWorkflow::getMaxComputedBuffers() const
 {
     return VideoClipWorkflow::nbBuffers;
 }
 
 void
-VideoClipWorkflow::releaseBuffer( LightVideoFrame *lvf )
+VideoClipWorkflow::releaseBuffer( Workflow::Frame *frame )
 {
     QMutexLocker    lock( m_renderLock );
 
-    m_availableBuffers.enqueue( lvf );
+    m_availableBuffers.enqueue( frame );
 }
 
 void
@@ -192,10 +192,10 @@ VideoClipWorkflow::flushComputedBuffers()
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
 }
 
-VideoClipWorkflow::StackedBuffer::StackedBuffer( LightVideoFrame *lvf,
+VideoClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame,
                                                     VideoClipWorkflow *poolHandler,
                                                     bool mustBeReleased) :
-    ::StackedBuffer<LightVideoFrame*>( lvf, mustBeReleased ),
+    ::StackedBuffer<Workflow::Frame*>( frame, mustBeReleased ),
     m_poolHandler( poolHandler )
 {
 }

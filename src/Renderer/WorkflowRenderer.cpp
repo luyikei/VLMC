@@ -27,16 +27,16 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
-#include "WorkflowRenderer.h"
-#include "timeline/Timeline.h"
-#include "SettingsManager.h"
-#include "LightVideoFrame.h"
-#include "MainWorkflow.h"
-#include "GenericRenderer.h"
 #include "AudioClipWorkflow.h"
-#include "VLCMedia.h"
 #include "Clip.h"
+#include "GenericRenderer.h"
+#include "MainWorkflow.h"
+#include "SettingsManager.h"
+#include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
+#include "WorkflowRenderer.h"
+#include "Workflow/Types.h"
+#include "timeline/Timeline.h"
 
 WorkflowRenderer::WorkflowRenderer() :
             m_mainWorkflow( MainWorkflow::getInstance() ),
@@ -119,7 +119,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
 
 int
 WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pts,
-                        quint32 *flags, size_t *bufferSize, void **buffer )
+                        quint32 *flags, size_t *bufferSize, const void **buffer )
 {
     int             ret = 1;
     EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
@@ -151,7 +151,7 @@ WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pt
 }
 
 int
-WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, void **buffer )
+WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void **buffer )
 {
     qint64                          ptsDiff = 0;
     MainWorkflow::OutputBuffers*    ret;
@@ -161,8 +161,8 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     else
     {
         ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
-        m_videoBuffSize = (*(ret->video))->nboctets;
-        ptsDiff = (*(ret->video))->ptsDiff;
+        m_videoBuffSize = ret->video->size();
+        ptsDiff = ret->video->ptsDiff;
     }
     if ( ptsDiff == 0 )
     {
@@ -172,13 +172,13 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
         ptsDiff = 1000000 / handler->fps;
     }
     m_pts = *pts = ptsDiff + m_pts;
-    *buffer = (*(ret->video))->frame.octets;
+    *buffer = ret->video->buffer();
     *bufferSize = m_videoBuffSize;
     return 0;
 }
 
 int
-WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize, void **buffer )
+WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void ** buffer )
 {
     qint64                              ptsDiff;
     quint32                             nbSample;

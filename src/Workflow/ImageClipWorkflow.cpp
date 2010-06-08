@@ -23,11 +23,11 @@
 #include "ImageClipWorkflow.h"
 #include "Clip.h"
 #include "ClipHelper.h"
-#include "LightVideoFrame.h"
 #include "MainWorkflow.h"
+#include "Media.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
-#include "Media.h"
+#include "Workflow/Types.h"
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
@@ -94,12 +94,11 @@ ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int )
     cw->m_renderLock->lock();
     if ( cw->m_buffer == NULL )
     {
-        //        cw->m_buffer = new LightVideoFrame( size );
-        cw->m_buffer = new LightVideoFrame( MainWorkflow::getInstance()->getWidth(),
+        cw->m_buffer = new Workflow::Frame( MainWorkflow::getInstance()->getWidth(),
                                             MainWorkflow::getInstance()->getHeight() );
         cw->m_stackedBuffer = new StackedBuffer( cw->m_buffer );
     }
-    *pp_ret = (*(cw->m_buffer))->frame.octets;
+    *pp_ret = cw->m_buffer->buffer();
 }
 
 void
@@ -136,8 +135,8 @@ ImageClipWorkflow::flushComputedBuffers()
 {
 }
 
-ImageClipWorkflow::StackedBuffer::StackedBuffer( LightVideoFrame *lvf ) :
-    ::StackedBuffer<LightVideoFrame*>( lvf, false )
+ImageClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame ) :
+    ::StackedBuffer<Workflow::Frame*>( frame, false )
 {
 }
 

@@ -26,15 +26,15 @@
 #include "vlmc.h"
 #include "Clip.h"
 #include "Library.h"
-#include "LightVideoFrame.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
 #include "SettingsManager.h"
+#include "Workflow/Types.h"
 
 #include <QDomElement>
 
-LightVideoFrame     *MainWorkflow::blackOutput = NULL;
+Workflow::Frame     *MainWorkflow::blackOutput = NULL;
 
 MainWorkflow::MainWorkflow( int trackCount ) :
         m_lengthFrame( 0 ),
@@ -108,9 +108,8 @@ MainWorkflow::startRender( quint32 width, quint32 height )
     m_height = height;
     if ( blackOutput != NULL )
         delete blackOutput;
-    blackOutput = new LightVideoFrame( m_width, m_height );
-    // FIX ME vvvvvv , It doesn't update meta info (nbpixels, nboctets, etc.
-    memset( (*blackOutput)->frame.octets, 0, (*blackOutput)->nboctets );
+    blackOutput = new Workflow::Frame( m_width, m_height );
+    memset( blackOutput->buffer(), 0, blackOutput->size() );
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
         m_tracks[i]->startRender();
     computeLength();
@@ -129,7 +128,7 @@ MainWorkflow::getOutput( TrackType trackType, bool paused )
                                         m_currentFrame[trackType], paused );
         if ( trackType == MainWorkflow::VideoTrack )
         {
-            LightVideoFrame*    frame = static_cast<LightVideoFrame*>( ret );
+            Workflow::Frame*    frame = static_cast<Workflow::Frame*>( ret );
             if ( frame == NULL )
                 m_outputBuffers->video = MainWorkflow::blackOutput;
             else

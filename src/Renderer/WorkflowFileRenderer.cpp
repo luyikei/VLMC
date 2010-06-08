@@ -24,7 +24,6 @@
 #include "WorkflowFileRenderer.h"
 #include "SettingsManager.h"
 #include "VLCMedia.h"
-#include "LightVideoFrame.h"
 #include "VLCMediaPlayer.h"
 
 #include <QTime>
@@ -98,7 +97,7 @@ float   WorkflowFileRenderer::getFps() const
 
 int
 WorkflowFileRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pts,
-                            quint32 *flags, size_t *bufferSize, void **buffer )
+                            quint32 *flags, size_t *bufferSize, const void **buffer )
 {
     int         ret = WorkflowRenderer::lock( datas, cookie, dts, pts, flags, bufferSize, buffer );
     EsHandler*  handler = reinterpret_cast<EsHandler*>( datas );

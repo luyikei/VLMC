@@ -6,7 +6,6 @@
 
 SET(VLMC_SRCS
     Commands/Commands.cpp
-    EffectsEngine/PluginsAPI/LightVideoFrame.cpp
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
     Library/Library.cpp
@@ -38,6 +37,7 @@ SET(VLMC_SRCS
     Workflow/StackedBuffer.hpp
     Workflow/TrackHandler.cpp
     Workflow/TrackWorkflow.cpp
+    Workflow/Types.cpp
     Workflow/VideoClipWorkflow.cpp
   )
 
@@ -71,6 +71,7 @@ SET (VLMC_HDRS
     Workflow/MainWorkflow.h
     Workflow/TrackHandler.h
     Workflow/TrackWorkflow.h
+    Workflow/Types.h
     Workflow/VideoClipWorkflow.h
   )
 
@@ -89,7 +90,6 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
   Commands
-  EffectsEngine/PluginsAPI
   Settings 
   Gui
   Gui/import

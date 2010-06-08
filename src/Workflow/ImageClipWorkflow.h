@@ -31,10 +31,10 @@ class   ImageClipWorkflow : public ClipWorkflow
     Q_OBJECT
 
     public:
-        class   StackedBuffer : public ::StackedBuffer<LightVideoFrame*>
+    class   StackedBuffer : public ::StackedBuffer<Workflow::Frame*>
         {
             public:
-                StackedBuffer( LightVideoFrame* lvf );
+                StackedBuffer( Workflow::Frame* frame );
                 virtual void    release();
         };
         ImageClipWorkflow( ClipHelper* ch );
@@ -55,7 +55,7 @@ class   ImageClipWorkflow : public ClipWorkflow
                                         int width, int height, int bpp, int size,
                                         qint64 pts );
     private:
-        LightVideoFrame         *m_buffer;
+        Workflow::Frame         *m_buffer;
         StackedBuffer           *m_stackedBuffer;
 
     private slots:

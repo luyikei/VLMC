@@ -175,7 +175,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  buffer      The buffer itself.
          */
         static int          lock( void *data, const char* cookie, qint64 *dts, qint64 *pts,
-                                quint32 *flags, size_t *bufferSize, void **buffer );
+                                quint32 *flags, size_t *bufferSize, const void **buffer );
         /**
          *  \brief  "Subcallback", for video frame injection
          *
@@ -184,7 +184,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  buffer      The buffer itself.
          */
         int                 lockVideo( EsHandler *handler, qint64 *pts,
-                                       size_t *bufferSize, void **buffer );
+                                       size_t *bufferSize, const void **buffer );
         /**
          *  \brief  "Subcallback", for audio sample injection
          *
@@ -193,7 +193,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  buffer      The buffer itself.
          */
         int                 lockAudio( EsHandler *handler, qint64 *pts,
-                                       size_t *bufferSize, void **buffer );
+                                       size_t *bufferSize, const void **buffer );
         /**
          *  \brief  unlock callback for the imem module
          *

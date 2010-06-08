@@ -36,9 +36,12 @@ class   QReadWriteLock;
 class   Clip;
 class   ClipHelper;
 class   EffectsEngine;
-class   LightVideoFrame;
 class   TrackHandler;
 class   TrackWorkflow;
+namespace   Workflow
+{
+    class   Frame;
+}
 
 #include <QObject>
 #include <QUuid>
@@ -58,7 +61,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         struct      OutputBuffers
         {
-            const LightVideoFrame*              video;
+            const Workflow::Frame*              video;
             AudioClipWorkflow::AudioSample*     audio;
         };
         /**
@@ -401,7 +404,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                         m_height;
 
         /// Pre-filled buffer used when there's nothing to render
-        static LightVideoFrame*         blackOutput;
+        static Workflow::Frame*         blackOutput;
 
         friend class                    Singleton<MainWorkflow>;
 

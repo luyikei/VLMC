@@ -24,10 +24,10 @@
 #include "Clip.h"
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
-#include "LightVideoFrame.h"
 #include "Media.h"
 #include "MemoryPool.hpp"
 #include "WaitCondition.hpp"
+#include "Workflow/Types.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
 

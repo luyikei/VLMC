@@ -317,7 +317,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             ret = renderClip( cw, currentFrame, start, needRepositioning,
                               renderOneFrame, paused );
             if ( m_trackType == MainWorkflow::VideoTrack )
-                m_videoStackedBuffer = reinterpret_cast<StackedBuffer<LightVideoFrame*>*>( ret );
+                m_videoStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
             else
                 m_audioStackedBuffer = reinterpret_cast<StackedBuffer<AudioClipWorkflow::AudioSample*>*>( ret );
         }

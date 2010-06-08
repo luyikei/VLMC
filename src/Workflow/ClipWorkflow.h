@@ -35,7 +35,11 @@ class   QWaitCondition;
 
 class   Clip;
 class   WaitCondition;
-class   LightVideoFrame;
+
+namespace Workflow
+{
+    class   Frame;
+}
 
 namespace LibVLCpp
 {

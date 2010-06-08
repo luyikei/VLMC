@@ -30,7 +30,6 @@
 #include <QXmlStreamWriter>
 
 class   ClipWorkflow;
-class   LightVideoFrame;
 
 class   QDomElement;
 class   QDomElement;
@@ -119,7 +118,7 @@ class   TrackWorkflow : public QObject
 
         MainWorkflow::TrackType                 m_trackType;
         qint64                                  m_lastFrame;
-        StackedBuffer<LightVideoFrame*>*                    m_videoStackedBuffer;
+        StackedBuffer<Workflow::Frame*>*                    m_videoStackedBuffer;
         StackedBuffer<AudioClipWorkflow::AudioSample*>*     m_audioStackedBuffer;
 
     signals:

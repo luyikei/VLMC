@@ -46,7 +46,7 @@ public:
                                     quint32 height, double fps, quint32 vbitrate,
                                     quint32 abitrate);
     static int                  lock( void* datas, const char* cookie, qint64 *dts, qint64 *pts,
-                                      quint32 *flags, size_t *bufferSize, void **buffer );
+                                      quint32 *flags, size_t *bufferSize, const void **buffer );
     virtual float               getFps() const;
 
 private:
