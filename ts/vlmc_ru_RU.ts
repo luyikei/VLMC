@@ -155,8 +155,12 @@ p, li { white-space: pre-wrap; }
         <translation>Обработчик ошибок VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
         <source>An error occured. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
+        <translation type="obsolete">Произошла ошибка. Приносим извинения за неудобства, однако мы сохранили ваш проект. Он будет открыт при следующем запуске VLMC.</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
+        <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
         <translation>Произошла ошибка. Приносим извинения за неудобства, однако мы сохранили ваш проект. Он будет открыт при следующем запуске VLMC.</translation>
     </message>
     <message>
@@ -233,13 +237,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="236"/>
-        <source>A backup file exists for this project. Do you want to load it ?</source>
+        <source>A backup file exists for this project. Do you want to load it?</source>
         <translation>Существует резервная копия этого проекта, загрузить?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="246"/>
-        <source>An outdated backup file was found. Do you want to erase it ?</source>
+        <source>An outdated backup file was found. Do you want to erase it?</source>
         <translation>Обнаружена устаревшая резервная копия проекта, удалить?</translation>
+    </message>
+    <message>
+        <source>A backup file exists for this project. Do you want to load it ?</source>
+        <translation type="obsolete">Существует резервная копия этого проекта, загрузить?</translation>
+    </message>
+    <message>
+        <source>An outdated backup file was found. Do you want to erase it ?</source>
+        <translation type="obsolete">Обнаружена устаревшая резервная копия проекта, удалить?</translation>
     </message>
 </context>
 <context>
@@ -401,7 +413,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="139"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="129"/>
         <source>Media Library</source>
         <translation>Медиабиблиотека</translation>
     </message>
@@ -426,40 +438,64 @@ p, li { white-space: pre-wrap; }
         <translation>Увеличить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="478"/>
         <source>VLMC settings</source>
         <translatorcomment>везде повторять слово &quot;настройки&quot; не будем</translatorcomment>
+        <translation type="obsolete">Общие</translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="obsolete">Клавиатура</translation>
+    </message>
+    <message>
+        <source>Youtube Settings</source>
+        <translation type="obsolete">Youtube</translation>
+    </message>
+    <message>
+        <source>Network Settings</source>
+        <translation type="obsolete">Сеть</translation>
+    </message>
+    <message>
+        <source>Project settings</source>
+        <translation type="obsolete">Настройки проекта</translation>
+    </message>
+    <message>
+        <source>Video settings</source>
+        <translation type="obsolete">Настройки видео</translation>
+    </message>
+    <message>
+        <source>Audio settings</source>
+        <translation type="obsolete">Настройки звука</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="478"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="496"/>
+        <source>General</source>
         <translation>Общие</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="481"/>
-        <source>Keyboard Settings</source>
+        <source>Keyboard</source>
         <translation>Клавиатура</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="484"/>
-        <source>Youtube Settings</source>
-        <translation>Youtube</translation>
+        <source>Youtube</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="487"/>
-        <source>Network Settings</source>
+        <source>Network</source>
         <translation>Сеть</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="496"/>
-        <source>Project settings</source>
-        <translation>Настройки проекта</translation>
-    </message>
-    <message>
         <location filename="../src/Gui/MainWindow.cpp" line="499"/>
-        <source>Video settings</source>
-        <translation>Настройки видео</translation>
+        <source>Video</source>
+        <translation>Видео</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="502"/>
-        <source>Audio settings</source>
-        <translation>Настройки звука</translation>
+        <source>Audio</source>
+        <translation>Звук</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="529"/>
@@ -502,7 +538,7 @@ p, li { white-space: pre-wrap; }
         <translation>Не удалось восстановить проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="150"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="140"/>
         <source>Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -513,12 +549,11 @@ p, li { white-space: pre-wrap; }
         <translation>ВидеоРедактор VideoLAN</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="54"/>
         <source>Effects</source>
-        <translation>Эффекты</translation>
+        <translation type="obsolete">Эффекты</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="122"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="112"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
@@ -533,67 +568,72 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="60"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="51"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="66"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="89"/>
         <source>&amp;Window</source>
         <translation>&amp;Окно</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="71"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="57"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="79"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="65"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="83"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="69"/>
         <source>&amp;Export</source>
         <translation>&amp;Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="112"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="102"/>
         <source>&amp;Quit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="117"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="107"/>
         <source>&amp;About</source>
         <translation>О программе &amp;VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="121"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="160"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="150"/>
         <source>&amp;New Project</source>
         <translation>Созд&amp;ать проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="153"/>
         <source>Open the wizard to create a new project</source>
         <translation>Открыть помощник создания новых проектов</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="161"/>
         <source>&amp;Fullscreen</source>
         <translation>На весь экран</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="262"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="166"/>
+        <source>&amp;To a file</source>
+        <translation>В файл</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="252"/>
         <source>Share on &amp;Youtube</source>
         <translation>Выложить на &amp;Youtube</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="265"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="255"/>
         <source>Share your project on youtube</source>
         <translation>Выложить проект на youtube</translation>
     </message>
@@ -606,88 +646,87 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Вывести проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="187"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="177"/>
         <source>&amp;Load Project</source>
         <translation>&amp;Загрузить проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="192"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="182"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="197"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="187"/>
         <source>&amp;Import</source>
         <translation>И&amp;мпорт</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="200"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="190"/>
         <source>Import new medias into the current project</source>
         <translation>Импортировать новые медиа в текущий проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="216"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="206"/>
         <source>Proj&amp;ect Preferences</source>
         <translation>Настройки п&amp;роекта</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="229"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
         <source>Save &amp;As</source>
         <translation>Сохранить &amp;как</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="234"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="224"/>
         <source>&amp;Close Project</source>
         <translation>Закры&amp;ть проект</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="239"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="229"/>
         <location filename="../src/Gui/MainWindow.cpp" line="803"/>
         <source>Crash</source>
         <translation>Сбой</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="248"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="238"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="257"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="247"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="145"/>
         <source>Transcode</source>
         <translation>Пережатие</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
         <source>As a &amp;file</source>
-        <translation>Как файл</translation>
+        <translation type="obsolete">Как файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="179"/>
         <source>Render as a file</source>
-        <translation>Вывести в файл</translation>
+        <translation type="obsolete">Вывести в файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="182"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="169"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="172"/>
         <source>Render your project as a file</source>
         <translation>Вывести проект в файл</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="211"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
         <source>Enable effects engine</source>
         <translation>Включить механизм эффектов</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="209"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="224"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="214"/>
         <source>Project Wizard</source>
         <translation>Помощник проектов</translation>
     </message>
@@ -716,8 +755,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="221"/>
-        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
+        <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
         <translation>Его удаления также удалит и со школы времени, продолжить?</translation>
+    </message>
+    <message>
+        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
+        <translation type="obsolete">Его удаления также удалит и со школы времени, продолжить?</translation>
     </message>
 </context>
 <context>
@@ -1179,9 +1222,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="223"/>
-        <source>An error occured while rendering.
+        <source>An error occurred while rendering.
 Please check your VLC installation before reporting the issue.</source>
         <translation>Во время вывода произошла ошибка.
+Проверьте установленный VLC прежде сообщения о ней.</translation>
+    </message>
+    <message>
+        <source>An error occured while rendering.
+Please check your VLC installation before reporting the issue.</source>
+        <translation type="obsolete">Во время вывода произошла ошибка.
 Проверьте установленный VLC прежде сообщения о ней.</translation>
     </message>
 </context>

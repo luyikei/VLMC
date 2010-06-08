@@ -234,7 +234,7 @@ GUIProjectManager::loadProject( const QString &fileName )
         {
             if ( QMessageBox::question( NULL, tr( "Backup file" ),
                                         tr( "A backup file exists for this project. "
-                                        "Do you want to load it ?" ),
+                                        "Do you want to load it?" ),
                                         QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
             {
                 fileToLoad = backupFilename;
@@ -244,7 +244,7 @@ GUIProjectManager::loadProject( const QString &fileName )
         {
             if ( QMessageBox::question( NULL, tr( "Backup file" ),
                                         tr( "An outdated backup file was found. "
-                                       "Do you want to erase it ?" ),
+                                       "Do you want to erase it?" ),
                                         QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
             {
                 autoBackup.remove();

@@ -220,6 +220,6 @@ void
 PreviewWidget::error()
 {
     QMessageBox::warning( this, tr( "Rendering error" ),
-                          tr( "An error occured while rendering.\nPlease check your VLC installation"
+                          tr( "An error occurred while rendering.\nPlease check your VLC installation"
                               " before reporting the issue.") );
 }

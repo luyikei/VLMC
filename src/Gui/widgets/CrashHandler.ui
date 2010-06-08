@@ -125,7 +125,7 @@
       <item row="1" column="1" rowspan="2">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>An error occured. We're sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</string>
+         <string>An error occurred. We're sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

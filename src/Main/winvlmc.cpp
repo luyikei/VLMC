@@ -32,7 +32,7 @@ LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *lpExceptionInfo)
         return EXCEPTION_CONTINUE_SEARCH;
     }
     //TODO: get backtrace
-    //TODO: relaunch ?
+    //TODO: relaunch?
     return 0;
 }
 

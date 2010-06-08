@@ -218,7 +218,7 @@ void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
     {
         QMessageBox msgBox;
         msgBox.setText( tr( "This clip or some of its children are contained in the timeline." ) );
-        msgBox.setInformativeText( tr( "Removing it will delete it from the timeline. Do you want to proceed ?" ) );
+        msgBox.setInformativeText( tr( "Removing it will delete it from the timeline. Do you want to proceed?" ) );
         msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::Cancel );
         msgBox.setDefaultButton( QMessageBox::Ok );
         int     ret = msgBox.exec();

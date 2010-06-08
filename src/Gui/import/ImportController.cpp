@@ -151,7 +151,7 @@ ImportController::importMedia( const QString &filePath )
     Media*  media = m_temporaryMedias->addMedia( filePath );
     if ( media == NULL )
     {
-        qCritical() << "An error occured while loading media:" << filePath;
+        qCritical() << "An error occurred while loading media:" << filePath;
         return ;
     }
     Clip*   clip = new Clip( media );

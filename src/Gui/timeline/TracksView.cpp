@@ -961,7 +961,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     else if ( m_actionResize )
     {
         ClipHelper *ch = m_actionItem->clipHelper();
-        //This is a "pointless action". The resize already occured. However, by doing this
+        //This is a "pointless action". The resize already occurred. However, by doing this
         //we can have an undo action.
         Commands::trigger( new Commands::MainWorkflow::ResizeClip( ch, ch->begin(),
                                                                    ch->end(),
@@ -1051,7 +1051,7 @@ TracksView::setScale( double scaleFactor )
 {
     QMatrix matrix;
     matrix.scale( scaleFactor, 1 );
-    //TODO update the scene scale ?
+    //TODO update the scene scale?
     setMatrix( matrix );
 
     int diff = ( int ) ( sceneRect().width() - ( qreal ) m_projectDuration );
@@ -1107,7 +1107,7 @@ TracksView::updateDuration()
     // Make sure that the width is not below zero
     int minimumWidth = qMax( m_projectDuration, 0 );
 
-    // PreferredWidth not working ?
+    // PreferredWidth not working?
     m_layout->setMinimumWidth( minimumWidth );
     m_layout->setMaximumWidth( minimumWidth );
 

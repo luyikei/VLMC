@@ -299,7 +299,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         // this frame setting will most likely toggle the next condition as true
         // If this condition is true, the clipworkflow will flush all its buffer
         // as we need to resynchronize after a setTime, so this condition has to remain
-        // false. Easy ain't it ?
+        // false. Easy ain't it?
         if ( paused == true && subFrame != m_lastFrame && renderOneFrame == false)
             needRepositioning = true;
         else
@@ -309,7 +309,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     {
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
-        //Is the clip supposed to render now ?
+        //Is the clip supposed to render now?
         if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
         {
             if ( ret != NULL )
@@ -321,11 +321,11 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             else
                 m_audioStackedBuffer = reinterpret_cast<StackedBuffer<AudioClipWorkflow::AudioSample*>*>( ret );
         }
-        //Is it about to be rendered ?
+        //Is it about to be rendered?
         else if ( start > currentFrame &&
                 start - currentFrame < TrackWorkflow::nbFrameBeforePreload )
             preloadClip( cw );
-        //Is it supposed to be stopped ?
+        //Is it supposed to be stopped?
         else
             stopClipWorkflow( cw );
         ++it;

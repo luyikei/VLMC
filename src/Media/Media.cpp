@@ -97,7 +97,7 @@ void        Media::setFileType()
     else if ( Media::ImageExtensions.contains( filter ) )
         m_fileType = Media::Image;
     else
-        qDebug() << "What the hell is this extension ? And how did you loaded it ?!";
+        qDebug() << "What the hell is this extension? And how did you loaded it?!";
 }
 
 void        Media::flushVolatileParameters()

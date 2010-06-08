@@ -26,7 +26,7 @@
   * Class/struct to be singletonized just have to
   * iherit from this classe with the class/struct type in template
   * parameter.You have to do few other things, but you know your job,
-  * don't you :) ?
+  * don't you? :)
   */
 
 #ifndef SINGLETON_HPP
