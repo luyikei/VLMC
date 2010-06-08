@@ -136,7 +136,7 @@ MainWorkflow::getOutput( TrackType trackType, bool paused )
         }
         else
         {
-            m_outputBuffers->audio = static_cast<AudioClipWorkflow::AudioSample*>( ret );
+            m_outputBuffers->audio = static_cast<Workflow::AudioSample*>( ret );
         }
     }
     return m_outputBuffers;

@@ -138,8 +138,8 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                 //m_tmpAudioBuffer is NULl by default, so it will remain NULL if we continue;
                 if ( ret == NULL )
                     continue ;
-                StackedBuffer<AudioClipWorkflow::AudioSample*>* stackedBuffer =
-                    reinterpret_cast<StackedBuffer<AudioClipWorkflow::AudioSample*>*> ( ret );
+                StackedBuffer<Workflow::AudioSample*>* stackedBuffer =
+                    reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*> ( ret );
                 if ( stackedBuffer != NULL )
                     return stackedBuffer->get();
             }

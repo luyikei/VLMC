@@ -57,6 +57,15 @@ namespace   Workflow
             quint8      *m_buffer;
             quint32     m_size;
     };
+    struct  AudioSample
+    {
+        unsigned char*  buff;
+        size_t          size;
+        quint32         nbSample;
+        quint32         nbChannels;
+        qint64          ptsDiff;
+        qint64          pts;
+    };
 }
 
 #endif // TYPES_H

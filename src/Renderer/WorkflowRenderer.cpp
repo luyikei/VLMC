@@ -182,7 +182,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 {
     qint64                              ptsDiff;
     quint32                             nbSample;
-    AudioClipWorkflow::AudioSample      *renderAudioSample;
+    Workflow::AudioSample               *renderAudioSample;
 
     if ( m_stopping == false && m_paused == false )
     {

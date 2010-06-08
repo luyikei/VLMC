@@ -41,6 +41,7 @@ class   TrackWorkflow;
 namespace   Workflow
 {
     class   Frame;
+    class   AudioSample;
 }
 
 #include <QObject>
@@ -61,8 +62,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         struct      OutputBuffers
         {
-            const Workflow::Frame*              video;
-            AudioClipWorkflow::AudioSample*     audio;
+            const Workflow::Frame               *video;
+            Workflow::AudioSample               *audio;
         };
         /**
          *  \enum   Represents the potential Track types.

@@ -28,24 +28,20 @@
 
 #include <QPointer>
 
+namespace Workflow
+{
+    struct  AudioSample;
+}
+
 class   AudioClipWorkflow : public ClipWorkflow
 {
     Q_OBJECT
 
     public:
-        struct  AudioSample
-        {
-            unsigned char*  buff;
-            size_t          size;
-            quint32         nbSample;
-            quint32         nbChannels;
-            qint64          ptsDiff;
-            qint64          pts;
-        };
-        class   StackedBuffer : public ::StackedBuffer<AudioSample*>
+        class   StackedBuffer : public ::StackedBuffer<Workflow::AudioSample*>
         {
             public:
-                StackedBuffer( AudioSample* lvf, AudioClipWorkflow* poolHandler,
+                StackedBuffer( Workflow::AudioSample* lvf, AudioClipWorkflow* poolHandler,
                                     bool mustBeReleased = true);
                 virtual void        release();
             private:
@@ -66,10 +62,10 @@ class   AudioClipWorkflow : public ClipWorkflow
         void                        releasePrealocated();
 
     private:
-        void                        releaseBuffer( AudioSample *sample );
+        void                        releaseBuffer( Workflow::AudioSample *sample );
         void                        initVlcOutput();
-        AudioSample*                createBuffer( size_t size );
-        void                        insertPastBlock( AudioSample* as );
+        Workflow::AudioSample*      createBuffer( size_t size );
+        void                        insertPastBlock( Workflow::AudioSample* as );
         static void                 lock( AudioClipWorkflow* clipWorkflow,
                                           quint8** pcm_buffer , quint32 size );
         static void                 unlock( AudioClipWorkflow* clipWorkflow,
@@ -79,8 +75,8 @@ class   AudioClipWorkflow : public ClipWorkflow
                                             quint32 size, qint64 pts );
 
     private:
-        QQueue<AudioSample*>        m_computedBuffers;
-        QQueue<AudioSample*>        m_availableBuffers;
+        QQueue<Workflow::AudioSample*>      m_computedBuffers;
+        QQueue<Workflow::AudioSample*>      m_availableBuffers;
         qint64                      m_ptsOffset;
 
         static const quint32   nbBuffers = 256;

@@ -319,7 +319,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             if ( m_trackType == MainWorkflow::VideoTrack )
                 m_videoStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
             else
-                m_audioStackedBuffer = reinterpret_cast<StackedBuffer<AudioClipWorkflow::AudioSample*>*>( ret );
+                m_audioStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*>( ret );
         }
         //Is it about to be rendered?
         else if ( start > currentFrame &&
