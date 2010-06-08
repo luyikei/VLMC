@@ -41,7 +41,6 @@ class   AudioClipWorkflow : public ClipWorkflow
             quint32         nbChannels;
             qint64          ptsDiff;
             qint64          pts;
-            quint32         debugId;
         };
         class   StackedBuffer : public ::StackedBuffer<AudioSample*>
         {

@@ -44,7 +44,6 @@ AudioClipWorkflow::preallocate()
         AudioSample *as = new AudioSample;
         as->buff = NULL;
         m_availableBuffers.push_back( as );
-        as->debugId = i;
     }
 }
 
@@ -130,7 +129,6 @@ AudioClipWorkflow::createBuffer( size_t size )
     AudioSample *as = new AudioSample;
     as->buff = new uchar[size];
     as->size = size;
-    as->debugId = -1;
     return as;
 }
 
