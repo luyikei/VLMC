@@ -24,6 +24,8 @@
 
 using namespace Workflow;
 
+#include <cstring> //memcpy
+
 Frame::Frame( quint32 width, quint32 height ) :
         ptsDiff( 0 ),
         m_width( width ),
@@ -66,4 +68,12 @@ quint32
 Frame::size() const
 {
     return m_size;
+}
+
+Frame*
+Frame::clone() const
+{
+    Frame   *f = new Frame( m_width, m_height );
+    memcpy( f->buffer(), m_buffer, m_size );
+    return f;
 }

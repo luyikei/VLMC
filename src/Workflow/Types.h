@@ -38,6 +38,7 @@ namespace   Workflow
             quint32         height() const;
             quint8          *buffer();
             const quint8    *buffer() const;
+            Frame           *clone() const;
             /**
              *  \returns    The frame size in pixels
              *
