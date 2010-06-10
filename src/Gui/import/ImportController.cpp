@@ -69,8 +69,8 @@ ImportController::ImportController(QWidget *parent) :
     m_filesModel->setNameFilters( m_nameFilters );
     m_filesModel->setRootPath( "/" );
     m_filesModel->setNameFilterDisables( false );
-
     restoreCurrentPath();
+    m_filesModel->sort( 0 );
 
     m_ui->treeView->setModel( m_filesModel );
     m_ui->treeView->setHeaderHidden( true );
@@ -81,8 +81,6 @@ ImportController::ImportController(QWidget *parent) :
     m_ui->treeView->setColumnHidden( 1, true );
     m_ui->treeView->setColumnHidden( 2, true );
     m_ui->treeView->setColumnHidden( 3, true );
-    for ( int i = 0; i < m_filesModel->columnCount(); ++i )
-        m_ui->treeView->sortByColumn( i );
 
     m_ui->forwardButton->setEnabled( true );
 
