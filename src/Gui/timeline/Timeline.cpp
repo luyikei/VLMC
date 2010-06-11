@@ -194,7 +194,8 @@ Timeline::save( QXmlStreamWriter &project ) const
             continue ;
         project.writeStartElement( "item" );
         project.writeAttribute( "uuid", item->clipHelper()->uuid().toString() );
-        project.writeAttribute( "color", item->itemColor().name() );
+        if ( item->itemColor().isValid() == true )
+            project.writeAttribute( "color", item->itemColor().name() );
         if ( item->groupItem() != NULL )
         {
             project.writeStartElement( "linkedTo" );
@@ -226,9 +227,11 @@ Timeline::load( const QDomElement &root )
         AbstractGraphicsMediaItem   *item = tracksView()->item( uuid );
         if ( item != NULL )
         {
-            QString     color = elem.attribute( "color" );
-            item->setColor( color );
-
+            if ( elem.hasAttribute( "color" ) == true )
+            {
+                QString     color = elem.attribute( "color" );
+                item->setColor( color );
+            }
             QDomElement links = elem.firstChildElement( "linkedTo" );
             if ( links.isNull() == false )
             {
