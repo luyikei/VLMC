@@ -59,12 +59,12 @@ class   VideoClipWorkflow : public ClipWorkflow
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         void                    releaseBuffer( Workflow::Frame* frame );
-        void                    flushComputedBuffers();
+        virtual void            flushComputedBuffers();
         /**
          *  \brief              Pre-allocate some image buffers.
          */
         void                    preallocate();
-        void                    releasePrealocated();
+        virtual void            releasePrealocated();
 
     private:
         QQueue<Workflow::Frame*>    m_computedBuffers;

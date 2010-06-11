@@ -34,7 +34,7 @@ AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
 
 AudioClipWorkflow::~AudioClipWorkflow()
 {
-    releasePrealocated();
+    stop();
 }
 
 void

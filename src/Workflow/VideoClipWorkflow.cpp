@@ -39,7 +39,7 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
 
 VideoClipWorkflow::~VideoClipWorkflow()
 {
-    releasePrealocated();
+    stop();
 }
 
 void

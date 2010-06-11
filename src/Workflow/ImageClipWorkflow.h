@@ -38,6 +38,7 @@ class   ImageClipWorkflow : public ClipWorkflow
                 virtual void    release();
         };
         ImageClipWorkflow( ClipHelper* ch );
+        ~ImageClipWorkflow();
 
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;

@@ -40,6 +40,11 @@ ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
              this, SLOT( stopComputation() ), Qt::QueuedConnection );
 }
 
+ImageClipWorkflow::~ImageClipWorkflow()
+{
+    stop();
+}
+
 void
 ImageClipWorkflow::initVlcOutput()
 {

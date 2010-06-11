@@ -57,9 +57,9 @@ class   AudioClipWorkflow : public ClipWorkflow
     protected:
         virtual quint32             getNbComputedBuffers() const;
         virtual quint32             getMaxComputedBuffers() const;
-        void                        flushComputedBuffers();
+        virtual void                flushComputedBuffers();
         void                        preallocate();
-        void                        releasePrealocated();
+        virtual void                releasePrealocated();
 
     private:
         void                        releaseBuffer( Workflow::AudioSample *sample );

@@ -49,6 +49,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
 
 ClipWorkflow::~ClipWorkflow()
 {
+    //Don't call stop() method from here, the Vtable is probably already gone.
     delete m_renderWaitCond;
     delete m_renderLock;
     delete m_initWaitCond;
