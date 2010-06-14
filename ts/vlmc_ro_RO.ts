@@ -137,7 +137,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>A crash occurred. Signal received: </source>
-        <translation type="unfinished"></translation>
+        <translation>A aparut o eroare. Semnal receptionat: </translation>
     </message>
 </context>
 <context>
@@ -167,11 +167,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrei sa salvezi?</translation>
     </message>
     <message>
         <source>Failed to load project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Esuare la incarcarea proiectului</translation>
     </message>
 </context>
 <context>
@@ -444,111 +444,111 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editeaza</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vizualizare</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Unelte</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fereastra</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ajutor</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fisier</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Inchide</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Despre</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Preferinte</translation>
     </message>
     <message>
         <source>&amp;New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Proiect nou</translation>
     </message>
     <message>
         <source>Open the wizard to create a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide indrumatorul sa creezi un proiect nou</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tot ecranul</translation>
     </message>
     <message>
         <source>&amp;Render</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Randare</translation>
     </message>
     <message>
         <source>Render your project</source>
-        <translation type="unfinished"></translation>
+        <translation>Randeaza proiectul tau</translation>
     </message>
     <message>
         <source>&amp;Load Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Incarca proiectul</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salveaza</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importa</translation>
     </message>
     <message>
         <source>Import new medias into the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa noi fisiere media in proiectul curent</translation>
     </message>
     <message>
         <source>Proj&amp;ect Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Proj&amp;ect Preferinte</translation>
     </message>
     <message>
         <source>Save &amp;As</source>
-        <translation type="unfinished"></translation>
+        <translation>Salveaza &amp;ca</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Inchide proiectul</translation>
     </message>
     <message>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizeaza uneltele mouse-ului sa manipulezi regiunile in timeline</translation>
     </message>
     <message>
         <source>Use the scissors to cut regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizeaza foarfeca pentru taierea regiunilor in timeline</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Micsorare zoom</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Marire  zoom</translation>
     </message>
     <message>
         <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC nu s-a inchis corect.Vrei sa recuperezi  proiectul?</translation>
     </message>
     <message>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC nu a reusit restaurarea proiectului tau.Ne cerem scuze pentru acest incovenient</translation>
     </message>
 </context>
 <context>
@@ -567,11 +567,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>This clip or some of its children are contained in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Acest clip sau anumite sectiuni ale sale sunt continute de timeline.</translation>
     </message>
     <message>
         <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Stergerea va duce la eliminarea din timelane.Doresti acest lucru?</translation>
     </message>
 </context>
 <context>
@@ -813,19 +813,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open the new project wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide indrumatorul de proiect nou</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Limba</translation>
     </message>
     <message>
         <source>Confirm clip deletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Confima stergerea clipului</translation>
     </message>
     <message>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Intreaba pentru confirmare inainte de stergerea clipului din timeline</translation>
     </message>
 </context>
 <context>
@@ -836,46 +836,46 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Go to the previous frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Mergi la cadrul anterior</translation>
     </message>
     <message>
         <source>Play / Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruleaza/Pauza</translation>
     </message>
     <message>
         <source>Go to the next frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Mergi la cadrul urmator</translation>
     </message>
     <message>
         <source>Set marker A</source>
-        <translation type="unfinished"></translation>
+        <translation>Seteaza marker A</translation>
     </message>
     <message>
         <source>Set marker B</source>
-        <translation type="unfinished"></translation>
+        <translation>Seteaza marker B</translation>
     </message>
     <message>
         <source>Cut at markers position</source>
-        <translation type="unfinished"></translation>
+        <translation>Taie corespunzator poztitiilor markerelor</translation>
     </message>
     <message>
         <source>Stop the playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
 </context>
 <context>
     <name>ProjectManager</name>
     <message>
         <source>Invalid project file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nume invalid al proiectului.</translation>
     </message>
     <message>
         <source>Can&apos;t open project file. (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu pot deschide proiectul. (%1)</translation>
     </message>
     <message>
         <source>Failed to load the project file: %1. Aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esuare la incarcarea proiectului: %1. Întrerupere.</translation>
     </message>
 </context>
 <context>
@@ -1004,7 +1004,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Output file already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fisierul rezultat deja exista,vrei sa-l suprascri?</translation>
     </message>
 </context>
 <context>
@@ -1082,23 +1082,23 @@ p, li { white-space: pre-wrap; }
     <name>TracksScene</name>
     <message>
         <source>Confirm the deletion of the region?</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmi stergerea regiunii?</translation>
     </message>
     <message>
         <source>Confirm the deletion of those regions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmi stergerea acestor regiuni?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Da</translation>
     </message>
     <message>
         <source>Yes, don&apos;t ask me again</source>
-        <translation type="unfinished"></translation>
+        <translation>Da,nu mai intreba</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu</translation>
     </message>
 </context>
 <context>
