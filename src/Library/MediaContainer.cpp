@@ -203,12 +203,18 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
         if ( clip.hasAttribute( "media" ) == true )
         {
             QString media = clip.attribute( "media" );
-            Media*  m = m_medias[media];
-            if ( m != NULL )
+            if ( m_medias.contains( media ) == true )
             {
+                Media*  m = m_medias[media];
                 c = new Clip( m, 0, -1, uuid );
                 m->setBaseClip( c );
                 addClip( c );
+            }
+            else
+            {
+                qWarning() << "Can't find parent media:" << media;
+                clip = clip.nextSibling().toElement();
+                continue ;
             }
         }
         else
