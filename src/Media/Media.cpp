@@ -27,9 +27,11 @@
   */
 
 #include "Media.h"
+
+#include "Clip.h"
 #include "MetaDataManager.h"
 #include "VLCMedia.h"
-#include "Clip.h"
+#include "Workspace.h"
 
 #include <QtDebug>
 #include <QUrl>
@@ -271,12 +273,6 @@ Media::isInWorkspace() const
 }
 
 void
-Media::setInWorkspace(bool inWorkspace )
-{
-    m_inWorkspace = inWorkspace;
-}
-
-void
 Media::setFilePath( const QString &filePath )
 {
     delete m_fileInfo;
@@ -286,4 +282,8 @@ Media::setFilePath( const QString &filePath )
         m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
     else
         m_mrl = "fake:///" + QUrl::toPercentEncoding( filePath, "/" );
+    delete m_vlcMedia;
+    m_vlcMedia = new LibVLCpp::Media( m_mrl );
+    if ( Workspace::isInProjectDir( filePath ) == true )
+        m_inWorkspace = true;
 }

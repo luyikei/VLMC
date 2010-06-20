@@ -75,6 +75,11 @@ public:
         File,
         Stream
     };
+    static const QString        VideoExtensions;
+    static const QString        AudioExtensions;
+    static const QString        ImageExtensions;
+    static const QString        streamPrefix;
+
     Media( const QString& filePath );
     virtual ~Media();
 
@@ -93,6 +98,11 @@ public:
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
+    /**
+     *  \brief                  Set this media's path.
+     *
+     *  \param      path        The media path. This should be an absolute path.
+     */
     void                        setFilePath( const QString& path );
 
     /**
@@ -128,11 +138,8 @@ public:
     int                         nbVideoTracks() const;
 
     FileType                    fileType() const;
-    static const QString        VideoExtensions;
-    static const QString        AudioExtensions;
-    static const QString        ImageExtensions;
+
     InputType                   inputType() const;
-    static const QString        streamPrefix;
 
     void                        emitMetaDataComputed();
     void                        emitAudioSpectrumComuted();
@@ -148,7 +155,6 @@ public:
     void                        save( QXmlStreamWriter& project );
 
     bool                        isInWorkspace() const;
-    void                        setInWorkspace( bool inWorkspace );
 
 private:
     void                        setFileType();

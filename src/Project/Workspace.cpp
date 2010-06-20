@@ -26,6 +26,7 @@
 #include "Library.h"
 #include "Media.h"
 #include "Project/WorkspaceWorker.h"
+#include "SettingsManager.h"
 
 #include <QtDebug>
 
@@ -67,5 +68,12 @@ void
 Workspace::copyTerminated( Media *media, QString dest )
 {
     media->setFilePath( dest );
-    media->setInWorkspace( true );
+}
+
+bool
+Workspace::isInProjectDir( const QString &filePath )
+{
+    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+
+    return ( filePath.startsWith( projectDir ) );
 }

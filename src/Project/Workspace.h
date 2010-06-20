@@ -36,6 +36,7 @@ class Workspace : public QObject, public Singleton<Workspace>
     public:
         static const QString        workspacePrefix;
 
+        static bool                 isInProjectDir( const QString& filePath );
     private:
         Workspace();
         ~Workspace(){}
