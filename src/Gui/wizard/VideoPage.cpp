@@ -23,9 +23,7 @@
 #include "VideoPage.h"
 #include "SettingsManager.h"
 
-#include <QtDebug>
-
-VideoPage::VideoPage( QWidget *parent ) :
+VideoPage::VideoPage( QWidget* parent ) :
     QWizardPage( parent )
 {
     ui.setupUi( this );
@@ -41,7 +39,8 @@ VideoPage::VideoPage( QWidget *parent ) :
              this, SLOT( updateAudioPresets() ) );
 }
 
-void VideoPage::changeEvent( QEvent *e )
+void
+VideoPage::changeEvent( QEvent* e )
 {
     QWizardPage::changeEvent( e );
     switch ( e->type() )
@@ -54,17 +53,19 @@ void VideoPage::changeEvent( QEvent *e )
     }
 }
 
-int VideoPage::nextId() const
+int
+VideoPage::nextId() const
 {
     return -1;
 }
 
-void VideoPage::initializePage()
+void
+VideoPage::initializePage()
 {
-    int projectFps = 30;
-    int projectHeight = 300;
-    int projectWidth = 480;
-    int sampleRate = 44000;
+    int     projectFps = 30;
+    int     projectHeight = 300;
+    int     projectWidth = 480;
+    int     sampleRate = 44000;
 
     ui.comboBoxVideoPresets->setCurrentIndex( 0 );
     ui.comboBoxAudioPresets->setCurrentIndex( 1 );
@@ -90,12 +91,13 @@ void VideoPage::initializePage()
     }
 }
 
-bool VideoPage::validatePage()
+bool
+VideoPage::validatePage()
 {
-    SettingsManager* sManager = SettingsManager::getInstance();
-    QVariant    projectFps( ui.doubleSpinBoxVideoFPS->value() );
-    QVariant    projectHeight( ui.spinBoxVideoHeight->value() );
-    QVariant    projectWidth( ui.spinBoxVideoWidth->value() );
+    SettingsManager*    sManager = SettingsManager::getInstance();
+    QVariant            projectFps( ui.doubleSpinBoxVideoFPS->value() );
+    QVariant            projectHeight( ui.spinBoxVideoHeight->value() );
+    QVariant            projectWidth( ui.spinBoxVideoWidth->value() );
 
     sManager->setValue( "video/VLMCOutputFPS", projectFps, SettingsManager::Project );
     sManager->setValue( "video/VideoProjectHeight", projectHeight, SettingsManager::Project );
@@ -104,24 +106,27 @@ bool VideoPage::validatePage()
     return true;
 }
 
-void VideoPage::cleanupPage()
+void
+VideoPage::cleanupPage()
 {
-
 }
 
-void VideoPage::setVideoFormEnabled( bool enabled )
+void
+VideoPage::setVideoFormEnabled( bool enabled )
 {
     ui.spinBoxVideoWidth->setEnabled( enabled );
     ui.spinBoxVideoHeight->setEnabled( enabled );
 }
 
-void VideoPage::setAudioFormEnabled( bool enabled )
+void
+VideoPage::setAudioFormEnabled( bool enabled )
 {
     ui.spinBoxAudioChannels->setEnabled( enabled );
     ui.comboBoxAudioSamplerate->setEnabled( enabled );
 }
 
-void VideoPage::updateVideoPresets()
+void
+VideoPage::updateVideoPresets()
 {
     if ( ui.comboBoxVideoPresets->currentIndex() == 0 )
         setVideoFormEnabled( true );
@@ -155,7 +160,8 @@ void VideoPage::updateVideoPresets()
     }
 }
 
-void VideoPage::updateAudioPresets()
+void
+VideoPage::updateAudioPresets()
 {
     if ( ui.comboBoxAudioPresets->currentIndex() == 0 )
         setAudioFormEnabled( true );
@@ -174,7 +180,8 @@ void VideoPage::updateAudioPresets()
     }
 }
 
-void VideoPage::setVideoResolution( int width, int height )
+void
+VideoPage::setVideoResolution( int width, int height )
 {
     ui.spinBoxVideoWidth->setValue( width );
     ui.spinBoxVideoHeight->setValue( height );
