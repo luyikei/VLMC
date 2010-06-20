@@ -94,7 +94,6 @@ void    ProjectManager::loadWorkflow()
 
     MainWorkflow::getInstance()->loadProject( root );
     loadTimeline( root );
-    SettingsManager::getInstance()->load( root );
     if ( m_projectFile != NULL )
     {
         appendToRecentProject( m_projectFile->fileName() );
@@ -139,6 +138,12 @@ void    ProjectManager::loadProject( const QString& fileName )
 
     QDomElement     root = m_domDocument->documentElement();
 
+    //Load settings first, as it contains some informations about the workspace.
+    SettingsManager::getInstance()->load( root );
+    QString     workspacePath = VLMC_GET_STRING("general/VLMCWorkspace");
+    QString     projectName = VLMC_PROJECT_GET_STRING("general/ProjectName");
+    QString     projectPath = workspacePath + '/' + projectName.replace( " ", "_" );
+    SettingsManager::getInstance()->setValue( "general/ProjectDir", projectPath, SettingsManager::Project );
     Library::getInstance()->loadProject( root );
 }
 
