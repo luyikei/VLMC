@@ -54,6 +54,9 @@ PreferenceWidget::PreferenceWidget( const char *category, SettingsManager::Type 
 
     foreach ( SettingValue* s, settings.values() )
     {
+        //Do not display private variables
+        if ( ( s->flags() & SettingValue::Private ) != 0 )
+            continue ;
         ISettingsCategoryWidget    *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
         label->setToolTip( tr( s->description() ) );
