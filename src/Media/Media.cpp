@@ -53,20 +53,12 @@ Media::Media( const QString& filePath )
     m_baseClip( NULL ),
     m_nbAudioTracks( 0 ),
     m_nbVideoTracks( 0 ),
-    m_metadataComputed( false )
+    m_metadataComputed( false ),
+    m_inWorkspace( false )
 {
     if ( filePath.startsWith( Media::streamPrefix ) == false )
     {
-        m_inputType = Media::File;
-        m_fileInfo = new QFileInfo( filePath );
-        m_fileName = m_fileInfo->fileName();
-        setFileType();
-        if ( m_fileType == Media::Video || m_fileType == Media::Audio )
-            m_mrl = "file:///" + QUrl::toPercentEncoding( m_fileInfo->absoluteFilePath(),
-                                                          "/" );
-        else
-            m_mrl = "fake:///" + QUrl::toPercentEncoding( m_fileInfo->absoluteFilePath(),
-                                                          "/" );
+        setFilePath( filePath );
     }
     else
     {
@@ -76,9 +68,9 @@ Media::Media( const QString& filePath )
         m_fileType = Media::Video;
         m_fileName = m_mrl;
         qDebug() << "Loading a stream";
+        m_vlcMedia = new LibVLCpp::Media( m_mrl );
     }
     m_audioValueList = new QList<int>();
-    m_vlcMedia = new LibVLCpp::Media( m_mrl );
 }
 
 Media::~Media()
@@ -278,19 +270,27 @@ Media::isInWorkspace() const
 void
 Media::setFilePath( const QString &filePath )
 {
-    delete m_fileInfo;
+    if ( m_fileInfo )
+        delete m_fileInfo;
     m_fileInfo = new QFileInfo( filePath );
     m_fileName = m_fileInfo->fileName();
+    setFileType();
     if ( m_fileType == Media::Video || m_fileType == Media::Audio )
         m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
     else
         m_mrl = "fake:///" + QUrl::toPercentEncoding( filePath, "/" );
-    delete m_vlcMedia;
+    if ( m_vlcMedia )
+        delete m_vlcMedia;
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
     //Don't call this before setting all the internals, as it relies on Media::fileInfo.
     if ( Workspace::isInProjectDir( this ) == true )
     {
         m_inWorkspace = true;
         m_workspacePath = Workspace::pathInProjectDir( this );
+    }
+    else
+    {
+        m_inWorkspace = false;
+        m_workspacePath = "";
     }
 }
