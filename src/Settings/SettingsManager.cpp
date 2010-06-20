@@ -160,14 +160,13 @@ SettingsManager::save( QXmlStreamWriter& project ) const
     SettingHash::const_iterator     end = m_xmlSettings.end();
 
     project.writeStartElement( "project" );
-    while ( it != end )
+    for ( ; it != end; ++it )
     {
         if ( ( it.value()->flags() & SettingValue::Private ) != 0 )
             continue ;
         project.writeStartElement( "property" );
         project.writeAttribute( "key", it.key() );
         project.writeAttribute( "value", it.value()->get().toString() );
-        ++it;
         project.writeEndElement();
     }
     project.writeEndElement();
