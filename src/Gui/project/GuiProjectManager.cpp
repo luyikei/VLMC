@@ -97,7 +97,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
     {
         QString outputFileName =
             QFileDialog::getSaveFileName( NULL, "Enter the output file name",
-                                          VLMC_GET_STRING( "general/VLMCWorkspace" ),
+                                          VLMC_PROJECT_GET_STRING( "general/ProjectDir" ),
                                           "VLMC project file(*.vlmc)" );
         if ( outputFileName.length() == 0 )
             return false;
