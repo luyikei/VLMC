@@ -57,13 +57,15 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );
-    VLMC_CREATE_PROJECT_STRING( "general/VLMCWorkspace", QDir::homePath(),
+    VLMC_CREATE_PREFERENCE_STRING( "general/VLMCWorkspace", QDir::homePath(),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Workspace location" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's videos will be stored" ) );
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's medias will be stored" ) );
 
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
+
+    VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/ProjectDir", "" );
 
     //We have to wait for the library to be loaded before loading the workflow
     connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
