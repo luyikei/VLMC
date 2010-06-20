@@ -145,7 +145,11 @@ SettingsManager::save() const
     SettingHash::const_iterator ed = m_classicSettings.end();
 
     for ( ; it != ed; ++it )
+    {
+        if ( ( it.value()->flags() & SettingValue::Private ) != 0 )
+            continue ;
         sett.setValue( it.key(), it.value()->get() );
+    }
     sett.sync();
 }
 
@@ -158,6 +162,8 @@ SettingsManager::save( QXmlStreamWriter& project ) const
     project.writeStartElement( "project" );
     while ( it != end )
     {
+        if ( ( it.value()->flags() & SettingValue::Private ) != 0 )
+            continue ;
         project.writeStartElement( "property" );
         project.writeAttribute( "key", it.key() );
         project.writeAttribute( "value", it.value()->get().toString() );
