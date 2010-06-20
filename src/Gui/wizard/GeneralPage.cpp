@@ -76,7 +76,7 @@ void GeneralPage::initializePage()
     ui.lineEditName->setText( projectName );
 
     //fetching the global workspace path
-    QString workspacePath = VLMC_PROJECT_GET_STRING( "general/VLMCWorkspace" );
+    QString workspacePath = VLMC_GET_STRING( "general/VLMCWorkspace" );
     ui.lineEditWorkspace->setText( workspacePath );
 
     updateProjectLocation();
@@ -109,7 +109,7 @@ bool GeneralPage::validatePage()
 
     QVariant projectName( ui.lineEditName->text() );
     sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
-    sManager->setValue( "general/VLMCWorkspace", ui.lineEditWorkspace->text(), SettingsManager::Project );
+    sManager->setValue( "general/VLMCWorkspace", ui.lineEditWorkspace->text(), SettingsManager::Vlmc );
 
     //Create the project directory in the workspace dir.
     QString     projectPath = ui.lineEditName->text().replace( ' ', '_' );
