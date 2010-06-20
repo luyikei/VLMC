@@ -93,6 +93,7 @@ public:
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
+    void                        setFilePath( const QString& path );
 
     /**
         \return                 Returns the length of this media (ie the
@@ -146,6 +147,9 @@ public:
 
     void                        save( QXmlStreamWriter& project );
 
+    bool                        isInWorkspace() const;
+    void                        setInWorkspace( bool inWorkspace );
+
 private:
     void                        setFileType();
 
@@ -167,6 +171,7 @@ protected:
     int                         m_nbAudioTracks;
     int                         m_nbVideoTracks;
     bool                        m_metadataComputed;
+    bool                        m_inWorkspace;
 
 signals:
     void                        metaDataComputed( const Media* );

@@ -111,7 +111,7 @@ MediaContainer::addClip( Clip* clip )
              ( clip->getMedia()->fileInfo() == c->getMedia()->fileInfo() &&
                     ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
         {
-            qDebug() << "Clip already loaded.";
+            qWarning() << "Clip already loaded.";
             return false;
         }
     }

@@ -263,3 +263,27 @@ Media::setBaseClip( Clip *clip )
     Q_ASSERT( m_baseClip == NULL );
     m_baseClip = clip;
 }
+
+bool
+Media::isInWorkspace() const
+{
+    return m_inWorkspace;
+}
+
+void
+Media::setInWorkspace(bool inWorkspace )
+{
+    m_inWorkspace = inWorkspace;
+}
+
+void
+Media::setFilePath( const QString &filePath )
+{
+    delete m_fileInfo;
+    m_fileInfo = new QFileInfo( filePath );
+    m_fileName = m_fileInfo->fileName();
+    if ( m_fileType == Media::Video || m_fileType == Media::Audio )
+        m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
+    else
+        m_mrl = "fake:///" + QUrl::toPercentEncoding( filePath, "/" );
+}

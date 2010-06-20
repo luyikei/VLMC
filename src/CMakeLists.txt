@@ -19,6 +19,8 @@ SET(VLMC_SRCS
     Metadata/MetaDataManager.cpp
     Metadata/MetaDataWorker.cpp
     Project/ProjectManager.cpp
+    Project/Workspace.cpp
+    Project/WorkspaceWorker.cpp
     Renderer/ClipRenderer.cpp
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp
@@ -59,6 +61,8 @@ SET (VLMC_HDRS
     Metadata/MetaDataManager.h
     Metadata/MetaDataWorker.h
     Project/ProjectManager.h
+    Project/Workspace.h
+    Project/WorkspaceWorker.h
     Renderer/ClipRenderer.h
     Renderer/GenericRenderer.h
     Renderer/WorkflowFileRenderer.h

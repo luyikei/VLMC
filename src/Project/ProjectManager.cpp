@@ -27,6 +27,7 @@
 #include "project/GuiProjectManager.h"
 #include "ProjectManager.h"
 #include "SettingsManager.h"
+#include "Workspace.h"
 
 #include <QDir>
 #include <QSettings>
@@ -69,6 +70,8 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 
     //We have to wait for the library to be loaded before loading the workflow
     connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
+    //Create the workspace:
+    Workspace::getInstance();
 }
 
 ProjectManager::~ProjectManager()
