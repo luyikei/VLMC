@@ -41,7 +41,7 @@ Workspace::Workspace()
 void
 Workspace::copyToWorkspace( Media *media )
 {
-    qDebug() << "Copying media:" << media->fileInfo() << "to workspace.";
+    qDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
     if ( media->isInWorkspace() == false )
     {
         WorkspaceWorker *worker = new WorkspaceWorker( media );
