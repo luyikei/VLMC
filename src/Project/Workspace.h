@@ -36,7 +36,8 @@ class Workspace : public QObject, public Singleton<Workspace>
     public:
         static const QString        workspacePrefix;
 
-        static bool                 isInProjectDir( const QString& filePath );
+        static bool                 isInProjectDir( const Media* media );
+        static QString              pathInProjectDir( const Media* media );
     private:
         Workspace();
         ~Workspace(){}

@@ -255,7 +255,10 @@ void
 Media::save( QXmlStreamWriter& project )
 {
     project.writeStartElement( "media" );
-    project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
+    if ( m_inWorkspace == true )
+        project.writeAttribute( "mrl", Workspace::workspacePrefix + m_workspacePath );
+    else
+        project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
     project.writeEndElement();
 }
 
@@ -284,6 +287,10 @@ Media::setFilePath( const QString &filePath )
         m_mrl = "fake:///" + QUrl::toPercentEncoding( filePath, "/" );
     delete m_vlcMedia;
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
-    if ( Workspace::isInProjectDir( filePath ) == true )
+    //Don't call this before setting all the internals, as it relies on Media::fileInfo.
+    if ( Workspace::isInProjectDir( this ) == true )
+    {
         m_inWorkspace = true;
+        m_workspacePath = Workspace::pathInProjectDir( this );
+    }
 }

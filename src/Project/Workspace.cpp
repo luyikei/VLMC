@@ -71,9 +71,18 @@ Workspace::copyTerminated( Media *media, QString dest )
 }
 
 bool
-Workspace::isInProjectDir( const QString &filePath )
+Workspace::isInProjectDir( const Media *media )
 {
     const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
 
-    return ( filePath.startsWith( projectDir ) );
+    return ( media->fileInfo()->absoluteFilePath().startsWith( projectDir ) );
 }
+
+QString
+Workspace::pathInProjectDir( const Media *media )
+{
+    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+
+    return ( media->fileInfo()->absoluteFilePath().mid( projectDir.length() ) );
+}
+

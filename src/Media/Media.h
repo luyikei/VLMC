@@ -178,6 +178,7 @@ protected:
     int                         m_nbVideoTracks;
     bool                        m_metadataComputed;
     bool                        m_inWorkspace;
+    QString                     m_workspacePath;
 
 signals:
     void                        metaDataComputed( const Media* );
