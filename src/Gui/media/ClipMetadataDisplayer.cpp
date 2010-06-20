@@ -56,6 +56,8 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
     //nb tracks :
     m_ui->nbVideoTracksValueLabel->setText( QString::number( media->nbVideoTracks() ) );
     m_ui->nbAudioTracksValueLabel->setText( QString::number( media->nbAudioTracks() ) );
+    //Path:
+    m_ui->pathValueLabel->setText( media->fileInfo()->filePath() );
 }
 
 void
