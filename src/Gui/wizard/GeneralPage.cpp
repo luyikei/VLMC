@@ -117,6 +117,7 @@ bool GeneralPage::validatePage()
 
     if ( workspaceDir.exists( projectPath ) == false )
         workspaceDir.mkdir( projectPath );
+    sManager->setValue( "general/ProjectDir", ui.lineEditProjectLocation->text(), SettingsManager::Project );
     return true;
 }
 
