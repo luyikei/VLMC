@@ -111,6 +111,12 @@ bool GeneralPage::validatePage()
     sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
     sManager->setValue( "general/VLMCWorkspace", ui.lineEditWorkspace->text(), SettingsManager::Project );
 
+    //Create the project directory in the workspace dir.
+    QString     projectPath = ui.lineEditName->text().replace( ' ', '_' );
+    QDir        workspaceDir( ui.lineEditWorkspace->text() );
+
+    if ( workspaceDir.exists( projectPath ) == false )
+        workspaceDir.mkdir( projectPath );
     return true;
 }
 
