@@ -31,6 +31,8 @@
 #include "Library.h"
 #include "Media.h"
 #include "MetaDataManager.h"
+#include "SettingsManager.h"
+#include "Workspace.h"
 
 #include <QtDebug>
 #include <QDomElement>
@@ -54,7 +56,14 @@ Library::loadProject( const QDomElement& doc )
         if ( media.hasAttribute( "mrl" ) == true )
         {
             QString mrl = media.attribute( "mrl" );
-            Media* m = addMedia( mrl );
+
+            //If in workspace: compute the path in workspace
+            if ( mrl.startsWith( Workspace::workspacePrefix ) == true )
+            {
+                QString     projectPath = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+                mrl = projectPath + '/' + mrl.mid( Workspace::workspacePrefix.length() );
+            }
+            Media*  m = addMedia( mrl );
             connect( m, SIGNAL( metaDataComputed( const Media* ) ),
                      this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
             m_medias[mrl] = m;
