@@ -218,41 +218,6 @@ SettingsManager::load( const QDomElement &root )
 }
 
 void
-SettingsManager::commit( SettingsManager::Type type )
-{
-    {
-        QWriteLocker    wlock( &m_rwLock );
-        if ( type == Project )
-        {
-            SettingHash::iterator it;
-            SettingHash::iterator ed = m_tmpXmlSettings.end();
-            for ( it = m_tmpXmlSettings.begin() ; it != ed; ++it )
-            {
-                if ( m_xmlSettings.contains( it.key() ) )
-                    m_xmlSettings[it.key()]->set( it.value()->get() );
-                else
-                    m_xmlSettings.insert( it.key(), it.value() );
-            }
-        }
-        else if ( type == Vlmc )
-        {
-            QSettings sett;
-            SettingHash::iterator it;
-            SettingHash::iterator ed = m_classicSettings.end();
-            for ( it = m_classicSettings.begin(); it != ed; ++it )
-            {
-                sett.setValue( it.key(), it.value()->get() );
-                if ( m_classicSettings.contains( it.key() ) )
-                    m_classicSettings[it.key()]->set( it.value()->get() );
-                else
-                    m_classicSettings.insert( it.key(), it.value() );
-            }
-        }
-    }
-    flush();
-}
-
-void
 SettingsManager::createVar( SettingValue::Type type, const QString &key,
                             const QVariant &defaultValue, const char *name,
                             const char *desc, SettingsManager::Type varType /*= Vlmc*/ )

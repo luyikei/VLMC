@@ -23,6 +23,8 @@
 #include "VideoPage.h"
 #include "SettingsManager.h"
 
+#include <QtDebug>
+
 VideoPage::VideoPage( QWidget *parent ) :
     QWizardPage( parent )
 {
@@ -98,7 +100,6 @@ bool VideoPage::validatePage()
     sManager->setValue( "video/VLMCOutputFPS", projectFps, SettingsManager::Project );
     sManager->setValue( "video/VideoProjectHeight", projectHeight, SettingsManager::Project );
     sManager->setValue( "video/VideoProjectWidth", projectWidth, SettingsManager::Project );
-    sManager->commit( SettingsManager::Project );
 
     return true;
 }
