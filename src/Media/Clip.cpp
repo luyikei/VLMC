@@ -29,6 +29,7 @@
 #include "Clip.h"
 #include "Library.h"
 #include "Media.h"
+#include "Workspace.h"
 
 const int   Clip::DefaultFPS = 30;
 
@@ -229,7 +230,12 @@ Clip::save( QXmlStreamWriter &project )
 {
     project.writeStartElement( "clip" );
     if ( isRootClip() == true )
-        project.writeAttribute( "media", m_media->fileInfo()->absoluteFilePath() );
+    {
+        if ( m_media->isInWorkspace() == true )
+            project.writeAttribute( "media", Workspace::pathInProjectDir( m_media ) );
+        else
+            project.writeAttribute( "media", m_media->fileInfo()->absoluteFilePath() );
+    }
     else
     {
         project.writeAttribute( "parent", m_parent->uuid() );

@@ -29,6 +29,8 @@
 #include "MediaContainer.h"
 #include "Media.h"
 #include "MetaDataManager.h"
+#include "SettingsManager.h"
+#include "Workspace.h"
 
 #include <QtDebug>
 
@@ -203,6 +205,10 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
         if ( clip.hasAttribute( "media" ) == true )
         {
             QString media = clip.attribute( "media" );
+
+            //Handle workspace stuff.
+            if ( media.startsWith( Workspace::workspacePrefix ) == true )
+                media = media.replace( Workspace::workspacePrefix, VLMC_PROJECT_GET_STRING( "general/ProjectDir" ) );
             if ( m_medias.contains( media ) == true )
             {
                 Media*  m = m_medias[media];
