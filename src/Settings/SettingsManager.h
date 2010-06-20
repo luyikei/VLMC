@@ -51,35 +51,42 @@ class QDomElement;
 #define VLMC_PROJECT_GET_BOOL( key )    SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toBool()
 
 
-#define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc )  \
+#define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc, flags )  \
 SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
-                                           desc, SettingsManager::Project );
+                                           desc, SettingsManager::Project, flags );
 
 #define VLMC_CREATE_PROJECT_INT( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PROJECT_VAR( SettingValue::Int, key, defaultValue, name, desc )
+        VLMC_CREATE_PROJECT_VAR( SettingValue::Int, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PROJECT_STRING( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, name, desc )
+        VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PROJECT_DOUBLE( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PROJECT_VAR( SettingValue::Double, key, defaultValue, name, desc )
+        VLMC_CREATE_PROJECT_VAR( SettingValue::Double, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PROJECT_BOOL( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PROJECT_VAR( SettingValue::Bool, key, defaultValue, name, desc )
+        VLMC_CREATE_PROJECT_VAR( SettingValue::Bool, key, defaultValue, name, desc, SettingValue::Nothing )
 
-#define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc )  \
+#define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
 SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
-                                           desc, SettingsManager::Vlmc );
+                                           desc, SettingsManager::Vlmc, flags );
 
+/// Vlmc preferences maccros
 #define VLMC_CREATE_PREFERENCE_INT( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_STRING( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_DOUBLE( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::Double, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::Double, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_LANGUAGE( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::Language, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::Language, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_KEYBOARD( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::KeyboardShortcut, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::KeyboardShortcut, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_BOOL( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PREFERENCE( SettingValue::Bool, key, defaultValue, name, desc )
+        VLMC_CREATE_PREFERENCE( SettingValue::Bool, key, defaultValue, name, desc, SettingValue::Nothing )
+
+//Convenience maccros :
+#define VLMC_CREATE_PRIVATE_PREFERENCE_STRING( key, defaultValue )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
+#define VLMC_CREATE_PRIVATE_PROJECT_STRING( key, defaultValue )  \
+        VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 class   SettingsManager : public QObject, public Singleton<SettingsManager>
 {
@@ -104,7 +111,8 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         void                        createVar( SettingValue::Type type, const QString &key,
                                                const QVariant &defaultValue,
                                                const char *name, const char *desc,
-                                               Type varType = Vlmc );
+                                               Type varType = Vlmc,
+                                               SettingValue::Flags flags = SettingValue::Nothing );
         bool                        watchValue( const QString &key,
                                                 QObject* receiver,
                                                 const char *method,

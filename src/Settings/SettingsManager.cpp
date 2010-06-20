@@ -196,14 +196,15 @@ SettingsManager::load( const QDomElement &root )
 void
 SettingsManager::createVar( SettingValue::Type type, const QString &key,
                             const QVariant &defaultValue, const char *name,
-                            const char *desc, SettingsManager::Type varType /*= Vlmc*/ )
+                            const char *desc, SettingsManager::Type varType /*= Vlmc*/,
+                            SettingValue::Flags flags /*= SettingValue::Nothing*/ )
 {
     QWriteLocker    wlock( &m_rwLock );
 
     if ( varType == Vlmc && m_classicSettings.contains( key ) == false )
-        m_classicSettings.insert( key, new SettingValue( type, defaultValue, name, desc ) );
+        m_classicSettings.insert( key, new SettingValue( type, defaultValue, name, desc, flags ) );
     else if ( varType == Project && m_xmlSettings.contains( key ) == false )
-        m_xmlSettings.insert( key, new SettingValue( type, defaultValue, name, desc ) );
+        m_xmlSettings.insert( key, new SettingValue( type, defaultValue, name, desc, flags ) );
     else
         Q_ASSERT_X( false, __FILE__, "creating an already created variable" );
 }

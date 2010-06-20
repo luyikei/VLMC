@@ -46,6 +46,13 @@ class   SettingValue : public QObject
             Language,
             KeyboardShortcut
         };
+        enum    Flags
+        {
+            Nothing = 0,
+            /// If this flag is used, then the variable should not be shown in the config widgets.
+            Private = 1,
+        };
+
         /**
          *  \brief      Constructs a setting value with its default value and description
          *
@@ -53,7 +60,7 @@ class   SettingValue : public QObject
          *  \param      desc            The setting description
          */
         SettingValue( Type type, const QVariant& defaultValue, const char* name,
-                      const char* desc );
+                      const char* desc, Flags flags = Nothing );
 
         /**
          * \brief setter for the m_val member
@@ -77,6 +84,7 @@ class   SettingValue : public QObject
 
         const char      *name() const;
         Type            type() const;
+        Flags           flags() const;
 
     private:
         /**
@@ -87,6 +95,7 @@ class   SettingValue : public QObject
         const char*     m_name;
         const char*     m_desc;
         Type            m_type;
+        Flags           m_flags;
     signals:
         /**
          * \brief This signal is emmited while the m_val

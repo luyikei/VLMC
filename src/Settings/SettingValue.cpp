@@ -24,12 +24,13 @@
 #include <QtDebug>
 
 SettingValue::SettingValue( SettingValue::Type type, const QVariant& defaultValue,
-                            const char* name, const char* desc ) :
+                            const char* name, const char* desc, SettingValue::Flags flags ) :
         m_val( defaultValue ),
         m_defaultVal( defaultValue ),
         m_name( name ),
         m_desc( desc ),
-        m_type( type )
+        m_type( type ),
+        m_flags( flags )
 {
 }
 
@@ -71,4 +72,10 @@ SettingValue::Type
 SettingValue::type() const
 {
     return m_type;
+}
+
+SettingValue::Flags
+SettingValue::flags() const
+{
+    return m_flags;
 }
