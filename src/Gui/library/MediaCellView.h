@@ -66,6 +66,7 @@ protected:
     void                mouseDoubleClickEvent( QMouseEvent* );
     void                mousePressEvent( QMouseEvent* );
     void                mouseMoveEvent( QMouseEvent* );
+    void                contextMenuEvent( QContextMenuEvent * );
 
 public slots:
     void                deleteButtonClicked( QWidget *sender, QMouseEvent *event );

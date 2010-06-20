@@ -34,8 +34,8 @@ const QString   Workspace::workspacePrefix = "workspace://";
 
 Workspace::Workspace()
 {
-    connect( Library::getInstance(), SIGNAL( newClipLoaded( Clip* ) ),
-             this, SLOT( clipLoaded( Clip* ) ) );
+//    connect( Library::getInstance(), SIGNAL( newClipLoaded( Clip* ) ),
+//             this, SLOT( clipLoaded( Clip* ) ) );
 }
 
 void

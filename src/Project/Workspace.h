@@ -38,11 +38,12 @@ class Workspace : public QObject, public Singleton<Workspace>
 
         static bool                 isInProjectDir( const Media* media );
         static QString              pathInProjectDir( const Media* media );
+
+        void    copyToWorkspace( Media* media );
     private:
         Workspace();
         ~Workspace(){}
 
-        void    copyToWorkspace( Media* media );
     public slots:
         void    clipLoaded( Clip* clip );
     private slots:

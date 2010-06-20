@@ -30,7 +30,9 @@
 #include "Media.h"
 #include "MetaDataManager.h"
 #include "MainWorkflow.h"
+#include "Workspace.h"
 
+#include <QMenu>
 #include <QMessageBox>
 #include <QTime>
 
@@ -260,4 +262,23 @@ const Clip*
 MediaCellView::clip() const
 {
     return m_clip;
+}
+
+void
+MediaCellView::contextMenuEvent( QContextMenuEvent *event )
+{
+    QMenu menu( this );
+
+    //For now, as we only have the copy to workspace option, don't do anything if the clip
+    //is not the root clip. Obviously, this will have to be removed if other actions are to be added.
+    if ( m_clip->isRootClip() == false )
+        return ;
+
+    QAction* copyInWorkspace = menu.addAction( "Copy in workspace" );
+
+    QAction* selectedAction = menu.exec( event->globalPos() );
+    if ( selectedAction == NULL )
+        return ;
+    if ( copyInWorkspace == selectedAction )
+        Workspace::getInstance()->copyToWorkspace( m_clip->getMedia() );
 }
