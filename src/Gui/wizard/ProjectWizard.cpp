@@ -100,6 +100,5 @@ void    ProjectWizard::accept()
 
 void    ProjectWizard::reject()
 {
-    SettingsManager::getInstance()->flush();
     QDialog::reject();
 }

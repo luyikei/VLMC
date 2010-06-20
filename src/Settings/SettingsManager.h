@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2009 VideoLAN
  *
- * Authors: Clement CHAVANCE <chavance.c@gmail.com>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -96,9 +96,6 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         void                        setValue( const QString &key,
                                                 const QVariant &value,
                                                 SettingsManager::Type type = Vlmc);
-        void                        setImmediateValue( const QString &key,
-                                                        const QVariant &value,
-                                                        SettingsManager::Type = Vlmc);
         SettingValue                *value( const QString &key,
                                             SettingsManager::Type type = Vlmc );
         SettingHash                 group( const QString &groupName,
@@ -117,18 +114,13 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         void                        save( QXmlStreamWriter& project ) const;
         bool                        load( const QDomElement &element );
 
-        void                        flush();
-
     private:
         friend class Singleton<SettingsManager>;
-        SettingsManager();
-        ~SettingsManager();
+        SettingsManager(){}
+        ~SettingsManager(){}
 
         SettingHash                 m_classicSettings;
         SettingHash                 m_xmlSettings;
-
-        SettingHash                 m_tmpClassicSettings;
-        SettingHash                 m_tmpXmlSettings;
 
         mutable QReadWriteLock      m_rwLock;
 };

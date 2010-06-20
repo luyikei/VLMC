@@ -40,41 +40,17 @@ SettingsManager::setValue( const QString &key,
     if ( type == Project && m_xmlSettings.contains( key ) == true )
         m_xmlSettings[key]->set( value );
     else if ( type == Vlmc && m_classicSettings.contains( key) == true )
+    {
+        QSettings    sett;
+        sett.setValue( key, value );
+        sett.sync();
         m_classicSettings[key]->set( value );
+    }
     else
     {
         Q_ASSERT_X( false, __FILE__, "set value without a created variable" );
         qWarning() << "Setting" << key << "does not exist.";
     }
-    return ;
-}
-
-void
-SettingsManager::setImmediateValue( const QString &key,
-                                    const QVariant &value,
-                                    SettingsManager::Type type )
-{
-    QWriteLocker    wlock( &m_rwLock );
-    SettingHash  *settMap;
-    if ( type == Project )
-        settMap = &m_xmlSettings;
-    else if ( type == Vlmc )
-    {
-        QSettings    sett;
-        sett.setValue( key, value );
-        sett.sync();
-        settMap = &m_classicSettings;
-    }
-    if ( settMap->contains( key ) )
-    {
-        settMap->value( key )->set( value );
-    }
-    else
-    {
-        Q_ASSERT_X( false, __FILE__, "set immediate value without a created variable" );
-        qWarning() << "Setting" << key << "does not exist.";
-    }
-    return ;
 }
 
 SettingValue*
@@ -230,25 +206,4 @@ SettingsManager::createVar( SettingValue::Type type, const QString &key,
         m_xmlSettings.insert( key, new SettingValue( type, defaultValue, name, desc ) );
     else
         Q_ASSERT_X( false, __FILE__, "creating an already created variable" );
-}
-
-void
-SettingsManager::flush()
-{
-    QWriteLocker    wl( &m_rwLock );
-    m_tmpXmlSettings.clear();
-    m_tmpClassicSettings.clear();
-}
-
-SettingsManager::SettingsManager()
-    : m_classicSettings(),
-    m_xmlSettings(),
-    m_tmpClassicSettings(),
-    m_tmpXmlSettings(),
-    m_rwLock()
-{
-}
-
-SettingsManager::~SettingsManager()
-{
 }
