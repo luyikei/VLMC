@@ -34,6 +34,7 @@
 RendererSettings::RendererSettings()
 {
     m_ui.setupUi( this );
+    setWindowFlags( windowFlags() | Qt::Sheet ); // Qt::Sheet is for UI on Mac
     connect( m_ui.outputFileNameButton, SIGNAL(clicked() ),
              this, SLOT(selectOutputFileName() ) );
     m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
