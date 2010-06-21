@@ -1,6 +1,7 @@
 /build
 /bin
 /debug
+/patches
 /qtc-gdbmacros
 Makefile*
 /include
