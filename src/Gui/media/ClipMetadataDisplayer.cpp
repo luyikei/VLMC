@@ -27,14 +27,12 @@
 
 #include <QTime>
 
-ClipMetadataDisplayer::ClipMetadataDisplayer( const Clip *clip, QWidget *parent /*= NULL*/ ) :
+ClipMetadataDisplayer::ClipMetadataDisplayer( QWidget *parent /*= NULL*/ ) :
     QWidget( parent ),
     m_ui( new Ui::ClipMetadataDisplayer ),
-    m_watchedClip( clip )
+    m_watchedClip( NULL )
 {
     m_ui->setupUi( this );
-    if ( clip != NULL )
-        setWatchedClip( clip );
 }
 
 void

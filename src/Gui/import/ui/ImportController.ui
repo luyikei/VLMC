@@ -127,7 +127,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="metadataContainer" native="true"/>
+          <widget class="ClipMetadataDisplayer" name="metadataContainer" native="true"/>
          </item>
          <item>
           <widget class="QWidget" name="tagContainer" native="true"/>
@@ -150,6 +150,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClipMetadataDisplayer</class>
+   <extends>QWidget</extends>
+   <header>ClipMetadataDisplayer.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../../ressources.qrc"/>
  </resources>

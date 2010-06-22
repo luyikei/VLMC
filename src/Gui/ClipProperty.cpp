@@ -57,7 +57,7 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     connect( ui->addTagsButton, SIGNAL( clicked() ), this, SLOT( addTagsRequired() ) );
     connect( ui->deleteTagsButton, SIGNAL( clicked() ), this, SLOT( removeTagsRequired() ) );
 
-    new ClipMetadataDisplayer( clip, ui->metadataContainer );
+    ui->metadataContainer->setWatchedClip( clip );
 }
 
 ClipProperty::~ClipProperty()

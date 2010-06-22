@@ -59,7 +59,6 @@ ImportController::ImportController(QWidget *parent) :
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
     m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
-    m_metadataDisplayer = new ClipMetadataDisplayer( NULL, m_ui->metadataContainer );
     m_stackNav->pushViewController( m_mediaListView );
 
     m_nameFilters << Media::AudioExtensions.split(' ', QString::SkipEmptyParts)
@@ -134,7 +133,7 @@ ImportController::clipSelection( Clip* clip )
     const QUuid& uuid = clip->uuid();
     if ( m_currentUuid == uuid )
         return ;
-    m_metadataDisplayer->setWatchedClip( clip );
+    m_ui->metadataContainer->setWatchedClip( clip );
     m_preview->stop();
     m_currentUuid = uuid;
     m_tag->clipSelected( clip );
