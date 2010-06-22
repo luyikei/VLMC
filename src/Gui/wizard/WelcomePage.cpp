@@ -132,10 +132,10 @@ void WelcomePage::loadRecentsProjects()
 
 void WelcomePage::loadProject()
 {
+    //FIXME: have a default path to store vlmc projects
     QString projectPath =
             QFileDialog::getOpenFileName( NULL, "Enter the output file name",
-                                          VLMC_GET_STRING( "general/VLMCWorkspace" ),
-                                          "VLMC project file(*.vlmc)" );
+                                          QDir::homePath(), "VLMC project file(*.vlmc)" );
 
     if ( projectPath.isEmpty() ) return;
 

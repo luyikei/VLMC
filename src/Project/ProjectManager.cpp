@@ -58,15 +58,16 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );
-    VLMC_CREATE_PREFERENCE_STRING( "general/VLMCWorkspace", QDir::homePath(),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Workspace location" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's medias will be stored" ) );
+    //FIXME: Change this to have a default path for vlmc projects
+//    VLMC_CREATE_PREFERENCE_STRING( "general/VLMCWorkspace", QDir::homePath(),
+//                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Workspace location" ),
+//                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's medias will be stored" ) );
 
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
 
-    VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/ProjectDir", "" );
+    VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/Workspace", "" );
 
     //We have to wait for the library to be loaded before loading the workflow
     connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
@@ -119,6 +120,7 @@ void    ProjectManager::loadProject( const QString& fileName )
     if ( closeProject() == false )
         return ;
     m_projectFile = new QFile( fileName );
+    QFileInfo       fInfo( fileName );
     if ( m_projectFile->open( QFile::ReadOnly ) == false )
     {
         failedToLoad( tr( "Can't open project file. (%1)" ).arg( m_projectFile->errorString() ) );
@@ -143,10 +145,7 @@ void    ProjectManager::loadProject( const QString& fileName )
 
     //Load settings first, as it contains some informations about the workspace.
     SettingsManager::getInstance()->load( root );
-    QString     workspacePath = VLMC_GET_STRING("general/VLMCWorkspace");
-    QString     projectName = VLMC_PROJECT_GET_STRING("general/ProjectName");
-    QString     projectPath = workspacePath + '/' + projectName.replace( " ", "_" );
-    SettingsManager::getInstance()->setValue( "general/ProjectDir", projectPath, SettingsManager::Project );
+    SettingsManager::getInstance()->setValue( "general/Workspace", fInfo.absolutePath(), SettingsManager::Project );
     Library::getInstance()->loadProject( root );
 }
 

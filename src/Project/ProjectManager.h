@@ -65,7 +65,7 @@ protected:
      *
      *  In non GUI mode, this does nothing.
      */
-    virtual void    saveTimeline( QXmlStreamWriter& ){};
+    virtual void    saveTimeline( QXmlStreamWriter& ){}
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
     /**
@@ -80,7 +80,7 @@ protected:
     virtual QString outputFileName() const;
 
     virtual void    failedToLoad( const QString& reason ) const;
-    virtual void    loadTimeline( const QDomElement& ){};
+    virtual void    loadTimeline( const QDomElement& ){}
     QString         createAutoSaveOutputFileName( const QString& baseName ) const;
 
     ProjectManager();
