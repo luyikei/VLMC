@@ -67,7 +67,6 @@ Media::Media( const QString& filePath )
         //FIXME:
         m_fileType = Media::Video;
         m_fileName = m_mrl;
-        qDebug() << "Loading a stream";
         m_vlcMedia = new LibVLCpp::Media( m_mrl );
     }
     m_audioValueList = new QList<int>();
@@ -270,6 +269,7 @@ Media::isInWorkspace() const
 void
 Media::setFilePath( const QString &filePath )
 {
+    m_inputType = Media::File;
     if ( m_fileInfo )
         delete m_fileInfo;
     m_fileInfo = new QFileInfo( filePath );
