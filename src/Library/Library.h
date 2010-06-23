@@ -78,6 +78,7 @@ signals:
     void    projectLoaded();
 
     friend class    Singleton<Library>;
+    friend class    Workspace;
 };
 
 #endif // LIBRARY_H

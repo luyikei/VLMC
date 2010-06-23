@@ -25,9 +25,13 @@
 
 #include <QObject>
 
+#include <QQueue>
+
 #include "Singleton.hpp"
 class   Clip;
 class   Media;
+
+class   QFileInfo;
 
 class Workspace : public QObject, public Singleton<Workspace>
 {
@@ -36,18 +40,21 @@ class Workspace : public QObject, public Singleton<Workspace>
     public:
         static const QString        workspacePrefix;
 
-        static bool                 isInProjectDir( const Media* media );
+        static bool                 isInProjectDir( const QString &path );
+        static bool                 isInProjectDir( const QFileInfo &fInfo );
+        static bool                 isInProjectDir( const Media *media );
         static QString              pathInProjectDir( const Media* media );
 
-        void    copyToWorkspace( Media* media );
+        void                        copyToWorkspace( Media* media );
+        void                        copyAllToWorkspace();
     private:
         Workspace();
         ~Workspace(){}
 
     public slots:
-        void    clipLoaded( Clip* clip );
+        void                        clipLoaded( Clip* clip );
     private slots:
-        void    copyTerminated( Media* media, QString dest );
+        void                        copyTerminated( Media* media, QString dest );
 
     friend class    Singleton<Workspace>;
 };

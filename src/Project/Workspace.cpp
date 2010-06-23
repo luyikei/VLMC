@@ -71,11 +71,25 @@ Workspace::copyTerminated( Media *media, QString dest )
 }
 
 bool
-Workspace::isInProjectDir( const Media *media )
+Workspace::isInProjectDir( const QFileInfo &fInfo )
 {
-    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+    const QString       projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
 
-    return ( media->fileInfo()->absoluteFilePath().startsWith( projectDir ) );
+    return ( fInfo.absolutePath().startsWith( projectDir ) );
+}
+
+bool
+Workspace::isInProjectDir( const QString &path )
+{
+    QFileInfo           fInfo( path );
+
+    return isInProjectDir( fInfo );
+}
+
+bool
+Workspace::isInProjectDir(const Media *media)
+{
+    return isInProjectDir( *(media->fileInfo() ) );
 }
 
 QString
@@ -86,3 +100,15 @@ Workspace::pathInProjectDir( const Media *media )
     return ( media->fileInfo()->absoluteFilePath().mid( projectDir.length() ) );
 }
 
+void
+Workspace::copyAllToWorkspace()
+{
+    QHash<QString, Media*>::iterator    it = Library::getInstance()->m_medias.begin();
+    QHash<QString, Media*>::iterator    ite = Library::getInstance()->m_medias.end();
+
+    while ( it != ite )
+    {
+        //FIXME
+        ++it;
+    }
+}

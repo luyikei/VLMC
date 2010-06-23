@@ -72,6 +72,7 @@ protected:
 
 private:
     bool            createNewProjectFile( bool saveAs );
+    bool            confirmRelocate() const;
 
 private:
     QTimer*         m_timer;

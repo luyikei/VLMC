@@ -22,15 +22,16 @@
 
 #include "GuiProjectManager.h"
 
-#include <QDateTime>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QTimer>
-
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
 #include "Timeline.h"
+#include "Workspace.h"
+
+#include <QDateTime>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTimer>
 
 GUIProjectManager::GUIProjectManager()
 {
@@ -91,22 +92,53 @@ GUIProjectManager::askForSaveIfModified()
 }
 
 bool
+GUIProjectManager::confirmRelocate() const
+{
+    QMessageBox msgBox;
+    msgBox.setText( tr( "You are about to relocate the project. Every video will be copied to your new workspace." ) );
+    msgBox.setInformativeText( tr( "Do you want to proceed?" ) );
+    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::No );
+    msgBox.setDefaultButton( QMessageBox::Ok );
+    int     ret = msgBox.exec();
+
+    switch ( ret )
+    {
+    case QMessageBox::Ok:
+        return true;
+    case QMessageBox::No:
+        return false ;
+    default:
+        return false;
+    }
+}
+
+bool
 GUIProjectManager::createNewProjectFile( bool saveAs )
 {
     if ( m_projectFile == NULL || saveAs == true )
     {
+        bool        relocate = false;
+
         QString outputFileName =
             QFileDialog::getSaveFileName( NULL, "Enter the output file name",
                                           VLMC_PROJECT_GET_STRING( "general/Workspace" ),
                                           "VLMC project file(*.vlmc)" );
         if ( outputFileName.length() == 0 )
             return false;
+        if ( Workspace::isInProjectDir( outputFileName ) == false )
+        {
+            if ( confirmRelocate() == false )
+                return false;
+            relocate = true;
+        }
         if ( m_projectFile != NULL )
             delete m_projectFile;
         if ( outputFileName.endsWith( ".vlmc" ) == false )
             outputFileName += ".vlmc";
         m_projectFile = new QFile( outputFileName );
         appendToRecentProject( outputFileName );
+        if ( relocate == true )
+            Workspace::getInstance()->copyAllToWorkspace();
         emit projectUpdated( projectName(), true );
     }
     return true;
