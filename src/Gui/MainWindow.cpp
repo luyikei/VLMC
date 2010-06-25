@@ -759,7 +759,7 @@ MainWindow::restoreSession()
 
         if ( cleanQuit == false )
         {
-            QMessageBox::StandardButton res = QMessageBox::question( this, tr( "Crash recovery" ), tr( "VLMC didn't closed nicely. Do you wan't to recover your project?" ),
+            QMessageBox::StandardButton res = QMessageBox::question( this, tr( "Crash recovery" ), tr( "VLMC didn't closed nicely. Do you want to recover your project?" ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
             if ( res == QMessageBox::Yes )
             {
