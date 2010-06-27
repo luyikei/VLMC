@@ -40,9 +40,10 @@ void
 WorkspaceWorker::run()
 {
     QFile           file( m_media->fileInfo()->absoluteFilePath() );
-    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
     const QString   dest = projectPath + '/' + m_media->fileInfo()->fileName();
 
     file.copy( m_media->fileInfo()->absoluteFilePath(), dest );
+    qDebug() << "Media copied to:" << dest;
     emit copied( m_media, dest );
 }

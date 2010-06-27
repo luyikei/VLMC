@@ -25,6 +25,7 @@
 
 #include <QObject>
 
+#include <QMutex>
 #include <QQueue>
 
 #include "Singleton.hpp"
@@ -49,7 +50,12 @@ class Workspace : public QObject, public Singleton<Workspace>
         void                        copyAllToWorkspace();
     private:
         Workspace();
-        ~Workspace(){}
+        ~Workspace();
+        void                        startCopyWorker( Media *media );
+    private:
+        QQueue<Media*>              m_mediasToCopy;
+        QMutex                      *m_mediasToCopyMutex;
+        bool                        m_copyInProgress;
 
     public slots:
         void                        clipLoaded( Clip* clip );

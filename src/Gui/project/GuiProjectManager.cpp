@@ -33,6 +33,8 @@
 #include <QMessageBox>
 #include <QTimer>
 
+#include <QtDebug>
+
 GUIProjectManager::GUIProjectManager()
 {
     connect( this, SIGNAL( projectClosed() ), Library::getInstance(), SLOT( clear() ) );

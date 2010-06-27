@@ -32,24 +32,44 @@
 
 const QString   Workspace::workspacePrefix = "workspace://";
 
-Workspace::Workspace()
+Workspace::Workspace() : m_copyInProgress( false )
 {
-//    connect( Library::getInstance(), SIGNAL( newClipLoaded( Clip* ) ),
-//             this, SLOT( clipLoaded( Clip* ) ) );
+    m_mediasToCopyMutex = new QMutex;
+}
+
+Workspace::~Workspace()
+{
+    delete m_mediasToCopyMutex;
 }
 
 void
 Workspace::copyToWorkspace( Media *media )
 {
-    qDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
-    if ( media->isInWorkspace() == false )
+    QMutexLocker    lock( m_mediasToCopyMutex );
+
+    if ( m_copyInProgress == true )
     {
-        WorkspaceWorker *worker = new WorkspaceWorker( media );
-        //This one is direct connected since the thread is terminated just after emitting the signal.
-        connect( worker, SIGNAL( copied( Media*, QString ) ),
-                 this, SLOT( copyTerminated( Media*, QString ) ), Qt::DirectConnection );
-        worker->start();
+        m_mediasToCopy.enqueue( media );
     }
+    else
+    {
+        qDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
+        m_copyInProgress = true;
+        if ( media->isInWorkspace() == false )
+        {
+            startCopyWorker( media );
+        }
+    }
+}
+
+void
+Workspace::startCopyWorker( Media *media )
+{
+    WorkspaceWorker *worker = new WorkspaceWorker( media );
+    //This one is direct connected since the thread is terminated just after emitting the signal.
+    connect( worker, SIGNAL( copied( Media*, QString ) ),
+             this, SLOT( copyTerminated( Media*, QString ) ), Qt::DirectConnection );
+    worker->start();
 }
 
 void
@@ -68,14 +88,31 @@ void
 Workspace::copyTerminated( Media *media, QString dest )
 {
     media->setFilePath( dest );
+    media->disconnect( this );
+
+    QMutexLocker    lock( m_mediasToCopyMutex );
+    if ( m_mediasToCopy.size() > 0 )
+    {
+        while ( m_mediasToCopy.size() > 0 )
+        {
+            Media   *toCopy = m_mediasToCopy.dequeue();
+            if ( toCopy->isInWorkspace() == false )
+            {
+                startCopyWorker( toCopy );
+                break ;
+            }
+        }
+    }
+    else
+        m_copyInProgress = false;
 }
 
 bool
 Workspace::isInProjectDir( const QFileInfo &fInfo )
 {
-    const QString       projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+    const QString       projectDir = VLMC_PROJECT_GET_STRING( "general/Workspace" );
 
-    return ( fInfo.absolutePath().startsWith( projectDir ) );
+    return ( projectDir.length() > 0 && fInfo.absolutePath().startsWith( projectDir ) );
 }
 
 bool
@@ -95,7 +132,7 @@ Workspace::isInProjectDir(const Media *media)
 QString
 Workspace::pathInProjectDir( const Media *media )
 {
-    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/ProjectDir" );
+    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/Workspace" );
 
     return ( media->fileInfo()->absoluteFilePath().mid( projectDir.length() ) );
 }
@@ -103,12 +140,18 @@ Workspace::pathInProjectDir( const Media *media )
 void
 Workspace::copyAllToWorkspace()
 {
-    QHash<QString, Media*>::iterator    it = Library::getInstance()->m_medias.begin();
-    QHash<QString, Media*>::iterator    ite = Library::getInstance()->m_medias.end();
+    if ( Library::getInstance()->m_clips.size() == 0 )
+        return ;
+    QHash<QUuid, Clip*>::iterator    it = Library::getInstance()->m_clips.begin();
+    QHash<QUuid, Clip*>::iterator    ite = Library::getInstance()->m_clips.end();
 
-    while ( it != ite )
     {
-        //FIXME
-        ++it;
+        QMutexLocker    lock( m_mediasToCopyMutex );
+        while ( it != ite )
+        {
+            m_mediasToCopy.enqueue( it.value()->getMedia() );
+            ++it;
+        }
     }
+    copyToWorkspace( m_mediasToCopy.dequeue() );
 }
