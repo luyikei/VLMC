@@ -31,12 +31,13 @@ class WorkspaceWorker : public QThread
 {
     Q_OBJECT
     public:
-        explicit WorkspaceWorker( Media *filePath );
+        explicit WorkspaceWorker( Media *filePath, const QString &dest );
 
     protected:
         void                run();
     private:
         Media*              m_media;
+        QString             m_dest;
     signals:
         void                copied( Media*, QString dest );
 };

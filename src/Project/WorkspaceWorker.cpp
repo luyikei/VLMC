@@ -31,8 +31,9 @@
 
 #include <QtDebug>
 
-WorkspaceWorker::WorkspaceWorker( Media *media ) :
-    m_media( media )
+WorkspaceWorker::WorkspaceWorker( Media *media, const QString &dest ) :
+    m_media( media ),
+    m_dest( dest )
 {
     connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
 }
@@ -40,20 +41,18 @@ WorkspaceWorker::WorkspaceWorker( Media *media ) :
 void
 WorkspaceWorker::run()
 {
-    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
-    const QString   dest = projectPath + '/' + m_media->fileInfo()->fileName();
     bool            hardLinkOk = false;
 
 #ifdef Q_OS_UNIX
     if ( link( m_media->fileInfo()->absoluteFilePath().toStdString().c_str(),
-          dest.toStdString().c_str() ) < 0 )
+          m_dest.toStdString().c_str() ) < 0 )
     {
         qDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
                 " hard copy mode.";
     }
     else
     {
-        qDebug() << "Media hard linked to:" << dest;
+        qDebug() << "Media hard linked to:" << m_dest;
         hardLinkOk = true;
     }
 #endif
@@ -62,8 +61,8 @@ WorkspaceWorker::run()
     {
         QFile           file( m_media->fileInfo()->absoluteFilePath() );
 
-        file.copy( m_media->fileInfo()->absoluteFilePath(), dest );
-        qDebug() << "Media copied to:" << dest;
+        file.copy( m_media->fileInfo()->absoluteFilePath(), m_dest );
+        qDebug() << "Media copied to:" << m_dest;
     }
-    emit copied( m_media, dest );
+    emit copied( m_media, m_dest );
 }

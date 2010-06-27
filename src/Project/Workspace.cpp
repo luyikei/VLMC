@@ -30,6 +30,10 @@
 
 #include <QtDebug>
 
+#ifdef WITH_GUI
+# include <QMessageBox>
+#endif
+
 const QString   Workspace::workspacePrefix = "workspace://";
 
 Workspace::Workspace() : m_copyInProgress( false )
@@ -65,7 +69,25 @@ Workspace::copyToWorkspace( Media *media )
 void
 Workspace::startCopyWorker( Media *media )
 {
-    WorkspaceWorker *worker = new WorkspaceWorker( media );
+    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+    const QString   dest = projectPath + '/' + media->fileInfo()->fileName();
+
+    if ( QFile::exists( dest ) == true )
+    {
+#ifdef WITH_GUI
+        QMessageBox::StandardButton b =
+                QMessageBox::question( NULL, tr( "File already exists!" ),
+                                       tr( "A file with the same name already exists, do you want to "
+                                           "overwrite it?" ),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No );
+        if ( b == QMessageBox::No )
+            copyTerminated( media, dest );
+#else
+        copyTerminated( media, dest );
+#endif
+    }
+    WorkspaceWorker *worker = new WorkspaceWorker( media, dest );
     //This one is direct connected since the thread is terminated just after emitting the signal.
     connect( worker, SIGNAL( copied( Media*, QString ) ),
              this, SLOT( copyTerminated( Media*, QString ) ), Qt::DirectConnection );
