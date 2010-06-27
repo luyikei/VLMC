@@ -25,6 +25,7 @@
 #include "Media.h"
 #include "SettingsManager.h"
 
+#include <cerrno>
 #include <QFile>
 #include <QFileInfo>
 
@@ -39,11 +40,30 @@ WorkspaceWorker::WorkspaceWorker( Media *media ) :
 void
 WorkspaceWorker::run()
 {
-    QFile           file( m_media->fileInfo()->absoluteFilePath() );
     const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
     const QString   dest = projectPath + '/' + m_media->fileInfo()->fileName();
+    bool            hardLinkOk = false;
 
-    file.copy( m_media->fileInfo()->absoluteFilePath(), dest );
-    qDebug() << "Media copied to:" << dest;
+#ifdef Q_OS_UNIX
+    if ( link( m_media->fileInfo()->absoluteFilePath().toStdString().c_str(),
+          dest.toStdString().c_str() ) < 0 )
+    {
+        qDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
+                " hard copy mode.";
+    }
+    else
+    {
+        qDebug() << "Media hard linked to:" << dest;
+        hardLinkOk = true;
+    }
+#endif
+
+    if ( hardLinkOk == false )
+    {
+        QFile           file( m_media->fileInfo()->absoluteFilePath() );
+
+        file.copy( m_media->fileInfo()->absoluteFilePath(), dest );
+        qDebug() << "Media copied to:" << dest;
+    }
     emit copied( m_media, dest );
 }
