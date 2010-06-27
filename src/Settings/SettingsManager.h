@@ -63,6 +63,9 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
         VLMC_CREATE_PROJECT_VAR( SettingValue::Double, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PROJECT_BOOL( key, defaultValue, name, desc )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::Bool, key, defaultValue, name, desc, SettingValue::Nothing )
+#define VLMC_CREATE_PROJECT_PATH( key, defaultValue, name, desc )  \
+        VLMC_CREATE_PROJECT_PATH( SettingValue::Path, key, defaultValue, name, desc, SettingValue::Nothing )
+
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
 SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
@@ -81,6 +84,8 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
         VLMC_CREATE_PREFERENCE( SettingValue::KeyboardShortcut, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_BOOL( key, defaultValue, name, desc )  \
         VLMC_CREATE_PREFERENCE( SettingValue::Bool, key, defaultValue, name, desc, SettingValue::Nothing )
+#define VLMC_CREATE_PREFERENCE_PATH( key, defaultValue, name, desc )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::Path, key, defaultValue, name, desc, SettingValue::Nothing )
 
 //Convenience maccros :
 #define VLMC_CREATE_PRIVATE_PREFERENCE_STRING( key, defaultValue )  \

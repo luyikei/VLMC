@@ -44,7 +44,8 @@ class   SettingValue : public QObject
             String,
             Bool,
             Language,
-            KeyboardShortcut
+            KeyboardShortcut,
+            Path,
         };
         enum    Flags
         {

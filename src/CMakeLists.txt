@@ -167,6 +167,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/KeyboardShortcutInput.cpp
         Gui/settings/LanguageWidget.cpp
         Gui/settings/Panel.cpp
+        Gui/settings/PathWidget.cpp
         Gui/settings/PreferenceWidget.cpp
         Gui/settings/Settings.cpp
         Gui/settings/StringWidget.cpp
@@ -221,6 +222,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/IntWidget.h
         Gui/settings/ISettingsCategoryWidget.h
         Gui/settings/LanguageWidget.h
+        Gui/settings/PathWidget.h
         Gui/settings/PreferenceWidget.h
         Gui/settings/StringWidget.h
         Gui/settings/Panel.h

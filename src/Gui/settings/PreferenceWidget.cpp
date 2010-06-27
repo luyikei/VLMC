@@ -31,6 +31,7 @@
 #include "IntWidget.h"
 #include "KeyboardShortcut.h"
 #include "LanguageWidget.h"
+#include "PathWidget.h"
 #include "StringWidget.h"
 
 #include <QFormLayout>
@@ -88,6 +89,8 @@ PreferenceWidget::widgetFactory( SettingValue *s )
         return new DoubleWidget( s, this );
     case SettingValue::Bool:
         return new BoolWidget( s, this );
+    case SettingValue::Path:
+        return new PathWidget( s, this );
     default:
         return NULL;
     }
