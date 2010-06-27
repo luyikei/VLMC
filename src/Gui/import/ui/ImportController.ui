@@ -111,7 +111,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QWidget" name="previewContainer" native="true">
+          <widget class="PreviewWidget" name="previewContainer" native="true">
            <property name="minimumSize">
             <size>
              <width>328</width>
@@ -155,6 +155,12 @@
    <class>ClipMetadataDisplayer</class>
    <extends>QWidget</extends>
    <header>ClipMetadataDisplayer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>PreviewWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

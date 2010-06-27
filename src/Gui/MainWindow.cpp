@@ -446,7 +446,8 @@ MainWindow::initializeDockWidgets( void )
 
     DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
-    m_clipPreview = new PreviewWidget( new ClipRenderer, this );
+    m_clipPreview = new PreviewWidget( this );
+    m_clipPreview->setRenderer( new ClipRenderer );
     dockManager->addDockedWidget( m_clipPreview,
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Clip Preview" ),
                                   Qt::AllDockWidgetAreas,
@@ -455,7 +456,8 @@ MainWindow::initializeDockWidgets( void )
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
     connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
 
-    m_projectPreview = new PreviewWidget( m_renderer, this );
+    m_projectPreview = new PreviewWidget( this );
+    m_projectPreview->setRenderer( m_renderer );
     dockManager->addDockedWidget( m_projectPreview,
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Project Preview" ),
                                   Qt::AllDockWidgetAreas,

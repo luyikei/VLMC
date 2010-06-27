@@ -53,7 +53,7 @@ ImportController::ImportController(QWidget *parent) :
     m_ui->setupUi(this);
     //The renderer will be deleted by the PreviewWidget
     m_clipRenderer = new ClipRenderer;
-    m_preview = new PreviewWidget( m_clipRenderer, m_ui->previewContainer );
+    m_ui->previewContainer->setRenderer( m_clipRenderer );
     m_stackNav = new StackViewController( m_ui->stackViewContainer );
     m_temporaryMedias = new MediaContainer;
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
@@ -107,7 +107,6 @@ ImportController::ImportController(QWidget *parent) :
 
 ImportController::~ImportController()
 {
-    delete m_preview;
     delete m_ui;
     delete m_stackNav;
     delete m_tag;
@@ -134,7 +133,7 @@ ImportController::clipSelection( Clip* clip )
     if ( m_currentUuid == uuid )
         return ;
     m_ui->metadataContainer->setWatchedClip( clip );
-    m_preview->stop();
+    m_ui->previewContainer->stop();
     m_currentUuid = uuid;
     m_tag->clipSelected( clip );
     emit clipSelected( clip );
@@ -209,7 +208,7 @@ ImportController::treeViewDoubleClicked( const QModelIndex& index )
 void
 ImportController::reject()
 {
-    m_preview->stop();
+    m_ui->previewContainer->stop();
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
@@ -221,7 +220,7 @@ void
 ImportController::accept()
 {
     m_mediaListView->clear();
-    m_preview->stop();
+    m_ui->previewContainer->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         Library::getInstance()->addClip( clip );

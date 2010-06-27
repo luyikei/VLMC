@@ -39,9 +39,10 @@ class   PreviewWidget : public QWidget
     Q_DISABLE_COPY( PreviewWidget )
 
 public:
-    explicit PreviewWidget( GenericRenderer* renderer, QWidget* parent = NULL );
+    explicit PreviewWidget( QWidget* parent = NULL );
     virtual ~PreviewWidget();
     const GenericRenderer*  getGenericRenderer() const;
+    void                    setRenderer( GenericRenderer *renderer );
 
 private:
     Ui::PreviewWidget*      m_ui;

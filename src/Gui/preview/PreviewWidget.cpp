@@ -29,10 +29,9 @@
 
 #include <QMessageBox>
 
-PreviewWidget::PreviewWidget( GenericRenderer* genericRenderer, QWidget *parent ) :
+PreviewWidget::PreviewWidget( QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::PreviewWidget ),
-    m_renderer( genericRenderer ),
     m_previewStopped( true )
 {
     m_ui->setupUi( this );
@@ -45,21 +44,36 @@ PreviewWidget::PreviewWidget( GenericRenderer* genericRenderer, QWidget *parent 
     m_videoPalette.setColor( QPalette::Window, QColor( Qt::black ) );
     m_ui->renderWidget->setPalette( m_videoPalette );
 
+    setAcceptDrops( false );
+
+    connect( m_ui->rulerWidget, SIGNAL( timeChanged(int,int,int,int) ),
+             m_ui->lcdNumber,   SLOT( setTime(int,int,int,int) ) );
+
+    connect( m_ui->pushButtonMarkerStart, SIGNAL( clicked() ), this, SLOT( markerStartClicked() ) );
+    connect( m_ui->pushButtonMarkerStop, SIGNAL( clicked() ), this, SLOT( markerStopClicked() ) );
+    connect( m_ui->pushButtonCreateClip, SIGNAL( clicked() ), this, SLOT( createNewClipFromMarkers() ) );
+}
+
+PreviewWidget::~PreviewWidget()
+{
+    delete m_renderer;
+    delete m_ui;
+}
+
+void
+PreviewWidget::setRenderer( GenericRenderer *renderer )
+{
+    m_renderer = renderer;
+
     // Hide markers and createClip buttons if we are not using a ClipRenderer
-    if ( !qobject_cast<ClipRenderer*>( genericRenderer ) )
+    if ( qobject_cast<ClipRenderer*>( renderer ) == NULL )
     {
         m_ui->pushButtonMarkerStart->hide();
         m_ui->pushButtonMarkerStop->hide();
         m_ui->pushButtonCreateClip->hide();
     }
-
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
-
-    setAcceptDrops( false );
-
-    connect( m_ui->rulerWidget, SIGNAL( timeChanged(int,int,int,int) ),
-             m_ui->lcdNumber,   SLOT( setTime(int,int,int,int) ) );
 
     m_renderer->setRenderWidget( m_ui->renderWidget );
 
@@ -72,16 +86,6 @@ PreviewWidget::PreviewWidget( GenericRenderer* genericRenderer, QWidget *parent 
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
     connect( m_renderer, SIGNAL( error() ), this, SLOT( error() ) );
-
-    connect( m_ui->pushButtonMarkerStart, SIGNAL( clicked() ), this, SLOT( markerStartClicked() ) );
-    connect( m_ui->pushButtonMarkerStop, SIGNAL( clicked() ), this, SLOT( markerStopClicked() ) );
-    connect( m_ui->pushButtonCreateClip, SIGNAL( clicked() ), this, SLOT( createNewClipFromMarkers() ) );
-}
-
-PreviewWidget::~PreviewWidget()
-{
-    delete m_renderer;
-    delete m_ui;
 }
 
 void    PreviewWidget::changeEvent( QEvent *e )

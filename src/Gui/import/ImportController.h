@@ -74,7 +74,6 @@ class ImportController : public QDialog
         void                        importMedia( const QString &filePath );
         void                        importDir( const QString &path );
         Ui::ImportController*       m_ui;
-        PreviewWidget*              m_preview;
         StackViewController*        m_stackNav;
         TagWidget*                  m_tag;
         MediaListView               *m_mediaListView;
