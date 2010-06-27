@@ -75,7 +75,7 @@ class ImportController : public QDialog
         void                        importDir( const QString &path );
         Ui::ImportController*       m_ui;
         StackViewController*        m_stackNav;
-        TagWidget*                  m_tag;
+//        TagWidget*                  m_tag;
         MediaListView               *m_mediaListView;
         QFileSystemModel            *m_filesModel;
         QString                     m_currentlyWatchedDir;

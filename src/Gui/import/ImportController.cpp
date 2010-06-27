@@ -57,7 +57,7 @@ ImportController::ImportController(QWidget *parent) :
     m_stackNav = new StackViewController( m_ui->stackViewContainer );
     m_temporaryMedias = new MediaContainer;
     m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
-    m_tag = new TagWidget( m_ui->tagContainer, 6 );
+//    m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
     m_stackNav->pushViewController( m_mediaListView );
 
@@ -109,7 +109,7 @@ ImportController::~ImportController()
 {
     delete m_ui;
     delete m_stackNav;
-    delete m_tag;
+//    delete m_tag;
 }
 
 void
@@ -135,7 +135,7 @@ ImportController::clipSelection( Clip* clip )
     m_ui->metadataContainer->setWatchedClip( clip );
     m_clipRenderer->stop();
     m_currentUuid = uuid;
-    m_tag->clipSelected( clip );
+//    m_tag->clipSelected( clip );
     emit clipSelected( clip );
 }
 

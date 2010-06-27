@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1009</width>
     <height>700</height>
    </rect>
   </property>
@@ -17,122 +17,133 @@
    <iconset resource="../../../../ressources.qrc">
     <normaloff>:/images/images/vlmc.png</normaloff>:/images/images/vlmc.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_11">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QHBoxLayout" name="mainLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QTreeView" name="treeView"/>
        </item>
        <item>
-        <widget class="QPushButton" name="forwardButton">
-         <property name="text">
-          <string/>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="forwardButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../../ressources.qrc">
+             <normaloff>:/images/down</normaloff>:/images/down</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="errorLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
          </property>
-         <property name="icon">
-          <iconset resource="../../../../ressources.qrc">
-           <normaloff>:/images/forward</normaloff>:/images/forward</iconset>
+         <item>
+          <widget class="QLabel" name="errorLabelImg">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="../../../../ressources.qrc">:/images/error</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="errorLabel">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="textVisible">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <item>
-          <layout class="QHBoxLayout" name="errorLayout">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetMinimumSize</enum>
-           </property>
-           <item>
-            <widget class="QLabel" name="errorLabelImg">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../../../ressources.qrc">:/images/error</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="errorLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="progressBar">
-           <property name="value">
-            <number>0</number>
-           </property>
-           <property name="textVisible">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="stackViewContainer" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>250</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QWidget" name="stackViewContainer" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="PreviewWidget" name="previewContainer" native="true">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>340</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="PreviewWidget" name="previewContainer" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>328</width>
-             <height>340</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>340</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ClipMetadataDisplayer" name="metadataContainer" native="true"/>
-         </item>
-         <item>
-          <widget class="QWidget" name="tagContainer" native="true"/>
-         </item>
-        </layout>
+        <widget class="ClipMetadataDisplayer" name="metadataContainer" native="true"/>
        </item>
       </layout>
      </item>

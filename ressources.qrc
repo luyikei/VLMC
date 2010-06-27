@@ -34,6 +34,7 @@
         <file alias="error">resources/images/error.png</file>
         <file alias="youtube">resources/images/youtube.png</file>
         <file alias="network">resources/images/network.png</file>
+        <file alias="down">resources/images/down.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>
