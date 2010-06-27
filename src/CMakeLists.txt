@@ -181,6 +181,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksRuler.cpp
         Gui/timeline/TracksScene.cpp
         Gui/timeline/TracksView.cpp
+        Gui/widgets/ElidableLabel.cpp
         Gui/widgets/TrackControls.cpp
         Gui/wizard/GeneralPage.cpp
         Gui/wizard/OpenPage.cpp
@@ -239,6 +240,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksScene.h
         Gui/timeline/TracksView.h
         Gui/UndoStack.h
+        Gui/widgets/ElidableLabel.h
         Gui/widgets/TrackControls.h
         Gui/wizard/GeneralPage.h
         Gui/wizard/OpenPage.h
