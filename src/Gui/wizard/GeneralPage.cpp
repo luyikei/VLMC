@@ -76,8 +76,7 @@ void GeneralPage::initializePage()
     ui.lineEditName->setText( projectName );
 
     //fetching the global workspace path
-    //FIXME: have a default path to store projects.
-    QString workspacePath = QDir::homePath();
+    QString workspacePath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
     ui.lineEditWorkspace->setText( workspacePath );
 
     updateProjectLocation();

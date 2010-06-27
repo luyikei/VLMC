@@ -292,6 +292,11 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Password" ) );
 
+    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath(),
+                                    QT_TRANSLATE_NOOP( "PreferencesWidget", "Project default location" ),
+                                    QT_TRANSLATE_NOOP( "PreferenceWidget", "The default location where to store projects folders" ) );
+
+
     //Load saved preferences :
     QSettings       s;
     if ( s.value( "VlmcVersion" ).toString() != PROJECT_VERSION )

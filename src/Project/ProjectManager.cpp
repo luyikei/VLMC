@@ -58,10 +58,6 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );
-    //FIXME: Change this to have a default path for vlmc projects
-//    VLMC_CREATE_PREFERENCE_STRING( "general/VLMCWorkspace", QDir::homePath(),
-//                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Workspace location" ),
-//                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The place where all project's medias will be stored" ) );
 
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
