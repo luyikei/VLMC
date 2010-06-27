@@ -232,7 +232,7 @@ Clip::save( QXmlStreamWriter &project )
     if ( isRootClip() == true )
     {
         if ( m_media->isInWorkspace() == true )
-            project.writeAttribute( "media", Workspace::pathInProjectDir( m_media ) );
+            project.writeAttribute( "media", Workspace::workspacePrefix + Workspace::pathInProjectDir( m_media ) );
         else
             project.writeAttribute( "media", m_media->fileInfo()->absoluteFilePath() );
     }
