@@ -39,6 +39,7 @@ class ClipMetadataDisplayer : public QWidget
         explicit ClipMetadataDisplayer( QWidget *parent = 0 );
 
         void                            setWatchedClip( const Clip *clip );
+        void                            clear();
 
     private:
         /**
@@ -53,6 +54,7 @@ class ClipMetadataDisplayer : public QWidget
 
     private slots:
         void                            metadataUpdated( const Media *media );
+        void                            clipDestroyed( Clip* clip );
 
 };
 

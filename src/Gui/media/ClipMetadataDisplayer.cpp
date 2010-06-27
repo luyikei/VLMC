@@ -59,13 +59,40 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
 }
 
 void
+ClipMetadataDisplayer::clear()
+{
+    m_ui->durationValueLabel->setText( "---" );
+    //Filename || title
+    m_ui->nameValueLabel->setText( "---" );
+    //Resolution
+    m_ui->resolutionValueLabel->setText( "---" );
+    //FPS
+    m_ui->fpsValueLabel->setText( "---" );
+    //nb tracks :
+    m_ui->nbVideoTracksValueLabel->setText( "---" );
+    m_ui->nbAudioTracksValueLabel->setText( "---" );
+    //Path:
+    m_ui->pathValueLabel->setText( "---" );
+}
+
+void
+ClipMetadataDisplayer::clipDestroyed( Clip* clip )
+{
+    if ( m_watchedClip == clip )
+        clear();
+}
+
+void
 ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
 {
     if ( m_watchedMedia )
         disconnect( m_watchedMedia );
+    if ( m_watchedClip )
+        disconnect( m_watchedClip );
 
     m_watchedClip = clip;
     m_watchedMedia = clip->getMedia();
+    connect( m_watchedClip, SIGNAL( unloaded( Clip* ) ), this, SLOT( clipDestroyed( Clip* ) ) );
     if ( m_watchedMedia->isMetadataComputed() == true )
         metadataUpdated( m_watchedMedia );
     else
