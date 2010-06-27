@@ -63,19 +63,20 @@ public:
      *
      *  \param  media   The media to add to the library
      */
-    void        addMedia( Media *media );
+    virtual void        addMedia( Media *media );
 
     /**
      *  \brief  Add a file to the media library
      *
      *  This method will also handle metadata parsing.
      *  \param  fileInfo    the file info of the media
-     *  \return             true if the media was successfully loaded. false otherwise.
+     *  \return             The newly create media if the media was successfully loaded.
+     *                      NULL otherwise.
      *  \sa     addClip( Clip* clip )
      *  \sa     media( const QUuid& uuid)
      *  \sa     clip( const QUuid& uuid )
      */
-    Media*      addMedia( const QFileInfo& fileInfo );
+    virtual Media       *addMedia( const QFileInfo& fileInfo );
     /**
      *  \brief  Check if a file has already been loaded into library.
      *  \param  fileInfo    The file infos

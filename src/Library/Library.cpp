@@ -39,6 +39,10 @@
 #include <QHash>
 #include <QUuid>
 
+Library::Library() : m_cleanState( true )
+{
+}
+
 void
 Library::loadProject( const QDomElement& doc )
 {
@@ -95,6 +99,7 @@ Library::saveProject( QXmlStreamWriter& project )
     project.writeStartElement( "clips" );
     save( project );
     project.writeEndElement();
+    setCleanState( true );
 }
 
 void
@@ -108,4 +113,45 @@ Library::mediaLoaded( const Media* media )
     m_nbMediaToLoad.fetchAndAddAcquire( -1 );
     if ( m_nbMediaToLoad == 0 )
         emit projectLoaded();
+}
+
+void
+Library::addMedia( Media* media )
+{
+    setCleanState( false );
+    MediaContainer::addMedia( media );
+}
+
+Media*
+Library::addMedia( const QFileInfo &fileInfo )
+{
+    Media* media = MediaContainer::addMedia( fileInfo );
+    if ( media != NULL )
+        setCleanState( false );
+    return media;
+}
+
+bool
+Library::addClip( Clip *clip )
+{
+    bool    ret = MediaContainer::addClip( clip );
+    if ( ret != false )
+        setCleanState( false );
+    return ret;
+}
+
+bool
+Library::isInCleanState() const
+{
+    return m_cleanState;
+}
+
+void
+Library::setCleanState( bool newState )
+{
+    if ( newState != m_cleanState )
+    {
+        m_cleanState = newState;
+        emit cleanStateChanged( newState );
+    }
 }

@@ -39,6 +39,8 @@ GUIProjectManager::GUIProjectManager()
 {
     connect( this, SIGNAL( projectClosed() ), Library::getInstance(), SLOT( clear() ) );
     connect( this, SIGNAL( projectClosed() ), MainWorkflow::getInstance(), SLOT( clear() ) );
+    connect( Library::getInstance(), SIGNAL( cleanStateChanged( bool ) ),
+             this, SLOT( cleanChanged( bool ) ) );
 
     //Automatic save part :
     m_timer = new QTimer( this );

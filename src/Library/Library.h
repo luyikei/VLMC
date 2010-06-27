@@ -51,12 +51,21 @@ class Library : public MediaContainer, public Singleton<Library>
     Q_OBJECT
     Q_DISABLE_COPY( Library );
 
+public:
+    virtual void    addMedia( Media* media );
+    virtual Media   *addMedia( const QFileInfo &fileInfo );
+    virtual bool    addClip( Clip *clip );
+    bool            isInCleanState() const;
+
 private:
-    Library() {}
+    Library();
     virtual ~Library(){}
+
+    void        setCleanState( bool newState );
 
 private:
     QAtomicInt  m_nbMediaToLoad;
+    bool        m_cleanState;
 
 public slots:
     /**
@@ -76,6 +85,7 @@ signals:
      *  \brief
      */
     void    projectLoaded();
+    void    cleanStateChanged( bool newState );
 
     friend class    Singleton<Library>;
     friend class    Workspace;
