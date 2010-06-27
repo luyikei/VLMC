@@ -183,6 +183,7 @@ protected:
 signals:
     void                        metaDataComputed( const Media* );
     void                        audioSpectrumComputed( const QUuid& );
+    void                        workspaceStateChanged( bool );
 };
 
 #endif // MEDIA_H__

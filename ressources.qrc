@@ -35,6 +35,8 @@
         <file alias="youtube">resources/images/youtube.png</file>
         <file alias="network">resources/images/network.png</file>
         <file alias="down">resources/images/down.png</file>
+        <file alias="ok">resources/images/ok.png</file>
+        <file alias="ko">resources/images/ko.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>

@@ -293,4 +293,5 @@ Media::setFilePath( const QString &filePath )
         m_inWorkspace = false;
         m_workspacePath = "";
     }
+    emit workspaceStateChanged( m_inWorkspace );
 }
