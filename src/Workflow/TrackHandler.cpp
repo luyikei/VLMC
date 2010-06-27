@@ -27,16 +27,11 @@
 #include <QDomDocument>
 #include <QDomElement>
 
-Workflow::Frame     *TrackHandler::nullOutput = NULL;
-
 TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
         m_trackType( trackType ),
         m_length( 0 )
 {
-    //FIXME -> This should be a NULL pointer.
-    TrackHandler::nullOutput = new Workflow::Frame( 0, 0);
-
     m_tracks = new Toggleable<TrackWorkflow*>[nbTracks];
     for ( unsigned int i = 0; i < nbTracks; ++i )
     {
@@ -47,11 +42,6 @@ TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType track
 
 TrackHandler::~TrackHandler()
 {
-    if ( nullOutput != NULL )
-    {
-        delete nullOutput;
-        nullOutput = NULL;
-    }
     for (unsigned int i = 0; i < m_trackCount; ++i)
         delete m_tracks[i];
     delete[] m_tracks;

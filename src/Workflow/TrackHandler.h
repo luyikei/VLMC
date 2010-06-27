@@ -107,7 +107,6 @@ class   TrackHandler : public QObject
         void                    activateTrack( unsigned int tracKId );
 
     private:
-        static Workflow::Frame*         nullOutput;
         Toggleable<TrackWorkflow*>*     m_tracks;
         unsigned int                    m_trackCount;
         MainWorkflow::TrackType         m_trackType;
