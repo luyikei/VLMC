@@ -133,7 +133,7 @@ ImportController::clipSelection( Clip* clip )
     if ( m_currentUuid == uuid )
         return ;
     m_ui->metadataContainer->setWatchedClip( clip );
-    m_ui->previewContainer->stop();
+    m_clipRenderer->stop();
     m_currentUuid = uuid;
     m_tag->clipSelected( clip );
     emit clipSelected( clip );
@@ -208,7 +208,7 @@ ImportController::treeViewDoubleClicked( const QModelIndex& index )
 void
 ImportController::reject()
 {
-    m_ui->previewContainer->stop();
+    m_clipRenderer->stop();
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
@@ -220,7 +220,7 @@ void
 ImportController::accept()
 {
     m_mediaListView->clear();
-    m_ui->previewContainer->stop();
+    m_clipRenderer->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         Library::getInstance()->addClip( clip );
