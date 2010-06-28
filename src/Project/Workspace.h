@@ -23,18 +23,20 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include <QObject>
+#include "Singleton.hpp"
+
+#include "ErrorHandler.h"
 
 #include <QMutex>
+#include <QObject>
 #include <QQueue>
 
-#include "Singleton.hpp"
 class   Clip;
 class   Media;
 
 class   QFileInfo;
 
-class Workspace : public QObject, public Singleton<Workspace>
+class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandler
 {
     Q_OBJECT
 
@@ -46,7 +48,7 @@ class Workspace : public QObject, public Singleton<Workspace>
         static bool                 isInProjectDir( const Media *media );
         static QString              pathInProjectDir( const Media* media );
 
-        void                        copyToWorkspace( Media* media );
+        bool                        copyToWorkspace( Media* media );
         void                        copyAllToWorkspace();
     private:
         Workspace();

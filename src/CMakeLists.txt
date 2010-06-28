@@ -25,6 +25,7 @@ SET(VLMC_SRCS
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp
     Renderer/WorkflowRenderer.cpp
+    Tools/ErrorHandler.cpp
     Tools/Pool.hpp
     Tools/QSingleton.hpp
     Tools/Singleton.hpp
@@ -67,6 +68,7 @@ SET (VLMC_HDRS
     Renderer/GenericRenderer.h
     Renderer/WorkflowFileRenderer.h
     Renderer/WorkflowRenderer.h
+    Tools/ErrorHandler.h
     Tools/VlmcDebug.h
     Workflow/AudioClipWorkflow.h 
     Workflow/ClipWorkflow.h

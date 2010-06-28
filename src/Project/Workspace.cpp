@@ -46,9 +46,14 @@ Workspace::~Workspace()
     delete m_mediasToCopyMutex;
 }
 
-void
+bool
 Workspace::copyToWorkspace( Media *media )
 {
+    if ( VLMC_PROJECT_GET_STRING("general/Workspace").length() == 0 )
+    {
+        setError( "There is no current workspace. Please create a project first.");
+        return false;
+    }
     QMutexLocker    lock( m_mediasToCopyMutex );
 
     if ( m_copyInProgress == true )
@@ -64,6 +69,7 @@ Workspace::copyToWorkspace( Media *media )
             startCopyWorker( media );
         }
     }
+    return true;
 }
 
 void
