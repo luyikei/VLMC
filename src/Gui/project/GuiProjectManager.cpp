@@ -142,6 +142,10 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
         if ( outputFileName.endsWith( ".vlmc" ) == false )
             outputFileName += ".vlmc";
         m_projectFile = new QFile( outputFileName );
+        QFileInfo       fInfo( outputFileName );
+        SettingsManager::getInstance()->setValue( "general/Workspace",
+                                                  fInfo.absolutePath(), SettingsManager::Project);
+
         appendToRecentProject( outputFileName );
         if ( relocate == true )
             Workspace::getInstance()->copyAllToWorkspace();

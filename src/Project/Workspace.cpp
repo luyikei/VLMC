@@ -177,6 +177,7 @@ Workspace::copyAllToWorkspace()
         QMutexLocker    lock( m_mediasToCopyMutex );
         while ( it != ite )
         {
+            qDebug() << "Enqueuing:" << it.value()->getMedia();
             m_mediasToCopy.enqueue( it.value()->getMedia() );
             ++it;
         }
