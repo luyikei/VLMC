@@ -58,10 +58,6 @@ p, li { white-space: pre-wrap; }
         <translation>Názov</translation>
     </message>
     <message>
-        <source>unnamed</source>
-        <translation>bez názvu</translation>
-    </message>
-    <message>
         <source>Duration</source>
         <translation>Trvanie</translation>
     </message>
@@ -88,6 +84,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>0</source>
         <translation>0</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Cesta</translation>
+    </message>
+    <message>
+        <source>In project workspace</source>
+        <translation>V pracovnom priestore projektu</translation>
     </message>
 </context>
 <context>
@@ -124,10 +128,6 @@ p, li { white-space: pre-wrap; }
         <translation>Pády programu VLMC</translation>
     </message>
     <message>
-        <source>An error occured. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>Nastala chyba. Ospravedlňujeme sa za spôsobené nepríjemnosti. Váš projekt však bol zachovaný a otvorí sa pri ďalšom otvorení programu VLMC.</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>OK</translation>
     </message>
@@ -146,6 +146,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>A crash occurred. Signal received: </source>
         <translation>Nastala chyba. Bol prijatý signál: </translation>
+    </message>
+    <message>
+        <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
+        <translation>Nastala chyba. Ospravedlňujeme sa Vám za nepríjemnosti, Váš projekt bol uložený. Môžete ho znovu otvoriť po ďalšom spustení programu VLMC.</translation>
     </message>
 </context>
 <context>
@@ -180,6 +184,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Failed to load project file</source>
         <translation>Nepodarilo sa načítať projekt</translation>
+    </message>
+    <message>
+        <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
+        <translation>Chystáte sa zmeniť umiestnenie projektu. Každé video bude skopírované do nového pracovného priestoru.</translation>
+    </message>
+    <message>
+        <source>Do you want to proceed?</source>
+        <translation>Chcete pokračovať?</translation>
+    </message>
+    <message>
+        <source>Backup file</source>
+        <translation>Súbor so zálohou</translation>
+    </message>
+    <message>
+        <source>A backup file exists for this project. Do you want to load it?</source>
+        <translation>Pre tento projekt je dostupný aj súbor so zálohou. Chcete ho načítať?</translation>
+    </message>
+    <message>
+        <source>An outdated backup file was found. Do you want to erase it?</source>
+        <translation>Našiel sa starší súbor so zálohou. Chcete ho vymazať?</translation>
     </message>
 </context>
 <context>
@@ -319,10 +343,6 @@ p, li { white-space: pre-wrap; }
         <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
-        <source>Effects</source>
-        <translation>Efekty</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Pomocník</translation>
     </message>
@@ -355,10 +375,6 @@ p, li { white-space: pre-wrap; }
         <translation>Pád</translation>
     </message>
     <message>
-        <source>Keyboard Settings</source>
-        <translation>Nastavenia klávesnice</translation>
-    </message>
-    <message>
         <source>Sorry</source>
         <translation>Prepáčte</translation>
     </message>
@@ -383,22 +399,6 @@ p, li { white-space: pre-wrap; }
         <translation>Dopredu</translation>
     </message>
     <message>
-        <source>VLMC settings</source>
-        <translation>Nastavenia programu VLMC</translation>
-    </message>
-    <message>
-        <source>Project settings</source>
-        <translation>Nastavenia projektu</translation>
-    </message>
-    <message>
-        <source>Video settings</source>
-        <translation>Nastavenia videa</translation>
-    </message>
-    <message>
-        <source>Audio settings</source>
-        <translation>Nastavenia zvuku</translation>
-    </message>
-    <message>
         <source>VLMC Renderer</source>
         <translation>Vykresľovač VLMC</translation>
     </message>
@@ -421,10 +421,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Zoom in</source>
         <translation>Priblížiť</translation>
-    </message>
-    <message>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
-        <translation>Program VLMC nebol korektne ukončený. Chcete obnoviť svoj posledný projekt?</translation>
     </message>
     <message>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
@@ -479,14 +475,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Celoobrazovkový režim</translation>
     </message>
     <message>
-        <source>&amp;Render</source>
-        <translation>Vy&amp;resľovač</translation>
-    </message>
-    <message>
-        <source>Render your project</source>
-        <translation>Vykreslite váš projekt</translation>
-    </message>
-    <message>
         <source>&amp;Load Project</source>
         <translation>N&amp;ačítať projekt</translation>
     </message>
@@ -514,6 +502,54 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Close Project</source>
         <translation>&amp;Zatvoriť projekt</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Všeobecné</translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation>Klávesnica</translation>
+    </message>
+    <message>
+        <source>Youtube</source>
+        <translation>Youtube</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Sieť</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Zvuk</translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
+        <translation>Program VLMC sa neukončil korektne. Chcete obnoviť svoj posledný projekt?</translation>
+    </message>
+    <message>
+        <source>&amp;Export</source>
+        <translation>&amp;Export</translation>
+    </message>
+    <message>
+        <source>&amp;To a file</source>
+        <translation>&amp;Do súboru</translation>
+    </message>
+    <message>
+        <source>Render your project as a file</source>
+        <translation>Renderovať projekt ako súbor</translation>
+    </message>
+    <message>
+        <source>Share on &amp;Youtube</source>
+        <translation>Zdieľať na &amp;Youtube</translation>
+    </message>
+    <message>
+        <source>Share your project on youtube</source>
+        <translation>Zdieľajte svoj projekt na portáli Youtube</translation>
+    </message>
 </context>
 <context>
     <name>MediaCellView</name>
@@ -534,8 +570,16 @@ p, li { white-space: pre-wrap; }
         <translation>Tento klip alebo niektoré jeho súčasti sú obsiahnuté na časovej osi.</translation>
     </message>
     <message>
-        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation>Odstránením ho môžete vymazať z časovej osi. Chcete pokračovať?</translation>
+        <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
+        <translation>Jeho odstránením sa vymaže aj z časovej osi. Chcete naozaj pokračovať?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t copy to workspace</source>
+        <translation>Do pracovného priestoru sa nedá kopírovať</translation>
+    </message>
+    <message>
+        <source>Can&apos;t copy this media to workspace: %1</source>
+        <translation>Nasledujúce médium nemožno skopírovať do pracovného priestoru: %1</translation>
     </message>
 </context>
 <context>
@@ -602,6 +646,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ready to load this project</source>
         <translation>Pripravené na načítanie projektu</translation>
+    </message>
+</context>
+<context>
+    <name>PathWidget</name>
+    <message>
+        <source>Select path</source>
+        <translation>Výber cesty</translation>
+    </message>
+    <message>
+        <source>Select a path</source>
+        <translation>Vyberte cestu</translation>
     </message>
 </context>
 <context>
@@ -791,14 +846,6 @@ p, li { white-space: pre-wrap; }
         <translation>Vzorkovacia frekvencia zvuku vo výstupnom projekte</translation>
     </message>
     <message>
-        <source>Workspace location</source>
-        <translation>Umiestnenie pracovného priestoru</translation>
-    </message>
-    <message>
-        <source>The place where all project&apos;s videos will be stored</source>
-        <translation>Mieste, kam sa ukladajú všetky videá projektu</translation>
-    </message>
-    <message>
         <source>Project name</source>
         <translation>Názov projektu</translation>
     </message>
@@ -821,6 +868,65 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
         <translation>Pred vymazaním klipu z časovej osi vyžadovať potvrdenie tejto akcie</translation>
+    </message>
+    <message>
+        <source>Youtube Developer Key</source>
+        <translation>Vývojársky kľúč pre portál Youtube</translation>
+    </message>
+    <message>
+        <source>The Youtube Developer Key</source>
+        <translation>Vývojársky kľúč pre portál Youtube</translation>
+    </message>
+    <message>
+        <source>Youtube Username</source>
+        <translation>Meno používateľa na serveri Youtube</translation>
+    </message>
+    <message>
+        <source>VLMC won&apos;t store your passwords...</source>
+        <translation>Program VLMC neukladá žiadne Vami zadané heslá...</translation>
+    </message>
+    <message>
+        <source>Proxy</source>
+        <translation>Proxy</translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy </source>
+        <translation>HTTP proxy </translation>
+    </message>
+    <message>
+        <source>Proxy Port</source>
+        <translation>Port Proxy</translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Port</source>
+        <translation>Port HTTP proxy</translation>
+    </message>
+    <message>
+        <source>Proxy Username</source>
+        <translation>Meno používateľa na proxy serveri</translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Username</source>
+        <translation>Meno používateľa na HTTP proxy serveri</translation>
+    </message>
+    <message>
+        <source>Proxy Password</source>
+        <translation>Heslo na prosxy server</translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Password</source>
+        <translation>Heslo na HTTP proxy server</translation>
+    </message>
+    <message>
+        <source>The default location where to store projects folders</source>
+        <translation>Predvolené umiestnenie kam chcete uložiť priečinky s projektami</translation>
+    </message>
+</context>
+<context>
+    <name>PreferencesWidget</name>
+    <message>
+        <source>Project default location</source>
+        <translation>Predvolené umiestnenie projektu</translation>
     </message>
 </context>
 <context>
@@ -856,6 +962,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Stop the playback</source>
         <translation>Zastaviť prehrávanie</translation>
+    </message>
+    <message>
+        <source>Rendering error</source>
+        <translation>Chyba pri renderovaní</translation>
+    </message>
+    <message>
+        <source>An error occurred while rendering.
+Please check your VLC installation before reporting the issue.</source>
+        <translation>Nastala chyba počas renderovania.
+Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.</translation>
     </message>
 </context>
 <context>
@@ -1023,6 +1139,129 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>audio</source>
         <translation>audio</translation>
+    </message>
+    <message>
+        <source>youtube</source>
+        <translation>youtube</translation>
+    </message>
+    <message>
+        <source>network</source>
+        <translation>sieť</translation>
+    </message>
+</context>
+<context>
+    <name>ShareOnYoutube</name>
+    <message>
+        <source>Share On Youtube</source>
+        <translation>Zdieľať na portáli Youtube</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Meno používateľa</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Heslo</translation>
+    </message>
+    <message>
+        <source>Autos &amp; Vehicles</source>
+        <translation>Autá &amp; vozidlá</translation>
+    </message>
+    <message>
+        <source>Comedy</source>
+        <translation>Komédia</translation>
+    </message>
+    <message>
+        <source>Education</source>
+        <translation>Vzdelávanie</translation>
+    </message>
+    <message>
+        <source>Entertainment</source>
+        <translation>Zábava</translation>
+    </message>
+    <message>
+        <source>Film &amp; Animation</source>
+        <translation>Film &amp; animácia</translation>
+    </message>
+    <message>
+        <source>Gaming</source>
+        <translation>Hry</translation>
+    </message>
+    <message>
+        <source>Howto &amp; Style</source>
+        <translation>Štýl návodov &amp;-Ako na to-</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>Hudba</translation>
+    </message>
+    <message>
+        <source>News &amp; Politics</source>
+        <translation>Správy &amp; politika</translation>
+    </message>
+    <message>
+        <source>Nonprofits &amp; Activism</source>
+        <translation>Neziskové aktivity &amp; aktivisti</translation>
+    </message>
+    <message>
+        <source>People &amp; Blogs</source>
+        <translation>Ľudia &amp; blogy</translation>
+    </message>
+    <message>
+        <source>Pets &amp; Animals</source>
+        <translation>Domáci miláčikovia &amp; zvieratá</translation>
+    </message>
+    <message>
+        <source>Science &amp; Technology</source>
+        <translation>Veda &amp; technika</translation>
+    </message>
+    <message>
+        <source>Sports</source>
+        <translation>Športy</translation>
+    </message>
+    <message>
+        <source>Travel &amp; Events</source>
+        <translation>Cestovanie &amp; udalosti</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titul</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Opis</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagy</translation>
+    </message>
+    <message>
+        <source>Video Size</source>
+        <translation>Veľkosť videa</translation>
+    </message>
+    <message>
+        <source>Small (480 x 272)</source>
+        <translation>Malé (480 x 272)</translation>
+    </message>
+    <message>
+        <source>Medium (640 x 360)</source>
+        <translation>Stredné (640 x 360)</translation>
+    </message>
+    <message>
+        <source>Large (960 x 540)</source>
+        <translation>Veľké (950 x 540)</translation>
+    </message>
+    <message>
+        <source>HD (1280 x 720)</source>
+        <translation>HD (1280 x 720)</translation>
+    </message>
+    <message>
+        <source>Make this video public (Default: private)</source>
+        <translation>Zverejniť toto video (predvolená voľba: súkromné)</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Kategória</translation>
     </message>
 </context>
 <context>
@@ -1381,6 +1620,17 @@ Potom kliknite na tlačidlo Ďalej...</translation>
     <message>
         <source>Rendering frame %1 / %2</source>
         <translation>Renderovanie snímky %1 / %2</translation>
+    </message>
+</context>
+<context>
+    <name>Workspace</name>
+    <message>
+        <source>File already exists!</source>
+        <translation>Súbor už existuje!</translation>
+    </message>
+    <message>
+        <source>A file with the same name already exists, do you want to overwrite it?</source>
+        <translation>Súbor s takýmto názvom už existuje, chcete ho prepísať?</translation>
     </message>
 </context>
 </TS>
