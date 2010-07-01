@@ -257,6 +257,8 @@ ImportController::restoreCurrentPath()
 {
     QSettings s;
     QVariant path = s.value( "ImportPreviouslySelectPath", QDir::homePath() );
+    if ( QFile::exists( path.toString() ) == false )
+        path = QDir::homePath();
     QFileInfo info = path.toString();
     m_currentlyWatchedDir = info.absoluteFilePath();
 }
