@@ -31,6 +31,8 @@
 #include <QTemporaryFile>
 #include <QTime>
 
+class   QTimer;
+
 namespace LibVLCpp
 {
     class   MediaPlayer;
@@ -70,10 +72,12 @@ class MetaDataWorker : public QObject
 
         unsigned char*              m_audioBuffer;
         QTime                       m_timer;
+        QTimer                      *m_lengthChangedTimer;
 
     private slots:
         void    entrypointPlaying();
         void    entrypointLengthChanged( qint64 );
+        void    lengthChangedTimeout();
 //        void    generateAudioSpectrum();
         void    failure();
 

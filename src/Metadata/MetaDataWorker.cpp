@@ -36,6 +36,8 @@
 # include <QImage>
 #endif
 
+#include <QTimer>
+
 MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media ) :
         m_mediaPlayer( mediaPlayer ),
         m_media( media ),
@@ -43,10 +45,13 @@ MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media
         m_lengthHasChanged( false ),
         m_audioBuffer( NULL )
 {
+    m_lengthChangedTimer = new QTimer;
+    m_lengthChangedTimer->setSingleShot( true );
 }
 
 MetaDataWorker::~MetaDataWorker()
 {
+    delete m_lengthChangedTimer;
     if ( m_audioBuffer )
         delete m_audioBuffer;
 }
@@ -62,11 +67,14 @@ MetaDataWorker::compute()
 
     m_media->addConstantParam( ":vout=dummy" );
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
+    connect( m_lengthChangedTimer, SIGNAL( timeout() ),
+             this, SLOT( lengthChangedTimeout() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( playing() ),
              this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ) );
     connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
     m_mediaPlayer->play();
+    m_lengthChangedTimer->start( 3000 );
     m_media->flushVolatileParameters();
 }
 
@@ -201,10 +209,25 @@ MetaDataWorker::finalize()
 }
 
 void
+MetaDataWorker::lengthChangedTimeout()
+{
+    //No race condition possible, since both lengthChanged methods are called from the Qt event loop.
+    m_lengthChangedTimer->disconnect();
+    if ( m_lengthHasChanged == true )
+        return ; //This should never happen as this slot is beeing disconnected if a real length is computed.
+    disconnect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
+                this, SLOT( entrypointLengthChanged( qint64 ) ) );
+    m_lengthHasChanged = true;
+    if ( m_mediaIsPlaying == true )
+        metaDataAvailable();
+}
+
+void
 MetaDataWorker::entrypointLengthChanged( qint64 newLength )
 {
     if ( newLength <= 0 )
         return ;
+    m_lengthChangedTimer->disconnect();
     disconnect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
                 this, SLOT( entrypointLengthChanged( qint64 ) ) );
     m_lengthHasChanged = true;
