@@ -1,5 +1,5 @@
 /*****************************************************************************
- * VLCInstance.cpp: Binding for libvlc instances
+ * Transcoder.h: Handle file transcoding.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,33 +20,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "VLCInstance.h"
-#include "vlc/vlc.h"
+#ifndef TRANSCODER_H
+#define TRANSCODER_H
 
-using namespace LibVLCpp;
+#include <QObject>
 
-Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
+#include "Media.h"
+
+class Transcoder : public QObject
 {
-    char const *argv[] =
-    {
-        "-vvvvv",
-        "--no-skip-frames",
-//        "--intf", "dummy",
-        "--text-renderer", "dummy",
-        //"--no-audio",
-        //"--plugin-path", VLC_TREE "/modules",
-        "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
-        "--ignore-config", //Don't use VLC's config files
-        "--no-overlay",
-    };
-    int argc = sizeof( argv ) / sizeof( *argv );
+    Q_OBJECT
+    public:
+        explicit    Transcoder( Media *media );
+        void        transcodeToPs();
 
-    m_internalPtr = libvlc_new( argc, argv );
-    Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",
-                "Can't launch VLMC without a valid LibVLC instance. Please check your VLC installation" );
-}
+    private:
+        Media       *m_media;
+        QString     m_destinationFile;
 
-Instance::~Instance()
-{
-    libvlc_release( m_internalPtr );
-}
+    private slots:
+        void        transcodeFinished();
+
+    signals:
+        void        progress( float pos );
+        void        done();
+};
+
+#endif // TRANSCODER_H

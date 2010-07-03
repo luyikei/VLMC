@@ -35,8 +35,10 @@
 #include "MetaDataManager.h"
 #include "PreviewWidget.h"
 #include "TagWidget.h"
+#include "Transcoder.h"
 
 #include <QFileSystemModel>
+#include <QMessageBox>
 #include <QPalette>
 #include <QSettings>
 #include <QTime>
@@ -219,14 +221,43 @@ ImportController::reject()
 void
 ImportController::accept()
 {
+    bool    invalidMedias = false;
+
     m_mediaListView->clear();
     m_clipRenderer->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
+    {
+        if ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->inputType() == Media::File )
+            invalidMedias = true;
         Library::getInstance()->addClip( clip );
+    }
+    if ( invalidMedias == true )
+        handleInvalidMedias();
     m_temporaryMedias->removeAll();
     m_clipRenderer->setClip( NULL );
     done( Accepted );
+}
+
+void
+ImportController::handleInvalidMedias()
+{
+    QMessageBox::StandardButton res = QMessageBox::question( NULL, tr( "Invalid medias" ),
+                                                             tr( "Some of the medias you loaded can't be used for video editing. Do you want VLMC to convert them"
+                                                                 " so you can use them in your project?" ),
+                           QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
+    if ( res == QMessageBox::Yes )
+    {
+        foreach ( Clip* clip, m_temporaryMedias->clips().values() )
+        {
+            if ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->inputType() == Media::File )
+            {
+                Transcoder  *transcoder = new Transcoder( clip->getMedia() );
+                connect( transcoder, SIGNAL( done() ), transcoder, SLOT( deleteLater() ) );
+                transcoder->transcodeToPs();
+            }
+        }
+    }
 }
 
 void

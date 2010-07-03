@@ -136,6 +136,7 @@ ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
         Commands/KeyboardShortcutHelper.cpp
         Main/guimain.cpp
+        Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         Gui/About.cpp
         Gui/AudioSpectrumDrawer.cpp
         Gui/ClickableLabel.cpp
@@ -194,6 +195,7 @@ ELSE(NOT WITH_GUI)
 
     LIST( APPEND VLMC_HDRS
         Commands/KeyboardShortcutHelper.h
+        Media/Transcoder.h #Won't be needed without the import, so let's put it in GUI list
         Gui/About.h
         Gui/ClickableLabel.h
         Gui/ClipProperty.h

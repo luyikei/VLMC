@@ -73,6 +73,8 @@ class ImportController : public QDialog
         void                        collapseAllButCurrentPath();
         void                        importMedia( const QString &filePath );
         void                        importDir( const QString &path );
+        void                        handleInvalidMedias();
+    private:
         Ui::ImportController*       m_ui;
         StackViewController*        m_stackNav;
 //        TagWidget*                  m_tag;
