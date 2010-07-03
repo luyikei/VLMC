@@ -159,6 +159,7 @@ ImportController::importMedia( const QString &filePath )
     m_temporaryMedias->addClip( clip );
     ++m_nbMediaToLoad;
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
+    connect( media, SIGNAL( metaDataComputed( const Media* ) ), this, SLOT( mediaLoaded() ) );
 }
 
 void
@@ -322,6 +323,7 @@ ImportController::failedToLoad( Media *media )
     m_ui->errorLabel->show();
     QTimer::singleShot( 3000, this, SLOT( hideErrors() ) );
     m_temporaryMedias->deleteClip( media->baseClip()->uuid() );
+    mediaLoaded();
 }
 
 void
