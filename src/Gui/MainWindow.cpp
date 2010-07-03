@@ -530,14 +530,6 @@ MainWindow::on_actionAbout_triggered()
     About::getInstance()->exec();
 }
 
-void
-MainWindow::on_actionTranscode_triggered()
-{
-    QMessageBox::information( this, tr( "Sorry" ),
-                              tr( "This feature is currently disabled." ) );
-    //Transcode::instance( this )->exec();
-}
-
 bool
 MainWindow::checkVideoLength()
 {
