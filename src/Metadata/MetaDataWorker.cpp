@@ -145,8 +145,8 @@ MetaDataWorker::metaDataAvailable()
     m_media->emitMetaDataComputed();
 #ifdef WITH_GUI
     //Setting time for snapshot :
-    if ( m_media->fileType() == Media::Video ||
-         m_media->fileType() == Media::Image )
+    if ( ( m_media->fileType() == Media::Video ||
+         m_media->fileType() == Media::Image ) && m_media->hasSnapshot() == false )
     {
         connect( m_mediaPlayer, SIGNAL( positionChanged( float ) ), this, SLOT( renderSnapshot() ) );
         m_mediaPlayer->setTime( m_mediaPlayer->getLength() / 3 );

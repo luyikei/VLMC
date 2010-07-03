@@ -54,6 +54,12 @@ GUIMedia::snapshot() const
     return *GUIMedia::defaultSnapshot;
 }
 
+bool
+GUIMedia::hasSnapshot() const
+{
+    return ( m_snapshot != NULL );
+}
+
 void
 GUIMedia::emitSnapshotComputed()
 {

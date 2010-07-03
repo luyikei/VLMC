@@ -37,6 +37,7 @@ public:
     ~GUIMedia();
     void                        setSnapshot( QPixmap* snapshot );
     const QPixmap               &snapshot() const;
+    bool                        hasSnapshot() const;
     void                        emitSnapshotComputed();
 
 protected:
