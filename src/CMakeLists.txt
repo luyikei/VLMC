@@ -270,7 +270,6 @@ ELSE(NOT WITH_GUI)
         Gui/preview/ui/PreviewWidget.ui
         Gui/import/ui/TagWidget.ui
         Gui/ui/Timeline.ui
-        Gui/ui/transcode.ui
         Gui/ui/WorkflowFileRendererDialog.ui
         Gui/widgets/TrackControls.ui
         Gui/wizard/ui/GeneralPage.ui
