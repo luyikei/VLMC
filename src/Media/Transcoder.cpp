@@ -25,6 +25,7 @@
 #include "LibVLCpp/VLCMedia.h"
 #include "LibVLCpp/VLCMediaPlayer.h"
 #include "Media.h"
+#include "MetaDataManager.h"
 #include "SettingsManager.h"
 
 #include <QFileInfo>
@@ -55,5 +56,6 @@ void
 Transcoder::transcodeFinished()
 {
     m_media->setFilePath( m_destinationFile );
+    MetaDataManager::getInstance()->computeMediaMetadata( m_media );
     emit done();
 }
