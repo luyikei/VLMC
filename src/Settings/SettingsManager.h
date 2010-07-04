@@ -98,19 +98,28 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
     Q_OBJECT
     Q_DISABLE_COPY( SettingsManager )
     public:
-        typedef QHash<QString, SettingValue*>    SettingHash;
         enum Type
         {
             Project,
             Vlmc
         };
 
+        struct  Pair
+        {
+            Pair( const QString& key, SettingValue *value );
+            bool            operator==( const QString& key ) const;
+            QString         key;
+            SettingValue    *value;
+        };
+        //We store this as a list to preserve order.
+        typedef QList<Pair>         SettingList;
+
         void                        setValue( const QString &key,
                                                 const QVariant &value,
                                                 SettingsManager::Type type = Vlmc);
         SettingValue                *value( const QString &key,
                                             SettingsManager::Type type = Vlmc );
-        SettingHash                 group( const QString &groupName,
+        SettingList                 group( const QString &groupName,
                                             SettingsManager::Type type = Vlmc );
 
         void                        createVar( SettingValue::Type type, const QString &key,
@@ -132,8 +141,8 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         SettingsManager(){}
         ~SettingsManager(){}
 
-        SettingHash                 m_classicSettings;
-        SettingHash                 m_xmlSettings;
+        SettingList                 m_classicSettings;
+        SettingList                 m_xmlSettings;
 
         mutable QReadWriteLock      m_rwLock;
 };

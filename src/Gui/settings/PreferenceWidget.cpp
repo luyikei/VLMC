@@ -48,13 +48,14 @@ PreferenceWidget::PreferenceWidget( const char *category, SettingsManager::Type 
     m_category( category )
 {
     QWidget     *container = new QWidget( this );
-    SettingsManager::SettingHash    settings =
+    SettingsManager::SettingList    settings =
             SettingsManager::getInstance()->group( QString( category ), type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 
-    foreach ( SettingValue* s, settings.values() )
+    foreach ( const SettingsManager::Pair p, settings )
     {
+        SettingValue    *s = p.value;
         //Do not display private variables
         if ( ( s->flags() & SettingValue::Private ) != 0 )
             continue ;
