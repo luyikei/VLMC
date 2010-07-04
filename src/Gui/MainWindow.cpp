@@ -275,7 +275,6 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "VLMC won't store your passwords..." ) );
 
     //Setup VLMC Proxy Settings
-    //FIXME: The widgets get sorted...
     VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUrl", "",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy " ) );
