@@ -118,7 +118,6 @@ INCLUDE_DIRECTORIES(
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
-#Add GUI stuff if required
 IF (NOT WITH_GUI)
     LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
     LIST (APPEND VLMC_HDRS Renderer/ConsoleRenderer.h)
@@ -132,6 +131,7 @@ IF (NOT WITH_GUI)
       ${LIBVLCCORE_LIBRARY}
       )
 
+#Add GUI stuff if required
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
         Commands/KeyboardShortcutHelper.cpp
@@ -185,6 +185,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksScene.cpp
         Gui/timeline/TracksView.cpp
         Gui/widgets/ElidableLabel.cpp
+        Gui/widgets/FramelessButton.cpp
         Gui/widgets/TrackControls.cpp
         Gui/wizard/GeneralPage.cpp
         Gui/wizard/OpenPage.cpp
@@ -245,6 +246,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksView.h
         Gui/UndoStack.h
         Gui/widgets/ElidableLabel.h
+        Gui/widgets/FramelessButton.h
         Gui/widgets/TrackControls.h
         Gui/wizard/GeneralPage.h
         Gui/wizard/OpenPage.h
