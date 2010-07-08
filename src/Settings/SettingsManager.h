@@ -92,6 +92,9 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
         VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 #define VLMC_CREATE_PRIVATE_PROJECT_STRING( key, defaultValue )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
+#define VLMC_CREATE_PREFERENCE_PASSWORD( key, defaultValue, name, desc )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, name, desc, SettingValue::Password )
+
 
 class   SettingsManager : public QObject, public Singleton<SettingsManager>
 {

@@ -51,7 +51,8 @@ class   SettingValue : public QObject
         {
             Nothing = 0,
             /// If this flag is used, then the variable should not be shown in the config widgets.
-            Private = 1,
+            Private     = 1 << 0,
+            Password    = 1 << 1,
         };
 
         /**

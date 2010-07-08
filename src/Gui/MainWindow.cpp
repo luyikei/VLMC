@@ -287,7 +287,7 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Username" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Username" ) );
 
-    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyPassword", "",
+    VLMC_CREATE_PREFERENCE_PASSWORD( "network/ProxyPassword", "",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Password" ) );
 

@@ -29,6 +29,8 @@ StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         m_setting( s )
 {
     m_lineEdit = new QLineEdit( parent );
+    if ( ( s->flags() & SettingValue::Password ) != 0 )
+        m_lineEdit->setEchoMode( QLineEdit::Password );
     connect( s, SIGNAL( changed( const QVariant& ) ),
              this, SLOT( changed( const QVariant& ) ) );
     changed( s->get() );
