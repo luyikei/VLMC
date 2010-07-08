@@ -58,7 +58,6 @@ class MediaLibrary : public QWidget
 
     private slots:
         void                filterUpdated( const QString &filter );
-        void                clearFilter();
         /**
          *  \brief          Used to update the filters when the view is changed.
          *

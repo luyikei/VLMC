@@ -46,8 +46,6 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SIGNAL( clipSelected( Clip* ) ) );
     connect( m_ui->filterInput, SIGNAL( textChanged( const QString& ) ),
              this, SLOT( filterUpdated( const QString& ) ) );
-    connect( m_ui->clearButton, SIGNAL( clicked() ),
-             this, SLOT( clearFilter() ) );
     connect( nav, SIGNAL( viewChanged( ViewController* ) ),
              this, SLOT( viewChanged( ViewController* ) ) );
     connect( m_ui->filterType, SIGNAL( currentIndexChanged( int ) ),
@@ -68,12 +66,6 @@ MediaLibrary::filterUpdated( const QString &filter )
         mcv->setVisible( currentFilter()( mcv->clip(), filter ) );
         ++it;
     }
-}
-
-void
-MediaLibrary::clearFilter()
-{
-    m_ui->filterInput->setText( "" );
 }
 
 MediaLibrary::Filter
