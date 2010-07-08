@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 #include "RendererSettings.h"
+
+#include "Media.h"
 #include "SettingsManager.h"
 
 #include "ui_RendererSettings.h"
@@ -51,7 +53,7 @@ RendererSettings::selectOutputFileName()
 {
     QString outputFileName =
             QFileDialog::getSaveFileName( NULL, tr ( "Enter the output file name" ),
-                                          QDir::currentPath(), tr( "Videos(*.avi *.mpg)" ) );
+                                          QDir::currentPath(), tr( "Videos(%1)" ).arg( Media::VideoExtensions ) );
     m_ui.outputFileName->setText( outputFileName );
 }
 

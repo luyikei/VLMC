@@ -36,10 +36,19 @@
 #include <QtDebug>
 #include <QUrl>
 
-const QString   Media::VideoExtensions = "*.mov *.avi *.mkv *.mpg *.mpeg *.wmv *.mp4 "
-                                         "*.ogg *.ogv *.dv *.ts *.m2v *.ps";
+const QString   Media::VideoExtensions = "*.3gp *.amv *.asf *.avi *.divx *.dv *.flv *.gxf "
+                                         "*.iso *.m1v *.m2v *.m2t *.m2ts *.m4v *.mkv *.mov "
+                                         "*.mp2 *.mp4 *.mpeg *.mpeg1 *.mpeg2 *.mpeg4 *.mpg "
+                                         "*.mts *.mxf *.nsv *.nuv *.ogg *.ogm *.ogv *.ogx *.ps "
+                                         "*.rec *.rm *.rmvb *.tod *.ts *.vob *.vro *.webm *.wmv";
+
 const QString   Media::ImageExtensions = "*.gif *.png *.jpg *.jpeg";
-const QString   Media::AudioExtensions = "*.mp3 *.oga *.flac *.aac *.wav";
+
+const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *.ape "
+                                         "*.dts *.flac *.it *.m4a *.m4p *.mid *.mka *.mlp "
+                                         "*.mod *.mp1 *.mp2 *.mp3 *.mpc *.oga *.ogg *.oma "
+                                         "*.rmi *.s3m *.spx *.tta *.voc *.vqf *.w64 *.wav "
+                                         "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
 Media::Media( const QString& filePath )
