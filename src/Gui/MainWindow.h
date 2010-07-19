@@ -108,7 +108,6 @@ private:
     ImportController*       m_importController;
 
 private slots:
-    void                    on_actionBypass_effects_engine_toggled(bool );
     void                    on_actionFullscreen_triggered( bool checked );
     void                    on_actionQuit_triggered();
     void                    on_actionAbout_triggered();

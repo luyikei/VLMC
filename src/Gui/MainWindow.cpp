@@ -685,19 +685,6 @@ MainWindow::toolButtonClicked( int id )
 }
 
 void
-MainWindow::on_actionBypass_effects_engine_toggled(bool)
-{
-//    EffectsEngine*  ee;
-//
-//    ee = MainWorkflow::getInstance()->getEffectsEngine();
-//    if (toggled)
-//        ee->enable();
-//    else
-//       ee->disable();
-    return ;
-}
-
-void
 MainWindow::on_actionProject_Preferences_triggered()
 {
   m_projectPreferences->show();
