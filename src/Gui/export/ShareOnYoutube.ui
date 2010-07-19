@@ -14,7 +14,7 @@
    <string>Share On Youtube</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../ressources.qrc">
+   <iconset resource="../../../resources.qrc">
     <normaloff>:/images/youtube</normaloff>:/images/youtube</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -218,7 +218,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../ressources.qrc"/>
+  <include location="../../../resources.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -55,8 +55,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
-         <normaloff>:/images/images/previous_frame.png</normaloff>:/images/images/previous_frame.png</iconset>
+        <iconset resource="../../../../resources.qrc">
+         <normaloff>:/images/previous_frame</normaloff>:/images/previous_frame</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -93,7 +93,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
+        <iconset resource="../../../../resources.qrc">
          <normaloff>:/images/play</normaloff>:/images/play</iconset>
        </property>
        <property name="iconSize">
@@ -131,8 +131,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
-         <normaloff>:/images/images/next_frame.png</normaloff>:/images/images/next_frame.png</iconset>
+        <iconset resource="../../../../resources.qrc">
+         <normaloff>:/images/next_frame</normaloff>:/images/next_frame</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -169,7 +169,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
+        <iconset resource="../../../../resources.qrc">
          <normaloff>:/images/marker_start</normaloff>:/images/marker_start</iconset>
        </property>
        <property name="iconSize">
@@ -207,7 +207,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
+        <iconset resource="../../../../resources.qrc">
          <normaloff>:/images/marker_stop</normaloff>:/images/marker_stop</iconset>
        </property>
        <property name="iconSize">
@@ -245,7 +245,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
+        <iconset resource="../../../../resources.qrc">
          <normaloff>:/images/editcut</normaloff>:/images/editcut</iconset>
        </property>
       </widget>
@@ -290,8 +290,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../../ressources.qrc">
-         <normaloff>:/images/images/stop.png</normaloff>:/images/images/stop.png</iconset>
+        <iconset resource="../../../../resources.qrc">
+         <normaloff>:/images/stop</normaloff>:/images/stop</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -358,7 +358,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../ressources.qrc"/>
+  <include location="../../../../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -14,8 +14,8 @@
    <string>Import</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../../../ressources.qrc">
-    <normaloff>:/images/images/vlmc.png</normaloff>:/images/images/vlmc.png</iconset>
+   <iconset resource="../../../../resources.qrc">
+    <normaloff>:/images/vlmc</normaloff>:/images/vlmc</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -52,7 +52,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../../ressources.qrc">
+            <iconset resource="../../../../resources.qrc">
              <normaloff>:/images/down</normaloff>:/images/down</iconset>
            </property>
           </widget>
@@ -83,7 +83,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../../../../ressources.qrc">:/images/error</pixmap>
+            <pixmap resource="../../../../resources.qrc">:/images/error</pixmap>
            </property>
           </widget>
          </item>
@@ -176,7 +176,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../ressources.qrc"/>
+  <include location="../../../../resources.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -494,7 +494,7 @@ MainWindow::createGlobalPreferences()
 {
     m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
     m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/images/vlmc.png" ),
+                                     QIcon( ":/images/vlmc" ),
                                      tr ( "General" ) );
     m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "keyboard" ), SettingsManager::Vlmc,
                                      QIcon( ":/images/keyboard" ),
@@ -512,13 +512,13 @@ MainWindow::createProjectPreferences()
 {
     m_projectPreferences = new Settings( SettingsManager::Project, this );
     m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Project,
-                                   QIcon( ":/images/images/vlmc.png" ),
+                                   QIcon( ":/images/vlmc" ),
                                    tr ( "General" ) );
     m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "video" ), SettingsManager::Project,
-                                   QIcon( ":/images/images/video.png" ),
+                                   QIcon( ":/images/video" ),
                                    tr ( "Video" ) );
     m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "audio" ), SettingsManager::Project,
-                                   QIcon( ":/images/images/audio.png" ),
+                                   QIcon( ":/images/audio" ),
                                    tr ( "Audio" ) );
 }
 

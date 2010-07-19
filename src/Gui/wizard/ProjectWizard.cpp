@@ -43,7 +43,7 @@ ProjectWizard::ProjectWizard( QWidget* parent )
     setWizardStyle( QWizard::ModernStyle );
 #endif
 
-    QPixmap logo = QPixmap( ":/images/images/vlmc.png" )
+    QPixmap logo = QPixmap( ":/images/vlmc" )
                    .scaledToHeight( 50, Qt::SmoothTransformation );
 
     setPixmap( QWizard::LogoPixmap, logo );
