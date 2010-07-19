@@ -118,11 +118,19 @@
    <addaction name="actionFullscreen"/>
   </widget>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/images/about</normaloff>:/images/about</iconset>
+   </property>
    <property name="text">
     <string>&amp;About</string>
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/images/help</normaloff>:/images/help</iconset>
+   </property>
    <property name="text">
     <string>Help</string>
    </property>
@@ -264,6 +272,10 @@
    </property>
   </action>
   <action name="actionClose_Project">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/images/close</normaloff>:/images/close</iconset>
+   </property>
    <property name="text">
     <string>&amp;Close Project</string>
    </property>
@@ -304,6 +316,10 @@
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/images/exit</normaloff>:/images/exit</iconset>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>

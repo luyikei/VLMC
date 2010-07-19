@@ -45,6 +45,10 @@
         <file alias="render-file">resources/images/render-file.png</file>
         <file alias="project-preferences">resources/images/project-preferences.png</file>
         <file alias="fullscreen">resources/images/fullscreen.png</file>
+        <file alias="exit">resources/images/exit.png</file>
+        <file alias="close">resources/images/close.png</file>
+        <file alias="help">resources/images/help.png</file>
+        <file alias="about">resources/images/about.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>
