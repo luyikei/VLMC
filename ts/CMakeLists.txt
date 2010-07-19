@@ -1,6 +1,6 @@
 
 ## RCC file
-SET(TS_QRC ${CMAKE_SOURCE_DIR}/ts/ressources-ts.qrc)
+SET(TS_QRC ${CMAKE_SOURCE_DIR}/ts/resources-ts.qrc)
 
 IF(NOT QT_LUPDATE_EXECUTABLE)
     MESSAGE(WARNING "VLMC could not find lupdate. You won't be able to update translations.")

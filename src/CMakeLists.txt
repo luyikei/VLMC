@@ -82,8 +82,8 @@ SET (VLMC_HDRS
   )
 
 SET(VLMC_RCC
-    ../ressources.qrc
-    ../ts/ressources-ts.qrc
+    ../resources.qrc
+    ../ts/resources-ts.qrc
   )
 
 IF (WIN32)
