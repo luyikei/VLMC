@@ -37,6 +37,14 @@
         <file alias="down">resources/images/down.png</file>
         <file alias="ok">resources/images/ok.png</file>
         <file alias="ko">resources/images/ko.png</file>
+        <file alias="newproject">resources/images/newproject.png</file>
+        <file alias="openproject">resources/images/openproject.png</file>
+        <file alias="save">resources/images/save.png</file>
+        <file alias="save-as">resources/images/save-as.png</file>
+        <file alias="import">resources/images/import.png</file>
+        <file alias="render-file">resources/images/render-file.png</file>
+        <file alias="project-preferences">resources/images/project-preferences.png</file>
+        <file alias="fullscreen">resources/images/fullscreen.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>
