@@ -64,6 +64,9 @@ class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandl
     private slots:
         void                        copyTerminated( Media* media, QString dest );
 
+    signals:
+        void                        notify( QString );
+
     friend class    Singleton<Workspace>;
 };
 

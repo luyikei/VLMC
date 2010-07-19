@@ -31,6 +31,7 @@
 #include <QtDebug>
 
 #ifdef WITH_GUI
+# include "NotificationZone.h"
 # include <QMessageBox>
 #endif
 
@@ -39,6 +40,10 @@ const QString   Workspace::workspacePrefix = "workspace://";
 Workspace::Workspace() : m_copyInProgress( false )
 {
     m_mediasToCopyMutex = new QMutex;
+#ifdef WITH_GUI
+    connect( this, SIGNAL( notify( QString ) ),
+             NotificationZone::getInstance(), SLOT( notify( QString ) ) );
+#endif
 }
 
 Workspace::~Workspace()
@@ -115,6 +120,8 @@ Workspace::clipLoaded( Clip *clip )
 void
 Workspace::copyTerminated( Media *media, QString dest )
 {
+    emit notify( tr( "Workspace: " ) + media->fileInfo()->fileName() + tr( " copied to " ) + dest );
+
     media->setFilePath( dest );
     media->disconnect( this );
 
@@ -177,7 +184,6 @@ Workspace::copyAllToWorkspace()
         QMutexLocker    lock( m_mediasToCopyMutex );
         while ( it != ite )
         {
-            qDebug() << "Enqueuing:" << it.value()->getMedia();
             m_mediasToCopy.enqueue( it.value()->getMedia() );
             ++it;
         }
