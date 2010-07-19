@@ -46,7 +46,6 @@ class SearchLineEdit : public QLineEdit
     private:
         FramelessButton     *m_clearButton;
         bool                m_message;
-        QLabel              *m_msg;
 
     public slots:
         void    clear();
