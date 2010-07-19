@@ -46,10 +46,10 @@ class MainWindow : public QMainWindow
     Q_DISABLE_COPY( MainWindow )
 
 public:
-
     explicit MainWindow( QWidget *parent = 0 );
-    void registerWidgetInWindowMenu( QDockWidget* widget );
     ~MainWindow();
+
+    void registerWidgetInWindowMenu( QDockWidget* widget );
 
 public slots:
     void        zoomIn();
@@ -63,6 +63,7 @@ private:
     void        initializeDockWidgets( void );
     void        setupLibrary();
     void        createStatusBar();
+    void        createNotificationZone();
     void        createGlobalPreferences();
     void        createProjectPreferences();
     void        initVlmcPreferences();
@@ -132,7 +133,6 @@ private slots:
 
 signals:
     void                    toolChanged( ToolButtons );
-
 };
 
 #endif // MAINWINDOW_H

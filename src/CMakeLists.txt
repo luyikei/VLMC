@@ -186,6 +186,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksView.cpp
         Gui/widgets/ElidableLabel.cpp
         Gui/widgets/FramelessButton.cpp
+        Gui/widgets/NotificationZone.cpp
         Gui/widgets/SearchLineEdit.cpp
         Gui/widgets/TrackControls.cpp
         Gui/wizard/GeneralPage.cpp
@@ -248,6 +249,7 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.h
         Gui/widgets/ElidableLabel.h
         Gui/widgets/FramelessButton.h
+        Gui/widgets/NotificationZone.h
         Gui/widgets/SearchLineEdit.h
         Gui/widgets/TrackControls.h
         Gui/wizard/GeneralPage.h
@@ -276,6 +278,7 @@ ELSE(NOT WITH_GUI)
         Gui/ui/Timeline.ui
         Gui/ui/WorkflowFileRendererDialog.ui
         Gui/widgets/TrackControls.ui
+        Gui/widgets/ui/NotificationZone.ui
         Gui/wizard/ui/GeneralPage.ui
         Gui/wizard/ui/OpenPage.ui
         Gui/wizard/ui/VideoPage.ui

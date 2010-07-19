@@ -26,6 +26,7 @@
 #include "LibVLCpp/VLCMediaPlayer.h"
 #include "Media.h"
 #include "MetaDataManager.h"
+#include "NotificationZone.h"
 #include "SettingsManager.h"
 
 #include <QFileInfo>
@@ -33,6 +34,10 @@
 Transcoder::Transcoder( Media* media ) :
         m_media( media )
 {
+    connect( this, SIGNAL( notify( QString ) ),
+             NotificationZone::getInstance(), SLOT( notify( QString ) ) );
+    connect( this, SIGNAL( progress( float ) ),
+             NotificationZone::getInstance(), SLOT( progressUpdated( float ) ) );
 }
 
 void
@@ -49,6 +54,7 @@ Transcoder::transcodeToPs()
     LibVLCpp::MediaPlayer   *mp = new LibVLCpp::MediaPlayer( media );
     connect( mp, SIGNAL( positionChanged( float ) ), this, SIGNAL( progress( float ) ) );
     connect( mp, SIGNAL( endReached() ), this, SLOT( transcodeFinished() ) );
+    emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );
     mp->play();
 }
 
@@ -58,4 +64,5 @@ Transcoder::transcodeFinished()
     m_media->setFilePath( m_destinationFile );
     MetaDataManager::getInstance()->computeMediaMetadata( m_media );
     emit done();
+    emit notify( m_media->fileInfo()->fileName() + ": Transcode finished" );
 }

@@ -44,6 +44,8 @@ class Transcoder : public QObject
     signals:
         void        progress( float pos );
         void        done();
+        //used for notification:
+        void        notify( QString );
 };
 
 #endif // TRANSCODER_H

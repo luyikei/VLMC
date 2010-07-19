@@ -49,6 +49,7 @@
 #include "DockWidgetManager.h"
 #include "ImportController.h"
 #include "MediaLibrary.h"
+#include "NotificationZone.h"
 #include "PreviewWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
@@ -364,8 +365,21 @@ MainWindow::on_actionLoad_Project_triggered()
 }
 
 void
+MainWindow::createNotificationZone()
+{
+    QWidget *notifSpacer = new QWidget( this );
+    notifSpacer->setFixedWidth( 75 );
+    m_ui.statusbar->addPermanentWidget( notifSpacer );
+
+    m_ui.statusbar->addPermanentWidget( NotificationZone::getInstance() );
+}
+
+void
 MainWindow::createStatusBar()
 {
+    //Notifications:
+    createNotificationZone();
+
     // Mouse (default) tool
     QToolButton* mouseTool = new QToolButton( this );
     mouseTool->setAutoRaise( true );
