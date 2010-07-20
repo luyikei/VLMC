@@ -68,6 +68,7 @@ private:
     void        createProjectPreferences();
     void        initVlmcPreferences();
     void        loadVlmcPreferences( const QString& subPart );
+    void        initToolbar();
 #ifdef WITH_CRASHBUTTON
     void        setupCrashTester();
 #endif
@@ -125,7 +126,7 @@ private slots:
     void                    on_actionRedo_triggered();
     void                    on_actionCrash_triggered();
     void                    on_actionImport_triggered();
-    void                    toolButtonClicked( int id );
+    void                    toolButtonClicked( QAction *action );
     void                    projectUpdated( const QString& projectName, bool savedStatus );
     void                    canUndoChanged( bool canUndo );
     void                    canRedoChanged( bool canRedo );

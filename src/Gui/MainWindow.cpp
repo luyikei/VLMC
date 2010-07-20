@@ -91,6 +91,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     createGlobalPreferences();
     createProjectPreferences();
     initializeDockWidgets();
+    initToolbar();
     createStatusBar();
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
@@ -176,14 +177,6 @@ void
 MainWindow::initVlmcPreferences()
 {
     //Setup VLMC Keyboard Preference...
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/defaultmode", "n",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select mode" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the selection tool in the timeline" ) );
-
-    VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/cutmode", "x",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Cut mode" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ) );
-
     VLMC_CREATE_PREFERENCE_KEYBOARD( "keyboard/mediapreview", "Ctrl+Return",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Media preview" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Preview the selected media, or pause the current preview" ) );
@@ -251,6 +244,14 @@ MainWindow::initVlmcPreferences()
     CREATE_MENU_SHORTCUT( "keyboard/renderproject", "Ctrl+R",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Render the project to a file" ), actionRender );
+
+    CREATE_MENU_SHORTCUT( "keyboard/defaultmode", "n",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Selection mode" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the selection tool in the timeline" ), actionSelection_mode );
+
+    CREATE_MENU_SHORTCUT( "keyboard/cutmode", "x",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Cut mode" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ), actionCut_mode );
 
     //Setup VLMC Lang. Preferences...
     VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default",
@@ -380,38 +381,6 @@ MainWindow::createStatusBar()
     //Notifications:
     createNotificationZone();
 
-    // Mouse (default) tool
-    QToolButton* mouseTool = new QToolButton( this );
-    mouseTool->setAutoRaise( true );
-    mouseTool->setCheckable( true );
-    mouseTool->setIcon( QIcon( ":/images/mouse" ) );
-    mouseTool->setStatusTip( tr( "Use the mouse tool to manipulate regions in the timeline" ) );
-    m_ui.statusbar->addPermanentWidget( mouseTool );
-
-    // Cut/Split tool
-    QToolButton* splitTool = new QToolButton( this );
-    splitTool->setAutoRaise( true );
-    splitTool->setCheckable( true );
-    splitTool->setIcon( QIcon( ":/images/editcut" ) );
-    splitTool->setStatusTip( tr( "Use the scissors to cut regions in the timeline" ) );
-    m_ui.statusbar->addPermanentWidget( splitTool );
-
-    // Group the two previous buttons
-    QButtonGroup* toolButtonGroup = new QButtonGroup( this );
-    toolButtonGroup->addButton( mouseTool, TOOL_DEFAULT);
-    toolButtonGroup->addButton( splitTool, TOOL_CUT );
-    toolButtonGroup->setExclusive( true );
-    mouseTool->setChecked( true );
-
-    //Shortcut part:
-    KeyboardShortcutHelper* defaultModeShortcut = new KeyboardShortcutHelper( "keyboard/defaultmode", this );
-    KeyboardShortcutHelper* cutModeShortcut = new KeyboardShortcutHelper( "keyboard/cutmode", this );
-    connect( defaultModeShortcut, SIGNAL( activated() ), mouseTool, SLOT( click() ) );
-    connect( cutModeShortcut, SIGNAL( activated() ), splitTool, SLOT( click() ) );
-
-    connect( toolButtonGroup, SIGNAL( buttonClicked( int ) ),
-             this, SLOT( toolButtonClicked( int ) ) );
-
     // Spacer
     QWidget* spacer = new QWidget( this );
     spacer->setFixedWidth( 20 );
@@ -487,6 +456,19 @@ MainWindow::initializeDockWidgets( void )
     if ( dock != 0 )
         dock->hide();
     setupLibrary();
+}
+
+void
+MainWindow::initToolbar()
+{
+    QActionGroup    *mouseActions = new QActionGroup( m_ui.toolBar );
+    mouseActions->addAction( m_ui.actionSelection_mode );
+    mouseActions->addAction( m_ui.actionCut_mode );
+    m_ui.actionSelection_mode->setChecked( true );
+    m_ui.toolBar->addActions( mouseActions->actions() );
+    connect( mouseActions, SIGNAL( triggered(QAction*) ),
+             this, SLOT( toolButtonClicked( QAction* ) ) );
+    m_ui.menuTools->addActions( mouseActions->actions() );
 }
 
 void
@@ -679,9 +661,14 @@ MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
 }
 
 void
-MainWindow::toolButtonClicked( int id )
+MainWindow::toolButtonClicked( QAction *action )
 {
-    emit toolChanged( (ToolButtons)id );
+    if ( action == m_ui.actionSelection_mode )
+        emit toolChanged( TOOL_DEFAULT );
+    else if ( action == m_ui.actionCut_mode )
+        emit toolChanged( TOOL_CUT );
+    else
+        qCritical() << "Unknown tool. This should not happen !";
 }
 
 void
