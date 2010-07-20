@@ -209,6 +209,10 @@ MainWindow::initVlmcPreferences()
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Preferences" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Open VLMC preferences" ), actionPreferences );
 
+    CREATE_MENU_SHORTCUT( "keyboard/projectpreferences", "Ctrl+P",
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Project preferences" ),
+                          QT_TRANSLATE_NOOP( "PreferenceWidget", "Open the project preferences"), actionProject_Preferences );
+
     CREATE_MENU_SHORTCUT( "keyboard/fullscreen", "F",
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Fullscreen" ),
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Switch to fullscreen mode" ), actionFullscreen );
