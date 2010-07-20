@@ -38,8 +38,8 @@
 
 #include <QtDebug>
 
-Settings::Settings( SettingsManager::Type type, QWidget *parent, Qt::WindowFlags f ) :
-    QDialog( parent, f ),
+Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
+    QDialog( parent ),
     m_type( type )
 {
     setMinimumHeight( 400 );
@@ -170,4 +170,8 @@ Settings::retranslateUi()
     if ( text.length() >= 1 )
         text[0] = text[0].toUpper();
     m_title->setText( text );
+    if ( m_type == SettingsManager::Project )
+        setWindowTitle( tr( "Project preferences" ) );
+    else
+        setWindowTitle( tr( "VLMC Settings" ) );
 }

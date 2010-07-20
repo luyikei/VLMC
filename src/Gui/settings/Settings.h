@@ -45,7 +45,7 @@ class   Settings : public QDialog
     Q_DISABLE_COPY( Settings )
 
     public:
-        Settings( SettingsManager::Type type, QWidget *parent = 0, Qt::WindowFlags f = 0 );
+        Settings( SettingsManager::Type type, QWidget *parent = 0 );
 
         void                        addCategory( const char *name,
                                                  SettingsManager::Type type,
