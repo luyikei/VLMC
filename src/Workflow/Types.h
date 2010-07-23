@@ -27,7 +27,7 @@
 
 namespace   Workflow
 {
-    const quint32   Depth = 3;
+    const quint32   Depth = 4;
 
     class   Frame
     {

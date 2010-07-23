@@ -30,6 +30,7 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
     char const *argv[] =
     {
 //        "-vvvvv",
+//        "--ffmpeg-debug", "3",
         "--no-skip-frames",
 //        "--intf", "dummy",
         "--text-renderer", "dummy",
