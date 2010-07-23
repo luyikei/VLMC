@@ -293,6 +293,14 @@ p, li { white-space: pre-wrap; }
         <source>TextLabel</source>
         <translation>TextovaMenovka</translation>
     </message>
+    <message>
+        <source>Invalid medias</source>
+        <translation>Neplatné médiá</translation>
+    </message>
+    <message>
+        <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
+        <translation>Niektoré z načítaných médií sa nedajú použiť na úpravu videa. Chcete, aby ich program VLMC konvertoval tak, aby sa dali použiť vo vašom projekte?</translation>
+    </message>
 </context>
 <context>
     <name>IntroDialog</name>
@@ -347,40 +355,12 @@ p, li { white-space: pre-wrap; }
         <translation>Pomocník</translation>
     </message>
     <message>
-        <source>Media Library</source>
-        <translation>Knižnica médií</translation>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>Náhľad</translation>
     </message>
     <message>
-        <source>Transcode</source>
-        <translation>Prekódovať</translation>
-    </message>
-    <message>
-        <source>Enable effects engine</source>
-        <translation>Zapnúť engine pre efekty</translation>
-    </message>
-    <message>
-        <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
-    </message>
-    <message>
-        <source>Project Wizard</source>
-        <translation>Sprievodca projektom</translation>
-    </message>
-    <message>
         <source>Crash</source>
         <translation>Pád</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation>Prepáčte</translation>
-    </message>
-    <message>
-        <source>This feature is currently disabled.</source>
-        <translation>Táto funkcia je momentálne zablokovaná.</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -433,10 +413,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;View</source>
         <translation>Zo&amp;braziť</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation>&amp;Nástroje</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -550,6 +526,22 @@ p, li { white-space: pre-wrap; }
         <source>Share your project on youtube</source>
         <translation>Zdieľajte svoj projekt na portáli Youtube</translation>
     </message>
+    <message>
+        <source>Tools</source>
+        <translation>Nástroje</translation>
+    </message>
+    <message>
+        <source>VLMC Toolbar</source>
+        <translation>Panel nástrojov VLMC</translation>
+    </message>
+    <message>
+        <source>Selection mode</source>
+        <translation>Režim výberu</translation>
+    </message>
+    <message>
+        <source>Cut mode</source>
+        <translation>Režim vystrihovania</translation>
+    </message>
 </context>
 <context>
     <name>MediaCellView</name>
@@ -589,10 +581,6 @@ p, li { white-space: pre-wrap; }
         <translation>Formulár</translation>
     </message>
     <message>
-        <source>Filter:</source>
-        <translation>Filter:</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
@@ -601,16 +589,15 @@ p, li { white-space: pre-wrap; }
         <translation>Tagy</translation>
     </message>
     <message>
-        <source>Filter by</source>
-        <translation>Filtrovať podľa</translation>
-    </message>
-    <message>
-        <source>clear</source>
-        <translation>vyčistiť</translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation>Import</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationZone</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulár</translation>
     </message>
 </context>
 <context>
@@ -661,10 +648,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>PreferenceWidget</name>
-    <message>
-        <source>Select mode</source>
-        <translation>Vyberte režim</translation>
-    </message>
     <message>
         <source>Select the selection tool in the timeline</source>
         <translation>Vyberte nástroj na výber na časovej osi</translation>
@@ -921,6 +904,18 @@ p, li { white-space: pre-wrap; }
         <source>The default location where to store projects folders</source>
         <translation>Predvolené umiestnenie kam chcete uložiť priečinky s projektami</translation>
     </message>
+    <message>
+        <source>Project preferences</source>
+        <translation>Nastavenia projektu</translation>
+    </message>
+    <message>
+        <source>Open the project preferences</source>
+        <translation>Otvoriť nastavenia projektu</translation>
+    </message>
+    <message>
+        <source>Selection mode</source>
+        <translation>Režim výberu</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesWidget</name>
@@ -1098,10 +1093,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <translation>Nastavenia vykresľovania</translation>
     </message>
     <message>
-        <source>Videos(*.avi *.mpg)</source>
-        <translation>Videá (*.avi, *.mpg)</translation>
-    </message>
-    <message>
         <source>Invalid parameters</source>
         <translation>Neplatné parametre</translation>
     </message>
@@ -1120,6 +1111,21 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Output file already exists, do you want to overwrite it?</source>
         <translation>Výstupný súbor už existuje, chcete ho prepísať?</translation>
+    </message>
+    <message>
+        <source>Videos(%1)</source>
+        <translation>Videá(%1)</translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Clear</source>
+        <translation>Vyčistiť</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Filter</translation>
     </message>
 </context>
 <context>
@@ -1147,6 +1153,14 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>network</source>
         <translation>sieť</translation>
+    </message>
+    <message>
+        <source>Project preferences</source>
+        <translation>Nastavenia projektu</translation>
+    </message>
+    <message>
+        <source>VLMC Settings</source>
+        <translation>Nastavenia VLMC</translation>
     </message>
 </context>
 <context>
@@ -1344,73 +1358,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Action not supported.</source>
         <translation>Akcia nie je podporovaná.</translation>
-    </message>
-</context>
-<context>
-    <name>Transcode</name>
-    <message>
-        <source>Transcode File</source>
-        <translation>Prekódovať súbor</translation>
-    </message>
-    <message>
-        <source>Input File</source>
-        <translation>Vstupný súbor</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profily</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <source>H264 + AAC</source>
-        <translation>H264 + AAC</translation>
-    </message>
-    <message>
-        <source>Dirac + AAC</source>
-        <translation>Dirac + AAC</translation>
-    </message>
-    <message>
-        <source>Theora + Vorbis</source>
-        <translation>Theora + Vorbis</translation>
-    </message>
-    <message>
-        <source>Theora + Flac</source>
-        <translation>Theora + Flac</translation>
-    </message>
-    <message>
-        <source>Mpeg4 + AAC</source>
-        <translation>Mpeg4 + AAC</translation>
-    </message>
-    <message>
-        <source>WMV + WMA</source>
-        <translation>WMV + WMA</translation>
-    </message>
-    <message>
-        <source>Choose File to open</source>
-        <translation>Vyberte si súbor, ktorý chcete otvoriť</translation>
-    </message>
-    <message>
-        <source>Video files (*.avi *.mkv *.ogg)</source>
-        <translation>Video súbory (*.avi *.mkv *.ogg)</translation>
-    </message>
-    <message>
-        <source>Transcode in progress</source>
-        <translation>Prebieha prekódovanie</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Upozornenie</translation>
-    </message>
-    <message>
-        <source>Choose a video to transcode</source>
-        <translation>Vyberte si video, ktoré sa má prekódovať</translation>
-    </message>
-    <message>
-        <source>Choose File to save</source>
-        <translation>Vyberte si video, ktoré chcete uložiť</translation>
     </message>
 </context>
 <context>
@@ -1631,6 +1578,14 @@ Potom kliknite na tlačidlo Ďalej...</translation>
     <message>
         <source>A file with the same name already exists, do you want to overwrite it?</source>
         <translation>Súbor s takýmto názvom už existuje, chcete ho prepísať?</translation>
+    </message>
+    <message>
+        <source>Workspace: </source>
+        <translation>Pracovné prostredie: </translation>
+    </message>
+    <message>
+        <source> copied to </source>
+        <translation> skopírované do </translation>
     </message>
 </context>
 </TS>
