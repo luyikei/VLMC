@@ -28,7 +28,7 @@
 #include "Effect.h"
 
 #include <QObject>
-#include <QList>
+#include <QHash>
 
 class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 {
@@ -36,14 +36,14 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
     public:
         void        initAll( quint32 width, quint32 height );
-        Effect*     effect( qint32 idx );
+        Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );
     private:
         EffectsEngine();
         ~EffectsEngine();
 
-        QList<Effect*>  m_effects;
+        QHash<QString, Effect*>  m_effects;
 
     signals:
         void        effectAdded( Effect*, Effect::Type );

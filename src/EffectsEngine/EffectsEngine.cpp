@@ -28,9 +28,6 @@
 
 EffectsEngine::EffectsEngine()
 {
-    Effect  *e = new Effect("libbw0r");
-
-    m_effects.push_back( e );
 }
 
 EffectsEngine::~EffectsEngine()
@@ -45,9 +42,12 @@ EffectsEngine::initAll( quint32 width, quint32 height )
 }
 
 Effect*
-EffectsEngine::effect( qint32 idx )
+EffectsEngine::effect( const QString& name )
 {
-    return m_effects.at( idx );
+    QHash<QString, Effect*>::iterator   it = m_effects.find( name );
+    if ( it != m_effects.end() )
+        return it.value();
+    return NULL;
 }
 
 bool
@@ -59,7 +59,7 @@ EffectsEngine::loadEffect( const QString &fileName )
         delete e;
         return false;
     }
-    m_effects.push_back( e );
+    m_effects[e->name()] = e;
     emit effectAdded( e, e->type() );
     return true;
 }
