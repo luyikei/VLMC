@@ -103,6 +103,7 @@ INCLUDE_DIRECTORIES(
   EffectsEngine
   Settings 
   Gui
+  Gui/effectsengine
   Gui/import
   Gui/library
   Gui/media
@@ -141,8 +142,6 @@ IF (NOT WITH_GUI)
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
         Commands/KeyboardShortcutHelper.cpp
-        Main/guimain.cpp
-        Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         Gui/About.cpp
         Gui/AudioSpectrumDrawer.cpp
         Gui/ClickableLabel.cpp
@@ -150,25 +149,26 @@ ELSE(NOT WITH_GUI)
         Gui/DockWidgetManager.cpp
         Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
-        Gui/preview/LCDTimecode.cpp
         Gui/MainWindow.cpp
-        Gui/import/TagWidget.cpp
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
+        Gui/effectsengine/EffectsList.cpp
         Gui/export/RendererSettings.cpp
         Gui/export/ShareOnYoutube.cpp
         Gui/import/ImportController.cpp
+        Gui/import/TagWidget.cpp
         Gui/library/ListViewController.cpp
         Gui/library/MediaCellView.cpp
         Gui/library/MediaLibrary.cpp
         Gui/library/MediaListView.cpp
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
-        Gui/media/GuiMedia.cpp
         Gui/media/ClipMetadataDisplayer.cpp
-        Gui/project/GuiProjectManager.cpp
+        Gui/media/GuiMedia.cpp
+        Gui/preview/LCDTimecode.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
+        Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/DoubleWidget.cpp
         Gui/settings/IntWidget.cpp
@@ -200,20 +200,25 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/ProjectWizard.cpp
         Gui/wizard/VideoPage.cpp
         Gui/wizard/WelcomePage.cpp
+        Main/guimain.cpp
+        Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 
     LIST( APPEND VLMC_HDRS
         Commands/KeyboardShortcutHelper.h
-        Media/Transcoder.h #Won't be needed without the import, so let's put it in GUI list
         Gui/About.h
         Gui/ClickableLabel.h
         Gui/ClipProperty.h
         Gui/DockWidgetManager.h
+        Gui/IntroDialog.h
+        Gui/LanguageHelper.h
+        Gui/MainWindow.h
+        Gui/UndoStack.h
+        Gui/WorkflowFileRendererDialog.h
+        Gui/effectsengine/EffectsList.h
         Gui/export/RendererSettings.h
         Gui/export/ShareOnYoutube.h
         Gui/import/ImportController.h
-        Gui/IntroDialog.h
-        Gui/LanguageHelper.h
         Gui/import/TagWidget.h
         Gui/library/ListViewController.h
         Gui/library/MediaCellView.h
@@ -222,26 +227,25 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewController.h
         Gui/library/StackViewNavController.h
         Gui/library/ViewController.h
-        Gui/MainWindow.h
         Gui/media/ClipMetadataDisplayer.h
         Gui/media/GuiMedia.h
         Gui/preview/LCDTimecode.h
         Gui/preview/PreviewRuler.h
         Gui/preview/PreviewWidget.h
         Gui/project/GuiProjectManager.h
-        Gui/settings/KeyboardShortcut.h
-        Gui/settings/KeyboardShortcutInput.h
         Gui/settings/BoolWidget.h
         Gui/settings/DoubleWidget.h
-        Gui/settings/IntWidget.h
         Gui/settings/ISettingsCategoryWidget.h
+        Gui/settings/IntWidget.h
+        Gui/settings/KeyboardShortcut.h
+        Gui/settings/KeyboardShortcutInput.h
         Gui/settings/LanguageWidget.h
+        Gui/settings/Panel.h
         Gui/settings/PathWidget.h
         Gui/settings/PreferenceWidget.h
-        Gui/settings/StringWidget.h
-        Gui/settings/Panel.h
         Gui/settings/PreferenceWidget.h
         Gui/settings/Settings.h
+        Gui/settings/StringWidget.h
         Gui/timeline/AbstractGraphicsMediaItem.h
         Gui/timeline/GraphicsAudioItem.h 
         Gui/timeline/GraphicsCursorItem.h
@@ -252,7 +256,6 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksRuler.h
         Gui/timeline/TracksScene.h
         Gui/timeline/TracksView.h
-        Gui/UndoStack.h
         Gui/widgets/ElidableLabel.h
         Gui/widgets/FramelessButton.h
         Gui/widgets/NotificationZone.h
@@ -263,24 +266,25 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/ProjectWizard.h
         Gui/wizard/VideoPage.h
         Gui/wizard/WelcomePage.h
-        Gui/WorkflowFileRendererDialog.h
+        Media/Transcoder.h #Won't be needed without the import, so let's put it in GUI list
         )
      
     SET(VLMC_UIS
+        Gui/effectsengine/ui/EffectsList.ui
         Gui/export/RendererSettings.ui
         Gui/export/ShareOnYoutube.ui
         Gui/import/ui/ImportController.ui
+        Gui/import/ui/TagWidget.ui
         Gui/library/StackViewNavController.ui
         Gui/library/ui/MediaCellView.ui
         Gui/library/ui/MediaLibrary.ui
         Gui/library/ui/StackViewNavController.ui
+        Gui/media/ui/ClipMetadataDisplayer.ui
+        Gui/preview/ui/PreviewWidget.ui
         Gui/ui/About.ui
         Gui/ui/ClipProperty.ui
         Gui/ui/IntroDialog.ui
         Gui/ui/MainWindow.ui
-        Gui/media/ui/ClipMetadataDisplayer.ui
-        Gui/preview/ui/PreviewWidget.ui
-        Gui/import/ui/TagWidget.ui
         Gui/ui/Timeline.ui
         Gui/ui/WorkflowFileRendererDialog.ui
         Gui/widgets/TrackControls.ui

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectsEngine.h: Manage the effects plugins.
+ * EffectsList.h: List the available effects plugin
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,33 +20,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTSENGINE_H
-#define EFFECTSENGINE_H
+#ifndef EFFECTSLIST_H
+#define EFFECTSLIST_H
 
-#include "Singleton.hpp"
+#include <QWidget>
+#include "EffectsEngine/Effect.h"
 
-#include "Effect.h"
+class   QStandardItemModel;
 
-#include <QObject>
-#include <QList>
+namespace Ui
+{
+    class EffectsList;
+}
 
-class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
+class EffectsList : public QWidget
 {
     Q_OBJECT
 
     public:
-        void        initAll( quint32 width, quint32 height );
-        Effect*     effect( qint32 idx );
-        bool        loadEffect( const QString& fileName );
+        explicit EffectsList(QWidget *parent = 0);
+        ~EffectsList();
+
     private:
-        EffectsEngine();
-        ~EffectsEngine();
+        Ui::EffectsList     *m_ui;
+        QStandardItemModel  *m_filtersModel;
+        QStandardItemModel  *m_effectsModel;
 
-        QList<Effect*>  m_effects;
-
-    signals:
-        void        effectAdded( Effect*, Effect::Type );
-    friend class    Singleton<EffectsEngine>;
+    public slots:
+        void                effectAdded( Effect *effect, Effect::Type type );
 };
 
-#endif // EFFECTSENGINE_H
+#endif // EFFECTSLIST_H

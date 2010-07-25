@@ -47,6 +47,7 @@
 
 /* Widgets */
 #include "DockWidgetManager.h"
+#include "EffectsList.h"
 #include "ImportController.h"
 #include "MediaLibrary.h"
 #include "NotificationZone.h"
@@ -451,6 +452,12 @@ MainWindow::initializeDockWidgets( void )
                                   Qt::TopDockWidgetArea );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
+
+    EffectsList *effectsList = new EffectsList( this );
+    dockManager->addDockedWidget( effectsList,
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
+                                  Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
+                                  Qt::LeftDockWidgetArea );
 
     QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),

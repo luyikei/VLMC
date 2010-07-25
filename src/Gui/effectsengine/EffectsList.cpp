@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectsEngine.h: Manage the effects plugins.
+ * EffectsList.cpp: List the available effects plugin
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,33 +20,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTSENGINE_H
-#define EFFECTSENGINE_H
+#include "EffectsList.h"
+#include "ui_EffectsList.h"
 
-#include "Singleton.hpp"
+#include <QStandardItemModel>
 
-#include "Effect.h"
-
-#include <QObject>
-#include <QList>
-
-class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
+EffectsList::EffectsList(QWidget *parent) :
+    QWidget(parent),
+    m_ui( new Ui::EffectsList )
 {
-    Q_OBJECT
+    m_ui->setupUi( this );
+    m_filtersModel = new QStandardItemModel( this );
+    m_effectsModel = new QStandardItemModel( this );
 
-    public:
-        void        initAll( quint32 width, quint32 height );
-        Effect*     effect( qint32 idx );
-        bool        loadEffect( const QString& fileName );
-    private:
-        EffectsEngine();
-        ~EffectsEngine();
+    m_ui->filterList->setModel( m_filtersModel );
+    m_ui->effectsList->setModel( m_effectsModel );
+}
 
-        QList<Effect*>  m_effects;
+EffectsList::~EffectsList()
+{
+    delete m_ui;
+}
 
-    signals:
-        void        effectAdded( Effect*, Effect::Type );
-    friend class    Singleton<EffectsEngine>;
-};
-
-#endif // EFFECTSENGINE_H
+void
+EffectsList::effectAdded( Effect *effect, Effect::Type type )
+{
+    if ( type == Effect::Filter )
+        m_filtersModel->appendRow( new QStandardItem( effect->name() ) );
+    else
+        m_effectsModel->appendRow( new QStandardItem( effect->name() ) );
+}

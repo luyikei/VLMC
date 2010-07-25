@@ -47,3 +47,17 @@ EffectsEngine::effect( qint32 idx )
 {
     return m_effects.at( idx );
 }
+
+bool
+EffectsEngine::loadEffect( const QString &fileName )
+{
+    Effect*     e = new Effect( fileName );
+    if ( e->load() == false )
+    {
+        delete e;
+        return false;
+    }
+    m_effects.push_back( e );
+    emit effectAdded( e, e->type() );
+    return true;
+}

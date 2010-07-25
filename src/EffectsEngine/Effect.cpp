@@ -66,6 +66,7 @@ Effect::load()
     m_f0r_info( &infos );
     m_name = infos.name;
     m_desc = infos.explanation;
+    m_type = static_cast<Type>( infos.plugin_type );
     return true;
 }
 
@@ -81,6 +82,12 @@ const QString&
 Effect::description() const
 {
     return m_desc;
+}
+
+Effect::Type
+Effect::type() const
+{
+    return m_type;
 }
 
 void

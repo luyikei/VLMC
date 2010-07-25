@@ -51,6 +51,7 @@ class Effect : public QLibrary
         bool            load();
         const QString&  name() const;
         const QString&  description() const;
+        Type            type() const;
         void            init( quint32 width, quint32 height );
         void            process( double time, const quint32* input, quint32* output ) const;
     private:
@@ -66,6 +67,7 @@ class Effect : public QLibrary
         QString         m_desc;
         quint32         m_width;
         quint32         m_height;
+        Type            m_type;
 };
 
 #endif // EFFECT_H
