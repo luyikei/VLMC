@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "EffectsList.h"
+#include "EffectsEngine/EffectsEngine.h"
 #include "ui_EffectsList.h"
 
 #include <QStandardItemModel>
@@ -35,6 +36,8 @@ EffectsList::EffectsList(QWidget *parent) :
 
     m_ui->filterList->setModel( m_filtersModel );
     m_ui->effectsList->setModel( m_effectsModel );
+    connect( EffectsEngine::getInstance(), SIGNAL( effectAdded( Effect*, Effect::Type ) ),
+             this, SLOT( effectAdded(Effect*,Effect::Type) ) );
 }
 
 EffectsList::~EffectsList()

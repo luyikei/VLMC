@@ -38,6 +38,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        initAll( quint32 width, quint32 height );
         Effect*     effect( qint32 idx );
         bool        loadEffect( const QString& fileName );
+        void        browseDirectory( const QString& path );
     private:
         EffectsEngine();
         ~EffectsEngine();

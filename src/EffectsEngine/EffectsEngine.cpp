@@ -24,6 +24,8 @@
 
 #include "Effect.h"
 
+#include <QDir>
+
 EffectsEngine::EffectsEngine()
 {
     Effect  *e = new Effect("libbw0r");
@@ -60,4 +62,16 @@ EffectsEngine::loadEffect( const QString &fileName )
     m_effects.push_back( e );
     emit effectAdded( e, e->type() );
     return true;
+}
+
+void
+EffectsEngine::browseDirectory( const QString &path )
+{
+    QDir    dir( path );
+    const QStringList& files = dir.entryList( QDir::Files | QDir::NoDotAndDotDot |
+                                              QDir::Readable | QDir::Executable );
+    foreach ( const QString& file, files )
+    {
+        loadEffect( path + '/' + file );
+    }
 }

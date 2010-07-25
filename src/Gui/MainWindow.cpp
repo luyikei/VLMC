@@ -38,6 +38,7 @@
 #include "About.h"
 #include "VlmcDebug.h"
 
+#include "EffectsEngine/EffectsEngine.h"
 #include "MainWorkflow.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnYoutube.h"
@@ -458,6 +459,8 @@ MainWindow::initializeDockWidgets( void )
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
+    //FIXME !!!
+    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
 
     QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
