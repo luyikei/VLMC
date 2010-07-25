@@ -6,8 +6,8 @@
 
 SET(VLMC_SRCS
     Commands/Commands.cpp
-    Settings/SettingsManager.cpp
-    Settings/SettingValue.cpp
+    EffectsEngine/EffectsEngine.cpp
+    EffectsEngine/Effect.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
     LibVLCpp/VLCInstance.cpp
@@ -25,6 +25,8 @@ SET(VLMC_SRCS
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp
     Renderer/WorkflowRenderer.cpp
+    Settings/SettingsManager.cpp
+    Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
     Tools/Pool.hpp
     Tools/QSingleton.hpp
@@ -51,8 +53,8 @@ ELSE (WIN32)
 ENDIF(WIN32)
 
 SET (VLMC_HDRS
-    Settings/SettingsManager.h
-    Settings/SettingValue.h
+    EffectsEngine/EffectsEngine.h
+    EffectsEngine/Effect.h
     Library/Library.h
     Library/MediaContainer.h
     LibVLCpp/VLCInstance.h
@@ -68,6 +70,8 @@ SET (VLMC_HDRS
     Renderer/GenericRenderer.h
     Renderer/WorkflowFileRenderer.h
     Renderer/WorkflowRenderer.h
+    Settings/SettingsManager.h
+    Settings/SettingValue.h
     Tools/ErrorHandler.h
     Tools/VlmcDebug.h
     Workflow/AudioClipWorkflow.h 
@@ -96,6 +100,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
   Commands
+  EffectsEngine
   Settings 
   Gui
   Gui/import
@@ -114,6 +119,7 @@ INCLUDE_DIRECTORIES(
   Renderer
   Tools
   Workflow
+  ${CMAKE_SOURCE_DIR}/extras
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
