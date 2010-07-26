@@ -32,6 +32,13 @@ DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     changed( s->get() );
     connect( s, SIGNAL( changed( const QVariant& ) ),
              this, SLOT( changed( const QVariant& ) ) );
+    if ( ( s->flags() & SettingValue::Clamped ) != 0 )
+    {
+        if ( s->min().isValid() )
+            m_spinbox->setMinimum( s->min().toDouble() );
+        if ( s->max().isValid() )
+            m_spinbox->setMaximum( s->max().toDouble() );
+    }
 }
 
 QWidget*

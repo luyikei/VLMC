@@ -79,3 +79,24 @@ SettingValue::flags() const
 {
     return m_flags;
 }
+
+void
+SettingValue::setLimits( const QVariant& min, const QVariant& max )
+{
+    if ( min.isValid() == true )
+        m_min = min;
+    if ( max.isValid() == true )
+        m_max = max;
+}
+
+const QVariant&
+SettingValue::min() const
+{
+    return m_min;
+}
+
+const QVariant&
+SettingValue::max() const
+{
+    return m_max;
+}

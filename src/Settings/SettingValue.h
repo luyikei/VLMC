@@ -53,6 +53,7 @@ class   SettingValue : public QObject
             /// If this flag is used, then the variable should not be shown in the config widgets.
             Private     = 1 << 0,
             Password    = 1 << 1,
+            Clamped     = 1 << 2, ///< When used, the m_min and m_max will be used
         };
 
         /**
@@ -88,6 +89,10 @@ class   SettingValue : public QObject
         Type            type() const;
         Flags           flags() const;
 
+        void            setLimits( const QVariant& min, const QVariant& max );
+        const QVariant& min() const;
+        const QVariant& max() const;
+
     private:
         /**
          * \brief the QVariant containingthe value of the settings
@@ -98,6 +103,8 @@ class   SettingValue : public QObject
         const char*     m_desc;
         Type            m_type;
         Flags           m_flags;
+        QVariant        m_min;
+        QVariant        m_max;
     signals:
         /**
          * \brief This signal is emmited while the m_val
