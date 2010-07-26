@@ -24,32 +24,16 @@
 #include "EffectsEngine/EffectsEngine.h"
 #include "ui_EffectsList.h"
 
-#include <QStandardItemModel>
-
 EffectsList::EffectsList(QWidget *parent) :
     QWidget(parent),
     m_ui( new Ui::EffectsList )
 {
     m_ui->setupUi( this );
-    m_filtersModel = new QStandardItemModel( this );
-    m_effectsModel = new QStandardItemModel( this );
-
-    m_ui->filterList->setModel( m_filtersModel );
-    m_ui->effectsList->setModel( m_effectsModel );
-    connect( EffectsEngine::getInstance(), SIGNAL( effectAdded( Effect*, Effect::Type ) ),
-             this, SLOT( effectAdded(Effect*,Effect::Type) ) );
+    m_ui->filterList->setType( Effect::Filter );
+    m_ui->effectsList->setType( Effect::Mixer2 );
 }
 
 EffectsList::~EffectsList()
 {
     delete m_ui;
-}
-
-void
-EffectsList::effectAdded( Effect *effect, Effect::Type type )
-{
-    if ( type == Effect::Filter )
-        m_filtersModel->appendRow( new QStandardItem( effect->name() ) );
-    else
-        m_effectsModel->appendRow( new QStandardItem( effect->name() ) );
 }

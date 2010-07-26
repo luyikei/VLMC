@@ -425,7 +425,15 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets( void )
 {
+    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
+
     //FIXME !!!
+    EffectsList *effectsList = new EffectsList( this );
+    dockManager->addDockedWidget( effectsList,
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
+                                  Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
+                                  Qt::LeftDockWidgetArea );
+
     EffectsEngine::getInstance()->browseDirectory( "/usr/local/frei0r/lib/" );
 
     m_renderer = new WorkflowRenderer();
@@ -434,8 +442,6 @@ MainWindow::initializeDockWidgets( void )
     m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_timeline->show();
     setCentralWidget( m_timeline );
-
-    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
     m_clipPreview = new PreviewWidget( this );
     m_clipPreview->setRenderer( new ClipRenderer );
@@ -456,12 +462,6 @@ MainWindow::initializeDockWidgets( void )
                                   Qt::TopDockWidgetArea );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
-
-    EffectsList *effectsList = new EffectsList( this );
-    dockManager->addDockedWidget( effectsList,
-                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
-                                  Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
-                                  Qt::LeftDockWidgetArea );
 
     QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),

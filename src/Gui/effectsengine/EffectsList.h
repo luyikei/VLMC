@@ -26,8 +26,6 @@
 #include <QWidget>
 #include "EffectsEngine/Effect.h"
 
-class   QStandardItemModel;
-
 namespace Ui
 {
     class EffectsList;
@@ -43,11 +41,6 @@ class EffectsList : public QWidget
 
     private:
         Ui::EffectsList     *m_ui;
-        QStandardItemModel  *m_filtersModel;
-        QStandardItemModel  *m_effectsModel;
-
-    public slots:
-        void                effectAdded( Effect *effect, Effect::Type type );
 };
 
 #endif // EFFECTSLIST_H

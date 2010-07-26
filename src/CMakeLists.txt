@@ -153,6 +153,7 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
         Gui/effectsengine/EffectsList.cpp
+        Gui/effectsengine/EffectsListView.cpp
         Gui/export/RendererSettings.cpp
         Gui/export/ShareOnYoutube.cpp
         Gui/import/ImportController.cpp
@@ -216,6 +217,7 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.h
         Gui/WorkflowFileRendererDialog.h
         Gui/effectsengine/EffectsList.h
+        Gui/effectsengine/EffectsListView.h
         Gui/export/RendererSettings.h
         Gui/export/ShareOnYoutube.h
         Gui/import/ImportController.h

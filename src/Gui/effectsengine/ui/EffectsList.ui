@@ -25,12 +25,15 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QListView" name="filterList">
+        <widget class="EffectsListView" name="filterList">
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragOnly</enum>
          </property>
         </widget>
        </item>
@@ -42,7 +45,7 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QListView" name="effectsList"/>
+        <widget class="EffectsListView" name="effectsList"/>
        </item>
       </layout>
      </widget>
@@ -50,6 +53,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>EffectsListView</class>
+   <extends>QListView</extends>
+   <header>effectsengine/EffectsListView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -430,6 +430,7 @@ void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     effect->setUsed( true );
+    effect->init( m_width, m_height );
     m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
 }
 
