@@ -36,11 +36,16 @@ EffectsEngine::~EffectsEngine()
 {
 }
 
-EffectsEngine::EffectHelper::EffectHelper( Effect *_effect, qint64 _start, qint64 _end ) :
+EffectsEngine::EffectHelper::EffectHelper( Effect *_effect, qint64 _start, qint64 _end,
+                                           const QString& _uuid ) :
         effect( _effect ),
         start( _start ),
         end( _end )
 {
+    if ( _uuid.isNull() == true )
+        uuid = QUuid::createUuid();
+    else
+        uuid = _uuid;
 }
 
 void

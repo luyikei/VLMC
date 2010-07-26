@@ -38,10 +38,12 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     public:
         struct      EffectHelper
         {
-            EffectHelper( Effect* effect, qint64 start = 0, qint64 end = -1 );
+            EffectHelper( Effect* effect, qint64 start = 0, qint64 end = -1,
+                          const QString& uuid = QString() );
             Effect* effect;
             qint64  start;
             qint64  end;
+            QUuid   uuid;
         };
         typedef QList<EffectHelper*>    EffectList;
 
