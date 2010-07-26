@@ -48,6 +48,7 @@ class Effect : public QLibrary
         Effect( const QString& fileName );
         virtual ~Effect();
 
+        void            setUsed( bool used );
         bool            load();
         const QString&  name() const;
         const QString&  description() const;
@@ -68,6 +69,7 @@ class Effect : public QLibrary
         quint32         m_width;
         quint32         m_height;
         Type            m_type;
+        bool            m_used;
 };
 
 #endif // EFFECT_H

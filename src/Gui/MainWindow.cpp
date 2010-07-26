@@ -426,7 +426,7 @@ void
 MainWindow::initializeDockWidgets( void )
 {
     //FIXME !!!
-    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
+    EffectsEngine::getInstance()->browseDirectory( "/usr/local/frei0r/lib/" );
 
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();

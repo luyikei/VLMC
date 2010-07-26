@@ -93,6 +93,9 @@ Effect::type() const
 void
 Effect::init( quint32 width, quint32 height )
 {
+    //Don't init if the effect is not currently used.
+    if ( m_used == false )
+        return ;
     if ( width != m_width || height != m_height )
     {
         if ( m_instance != NULL )
@@ -111,4 +114,10 @@ void
 Effect::process( double time, const quint32 *input, quint32 *output ) const
 {
     m_f0r_update( m_instance, time, input, output );
+}
+
+void
+Effect::setUsed( bool used )
+{
+    m_used = used;
 }
