@@ -52,7 +52,7 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_INT( "video/VideoProjectWidth", 480,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ) );
-    VLMC_CREATE_PROJECT_INT( "video/VideoProjectHeight", 300,
+    VLMC_CREATE_PROJECT_INT( "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ) );
     VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,

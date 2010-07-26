@@ -77,3 +77,10 @@ Frame::clone() const
     memcpy( f->buffer(), m_buffer, m_size );
     return f;
 }
+
+void
+Frame::setBuffer( quint8 *buff )
+{
+    delete[] m_buffer;
+    m_buffer = buff;
+}

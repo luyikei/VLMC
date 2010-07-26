@@ -25,12 +25,20 @@
 #include "Effect.h"
 
 #include <QDir>
+#include <QtDebug>
 
 EffectsEngine::EffectsEngine()
 {
 }
 
 EffectsEngine::~EffectsEngine()
+{
+}
+
+EffectsEngine::EffectHelper::EffectHelper( Effect *_effect, qint64 _start, qint64 _end ) :
+        effect( _effect ),
+        start( _start ),
+        end( _end )
 {
 }
 

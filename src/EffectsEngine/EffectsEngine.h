@@ -35,6 +35,14 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     Q_OBJECT
 
     public:
+        struct      EffectHelper
+        {
+            EffectHelper( Effect* effect, qint64 start = 0, qint64 end = -1 );
+            Effect* effect;
+            qint64  start;
+            qint64  end;
+        };
+
         void        initAll( quint32 width, quint32 height );
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );

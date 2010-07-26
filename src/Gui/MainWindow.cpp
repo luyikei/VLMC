@@ -425,6 +425,9 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets( void )
 {
+    //FIXME !!!
+    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
+
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
     m_timeline = new Timeline( m_renderer, this );
@@ -459,8 +462,6 @@ MainWindow::initializeDockWidgets( void )
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
-    //FIXME !!!
-    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
 
     QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
