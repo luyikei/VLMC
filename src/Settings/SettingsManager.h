@@ -129,7 +129,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
                                                const QVariant &defaultValue,
                                                const char *name, const char *desc,
                                                Type varType = Vlmc,
-                                               SettingValue::Flags flags = SettingValue::Nothing );
+                                               QFlags<SettingValue::Flag> flags = SettingValue::Nothing );
         bool                        watchValue( const QString &key,
                                                 QObject* receiver,
                                                 const char *method,

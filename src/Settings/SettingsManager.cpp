@@ -231,7 +231,7 @@ SettingValue*
 SettingsManager::createVar( SettingValue::Type type, const QString &key,
                             const QVariant &defaultValue, const char *name,
                             const char *desc, SettingsManager::Type varType /*= Vlmc*/,
-                            SettingValue::Flags flags /*= SettingValue::Nothing*/ )
+                            QFlags<SettingValue::Flag> flags /*= SettingValue::Nothing*/ )
 {
     QWriteLocker    wlock( &m_rwLock );
 

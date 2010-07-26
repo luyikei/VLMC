@@ -38,6 +38,10 @@ IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         if ( s->max().isValid() )
             m_spinbox->setMaximum( s->max().toInt() );
     }
+    if ( ( s->flags() & SettingValue::EightMultiple ) != 0 )
+    {
+        m_spinbox->setSingleStep( 8 );
+    }
     changed( s->get() );
 }
 
