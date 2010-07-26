@@ -31,6 +31,17 @@ IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     m_spinbox = new QSpinBox( parent );
     connect( s, SIGNAL( changed( const QVariant& ) ),
              this, SLOT( changed( const QVariant& ) ) );
+    if ( ( s->flags() & SettingValue::Clamped ) != 0 )
+    {
+        if ( s->min().isValid() )
+            m_spinbox->setMinimum( s->min().toInt() );
+        if ( s->max().isValid() )
+            m_spinbox->setMaximum( s->max().toInt() );
+    }
+    if ( ( s->flags() & SettingValue::EightMultiple ) != 0 )
+    {
+        m_spinbox->setSingleStep( 8 );
+    }
     changed( s->get() );
 }
 

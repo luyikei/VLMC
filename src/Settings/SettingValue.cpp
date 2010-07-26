@@ -35,10 +35,20 @@ SettingValue::SettingValue( SettingValue::Type type, const QVariant& defaultValu
 }
 
 void
-SettingValue::set( const QVariant& val )
+SettingValue::set( const QVariant& _val )
 {
+    QVariant val = _val;
     if ( val != m_val )
     {
+        if ( ( m_flags & Clamped ) != 0 )
+        {
+            if ( m_min.isValid() && val.toDouble() < m_min.toDouble() )
+                val = m_min;
+            if ( m_max.isValid() && val.toDouble() > m_max.toDouble() )
+                val = m_max;
+        }
+        if ( ( m_flags & EightMultiple ) != 0 )
+            val = ( val.toInt() + 7 ) & ~7;
         m_val = val;
         emit changed( m_val );
     }
@@ -78,4 +88,25 @@ SettingValue::Flags
 SettingValue::flags() const
 {
     return m_flags;
+}
+
+void
+SettingValue::setLimits( const QVariant& min, const QVariant& max )
+{
+    if ( min.isValid() == true )
+        m_min = min;
+    if ( max.isValid() == true )
+        m_max = max;
+}
+
+const QVariant&
+SettingValue::min() const
+{
+    return m_min;
+}
+
+const QVariant&
+SettingValue::max() const
+{
+    return m_max;
 }

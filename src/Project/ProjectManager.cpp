@@ -49,12 +49,16 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ) );
-    VLMC_CREATE_PROJECT_INT( "video/VideoProjectWidth", 480,
+    SettingValue    *width = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectWidth", 480,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ) );
-    VLMC_CREATE_PROJECT_INT( "video/VideoProjectHeight", 320,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
+                             SettingValue::Flags( SettingValue::Clamped | SettingValue::EightMultiple ) );
+    width->setLimits( 0, 2048 );
+    SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ) );
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
+                             SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );
+    height->setLimits( 0, 2048 );
     VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );

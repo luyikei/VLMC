@@ -125,11 +125,11 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         SettingList                 group( const QString &groupName,
                                             SettingsManager::Type type = Vlmc );
 
-        void                        createVar( SettingValue::Type type, const QString &key,
+        SettingValue                *createVar( SettingValue::Type type, const QString &key,
                                                const QVariant &defaultValue,
                                                const char *name, const char *desc,
                                                Type varType = Vlmc,
-                                               SettingValue::Flags flags = SettingValue::Nothing );
+                                               QFlags<SettingValue::Flag> flags = SettingValue::Nothing );
         bool                        watchValue( const QString &key,
                                                 QObject* receiver,
                                                 const char *method,
