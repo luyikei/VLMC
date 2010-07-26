@@ -147,7 +147,7 @@ class   ClipWorkflow : public QObject
          *  \brief  Set the rendering position
          *  \param  time    The position in millisecond
          */
-        void                    setTime( qint64 time );
+        virtual void            setTime( qint64 time );
 
         /**
          *  This method must be used to change the state of the ClipWorkflow

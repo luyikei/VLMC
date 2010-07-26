@@ -86,7 +86,7 @@ EffectsEngine::browseDirectory( const QString &path )
 }
 
 void
-EffectsEngine::applyEffects( const EffectList &effects, MainWorkflow::OutputBuffers *ret,
+EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
                              qint64 currentFrame  )
 {
     if ( effects.size() == 0 )
@@ -96,7 +96,7 @@ EffectsEngine::applyEffects( const EffectList &effects, MainWorkflow::OutputBuff
 
     quint8      *buff1 = NULL;
     quint8      *buff2 = NULL;
-    quint8      *input = ret->video->buffer();
+    quint8      *input = frame->buffer();
     bool        firstBuff = true;
 
     while ( it != ite )
@@ -110,7 +110,7 @@ EffectsEngine::applyEffects( const EffectList &effects, MainWorkflow::OutputBuff
             else
                 buff = &buff2;
             if ( *buff == NULL )
-                *buff = new quint8[ret->video->size()];
+                *buff = new quint8[frame->size()];
             Effect  *effect = (*it)->effect;
             effect->process( 0.0, (quint32*)input, (quint32*)*buff );
             input = *buff;
@@ -124,12 +124,12 @@ EffectsEngine::applyEffects( const EffectList &effects, MainWorkflow::OutputBuff
         if ( firstBuff == true )
         {
             delete[] buff1;
-            ret->video->setBuffer( buff2 );
+            frame->setBuffer( buff2 );
         }
         else
         {
             delete[] buff2;
-            ret->video->setBuffer( buff1 );
+            frame->setBuffer( buff1 );
         }
     }
 }

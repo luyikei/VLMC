@@ -24,6 +24,7 @@
 #define VIDEOCLIPWORKFLOW_H
 
 #include "ClipWorkflow.h"
+#include "EffectsEngine.h"
 #include "StackedBuffer.hpp"
 #include "Pool.hpp"
 
@@ -51,6 +52,8 @@ class   VideoClipWorkflow : public ClipWorkflow
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
         virtual void            *getOutput( ClipWorkflow::GetMode mode );
+        virtual bool            appendEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
+        virtual void            setTime( qint64 time );
 
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30
 
@@ -76,6 +79,10 @@ class   VideoClipWorkflow : public ClipWorkflow
                                         qint64 pts );
         quint32                     m_width;
         quint32                     m_height;
+        QReadWriteLock              *m_effectsLock;
+        QMutex                      *m_renderedFrameMutex;
+        qint64                      m_renderedFrame;
+        QList<EffectsEngine::EffectHelper*>     m_effects;
 };
 
 #endif // VIDEOCLIPWORKFLOW_H

@@ -51,7 +51,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        browseDirectory( const QString& path );
 
         static void applyEffects( const EffectList& effects,
-                                  MainWorkflow::OutputBuffers* ret, qint64 currentFrame );
+                                  Workflow::Frame *frame, qint64 currentFrame );
     private:
         EffectsEngine();
         ~EffectsEngine();

@@ -171,7 +171,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     }
     {
         QReadLocker lock( m_effectsLock );
-        EffectsEngine::applyEffects( m_effects, ret, m_mainWorkflow->getCurrentFrame() );
+        EffectsEngine::applyEffects( m_effects, ret->video, m_mainWorkflow->getCurrentFrame() );
     }
     m_pts = *pts = ptsDiff + m_pts;
     *buffer = ret->video->buffer();

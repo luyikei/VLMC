@@ -33,13 +33,18 @@
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_width( 0 ),
-        m_height( 0 )
+        m_height( 0 ),
+        m_renderedFrame( 0 )
 {
+    m_effectsLock = new QReadWriteLock();
+    m_renderedFrameMutex = new QMutex();
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()
 {
     stop();
+    delete m_renderedFrameMutex;
+    delete m_effectsLock;
 }
 
 void
@@ -157,6 +162,14 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
 
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
+    {
+        QWriteLocker    lock( cw->m_effectsLock );
+        EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame );
+    }
+    {
+        QMutexLocker    lock( cw->m_renderedFrameMutex );
+        cw->m_renderedFrame++;
+    }
     frame->ptsDiff = cw->m_currentPts - cw->m_previousPts;
     cw->commonUnlock();
     cw->m_renderWaitCond->wakeAll();
@@ -190,6 +203,31 @@ VideoClipWorkflow::flushComputedBuffers()
 
     while ( m_computedBuffers.isEmpty() == false )
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
+}
+
+bool
+VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
+{
+    if ( effect->type() != Effect::Filter )
+    {
+        qWarning() << "VideoClipWorkflow does not handle non filter effects.";
+        return false;
+    }
+    effect->setUsed( true );
+    effect->init( m_width, m_height );
+    QWriteLocker    lock( m_effectsLock );
+    m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
+    return true;
+}
+
+void
+VideoClipWorkflow::setTime( qint64 time )
+{
+    {
+        QMutexLocker    lock( m_renderedFrameMutex );
+        m_renderedFrame = time / 1000 * Clip::DefaultFPS;
+    }
+    ClipWorkflow::setTime( time );
 }
 
 VideoClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame,
