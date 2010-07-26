@@ -23,6 +23,7 @@
 #include "EffectsEngine.h"
 
 #include "Effect.h"
+#include "Types.h"
 
 #include <QDir>
 #include <QtDebug>
@@ -81,5 +82,54 @@ EffectsEngine::browseDirectory( const QString &path )
     foreach ( const QString& file, files )
     {
         loadEffect( path + '/' + file );
+    }
+}
+
+void
+EffectsEngine::applyEffects( const EffectList &effects, MainWorkflow::OutputBuffers *ret,
+                             qint64 currentFrame  )
+{
+    if ( effects.size() == 0 )
+        return ;
+    EffectList::const_iterator     it = effects.constBegin();
+    EffectList::const_iterator     ite = effects.constEnd();
+
+    quint8      *buff1 = NULL;
+    quint8      *buff2 = NULL;
+    quint8      *input = ret->video->buffer();
+    bool        firstBuff = true;
+
+    while ( it != ite )
+    {
+        if ( (*it)->start < currentFrame &&
+             ( (*it)->end < 0 || (*it)->end > currentFrame ) )
+        {
+            quint8      **buff;
+            if ( firstBuff == true )
+                buff = &buff1;
+            else
+                buff = &buff2;
+            if ( *buff == NULL )
+                *buff = new quint8[ret->video->size()];
+            Effect  *effect = (*it)->effect;
+            effect->process( 0.0, (quint32*)input, (quint32*)*buff );
+            input = *buff;
+            firstBuff = !firstBuff;
+        }
+        ++it;
+    }
+    if ( buff1 != NULL || buff2 != NULL )
+    {
+        //The old input frame will automatically be deleted when setting the new buffer
+        if ( firstBuff == true )
+        {
+            delete[] buff1;
+            ret->video->setBuffer( buff2 );
+        }
+        else
+        {
+            delete[] buff2;
+            ret->video->setBuffer( buff1 );
+        }
     }
 }

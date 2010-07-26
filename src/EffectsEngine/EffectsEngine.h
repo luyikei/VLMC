@@ -26,6 +26,7 @@
 #include "Singleton.hpp"
 
 #include "Effect.h"
+#include "MainWorkflow.h"
 
 #include <QObject>
 #include <QHash>
@@ -42,11 +43,15 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
             qint64  start;
             qint64  end;
         };
+        typedef QList<EffectHelper*>    EffectList;
 
         void        initAll( quint32 width, quint32 height );
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );
+
+        static void applyEffects( const EffectList& effects,
+                                  MainWorkflow::OutputBuffers* ret, qint64 currentFrame );
     private:
         EffectsEngine();
         ~EffectsEngine();

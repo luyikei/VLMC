@@ -149,8 +149,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         virtual void        startPreview();
 
-        void                applyEffects( MainWorkflow::OutputBuffers *ret );
-
     protected:
         /**
          *  \brief          Will return a pointer to the function/static method to use
@@ -283,7 +281,8 @@ class   WorkflowRenderer : public GenericRenderer
          */
         qint64              m_oldLength;
 
-        QList<EffectsEngine::EffectHelper*>     m_effects;
+        QReadWriteLock      *m_effectsLock;
+        EffectsEngine::EffectList     m_effects;
 
         static const quint8     VideoCookie = '0';
         static const quint8     AudioCookie = '1';

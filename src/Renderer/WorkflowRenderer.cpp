@@ -48,6 +48,7 @@ WorkflowRenderer::WorkflowRenderer() :
             m_esHandler( NULL ),
             m_oldLength( 0 )
 {
+    m_effectsLock = new QReadWriteLock;
 }
 
 void    WorkflowRenderer::initializeRenderer()
@@ -82,6 +83,7 @@ WorkflowRenderer::~WorkflowRenderer()
         delete m_media;
     if ( m_silencedAudioBuffer )
         delete m_silencedAudioBuffer;
+    delete m_effectsLock;
 }
 
 void
@@ -167,7 +169,10 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
         //this is a bit hackish though... (especially regarding the "no frame computed" detection)
         ptsDiff = 1000000 / handler->fps;
     }
-    applyEffects( ret );
+    {
+        QReadLocker lock( m_effectsLock );
+        EffectsEngine::applyEffects( m_effects, ret, m_mainWorkflow->getCurrentFrame() );
+    }
     m_pts = *pts = ptsDiff + m_pts;
     *buffer = ret->video->buffer();
     *bufferSize = ret->video->size();
@@ -214,54 +219,6 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 
 void    WorkflowRenderer::unlock( void*, const char*, size_t, void* )
 {
-}
-
-void
-WorkflowRenderer::applyEffects( MainWorkflow::OutputBuffers* ret )
-{
-    if ( m_effects.size() == 0 )
-        return ;
-    QList<EffectsEngine::EffectHelper*>::const_iterator     it = m_effects.constBegin();
-    QList<EffectsEngine::EffectHelper*>::const_iterator     ite = m_effects.constEnd();
-
-    quint8      *buff1 = NULL;
-    quint8      *buff2 = NULL;
-    quint8      *input = ret->video->buffer();
-    bool        firstBuff = true;
-
-    while ( it != ite )
-    {
-        if ( (*it)->start < m_mainWorkflow->getCurrentFrame() &&
-             ( (*it)->end < 0 || (*it)->end > m_mainWorkflow->getCurrentFrame() ) )
-        {
-            quint8      **buff;
-            if ( firstBuff == true )
-                buff = &buff1;
-            else
-                buff = &buff2;
-            if ( *buff == NULL )
-                *buff = new quint8[ret->video->size()];
-            Effect  *effect = (*it)->effect;
-            effect->process( 0.0, (quint32*)input, (quint32*)*buff );
-            input = *buff;
-            firstBuff = !firstBuff;
-        }
-        ++it;
-    }
-    if ( buff1 != NULL || buff2 != NULL )
-    {
-        //The old input frame will automatically be deleted when setting the new buffer
-        if ( firstBuff == true )
-        {
-            delete[] buff1;
-            ret->video->setBuffer( buff2 );
-        }
-        else
-        {
-            delete[] buff2;
-            ret->video->setBuffer( buff1 );
-        }
-    }
 }
 
 void        WorkflowRenderer::startPreview()
@@ -431,6 +388,7 @@ WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     effect->setUsed( true );
     effect->init( m_width, m_height );
+    QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
 }
 
