@@ -39,6 +39,8 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
 {
     m_effectsLock = new QReadWriteLock();
     m_renderedFrameMutex = new QMutex();
+    Effect  *effect = EffectsEngine::getInstance()->effect("bw0r");
+    appendEffect( effect, 0, 200 );
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()
@@ -99,6 +101,9 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
     m_vlcMedia->addOption( buffer );
+
+    foreach ( EffectsEngine::EffectHelper *helper, m_effects )
+        helper->effect->init( m_width, m_height );
 }
 
 void*
@@ -215,7 +220,6 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
         return false;
     }
     EffectInstance  *effectInstance = effect->createInstance();
-    effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
     return true;
