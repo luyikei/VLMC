@@ -55,8 +55,8 @@ EffectInstance::process( double time, const quint32 *input, quint32 *output ) co
     m_effect->m_f0r_update( m_instance, time, input, output );
 }
 
-const Effect*
-EffectInstance::effect() const
+Effect*
+EffectInstance::effect()
 {
     return m_effect;
 }

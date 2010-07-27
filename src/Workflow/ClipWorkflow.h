@@ -198,6 +198,10 @@ class   ClipWorkflow : public QObject
         void                    stopRenderer();
 
         void                    save( QXmlStreamWriter& project ) const;
+        virtual void            saveEffects( QXmlStreamWriter& ) const
+        {
+            //Empty implementation, as some clipworkflow does not have effects for now.
+        }
 
     private:
         void                    setState( State state );

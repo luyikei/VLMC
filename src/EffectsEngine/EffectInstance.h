@@ -33,7 +33,7 @@ class EffectInstance
     public:
         void            init( quint32 width, quint32 height );
         void            process( double time, const quint32* input, quint32* output ) const;
-        const Effect*   effect() const;
+        Effect*         effect();
 
     private:
         EffectInstance( Effect *effect );

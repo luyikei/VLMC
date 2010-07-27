@@ -222,6 +222,27 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
 }
 
 void
+VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
+{
+    QReadLocker lock( m_effectsLock );
+    if ( m_effects.size() <= 0 )
+        return ;
+    EffectsEngine::EffectList::const_iterator   it = m_effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = m_effects.end();
+    project.writeStartElement( "effects" );
+    while ( it != ite )
+    {
+        project.writeStartElement( "effect" );
+        project.writeAttribute( "name", (*it)->effect->effect()->name() );
+        project.writeAttribute( "start", QString::number( (*it)->start ) );
+        project.writeAttribute( "end", QString::number( (*it)->end ) );
+        project.writeEndElement();
+        ++it;
+    }
+    project.writeEndElement();
+}
+
+void
 VideoClipWorkflow::setTime( qint64 time )
 {
     {
