@@ -28,6 +28,7 @@
 
 #include <QObject>
 #include <QUuid>
+#include <QXmlStreamWriter>
 
 class   QMutex;
 class   QReadWriteLock;
@@ -195,6 +196,8 @@ class   ClipWorkflow : public QObject
          *  IE. just stop the VLC thread, and do not flush anything.
          */
         void                    stopRenderer();
+
+        void                    save( QXmlStreamWriter& project ) const;
 
     private:
         void                    setState( State state );

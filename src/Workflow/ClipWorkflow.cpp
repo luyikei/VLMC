@@ -315,3 +315,12 @@ ClipWorkflow::shouldRender() const
              m_state != ClipWorkflow::Stopped &&
              m_state != ClipWorkflow::Stopping );
 }
+
+void
+ClipWorkflow::save( QXmlStreamWriter &project ) const
+{
+    project.writeAttribute( "uuid", m_clipHelper->clip()->fullId() );
+    project.writeAttribute( "begin", QString::number( m_clipHelper->begin() ) );
+    project.writeAttribute( "end", QString::number( m_clipHelper->end() ) );
+    project.writeAttribute( "helper", m_clipHelper->uuid().toString() );
+}
