@@ -31,6 +31,8 @@
 #include <QObject>
 #include <QHash>
 
+class   QSettings;
+
 class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 {
     Q_OBJECT
@@ -58,6 +60,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         ~EffectsEngine();
 
         QHash<QString, Effect*> m_effects;
+        QSettings               *m_cache;
 
     signals:
         void        effectAdded( Effect*, Effect::Type );

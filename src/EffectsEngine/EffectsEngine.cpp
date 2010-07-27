@@ -26,11 +26,16 @@
 #include "EffectInstance.h"
 #include "Types.h"
 
+#include <QDesktopServices>
 #include <QDir>
+#include <QSettings>
 #include <QtDebug>
 
 EffectsEngine::EffectsEngine()
 {
+    m_cache = new QSettings( QDesktopServices::storageLocation(
+                    QDesktopServices::CacheLocation ) + "/effects",
+                             QSettings::IniFormat, this );
 }
 
 EffectsEngine::~EffectsEngine()
@@ -61,14 +66,36 @@ EffectsEngine::effect( const QString& name )
 bool
 EffectsEngine::loadEffect( const QString &fileName )
 {
-    Effect*     e = new Effect( fileName );
+    Effect*         e = new Effect( fileName );
+    QString         name;
+    Effect::Type    type;
+
+    if ( m_cache->contains( fileName + "/name" ) == true &&
+         m_cache->contains( fileName + "/type" ) == true )
+    {
+        name = m_cache->value( fileName + "/name" ).toString();
+        int     typeInt = m_cache->value( fileName + "/type" ).toInt();
+        if ( typeInt < Effect::Unknown || typeInt > Effect::Mixer3 )
+            qWarning() << "Invalid plugin type.";
+        else
+        {
+            type = static_cast<Effect::Type>( typeInt );
+            m_effects[name] = e;
+            emit effectAdded( e, type );
+            return true;
+        }
+    }
     if ( e->load() == false )
     {
         delete e;
         return false;
     }
     m_effects[e->name()] = e;
-    emit effectAdded( e, e->type() );
+    m_cache->setValue( fileName + "/name", e->name() );
+    m_cache->setValue( fileName + "/type", e->type() );
+    name = e->name();
+    type = e->type();
+    emit effectAdded( e, type );
     return true;
 }
 
