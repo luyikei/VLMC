@@ -38,6 +38,10 @@
 #include <QColor>
 #include <QPalette>
 
+#ifdef Q_WS_X11
+#include <X11/Xlib.h>
+#endif
+
 /**
  *  VLMC Entry point
  *  \brief this is the VLMC entry point
@@ -48,6 +52,9 @@
 int
 VLMCmain( int argc, char **argv )
 {
+#ifdef Q_WS_X11
+    XInitThreads();
+#endif
     QApplication app( argc, argv );
     app.setApplicationName( "vlmc" );
     app.setOrganizationName( "vlmc" );
