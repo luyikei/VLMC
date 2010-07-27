@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "Clip.h"
+#include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "StackedBuffer.hpp"
 #include "VideoClipWorkflow.h"
@@ -213,9 +214,10 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
         qWarning() << "VideoClipWorkflow does not handle non filter effects.";
         return false;
     }
-    effect->init( m_width, m_height );
+    EffectInstance  *effectInstance = new EffectInstance( effect );
+    effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
-    m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
+    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
     return true;
 }
 

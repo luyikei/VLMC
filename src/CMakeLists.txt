@@ -8,6 +8,7 @@ SET(VLMC_SRCS
     Commands/Commands.cpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
+    EffectsEngine/EffectInstance.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
     LibVLCpp/VLCInstance.cpp
@@ -55,6 +56,7 @@ ENDIF(WIN32)
 SET (VLMC_HDRS
     EffectsEngine/EffectsEngine.h
     EffectsEngine/Effect.h
+    EffectsEngine/EffectInstance.h
     Library/Library.h
     Library/MediaContainer.h
     LibVLCpp/VLCInstance.h

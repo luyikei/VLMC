@@ -28,6 +28,7 @@
 #include <inttypes.h>
 
 #include "Clip.h"
+#include "EffectInstance.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
@@ -386,9 +387,10 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
 void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
-    effect->init( m_width, m_height );
+    EffectInstance  *effectInstance = new EffectInstance( effect );
+    effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
-    m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
+    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }
 
 /////////////////////////////////////////////////////////////////////

@@ -27,11 +27,14 @@
 
 #include "frei0r/frei0r.h"
 
+class   EffectInstance;
+
 class Effect : public QLibrary
 {
     public:
         enum    Type
         {
+            Unknown = -1,
             Filter = F0R_PLUGIN_TYPE_FILTER,
             Source = F0R_PLUGIN_TYPE_SOURCE,
             Mixer2 = F0R_PLUGIN_TYPE_MIXER2,
@@ -52,9 +55,13 @@ class Effect : public QLibrary
         const QString&  name() const;
         const QString&  description() const;
         Type            type() const;
-        void            init( quint32 width, quint32 height );
-        void            process( double time, const quint32* input, quint32* output ) const;
+
     private:
+        QString         m_name;
+        QString         m_desc;
+        Type            m_type;
+
+        //Symbols:
         f0r_init_t      m_f0r_init;
         f0r_deinit_t    m_f0r_deinit;
         f0r_get_info_t  m_f0r_info;
@@ -62,12 +69,7 @@ class Effect : public QLibrary
         f0r_destruct_t  m_f0r_destruct;
         f0r_update_t    m_f0r_update;
 
-        f0r_instance_t  m_instance;
-        QString         m_name;
-        QString         m_desc;
-        quint32         m_width;
-        quint32         m_height;
-        Type            m_type;
+        friend class    EffectInstance;
 };
 
 #endif // EFFECT_H

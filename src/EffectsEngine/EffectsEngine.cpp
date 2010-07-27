@@ -23,6 +23,7 @@
 #include "EffectsEngine.h"
 
 #include "Effect.h"
+#include "EffectInstance.h"
 #include "Types.h"
 
 #include <QDir>
@@ -36,7 +37,7 @@ EffectsEngine::~EffectsEngine()
 {
 }
 
-EffectsEngine::EffectHelper::EffectHelper( Effect *_effect, qint64 _start, qint64 _end,
+EffectsEngine::EffectHelper::EffectHelper( EffectInstance *_effect, qint64 _start, qint64 _end,
                                            const QString& _uuid ) :
         effect( _effect ),
         start( _start ),
@@ -109,7 +110,7 @@ EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
                 buff = &buff2;
             if ( *buff == NULL )
                 *buff = new quint8[frame->size()];
-            Effect  *effect = (*it)->effect;
+            EffectInstance      *effect = (*it)->effect;
             effect->process( 0.0, (quint32*)input, (quint32*)*buff );
             input = *buff;
             firstBuff = !firstBuff;

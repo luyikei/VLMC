@@ -28,19 +28,13 @@
 
 Effect::Effect( const QString &fileName ) :
         QLibrary( fileName ),
-        m_instance( NULL ),
-        m_width( 0 ),
-        m_height( 0 )
+        m_type( Unknown )
 {
 }
 
 Effect::~Effect()
 {
     m_f0r_deinit();
-    if ( m_instance != NULL )
-    {
-        m_f0r_destruct( m_instance );
-    }
 }
 
 #define LOAD_FREI0R_SYMBOL( dest, symbolName )  \
@@ -53,6 +47,8 @@ if ( ( dest = reinterpret_cast<typeof( dest )>( resolve( symbolName ) ) ) == NUL
 bool
 Effect::load()
 {
+    if ( isLoaded() == true )
+        return true;
     LOAD_FREI0R_SYMBOL( m_f0r_init, "f0r_init" );
     LOAD_FREI0R_SYMBOL( m_f0r_deinit, "f0r_deinit" )
     LOAD_FREI0R_SYMBOL( m_f0r_info, "f0r_get_plugin_info" )
@@ -89,21 +85,4 @@ Effect::Type
 Effect::type() const
 {
     return m_type;
-}
-
-void
-Effect::init( quint32 width, quint32 height )
-{
-    if ( width != m_width || height != m_height )
-    {
-        m_instance = m_f0r_construct( width, height );
-        m_width = width;
-        m_height = height;
-    }
-}
-
-void
-Effect::process( double time, const quint32 *input, quint32 *output ) const
-{
-    m_f0r_update( m_instance, time, input, output );
 }
