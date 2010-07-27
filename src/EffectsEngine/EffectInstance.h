@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Types.cpp: Workflow related types.
+ * EffectInstance.h: Handle an effect instance.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,67 +20,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Workflow/Types.h"
+#ifndef EFFECTINSTANCE_H
+#define EFFECTINSTANCE_H
 
-using namespace Workflow;
+class   Effect;
 
-#include <cstring> //memcpy
+#include <QtGlobal>
+#include "frei0r/frei0r.h"
 
-Frame::Frame( quint32 width, quint32 height ) :
-        ptsDiff( 0 ),
-        m_width( width ),
-        m_height( height )
+class EffectInstance
 {
-    m_size = width * height * Depth;
-    m_buffer = new quint8[m_size];
-}
+    public:
+        void            init( quint32 width, quint32 height );
+        void            process( double time, const quint32* input, quint32* output ) const;
+        Effect*         effect();
 
-Frame::~Frame()
-{
-    delete[] m_buffer;
-}
+    private:
+        EffectInstance( Effect *effect );
+        ~EffectInstance();
 
-quint8*
-Frame::buffer()
-{
-    return m_buffer;
-}
+        Effect          *m_effect;
+        quint32         m_width;
+        quint32         m_height;
+        f0r_instance_t  m_instance;
 
-const quint8*
-Frame::buffer() const
-{
-    return m_buffer;
-}
+        friend class    Effect;
 
-quint32
-Frame::width() const
-{
-    return m_width;
-}
+};
 
-quint32
-Frame::height() const
-{
-    return m_height;
-}
-
-quint32
-Frame::size() const
-{
-    return m_size;
-}
-
-Frame*
-Frame::clone() const
-{
-    Frame   *f = new Frame( m_width, m_height );
-    memcpy( f->buffer(), m_buffer, m_size );
-    return f;
-}
-
-void
-Frame::setBuffer( quint8 *buff )
-{
-    delete[] m_buffer;
-    m_buffer = buff;
-}
+#endif // EFFECTINSTANCE_H

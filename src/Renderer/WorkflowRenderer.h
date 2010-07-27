@@ -23,8 +23,10 @@
 #ifndef WORKFLOWRENDERER_H
 #define WORKFLOWRENDERER_H
 
+#include "EffectsEngine/EffectsEngine.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
+
 
 #include <QObject>
 
@@ -128,6 +130,8 @@ class   WorkflowRenderer : public GenericRenderer
          *  \sa             stop();
          */
         void                killRenderer();
+
+        void                appendEffect( Effect* effect, qint64 start = 0, qint64 end = -1 );
 
     private:
         /**
@@ -247,6 +251,7 @@ class   WorkflowRenderer : public GenericRenderer
          */
         bool                paramsHasChanged( quint32 width, quint32 height,
                                                   double fps );
+
     protected:
         MainWorkflow*       m_mainWorkflow;
         LibVLCpp::Media*    m_media;
@@ -267,7 +272,6 @@ class   WorkflowRenderer : public GenericRenderer
          *                  be injected
          */
         quint8              *m_silencedAudioBuffer;
-        size_t              m_videoBuffSize;
         EsHandler*          m_esHandler;
         quint32             m_nbChannels;
         quint32             m_rate;
@@ -276,6 +280,9 @@ class   WorkflowRenderer : public GenericRenderer
          *                  has to be performed.
          */
         qint64              m_oldLength;
+
+        QReadWriteLock      *m_effectsLock;
+        EffectsEngine::EffectList     m_effects;
 
         static const quint8     VideoCookie = '0';
         static const quint8     AudioCookie = '1';

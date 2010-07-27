@@ -38,6 +38,7 @@
 #include "About.h"
 #include "VlmcDebug.h"
 
+#include "EffectsEngine/EffectsEngine.h"
 #include "MainWorkflow.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnYoutube.h"
@@ -47,6 +48,7 @@
 
 /* Widgets */
 #include "DockWidgetManager.h"
+#include "EffectsList.h"
 #include "ImportController.h"
 #include "MediaLibrary.h"
 #include "NotificationZone.h"
@@ -423,14 +425,22 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets( void )
 {
+    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
+
+    EffectsList *effectsList = new EffectsList( this );
+    dockManager->addDockedWidget( effectsList,
+                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
+                                  Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
+                                  Qt::LeftDockWidgetArea );
+    //FIXME !!!
+    EffectsEngine::getInstance()->browseDirectory( "/usr/local/frei0r/lib/" );
+
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
     m_timeline = new Timeline( m_renderer, this );
     m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_timeline->show();
     setCentralWidget( m_timeline );
-
-    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
     m_clipPreview = new PreviewWidget( this );
     m_clipPreview->setRenderer( new ClipRenderer );

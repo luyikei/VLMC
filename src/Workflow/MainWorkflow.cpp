@@ -26,6 +26,7 @@
 #include "vlmc.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "EffectsEngine/EffectsEngine.h"
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
@@ -104,6 +105,7 @@ MainWorkflow::computeLength()
 void
 MainWorkflow::startRender( quint32 width, quint32 height )
 {
+    //Reinit the effects in case the width/height has change
     m_renderStarted = true;
     m_width = width;
     m_height = height;

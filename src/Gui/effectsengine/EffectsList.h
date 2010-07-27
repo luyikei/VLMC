@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Types.cpp: Workflow related types.
+ * EffectsList.h: List the available effects plugin
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,67 +20,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Workflow/Types.h"
+#ifndef EFFECTSLIST_H
+#define EFFECTSLIST_H
 
-using namespace Workflow;
+#include <QWidget>
+#include "EffectsEngine/Effect.h"
 
-#include <cstring> //memcpy
-
-Frame::Frame( quint32 width, quint32 height ) :
-        ptsDiff( 0 ),
-        m_width( width ),
-        m_height( height )
+namespace Ui
 {
-    m_size = width * height * Depth;
-    m_buffer = new quint8[m_size];
+    class EffectsList;
 }
 
-Frame::~Frame()
+class EffectsList : public QWidget
 {
-    delete[] m_buffer;
-}
+    Q_OBJECT
 
-quint8*
-Frame::buffer()
-{
-    return m_buffer;
-}
+    public:
+        explicit EffectsList(QWidget *parent = 0);
+        ~EffectsList();
 
-const quint8*
-Frame::buffer() const
-{
-    return m_buffer;
-}
+    private:
+        Ui::EffectsList     *m_ui;
+};
 
-quint32
-Frame::width() const
-{
-    return m_width;
-}
-
-quint32
-Frame::height() const
-{
-    return m_height;
-}
-
-quint32
-Frame::size() const
-{
-    return m_size;
-}
-
-Frame*
-Frame::clone() const
-{
-    Frame   *f = new Frame( m_width, m_height );
-    memcpy( f->buffer(), m_buffer, m_size );
-    return f;
-}
-
-void
-Frame::setBuffer( quint8 *buff )
-{
-    delete[] m_buffer;
-    m_buffer = buff;
-}
+#endif // EFFECTSLIST_H

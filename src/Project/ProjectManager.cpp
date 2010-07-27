@@ -54,7 +54,7 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
                              SettingValue::Flags( SettingValue::Clamped | SettingValue::EightMultiple ) );
     width->setLimits( 0, 2048 );
-    SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 300,
+    SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
                              SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Types.cpp: Workflow related types.
+ * EffectInstance.cpp: Handle an effect instance.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,67 +20,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Workflow/Types.h"
+#include "EffectInstance.h"
 
-using namespace Workflow;
+#include "Effect.h"
 
-#include <cstring> //memcpy
-
-Frame::Frame( quint32 width, quint32 height ) :
-        ptsDiff( 0 ),
-        m_width( width ),
-        m_height( height )
+EffectInstance::EffectInstance( Effect *effect ) :
+        m_effect( effect ),
+        m_width( 0 ),
+        m_height( 0 ),
+        m_instance( NULL )
 {
-    m_size = width * height * Depth;
-    m_buffer = new quint8[m_size];
 }
 
-Frame::~Frame()
+EffectInstance::~EffectInstance()
 {
-    delete[] m_buffer;
-}
-
-quint8*
-Frame::buffer()
-{
-    return m_buffer;
-}
-
-const quint8*
-Frame::buffer() const
-{
-    return m_buffer;
-}
-
-quint32
-Frame::width() const
-{
-    return m_width;
-}
-
-quint32
-Frame::height() const
-{
-    return m_height;
-}
-
-quint32
-Frame::size() const
-{
-    return m_size;
-}
-
-Frame*
-Frame::clone() const
-{
-    Frame   *f = new Frame( m_width, m_height );
-    memcpy( f->buffer(), m_buffer, m_size );
-    return f;
+    m_effect->m_f0r_destruct( m_instance );
 }
 
 void
-Frame::setBuffer( quint8 *buff )
+EffectInstance::init( quint32 width, quint32 height )
 {
-    delete[] m_buffer;
-    m_buffer = buff;
+    if ( width != m_width || height != m_height )
+    {
+        m_effect->load();
+        m_instance = m_effect->m_f0r_construct( width, height );
+        m_width = width;
+        m_height = height;
+    }
+}
+
+void
+EffectInstance::process( double time, const quint32 *input, quint32 *output ) const
+{
+    m_effect->m_f0r_update( m_instance, time, input, output );
+}
+
+Effect*
+EffectInstance::effect()
+{
+    return m_effect;
 }

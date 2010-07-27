@@ -61,8 +61,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         struct      OutputBuffers
         {
-            const Workflow::Frame               *video;
-            Workflow::AudioSample               *audio;
+            Workflow::Frame         *video;
+            Workflow::AudioSample   *audio;
         };
         /**
          *  \enum   Represents the potential Track types.

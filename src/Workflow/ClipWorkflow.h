@@ -28,6 +28,7 @@
 
 #include <QObject>
 #include <QUuid>
+#include <QXmlStreamWriter>
 
 class   QMutex;
 class   QReadWriteLock;
@@ -147,7 +148,7 @@ class   ClipWorkflow : public QObject
          *  \brief  Set the rendering position
          *  \param  time    The position in millisecond
          */
-        void                    setTime( qint64 time );
+        virtual void            setTime( qint64 time );
 
         /**
          *  This method must be used to change the state of the ClipWorkflow
@@ -195,6 +196,12 @@ class   ClipWorkflow : public QObject
          *  IE. just stop the VLC thread, and do not flush anything.
          */
         void                    stopRenderer();
+
+        void                    save( QXmlStreamWriter& project ) const;
+        virtual void            saveEffects( QXmlStreamWriter& ) const
+        {
+            //Empty implementation, as some clipworkflow does not have effects for now.
+        }
 
     private:
         void                    setState( State state );

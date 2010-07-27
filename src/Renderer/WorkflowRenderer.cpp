@@ -28,6 +28,7 @@
 #include <inttypes.h>
 
 #include "Clip.h"
+#include "EffectInstance.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
@@ -48,6 +49,7 @@ WorkflowRenderer::WorkflowRenderer() :
             m_esHandler( NULL ),
             m_oldLength( 0 )
 {
+    m_effectsLock = new QReadWriteLock;
 }
 
 void    WorkflowRenderer::initializeRenderer()
@@ -82,6 +84,7 @@ WorkflowRenderer::~WorkflowRenderer()
         delete m_media;
     if ( m_silencedAudioBuffer )
         delete m_silencedAudioBuffer;
+    delete m_effectsLock;
 }
 
 void
@@ -96,7 +99,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     //Clean any previous render.
 
     sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:cookie=0:codec=%s:cat=2:caching=0",
-             width, height, "16/9", "30/1", "RV24" );
+             width, height, "16/9", "30/1", "RV32" );
     sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
                 m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );
@@ -157,12 +160,9 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
 
     if ( m_stopping == true )
         return 1;
-    else
-    {
-        ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
-        m_videoBuffSize = ret->video->size();
-        ptsDiff = ret->video->ptsDiff;
-    }
+
+    ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
+    ptsDiff = ret->video->ptsDiff;
     if ( ptsDiff == 0 )
     {
         //If no ptsDiff has been computed, we have to fake it, so we compute
@@ -170,9 +170,13 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
         //this is a bit hackish though... (especially regarding the "no frame computed" detection)
         ptsDiff = 1000000 / handler->fps;
     }
+    {
+        QReadLocker lock( m_effectsLock );
+        EffectsEngine::applyEffects( m_effects, ret->video, m_mainWorkflow->getCurrentFrame() );
+    }
     m_pts = *pts = ptsDiff + m_pts;
     *buffer = ret->video->buffer();
-    *bufferSize = m_videoBuffSize;
+    *bufferSize = ret->video->size();
     return 0;
 }
 
@@ -378,6 +382,15 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
 
     return ( newWidth != width || newHeight != height ||
          newOutputFps != fps );
+}
+
+void
+WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
+{
+    EffectInstance  *effectInstance = effect->createInstance();
+    effectInstance->init( m_width, m_height );
+    QWriteLocker    lock( m_effectsLock );
+    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }
 
 /////////////////////////////////////////////////////////////////////

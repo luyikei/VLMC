@@ -99,6 +99,9 @@ public slots:
      */
     void actionRemoveClip( const QUuid& uuid, unsigned int track, MainWorkflow::TrackType trackType );
 
+    void    dragEnterEvent( QDragEnterEvent *event );
+    void    dropEvent( QDropEvent *event );
+
 protected:
     virtual void changeEvent( QEvent *e );
 

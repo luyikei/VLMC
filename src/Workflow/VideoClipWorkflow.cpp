@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "Clip.h"
+#include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "StackedBuffer.hpp"
 #include "VideoClipWorkflow.h"
@@ -33,13 +34,20 @@
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_width( 0 ),
-        m_height( 0 )
+        m_height( 0 ),
+        m_renderedFrame( 0 )
 {
+    m_effectsLock = new QReadWriteLock();
+    m_renderedFrameMutex = new QMutex();
+    Effect  *effect = EffectsEngine::getInstance()->effect("bw0r");
+    appendEffect( effect, 0, 200 );
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()
 {
     stop();
+    delete m_renderedFrameMutex;
+    delete m_effectsLock;
 }
 
 void
@@ -81,7 +89,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->setVideoDataCtx( this );
     m_vlcMedia->setVideoLockCallback( reinterpret_cast<void*>( getLockCallback() ) );
     m_vlcMedia->setVideoUnlockCallback( reinterpret_cast<void*>( getUnlockCallback() ) );
-    m_vlcMedia->addOption( ":sout-transcode-vcodec=RV24" );
+    m_vlcMedia->addOption( ":sout-transcode-vcodec=RV32" );
     if ( m_fullSpeedRender == false )
         m_vlcMedia->addOption( ":sout-smem-time-sync" );
     else
@@ -93,6 +101,9 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
     m_vlcMedia->addOption( buffer );
+
+    foreach ( EffectsEngine::EffectHelper *helper, m_effects )
+        helper->effect->init( m_width, m_height );
 }
 
 void*
@@ -157,6 +168,14 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
 
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
+    {
+        QWriteLocker    lock( cw->m_effectsLock );
+        EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame );
+    }
+    {
+        QMutexLocker    lock( cw->m_renderedFrameMutex );
+        cw->m_renderedFrame++;
+    }
     frame->ptsDiff = cw->m_currentPts - cw->m_previousPts;
     cw->commonUnlock();
     cw->m_renderWaitCond->wakeAll();
@@ -190,6 +209,51 @@ VideoClipWorkflow::flushComputedBuffers()
 
     while ( m_computedBuffers.isEmpty() == false )
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
+}
+
+bool
+VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
+{
+    if ( effect->type() != Effect::Filter )
+    {
+        qWarning() << "VideoClipWorkflow does not handle non filter effects.";
+        return false;
+    }
+    EffectInstance  *effectInstance = effect->createInstance();
+    QWriteLocker    lock( m_effectsLock );
+    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
+    return true;
+}
+
+void
+VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
+{
+    QReadLocker lock( m_effectsLock );
+    if ( m_effects.size() <= 0 )
+        return ;
+    EffectsEngine::EffectList::const_iterator   it = m_effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = m_effects.end();
+    project.writeStartElement( "effects" );
+    while ( it != ite )
+    {
+        project.writeStartElement( "effect" );
+        project.writeAttribute( "name", (*it)->effect->effect()->name() );
+        project.writeAttribute( "start", QString::number( (*it)->start ) );
+        project.writeAttribute( "end", QString::number( (*it)->end ) );
+        project.writeEndElement();
+        ++it;
+    }
+    project.writeEndElement();
+}
+
+void
+VideoClipWorkflow::setTime( qint64 time )
+{
+    {
+        QMutexLocker    lock( m_renderedFrameMutex );
+        m_renderedFrame = time / 1000 * Clip::DefaultFPS;
+    }
+    ClipWorkflow::setTime( time );
 }
 
 VideoClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame,
