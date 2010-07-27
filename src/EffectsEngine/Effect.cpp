@@ -70,19 +70,25 @@ Effect::load()
 #undef LOAD_FREI0R_SYMBOL
 
 const QString&
-Effect::name() const
+Effect::name()
 {
+    if ( isLoaded() == false )
+        load();
     return m_name;
 }
 
 const QString&
-Effect::description() const
+Effect::description()
 {
+    if ( isLoaded() == false )
+        load();
     return m_desc;
 }
 
 Effect::Type
-Effect::type() const
+Effect::type()
 {
+    if ( isLoaded() == false )
+        load();
     return m_type;
 }

@@ -52,9 +52,9 @@ class Effect : public QLibrary
         virtual ~Effect();
 
         bool            load();
-        const QString&  name() const;
-        const QString&  description() const;
-        Type            type() const;
+        const QString&  name();
+        const QString&  description();
+        Type            type();
 
     private:
         QString         m_name;
