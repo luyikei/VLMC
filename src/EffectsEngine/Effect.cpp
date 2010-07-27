@@ -36,9 +36,9 @@ Effect::Effect( const QString &fileName ) :
 
 Effect::~Effect()
 {
+    m_f0r_deinit();
     if ( m_instance != NULL )
     {
-        m_f0r_deinit();
         m_f0r_destruct( m_instance );
     }
 }
@@ -63,6 +63,7 @@ Effect::load()
     //Initializing structures
     f0r_plugin_info_t   infos;
 
+    m_f0r_init();
     m_f0r_info( &infos );
     m_name = infos.name;
     m_desc = infos.explanation;
@@ -93,18 +94,9 @@ Effect::type() const
 void
 Effect::init( quint32 width, quint32 height )
 {
-    //Don't init if the effect is not currently used.
-    if ( m_used == false )
-        return ;
     if ( width != m_width || height != m_height )
     {
-        if ( m_instance != NULL )
-        {
-            m_f0r_deinit();
-            m_f0r_destruct( m_instance );
-        }
         m_instance = m_f0r_construct( width, height );
-        m_f0r_init();
         m_width = width;
         m_height = height;
     }
@@ -114,10 +106,4 @@ void
 Effect::process( double time, const quint32 *input, quint32 *output ) const
 {
     m_f0r_update( m_instance, time, input, output );
-}
-
-void
-Effect::setUsed( bool used )
-{
-    m_used = used;
 }

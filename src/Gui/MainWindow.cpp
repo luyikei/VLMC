@@ -427,13 +427,12 @@ MainWindow::initializeDockWidgets( void )
 {
     DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
-    //FIXME !!!
     EffectsList *effectsList = new EffectsList( this );
     dockManager->addDockedWidget( effectsList,
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
-
+    //FIXME !!!
     EffectsEngine::getInstance()->browseDirectory( "/usr/local/frei0r/lib/" );
 
     m_renderer = new WorkflowRenderer();

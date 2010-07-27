@@ -47,7 +47,6 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         };
         typedef QList<EffectHelper*>    EffectList;
 
-        void        initAll( quint32 width, quint32 height );
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );

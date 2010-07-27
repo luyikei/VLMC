@@ -48,13 +48,6 @@ EffectsEngine::EffectHelper::EffectHelper( Effect *_effect, qint64 _start, qint6
         uuid = _uuid;
 }
 
-void
-EffectsEngine::initAll( quint32 width, quint32 height )
-{
-    foreach ( Effect *e, m_effects )
-        e->init( width, height );
-}
-
 Effect*
 EffectsEngine::effect( const QString& name )
 {

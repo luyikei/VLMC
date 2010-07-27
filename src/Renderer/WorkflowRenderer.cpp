@@ -386,7 +386,6 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
 void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
-    effect->setUsed( true );
     effect->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effect, start, end ) );
