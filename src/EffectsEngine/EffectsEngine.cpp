@@ -81,7 +81,7 @@ EffectsEngine::loadEffect( const QString &fileName )
         {
             type = static_cast<Effect::Type>( typeInt );
             m_effects[name] = e;
-            emit effectAdded( e, type );
+            emit effectAdded( e, name, type );
             return true;
         }
     }
@@ -95,7 +95,7 @@ EffectsEngine::loadEffect( const QString &fileName )
     m_cache->setValue( fileName + "/type", e->type() );
     name = e->name();
     type = e->type();
-    emit effectAdded( e, type );
+    emit effectAdded( e, name, type );
     return true;
 }
 

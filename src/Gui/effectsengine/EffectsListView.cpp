@@ -11,8 +11,10 @@ EffectsListView::EffectsListView(QWidget *parent) :
     QListView(parent)
 {
     m_model = new QStandardItemModel( this );
-    connect( EffectsEngine::getInstance(), SIGNAL( effectAdded( Effect*, Effect::Type ) ),
-             this, SLOT( effectAdded(Effect*,Effect::Type) ) );
+    connect( EffectsEngine::getInstance(),
+             SIGNAL( effectAdded( Effect*, const QString&, Effect::Type ) ),
+             this,
+             SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
     setModel( m_model );
     setEditTriggers( QListView::NoEditTriggers );
     setDragEnabled( true );
@@ -20,10 +22,10 @@ EffectsListView::EffectsListView(QWidget *parent) :
 }
 
 void
-EffectsListView::effectAdded( Effect *effect, Effect::Type type )
+EffectsListView::effectAdded( Effect *, const QString& name, Effect::Type type )
 {
     if ( type == m_type )
-        m_model->appendRow( new QStandardItem( effect->name() ) );
+        m_model->appendRow( new QStandardItem( name ) );
 }
 
 void

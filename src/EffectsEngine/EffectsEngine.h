@@ -63,7 +63,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         QSettings               *m_cache;
 
     signals:
-        void        effectAdded( Effect*, Effect::Type );
+        void        effectAdded( Effect*, const QString& name, Effect::Type );
     friend class    Singleton<EffectsEngine>;
 };
 

@@ -24,7 +24,8 @@ class EffectsListView : public QListView
         Effect::Type        m_type;
         QPoint              m_dragStartPos;
     public slots:
-        void                effectAdded( Effect *effect, Effect::Type type );
+        void                effectAdded( Effect *effect, const QString& name,
+                                         Effect::Type type );
 };
 
 #endif // EFFECTLISTVIEW_H
