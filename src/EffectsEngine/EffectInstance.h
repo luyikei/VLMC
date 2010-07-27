@@ -31,18 +31,20 @@ class   Effect;
 class EffectInstance
 {
     public:
-        EffectInstance( Effect *effect );
-        ~EffectInstance();
-
         void            init( quint32 width, quint32 height );
         void            process( double time, const quint32* input, quint32* output ) const;
         const Effect*   effect() const;
 
     private:
+        EffectInstance( Effect *effect );
+        ~EffectInstance();
+
         Effect          *m_effect;
         quint32         m_width;
         quint32         m_height;
         f0r_instance_t  m_instance;
+
+        friend class    Effect;
 
 };
 

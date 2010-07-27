@@ -55,11 +55,16 @@ class Effect : public QLibrary
         const QString&  name();
         const QString&  description();
         Type            type();
+        EffectInstance  *createInstance();
+
+    private:
+        void            destroyInstance( EffectInstance* instance );
 
     private:
         QString         m_name;
         QString         m_desc;
         Type            m_type;
+        QAtomicInt      m_instCount;
 
         //Symbols:
         f0r_init_t      m_f0r_init;

@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "Effect.h"
+#include "EffectInstance.h"
 
 #include "frei0r/frei0r.h"
 
@@ -91,4 +92,20 @@ Effect::type()
     if ( isLoaded() == false )
         load();
     return m_type;
+}
+
+EffectInstance*
+Effect::createInstance()
+{
+    m_instCount.fetchAndAddAcquire( 1 );
+    return new EffectInstance( this );
+}
+
+void
+Effect::destroyInstance( EffectInstance *instance )
+{
+    delete instance;
+    //fetchAndAddAcquire returns the old value.
+    if ( m_instCount.fetchAndAddAcquire( -1 ) == 1 )
+        unload();
 }
