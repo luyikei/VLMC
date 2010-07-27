@@ -52,92 +52,103 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ClipMetadataDisplayer</name>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulário</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="26"/>
+        <source>Media Properties</source>
+        <translation type="unfinished">Propriedades da Mídia</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="38"/>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="51"/>
+        <source>Duration</source>
+        <translation type="unfinished">Duração</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="67"/>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="96"/>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="125"/>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="212"/>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="228"/>
+        <source>---</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="80"/>
+        <source>Resolution</source>
+        <translation type="unfinished">Resolução</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="109"/>
+        <source>FPS</source>
+        <translation type="unfinished">QPS</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="138"/>
+        <source>Number of video tracks</source>
+        <translation type="unfinished">Número de trilhas de vídeo</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="151"/>
+        <source>Number of audio tracks</source>
+        <translation type="unfinished">Número de trilhas de áudio</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="167"/>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="183"/>
+        <source>0</source>
+        <translation type="unfinished">0</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="196"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="248"/>
+        <source>In project workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ClipProperty</name>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="48"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="43"/>
         <source>properties</source>
         <translation>propriedades</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="103"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="93"/>
         <source>New tags edition</source>
         <translation>Nova edição de marcadores</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ClipProperty.cpp" line="104"/>
+        <location filename="../src/Gui/ClipProperty.cpp" line="94"/>
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
         <translation>Preencha os marcadores (é possivel preencher múltiplos marcadores, separados por vírgulas)</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="82"/>
-        <source>Media Properties</source>
-        <translation>Propriedades da Mídia</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="88"/>
-        <source>Name</source>
-        <translation>Nome</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="95"/>
-        <source>unnamed</source>
-        <translation>sem nome</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="102"/>
-        <source>Duration</source>
-        <translation>Duração</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="109"/>
-        <source>0s</source>
-        <translation>0s</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="122"/>
-        <source>Resolution</source>
-        <translation>Resolução</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="135"/>
-        <source>0px. x 0px.</source>
-        <translation>0px. x 0px.</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="148"/>
-        <source>FPS</source>
-        <translation>QPS</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="155"/>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="176"/>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="183"/>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="162"/>
-        <source>Number of video tracks</source>
-        <translation>Número de trilhas de vídeo</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="169"/>
-        <source>Number of audio tracks</source>
-        <translation>Número de trilhas de áudio</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="193"/>
+        <location filename="../src/Gui/ui/ClipProperty.ui" line="63"/>
         <source>Metatags :</source>
         <translation>Meta marcadores :</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="242"/>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="253"/>
+        <location filename="../src/Gui/ui/ClipProperty.ui" line="70"/>
+        <location filename="../src/Gui/ui/ClipProperty.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/ClipProperty.ui" line="267"/>
+        <location filename="../src/Gui/ui/ClipProperty.ui" line="92"/>
         <source>Annotations :</source>
         <translation>Anotações :</translation>
     </message>
@@ -152,8 +163,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
-        <source>An error occured. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>Ocorreu um erro. Embora seu projeto tenha sido salvo, lamentamos o inconveniente. O projeto será reaberto na próxima vez que abrir o VLMC.</translation>
+        <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="156"/>
@@ -184,22 +195,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>DockWidgetManager</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="291"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="342"/>
         <source>Media Library</source>
         <translation>Biblioteca de Mídias</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="400"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="438"/>
         <source>Clip Preview</source>
         <translation>Visualização do Clipe</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="409"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="448"/>
         <source>Project Preview</source>
         <translation>Visualização do Projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="417"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="456"/>
         <source>History</source>
         <translation>Histórico</translation>
     </message>
@@ -207,19 +218,45 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GUIProjectManager</name>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="70"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="77"/>
         <source>The project has been modified.</source>
         <translation>O projeto foi modificado.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="71"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="78"/>
         <source>Do you want to save it?</source>
         <translation>Deseja salvá-lo?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="207"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="102"/>
+        <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="103"/>
+        <source>Do you want to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
         <source>Failed to load project file</source>
         <translation>Não foi possível carregar o arquivo de projeto</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
+        <source>Backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
+        <source>A backup file exists for this project. Do you want to load it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
+        <source>An outdated backup file was found. Do you want to erase it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -260,38 +297,38 @@ p, li { white-space: pre-wrap; }
         <translation>Pasta do projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="15"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="37"/>
         <source>New project wizard</source>
         <translation>Assistente para novo projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="16"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="38"/>
         <source>Set General options</source>
         <translation>Configurar opções gerais</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="75"/>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="82"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="97"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="104"/>
         <source>Form is incomplete</source>
         <translation>O formulário está incompleto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="76"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="98"/>
         <source>The project name must be filled.</source>
         <translation>O nome do projeto deve ser preenchido.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="83"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="105"/>
         <source>The workspace location must be set.</source>
         <translation>A pasta de trabalho deve ser definida.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="109"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="137"/>
         <source>Missing workspace location</source>
         <translation>Pasta de trabalho ausente</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="123"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="151"/>
         <source>Invalid workspace location</source>
         <translation>Pasta de trabalho inválida</translation>
     </message>
@@ -299,8 +336,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsAudioItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="41"/>
-        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="55"/>
+        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="43"/>
+        <location filename="../src/Gui/timeline/GraphicsAudioItem.cpp" line="57"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Nome:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Duração:&lt;/b&gt; %2</translation>
     </message>
@@ -308,8 +345,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GraphicsMovieItem</name>
     <message>
-        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="42"/>
-        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="56"/>
+        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="43"/>
+        <location filename="../src/Gui/timeline/GraphicsMovieItem.cpp" line="57"/>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
         <translation>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Nome:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Duração:&lt;/b&gt; %2</translation>
     </message>
@@ -317,12 +354,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ImportController</name>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="154"/>
-        <source>properties</source>
-        <translation>propriedades</translation>
+        <location filename="../src/Gui/import/ImportController.cpp" line="246"/>
+        <source>Invalid medias</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="316"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="247"/>
+        <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/import/ImportController.cpp" line="320"/>
         <source>Failed to load %1</source>
         <translation>Não foi possivel carregar %1</translation>
     </message>
@@ -332,54 +374,9 @@ p, li { white-space: pre-wrap; }
         <translation>Importar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="71"/>
+        <location filename="../src/Gui/import/ui/ImportController.ui" line="93"/>
         <source>TextLabel</source>
         <translation>Título</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="132"/>
-        <source>Media Properties</source>
-        <translation>Propriedades da Mídia</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="138"/>
-        <source>Name</source>
-        <translation>Nome</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="145"/>
-        <source>unnamed</source>
-        <translation>sem nome</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="152"/>
-        <source>Duration</source>
-        <translation>Duração</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="159"/>
-        <source>0s</source>
-        <translation>0s</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="172"/>
-        <source>Resolution</source>
-        <translation>Resolução</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="185"/>
-        <source>0px. x 0px.</source>
-        <translation>0px. x 0px.</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="198"/>
-        <source>FPS</source>
-        <translation>QPS</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/import/ui/ImportController.ui" line="205"/>
-        <source>0</source>
-        <translation>0</translation>
     </message>
 </context>
 <context>
@@ -431,113 +428,105 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="131"/>
-        <source>Media Library</source>
-        <translation>Biblioteca de Mídias</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="325"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="317"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="320"/>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
         <translation>Usar a ferramenta do mouse para manipular regiões na linha de tempo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="333"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="332"/>
+        <source>Cut mode</source>
+        <translation type="unfinished">Modo de recorte</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="335"/>
         <source>Use the scissors to cut regions in the timeline</source>
         <translation>Usar a tesoura para recortar regiões na linha de tempo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="360"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="396"/>
         <source>Zoom out</source>
         <translation>Menos aproximação</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="381"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="417"/>
         <source>Zoom in</source>
         <translation>Mais aproximação</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="431"/>
-        <source>VLMC settings</source>
-        <translation>Configurações do VLMC</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="484"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="502"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="434"/>
-        <source>Keyboard Settings</source>
-        <translation>Configurações de Teclado</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="487"/>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="442"/>
-        <source>Project settings</source>
-        <translation>Configurações de projeto</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="490"/>
+        <source>Youtube</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="445"/>
-        <source>Video settings</source>
-        <translation>Configurações de vídeo</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="493"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="448"/>
-        <source>Audio settings</source>
-        <translation>Configurações de áudio</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="505"/>
+        <source>Video</source>
+        <translation type="unfinished">Vìdeo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="471"/>
-        <source>Sorry</source>
-        <translation>Desculpe</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="508"/>
+        <source>Audio</source>
+        <translation type="unfinished">Áudio</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="472"/>
-        <source>This feature is currently disabled.</source>
-        <translation>Esta funcionalidade está desabilitada no momento.</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="480"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="537"/>
         <source>VLMC Renderer</source>
         <translation>Exibidor VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="480"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="537"/>
         <source>There is nothing to render.</source>
         <translation>Não há nada para exibir.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="752"/>
         <source>Crash recovery</source>
         <translation>Recuperação de falhas</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="632"/>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
-        <translation>O VLMC não foi fechado corretamente. Deseja recuperar o seu projeto?</translation>
+        <location filename="../src/Gui/MainWindow.cpp" line="752"/>
+        <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="639"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="759"/>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
         <translation>O VLMC não conseguiu restaurar o seu projeto. Pedimos desculpas pelo inconveniente</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="639"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="759"/>
         <source>Can&apos;t restore project</source>
         <translation>Não foi possível recuperar o projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="142"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="162"/>
         <source>Preview</source>
         <translation>Visualização</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="14"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="582"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="697"/>
         <source>VideoLAN Movie Creator</source>
         <translation>Criador de Filmes VideoLAN</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="54"/>
-        <source>Effects</source>
-        <translation>Efeitos</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="114"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="142"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
@@ -547,145 +536,146 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Editar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="45"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="82"/>
         <source>&amp;View</source>
         <translation>Ex&amp;ibir</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="60"/>
-        <source>&amp;Tools</source>
-        <translation>&amp;Ferramentas</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="66"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="77"/>
         <source>&amp;Window</source>
         <translation>&amp;Janela</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="71"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="45"/>
         <source>&amp;Help</source>
         <translation>Aj&amp;uda</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="79"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="53"/>
         <source>&amp;File</source>
         <translation>&amp;Arquivo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="104"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="195"/>
+        <source>&amp;To a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="198"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
+        <source>Render your project as a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="290"/>
+        <source>Share on &amp;Youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="293"/>
+        <source>Share your project on youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="302"/>
         <source>&amp;Quit</source>
         <translation>&amp;Fechar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="109"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="133"/>
         <source>&amp;About</source>
         <translation>&amp;Sobre</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="123"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="57"/>
+        <source>&amp;Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="88"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="101"/>
+        <source>VLMC Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="151"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Preferências</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="152"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
         <source>&amp;New Project</source>
         <translation>&amp;Novo Projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="155"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="174"/>
         <source>Open the wizard to create a new project</source>
         <translation>Abre o assistente para criar um novo projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="163"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Tela Inteira</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="168"/>
-        <source>&amp;Render</source>
-        <translation>&amp;Exibir</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
-        <source>Render your project</source>
-        <translation>Exibe o seu projeto</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="176"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="210"/>
         <source>&amp;Load Project</source>
         <translation>&amp;Carregar Projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="181"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
         <source>&amp;Save</source>
         <translation>&amp;Salvar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
         <source>&amp;Import</source>
         <translation>&amp;Importar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="189"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="231"/>
         <source>Import new medias into the current project</source>
         <translation>Importa novas mídias para o projeto atual</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="205"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="240"/>
         <source>Proj&amp;ect Preferences</source>
         <translation>Preferências do Proj&amp;eto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="218"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="249"/>
         <source>Save &amp;As</source>
         <translation>Salvar &amp;como</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="223"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="258"/>
         <source>&amp;Close Project</source>
         <translation>&amp;Fechar Projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="669"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="263"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="793"/>
         <source>Crash</source>
         <translation>Falha</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="237"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="272"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="246"/>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="281"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="147"/>
-        <source>Transcode</source>
-        <translation>Transcodificar</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="279"/>
-        <source>Import</source>
-        <translation>Importar</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="200"/>
-        <source>Enable effects engine</source>
-        <translation>Ativar o módulo de efeitos</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="208"/>
-        <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/MainWindow.ui" line="213"/>
-        <source>Project Wizard</source>
-        <translation>Assistente de Projeto</translation>
+        <location filename="../src/Gui/ui/MainWindow.ui" line="314"/>
+        <source>Selection mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -706,14 +696,55 @@ p, li { white-space: pre-wrap; }
         <translation>duração</translation>
     </message>
     <message>
-        <location filename="../src/Gui/library/MediaCellView.cpp" line="220"/>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="222"/>
         <source>This clip or some of its children are contained in the timeline.</source>
         <translation>Este clipe ou algumas das suas partes estão contidas na linha de tempo.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/library/MediaCellView.cpp" line="221"/>
-        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation>Excluindo-o também o excluirá da linha de tempo. Deseja continuar?</translation>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="223"/>
+        <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="286"/>
+        <source>Can&apos;t copy to workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/MediaCellView.cpp" line="287"/>
+        <source>Can&apos;t copy this media to workspace: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MediaLibrary</name>
+    <message>
+        <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="20"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulário</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="38"/>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="43"/>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="56"/>
+        <source>Import</source>
+        <translation type="unfinished">Importar</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationZone</name>
+    <message>
+        <location filename="../src/Gui/widgets/ui/NotificationZone.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulário</translation>
     </message>
 </context>
 <context>
@@ -756,34 +787,42 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>PreferenceWidget</name>
+    <name>PathWidget</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="176"/>
-        <source>Select mode</source>
-        <translation>Modo de seleção</translation>
+        <location filename="../src/Gui/settings/PathWidget.cpp" line="38"/>
+        <source>Select path</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="177"/>
+        <location filename="../src/Gui/settings/PathWidget.cpp" line="69"/>
+        <source>Select a path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreferenceWidget</name>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="254"/>
         <source>Select the selection tool in the timeline</source>
         <translation>Seleciona a ferramenta de seleção na linha de tempo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="179"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="257"/>
         <source>Cut mode</source>
         <translation>Modo de recorte</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="180"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="258"/>
         <source>Select the cut/razor tool in the timeline</source>
         <translation>Seleciona a ferramenta de recorte/raspagem na linha de tempo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="182"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="181"/>
         <source>Media preview</source>
         <translation>Visualizar mídia</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="183"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="182"/>
         <source>Preview the selected media, or pause the current preview</source>
         <translation>Visualiza a mídia selecionada ou pausa a visualização atual</translation>
     </message>
@@ -798,293 +837,377 @@ p, li { white-space: pre-wrap; }
         <translation>Visualiza o projeto ou pausa a visualização atual</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="190"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="191"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="191"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="192"/>
         <source>Undo the last action</source>
         <translation>Desfaz a última ação</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="194"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="196"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="195"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="197"/>
         <source>Redo the last action</source>
         <translation>Refaz a última ação</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="198"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="201"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="199"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="202"/>
         <source>Toggle the help page</source>
         <translation>Alterna a página de ajuda</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="201"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="205"/>
         <source>Quit</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="202"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="206"/>
         <source>Quit VLMC</source>
         <translation>Fechar o VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="204"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="209"/>
         <source>Preferences</source>
         <translation>Preferências</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="205"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="210"/>
         <source>Open VLMC preferences</source>
         <translation>Abrir as preferências do VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="207"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="213"/>
+        <source>Project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="214"/>
+        <source>Open the project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="217"/>
         <source>Fullscreen</source>
         <translation>Tela Inteira</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="208"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="218"/>
         <source>Switch to fullscreen mode</source>
         <translation>Alternar para o modo de Tela Inteira</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="211"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="222"/>
         <source>New project</source>
         <translation>Novo projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="212"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="223"/>
         <source>Open the new project wizard</source>
         <translation>Abre o assistente para novo projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="253"/>
+        <source>Selection mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="262"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="243"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="271"/>
         <source>Confirm clip deletion</source>
         <translation>Confirmar a exclusão do clipe</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="244"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="272"/>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
         <translation>Pede uma confirmação antes de excluir um clipe da linha de tempo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="215"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="276"/>
+        <source>Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="277"/>
+        <source>The Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="280"/>
+        <source>Youtube Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="281"/>
+        <source>VLMC won&apos;t store your passwords...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="285"/>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="286"/>
+        <source>The HTTP Proxy </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="289"/>
+        <source>Proxy Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="290"/>
+        <source>The HTTP Proxy Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="293"/>
+        <source>Proxy Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="294"/>
+        <source>The HTTP Proxy Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="297"/>
+        <source>Proxy Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="298"/>
+        <source>The HTTP Proxy Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="302"/>
+        <source>The default location where to store projects folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="227"/>
         <source>Open a project</source>
         <translation>Abrir um projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="216"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="228"/>
         <source>Open an existing project</source>
         <translation>Abre um projeto existente</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="219"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="232"/>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="220"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="233"/>
         <source>Save the current project</source>
         <translation>Salva o projeto atual</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="222"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Save as</source>
         <translation>Salvar como</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="223"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="237"/>
         <source>Save the current project to a new file</source>
         <translation>Salva o projeto atual como um novo arquivo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="226"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="241"/>
         <source>Close the project</source>
         <translation>Fechar o projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="227"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="242"/>
         <source>Close the current project</source>
         <translation>Fecha o projeto atual</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="229"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="245"/>
         <source>Import media</source>
         <translation>Importar mídia</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="230"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="246"/>
         <source>Open the import window</source>
         <translation>Abre a janela de importação</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="232"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="249"/>
         <source>Render the project</source>
         <translation>Exibir o projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="233"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="250"/>
         <source>Render the project to a file</source>
         <translation>Gera a exibição do projeto em um arquivo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="237"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="263"/>
         <source>The VLMC&apos;s UI language</source>
         <translation>O idioma da interface do VLMC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="42"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="49"/>
         <source>Automatic save</source>
         <translation>Salvamento automático</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="43"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="50"/>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
         <translation>Quando esta opção esta habilitada, o VLMC salvará automaticamente o seu projeto em intervalos definidos</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="51"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="58"/>
         <source>Automatic save interval</source>
         <translation>Intervalo de salvamentos automáticos</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="52"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="59"/>
         <source>This is the interval that VLMC will wait between two automatic save</source>
         <translation>Intervalo que o VLMC usará entre dois salvamentos automáticos</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="48"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="50"/>
         <source>Output video FPS</source>
         <translation>QPS da saída de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="49"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="51"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
         <translation>Quadros por segundo usados para visualizar e exibir o projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="51"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="53"/>
         <source>Video width</source>
         <translation>Largura do vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="52"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="54"/>
         <source>Width resolution of the output video</source>
         <translation>Largura de resolução da saída de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="54"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="58"/>
         <source>Video height</source>
         <translation>Altura do video</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="55"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="59"/>
         <source>Height resolution of the output video</source>
         <translation>Altura de resolução da saída de video</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="57"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="63"/>
         <source>Audio samplerate</source>
         <translation>Taxa de amostragem do áudio</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="58"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Output project audio samplerate</source>
         <translation>Taxa de amostragem da saída de áudio do projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="60"/>
-        <source>Workspace location</source>
-        <translation>Pasta de trabalho</translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="61"/>
-        <source>The place where all project&apos;s videos will be stored</source>
-        <translation>Pasta onde todos os vídeos do projeto serão armazenados</translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="64"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="67"/>
         <source>Project name</source>
         <translation>Nome do projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="65"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="68"/>
         <source>The project name</source>
         <translation>O nome do projeto</translation>
     </message>
 </context>
 <context>
+    <name>PreferencesWidget</name>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="301"/>
+        <source>Project default location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PreviewWidget</name>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="26"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="20"/>
         <source>Preview</source>
         <translation>Visualização</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="58"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="52"/>
         <source>Go to the previous frame</source>
         <translation>Retroceder um quadro</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="96"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="90"/>
         <source>Play / Pause</source>
         <translation>Reproduzir / Pausar</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="134"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="128"/>
         <source>Go to the next frame</source>
         <translation>Avançar um quadro</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="172"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="166"/>
         <source>Set marker A</source>
         <translation>Definir marcador A</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="210"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
         <source>Set marker B</source>
         <translation>Definir marcador B</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="248"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="242"/>
         <source>Cut at markers position</source>
         <translation>Recortar entre os marcadores</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="293"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="287"/>
         <source>Stop the playback</source>
         <translation>Parar a reprodução</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/PreviewWidget.cpp" line="226"/>
+        <source>Rendering error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/preview/PreviewWidget.cpp" line="227"/>
+        <source>An error occurred while rendering.
+Please check your VLC installation before reporting the issue.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="103"/>
-        <source>Invalid project file name.</source>
-        <translation>Nome de arquivo de projeto inválido.</translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="112"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="126"/>
         <source>Can&apos;t open project file. (%1)</source>
         <translation>Não foi possível abrir o projeto (%1)</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="250"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="268"/>
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Não foi possível carregar o projeto: %1. Abortando.</translation>
     </message>
@@ -1115,32 +1238,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message id="false">
-        <location filename="../src/Commands/Commands.cpp" line="55"/>
+        <location filename="../src/Commands/Commands.cpp" line="56"/>
         <source>Adding clip to track %1</source>
         <translation>Adicionando clipe à trilha %1</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="80"/>
+        <location filename="../src/Commands/Commands.cpp" line="81"/>
         <source>Moving clip from track %1 to %2</source>
         <translation>Movendo o clipe da trilha %1 para a trilha %2</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="83"/>
+        <location filename="../src/Commands/Commands.cpp" line="84"/>
         <source>Moving clip</source>
         <translation>Movendo o clipe</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="107"/>
+        <location filename="../src/Commands/Commands.cpp" line="108"/>
         <source>Remove clip</source>
         <translation>Excluir o clipe</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="136"/>
+        <location filename="../src/Commands/Commands.cpp" line="137"/>
         <source>Resizing clip</source>
         <translation>Redimensionando o clipe</translation>
     </message>
     <message>
-        <location filename="../src/Commands/Commands.cpp" line="170"/>
+        <location filename="../src/Commands/Commands.cpp" line="171"/>
         <source>Splitting clip</source>
         <translation>Dividindo o clipe</translation>
     </message>
@@ -1213,83 +1336,259 @@ p, li { white-space: pre-wrap; }
         <translation>AAC</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="53"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="55"/>
         <source>Enter the output file name</source>
         <translation>Preencha o nome do arquivo de saida</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="54"/>
-        <source>Videos(*.avi *.mpg)</source>
-        <translation>Vídeos (*.avi *.mpg)</translation>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="56"/>
+        <source>Videos(%1)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="63"/>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="72"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="65"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="74"/>
         <source>Invalid parameters</source>
         <translation>Parâmetros inválidos</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="64"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="66"/>
         <source>Please enter valid rendering parameters</source>
         <translation>Por favor, defina parâmetros de exibição válidos</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="73"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="75"/>
         <source>Please provide a valid output file!</source>
         <translation>Por favor, defina um arquivo de saída válido!</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="81"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="83"/>
         <source>File already exists!</source>
         <translation>O arquivo já existe!</translation>
     </message>
     <message>
-        <location filename="../src/Gui/export/RendererSettings.cpp" line="82"/>
+        <location filename="../src/Gui/export/RendererSettings.cpp" line="84"/>
         <source>Output file already exists, do you want to overwrite it?</source>
         <translation>O arquivo de saída já existe. Deseja sobrescrevê-lo?</translation>
     </message>
 </context>
 <context>
+    <name>SearchLineEdit</name>
+    <message>
+        <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="35"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="123"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Settings</name>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="429"/>
-        <location filename="../src/Gui/MainWindow.cpp" line="440"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="482"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="500"/>
         <source>general</source>
         <translation>geral</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="432"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="485"/>
         <source>keyboard</source>
         <translation>teclado</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="443"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="488"/>
+        <source>youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="491"/>
+        <source>network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/MainWindow.cpp" line="503"/>
         <source>video</source>
         <translation>vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="446"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="506"/>
         <source>audio</source>
         <translation>áudio</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/settings/Settings.cpp" line="174"/>
+        <source>Project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/settings/Settings.cpp" line="176"/>
+        <source>VLMC Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShareOnYoutube</name>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="14"/>
+        <source>Share On Youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="24"/>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="34"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="45"/>
+        <source>Autos &amp; Vehicles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="50"/>
+        <source>Comedy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="55"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="60"/>
+        <source>Entertainment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="65"/>
+        <source>Film &amp; Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="70"/>
+        <source>Gaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="75"/>
+        <source>Howto &amp; Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="80"/>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="85"/>
+        <source>News &amp; Politics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="90"/>
+        <source>Nonprofits &amp; Activism</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="95"/>
+        <source>People &amp; Blogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="100"/>
+        <source>Pets &amp; Animals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="105"/>
+        <source>Science &amp; Technology</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="110"/>
+        <source>Sports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="115"/>
+        <source>Travel &amp; Events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="123"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="133"/>
+        <source>Description</source>
+        <translation type="unfinished">Descrição</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="153"/>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="163"/>
+        <source>Video Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="171"/>
+        <source>Small (480 x 272)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="176"/>
+        <source>Medium (640 x 360)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="181"/>
+        <source>Large (960 x 540)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="186"/>
+        <source>HD (1280 x 720)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="194"/>
+        <source>Make this video public (Default: private)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/export/ShareOnYoutube.ui" line="214"/>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StackViewNavController</name>
     <message>
-        <location filename="../src/Gui/library/StackViewNavController.ui" line="14"/>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="14"/>
+        <location filename="../src/Gui/library/StackViewNavController.ui" line="14"/>
         <source>Form</source>
         <translation>Formulário</translation>
     </message>
     <message>
-        <location filename="../src/Gui/library/StackViewNavController.ui" line="20"/>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="20"/>
+        <location filename="../src/Gui/library/StackViewNavController.ui" line="20"/>
         <source>Previous</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../src/Gui/library/StackViewNavController.ui" line="33"/>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="33"/>
+        <location filename="../src/Gui/library/StackViewNavController.ui" line="33"/>
         <source>TextLabel</source>
         <translation>Título</translation>
     </message>
@@ -1369,93 +1668,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TracksView</name>
     <message>
-        <location filename="../src/Gui/timeline/TracksView.cpp" line="632"/>
+        <location filename="../src/Gui/timeline/TracksView.cpp" line="633"/>
         <source>Action not supported.</source>
         <translation>Não há suporte para esta ação.</translation>
-    </message>
-</context>
-<context>
-    <name>Transcode</name>
-    <message>
-        <location filename="../src/Gui/ui/transcode.ui" line="17"/>
-        <source>Transcode File</source>
-        <translation>Arquivo Transcodificado</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/transcode.ui" line="25"/>
-        <source>Input File</source>
-        <translation>Arquivo de Entrada</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/transcode.ui" line="32"/>
-        <source>Profiles</source>
-        <translation>Perfis</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/ui/transcode.ui" line="44"/>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="70"/>
-        <source>H264 + AAC</source>
-        <translation>H264 + AAC</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="71"/>
-        <source>Dirac + AAC</source>
-        <translation>Dirac + AAC</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="72"/>
-        <source>Theora + Vorbis</source>
-        <translation>Theora + Vorbis</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="73"/>
-        <source>Theora + Flac</source>
-        <translation>Theora + Flac</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="74"/>
-        <source>Mpeg4 + AAC</source>
-        <translation>Mpeg4 + AAC</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="75"/>
-        <source>WMV + WMA</source>
-        <translation>WMV + WMA</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="85"/>
-        <source>Choose File to open</source>
-        <translation>Escolher arquivo para abrir</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="87"/>
-        <location filename="../src/Gui/Transcode.cpp" line="188"/>
-        <source>Video files (*.avi *.mkv *.ogg)</source>
-        <translation>Arquivos de vídeo (*avi *.mkv *.ogg)</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="147"/>
-        <source>Transcode in progress</source>
-        <translation>Transcodificação em andamento</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="181"/>
-        <source>Warning</source>
-        <translation>Aviso</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="182"/>
-        <source>Choose a video to transcode</source>
-        <translation>Escolher um vídeo para transcodificar</translation>
-    </message>
-    <message>
-        <location filename="../src/Gui/Transcode.cpp" line="186"/>
-        <source>Choose File to save</source>
-        <translation>Escolher arquivo para salvar</translation>
     </message>
 </context>
 <context>
@@ -1571,18 +1786,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="210"/>
-        <source>44000 Hz</source>
-        <translation>44000 Hz</translation>
+        <source>44100 Hz</source>
+        <translation type="unfinished">11000 Hz {44100 ?}</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="215"/>
-        <source>22000 Hz</source>
-        <translation>22000 Hz</translation>
+        <source>22050 Hz</source>
+        <translation type="unfinished">11000 Hz {22050 ?}</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="220"/>
-        <source>11000 Hz</source>
-        <translation>11000 Hz</translation>
+        <source>11025 Hz</source>
+        <translation type="unfinished">11000 Hz {11025 ?}</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/VideoPage.cpp" line="31"/>
@@ -1656,22 +1871,22 @@ p, li { white-space: pre-wrap; }
         <translation>Não exibir ao iniciar.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="42"/>
+        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="44"/>
         <source>Project wizard</source>
         <translation>Assistente de projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="43"/>
+        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="45"/>
         <source>Open or create a project</source>
         <translation>Abrir ou criar um projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="98"/>
+        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="100"/>
         <source>Sorry</source>
         <translation>Desculpe</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="99"/>
+        <location filename="../src/Gui/wizard/WelcomePage.cpp" line="101"/>
         <source>You first need to select a project from the list.
 Then click next to continue...</source>
         <translation>Primeiro selecione um projeto da lista
@@ -1709,6 +1924,29 @@ Então clique em próximo para continuar...</translation>
         <location filename="../src/Gui/WorkflowFileRendererDialog.cpp" line="66"/>
         <source>Rendering frame %1 / %2</source>
         <translation>Exibindo o quadro %1 / %2</translation>
+    </message>
+</context>
+<context>
+    <name>Workspace</name>
+    <message>
+        <location filename="../src/Project/Workspace.cpp" line="90"/>
+        <source>File already exists!</source>
+        <translation type="unfinished">O arquivo já existe!</translation>
+    </message>
+    <message>
+        <location filename="../src/Project/Workspace.cpp" line="91"/>
+        <source>A file with the same name already exists, do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Project/Workspace.cpp" line="123"/>
+        <source>Workspace: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Project/Workspace.cpp" line="123"/>
+        <source> copied to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

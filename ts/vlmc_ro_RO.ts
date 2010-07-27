@@ -39,43 +39,58 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ClipProperty</name>
+    <name>ClipMetadataDisplayer</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Media Properties</source>
-        <translation>Proprietati media</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nume</translation>
-    </message>
-    <message>
-        <source>unnamed</source>
-        <translation>fara nume</translation>
+        <translation type="unfinished">Nume</translation>
     </message>
     <message>
         <source>Duration</source>
-        <translation>Durata</translation>
+        <translation type="unfinished">Durata</translation>
     </message>
     <message>
-        <source>0s</source>
-        <translation></translation>
+        <source>---</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Rezolutie</translation>
-    </message>
-    <message>
-        <source>0px. x 0px.</source>
-        <translation></translation>
+        <translation type="unfinished">Rezolutie</translation>
     </message>
     <message>
         <source>FPS</source>
-        <translation></translation>
+        <translation type="unfinished">FPS</translation>
+    </message>
+    <message>
+        <source>Number of video tracks</source>
+        <translation type="unfinished">Numarul pistelor video</translation>
+    </message>
+    <message>
+        <source>Number of audio tracks</source>
+        <translation type="unfinished">Numarul pistelor audio</translation>
     </message>
     <message>
         <source>0</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In project workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ClipProperty</name>
     <message>
         <source>Metatags :</source>
         <translation></translation>
@@ -100,24 +115,12 @@ p, li { white-space: pre-wrap; }
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
         <translation>Introduceti tagurile (Puteti introduce mai multe taguri separate prin virgula)</translation>
     </message>
-    <message>
-        <source>Number of video tracks</source>
-        <translation>Numarul pistelor video</translation>
-    </message>
-    <message>
-        <source>Number of audio tracks</source>
-        <translation>Numarul pistelor audio</translation>
-    </message>
 </context>
 <context>
     <name>CrashHandler</name>
     <message>
         <source>VLMC Crash handler</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>An error occured. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>A apărut o eroare. Ne pare rău pentru inconvenient, deşi am salvat proiectul dumneavoastra. Acesta va fi redeschis următoarea dată când veţi deschide VLMC.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -138,6 +141,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>A crash occurred. Signal received: </source>
         <translation>A aparut o eroare. Semnal receptionat: </translation>
+    </message>
+    <message>
+        <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -172,6 +179,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Failed to load project file</source>
         <translation>Esuare la incarcarea proiectului</translation>
+    </message>
+    <message>
+        <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A backup file exists for this project. Do you want to load it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An outdated backup file was found. Do you want to erase it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -254,52 +281,20 @@ p, li { white-space: pre-wrap; }
         <translation>Importa</translation>
     </message>
     <message>
-        <source>Media Properties</source>
-        <translation>Proprietatile fisierului</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nume</translation>
-    </message>
-    <message>
-        <source>unnamed</source>
-        <translation>Fara nume</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Durata</translation>
-    </message>
-    <message>
-        <source>0s</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Rezolutie</translation>
-    </message>
-    <message>
-        <source>0px. x 0px.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>properties</source>
-        <translation>proprietati</translation>
-    </message>
-    <message>
         <source>TextLabel</source>
         <translation>Eticheta</translation>
     </message>
     <message>
         <source>Failed to load %1</source>
         <translation>Nu am putut încărca %1</translation>
+    </message>
+    <message>
+        <source>Invalid medias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -351,56 +346,16 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>Effects</source>
-        <translation>Efecte</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Ajutor</translation>
-    </message>
-    <message>
-        <source>Media Library</source>
-        <translation>Biblioteca media</translation>
     </message>
     <message>
         <source>Preview</source>
         <translation>Previzualizare</translation>
     </message>
     <message>
-        <source>Transcode</source>
-        <translation>Codare</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importă</translation>
-    </message>
-    <message>
-        <source>Enable effects engine</source>
-        <translation>Activare efecte</translation>
-    </message>
-    <message>
-        <source>Ctrl+P</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Project Wizard</source>
-        <translation>Îndrumător proiect</translation>
-    </message>
-    <message>
         <source>Crash</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Keyboard Settings</source>
-        <translation>Setări tastatură</translation>
-    </message>
-    <message>
-        <source>Sorry</source>
-        <translation>Regret</translation>
-    </message>
-    <message>
-        <source>This feature is currently disabled.</source>
-        <translation>Această facilitate este în prezent dezactivată.</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -419,22 +374,6 @@ p, li { white-space: pre-wrap; }
         <translation>Reia operaţiunea</translation>
     </message>
     <message>
-        <source>VLMC settings</source>
-        <translation>Setări VLMC</translation>
-    </message>
-    <message>
-        <source>Project settings</source>
-        <translation>Setările proiectului</translation>
-    </message>
-    <message>
-        <source>Video settings</source>
-        <translation>Setări video</translation>
-    </message>
-    <message>
-        <source>Audio settings</source>
-        <translation>Setări audio</translation>
-    </message>
-    <message>
         <source>VLMC Renderer</source>
         <translation>Randare VLMC</translation>
     </message>
@@ -449,10 +388,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;View</source>
         <translation>&amp;Vizualizare</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation>&amp;Unelte</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -489,14 +424,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Fullscreen</source>
         <translation>&amp;Tot ecranul</translation>
-    </message>
-    <message>
-        <source>&amp;Render</source>
-        <translation>&amp;Randare</translation>
-    </message>
-    <message>
-        <source>Render your project</source>
-        <translation>Randeaza proiectul tau</translation>
     </message>
     <message>
         <source>&amp;Load Project</source>
@@ -543,12 +470,72 @@ p, li { white-space: pre-wrap; }
         <translation>Marire  zoom</translation>
     </message>
     <message>
-        <source>VLMC didn&apos;t closed nicely. Do you wan&apos;t to recover your project?</source>
-        <translation>VLMC nu s-a inchis corect.Vrei sa recuperezi  proiectul?</translation>
-    </message>
-    <message>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
         <translation>VLMC nu a reusit restaurarea proiectului tau.Ne cerem scuze pentru acest incovenient</translation>
+    </message>
+    <message>
+        <source>&amp;Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;To a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Render your project as a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share on &amp;Youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share your project on youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selection mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut mode</source>
+        <translation type="unfinished">Mod de tăiat</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Audio</translation>
+    </message>
+    <message>
+        <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -570,8 +557,42 @@ p, li { white-space: pre-wrap; }
         <translation>Acest clip sau anumite sectiuni ale sale sunt continute de timeline.</translation>
     </message>
     <message>
-        <source>Removing it will delete it from the timeline. Do you want to proceed ?</source>
-        <translation>Stergerea va duce la eliminarea din timelane.Doresti acest lucru?</translation>
+        <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t copy to workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t copy this media to workspace: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MediaLibrary</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nume</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Importa</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationZone</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -610,11 +631,18 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>PreferenceWidget</name>
+    <name>PathWidget</name>
     <message>
-        <source>Select mode</source>
-        <translation>Selectaţi modul</translation>
+        <source>Select path</source>
+        <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select a path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreferenceWidget</name>
     <message>
         <source>Select the selection tool in the timeline</source>
         <translation>Selectaţi instrumentul de selecţie</translation>
@@ -796,14 +824,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ieşire proiect audio samplerate</translation>
     </message>
     <message>
-        <source>Workspace location</source>
-        <translation>Locaţia de lucru</translation>
-    </message>
-    <message>
-        <source>The place where all project&apos;s videos will be stored</source>
-        <translation>Locul în care toate proiectele vor fi depozitate</translation>
-    </message>
-    <message>
         <source>Project name</source>
         <translation>Numele proiectului</translation>
     </message>
@@ -826,6 +846,77 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
         <translation>Intreaba pentru confirmare inainte de stergerea clipului din timeline</translation>
+    </message>
+    <message>
+        <source>Project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open the project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selection mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Youtube Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC won&apos;t store your passwords...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The HTTP Proxy Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The default location where to store projects folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreferencesWidget</name>
+    <message>
+        <source>Project default location</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -862,13 +953,18 @@ p, li { white-space: pre-wrap; }
         <source>Stop the playback</source>
         <translation>Stop</translation>
     </message>
+    <message>
+        <source>Rendering error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error occurred while rendering.
+Please check your VLC installation before reporting the issue.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
-    <message>
-        <source>Invalid project file name.</source>
-        <translation>Nume invalid al proiectului.</translation>
-    </message>
     <message>
         <source>Can&apos;t open project file. (%1)</source>
         <translation>Nu pot deschide proiectul. (%1)</translation>
@@ -983,10 +1079,6 @@ p, li { white-space: pre-wrap; }
         <translation>Setările de randare</translation>
     </message>
     <message>
-        <source>Videos(*.avi *.mpg)</source>
-        <translation>Video(*.avi *.mpg)</translation>
-    </message>
-    <message>
         <source>Invalid parameters</source>
         <translation>Parametri invalizi</translation>
     </message>
@@ -1006,6 +1098,21 @@ p, li { white-space: pre-wrap; }
         <source>Output file already exists, do you want to overwrite it?</source>
         <translation>Fisierul rezultat deja exista,vrei sa-l suprascri?</translation>
     </message>
+    <message>
+        <source>Videos(%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -1024,6 +1131,137 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>audio</source>
         <translation>audio</translation>
+    </message>
+    <message>
+        <source>Project preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>network</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShareOnYoutube</name>
+    <message>
+        <source>Share On Youtube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autos &amp; Vehicles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comedy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entertainment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Film &amp; Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Howto &amp; Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>News &amp; Politics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nonprofits &amp; Activism</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>People &amp; Blogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pets &amp; Animals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Science &amp; Technology</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Travel &amp; Events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descriere</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Small (480 x 272)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium (640 x 360)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Large (960 x 540)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HD (1280 x 720)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make this video public (Default: private)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1106,73 +1344,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Action not supported.</source>
         <translation>Acţiunea nu este acceptata.</translation>
-    </message>
-</context>
-<context>
-    <name>Transcode</name>
-    <message>
-        <source>Transcode File</source>
-        <translation>Codare fisier</translation>
-    </message>
-    <message>
-        <source>Input File</source>
-        <translation>Fisier de intrare</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profile</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>H264 + AAC</source>
-        <translation>H264 + AAC</translation>
-    </message>
-    <message>
-        <source>Dirac + AAC</source>
-        <translation>Dirac + AAC</translation>
-    </message>
-    <message>
-        <source>Theora + Vorbis</source>
-        <translation>Theora + Vorbis</translation>
-    </message>
-    <message>
-        <source>Theora + Flac</source>
-        <translation>Theora + Flac</translation>
-    </message>
-    <message>
-        <source>Mpeg4 + AAC</source>
-        <translation>Mpeg4 + AAC</translation>
-    </message>
-    <message>
-        <source>WMV + WMA</source>
-        <translation>WMV + WMA</translation>
-    </message>
-    <message>
-        <source>Choose File to open</source>
-        <translation>Alege un fisier sa-l deschizi</translation>
-    </message>
-    <message>
-        <source>Video files (*.avi *.mkv *.ogg)</source>
-        <translation>Fisiere video (*.avi *.mkv *.ogg)</translation>
-    </message>
-    <message>
-        <source>Transcode in progress</source>
-        <translation>Codare in progres</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Atentie</translation>
-    </message>
-    <message>
-        <source>Choose a video to transcode</source>
-        <translation>Alege un fisier pentru codare</translation>
-    </message>
-    <message>
-        <source>Choose File to save</source>
-        <translation>Alege fisierul de salvat</translation>
     </message>
 </context>
 <context>
@@ -1265,24 +1436,24 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>44000 Hz</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>22000 Hz</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>11000 Hz</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>New project wizard</source>
         <translation>Indrumator proiect nou</translation>
     </message>
     <message>
         <source>Configure Video settings</source>
         <translation>Configurare setari video</translation>
+    </message>
+    <message>
+        <source>44100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>22050 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>11025 Hz</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1382,6 +1553,25 @@ Apoi faceţi clic pe Next pentru a continua ......</translation>
     <message>
         <source>Rendering frame %1 / %2</source>
         <translation>Randare cadru %1 / %2</translation>
+    </message>
+</context>
+<context>
+    <name>Workspace</name>
+    <message>
+        <source>File already exists!</source>
+        <translation type="unfinished">Fişierul există deja!</translation>
+    </message>
+    <message>
+        <source>A file with the same name already exists, do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Workspace: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> copied to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

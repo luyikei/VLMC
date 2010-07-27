@@ -979,14 +979,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Nepodarilo sa načítať súbor s projektom: %1. Akcia bola prerušená.</translation>
     </message>
-    <message>
-        <source>&lt;Unnamed project&gt;</source>
-        <translation>&lt;Nepomenovaný projekt&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;Unsaved project&gt;</source>
-        <translation>&lt;Neuložený projekt&gt;</translation>
-    </message>
 </context>
 <context>
     <name>ProjectWizard</name>
