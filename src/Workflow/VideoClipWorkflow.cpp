@@ -39,8 +39,6 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
 {
     m_effectsLock = new QReadWriteLock();
     m_renderedFrameMutex = new QMutex();
-    Effect  *effect = EffectsEngine::getInstance()->effect("bw0r");
-    appendEffect( effect, 0, 200 );
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()

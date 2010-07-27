@@ -323,4 +323,5 @@ ClipWorkflow::save( QXmlStreamWriter &project ) const
     project.writeAttribute( "begin", QString::number( m_clipHelper->begin() ) );
     project.writeAttribute( "end", QString::number( m_clipHelper->end() ) );
     project.writeAttribute( "helper", m_clipHelper->uuid().toString() );
+    saveEffects( project );
 }
