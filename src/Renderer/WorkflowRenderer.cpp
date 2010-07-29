@@ -393,6 +393,17 @@ WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }
 
+void
+WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
+{
+    project.writeStartElement( "renderer" );
+    {
+        QReadLocker     lock( m_effectsLock );
+        EffectsEngine::getInstance()->saveEffects( m_effects, project );
+    }
+    project.writeEndElement();
+}
+
 /////////////////////////////////////////////////////////////////////
 /////SLOTS :
 /////////////////////////////////////////////////////////////////////

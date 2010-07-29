@@ -27,6 +27,8 @@
 #include "project/GuiProjectManager.h"
 #include "ProjectManager.h"
 #include "SettingsManager.h"
+#include "Timeline.h"
+#include "WorkflowRenderer.h"
 #include "Workspace.h"
 
 #include <QDir>
@@ -163,6 +165,7 @@ void    ProjectManager::__saveProject( const QString &fileName )
 
     Library::getInstance()->saveProject( project );
     MainWorkflow::getInstance()->saveProject( project );
+    Timeline::getInstance()->renderer()->saveProject( project );
     SettingsManager::getInstance()->save( project );
     saveTimeline( project );
 

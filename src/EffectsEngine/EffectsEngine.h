@@ -53,8 +53,10 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );
 
-        static void applyEffects( const EffectList& effects,
+        static void applyEffects( const EffectList &effects,
                                   Workflow::Frame *frame, qint64 currentFrame );
+        static void saveEffects( const EffectList &effects, QXmlStreamWriter &project );
+
     private:
         EffectsEngine();
         ~EffectsEngine();

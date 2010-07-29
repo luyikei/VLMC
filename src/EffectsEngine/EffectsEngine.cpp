@@ -159,3 +159,23 @@ EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
         }
     }
 }
+
+void
+EffectsEngine::saveEffects( const EffectList &effects, QXmlStreamWriter &project )
+{
+    if ( effects.size() <= 0 )
+        return ;
+    EffectsEngine::EffectList::const_iterator   it = effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = effects.end();
+    project.writeStartElement( "effects" );
+    while ( it != ite )
+    {
+        project.writeStartElement( "effect" );
+        project.writeAttribute( "name", (*it)->effect->effect()->name() );
+        project.writeAttribute( "start", QString::number( (*it)->start ) );
+        project.writeAttribute( "end", QString::number( (*it)->end ) );
+        project.writeEndElement();
+        ++it;
+    }
+    project.writeEndElement();
+}
