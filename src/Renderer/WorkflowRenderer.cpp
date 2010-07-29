@@ -118,6 +118,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
 
+    QReadLocker     lock( m_effectsLock );
     EffectsEngine::initEffects( m_effects, width, height );
 }
 
