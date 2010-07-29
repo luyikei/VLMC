@@ -117,6 +117,8 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     sprintf( buffer, ":imem-data=%"PRId64, (intptr_t)m_esHandler );
     m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
+
+    EffectsEngine::initEffects( m_effects, width, height );
 }
 
 int
@@ -388,7 +390,7 @@ void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     EffectInstance  *effectInstance = effect->createInstance();
-    effectInstance->init( m_width, m_height );
+    qDebug() << "width:" << m_width << m_height;
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }

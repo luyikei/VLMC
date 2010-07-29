@@ -56,6 +56,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         static void applyEffects( const EffectList &effects,
                                   Workflow::Frame *frame, qint64 currentFrame );
         static void saveEffects( const EffectList &effects, QXmlStreamWriter &project );
+        static void initEffects( const EffectList &effects, quint32 width, quint32 height );
 
     private:
         EffectsEngine();

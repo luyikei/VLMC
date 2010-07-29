@@ -179,3 +179,16 @@ EffectsEngine::saveEffects( const EffectList &effects, QXmlStreamWriter &project
     }
     project.writeEndElement();
 }
+
+void
+EffectsEngine::initEffects( const EffectList &effects, quint32 width, quint32 height )
+{
+    EffectsEngine::EffectList::const_iterator   it = effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = effects.end();
+
+    while ( it != ite )
+    {
+        (*it)->effect->init( width, height );
+        ++it;
+    }
+}
