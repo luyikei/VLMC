@@ -432,7 +432,7 @@ WorkflowRenderer::loadProject( const QDomElement &project )
             else
                 qCritical() << "Renderer: Can't load effect" << effect.attribute( "name" );
         }
-        effect = effect.nextSibling().toElement();
+        effect = effect.nextSiblingElement();
     }
 }
 

@@ -212,7 +212,7 @@ SettingsManager::load( const QDomElement &root )
         return false ;
     }
     QWriteLocker    wLock( &m_rwLock );
-    QDomElement s = element.firstChild().toElement();
+    QDomElement s = element.firstChildElement();
     while ( s.isNull() == false )
     {
         QString     key = s.attribute( "key" );
@@ -222,7 +222,7 @@ SettingsManager::load( const QDomElement &root )
             qWarning() << "Invalid setting node.";
         else
             setValue( key, value, SettingsManager::Project );
-        s = s.nextSibling().toElement();
+        s = s.nextSiblingElement();
     }
     return true;
 }

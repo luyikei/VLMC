@@ -193,7 +193,7 @@ MediaContainer::save( QXmlStreamWriter &project )
 void
 MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
 {
-    QDomElement clip = clips.firstChild().toElement();
+    QDomElement clip = clips.firstChildElement();
 
     while ( clip.isNull() == false )
     {
@@ -219,7 +219,7 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
             else
             {
                 qWarning() << "Can't find parent media:" << media;
-                clip = clip.nextSibling().toElement();
+                clip = clip.nextSiblingElement();
                 continue ;
             }
         }
@@ -242,6 +242,6 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
         QDomElement subClips = clip.firstChildElement( "subClips" );
         if ( subClips.isNull() == false )
             c->getChilds()->load( subClips, this );
-        clip = clip.nextSibling().toElement();
+        clip = clip.nextSiblingElement();
     }
 }

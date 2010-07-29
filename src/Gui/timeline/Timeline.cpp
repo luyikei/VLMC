@@ -219,7 +219,7 @@ Timeline::load( const QDomElement &root )
         return ;
     }
 
-    QDomElement elem = project.firstChild().toElement();
+    QDomElement elem = project.firstChildElement();
     while ( elem.isNull() == false )
     {
         QString uuid = elem.attribute( "uuid" );
@@ -235,20 +235,20 @@ Timeline::load( const QDomElement &root )
             QDomElement links = elem.firstChildElement( "linkedTo" );
             if ( links.isNull() == false )
             {
-                QDomElement linkedItem = links.firstChild().toElement();
+                QDomElement linkedItem = links.firstChildElement();
                 while ( linkedItem.isNull() == false )
                 {
                     QString     linkedUuid = linkedItem.attribute( "uuid" );
                     AbstractGraphicsMediaItem   *li = tracksView()->item( linkedUuid );
                     if ( li != NULL )
                         item->group( li );
-                    linkedItem = linkedItem.nextSibling().toElement();
+                    linkedItem = linkedItem.nextSiblingElement();
                 }
             }
         }
         else
             qWarning() << "No such timeline item:" << uuid;
-        elem = elem.nextSibling().toElement();
+        elem = elem.nextSiblingElement();
     }
 }
 

@@ -296,7 +296,7 @@ MainWorkflow::loadProject( const QDomElement &root )
     if ( project.isNull() == true )
         return ;
 
-    QDomElement elem = project.firstChild().toElement();
+    QDomElement elem = project.firstChildElement();
 
     while ( elem.isNull() == false )
     {
@@ -317,7 +317,7 @@ MainWorkflow::loadProject( const QDomElement &root )
         }
         type = static_cast<MainWorkflow::TrackType>( utype );
 
-        QDomElement clip = elem.firstChild().toElement();
+        QDomElement clip = elem.firstChildElement();
         while ( clip.isNull() == false )
         {
             //Iterate over clip fields:
@@ -363,13 +363,13 @@ MainWorkflow::loadProject( const QDomElement &root )
                         else
                             qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
                     }
-                    effect = effect.nextSibling().toElement();
+                    effect = effect.nextSiblingElement();
                 }
             }
 
-            clip = clip.nextSibling().toElement();
+            clip = clip.nextSiblingElement();
         }
-        elem = elem.nextSibling().toElement();
+        elem = elem.nextSiblingElement();
     }
 }
 

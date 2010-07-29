@@ -54,7 +54,7 @@ Library::loadProject( const QDomElement& doc )
     //Add a virtual media, which represents all the clip.
     //This avoid emitting projectLoaded(); before all the clip are actually loaded.
     m_nbMediaToLoad = 1;
-    QDomElement media = medias.firstChild().toElement();
+    QDomElement media = medias.firstChildElement();
     while ( media.isNull() == false )
     {
         if ( media.hasAttribute( "mrl" ) == true )
@@ -74,7 +74,7 @@ Library::loadProject( const QDomElement& doc )
             m_medias[mrl] = m;
             m_nbMediaToLoad.fetchAndAddAcquire( 1 );
         }
-        media = media.nextSibling().toElement();
+        media = media.nextSiblingElement();
     }
     const QDomElement   clips = doc.firstChildElement( "clips" );
     if ( clips.isNull() == true )
