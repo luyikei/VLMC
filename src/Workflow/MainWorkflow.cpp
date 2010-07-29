@@ -361,7 +361,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                         if ( e != NULL )
                             addEffect( e, trackId, uuid, type );
                         else
-                            qCritical() << "Can't load effect" << effect.attribute( "name" );
+                            qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
                     }
                     effect = effect.nextSibling().toElement();
                 }

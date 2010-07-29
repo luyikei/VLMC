@@ -150,6 +150,7 @@ ProjectManager::loadProject( const QString& fileName )
     //Load settings first, as it contains some informations about the workspace.
     SettingsManager::getInstance()->load( root );
     SettingsManager::getInstance()->setValue( "general/Workspace", fInfo.absolutePath(), SettingsManager::Project );
+    Timeline::getInstance()->renderer()->loadProject( root );
     Library::getInstance()->loadProject( root );
 }
 

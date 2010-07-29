@@ -20,12 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
-#include <QThread>
-#include <QWaitCondition>
 //Allow PRId64 to be defined:
 #define __STDC_FORMAT_MACROS
-#include <inttypes.h>
+
+#include "WorkflowRenderer.h"
 
 #include "Clip.h"
 #include "EffectInstance.h"
@@ -34,9 +32,14 @@
 #include "SettingsManager.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
-#include "WorkflowRenderer.h"
 #include "Workflow/Types.h"
 #include "timeline/Timeline.h"
+
+#include <QDomElement>
+#include <QtDebug>
+#include <QThread>
+#include <QWaitCondition>
+#include <inttypes.h>
 
 WorkflowRenderer::WorkflowRenderer() :
             m_mainWorkflow( MainWorkflow::getInstance() ),
@@ -391,7 +394,6 @@ void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     EffectInstance  *effectInstance = effect->createInstance();
-    qDebug() << "width:" << m_width << m_height;
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }
@@ -405,6 +407,33 @@ WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
         EffectsEngine::saveEffects( m_effects, project );
     }
     project.writeEndElement();
+}
+
+void
+WorkflowRenderer::loadProject( const QDomElement &project )
+{
+    QDomElement     renderer = project.firstChildElement( "renderer" );
+    if ( renderer.isNull() == true )
+        return ;
+    QDomElement     effects = renderer.firstChildElement( "effects" );
+    if ( effects.isNull() == true )
+        return ;
+    QDomElement     effect = effects.firstChildElement( "effect" );
+    while ( effect.isNull() == false )
+    {
+        if ( effect.hasAttribute( "name" ) == true &&
+             effect.hasAttribute( "start" ) == true &&
+             effect.hasAttribute( "end" ) == true )
+        {
+            Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
+            if ( e != NULL )
+                appendEffect( e, effect.attribute( "start" ).toLongLong(),
+                              effect.attribute( "end" ).toLongLong() );
+            else
+                qCritical() << "Renderer: Can't load effect" << effect.attribute( "name" );
+        }
+        effect = effect.nextSibling().toElement();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////

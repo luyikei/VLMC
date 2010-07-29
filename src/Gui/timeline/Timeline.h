@@ -54,7 +54,7 @@ public:
     TracksRuler*        tracksRuler() { return m_tracksRuler; }
     /// Return a pointer to the Timeline instance (singleton).
     static Timeline*    getInstance() { return m_instance; }
-    const WorkflowRenderer    *renderer() const { return m_renderer; }
+    WorkflowRenderer    *renderer() { return m_renderer; }
 
     void                save( QXmlStreamWriter& project ) const;
     void                load( const QDomElement &root );
