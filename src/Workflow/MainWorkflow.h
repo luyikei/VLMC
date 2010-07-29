@@ -27,14 +27,10 @@
 #include "Singleton.hpp"
 #include <QXmlStreamWriter>
 
-class   QDomDocument;
-class   QDomElement;
-class   QMutex;
-class   QReadWriteLock;
-
 class   Clip;
 class   ClipHelper;
 class   EffectsEngine;
+class   Effect;
 class   TrackHandler;
 class   TrackWorkflow;
 namespace   Workflow
@@ -42,6 +38,11 @@ namespace   Workflow
     class   Frame;
     class   AudioSample;
 }
+
+class   QDomDocument;
+class   QDomElement;
+class   QMutex;
+class   QReadWriteLock;
 
 #include <QObject>
 #include <QUuid>
@@ -106,8 +107,12 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
          */
-        void            addClip( ClipHelper* clipHelper, unsigned int trackId, qint64 start,
+        void            addClip( ClipHelper* clipHelper, quint32 trackId, qint64 start,
                                          TrackType type, bool informGui );
+
+
+        void            addEffect( Effect* effect, quint32 trackId, const QUuid &uuid,
+                                   TrackType type );
 
         /**
          *  \brief      Initialize the workflow for the render.

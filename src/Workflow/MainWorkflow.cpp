@@ -85,6 +85,12 @@ MainWorkflow::addClip( ClipHelper *clipHelper, unsigned int trackId,
 }
 
 void
+MainWorkflow::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid, TrackType type )
+{
+    m_tracks[type]->addEffect( effect, trackId, uuid );
+}
+
+void
 MainWorkflow::computeLength()
 {
     qint64      maxLength = 0;
@@ -340,6 +346,27 @@ MainWorkflow::loadProject( const QDomElement &root )
                                                   end.toLongLong(), chUuid );
                 addClip( ch, trackId, startFrame.toLongLong(), type, true );
             }
+
+            QDomElement     effects = clip.firstChildElement( "effects" );
+            if ( effects.isNull() == false )
+            {
+                QDomElement effect = effects.firstChildElement( "effect" );
+                while ( effect.isNull() == false )
+                {
+                    if ( effect.hasAttribute( "name" ) == true &&
+                         effect.hasAttribute( "start" ) == true &&
+                         effect.hasAttribute( "end" ) == true )
+                    {
+                        Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
+                        if ( e != NULL )
+                            addEffect( e, trackId, uuid, type );
+                        else
+                            qCritical() << "Can't load effect" << effect.attribute( "name" );
+                    }
+                    effect = effect.nextSibling().toElement();
+                }
+            }
+
             clip = clip.nextSibling().toElement();
         }
         elem = elem.nextSibling().toElement();

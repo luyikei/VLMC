@@ -30,12 +30,13 @@
 #include <QUuid>
 #include <QXmlStreamWriter>
 
+class   Clip;
+class   Effect;
+class   WaitCondition;
+
 class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
-
-class   Clip;
-class   WaitCondition;
 
 namespace Workflow
 {
@@ -198,10 +199,9 @@ class   ClipWorkflow : public QObject
         void                    stopRenderer();
 
         void                    save( QXmlStreamWriter& project ) const;
-        virtual void            saveEffects( QXmlStreamWriter& ) const
-        {
-            //Empty implementation, as some clipworkflow does not have effects for now.
-        }
+        virtual void            saveEffects( QXmlStreamWriter& ) const = 0;
+        virtual bool            appendEffect( Effect *effect, qint64 start = 0,
+                                              qint64 end = -1 ) = 0;
 
     private:
         void                    setState( State state );

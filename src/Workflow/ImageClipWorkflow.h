@@ -43,6 +43,8 @@ class   ImageClipWorkflow : public ClipWorkflow
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
         virtual void            *getOutput( ClipWorkflow::GetMode mode );
+        virtual void            saveEffects( QXmlStreamWriter & ) const {} //Nothing to do here now.
+        virtual bool            appendEffect( Effect *, qint64, qint64 ) { return false; }; //Nothing to do here now.
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;

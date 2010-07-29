@@ -88,6 +88,20 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     computeLength();
 }
 
+void
+TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
+{
+    QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
+    QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
+
+    while ( it != end )
+    {
+        if ( it.value()->getClipHelper()->clip()->fullId() == uuid )
+            it.value()->appendEffect( effect );
+        ++it;
+    }
+}
+
 //Must be called from a thread safe method (m_clipsLock locked)
 void
 TrackWorkflow::computeLength()

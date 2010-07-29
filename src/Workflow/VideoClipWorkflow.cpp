@@ -212,6 +212,7 @@ VideoClipWorkflow::flushComputedBuffers()
 bool
 VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
+    qDebug() << "Adding effect:" << effect;
     if ( effect->type() != Effect::Filter )
     {
         qWarning() << "VideoClipWorkflow does not handle non filter effects.";

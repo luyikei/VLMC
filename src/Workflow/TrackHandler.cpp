@@ -65,6 +65,12 @@ TrackHandler::addClip( ClipHelper* ch, unsigned int trackId, qint64 start )
 }
 
 void
+TrackHandler::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid )
+{
+    m_tracks[trackId]->addEffect( effect, uuid );
+}
+
+void
 TrackHandler::startRender()
 {
     m_endReached = false;

@@ -91,7 +91,8 @@ QStringList ProjectManager::recentsProjects() const
     return m_recentsProjects;
 }
 
-void    ProjectManager::loadWorkflow()
+void
+ProjectManager::loadWorkflow()
 {
     QDomElement     root = m_domDocument->documentElement();
     bool            savedState;
@@ -110,7 +111,8 @@ void    ProjectManager::loadWorkflow()
     delete m_domDocument;
 }
 
-void    ProjectManager::loadProject( const QString& fileName )
+void
+ProjectManager::loadProject( const QString& fileName )
 {
     //FIXME:this is probably useless, as this is handled by the gui part now.
     //Don't print an error. The user most likely canceled the open project dialog.
