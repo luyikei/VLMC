@@ -100,8 +100,8 @@ VideoClipWorkflow::initVlcOutput()
     sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
     m_vlcMedia->addOption( buffer );
 
-    foreach ( EffectsEngine::EffectHelper *helper, m_effects )
-        helper->effect->init( m_width, m_height );
+    QReadLocker     lock( m_effectsLock );
+    EffectsEngine::initEffects( m_effects, m_width, m_height );
 }
 
 void*
