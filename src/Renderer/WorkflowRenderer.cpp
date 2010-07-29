@@ -402,7 +402,7 @@ WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
     project.writeStartElement( "renderer" );
     {
         QReadLocker     lock( m_effectsLock );
-        EffectsEngine::getInstance()->saveEffects( m_effects, project );
+        EffectsEngine::saveEffects( m_effects, project );
     }
     project.writeEndElement();
 }

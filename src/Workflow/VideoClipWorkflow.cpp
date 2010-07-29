@@ -228,7 +228,7 @@ void
 VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
 {
     QReadLocker lock( m_effectsLock );
-    EffectsEngine::getInstance()->saveEffects( m_effects, project );
+    EffectsEngine::saveEffects( m_effects, project );
 }
 
 void
