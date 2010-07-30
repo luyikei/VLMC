@@ -394,6 +394,8 @@ void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     EffectInstance  *effectInstance = effect->createInstance();
+    if ( m_isRendering == true )
+        effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
 }
