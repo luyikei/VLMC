@@ -120,9 +120,6 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     sprintf( buffer, ":imem-data=%"PRId64, (intptr_t)m_esHandler );
     m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
-
-    QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_effects, width, height );
 }
 
 int
@@ -239,6 +236,9 @@ void        WorkflowRenderer::startPreview()
         m_outputFps = outputFps();
         setupRenderer( m_width, m_height, m_outputFps );
     }
+    QReadLocker     lock( m_effectsLock );
+    EffectsEngine::initEffects( m_effects, m_width, m_height );
+
     //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );
     m_mediaPlayer->setMedia( m_media );
@@ -394,7 +394,7 @@ void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     EffectInstance  *effectInstance = effect->createInstance();
-    if ( m_isRendering == true )
+    if ( isRendering() == true )
         effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
     m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
