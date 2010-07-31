@@ -55,6 +55,9 @@ class Effect : public QLibrary
         const QString&  name();
         const QString&  description();
         Type            type();
+        //This breaks coding convention, but it would be safe just to undef major/minor.
+        int             getMajor();
+        int             getMinor();
         EffectInstance  *createInstance();
 
     private:
@@ -64,6 +67,9 @@ class Effect : public QLibrary
         QString         m_name;
         QString         m_desc;
         Type            m_type;
+        int             m_major;
+        int             m_minor;
+        int             m_nbParams;
         QAtomicInt      m_instCount;
 
         //Symbols:

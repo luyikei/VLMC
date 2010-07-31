@@ -29,7 +29,10 @@
 
 Effect::Effect( const QString &fileName ) :
         QLibrary( fileName ),
-        m_type( Unknown )
+        m_type( Unknown ),
+        m_major( -1 ),
+        m_minor( -1 ),
+        m_nbParams( -1 )
 {
 }
 
@@ -65,6 +68,9 @@ Effect::load()
     m_name = infos.name;
     m_desc = infos.explanation;
     m_type = static_cast<Type>( infos.plugin_type );
+    m_major = infos.major_version;
+    m_minor = infos.minor_version;
+    m_nbParams = infos.num_params;
     return true;
 }
 
@@ -92,6 +98,22 @@ Effect::type()
     if ( isLoaded() == false )
         load();
     return m_type;
+}
+
+int
+Effect::getMajor()
+{
+    if ( m_major == -1 )
+        load();
+    return m_major;
+}
+
+int
+Effect::getMinor()
+{
+    if ( m_minor == -1 )
+        load();
+    return m_minor;
 }
 
 EffectInstance*
