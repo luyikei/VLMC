@@ -56,22 +56,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulario</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="26"/>
         <source>Media Properties</source>
-        <translation type="unfinished">Propiedades do medio</translation>
+        <translation>Propiedades do medio</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="51"/>
         <source>Duration</source>
-        <translation type="unfinished">Duración</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="67"/>
@@ -80,43 +80,43 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="212"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="228"/>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="80"/>
         <source>Resolution</source>
-        <translation type="unfinished">Resolución</translation>
+        <translation>Resolución</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="109"/>
         <source>FPS</source>
-        <translation type="unfinished">FPS</translation>
+        <translation>FPS</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="138"/>
         <source>Number of video tracks</source>
-        <translation type="unfinished">Número de pistas de vídeo</translation>
+        <translation>Número de pistas de vídeo</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="151"/>
         <source>Number of audio tracks</source>
-        <translation type="unfinished">Número de pistas de audio</translation>
+        <translation>Número de pistas de audio</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="167"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="183"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="196"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Camiño</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="248"/>
         <source>In project workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>No espazo de traballo do proxecto</translation>
     </message>
 </context>
 <context>
@@ -174,7 +174,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Producíuse un erro. Lamentamos o inconveniente, aínda que se gardou o seu proxecto, que se reabrirá a próxima vez que inicie o VLMC.</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="156"/>
@@ -230,12 +230,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="102"/>
         <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai relocalizar o seu proxecto. Todos os vídeos serán copiados ao seu novo espazo de traballo.</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="103"/>
         <source>Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Quere proceder?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
@@ -246,17 +246,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
         <source>Backup file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro de copia de seguranza</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
         <source>A backup file exists for this project. Do you want to load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Está dispoñíbel un ficheiro de seguranza para este proxecto. Quéreo cargar?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
         <source>An outdated backup file was found. Do you want to erase it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrouse un ficheiro de copia de seguranza desactualizado. Quéreo eliminar?</translation>
     </message>
 </context>
 <context>
@@ -356,12 +356,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="246"/>
         <source>Invalid medias</source>
-        <translation type="unfinished"></translation>
+        <translation>Medios non válidos</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="247"/>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>Algúns dos medios que cargou non se poden usar para a edición de vídeo. Quere que o VLMC os converta para que os poida usar no seu proxecto?</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="320"/>
@@ -436,7 +436,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="332"/>
         <source>Cut mode</source>
-        <translation type="unfinished">Modo de corte</translation>
+        <translation>Modo de corte</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="335"/>
@@ -457,32 +457,32 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/MainWindow.cpp" line="484"/>
         <location filename="../src/Gui/MainWindow.cpp" line="502"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Xeral</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="487"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Teclado</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="490"/>
         <source>Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="493"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="505"/>
         <source>Video</source>
-        <translation type="unfinished">Vídeo</translation>
+        <translation>Vídeo</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="508"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="537"/>
@@ -502,7 +502,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="752"/>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>O VLMC non se pechou correctamente. Quere recuperar o seu proxecto?</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="759"/>
@@ -559,23 +559,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="195"/>
         <source>&amp;To a file</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nun ficheiro</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="198"/>
         <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
         <source>Render your project as a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Renderizar o seu proxecto como un ficheiro</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="290"/>
         <source>Share on &amp;Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir no &amp;Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="293"/>
         <source>Share your project on youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir o seu proxecto no Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="302"/>
@@ -590,17 +590,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="57"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportar</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="88"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferramentas</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="101"/>
         <source>VLMC Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra de ferramentas do VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="151"/>
@@ -676,7 +676,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="314"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de selección</translation>
     </message>
 </context>
 <context>
@@ -704,17 +704,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="223"/>
         <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Se o elimina será borrado da liña do tempo. Quere proceder?</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="286"/>
         <source>Can&apos;t copy to workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se puido copiar para o espazo de traballo</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="287"/>
         <source>Can&apos;t copy this media to workspace: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se puido copiar este medio para o espazo de traballo: %1</translation>
     </message>
 </context>
 <context>
@@ -722,22 +722,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">Formulario</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="43"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="56"/>
         <source>Import</source>
-        <translation type="unfinished">Importar</translation>
+        <translation>Importar</translation>
     </message>
 </context>
 <context>
@@ -745,7 +745,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/ui/NotificationZone.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulario</translation>
+        <translation>Formulario</translation>
     </message>
 </context>
 <context>
@@ -792,12 +792,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="38"/>
         <source>Select path</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar camiño</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="69"/>
         <source>Select a path</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un camiño</translation>
     </message>
 </context>
 <context>
@@ -890,12 +890,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="213"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias do proxecto</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="214"/>
         <source>Open the project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir as preferencias do proxecto</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="217"/>
@@ -920,7 +920,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="253"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de selección</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="262"/>
@@ -940,67 +940,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="276"/>
         <source>Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Chave de desenvolvedor/a do Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="277"/>
         <source>The Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>A chave de desenvolvedor/a do Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="280"/>
         <source>Youtube Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome de usuario/a do Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="281"/>
         <source>VLMC won&apos;t store your passwords...</source>
-        <translation type="unfinished"></translation>
+        <translation>O VLMC non almacenará os seus contrasinais...</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="285"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="286"/>
         <source>The HTTP Proxy </source>
-        <translation type="unfinished"></translation>
+        <translation>O proxy HTTP</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="289"/>
         <source>Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Porto do proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="290"/>
         <source>The HTTP Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>O porto do proxy HTTP</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="293"/>
         <source>Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome de usuario/a do proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="294"/>
         <source>The HTTP Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>O nome de usuario/a do proxy HTTP</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="297"/>
         <source>Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasinal do proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="298"/>
         <source>The HTTP Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>O contrasinal do proxy HTTP</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="302"/>
         <source>The default location where to store projects folders</source>
-        <translation type="unfinished"></translation>
+        <translation>A localización predeterminada onde se gardarán os cartafoles dos proxectos</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="227"/>
@@ -1143,7 +1143,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="301"/>
         <source>Project default location</source>
-        <translation type="unfinished"></translation>
+        <translation>Localización predeterminada do proxecto</translation>
     </message>
 </context>
 <context>
@@ -1191,13 +1191,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="226"/>
         <source>Rendering error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro de renderización</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="227"/>
         <source>An error occurred while rendering.
 Please check your VLC installation before reporting the issue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Houbo un erro ao renderizar.
+Verifique a súa instalación do VLC antes de informar do erro.</translation>
     </message>
 </context>
 <context>
@@ -1344,7 +1345,7 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="56"/>
         <source>Videos(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vídeos(%1)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="65"/>
@@ -1378,12 +1379,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="35"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="123"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrar</translation>
     </message>
 </context>
 <context>
@@ -1402,12 +1403,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="488"/>
         <source>youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="491"/>
         <source>network</source>
-        <translation type="unfinished"></translation>
+        <translation>rede</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="503"/>
@@ -1422,12 +1423,13 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="174"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias do proxecto</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="176"/>
         <source>VLMC Settings</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Configuracións do VLMC</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1435,142 +1437,142 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="14"/>
         <source>Share On Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Compartir no Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="24"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome de usuario/a</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="34"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="45"/>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>Automóbeis e vehículos</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="50"/>
         <source>Comedy</source>
-        <translation type="unfinished"></translation>
+        <translation>Humor</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="55"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educación</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="60"/>
         <source>Entertainment</source>
-        <translation type="unfinished"></translation>
+        <translation>Diversión</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="65"/>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Filmes e animación</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="70"/>
         <source>Gaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Xogos</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="75"/>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Guías e estilo</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="80"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="85"/>
         <source>News &amp; Politics</source>
-        <translation type="unfinished"></translation>
+        <translation>Novas e política</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="90"/>
         <source>Nonprofits &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizacións sen ánimo de lucro e activismo</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="95"/>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Persoas e blogues</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="100"/>
         <source>Pets &amp; Animals</source>
-        <translation type="unfinished"></translation>
+        <translation>Mascotas e animais</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="105"/>
         <source>Science &amp; Technology</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciencia e tecnoloxía</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="110"/>
         <source>Sports</source>
-        <translation type="unfinished"></translation>
+        <translation>Deportes</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="115"/>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Viaxes e eventos</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="123"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="133"/>
         <source>Description</source>
-        <translation type="unfinished">Descrición</translation>
+        <translation>Descrición</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="153"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="163"/>
         <source>Video Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño do vídeo</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="171"/>
         <source>Small (480 x 272)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pequeno (480 x 272)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="176"/>
         <source>Medium (640 x 360)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediano (640 x 360)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="181"/>
         <source>Large (960 x 540)</source>
-        <translation type="unfinished"></translation>
+        <translation>Grande (960 x 540)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="186"/>
         <source>HD (1280 x 720)</source>
-        <translation type="unfinished"></translation>
+        <translation>HD (1280 x 720)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="194"/>
         <source>Make this video public (Default: private)</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter este vídeo en público (o predeterminado é: privado)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="214"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoría</translation>
     </message>
 </context>
 <context>
@@ -1798,17 +1800,17 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="210"/>
         <source>44100 Hz</source>
-        <translation type="unfinished">11000 Hz {44100 ?}</translation>
+        <translation>44100 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="215"/>
         <source>22050 Hz</source>
-        <translation type="unfinished">11000 Hz {22050 ?}</translation>
+        <translation>22050 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="220"/>
         <source>11025 Hz</source>
-        <translation type="unfinished">11000 Hz {11025 ?}</translation>
+        <translation>11025 Hz</translation>
     </message>
 </context>
 <context>
@@ -1932,22 +1934,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/Workspace.cpp" line="90"/>
         <source>File already exists!</source>
-        <translation type="unfinished">O ficheiro xa existe!</translation>
+        <translation>O ficheiro xa existe!</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="91"/>
         <source>A file with the same name already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Xa existe un ficheiro co mesmo nome; quéreo sobrescribir?</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source>Workspace: </source>
-        <translation type="unfinished"></translation>
+        <translation>Espazo de traballo: </translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source> copied to </source>
-        <translation type="unfinished"></translation>
+        <translation> copiouse a </translation>
     </message>
 </context>
 </TS>
