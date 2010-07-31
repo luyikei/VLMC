@@ -53,7 +53,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         void                    *getUnlockCallback() const;
         virtual void            *getOutput( ClipWorkflow::GetMode mode );
         virtual bool            appendEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
-        virtual void            setTime( qint64 time );
+        virtual void            setTime( qint64 time, qint64 frame );
         virtual void            saveEffects( QXmlStreamWriter &project ) const;
 
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30

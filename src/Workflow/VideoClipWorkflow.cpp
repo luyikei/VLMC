@@ -233,13 +233,13 @@ VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
 }
 
 void
-VideoClipWorkflow::setTime( qint64 time )
+VideoClipWorkflow::setTime( qint64 time, qint64 frame )
 {
     {
         QMutexLocker    lock( m_renderedFrameMutex );
-        m_renderedFrame = time / 1000 * clip()->getMedia()->fps();
+        m_renderedFrame = frame;
     }
-    ClipWorkflow::setTime( time );
+    ClipWorkflow::setTime( time, frame );
 }
 
 VideoClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame,
