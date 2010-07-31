@@ -56,22 +56,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">窗体</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="26"/>
         <source>Media Properties</source>
-        <translation type="unfinished">媒体属性</translation>
+        <translation>媒体属性</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="51"/>
         <source>Duration</source>
-        <translation type="unfinished">时长</translation>
+        <translation>时长</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="67"/>
@@ -80,43 +80,44 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="212"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="228"/>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="80"/>
         <source>Resolution</source>
-        <translation type="unfinished">分辨率</translation>
+        <translation>分辨率</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="109"/>
         <source>FPS</source>
-        <translation type="unfinished">帧率</translation>
+        <translation>帧率</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="138"/>
         <source>Number of video tracks</source>
-        <translation type="unfinished">视频轨数</translation>
+        <translation>视频轨数</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="151"/>
         <source>Number of audio tracks</source>
-        <translation type="unfinished">音频轨数</translation>
+        <translation>音频轨数</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="167"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="183"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="196"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>路径</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="248"/>
         <source>In project workspace</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>项目内工作空间</translatorcomment>
+        <translation>项目工作空间</translation>
     </message>
 </context>
 <context>
@@ -174,7 +175,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>出现了一个错误。对您造成的不便我们非常抱歉，尽管我们已经保存了您的项目。它将在您下次打开 VLMC 时被重新打开。</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="156"/>
@@ -230,12 +231,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="102"/>
         <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
-        <translation type="unfinished"></translation>
+        <translation>您将改变项目的存储地点。所有视频都将被复制到您的新工作空间中。</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="103"/>
         <source>Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>是否继续?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
@@ -246,17 +247,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
         <source>Backup file</source>
-        <translation type="unfinished"></translation>
+        <translation>备份文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
         <source>A backup file exists for this project. Do you want to load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>此项目存在备份文件。是否加载?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
         <source>An outdated backup file was found. Do you want to erase it?</source>
-        <translation type="unfinished"></translation>
+        <translation>发现过期的备份文件。是否清除?</translation>
     </message>
 </context>
 <context>
@@ -356,12 +357,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="246"/>
         <source>Invalid medias</source>
-        <translation type="unfinished"></translation>
+        <translation>无效媒体</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="247"/>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>您所加载的部分媒体不能用于视频编辑。是否希望 VLMC 将它们转换格式以便在项目中使用?</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="320"/>
@@ -436,7 +437,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="332"/>
         <source>Cut mode</source>
-        <translation type="unfinished">切割模式</translation>
+        <translation>切割模式</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="335"/>
@@ -457,32 +458,32 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/MainWindow.cpp" line="484"/>
         <location filename="../src/Gui/MainWindow.cpp" line="502"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>全局</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="487"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>键盘</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="490"/>
         <source>Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="493"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="505"/>
         <source>Video</source>
-        <translation type="unfinished">视频</translation>
+        <translation>视频</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="508"/>
         <source>Audio</source>
-        <translation type="unfinished">音频</translation>
+        <translation>音频</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="537"/>
@@ -502,7 +503,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="752"/>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 未正常关闭。是否恢复您的项目?</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="759"/>
@@ -559,23 +560,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="195"/>
         <source>&amp;To a file</source>
-        <translation type="unfinished"></translation>
+        <translation>存为文件(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="198"/>
         <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
         <source>Render your project as a file</source>
-        <translation type="unfinished"></translation>
+        <translation>将您的项目渲染为文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="290"/>
         <source>Share on &amp;Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>分享到 &amp;YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="293"/>
         <source>Share your project on youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>在 YouTube 上分享您的项目</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="302"/>
@@ -590,17 +591,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="57"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>导出(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="88"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="101"/>
         <source>VLMC Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 工具栏</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="151"/>
@@ -676,7 +677,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="314"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>选择模式</translation>
     </message>
 </context>
 <context>
@@ -704,17 +705,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="223"/>
         <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>移除将将其从时间轴中删除。是否继续?</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="286"/>
         <source>Can&apos;t copy to workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>无法复制到工作空间</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="287"/>
         <source>Can&apos;t copy this media to workspace: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法将此媒体复制到工作空间: %1</translation>
     </message>
 </context>
 <context>
@@ -722,22 +723,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">窗体</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="43"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="56"/>
         <source>Import</source>
-        <translation type="unfinished">导入</translation>
+        <translation>导入</translation>
     </message>
 </context>
 <context>
@@ -745,7 +746,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/ui/NotificationZone.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">窗体</translation>
+        <translation>窗体</translation>
     </message>
 </context>
 <context>
@@ -792,12 +793,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="38"/>
         <source>Select path</source>
-        <translation type="unfinished"></translation>
+        <translation>选择路径</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="69"/>
         <source>Select a path</source>
-        <translation type="unfinished"></translation>
+        <translation>选择一个路径</translation>
     </message>
 </context>
 <context>
@@ -890,12 +891,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="213"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>项目首选项</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="214"/>
         <source>Open the project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>打开项目首选项</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="217"/>
@@ -920,7 +921,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="253"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>选择模式</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="262"/>
@@ -940,67 +941,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="276"/>
         <source>Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube 开发者 Key</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="277"/>
         <source>The Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube 开发者密钥</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="280"/>
         <source>Youtube Username</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube 用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="281"/>
         <source>VLMC won&apos;t store your passwords...</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 不会储存您的密码...</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="285"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>代理</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="286"/>
         <source>The HTTP Proxy </source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP 代理 </translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="289"/>
         <source>Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>代理端口</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="290"/>
         <source>The HTTP Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP 代理端口</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="293"/>
         <source>Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>代理用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="294"/>
         <source>The HTTP Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP 代理用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="297"/>
         <source>Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>代理密码</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="298"/>
         <source>The HTTP Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP 代理密码</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="302"/>
         <source>The default location where to store projects folders</source>
-        <translation type="unfinished"></translation>
+        <translation>储存项目文件夹的默认地点</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="227"/>
@@ -1143,7 +1144,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="301"/>
         <source>Project default location</source>
-        <translation type="unfinished"></translation>
+        <translation>项目默认地点</translation>
     </message>
 </context>
 <context>
@@ -1191,13 +1192,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="226"/>
         <source>Rendering error</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染错误</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="227"/>
         <source>An error occurred while rendering.
 Please check your VLC installation before reporting the issue.</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染过程中出现了一个错误。
+请在报告问题之前先检查您的 VLC 是否已经正常安装。</translation>
     </message>
 </context>
 <context>
@@ -1344,7 +1346,7 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="56"/>
         <source>Videos(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>视频(%1)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="65"/>
@@ -1378,12 +1380,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="35"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="123"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>滤镜</translation>
     </message>
 </context>
 <context>
@@ -1402,12 +1404,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="488"/>
         <source>youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="491"/>
         <source>network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="503"/>
@@ -1422,12 +1424,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="174"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>项目首选项</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="176"/>
         <source>VLMC Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 设置</translation>
     </message>
 </context>
 <context>
@@ -1435,142 +1437,142 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="14"/>
         <source>Share On Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>分享到 YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="24"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="34"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="45"/>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>汽车 &amp; 交通工具</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="50"/>
         <source>Comedy</source>
-        <translation type="unfinished"></translation>
+        <translation>喜剧</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="55"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="60"/>
         <source>Entertainment</source>
-        <translation type="unfinished"></translation>
+        <translation>娱乐</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="65"/>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>电影 &amp; 动画</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="70"/>
         <source>Gaming</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="75"/>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished"></translation>
+        <translation>教程 &amp; 生活百科</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="80"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>音乐</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="85"/>
         <source>News &amp; Politics</source>
-        <translation type="unfinished"></translation>
+        <translation>新闻 &amp; 政治</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="90"/>
         <source>Nonprofits &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>非赢利 &amp; 行动主义</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="95"/>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished"></translation>
+        <translation>人物 &amp; 博客</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="100"/>
         <source>Pets &amp; Animals</source>
-        <translation type="unfinished"></translation>
+        <translation>宠物 &amp; 动物</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="105"/>
         <source>Science &amp; Technology</source>
-        <translation type="unfinished"></translation>
+        <translation>科学 &amp; 技术</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="110"/>
         <source>Sports</source>
-        <translation type="unfinished"></translation>
+        <translation>体育</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="115"/>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished"></translation>
+        <translation>旅游 &amp; 事件</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="123"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="133"/>
         <source>Description</source>
-        <translation type="unfinished">描述</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="153"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>标签</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="163"/>
         <source>Video Size</source>
-        <translation type="unfinished"></translation>
+        <translation>视频尺寸</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="171"/>
         <source>Small (480 x 272)</source>
-        <translation type="unfinished"></translation>
+        <translation>小 (480 x 272)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="176"/>
         <source>Medium (640 x 360)</source>
-        <translation type="unfinished"></translation>
+        <translation>中 (640 x 360)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="181"/>
         <source>Large (960 x 540)</source>
-        <translation type="unfinished"></translation>
+        <translation>大 (960 x 540)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="186"/>
         <source>HD (1280 x 720)</source>
-        <translation type="unfinished"></translation>
+        <translation>HD (1280 x 720)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="194"/>
         <source>Make this video public (Default: private)</source>
-        <translation type="unfinished"></translation>
+        <translation>公开此视频 (默认: 私有)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="214"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>分类</translation>
     </message>
 </context>
 <context>
@@ -1798,17 +1800,17 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="210"/>
         <source>44100 Hz</source>
-        <translation type="unfinished">11000 Hz {44100 ?}</translation>
+        <translation>44100 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="215"/>
         <source>22050 Hz</source>
-        <translation type="unfinished">11000 Hz {22050 ?}</translation>
+        <translation>22050 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="220"/>
         <source>11025 Hz</source>
-        <translation type="unfinished">11000 Hz {11025 ?}</translation>
+        <translation>11025 Hz</translation>
     </message>
 </context>
 <context>
@@ -1932,22 +1934,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/Workspace.cpp" line="90"/>
         <source>File already exists!</source>
-        <translation type="unfinished">文件已存在!</translation>
+        <translation>文件已存在!</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="91"/>
         <source>A file with the same name already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>同名文件已存在，是否覆写?</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source>Workspace: </source>
-        <translation type="unfinished"></translation>
+        <translation>工作空间: </translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source> copied to </source>
-        <translation type="unfinished"></translation>
+        <translation> 复制到 </translation>
     </message>
 </context>
 </TS>
