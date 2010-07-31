@@ -25,6 +25,8 @@
 
 #include "Singleton.hpp"
 
+class   QTime;
+
 #include "Effect.h"
 #include "MainWorkflow.h"
 
@@ -54,7 +56,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        browseDirectory( const QString& path );
 
         static void applyEffects( const EffectList &effects,
-                                  Workflow::Frame *frame, qint64 currentFrame );
+                                  Workflow::Frame *frame, qint64 currentFrame, double time );
         static void saveEffects( const EffectList &effects, QXmlStreamWriter &project );
         static void initEffects( const EffectList &effects, quint32 width, quint32 height );
 
@@ -64,6 +66,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
         QHash<QString, Effect*> m_effects;
         QSettings               *m_cache;
+        QTime                   *m_time;
 
     signals:
         void        effectAdded( Effect*, const QString& name, Effect::Type );

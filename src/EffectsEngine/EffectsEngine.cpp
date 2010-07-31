@@ -113,7 +113,7 @@ EffectsEngine::browseDirectory( const QString &path )
 
 void
 EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
-                             qint64 currentFrame  )
+                             qint64 currentFrame, double time )
 {
     if ( effects.size() == 0 )
         return ;
@@ -138,7 +138,7 @@ EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
             if ( *buff == NULL )
                 *buff = new quint8[frame->size()];
             EffectInstance      *effect = (*it)->effect;
-            effect->process( 0.0, (quint32*)input, (quint32*)*buff );
+            effect->process( time, (quint32*)input, (quint32*)*buff );
             input = *buff;
             firstBuff = !firstBuff;
         }

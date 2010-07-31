@@ -168,7 +168,8 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
     {
         QWriteLocker    lock( cw->m_effectsLock );
-        EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame );
+        EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame,
+                                     cw->m_renderedFrame * 1000.0 / (double)Clip::DefaultFPS );
     }
     {
         QMutexLocker    lock( cw->m_renderedFrameMutex );
