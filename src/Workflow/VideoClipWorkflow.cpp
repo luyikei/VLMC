@@ -23,6 +23,7 @@
 #include "Clip.h"
 #include "EffectInstance.h"
 #include "MainWorkflow.h"
+#include "Media.h"
 #include "StackedBuffer.hpp"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
@@ -97,7 +98,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":sout-transcode-height=%i", m_height );
     m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
+    sprintf( buffer, ":sout-transcode-fps=%f", clip()->getMedia()->fps() );
     m_vlcMedia->addOption( buffer );
 
     QReadLocker     lock( m_effectsLock );
@@ -169,7 +170,7 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     {
         QWriteLocker    lock( cw->m_effectsLock );
         EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame,
-                                     cw->m_renderedFrame * 1000.0 / (double)Clip::DefaultFPS );
+                                     cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
     }
     {
         QMutexLocker    lock( cw->m_renderedFrameMutex );
@@ -236,7 +237,7 @@ VideoClipWorkflow::setTime( qint64 time )
 {
     {
         QMutexLocker    lock( m_renderedFrameMutex );
-        m_renderedFrame = time / 1000 * Clip::DefaultFPS;
+        m_renderedFrame = time / 1000 * clip()->getMedia()->fps();
     }
     ClipWorkflow::setTime( time );
 }
