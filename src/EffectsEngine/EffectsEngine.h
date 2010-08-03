@@ -49,16 +49,16 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
             qint64              end;
             QUuid               uuid;
         };
-        typedef QList<EffectHelper*>    EffectList;
+        typedef QList<EffectHelper*>    FilterList;
 
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );
 
-        static void applyEffects( const EffectList &effects,
+        static void applyEffects( const FilterList &effects,
                                   Workflow::Frame *frame, qint64 currentFrame, double time );
-        static void saveEffects( const EffectList &effects, QXmlStreamWriter &project );
-        static void initEffects( const EffectList &effects, quint32 width, quint32 height );
+        static void saveEffects( const FilterList &effects, QXmlStreamWriter &project );
+        static void initEffects( const FilterList &effects, quint32 width, quint32 height );
 
     private:
         EffectsEngine();

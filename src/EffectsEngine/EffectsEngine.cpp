@@ -112,13 +112,13 @@ EffectsEngine::browseDirectory( const QString &path )
 }
 
 void
-EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
+EffectsEngine::applyEffects( const FilterList &effects, Workflow::Frame* frame,
                              qint64 currentFrame, double time )
 {
     if ( effects.size() == 0 )
         return ;
-    EffectList::const_iterator     it = effects.constBegin();
-    EffectList::const_iterator     ite = effects.constEnd();
+    FilterList::const_iterator     it = effects.constBegin();
+    FilterList::const_iterator     ite = effects.constEnd();
 
     quint8      *buff1 = NULL;
     quint8      *buff2 = NULL;
@@ -161,12 +161,12 @@ EffectsEngine::applyEffects( const EffectList &effects, Workflow::Frame* frame,
 }
 
 void
-EffectsEngine::saveEffects( const EffectList &effects, QXmlStreamWriter &project )
+EffectsEngine::saveEffects( const FilterList &effects, QXmlStreamWriter &project )
 {
     if ( effects.size() <= 0 )
         return ;
-    EffectsEngine::EffectList::const_iterator   it = effects.begin();
-    EffectsEngine::EffectList::const_iterator   ite = effects.end();
+    EffectsEngine::FilterList::const_iterator   it = effects.begin();
+    EffectsEngine::FilterList::const_iterator   ite = effects.end();
     project.writeStartElement( "effects" );
     while ( it != ite )
     {
@@ -181,10 +181,10 @@ EffectsEngine::saveEffects( const EffectList &effects, QXmlStreamWriter &project
 }
 
 void
-EffectsEngine::initEffects( const EffectList &effects, quint32 width, quint32 height )
+EffectsEngine::initEffects( const FilterList &effects, quint32 width, quint32 height )
 {
-    EffectsEngine::EffectList::const_iterator   it = effects.begin();
-    EffectsEngine::EffectList::const_iterator   ite = effects.end();
+    EffectsEngine::FilterList::const_iterator   it = effects.begin();
+    EffectsEngine::FilterList::const_iterator   ite = effects.end();
 
     while ( it != ite )
     {
