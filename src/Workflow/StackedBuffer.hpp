@@ -1,5 +1,5 @@
 /*****************************************************************************
-* StackedBuffer.hpp: A buffer that's must can be released and pushed back on a Pool.
+* StackedBuffer.hpp: A buffer that must can be released and pushed back on a Pool.
 *****************************************************************************
 * Copyright (C) 2008-2010 VideoLAN
 *
@@ -30,7 +30,7 @@ template <typename T>
 class   StackedBuffer
 {
     public:
-        StackedBuffer( T buff, bool mustBeReleased  = true ) :
+        StackedBuffer( T buff, bool mustBeReleased = true ) :
                 m_buff( buff ),
                 m_mustRelease( mustBeReleased )
         {
