@@ -26,7 +26,7 @@
 class   Effect;
 
 #include <QtGlobal>
-#include "frei0r/frei0r.h"
+#include "frei0r.h"
 
 class EffectInstance
 {

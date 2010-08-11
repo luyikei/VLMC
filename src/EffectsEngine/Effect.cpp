@@ -22,7 +22,8 @@
 
 #include "Effect.h"
 #include "FilterInstance.h"
-#include "frei0r/frei0r.h"
+
+#include "frei0r.h"
 
 #include <QtDebug>
 
