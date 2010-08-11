@@ -39,8 +39,8 @@
 #include <errno.h>
 #include <signal.h>
 
-const QString   ProjectManager::unNamedProject = tr( "<Unnamed project>" );
-const QString   ProjectManager::unSavedProject = tr( "<Unsaved project>" );
+const QString   ProjectManager::unNamedProject = tr( "Untitled Project" );
+const QString   ProjectManager::unSavedProject = tr( "Unsaved Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
