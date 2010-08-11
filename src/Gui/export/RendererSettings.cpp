@@ -33,12 +33,17 @@
 #include <QDirModel>
 #include <QFileInfo>
 
-RendererSettings::RendererSettings()
+RendererSettings::RendererSettings( bool exportType )
 {
-    m_ui.setupUi( this );
-    setWindowFlags( windowFlags() | Qt::Sheet ); // Qt::Sheet is for UI on Mac
-    connect( m_ui.outputFileNameButton, SIGNAL(clicked() ),
-             this, SLOT(selectOutputFileName() ) );
+    m_ui.setupUi( this );    
+
+    if( exportType )
+    {
+        m_ui.outputFileName->setEnabled( false );
+        m_ui.outputFileNameButton->setEnabled( false );
+        m_ui.outputFileName->setText("Export to Web");
+    }
+
     m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
     m_ui.height->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectHeight" ) );
     m_ui.fps->setValue( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
@@ -46,6 +51,11 @@ RendererSettings::RendererSettings()
     QCompleter* completer = new QCompleter( this );
     completer->setModel( new QDirModel( completer ) );
     m_ui.outputFileName->setCompleter( completer );
+
+    connect( m_ui.outputFileNameButton, SIGNAL( clicked() ),
+             this, SLOT(selectOutputFileName() ) );
+    connect( m_ui.videoPresetBox, SIGNAL( activated( int ) ),
+             this, SLOT( updateVideoPreset( int ) ) );
 }
 
 void
@@ -55,6 +65,39 @@ RendererSettings::selectOutputFileName()
             QFileDialog::getSaveFileName( NULL, tr ( "Enter the output file name" ),
                                           QDir::currentPath(), tr( "Videos(%1)" ).arg( Media::VideoExtensions ) );
     m_ui.outputFileName->setText( outputFileName );
+}
+
+void
+RendererSettings::setPreset( quint32 width, quint32 height, quint32 fps )
+{
+    m_ui.width->setValue( width );
+    m_ui.height->setValue( height );
+    m_ui.fps->setValue( fps );
+}
+
+void
+RendererSettings::updateVideoPreset( int index )
+{
+    m_ui.width->setEnabled( false );
+    m_ui.height->setEnabled( false );
+    m_ui.fps->setEnabled( false );
+
+    switch( index )
+    {
+        case QVGA:  setPreset( 320, 240, 30);   break;
+        case VGA:   setPreset( 640, 480, 30);   break;
+        case SVGA:  setPreset( 800, 600, 30);   break;
+        case XVGA:  setPreset( 1024, 768, 30);  break;
+        case P480:  setPreset( 720, 480, 30);   break;
+        case P576:  setPreset( 720, 576, 25);   break;
+        case P720:  setPreset( 1280, 720, 30);  break;
+        case P1080: setPreset( 1920, 1080, 30); break;
+        case Custom:
+        default:
+             m_ui.width->setEnabled( true );
+             m_ui.height->setEnabled( true );
+             m_ui.fps->setEnabled( true );
+    }
 }
 
 void

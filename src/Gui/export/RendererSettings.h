@@ -30,8 +30,22 @@ class   RendererSettings : public QDialog
 {
     Q_OBJECT
 
+    enum VideoPresets
+    {
+        Custom = 0,
+        QVGA,
+        VGA,
+        SVGA,
+        XVGA,
+        P480,
+        P576,
+        P720,
+        P1080
+    };
+
     public:
-        RendererSettings();
+        RendererSettings( bool exportType = false );
+
         quint32         width() const;
         quint32         height() const;
         double          fps() const;
@@ -41,10 +55,12 @@ class   RendererSettings : public QDialog
 
     private slots:
         void            selectOutputFileName();
+        void            updateVideoPreset( int index );
         virtual void    accept();
 
     private:
         Ui::RendererSettings    m_ui;
+        void                    setPreset( quint32 width, quint32 height, quint32 fps );
 };
 
 #endif // RENDERERSETTINGS_H
