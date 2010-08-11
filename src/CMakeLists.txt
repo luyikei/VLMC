@@ -29,6 +29,11 @@ SET(VLMC_SRCS
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp
     Renderer/WorkflowRenderer.cpp
+    Services/UploaderIODevice.cpp
+    Services/YouTube/YouTubeAuthenticator.cpp
+    Services/YouTube/YouTubeFeedParser.cpp
+    Services/YouTube/YouTubeService.cpp
+    Services/YouTube/YouTubeUploader.cpp
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
@@ -74,9 +79,13 @@ SET (VLMC_HDRS
     Renderer/GenericRenderer.h
     Renderer/WorkflowFileRenderer.h
     Renderer/WorkflowRenderer.h
+    Services/AbstractSharingService.h
+    Services/UploaderIODevice.h
+    Services/YouTube/YouTubeAuthenticator.h
+    Services/YouTube/YouTubeService.h
+    Services/YouTube/YouTubeUploader.h
     Settings/SettingsManager.h
     Settings/SettingValue.h
-    Tools/ErrorHandler.h
     Tools/VlmcDebug.h
     Workflow/AudioClipWorkflow.h 
     Workflow/ClipWorkflow.h
@@ -85,7 +94,6 @@ SET (VLMC_HDRS
     Workflow/MainWorkflow.h
     Workflow/TrackHandler.h
     Workflow/TrackWorkflow.h
-    Workflow/Types.h
     Workflow/VideoClipWorkflow.h
   )
 
@@ -122,6 +130,8 @@ INCLUDE_DIRECTORIES(
   Metadata
   Project
   Renderer
+  Services
+  Services/YouTube
   Tools
   Workflow
 )
@@ -134,12 +144,7 @@ IF (NOT WITH_GUI)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
-    TARGET_LINK_LIBRARIES(vlmc
-      ${QT_QTCORE_LIBRARY} 
-      ${QT_QTXML_LIBRARY} 
-      ${LIBVLC_LIBRARY}
-      ${LIBVLCCORE_LIBRARY}
-      )
+    TARGET_LINK_LIBRARIES(vlmc ${VLMC_LIBS})
 
 #Add GUI stuff if required
 ELSE(NOT WITH_GUI)
@@ -159,7 +164,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/EffectsList.cpp
         Gui/effectsengine/EffectsListView.cpp
         Gui/export/RendererSettings.cpp
-        Gui/export/ShareOnYoutube.cpp
+        Gui/export/ShareOnInternet.cpp
         Gui/import/ImportController.cpp
         Gui/import/TagWidget.cpp
         Gui/library/ListViewController.cpp
@@ -226,7 +231,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/EffectsList.h
         Gui/effectsengine/EffectsListView.h
         Gui/export/RendererSettings.h
-        Gui/export/ShareOnYoutube.h
+        Gui/export/ShareOnInternet.h
         Gui/import/ImportController.h
         Gui/import/TagWidget.h
         Gui/library/ListViewController.h
@@ -284,7 +289,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/ui/EffectsList.ui
         Gui/effectsengine/ui/EffectInstanceWidget.ui
         Gui/export/RendererSettings.ui
-        Gui/export/ShareOnYoutube.ui
+        Gui/export/ShareOnInternet.ui
         Gui/import/ui/ImportController.ui
         Gui/import/ui/TagWidget.ui
         Gui/library/StackViewNavController.ui
@@ -344,14 +349,7 @@ ELSE(NOT WITH_GUI)
     ENDIF( APPLE )
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
-    TARGET_LINK_LIBRARIES(vlmc
-      ${QT_QTCORE_LIBRARY} 
-      ${QT_QTGUI_LIBRARY} 
-      ${QT_QTXML_LIBRARY} 
-      ${QT_QTSVG_LIBRARY} 
-      ${LIBVLC_LIBRARY}
-      ${LIBVLCCORE_LIBRARY}
-      )
+    TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
 
 ENDIF( NOT WITH_GUI )
 
