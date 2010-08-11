@@ -73,8 +73,8 @@ SettingsManager::setValue( const QString &key,
             return ;
         }
     }
-    Q_ASSERT_X( false, __FILE__, "set value without a created variable" );
     qWarning() << "Setting" << key << "does not exist.";
+    Q_ASSERT_X( false, __FILE__, "set value without a created variable" );
 }
 
 SettingValue*
@@ -95,8 +95,8 @@ SettingsManager::value( const QString &key,
         if ( it != m_classicSettings.end() )
             return (*it).value;
     }
-    Q_ASSERT_X( false, __FILE__, "get value without a created variable" );
     qWarning() << "Setting" << key << "does not exist.";
+    Q_ASSERT_X( false, __FILE__, "get value without a created variable" );
     return NULL;
 }
 
