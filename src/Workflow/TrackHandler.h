@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,7 +64,6 @@ class   TrackHandler : public QObject
          */
         void                    *getOutput( qint64 currentFrame, qint64 subFrame,
                                            bool paused );
-        void                    activateAll();
         qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
         void                    stop();
         void                    moveClip( const QUuid& clipUuid, unsigned int oldTrack,
@@ -106,11 +105,11 @@ class   TrackHandler : public QObject
 
     private:
         void                    computeLength();
-        void                    activateTrack( unsigned int tracKId );
 
     private:
         Toggleable<TrackWorkflow*>*     m_tracks;
         unsigned int                    m_trackCount;
+        QAtomicInt                      m_nbRenderingTracks;
         MainWorkflow::TrackType         m_trackType;
         qint64                          m_length;
         unsigned int                    m_highestTrackNumber;
@@ -118,7 +117,7 @@ class   TrackHandler : public QObject
 
 
     private slots:
-        void                            trackEndReached( unsigned int trackId );
+        void                            trackEndReached();
 
     signals:
         void                            tracksEndReached();

@@ -46,7 +46,7 @@ class   TrackWorkflow : public QObject
     Q_OBJECT
 
     public:
-        TrackWorkflow( unsigned int trackId, MainWorkflow::TrackType type );
+        TrackWorkflow( MainWorkflow::TrackType type );
         ~TrackWorkflow();
 
         void*                                   getOutput( qint64 currentFrame,
@@ -89,6 +89,7 @@ class   TrackWorkflow : public QObject
         bool                                    contains( const QUuid& uuid ) const;
 
         void                                    stopFrameComputing();
+        bool                                    hasFrameToRender( qint64 currentFrame ) const;
 
     private:
         void                                    computeLength();
@@ -97,14 +98,11 @@ class   TrackWorkflow : public QObject
                                                             bool renderOneFrame, bool paused );
         void                                    preloadClip( ClipWorkflow* cw );
         void                                    stopClipWorkflow( ClipWorkflow* cw );
-        bool                                    checkEnd( qint64 currentFrame ) const;
         void                                    adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw );
         void                                    releasePreviousRender();
 
 
     private:
-        unsigned int                            m_trackId;
-
         QMap<qint64, ClipWorkflow*>             m_clips;
 
         /**
@@ -123,7 +121,7 @@ class   TrackWorkflow : public QObject
         StackedBuffer<Workflow::AudioSample*>*  m_audioStackedBuffer;
 
     signals:
-        void                                    trackEndReached( unsigned int );
+        void                                    trackEndReached();
 };
 
 #endif // TRACKWORKFLOW_H

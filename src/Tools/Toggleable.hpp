@@ -32,7 +32,7 @@ template <typename T>
 class   Toggleable
 {
     public:
-        Toggleable() : m_ptr( NULL ), m_activated( true ), m_hardDeactivated( false )
+        Toggleable() : m_ptr( NULL ), m_activated( true )
         {
         }
         void    setPtr( T ptr )
@@ -51,15 +51,11 @@ class   Toggleable
         }
         bool    activated() const
         {
-            return ( m_hardDeactivated == false && m_activated == true );
+            return m_activated;
         }
         bool    deactivated() const
         {
-            return ( m_hardDeactivated == true || m_activated == false );
-        }
-        bool    hardDeactivated() const
-        {
-            return m_hardDeactivated;
+            return !m_activated;
         }
         void    activate()
         {
@@ -69,15 +65,9 @@ class   Toggleable
         {
             m_activated = false;
         }
-        void    setHardDeactivation( bool val )
-        {
-            m_hardDeactivated = val;
-        }
-
     private:
         T           m_ptr;
         bool        m_activated;
-        bool        m_hardDeactivated;
 };
 
 #endif // TOGGLEABLE_HPP

@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,14 +29,15 @@
 
 TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
+        m_nbRenderingTracks( 0 ),
         m_trackType( trackType ),
         m_length( 0 )
 {
     m_tracks = new Toggleable<TrackWorkflow*>[nbTracks];
     for ( unsigned int i = 0; i < nbTracks; ++i )
     {
-        m_tracks[i].setPtr( new TrackWorkflow( i, trackType ) );
-        connect( m_tracks[i], SIGNAL( trackEndReached( unsigned int ) ), this, SLOT( trackEndReached(unsigned int) ), Qt::DirectConnection );
+        m_tracks[i].setPtr( new TrackWorkflow( trackType ) );
+        connect( m_tracks[i], SIGNAL( trackEndReached() ), this, SLOT( trackEndReached() ), Qt::DirectConnection );
     }
 }
 
@@ -58,10 +59,6 @@ TrackHandler::addClip( ClipHelper* ch, unsigned int trackId, qint64 start )
     //Now check if this clip addition has changed something about the workflow's length
     if ( m_tracks[trackId]->getLength() > m_length )
         m_length = m_tracks[trackId]->getLength();
-
-    //if the track is deactivated, we need to reactivate it.
-    if ( m_tracks[trackId].deactivated() == true )
-        activateTrack( trackId );
 }
 
 void
@@ -81,7 +78,7 @@ TrackHandler::startRender()
     {
         for ( unsigned int i = 0; i < m_trackCount; ++i )
         {
-            activateTrack( i );
+            m_nbRenderingTracks.fetchAndAddAcquire( 1 );
             m_tracks[i]->preload();
         }
     }
@@ -111,53 +108,31 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 {
     for ( int i = m_trackCount - 1; i >= 0; --i )
     {
+        if ( m_tracks[i].activated() == false || m_tracks[i]->hasFrameToRender( currentFrame ) )
+            continue ;
         if ( m_trackType == MainWorkflow::VideoTrack )
         {
-            if ( m_tracks[i].activated() == false )
+            void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
+            StackedBuffer<Workflow::Frame*>   *buff = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
+            if ( ret == NULL )
                 continue ;
             else
-            {
-                void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-                StackedBuffer<Workflow::Frame*>   *buff = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
-                if ( ret == NULL )
-                    continue ;
-                else
-                    return buff->get();
-            }
+                return buff->get();
         }
         else
         {
-            if ( m_tracks[i].activated() == true )
-            {
-                //If paused is false at this point, there's probably something wrong...
-                void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-                //m_tmpAudioBuffer is NULl by default, so it will remain NULL if we continue;
-                if ( ret == NULL )
-                    continue ;
-                StackedBuffer<Workflow::AudioSample*>* stackedBuffer =
-                    reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*> ( ret );
-                if ( stackedBuffer != NULL )
-                    return stackedBuffer->get();
-            }
+            //If paused is false at this point, there's probably something wrong...
+            void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
+            //m_tmpAudioBuffer is NULl by default, so it will remain NULL if we continue;
+            if ( ret == NULL )
+                continue ;
+            StackedBuffer<Workflow::AudioSample*>* stackedBuffer =
+                reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*> ( ret );
+            if ( stackedBuffer != NULL )
+                return stackedBuffer->get();
         }
     }
     return NULL;
-}
-
-void
-TrackHandler::activateAll()
-{
-    for ( unsigned int i = 0; i < m_trackCount; ++i )
-        activateTrack( i );
-}
-
-void
-TrackHandler::activateTrack( unsigned int trackId )
-{
-    if ( m_tracks[trackId]->getLength() > 0 )
-        m_tracks[trackId].activate();
-    else
-        m_tracks[trackId].deactivate();
 }
 
 qint64
@@ -172,10 +147,7 @@ void
 TrackHandler::stop()
 {
     for (unsigned int i = 0; i < m_trackCount; ++i)
-    {
-        if ( m_tracks[i].activated() == true )
-            m_tracks[i]->stop();
-    }
+        m_tracks[i]->stop();
 }
 
 void
@@ -188,14 +160,11 @@ TrackHandler::moveClip(const QUuid &clipUuid, unsigned int oldTrack,
     {
         //And now, just move the clip.
         m_tracks[newTrack]->moveClip( clipUuid, startingFrame );
-        activateTrack( newTrack );
     }
     else
     {
         ClipWorkflow* cw = m_tracks[oldTrack]->removeClipWorkflow( clipUuid );
         m_tracks[newTrack]->addClip( cw, startingFrame );
-        activateTrack( oldTrack );
-        activateTrack( newTrack );
     }
     computeLength();
 }
@@ -207,20 +176,19 @@ TrackHandler::removeClip( const QUuid& uuid, unsigned int trackId )
 
     Clip* clip = m_tracks[trackId]->removeClip( uuid );
     computeLength();
-    activateTrack( trackId );
     return clip;
 }
 
 void
 TrackHandler::muteTrack( unsigned int trackId )
 {
-    m_tracks[trackId].setHardDeactivation( true );
+    m_tracks[trackId].deactivate();
 }
 
 void
 TrackHandler::unmuteTrack( unsigned int trackId )
 {
-    m_tracks[trackId].setHardDeactivation( false );
+    m_tracks[trackId].activate();
 }
 
 Clip*
@@ -248,15 +216,11 @@ TrackHandler::endIsReached() const
 }
 
 void
-TrackHandler::trackEndReached( unsigned int trackId )
+TrackHandler::trackEndReached()
 {
-    m_tracks[trackId].deactivate();
-
-    for ( unsigned int i = 0; i < m_trackCount; ++i)
-    {
-        if ( m_tracks[i].activated() == true )
-            return ;
-    }
+    qDebug() << "deactivated track. remaining:" << m_nbRenderingTracks - 1;
+    if ( m_nbRenderingTracks.fetchAndAddAcquire( -1 ) != 1 )
+        return ;
     m_endReached = true;
     emit tracksEndReached();
 }

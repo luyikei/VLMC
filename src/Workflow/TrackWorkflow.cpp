@@ -37,8 +37,7 @@
 
 #include <QtDebug>
 
-TrackWorkflow::TrackWorkflow( unsigned int trackId, MainWorkflow::TrackType type  ) :
-        m_trackId( trackId ),
+TrackWorkflow::TrackWorkflow( MainWorkflow::TrackType type  ) :
         m_length( 0 ),
         m_trackType( type ),
         m_lastFrame( 0 ),
@@ -233,7 +232,7 @@ TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 }
 
 bool
-TrackWorkflow::checkEnd( qint64 currentFrame ) const
+TrackWorkflow::hasFrameToRender( qint64 currentFrame ) const
 {
     if ( m_clips.size() == 0 )
         return true;
@@ -289,14 +288,14 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     bool                                        needRepositioning;
-    void*                                       ret = NULL;
+    void                                        *ret = NULL;
     bool                                        renderOneFrame = false;
 
     if ( m_lastFrame == -1 )
         m_lastFrame = currentFrame;
-    if ( checkEnd( currentFrame ) == true )
+    if ( hasFrameToRender( currentFrame ) == true )
     {
-        emit trackEndReached( m_trackId );
+        emit trackEndReached();
         //We continue, as there can be ClipWorkflow that requires to be stopped.
     }
     {
@@ -369,8 +368,6 @@ void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         }
         ++it;
     }
-    qDebug() << "Track" << m_trackId << "was asked to move clip" << id << "to position" << startingFrame
-            << "but this clip doesn't exist in this track";
 }
 
 Clip*       TrackWorkflow::removeClip( const QUuid& id )
@@ -392,7 +389,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             cw->disconnect();
             delete cw;
             if ( m_length == 0 )
-                emit trackEndReached( m_trackId );
+                emit trackEndReached();
             return clip;
         }
         ++it;

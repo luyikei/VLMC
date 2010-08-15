@@ -267,13 +267,6 @@ MainWorkflow::setCurrentFrame( qint64 currentFrame, MainWorkflow::FrameChangedRe
 {
     QWriteLocker    lock( m_currentFrameLock );
 
-    if ( m_renderStarted == true )
-    {
-        //Since any track can be reactivated, we reactivate all of them, and let them
-        //disable themself if required.
-        for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i)
-            m_tracks[i]->activateAll();
-    }
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i)
         m_currentFrame[i] = currentFrame;
     emit frameChanged( currentFrame, reason );
