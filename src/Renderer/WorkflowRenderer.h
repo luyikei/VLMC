@@ -284,7 +284,7 @@ class   WorkflowRenderer : public GenericRenderer
         qint64              m_oldLength;
 
         QReadWriteLock      *m_effectsLock;
-        EffectsEngine::FilterList     m_effects;
+        EffectsEngine::FilterList     m_filters;
 
         static const quint8     VideoCookie = '0';
         static const quint8     AudioCookie = '1';

@@ -23,7 +23,7 @@
 #include "EffectsEngine.h"
 
 #include "Effect.h"
-#include "EffectInstance.h"
+#include "FilterInstance.h"
 #include "Types.h"
 
 #include <QDesktopServices>
@@ -40,18 +40,6 @@ EffectsEngine::EffectsEngine()
 
 EffectsEngine::~EffectsEngine()
 {
-}
-
-EffectsEngine::EffectHelper::EffectHelper( EffectInstance *_effect, qint64 _start, qint64 _end,
-                                           const QString& _uuid ) :
-        effect( _effect ),
-        start( _start ),
-        end( _end )
-{
-    if ( _uuid.isNull() == true )
-        uuid = QUuid::createUuid();
-    else
-        uuid = _uuid;
 }
 
 Effect*
@@ -137,7 +125,7 @@ EffectsEngine::applyEffects( const FilterList &effects, Workflow::Frame* frame,
                 buff = &buff2;
             if ( *buff == NULL )
                 *buff = new quint8[frame->size()];
-            EffectInstance      *effect = (*it)->effect;
+            FilterInstance      *effect = (*it)->effect;
             effect->process( time, (quint32*)input, (quint32*)*buff );
             input = *buff;
             firstBuff = !firstBuff;

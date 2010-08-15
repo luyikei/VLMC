@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectInstance.cpp: Handle an effect instance.
+ * EffectInstance.h: Handle a filter instance.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,37 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifndef FILTERINSTANCE_H
+#define FILTERINSTANCE_H
+
 #include "EffectInstance.h"
 
-#include "Effect.h"
-
-EffectInstance::EffectInstance( Effect *effect ) :
-        m_effect( effect ),
-        m_width( 0 ),
-        m_height( 0 ),
-        m_instance( NULL )
+class FilterInstance : public EffectInstance
 {
-}
+    public:
+        FilterInstance( Effect *effect );
+        void        process( double time, const quint32* input, quint32* output ) const;
+};
 
-EffectInstance::~EffectInstance()
-{
-    m_effect->m_f0r_destruct( m_instance );
-}
-
-void
-EffectInstance::init( quint32 width, quint32 height )
-{
-    if ( width != m_width || height != m_height )
-    {
-        m_effect->load();
-        m_instance = m_effect->m_f0r_construct( width, height );
-        m_width = width;
-        m_height = height;
-    }
-}
-
-Effect*
-EffectInstance::effect()
-{
-    return m_effect;
-}
+#endif // FILTERINSTANCE_H

@@ -81,6 +81,7 @@ class Effect : public QLibrary
         f0r_update_t    m_f0r_update;
 
         friend class    EffectInstance;
+        friend class    FilterInstance;
 };
 
 #endif // EFFECT_H

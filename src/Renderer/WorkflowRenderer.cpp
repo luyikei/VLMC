@@ -26,7 +26,7 @@
 #include "WorkflowRenderer.h"
 
 #include "Clip.h"
-#include "EffectInstance.h"
+#include "FilterInstance.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
@@ -175,7 +175,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     }
     {
         QReadLocker lock( m_effectsLock );
-        EffectsEngine::applyEffects( m_effects, ret->video,
+        EffectsEngine::applyEffects( m_filters, ret->video,
                                      m_mainWorkflow->getCurrentFrame(),
                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
     }
@@ -239,7 +239,7 @@ void        WorkflowRenderer::startPreview()
         setupRenderer( m_width, m_height, m_outputFps );
     }
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_effects, m_width, m_height );
+    EffectsEngine::initEffects( m_filters, m_width, m_height );
 
     //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );
@@ -395,11 +395,17 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
 void
 WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
-    EffectInstance  *effectInstance = effect->createInstance();
+    if ( effect->type() != Effect::Filter )
+    {
+        qWarning() << "WorkflowRenderer does not handle non filter effects.";
+        return ;
+    }
+    FilterInstance  *filterInstance = static_cast<FilterInstance*>( effect->createInstance() );
+
     if ( isRendering() == true )
-        effectInstance->init( m_width, m_height );
+        filterInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
-    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
+    m_filters.push_back( new EffectsEngine::FilterHelper( filterInstance, start, end ) );
 }
 
 void
@@ -408,7 +414,7 @@ WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
     project.writeStartElement( "renderer" );
     {
         QReadLocker     lock( m_effectsLock );
-        EffectsEngine::saveEffects( m_effects, project );
+        EffectsEngine::saveEffects( m_filters, project );
     }
     project.writeEndElement();
 }

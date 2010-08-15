@@ -83,7 +83,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         QReadWriteLock              *m_effectsLock;
         QMutex                      *m_renderedFrameMutex;
         qint64                      m_renderedFrame;
-        QList<EffectsEngine::EffectHelper*>     m_effects;
+        QList<EffectsEngine::FilterHelper*>     m_filters;
 };
 
 #endif // VIDEOCLIPWORKFLOW_H

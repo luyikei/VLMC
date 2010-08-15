@@ -123,7 +123,7 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         {
             //If paused is false at this point, there's probably something wrong...
             void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-            //m_tmpAudioBuffer is NULl by default, so it will remain NULL if we continue;
+            //m_tmpAudioBuffer is NULL by default, so it will remain NULL if we continue;
             if ( ret == NULL )
                 continue ;
             StackedBuffer<Workflow::AudioSample*>* stackedBuffer =

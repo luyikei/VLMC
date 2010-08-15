@@ -21,8 +21,7 @@
  *****************************************************************************/
 
 #include "Effect.h"
-#include "EffectInstance.h"
-
+#include "FilterInstance.h"
 #include "frei0r/frei0r.h"
 
 #include <QtDebug>
@@ -120,7 +119,13 @@ EffectInstance*
 Effect::createInstance()
 {
     m_instCount.fetchAndAddAcquire( 1 );
-    return new EffectInstance( this );
+    switch ( m_type )
+    {
+    case Filter:
+        return new FilterInstance( this );
+    default:
+        return NULL;
+    }
 }
 
 void

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "Clip.h"
-#include "EffectInstance.h"
+#include "FilterInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
 #include "StackedBuffer.hpp"
@@ -102,7 +102,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
 
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_effects, m_width, m_height );
+    EffectsEngine::initEffects( m_filters, m_width, m_height );
 }
 
 void*
@@ -169,7 +169,7 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
     {
         QWriteLocker    lock( cw->m_effectsLock );
-        EffectsEngine::applyEffects( cw->m_effects, frame, cw->m_renderedFrame,
+        EffectsEngine::applyEffects( cw->m_filters, frame, cw->m_renderedFrame,
                                      cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
     }
     {
@@ -219,9 +219,9 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
         qWarning() << "VideoClipWorkflow does not handle non filter effects.";
         return false;
     }
-    EffectInstance  *effectInstance = effect->createInstance();
+    FilterInstance  *filterInstance = static_cast<FilterInstance*>( effect->createInstance() );
     QWriteLocker    lock( m_effectsLock );
-    m_effects.push_back( new EffectsEngine::EffectHelper( effectInstance, start, end ) );
+    m_filters.push_back( new EffectsEngine::FilterHelper( filterInstance, start, end ) );
     return true;
 }
 
@@ -229,7 +229,7 @@ void
 VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
 {
     QReadLocker lock( m_effectsLock );
-    EffectsEngine::saveEffects( m_effects, project );
+    EffectsEngine::saveEffects( m_filters, project );
 }
 
 void

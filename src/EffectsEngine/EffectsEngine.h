@@ -30,6 +30,8 @@ class   QTime;
 #include "Effect.h"
 #include "MainWorkflow.h"
 
+class   FilterInstance;
+
 #include <QObject>
 #include <QHash>
 
@@ -40,16 +42,28 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     Q_OBJECT
 
     public:
+        template <typename T>
         struct      EffectHelper
         {
-            EffectHelper( EffectInstance* effect, qint64 start = 0, qint64 end = -1,
-                          const QString& uuid = QString() );
-            EffectInstance*     effect;
-            qint64              start;
-            qint64              end;
-            QUuid               uuid;
+            EffectHelper( T *_effect, qint64 _start = 0, qint64 _end = -1,
+                          const QString& _uuid = QString() ) :
+                effect( _effect ),
+                start( _start ),
+                end( _end )
+            {
+                if ( _uuid.isNull() == true )
+                    uuid = QUuid::createUuid();
+                else
+                    uuid = _uuid;
+            }
+
+            T*          effect;
+            qint64      start;
+            qint64      end;
+            QUuid       uuid;
         };
-        typedef QList<EffectHelper*>    FilterList;
+        typedef EffectHelper<FilterInstance>    FilterHelper;
+        typedef QList<FilterHelper*>    FilterList;
 
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
