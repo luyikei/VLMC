@@ -41,7 +41,10 @@ Effect::~Effect()
 }
 
 #define LOAD_FREI0R_SYMBOL( dest, symbolName )  \
-if ( ( dest = reinterpret_cast<typeof( dest )>( resolve( symbolName ) ) ) == NULL ) \
+dest = reinterpret_cast<typeof( dest )>( resolve( symbolName ) )
+
+#define LOAD_FREI0R_SYMBOL_CHECKED( dest, symbolName )  \
+if ( ( LOAD_FREI0R_SYMBOL( dest, symbolName ) ) == NULL ) \
 {                                                                       \
     qCritical() << "Failed to load symbol:" << symbolName;              \
     return false;                                                       \
@@ -52,12 +55,13 @@ Effect::load()
 {
     if ( isLoaded() == true )
         return true;
-    LOAD_FREI0R_SYMBOL( m_f0r_init, "f0r_init" );
-    LOAD_FREI0R_SYMBOL( m_f0r_deinit, "f0r_deinit" )
-    LOAD_FREI0R_SYMBOL( m_f0r_info, "f0r_get_plugin_info" )
-    LOAD_FREI0R_SYMBOL( m_f0r_construct, "f0r_construct" )
-    LOAD_FREI0R_SYMBOL( m_f0r_destruct, "f0r_destruct" )
-    LOAD_FREI0R_SYMBOL( m_f0r_update, "f0r_update" )
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_init, "f0r_init" )
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_deinit, "f0r_deinit" )
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_info, "f0r_get_plugin_info" )
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_construct, "f0r_construct" )
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_destruct, "f0r_destruct" )
+    LOAD_FREI0R_SYMBOL( m_f0r_update, "f0r_update" );
+    LOAD_FREI0R_SYMBOL( m_f0r_update2, "f0r_update2" );
 
     //Initializing structures
     f0r_plugin_info_t   infos;
@@ -70,6 +74,16 @@ Effect::load()
     m_major = infos.major_version;
     m_minor = infos.minor_version;
     m_nbParams = infos.num_params;
+    if ( m_type == Filter && m_f0r_update == NULL )
+    {
+        qCritical() << "Failed to load symbol f0r_update. Dropping module" << fileName();
+        return false;
+    }
+    if ( ( m_type == Mixer2 || m_type == Mixer3 ) && m_f0r_update2 == NULL )
+    {
+        qCritical() << "Failed to load symbol f0r_update2. Dropping module" << fileName();
+        return false;
+    }
     return true;
 }
 

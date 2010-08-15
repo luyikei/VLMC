@@ -10,6 +10,7 @@ SET(VLMC_SRCS
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectInstance.cpp
     EffectsEngine/FilterInstance.cpp
+    EffectsEngine/MixerInstance.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
     LibVLCpp/VLCInstance.cpp

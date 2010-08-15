@@ -47,6 +47,7 @@ class Effect : public QLibrary
         typedef     f0r_instance_t (*f0r_construct_t)( unsigned int, unsigned int );
         typedef     void (*f0r_destruct_t)( f0r_instance_t );
         typedef     void (*f0r_update_t)( f0r_instance_t, double, const unsigned int*, unsigned int * );
+        typedef     void (*f0r_update2_t)( f0r_instance_t, double, const unsigned int*, const unsigned int*, const unsigned int*, unsigned int * );
 
         Effect( const QString& fileName );
         virtual ~Effect();
@@ -79,9 +80,11 @@ class Effect : public QLibrary
         f0r_construct_t m_f0r_construct;
         f0r_destruct_t  m_f0r_destruct;
         f0r_update_t    m_f0r_update;
+        f0r_update2_t   m_f0r_update2;
 
         friend class    EffectInstance;
         friend class    FilterInstance;
+        friend class    MixerInstance;
 };
 
 #endif // EFFECT_H

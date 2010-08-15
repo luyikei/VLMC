@@ -1,5 +1,5 @@
 /*****************************************************************************
- * FilterInstance.h: Handle a filter instance.
+ * MixerInstance.cpp: Handle a filter instance.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,16 +20,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef FILTERINSTANCE_H
-#define FILTERINSTANCE_H
+#include "MixerInstance.h"
 
-#include "EffectInstance.h"
+#include "Effect.h"
 
-class FilterInstance : public EffectInstance
+MixerInstance::MixerInstance( Effect *effect ) :
+        EffectInstance( effect )
 {
-    public:
-        FilterInstance( Effect *effect );
-        void        process( double time, const quint32* input, quint32* output ) const;
-};
+}
 
-#endif // FILTERINSTANCE_H
+void
+MixerInstance::process( double time, const quint32 *frame1, const quint32 *frame2,
+                       const quint32 *frame3, quint32 *output )
+{
+    m_effect->m_f0r_update2( m_instance, time, frame1, frame2, frame3, output );
+}

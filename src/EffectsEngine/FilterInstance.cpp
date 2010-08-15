@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectInstance.h: Handle a filter instance.
+ * FilterInstance.cpp: Handle a filter instance.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
