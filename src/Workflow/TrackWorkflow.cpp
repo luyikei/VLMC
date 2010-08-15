@@ -293,11 +293,6 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 
     if ( m_lastFrame == -1 )
         m_lastFrame = currentFrame;
-    if ( hasFrameToRender( currentFrame ) == true )
-    {
-        emit trackEndReached();
-        //We continue, as there can be ClipWorkflow that requires to be stopped.
-    }
     {
         QMutexLocker      lock2( m_renderOneFrameMutex );
         if ( m_renderOneFrame == true )
@@ -388,8 +383,6 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             computeLength();
             cw->disconnect();
             delete cw;
-            if ( m_length == 0 )
-                emit trackEndReached();
             return clip;
         }
         ++it;

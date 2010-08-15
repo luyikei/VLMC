@@ -29,7 +29,6 @@
 
 TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
-        m_nbRenderingTracks( 0 ),
         m_trackType( trackType ),
         m_length( 0 )
 {
@@ -37,7 +36,6 @@ TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType track
     for ( unsigned int i = 0; i < nbTracks; ++i )
     {
         m_tracks[i].setPtr( new TrackWorkflow( trackType ) );
-        connect( m_tracks[i], SIGNAL( trackEndReached() ), this, SLOT( trackEndReached() ), Qt::DirectConnection );
     }
 }
 
@@ -78,7 +76,6 @@ TrackHandler::startRender()
     {
         for ( unsigned int i = 0; i < m_trackCount; ++i )
         {
-            m_nbRenderingTracks.fetchAndAddAcquire( 1 );
             m_tracks[i]->preload();
         }
     }
@@ -106,10 +103,13 @@ TrackHandler::getLength() const
 void*
 TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 {
+    bool        validTrack = false;
+
     for ( int i = m_trackCount - 1; i >= 0; --i )
     {
         if ( m_tracks[i].activated() == false || m_tracks[i]->hasFrameToRender( currentFrame ) )
             continue ;
+        validTrack = true;
         if ( m_trackType == MainWorkflow::VideoTrack )
         {
             void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
@@ -132,6 +132,8 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                 return stackedBuffer->get();
         }
     }
+    if ( validTrack == false )
+        allTracksEnded();
     return NULL;
 }
 
@@ -216,11 +218,8 @@ TrackHandler::endIsReached() const
 }
 
 void
-TrackHandler::trackEndReached()
+TrackHandler::allTracksEnded()
 {
-    qDebug() << "deactivated track. remaining:" << m_nbRenderingTracks - 1;
-    if ( m_nbRenderingTracks.fetchAndAddAcquire( -1 ) != 1 )
-        return ;
     m_endReached = true;
     emit tracksEndReached();
 }

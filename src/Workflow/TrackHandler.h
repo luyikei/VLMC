@@ -105,19 +105,15 @@ class   TrackHandler : public QObject
 
     private:
         void                    computeLength();
+        void                    allTracksEnded();
 
     private:
         Toggleable<TrackWorkflow*>*     m_tracks;
         unsigned int                    m_trackCount;
-        QAtomicInt                      m_nbRenderingTracks;
         MainWorkflow::TrackType         m_trackType;
         qint64                          m_length;
         unsigned int                    m_highestTrackNumber;
         bool                            m_endReached;
-
-
-    private slots:
-        void                            trackEndReached();
 
     signals:
         void                            tracksEndReached();

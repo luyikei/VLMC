@@ -119,9 +119,6 @@ class   TrackWorkflow : public QObject
         qint64                                  m_lastFrame;
         StackedBuffer<Workflow::Frame*>*        m_videoStackedBuffer;
         StackedBuffer<Workflow::AudioSample*>*  m_audioStackedBuffer;
-
-    signals:
-        void                                    trackEndReached();
 };
 
 #endif // TRACKWORKFLOW_H
