@@ -65,7 +65,7 @@ VLMCmain( int argc, char **argv )
     LanguageHelper::getInstance()->languageChanged(
             s.value( "general/VLMCLang", "default" ) );
 
-#ifdef Q_OS_WIN
+#ifdef Q_WS_WIN
 
     QFile  css(":/styles/windows");
     if ( css.open( QIODevice::ReadOnly | QIODevice::Text ) )
@@ -76,6 +76,7 @@ VLMCmain( int argc, char **argv )
     }
 #endif
 
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
     // Creating the color palette
     QPalette p;
     p.setColor( QPalette::WindowText,       QColor( 255, 255, 255, 255 ) );
@@ -99,14 +100,13 @@ VLMCmain( int argc, char **argv )
     p.setColor( QPalette::WindowText,       QColor( 255, 255, 255, 255 ) );
     p.setColor( QPalette::Link,             QColor( 177, 202, 0,   255 ) );
     p.setColor( QPalette::LinkVisited,      QColor( 177, 202, 0,   255 ) );
+    app.setPalette( p );
+#endif
 
 #ifndef QT_DEBUG
     IntroDialog d;
     d.exec();
 #endif
-
-    app.setPalette( p );
-
     MainWindow w;
     if ( argc > 1 )
         GUIProjectManager::getInstance()->loadProject( argv[argc - 1] );
