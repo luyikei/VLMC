@@ -23,8 +23,6 @@
 #include "Effect.h"
 #include "FilterInstance.h"
 
-#include "frei0r.h"
-
 #include <QtDebug>
 
 Effect::Effect( const QString &fileName ) :
