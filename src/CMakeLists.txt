@@ -124,7 +124,6 @@ INCLUDE_DIRECTORIES(
   Renderer
   Tools
   Workflow
-  ${CMAKE_SOURCE_DIR}/extras
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
