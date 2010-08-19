@@ -24,6 +24,8 @@
 #include "EffectSettingValue.h"
 #include "EffectInstance.h"
 
+#include <QColor>
+#include <QPoint>
 #include <QtDebug>
 
 EffectSettingValue::EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
@@ -60,10 +62,31 @@ EffectSettingValue::set( const QVariant &val )
             copyToFrei0rBuff( &tmp );
             break ;
         }
-//        case String:
-//        case Bool:
-//        case Color:
-//        case Position:
+        case String:
+        {
+            QByteArray      bytes = val.toString().toUtf8();
+            const char*   tmp = bytes;
+            copyToFrei0rBuff( tmp, bytes.length() );
+            break ;
+        }
+        case Bool:
+        {
+            bool    tmp = val.toBool();
+            copyToFrei0rBuff( &tmp );
+            break ;
+        }
+        case Color:
+        {
+            QColor  color = val.value<QColor>();
+            float   rgb[3] = { color.redF(), color.greenF(), color.blueF() };
+            copyToFrei0rBuff( rgb, 3 * sizeof(float) );
+        }
+        case Position:
+        {
+            QPointF     pos = val.value<QPointF>();
+            double      posD[2] = { pos.x(), pos.y() };
+            copyToFrei0rBuff( posD, 2 * sizeof(double) );
+        }
     default:
         qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
         break;
