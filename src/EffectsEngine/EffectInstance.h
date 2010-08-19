@@ -38,7 +38,7 @@ class EffectInstance
         const ParamList &params() const;
     protected:
         EffectInstance( Effect *effect );
-        ~EffectInstance();
+        virtual ~EffectInstance();
 
         Effect                      *m_effect;
         quint32                     m_width;
