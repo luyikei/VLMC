@@ -26,6 +26,16 @@ using namespace Workflow;
 
 #include <cstring> //memcpy
 
+Frame::Frame() :
+        ptsDiff( 0 ),
+        m_width( 0 ),
+        m_height( 0 ),
+        m_buffer( 0 ),
+        m_size( 0 ),
+        m_nbPixels( 0 )
+{
+}
+
 Frame::Frame( quint32 width, quint32 height ) :
         ptsDiff( 0 ),
         m_width( width ),
@@ -90,4 +100,18 @@ Frame::setBuffer( quint32 *buff )
 {
     delete[] m_buffer;
     m_buffer = buff;
+}
+
+void
+Frame::resize( quint32 width, quint32 height )
+{
+    if ( width != m_width || height != height )
+    {
+        delete[] m_buffer;
+        m_width = width;
+        m_height = height;
+        m_nbPixels = width * height;
+        m_size = m_nbPixels * Depth;
+        m_buffer = new quint32[m_nbPixels];
+    }
 }

@@ -23,6 +23,7 @@
 #ifndef TRACKWORKFLOW_H
 #define TRACKWORKFLOW_H
 
+#include "EffectsEngine.h"
 #include "MainWorkflow.h"
 #include "StackedBuffer.hpp"
 
@@ -84,7 +85,7 @@ class   TrackWorkflow : public QObject
         void                                    muteClip( const QUuid& uuid );
         void                                    unmuteClip( const QUuid& uuid );
 
-        void                                    preload();
+        void                                    initRender( quint32 width, quint32 height );
 
         bool                                    contains( const QUuid& uuid ) const;
 
@@ -104,6 +105,7 @@ class   TrackWorkflow : public QObject
 
     private:
         QMap<qint64, ClipWorkflow*>             m_clips;
+        EffectsEngine::MixerList                m_mixers;
 
         /**
          *  \brief      The track length in frames.
@@ -119,6 +121,7 @@ class   TrackWorkflow : public QObject
         qint64                                  m_lastFrame;
         StackedBuffer<Workflow::Frame*>*        m_videoStackedBuffer;
         StackedBuffer<Workflow::AudioSample*>*  m_audioStackedBuffer;
+        Workflow::Frame                         *m_mixerBuffer;
 };
 
 #endif // TRACKWORKFLOW_H

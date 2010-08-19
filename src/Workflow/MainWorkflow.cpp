@@ -120,7 +120,7 @@ MainWorkflow::startRender( quint32 width, quint32 height )
     blackOutput = new Workflow::Frame( m_width, m_height );
     memset( blackOutput->buffer(), 0, blackOutput->size() );
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
-        m_tracks[i]->startRender();
+        m_tracks[i]->startRender( width, height );
     computeLength();
 }
 

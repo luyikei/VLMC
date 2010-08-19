@@ -32,6 +32,7 @@ namespace   Workflow
     class   Frame
     {
         public:
+            explicit Frame();
             Frame( quint32 width, quint32 height );
             ~Frame();
             quint32         width() const;
@@ -40,6 +41,12 @@ namespace   Workflow
             const quint32   *buffer() const;
             void            setBuffer( quint32 *buff );
             Frame           *clone() const;
+            /**
+             *  \brief      Resize the buffer.
+             *
+             *  \warning    This will not resize what's in the frame !
+             */
+            void            resize( quint32 width, quint32 height );
             /**
              *  \returns    The frame size in octets
              *

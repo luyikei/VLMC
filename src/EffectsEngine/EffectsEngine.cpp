@@ -180,3 +180,18 @@ EffectsEngine::initFilters( const FilterList &effects, quint32 width, quint32 he
         ++it;
     }
 }
+
+EffectsEngine::MixerHelper*
+EffectsEngine::getMixer( const MixerList &mixers, qint64 currentFrame )
+{
+    MixerList::const_iterator       it = mixers.constBegin();
+    MixerList::const_iterator       ite = mixers.constEnd();
+
+    while ( it != ite )
+    {
+        if ( it.key() <= currentFrame && currentFrame <= it.value()->end )
+            return it.value();
+        ++it;
+    }
+    return NULL;
+}

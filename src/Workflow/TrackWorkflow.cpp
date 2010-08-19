@@ -28,6 +28,8 @@
 #include "AudioClipWorkflow.h"
 #include "ImageClipWorkflow.h"
 #include "Media.h"
+#include "MixerInstance.h"
+#include "Types.h"
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
 
@@ -46,6 +48,7 @@ TrackWorkflow::TrackWorkflow( MainWorkflow::TrackType type  ) :
 {
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
+    m_mixerBuffer = new Workflow::Frame;
 }
 
 TrackWorkflow::~TrackWorkflow()
@@ -289,6 +292,8 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     bool                                        needRepositioning;
     void                                        *ret = NULL;
+    StackedBuffer<Workflow::Frame*>             *frames[EffectsEngine::MaxFramesForMixer];
+    quint32                                     frameId = 0;
     bool                                        renderOneFrame = false;
 
     if ( m_lastFrame == -1 )
@@ -313,6 +318,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         else
             needRepositioning = ( abs( subFrame - m_lastFrame ) > 1 ) ? true : false;
     }
+    memset( frames, 0, sizeof(*frames) * EffectsEngine::MaxFramesForMixer );
     while ( it != end )
     {
         qint64          start = it.key();
@@ -325,7 +331,10 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             ret = renderClip( cw, currentFrame, start, needRepositioning,
                               renderOneFrame, paused );
             if ( m_trackType == MainWorkflow::VideoTrack )
-                m_videoStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
+            {
+                frames[frameId] = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
+                ++frameId;
+            }
             else
                 m_audioStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*>( ret );
         }
@@ -337,6 +346,21 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         else
             stopClipWorkflow( cw );
         ++it;
+    }
+    //Handle mixers:
+    if ( m_trackType == MainWorkflow::VideoTrack )
+    {
+        if ( frames[1] != NULL ) //More than one frame has been rendered, let's mix them !
+        {
+            EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
+            if ( mixer != NULL )
+            {
+                //FIXME: We don't handle mixer3 yet.
+                mixer->effect->process( 0.0, frames[0]->get()->buffer(),
+                                        frames[0]->get()->buffer(), NULL, m_mixerBuffer->buffer() );
+                ret = m_mixerBuffer;
+            }
+        }
     }
     m_lastFrame = subFrame;
     if ( ret == NULL )
@@ -515,10 +539,11 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 }
 
 void
-TrackWorkflow::preload()
+TrackWorkflow::initRender( quint32 width, quint32 height )
 {
     QReadLocker     lock( m_clipsLock );
 
+    m_mixerBuffer->resize( width, height );
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     while ( it != end )

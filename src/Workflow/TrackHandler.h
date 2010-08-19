@@ -54,7 +54,7 @@ class   TrackHandler : public QObject
          */
         unsigned int            getTrackCount() const;
         qint64                  getLength() const;
-        void                    startRender();
+        void                    startRender( quint32 width, quint32 height );
         /**
          *  \param      currentFrame    The current rendering frame (ie the video frame, in all case)
          *  \param      subFrame        The type-dependent frame. IE, for a video track,

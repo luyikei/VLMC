@@ -66,7 +66,7 @@ TrackHandler::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid )
 }
 
 void
-TrackHandler::startRender()
+TrackHandler::startRender( quint32 width, quint32 height )
 {
     m_endReached = false;
     computeLength();
@@ -76,7 +76,7 @@ TrackHandler::startRender()
     {
         for ( unsigned int i = 0; i < m_trackCount; ++i )
         {
-            m_tracks[i]->preload();
+            m_tracks[i]->initRender( width, height );
         }
     }
 }
