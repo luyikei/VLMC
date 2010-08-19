@@ -46,6 +46,9 @@ class   SettingValue : public QObject
             Language,
             KeyboardShortcut,
             Path,
+            //For effect engine settings:
+            Color,
+            Position
         };
         enum    Flag
         {
@@ -72,7 +75,7 @@ class   SettingValue : public QObject
          * \param   val the value wich will be affected to m_val
          */
 
-        void            set( const QVariant& val );
+        virtual void    set( const QVariant& val );
 
         /**
          * \brief getter for the m_val member
@@ -95,7 +98,7 @@ class   SettingValue : public QObject
         const QVariant& min() const;
         const QVariant& max() const;
 
-    private:
+    protected:
         /**
          * \brief the QVariant containingthe value of the settings
          */

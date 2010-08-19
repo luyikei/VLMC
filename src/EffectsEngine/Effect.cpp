@@ -37,6 +37,8 @@ Effect::Effect( const QString &fileName ) :
 Effect::~Effect()
 {
     m_f0r_deinit();
+    qDeleteAll( m_params );
+    m_params.clear();
 }
 
 #define LOAD_FREI0R_SYMBOL( dest, symbolName )  \
@@ -61,6 +63,9 @@ Effect::load()
     LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_destruct, "f0r_destruct" )
     LOAD_FREI0R_SYMBOL( m_f0r_update, "f0r_update" );
     LOAD_FREI0R_SYMBOL( m_f0r_update2, "f0r_update2" );
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_get_param_value, "f0r_get_param_value" );
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_set_param_value, "f0r_set_param_value" );
+    LOAD_FREI0R_SYMBOL_CHECKED( m_f0r_get_param_info, "f0r_get_param_info" );
 
     //Initializing structures
     f0r_plugin_info_t   infos;
@@ -82,6 +87,11 @@ Effect::load()
     {
         qCritical() << "Failed to load symbol f0r_update2. Dropping module" << fileName();
         return false;
+    }
+    for ( qint32 i = 0; i < m_nbParams; ++i )
+    {
+        f0r_param_info_t    *param = new f0r_param_info_t;
+        m_f0r_get_param_info( param, i );
     }
     return true;
 }
@@ -148,4 +158,10 @@ Effect::destroyInstance( EffectInstance *instance )
     //fetchAndAddAcquire returns the old value.
     if ( m_instCount.fetchAndAddAcquire( -1 ) == 1 )
         unload();
+}
+
+const Effect::ParamList&
+Effect::params() const
+{
+    return m_params;
 }

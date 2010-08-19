@@ -9,6 +9,7 @@ SET(VLMC_SRCS
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectInstance.cpp
+    EffectsEngine/EffectSettingValue.cpp
     EffectsEngine/FilterInstance.cpp
     EffectsEngine/MixerInstance.cpp
     Library/Library.cpp
@@ -59,6 +60,7 @@ SET (VLMC_HDRS
     EffectsEngine/EffectsEngine.h
     EffectsEngine/Effect.h
     EffectsEngine/EffectInstance.h
+    EffectsEngine/EffectSettingValue.h
     Library/Library.h
     Library/MediaContainer.h
     LibVLCpp/VLCInstance.h

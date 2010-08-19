@@ -40,6 +40,7 @@ class Effect : public QLibrary
             Mixer2 = F0R_PLUGIN_TYPE_MIXER2,
             Mixer3 = F0R_PLUGIN_TYPE_MIXER3
         };
+        typedef     QList<f0r_param_info_t*>    ParamList;
 
         typedef     int (*f0r_init_t)();
         typedef     void (*f0r_deinit_t)();
@@ -48,6 +49,9 @@ class Effect : public QLibrary
         typedef     void (*f0r_destruct_t)( f0r_instance_t );
         typedef     void (*f0r_update_t)( f0r_instance_t, double, const unsigned int*, unsigned int * );
         typedef     void (*f0r_update2_t)( f0r_instance_t, double, const unsigned int*, const unsigned int*, const unsigned int*, unsigned int * );
+        typedef     void (*f0r_get_param_value_t)( f0r_instance_t, f0r_param_t, int );
+        typedef     void (*f0r_set_param_value_t)( f0r_instance_t, f0r_param_t, int );
+        typedef     void (*f0r_get_param_info_t)( f0r_param_info_t*, int );
 
         Effect( const QString& fileName );
         virtual ~Effect();
@@ -56,6 +60,7 @@ class Effect : public QLibrary
         const QString&  name();
         const QString&  description();
         Type            type();
+        const ParamList &params() const;
         //This breaks coding convention, but it would be safe just to undef major/minor.
         int             getMajor();
         int             getMinor();
@@ -65,26 +70,31 @@ class Effect : public QLibrary
         void            destroyInstance( EffectInstance* instance );
 
     private:
-        QString         m_name;
-        QString         m_desc;
-        Type            m_type;
-        int             m_major;
-        int             m_minor;
-        int             m_nbParams;
-        QAtomicInt      m_instCount;
+        QString                     m_name;
+        QString                     m_desc;
+        Type                        m_type;
+        int                         m_major;
+        int                         m_minor;
+        int                         m_nbParams;
+        QAtomicInt                  m_instCount;
+        ParamList                   m_params;
 
         //Symbols:
-        f0r_init_t      m_f0r_init;
-        f0r_deinit_t    m_f0r_deinit;
-        f0r_get_info_t  m_f0r_info;
-        f0r_construct_t m_f0r_construct;
-        f0r_destruct_t  m_f0r_destruct;
-        f0r_update_t    m_f0r_update;
-        f0r_update2_t   m_f0r_update2;
+        f0r_init_t                  m_f0r_init;
+        f0r_deinit_t                m_f0r_deinit;
+        f0r_get_info_t              m_f0r_info;
+        f0r_construct_t             m_f0r_construct;
+        f0r_destruct_t              m_f0r_destruct;
+        f0r_update_t                m_f0r_update;
+        f0r_update2_t               m_f0r_update2;
+        f0r_get_param_value_t       m_f0r_get_param_value;
+        f0r_set_param_value_t       m_f0r_set_param_value;
+        f0r_get_param_info_t        m_f0r_get_param_info;
 
         friend class    EffectInstance;
         friend class    FilterInstance;
         friend class    MixerInstance;
+        friend class    EffectSettingValue;
 };
 
 #endif // EFFECT_H

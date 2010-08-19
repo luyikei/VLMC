@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "EffectInstance.h"
+#include "EffectSettingValue.h"
 
 #include "Effect.h"
 
@@ -30,6 +31,19 @@ EffectInstance::EffectInstance( Effect *effect ) :
         m_height( 0 ),
         m_instance( NULL )
 {
+    Effect::ParamList::const_iterator       it = effect->params().constBegin();
+    Effect::ParamList::const_iterator       ite = effect->params().constEnd();
+    quint32                                 i = 0;
+
+    while ( it != ite )
+    {
+        f0r_param_info_t    *info= *it;
+        m_params.push_back( new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
+                                                    this, i, QVariant(),
+                                                    info->name, info->explanation ) );
+        ++it;
+        ++i;
+    }
 }
 
 EffectInstance::~EffectInstance()

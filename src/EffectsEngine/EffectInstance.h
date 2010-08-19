@@ -25,26 +25,27 @@
 
 class   Effect;
 
-#include <QtGlobal>
+#include <QList>
 #include "frei0r.h"
+
+class   EffectSettingValue;
 
 class EffectInstance
 {
     public:
         void            init( quint32 width, quint32 height );
         Effect*         effect();
-
     protected:
         EffectInstance( Effect *effect );
         ~EffectInstance();
 
-        Effect          *m_effect;
-        quint32         m_width;
-        quint32         m_height;
-        f0r_instance_t  m_instance;
+        Effect                      *m_effect;
+        quint32                     m_width;
+        quint32                     m_height;
+        f0r_instance_t              m_instance;
+        QList<EffectSettingValue*>  m_params;
 
         friend class    Effect;
-
 };
 
 #endif // EFFECTINSTANCE_H
