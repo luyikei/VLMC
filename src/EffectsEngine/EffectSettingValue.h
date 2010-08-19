@@ -36,6 +36,7 @@ class EffectSettingValue : public SettingValue
         EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
                             const QVariant& defaultValue, const char* name,
                             const char* desc, Flags flags = Nothing );
+        virtual ~EffectSettingValue();
 
         f0r_param_t     getFrei0rParameter() const;
         virtual void    set( const QVariant& val );
@@ -57,7 +58,7 @@ class EffectSettingValue : public SettingValue
     private:
         qint8           *m_paramBuff;
         quint32         m_buffSize;
-        EffectInstance  *m_instance;
+        EffectInstance  *m_effectInstance;
         quint32         m_index;
 };
 

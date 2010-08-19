@@ -47,6 +47,7 @@ class EffectInstance
         ParamList                   m_params;
 
         friend class    Effect;
+        friend class    EffectSettingValue;
 };
 
 #endif // EFFECTINSTANCE_H

@@ -25,6 +25,8 @@
 
 #include "Effect.h"
 
+#include <QtDebug>
+
 EffectInstance::EffectInstance( Effect *effect ) :
         m_effect( effect ),
         m_width( 0 ),
@@ -37,7 +39,7 @@ EffectInstance::EffectInstance( Effect *effect ) :
 
     while ( it != ite )
     {
-        f0r_param_info_t    *info= *it;
+        f0r_param_info_t    *info = *it;
         m_params[info->name] = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
                                                     this, i, QVariant(),
                                                     info->name, info->explanation );

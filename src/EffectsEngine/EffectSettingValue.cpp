@@ -32,9 +32,14 @@ EffectSettingValue::EffectSettingValue( Type type, EffectInstance* instance, qui
     SettingValue( type, defaultValue, name, desc, flags ),
     m_paramBuff( NULL ),
     m_buffSize( 0 ),
-    m_instance( instance ),
+    m_effectInstance( instance ),
     m_index( index )
 {
+}
+
+EffectSettingValue::~EffectSettingValue()
+{
+    delete[] m_paramBuff;
 }
 
 f0r_param_t
@@ -63,7 +68,7 @@ EffectSettingValue::set( const QVariant &val )
         qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
         break;
     }
-    m_instance->effect()->m_f0r_set_param_value( m_instance, m_paramBuff, m_index );
+    m_effectInstance->effect()->m_f0r_set_param_value( m_effectInstance->m_instance, m_paramBuff, m_index );
 }
 
 quint32
