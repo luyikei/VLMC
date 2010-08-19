@@ -326,8 +326,6 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         //Is the clip supposed to render now?
         if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
         {
-            if ( ret != NULL )
-                qCritical() << "There's more than one clip to render here. Undefined behaviour !";
             ret = renderClip( cw, currentFrame, start, needRepositioning,
                               renderOneFrame, paused );
             if ( m_trackType == MainWorkflow::VideoTrack )
@@ -351,14 +349,24 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     if ( m_trackType == MainWorkflow::VideoTrack )
     {
         EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
-        if ( mixer != NULL )
+        if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.
             mixer->effect->process( currentFrame * 1000.0 / m_fps,
                                     frames[0]->get()->buffer(),
                                     frames[1] != NULL ? frames[1]->get()->buffer() : MainWorkflow::blackOutput->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
-            ret = m_mixerBuffer;
+            m_mixerBuffer->ptsDiff = frames[0]->get()->ptsDiff;
+            //The rest of the code uses stackedbuffer, m_mixerBuffer is just a Frame*
+            for ( quint32 i = 0; i < EffectsEngine::MaxFramesForMixer; ++i )
+            {
+                if ( frames[i] != NULL )
+                    frames[i]->release();
+                else
+                    break;
+            }
+            m_lastFrame = subFrame;
+            return m_mixerBuffer;
         }
         else //If no mixer, clean the potentially rendered extra frames.
         {
@@ -369,6 +377,8 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                 else
                     break;
             }
+            ret = frames[0];
+            m_videoStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
         }
     }
     m_lastFrame = subFrame;
@@ -564,6 +574,7 @@ TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
             preloadClip( cw );
         ++it;
     }
+    EffectsEngine::initMixers( m_mixers, width, height );
 }
 
 bool

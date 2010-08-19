@@ -433,7 +433,7 @@ MainWindow::initializeDockWidgets( void )
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
     //FIXME !!!
-    EffectsEngine::getInstance()->browseDirectory( "/usr/local/frei0r/lib/" );
+    EffectsEngine::getInstance()->browseDirectory( "/usr/local/lib/frei0r-1" );
 
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
