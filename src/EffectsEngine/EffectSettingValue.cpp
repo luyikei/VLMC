@@ -68,7 +68,15 @@ EffectSettingValue::set( const QVariant &val )
         qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
         break;
     }
-    m_effectInstance->effect()->m_f0r_set_param_value( m_effectInstance->m_instance, m_paramBuff, m_index );
+    apply();
+}
+
+void
+EffectSettingValue::apply()
+{
+    if ( m_paramBuff != NULL )
+        m_effectInstance->effect()->m_f0r_set_param_value( m_effectInstance->m_instance,
+                                                           m_paramBuff, m_index );
 }
 
 quint32

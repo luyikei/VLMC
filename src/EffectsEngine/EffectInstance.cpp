@@ -62,6 +62,9 @@ EffectInstance::init( quint32 width, quint32 height )
         m_instance = m_effect->m_f0r_construct( width, height );
         m_width = width;
         m_height = height;
+        //Re-apply parameters, as they were lost during f0r_destruct();
+        foreach ( EffectSettingValue* val, m_params.values() )
+            val->apply();
     }
 }
 

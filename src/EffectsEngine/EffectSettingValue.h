@@ -41,6 +41,14 @@ class EffectSettingValue : public SettingValue
         f0r_param_t     getFrei0rParameter() const;
         virtual void    set( const QVariant& val );
         quint32         index() const;
+        /**
+         *  \brief      Force the parameter to apply, even if no change is detected
+         *              from VLMC side.
+         *
+         *  This is usefull when the instance had been destroyed, and the params should
+         *  be applied again.
+         */
+        void            apply();
         static Type     frei0rToVlmc( int type );
 
     private:
