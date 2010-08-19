@@ -175,7 +175,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     }
     {
         QReadLocker lock( m_effectsLock );
-        EffectsEngine::applyEffects( m_filters, ret->video,
+        EffectsEngine::applyFilters( m_filters, ret->video,
                                      m_mainWorkflow->getCurrentFrame(),
                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
     }
@@ -239,7 +239,7 @@ void        WorkflowRenderer::startPreview()
         setupRenderer( m_width, m_height, m_outputFps );
     }
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_filters, m_width, m_height );
+    EffectsEngine::initFilters( m_filters, m_width, m_height );
 
     //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );
@@ -414,7 +414,7 @@ WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
     project.writeStartElement( "renderer" );
     {
         QReadLocker     lock( m_effectsLock );
-        EffectsEngine::saveEffects( m_filters, project );
+        EffectsEngine::saveFilters( m_filters, project );
     }
     project.writeEndElement();
 }

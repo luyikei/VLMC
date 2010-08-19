@@ -100,7 +100,7 @@ EffectsEngine::browseDirectory( const QString &path )
 }
 
 void
-EffectsEngine::applyEffects( const FilterList &effects, Workflow::Frame* frame,
+EffectsEngine::applyFilters( const FilterList &effects, Workflow::Frame* frame,
                              qint64 currentFrame, double time )
 {
     if ( effects.size() == 0 )
@@ -149,7 +149,7 @@ EffectsEngine::applyEffects( const FilterList &effects, Workflow::Frame* frame,
 }
 
 void
-EffectsEngine::saveEffects( const FilterList &effects, QXmlStreamWriter &project )
+EffectsEngine::saveFilters( const FilterList &effects, QXmlStreamWriter &project )
 {
     if ( effects.size() <= 0 )
         return ;
@@ -169,7 +169,7 @@ EffectsEngine::saveEffects( const FilterList &effects, QXmlStreamWriter &project
 }
 
 void
-EffectsEngine::initEffects( const FilterList &effects, quint32 width, quint32 height )
+EffectsEngine::initFilters( const FilterList &effects, quint32 width, quint32 height )
 {
     EffectsEngine::FilterList::const_iterator   it = effects.begin();
     EffectsEngine::FilterList::const_iterator   ite = effects.end();

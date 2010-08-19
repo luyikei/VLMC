@@ -31,6 +31,7 @@ class   QTime;
 #include "MainWorkflow.h"
 
 class   FilterInstance;
+class   MixerInstance;
 
 #include <QObject>
 #include <QHash>
@@ -63,16 +64,18 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
             QUuid       uuid;
         };
         typedef EffectHelper<FilterInstance>    FilterHelper;
-        typedef QList<FilterHelper*>    FilterList;
+        typedef QList<FilterHelper*>            FilterList;
+        typedef EffectHelper<MixerInstance>     MixerHelper;
+        typedef QList<MixerHelper*>             MixerList;
 
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        browseDirectory( const QString& path );
 
-        static void applyEffects( const FilterList &effects,
+        static void applyFilters( const FilterList &effects,
                                   Workflow::Frame *frame, qint64 currentFrame, double time );
-        static void saveEffects( const FilterList &effects, QXmlStreamWriter &project );
-        static void initEffects( const FilterList &effects, quint32 width, quint32 height );
+        static void saveFilters( const FilterList &effects, QXmlStreamWriter &project );
+        static void initFilters( const FilterList &effects, quint32 width, quint32 height );
 
     private:
         EffectsEngine();

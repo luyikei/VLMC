@@ -102,7 +102,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
 
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_filters, m_width, m_height );
+    EffectsEngine::initFilters( m_filters, m_width, m_height );
 }
 
 void*
@@ -169,7 +169,7 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
     {
         QWriteLocker    lock( cw->m_effectsLock );
-        EffectsEngine::applyEffects( cw->m_filters, frame, cw->m_renderedFrame,
+        EffectsEngine::applyFilters( cw->m_filters, frame, cw->m_renderedFrame,
                                      cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
     }
     {
@@ -229,7 +229,7 @@ void
 VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
 {
     QReadLocker lock( m_effectsLock );
-    EffectsEngine::saveEffects( m_filters, project );
+    EffectsEngine::saveFilters( m_filters, project );
 }
 
 void
