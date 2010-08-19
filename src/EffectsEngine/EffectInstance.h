@@ -24,17 +24,18 @@
 #define EFFECTINSTANCE_H
 
 class   Effect;
-
-#include <QList>
-#include "frei0r.h"
-
 class   EffectSettingValue;
+
+#include <QHash>
+#include "frei0r.h"
 
 class EffectInstance
 {
     public:
+        typedef         QHash<QString, EffectSettingValue*>     ParamList;
         void            init( quint32 width, quint32 height );
         Effect*         effect();
+        const ParamList &params() const;
     protected:
         EffectInstance( Effect *effect );
         ~EffectInstance();
@@ -43,7 +44,7 @@ class EffectInstance
         quint32                     m_width;
         quint32                     m_height;
         f0r_instance_t              m_instance;
-        QList<EffectSettingValue*>  m_params;
+        ParamList                   m_params;
 
         friend class    Effect;
 };

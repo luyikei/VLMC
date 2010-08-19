@@ -38,9 +38,9 @@ EffectInstance::EffectInstance( Effect *effect ) :
     while ( it != ite )
     {
         f0r_param_info_t    *info= *it;
-        m_params.push_back( new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
+        m_params[info->name] = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
                                                     this, i, QVariant(),
-                                                    info->name, info->explanation ) );
+                                                    info->name, info->explanation );
         ++it;
         ++i;
     }
@@ -67,4 +67,10 @@ Effect*
 EffectInstance::effect()
 {
     return m_effect;
+}
+
+const EffectInstance::ParamList&
+EffectInstance::params() const
+{
+    return m_params;
 }
