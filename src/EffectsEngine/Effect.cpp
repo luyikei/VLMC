@@ -22,6 +22,7 @@
 
 #include "Effect.h"
 #include "FilterInstance.h"
+#include "MixerInstance.h"
 
 #include <QtDebug>
 
@@ -142,10 +143,12 @@ EffectInstance*
 Effect::createInstance()
 {
     m_instCount.fetchAndAddAcquire( 1 );
-    switch ( m_type )
+    switch ( type() )
     {
     case Filter:
         return new FilterInstance( this );
+    case Mixer2:
+        return new MixerInstance( this );
     default:
         return NULL;
     }
