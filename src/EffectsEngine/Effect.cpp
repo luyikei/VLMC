@@ -93,6 +93,7 @@ Effect::load()
     {
         f0r_param_info_t    *param = new f0r_param_info_t;
         m_f0r_get_param_info( param, i );
+        m_params.push_back( param );
     }
     return true;
 }
