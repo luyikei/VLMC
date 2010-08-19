@@ -81,6 +81,8 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
         //Mixers methods:
         static MixerHelper*     getMixer( const MixerList& mixers, qint64 currentFrame );
+        static void             initMixers( const MixerList& mixers, quint32 width,
+                                            quint32 height );
 
     private:
         EffectsEngine();

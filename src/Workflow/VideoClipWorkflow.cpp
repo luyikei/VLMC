@@ -146,9 +146,7 @@ VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
 
     cw->m_renderLock->lock();
     if ( cw->m_availableBuffers.isEmpty() == true )
-    {
         frame = new Workflow::Frame( cw->m_width, cw->m_height );
-    }
     else
         frame = cw->m_availableBuffers.dequeue();
     cw->m_computedBuffers.enqueue( frame );

@@ -24,6 +24,7 @@
 
 #include "Effect.h"
 #include "FilterInstance.h"
+#include "MixerInstance.h"
 #include "Types.h"
 
 #include <QDesktopServices>
@@ -194,4 +195,19 @@ EffectsEngine::getMixer( const MixerList &mixers, qint64 currentFrame )
         ++it;
     }
     return NULL;
+}
+
+void
+EffectsEngine::initMixers( const MixerList &mixers, quint32 width, quint32 height )
+{
+    if ( mixers.size() <= 0 )
+        return ;
+    EffectsEngine::MixerList::const_iterator   it = mixers.constBegin();
+    EffectsEngine::MixerList::const_iterator   ite = mixers.constEnd();
+
+    while ( it != ite )
+    {
+        it.value()->effect->init( width, height );
+        ++it;
+    }
 }
