@@ -109,7 +109,7 @@ MainWorkflow::computeLength()
 }
 
 void
-MainWorkflow::startRender( quint32 width, quint32 height )
+MainWorkflow::startRender( quint32 width, quint32 height, double fps )
 {
     //Reinit the effects in case the width/height has change
     m_renderStarted = true;
@@ -120,7 +120,7 @@ MainWorkflow::startRender( quint32 width, quint32 height )
     blackOutput = new Workflow::Frame( m_width, m_height );
     memset( blackOutput->buffer(), 0, blackOutput->size() );
     for ( unsigned int i = 0; i < MainWorkflow::NbTrackType; ++i )
-        m_tracks[i]->startRender( width, height );
+        m_tracks[i]->startRender( width, height, fps );
     computeLength();
 }
 

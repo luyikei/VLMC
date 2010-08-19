@@ -121,7 +121,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param      height  The height to use with this render session.
          *  This will basically activate all the tracks, so they can render.
          */
-        void                    startRender( quint32 width, quint32 height );
+        void                    startRender( quint32 width, quint32 height, double fps );
         /**
          *  \brief      Gets a frame from the workflow
          *
@@ -355,6 +355,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    stopFrameComputing();
 
+        /// Pre-filled buffer used when there's nothing to render
+        static Workflow::Frame*         blackOutput;
+
     private:
         MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();
@@ -407,9 +410,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                         m_width;
         /// Height used for the render
         quint32                         m_height;
-
-        /// Pre-filled buffer used when there's nothing to render
-        static Workflow::Frame*         blackOutput;
 
         friend class                    Singleton<MainWorkflow>;
 

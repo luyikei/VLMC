@@ -85,7 +85,8 @@ class   TrackWorkflow : public QObject
         void                                    muteClip( const QUuid& uuid );
         void                                    unmuteClip( const QUuid& uuid );
 
-        void                                    initRender( quint32 width, quint32 height );
+        void                                    initRender( quint32 width, quint32 height,
+                                                            double fps );
 
         bool                                    contains( const QUuid& uuid ) const;
 
@@ -122,6 +123,7 @@ class   TrackWorkflow : public QObject
         StackedBuffer<Workflow::Frame*>*        m_videoStackedBuffer;
         StackedBuffer<Workflow::AudioSample*>*  m_audioStackedBuffer;
         Workflow::Frame                         *m_mixerBuffer;
+        double                                  m_fps;
 };
 
 #endif // TRACKWORKFLOW_H

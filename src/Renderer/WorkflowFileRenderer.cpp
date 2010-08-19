@@ -71,7 +71,7 @@ void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 wi
     m_audioPts = 0;
 
     m_mainWorkflow->setFullSpeedRender( true );
-    m_mainWorkflow->startRender( width, height );
+    m_mainWorkflow->startRender( width, height, fps );
     //Waiting for renderers to preload some frames:
     SleepS( 1 );
     m_mediaPlayer->play();

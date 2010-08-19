@@ -246,7 +246,7 @@ void        WorkflowRenderer::startPreview()
     m_mediaPlayer->setMedia( m_media );
 
     m_mainWorkflow->setFullSpeedRender( false );
-    m_mainWorkflow->startRender( m_width, m_height );
+    m_mainWorkflow->startRender( m_width, m_height, m_outputFps );
     m_isRendering = true;
     m_paused = false;
     m_stopping = false;

@@ -350,15 +350,24 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     //Handle mixers:
     if ( m_trackType == MainWorkflow::VideoTrack )
     {
-        if ( frames[1] != NULL ) //More than one frame has been rendered, let's mix them !
+        EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
+        if ( mixer != NULL )
         {
-            EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
-            if ( mixer != NULL )
+            //FIXME: We don't handle mixer3 yet.
+            mixer->effect->process( currentFrame * 1000.0 / m_fps,
+                                    frames[0]->get()->buffer(),
+                                    frames[1] != NULL ? frames[1]->get()->buffer() : MainWorkflow::blackOutput->buffer(),
+                                    NULL, m_mixerBuffer->buffer() );
+            ret = m_mixerBuffer;
+        }
+        else //If no mixer, clean the potentially rendered extra frames.
+        {
+            for ( quint32 i = 1; i < EffectsEngine::MaxFramesForMixer; ++i )
             {
-                //FIXME: We don't handle mixer3 yet.
-                mixer->effect->process( 0.0, frames[0]->get()->buffer(),
-                                        frames[0]->get()->buffer(), NULL, m_mixerBuffer->buffer() );
-                ret = m_mixerBuffer;
+                if ( frames[i] != NULL )
+                    frames[i]->release();
+                else
+                    break;
             }
         }
     }
@@ -539,11 +548,12 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 }
 
 void
-TrackWorkflow::initRender( quint32 width, quint32 height )
+TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
 {
     QReadLocker     lock( m_clipsLock );
 
     m_mixerBuffer->resize( width, height );
+    m_fps = fps;
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     while ( it != end )
