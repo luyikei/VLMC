@@ -31,8 +31,9 @@ Frame::Frame( quint32 width, quint32 height ) :
         m_width( width ),
         m_height( height )
 {
-    m_size = width * height * Depth;
-    m_buffer = new quint8[m_size];
+    m_nbPixels = width * height;
+    m_size = m_nbPixels * Depth;
+    m_buffer = new quint32[m_nbPixels];
 }
 
 Frame::~Frame()
@@ -40,13 +41,13 @@ Frame::~Frame()
     delete[] m_buffer;
 }
 
-quint8*
+quint32*
 Frame::buffer()
 {
     return m_buffer;
 }
 
-const quint8*
+const quint32*
 Frame::buffer() const
 {
     return m_buffer;
@@ -70,6 +71,12 @@ Frame::size() const
     return m_size;
 }
 
+quint32
+Frame::nbPixels() const
+{
+    return m_nbPixels;
+}
+
 Frame*
 Frame::clone() const
 {
@@ -79,7 +86,7 @@ Frame::clone() const
 }
 
 void
-Frame::setBuffer( quint8 *buff )
+Frame::setBuffer( quint32 *buff )
 {
     delete[] m_buffer;
     m_buffer = buff;

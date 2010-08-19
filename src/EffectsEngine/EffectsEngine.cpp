@@ -108,9 +108,9 @@ EffectsEngine::applyFilters( const FilterList &effects, Workflow::Frame* frame,
     FilterList::const_iterator     it = effects.constBegin();
     FilterList::const_iterator     ite = effects.constEnd();
 
-    quint8      *buff1 = NULL;
-    quint8      *buff2 = NULL;
-    quint8      *input = frame->buffer();
+    quint32     *buff1 = NULL;
+    quint32     *buff2 = NULL;
+    quint32     *input = frame->buffer();
     bool        firstBuff = true;
 
     while ( it != ite )
@@ -118,15 +118,15 @@ EffectsEngine::applyFilters( const FilterList &effects, Workflow::Frame* frame,
         if ( (*it)->start < currentFrame &&
              ( (*it)->end < 0 || (*it)->end > currentFrame ) )
         {
-            quint8      **buff;
+            quint32     **buff;
             if ( firstBuff == true )
                 buff = &buff1;
             else
                 buff = &buff2;
             if ( *buff == NULL )
-                *buff = new quint8[frame->size()];
+                *buff = new quint32[frame->nbPixels()];
             FilterInstance      *effect = (*it)->effect;
-            effect->process( time, (quint32*)input, (quint32*)*buff );
+            effect->process( time, input, *buff );
             input = *buff;
             firstBuff = !firstBuff;
         }

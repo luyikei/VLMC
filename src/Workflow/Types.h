@@ -36,16 +36,22 @@ namespace   Workflow
             ~Frame();
             quint32         width() const;
             quint32         height() const;
-            quint8          *buffer();
-            const quint8    *buffer() const;
-            void            setBuffer( quint8 *buff );
+            quint32         *buffer();
+            const quint32   *buffer() const;
+            void            setBuffer( quint32 *buff );
             Frame           *clone() const;
             /**
-             *  \returns    The frame size in pixels
+             *  \returns    The frame size in octets
              *
              *  This is equal to width * height * Depth
              */
+            /**
+             *  \returns    The frame size in pixels
+             *
+             *  This is equal to width * height
+             */
             quint32         size() const;
+            quint32         nbPixels() const;
             /**
              *  \warning    Terrible hack !
              *
@@ -56,8 +62,9 @@ namespace   Workflow
         private:
             quint32     m_width;
             quint32     m_height;
-            quint8      *m_buffer;
+            quint32     *m_buffer;
             quint32     m_size;
+            quint32     m_nbPixels;
     };
     struct  AudioSample
     {
