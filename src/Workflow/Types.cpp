@@ -105,7 +105,7 @@ Frame::setBuffer( quint32 *buff )
 void
 Frame::resize( quint32 width, quint32 height )
 {
-    if ( width != m_width || height != height )
+    if ( width != m_width || height != m_height )
     {
         delete[] m_buffer;
         m_width = width;
