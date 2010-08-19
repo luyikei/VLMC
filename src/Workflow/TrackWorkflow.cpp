@@ -339,8 +339,11 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         ++it;
     }
     m_lastFrame = subFrame;
-
-    return ret;
+    if ( ret == NULL )
+        return NULL;
+    if ( m_trackType == MainWorkflow::VideoTrack )
+        return reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret )->get();
+    return reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*>( ret )->get();
 }
 
 void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )

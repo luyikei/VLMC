@@ -110,27 +110,11 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         if ( m_tracks[i].activated() == false || m_tracks[i]->hasFrameToRender( currentFrame ) )
             continue ;
         validTrack = true;
-        if ( m_trackType == MainWorkflow::VideoTrack )
-        {
-            void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-            StackedBuffer<Workflow::Frame*>   *buff = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
-            if ( ret == NULL )
-                continue ;
-            else
-                return buff->get();
-        }
+        void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
+        if ( ret == NULL )
+            continue ;
         else
-        {
-            //If paused is false at this point, there's probably something wrong...
-            void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-            //m_tmpAudioBuffer is NULL by default, so it will remain NULL if we continue;
-            if ( ret == NULL )
-                continue ;
-            StackedBuffer<Workflow::AudioSample*>* stackedBuffer =
-                reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*> ( ret );
-            if ( stackedBuffer != NULL )
-                return stackedBuffer->get();
-        }
+            return ret;
     }
     if ( validTrack == false )
         allTracksEnded();
