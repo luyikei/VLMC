@@ -30,17 +30,18 @@
 #include "EffectSettingValue.h"
 
 #include <QFormLayout>
+#include <QGroupBox>
 #include <QLabel>
+#include <QVBoxLayout>
 
 EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *parent ) :
-    QDialog( parent )
+    QDialog( parent ),
+    m_ui( new Ui::EffectSettingWidget )
 {
-    QFormLayout     *layout = new QFormLayout( this );
-
-    layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
-    layout->addRow( tr( "Name" ), new QLabel( effect->effect()->name(), this ) );
-    layout->addRow( tr( "Description" ), new QLabel( effect->effect()->description(), this ) );
-    layout->addRow( tr( "Type" ), new QLabel( nameFromType( effect->effect()->type() ), this ) );
+    m_ui->setupUi( this );
+    m_ui->nameValueLabel->setText( effect->effect()->name() );
+    m_ui->descValueLabel->setText( effect->effect()->description() );
+    m_ui->typeValueLabel->setText( nameFromType( effect->effect()->type() ) );
 
     EffectInstance::ParamList::iterator         it = effect->params().begin();
     EffectInstance::ParamList::iterator         ite = effect->params().end();
@@ -50,10 +51,12 @@ EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *par
         ISettingsCategoryWidget     *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
         widget->widget()->setToolTip( s->description() );
-        layout->addRow( label , widget->widget() );
-        m_settings.push_back( s );
+        m_ui->settingsLayout->addRow( label , widget->widget() );
+        m_settings.push_back( widget );
         ++it;
     }
+    connect( m_ui->buttons, SIGNAL( clicked( QAbstractButton* ) ),
+             this, SLOT( buttonsClicked( QAbstractButton* ) ) );
 }
 
 QString
@@ -87,5 +90,25 @@ EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
         return new ColorWidget( s, this );
     default:
         return NULL;
+    }
+}
+
+void
+EffectInstanceWidget::save()
+{
+    foreach ( ISettingsCategoryWidget* val, m_settings )
+        val->save();
+}
+
+void
+EffectInstanceWidget::buttonsClicked( QAbstractButton *button )
+{
+    switch ( m_ui->buttons->standardButton( button ) )
+    {
+    case QDialogButtonBox::Ok:
+    case QDialogButtonBox::Apply:
+        save();
+    default:
+        break ;
     }
 }

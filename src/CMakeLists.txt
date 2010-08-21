@@ -284,6 +284,7 @@ ELSE(NOT WITH_GUI)
      
     SET(VLMC_UIS
         Gui/effectsengine/ui/EffectsList.ui
+        Gui/effectsengine/ui/EffectInstanceWidget.ui
         Gui/export/RendererSettings.ui
         Gui/export/ShareOnYoutube.ui
         Gui/import/ui/ImportController.ui

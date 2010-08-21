@@ -29,6 +29,7 @@ class   EffectInstance;
 class   EffectSettingValue;
 
 #include "Effect.h"
+#include "ui_EffectInstanceWidget.h"
 
 class   ISettingsCategoryWidget;
 
@@ -42,9 +43,14 @@ class EffectInstanceWidget : public QDialog
     private:
         static QString                      nameFromType( Effect::Type type );
         ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
+        void                                save();
     private:
         EffectInstance                      *m_effect;
-        QList<EffectSettingValue*>          m_settings;
+        QList<ISettingsCategoryWidget*>     m_settings;
+        Ui::EffectSettingWidget             *m_ui;
+
+    private slots:
+        void        buttonsClicked( QAbstractButton* button );
 };
 
 #endif // EFFECTINSTANCEWIDGET_H
