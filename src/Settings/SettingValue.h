@@ -80,7 +80,7 @@ class   SettingValue : public QObject
         /**
          * \brief getter for the m_val member
          */
-        const QVariant& get() const;
+        virtual const QVariant& get(); //Not const to avoid a mess with EffectSettingValue.
         /**
          *  \return The setting's description
          */

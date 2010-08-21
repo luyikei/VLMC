@@ -34,12 +34,12 @@ class EffectSettingValue : public SettingValue
 
     public:
         EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
-                            const QVariant& defaultValue, const char* name,
-                            const char* desc, Flags flags = Nothing );
+                            const char* name, const char* desc, Flags flags = Nothing );
         virtual ~EffectSettingValue();
 
         f0r_param_t     getFrei0rParameter() const;
         virtual void    set( const QVariant& val );
+        const QVariant  &get();
         quint32         index() const;
         /**
          *  \brief      Force the parameter to apply, even if no change is detected

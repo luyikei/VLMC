@@ -55,7 +55,7 @@ SettingValue::set( const QVariant& _val )
 }
 
 const QVariant&
-SettingValue::get() const
+SettingValue::get()
 {
     return m_val;
 }

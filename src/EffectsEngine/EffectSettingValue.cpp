@@ -29,14 +29,15 @@
 #include <QtDebug>
 
 EffectSettingValue::EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
-                                        const QVariant &defaultValue, const char *name,
-                                        const char *desc, Flags flags ) :
-    SettingValue( type, defaultValue, name, desc, flags ),
+                                        const char *name, const char *desc, Flags flags ) :
+    SettingValue( type, QVariant(), name, desc, flags ),
     m_paramBuff( NULL ),
     m_buffSize( 0 ),
     m_effectInstance( instance ),
     m_index( index )
 {
+    //Fetch the default value.
+    m_defaultVal = get();
 }
 
 EffectSettingValue::~EffectSettingValue()
@@ -62,30 +63,32 @@ EffectSettingValue::set( const QVariant &val )
             copyToFrei0rBuff( &tmp );
             break ;
         }
-        case String:
+    case String:
         {
             QByteArray      bytes = val.toString().toUtf8();
             const char*   tmp = bytes;
             copyToFrei0rBuff( tmp, bytes.length() );
             break ;
         }
-        case Bool:
+    case Bool:
         {
             bool    tmp = val.toBool();
             copyToFrei0rBuff( &tmp );
             break ;
         }
-        case Color:
+    case Color:
         {
             QColor  color = val.value<QColor>();
             float   rgb[3] = { color.redF(), color.greenF(), color.blueF() };
             copyToFrei0rBuff( rgb, 3 * sizeof(float) );
+            break ;
         }
-        case Position:
+    case Position:
         {
             QPointF     pos = val.value<QPointF>();
             double      posD[2] = { pos.x(), pos.y() };
             copyToFrei0rBuff( posD, 2 * sizeof(double) );
+            break ;
         }
     default:
         qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
@@ -100,6 +103,58 @@ EffectSettingValue::apply()
     if ( m_paramBuff != NULL )
         m_effectInstance->effect()->m_f0r_set_param_value( m_effectInstance->m_instance,
                                                            m_paramBuff, m_index );
+}
+
+const QVariant&
+EffectSettingValue::get()
+{
+    switch ( m_type )
+    {
+    case Double:
+        {
+            double  tmp;
+            m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
+                                                               &tmp, m_index );
+            m_val = tmp;
+            break ;
+        }
+    case String:
+        {
+            char    *tmp;
+            m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
+                                                               &tmp, m_index );
+            m_val = QString::fromUtf8( tmp );
+            break ;
+        }
+    case Bool:
+        {
+            bool    tmp;
+            m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
+                                                               &tmp, m_index );
+            m_val = tmp;
+            break ;
+        }
+    case Color:
+        {
+            f0r_param_color_t   tmp;
+            m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
+                                                               &tmp, m_index );
+            m_val = QColor( tmp.r, tmp.g, tmp.b );
+            break ;
+        }
+    case Position:
+        {
+            f0r_param_position_t    tmp;
+            m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
+                                                               &tmp, m_index );
+            m_val = QPointF( tmp.x, tmp.y );
+            break ;
+        }
+    default:
+        qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
+        m_val = QVariant();
+    }
+    return m_val;
 }
 
 quint32

@@ -34,6 +34,7 @@ class EffectInstance
     public:
         typedef         QHash<QString, EffectSettingValue*>     ParamList;
         void            init( quint32 width, quint32 height );
+        bool            isInit() const;
         Effect*         effect();
         const ParamList &params() const;
         ParamList       &params();

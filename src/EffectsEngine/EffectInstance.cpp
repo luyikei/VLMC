@@ -33,6 +33,8 @@ EffectInstance::EffectInstance( Effect *effect ) :
         m_height( 0 ),
         m_instance( NULL )
 {
+    init( 1, 1 );
+
     Effect::ParamList::const_iterator       it = effect->params().constBegin();
     Effect::ParamList::const_iterator       ite = effect->params().constEnd();
     quint32                                 i = 0;
@@ -59,8 +61,7 @@ EffectInstance::settingValueFactory( f0r_param_info_t *info, quint32 index )
     if ( info->type == F0R_PARAM_DOUBLE )
         flags = SettingValue::Clamped;
     EffectSettingValue  *val = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
-                                                        this, index, QVariant(),
-                                                        info->name, info->explanation );
+                                                        this, index, info->name, info->explanation );
     if ( info->type == F0R_PARAM_DOUBLE )
         val->setLimits( 0.0, 1.0 );
     return val;
@@ -79,6 +80,12 @@ EffectInstance::init( quint32 width, quint32 height )
         foreach ( EffectSettingValue* val, m_params.values() )
             val->apply();
     }
+}
+
+bool
+EffectInstance::isInit() const
+{
+    return m_instance != NULL;
 }
 
 Effect*
