@@ -1,10 +1,11 @@
 /*****************************************************************************
- * Settings.cpp: generic preferences interface
+ * Settings.cpp: Generic preferences interface
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Clement CHAVANCE <kinder@vlmc.org>
- *          Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Ludovic Fauvet <etix@l0cal.com>
+ *          Hugo Beauzée-Luyssen <beauze.h@gmail.com>
+ *
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,16 +28,13 @@
 #include "SettingsManager.h"
 #include "Panel.h"
 
+#include <QAbstractButton>
 #include <QApplication>
 #include <QDialogButtonBox>
-#include <QAbstractButton>
-#include <QIcon>
 #include <QLabel>
 #include <QScrollArea>
 #include <QHBoxLayout>
 #include <QStackedLayout>
-
-#include <QtDebug>
 
 Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
     QDialog( parent ),
@@ -50,14 +48,15 @@ Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
                                    QDialogButtonBox::Cancel |
                                    QDialogButtonBox::Apply );
 
-    connect( m_buttons, SIGNAL( clicked( QAbstractButton* ) ),
-             this, SLOT( buttonClicked( QAbstractButton* ) ) );
-
     // Create the layout
     buildLayout();
 
     connect( m_panel, SIGNAL( changePanel( int ) ),
              this, SLOT( switchWidget( int ) ) );
+    connect( m_buttons, SIGNAL( clicked( QAbstractButton* ) ),
+             this, SLOT( buttonClicked( QAbstractButton* ) ) );
+    connect( m_buttons, SIGNAL( accepted() ), this, SLOT( accept() ) );
+    connect( m_buttons, SIGNAL( rejected() ), this, SLOT( reject() ) );
 }
 
 void
@@ -84,7 +83,7 @@ Settings::buildLayout()
     m_panel->setMaximumWidth( 130 );
 
     // Create the master layout
-    QGridLayout *mLayout = new QGridLayout( this );
+    QGridLayout     *mLayout = new QGridLayout( this );
     mLayout->addWidget( m_panel, 0, 0, 2, 1 );
 
     m_title = new QLabel( this );
@@ -104,35 +103,20 @@ Settings::buildLayout()
 void
 Settings::buttonClicked( QAbstractButton *button )
 {
-    bool  save = false;
-    bool  hide = false;
-
     switch ( m_buttons->standardButton( button ) )
     {
-        case QDialogButtonBox::Ok:
-            save = true;
-            hide = true;
-            break;
-        case QDialogButtonBox::Cancel:
-            hide = true;
-            break;
-        case QDialogButtonBox::Apply:
-            save = true;
-            break;
-        default :
-            break;
+    case QDialogButtonBox::Ok:
+    case QDialogButtonBox::Apply:
+        {
+            for ( int i = 0; i < m_stackedLayout->count(); ++i )
+                qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save();
+            //If we're handling vlmc preferences, save the value in the QSettings
+            if ( m_type == SettingsManager::Vlmc )
+                SettingsManager::getInstance()->save();
+        }
+    default:
+        break ;
     }
-    if ( save == true )
-    {
-        // Ask each widget to save their state
-        for ( int i = 0; i < m_stackedLayout->count(); ++i )
-            qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save();
-        //If we're handling vlmc preferences, save the value in the QSettings
-        if ( m_type == SettingsManager::Vlmc )
-            SettingsManager::getInstance()->save();
-    }
-    if ( hide == true )
-        setVisible( false );
 }
 
 void
