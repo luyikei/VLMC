@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectInstance.h: Handle an effect instance.
+ * EffectInstanceWidget.h: Display the settings for an EffectInstance
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,35 +20,31 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTINSTANCE_H
-#define EFFECTINSTANCE_H
+#ifndef EFFECTINSTANCEWIDGET_H
+#define EFFECTINSTANCEWIDGET_H
 
-class   Effect;
+#include <QDialog>
+
+class   EffectInstance;
 class   EffectSettingValue;
 
-#include <QHash>
-#include "frei0r.h"
+#include "Effect.h"
 
-class EffectInstance
+class   ISettingsCategoryWidget;
+
+class EffectInstanceWidget : public QDialog
 {
+    Q_OBJECT
+
     public:
-        typedef         QHash<QString, EffectSettingValue*>     ParamList;
-        void            init( quint32 width, quint32 height );
-        Effect*         effect();
-        const ParamList &params() const;
-        ParamList       &params();
-    protected:
-        EffectInstance( Effect *effect );
-        virtual ~EffectInstance();
+        explicit EffectInstanceWidget( EffectInstance* effect, QWidget *parent = 0);
 
-        Effect                      *m_effect;
-        quint32                     m_width;
-        quint32                     m_height;
-        f0r_instance_t              m_instance;
-        ParamList                   m_params;
-
-        friend class    Effect;
-        friend class    EffectSettingValue;
+    private:
+        static QString                      nameFromType( Effect::Type type );
+        ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
+    private:
+        EffectInstance                      *m_effect;
+        QList<EffectSettingValue*>          m_settings;
 };
 
-#endif // EFFECTINSTANCE_H
+#endif // EFFECTINSTANCEWIDGET_H

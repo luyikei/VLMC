@@ -157,6 +157,7 @@ ELSE(NOT WITH_GUI)
         Gui/MainWindow.cpp
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
+        Gui/effectsengine/EffectInstanceWidget.cpp
         Gui/effectsengine/EffectsList.cpp
         Gui/effectsengine/EffectsListView.cpp
         Gui/export/RendererSettings.cpp
@@ -221,6 +222,7 @@ ELSE(NOT WITH_GUI)
         Gui/MainWindow.h
         Gui/UndoStack.h
         Gui/WorkflowFileRendererDialog.h
+        Gui/effectsengine/EffectInstanceWidget.h
         Gui/effectsengine/EffectsList.h
         Gui/effectsengine/EffectsListView.h
         Gui/export/RendererSettings.h

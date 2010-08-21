@@ -79,3 +79,9 @@ EffectInstance::params() const
 {
     return m_params;
 }
+
+EffectInstance::ParamList&
+EffectInstance::params()
+{
+    return m_params;
+}
