@@ -23,6 +23,7 @@
 #include "EffectInstanceWidget.h"
 
 #include "BoolWidget.h"
+#include "ColorWidget.h"
 #include "DoubleSliderWidget.h"
 #include "Effect.h"
 #include "EffectInstance.h"
@@ -82,6 +83,8 @@ EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
         return new BoolWidget( s, this );
     case    SettingValue::Double:
         return new DoubleSliderWidget( s, this );
+    case    SettingValue::Color:
+        return new ColorWidget( s, this );
     default:
         return NULL;
     }

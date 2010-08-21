@@ -177,6 +177,7 @@ ELSE(NOT WITH_GUI)
         Gui/preview/PreviewWidget.cpp
         Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
+        Gui/settings/ColorWidget.cpp
         Gui/settings/DoubleWidget.cpp
         Gui/settings/DoubleSliderWidget.cpp
         Gui/settings/IntWidget.cpp
@@ -244,6 +245,7 @@ ELSE(NOT WITH_GUI)
         Gui/preview/PreviewWidget.h
         Gui/project/GuiProjectManager.h
         Gui/settings/BoolWidget.h
+        Gui/settings/ColorWidget.h
         Gui/settings/DoubleWidget.h
         Gui/settings/DoubleSliderWidget.h
         Gui/settings/ISettingsCategoryWidget.h
