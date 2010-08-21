@@ -1,9 +1,9 @@
 /*****************************************************************************
- * DoubleWidget.cpp Handle double and float settings.
+ * DoubleSliderWidget.h Handle double settings using a slider for values.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,40 +20,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "DoubleWidget.h"
-#include "SettingValue.h"
+#ifndef DOUBLESLIDERWIDGET_H
+#define DOUBLESLIDERWIDGET_H
 
-#include <QDoubleSpinBox>
+#include "ISettingsCategoryWidget.h"
 
-DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+class   SettingValue;
+
+class   QSlider;
+class   QLabel;
+
+class DoubleSliderWidget : public ISettingsCategoryWidget
 {
-    m_spinbox = new QDoubleSpinBox( parent );
-    changed( s->get() );
+    Q_OBJECT
 
-    if ( ( s->flags() & SettingValue::Clamped ) != 0 )
-    {
-        if ( s->min().isValid() )
-            m_spinbox->setMinimum( s->min().toDouble() );
-        if ( s->max().isValid() )
-            m_spinbox->setMaximum( s->max().toDouble() );
-    }
-}
+    public:
+        DoubleSliderWidget( SettingValue *s, QWidget *parent = NULL );
+        QWidget     *widget();
+        void        save();
 
-QWidget*
-DoubleWidget::widget()
-{
-    return m_spinbox;
-}
+    private:
+        SettingValue    *m_setting;
+        QSlider         *m_slider;
+        QWidget         *m_container;
+        QLabel          *m_valueDisplayer;
 
-void
-DoubleWidget::save()
-{
-    m_setting->set( m_spinbox->value() );
-}
+    private slots:
+        virtual void    changed( const QVariant& );
+        void            sliderMoved( int value );
+};
 
-void
-DoubleWidget::changed( const QVariant &val )
-{
-    m_spinbox->setValue( val.toDouble() );
-}
+#endif // DOUBLESLIDERWIDGET_H

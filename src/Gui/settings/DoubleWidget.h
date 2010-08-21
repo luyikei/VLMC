@@ -36,7 +36,7 @@ class   DoubleWidget : public ISettingsCategoryWidget
 
     public:
         DoubleWidget( SettingValue *s, QWidget *parent = NULL );
-        QWidget*                widget();
+        QWidget                 *widget();
         void                    save();
 
     private slots:

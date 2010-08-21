@@ -40,6 +40,8 @@ class EffectInstance
     protected:
         EffectInstance( Effect *effect );
         virtual ~EffectInstance();
+        EffectSettingValue*         settingValueFactory( f0r_param_info_t* info, quint32 index );
+    protected:
 
         Effect                      *m_effect;
         quint32                     m_width;

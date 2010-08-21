@@ -40,9 +40,7 @@ EffectInstance::EffectInstance( Effect *effect ) :
     while ( it != ite )
     {
         f0r_param_info_t    *info = *it;
-        m_params[info->name] = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
-                                                    this, i, QVariant(),
-                                                    info->name, info->explanation );
+        m_params[info->name] = settingValueFactory( info, i );
         ++it;
         ++i;
     }
@@ -51,6 +49,21 @@ EffectInstance::EffectInstance( Effect *effect ) :
 EffectInstance::~EffectInstance()
 {
     m_effect->m_f0r_destruct( m_instance );
+}
+
+EffectSettingValue*
+EffectInstance::settingValueFactory( f0r_param_info_t *info, quint32 index )
+{
+    SettingValue::Flag      flags = SettingValue::Nothing;
+
+    if ( info->type == F0R_PARAM_DOUBLE )
+        flags = SettingValue::Clamped;
+    EffectSettingValue  *val = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
+                                                        this, index, QVariant(),
+                                                        info->name, info->explanation );
+    if ( info->type == F0R_PARAM_DOUBLE )
+        val->setLimits( 0.0, 1.0 );
+    return val;
 }
 
 void

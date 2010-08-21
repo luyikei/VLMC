@@ -23,7 +23,7 @@
 #include "EffectInstanceWidget.h"
 
 #include "BoolWidget.h"
-#include "DoubleWidget.h"
+#include "DoubleSliderWidget.h"
 #include "Effect.h"
 #include "EffectInstance.h"
 #include "EffectSettingValue.h"
@@ -81,7 +81,7 @@ EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
     case    SettingValue::Bool:
         return new BoolWidget( s, this );
     case    SettingValue::Double:
-        return new DoubleWidget( s, this );
+        return new DoubleSliderWidget( s, this );
     default:
         return NULL;
     }

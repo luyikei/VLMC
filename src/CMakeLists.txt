@@ -178,6 +178,7 @@ ELSE(NOT WITH_GUI)
         Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/DoubleWidget.cpp
+        Gui/settings/DoubleSliderWidget.cpp
         Gui/settings/IntWidget.cpp
         Gui/settings/KeyboardShortcut.cpp
         Gui/settings/KeyboardShortcutInput.cpp
@@ -244,6 +245,7 @@ ELSE(NOT WITH_GUI)
         Gui/project/GuiProjectManager.h
         Gui/settings/BoolWidget.h
         Gui/settings/DoubleWidget.h
+        Gui/settings/DoubleSliderWidget.h
         Gui/settings/ISettingsCategoryWidget.h
         Gui/settings/IntWidget.h
         Gui/settings/KeyboardShortcut.h
