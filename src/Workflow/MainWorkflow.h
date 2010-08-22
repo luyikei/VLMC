@@ -57,16 +57,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
     public:
         /**
-         *  \struct     Represents an output, with both audio and video buffers.
-         *              Note that an OutputBuffers will not necessarly have its both
-         *              fields filed out.
-         */
-        struct      OutputBuffers
-        {
-            Workflow::Frame         *video;
-            Workflow::AudioSample   *audio;
-        };
-        /**
          *  \enum   Used to know which part required a change of rendered frame.
          *          The main use of this enum is to avoid infinite information propagation
          *          such as the timeline informing itself that the frame as changed, which
@@ -125,7 +115,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of track you wish to get the render from.
          *  \param  paused      The paused state of the renderer
          */
-        OutputBuffers*          getOutput( Workflow::TrackType trackType, bool paused );
+        Workflow::OutputBuffer  *getOutput( Workflow::TrackType trackType, bool paused );
         /**
          *  \brief              Set the workflow position by the desired frame
          *  \param              currentFrame: The desired frame to render from
@@ -395,8 +385,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
         /// Contains the trackhandler, indexed by Workflow::TrackType
         TrackHandler**                  m_tracks;
-        /// Pre-allocated buffer, that will contain every computed outputs.
-        OutputBuffers*                  m_outputBuffers;
 
         /// Width used for the render
         quint32                         m_width;

@@ -159,13 +159,13 @@ int
 WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void **buffer )
 {
     qint64                          ptsDiff = 0;
-    MainWorkflow::OutputBuffers*    ret;
+    Workflow::Frame                 *ret;
 
     if ( m_stopping == true )
         return 1;
 
-    ret = m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused );
-    ptsDiff = ret->video->ptsDiff;
+    ret = static_cast<Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused ) );
+    ptsDiff = ret->ptsDiff;
     if ( ptsDiff == 0 )
     {
         //If no ptsDiff has been computed, we have to fake it, so we compute
@@ -175,13 +175,13 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     }
     {
         QReadLocker lock( m_effectsLock );
-        EffectsEngine::applyFilters( m_filters, ret->video,
+        EffectsEngine::applyFilters( m_filters, ret,
                                      m_mainWorkflow->getCurrentFrame(),
                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
     }
     m_pts = *pts = ptsDiff + m_pts;
-    *buffer = ret->video->buffer();
-    *bufferSize = ret->video->size();
+    *buffer = ret->buffer();
+    *bufferSize = ret->size();
     return 0;
 }
 
@@ -194,9 +194,8 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 
     if ( m_stopping == false && m_paused == false )
     {
-        MainWorkflow::OutputBuffers* ret = m_mainWorkflow->getOutput( Workflow::AudioTrack,
-                                                                      m_paused );
-        renderAudioSample = ret->audio;
+        renderAudioSample = static_cast<Workflow::AudioSample*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
+                                                                                           m_paused ) );
     }
     else
         renderAudioSample = NULL;

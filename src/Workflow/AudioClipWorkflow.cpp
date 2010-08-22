@@ -77,7 +77,7 @@ AudioClipWorkflow::getUnlockCallback() const
     return reinterpret_cast<void*>( &AudioClipWorkflow::unlock );
 }
 
-void*
+Workflow::OutputBuffer*
 AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );

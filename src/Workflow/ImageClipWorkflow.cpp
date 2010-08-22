@@ -84,7 +84,7 @@ ImageClipWorkflow::getUnlockCallback() const
     return reinterpret_cast<void*>( &ImageClipWorkflow::unlock );
 }
 
-void*
+Workflow::OutputBuffer*
 ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
 {
     QMutexLocker    lock( m_renderLock );

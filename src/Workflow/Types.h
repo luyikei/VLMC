@@ -39,7 +39,14 @@ namespace   Workflow
         NbTrackType, ///< Used to know how many types we have
     };
 
-    class   Frame
+    struct  OutputBuffer
+    {
+        TrackType   type;
+        protected:
+            OutputBuffer( TrackType _type ) : type( _type ) {}
+    };
+
+    class   Frame : public OutputBuffer
     {
         public:
             explicit Frame();
@@ -83,8 +90,9 @@ namespace   Workflow
             quint32     m_size;
             quint32     m_nbPixels;
     };
-    struct  AudioSample
+    struct  AudioSample : public OutputBuffer
     {
+        AudioSample() : OutputBuffer( AudioTrack ){}
         unsigned char*  buff;
         size_t          size;
         quint32         nbSample;

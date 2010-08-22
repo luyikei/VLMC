@@ -59,7 +59,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
                  this, SLOT( tracksEndReached() ) );
         m_currentFrame[i] = 0;
     }
-    m_outputBuffers = new OutputBuffers;
 }
 
 MainWorkflow::~MainWorkflow()
@@ -125,7 +124,7 @@ MainWorkflow::startRender( quint32 width, quint32 height, double fps )
     computeLength();
 }
 
-MainWorkflow::OutputBuffers*
+Workflow::OutputBuffer*
 MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
 {
     QMutexLocker        lock( m_renderStartedMutex );
@@ -134,22 +133,16 @@ MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
     {
         QReadLocker         lock2( m_currentFrameLock );
 
-        void*   ret = m_tracks[trackType]->getOutput( m_currentFrame[Workflow::VideoTrack],
-                                        m_currentFrame[trackType], paused );
+        Workflow::OutputBuffer  *ret = m_tracks[trackType]->getOutput( m_currentFrame[Workflow::VideoTrack],
+                                                                        m_currentFrame[trackType], paused );
         if ( trackType == Workflow::VideoTrack )
         {
-            Workflow::Frame*    frame = static_cast<Workflow::Frame*>( ret );
-            if ( frame == NULL )
-                m_outputBuffers->video = MainWorkflow::blackOutput;
-            else
-                m_outputBuffers->video = frame;
+            if ( ret == NULL )
+                return MainWorkflow::blackOutput;
         }
-        else
-        {
-            m_outputBuffers->audio = static_cast<Workflow::AudioSample*>( ret );
-        }
+        return ret;
     }
-    return m_outputBuffers;
+    return NULL;
 }
 
 void

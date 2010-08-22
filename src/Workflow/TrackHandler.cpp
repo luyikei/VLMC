@@ -100,7 +100,7 @@ TrackHandler::getLength() const
     return m_length;
 }
 
-void*
+Workflow::OutputBuffer*
 TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 {
     bool        validTrack = false;
@@ -110,7 +110,7 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         if ( m_tracks[i].activated() == false || m_tracks[i]->hasFrameToRender( currentFrame ) )
             continue ;
         validTrack = true;
-        void*   ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
+        Workflow::OutputBuffer  *ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
         if ( ret == NULL )
             continue ;
         else

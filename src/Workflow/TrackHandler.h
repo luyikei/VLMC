@@ -62,7 +62,7 @@ class   TrackHandler : public QObject
          *                              track, it will be different.
          *  \param      paused          The renderer paused state
          */
-        void                    *getOutput( qint64 currentFrame, qint64 subFrame,
+        Workflow::OutputBuffer  *getOutput( qint64 currentFrame, qint64 subFrame,
                                            bool paused );
         qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
         void                    stop();

@@ -25,6 +25,7 @@
 
 #include "mdate.h"
 #include "ClipHelper.h"
+#include "Types.h"
 
 #include <QObject>
 #include <QUuid>
@@ -106,7 +107,7 @@ class   ClipWorkflow : public QObject
          *  therefore, you can call this method blindly, without taking care
          *  of the rendering process advancement.
          */
-        virtual void*           getOutput( ClipWorkflow::GetMode mode ) = 0;
+        virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode ) = 0;
         void                    postGetOutput();
         virtual void            initVlcOutput() = 0;
         void                    initialize();
