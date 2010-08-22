@@ -79,6 +79,7 @@ Effect::load()
     m_major = infos.major_version;
     m_minor = infos.minor_version;
     m_nbParams = infos.num_params;
+    m_author = infos.author;
     if ( m_type == Filter && m_f0r_update == NULL )
     {
         qCritical() << "Failed to load symbol f0r_update. Dropping module" << fileName();
@@ -168,4 +169,12 @@ const Effect::ParamList&
 Effect::params() const
 {
     return m_params;
+}
+
+const QString&
+Effect::author()
+{
+    if ( isLoaded() == false )
+        load();
+    return m_author;
 }

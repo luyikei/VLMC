@@ -60,6 +60,7 @@ class Effect : public QLibrary
         const QString&  name();
         const QString&  description();
         Type            type();
+        const QString&  author();
         const ParamList &params() const;
         //This breaks coding convention, but it would be safe just to undef major/minor.
         int             getMajor();
@@ -75,6 +76,7 @@ class Effect : public QLibrary
         Type                        m_type;
         int                         m_major;
         int                         m_minor;
+        QString                     m_author;
         int                         m_nbParams;
         QAtomicInt                  m_instCount;
         ParamList                   m_params;
