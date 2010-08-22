@@ -142,13 +142,13 @@ WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pt
     {
         ret = handler->self->lockVideo( handler, pts, bufferSize, buffer );
         if ( paused == false )
-            handler->self->m_mainWorkflow->nextFrame( MainWorkflow::VideoTrack );
+            handler->self->m_mainWorkflow->nextFrame( Workflow::VideoTrack );
     }
     else if ( cookie[0] == WorkflowRenderer::AudioCookie )
     {
         ret = handler->self->lockAudio( handler, pts, bufferSize, buffer );
         if ( paused == false )
-            handler->self->m_mainWorkflow->nextFrame( MainWorkflow::AudioTrack );
+            handler->self->m_mainWorkflow->nextFrame( Workflow::AudioTrack );
     }
     else
         qCritical() << "Invalid imem cookie";
@@ -164,7 +164,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     if ( m_stopping == true )
         return 1;
 
-    ret = m_mainWorkflow->getOutput( MainWorkflow::VideoTrack, m_paused );
+    ret = m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused );
     ptsDiff = ret->video->ptsDiff;
     if ( ptsDiff == 0 )
     {
@@ -194,7 +194,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 
     if ( m_stopping == false && m_paused == false )
     {
-        MainWorkflow::OutputBuffers* ret = m_mainWorkflow->getOutput( MainWorkflow::AudioTrack,
+        MainWorkflow::OutputBuffers* ret = m_mainWorkflow->getOutput( Workflow::AudioTrack,
                                                                       m_paused );
         renderAudioSample = ret->audio;
     }
@@ -264,7 +264,7 @@ void        WorkflowRenderer::nextFrame()
 void        WorkflowRenderer::previousFrame()
 {
     if ( m_paused == true )
-        m_mainWorkflow->previousFrame( MainWorkflow::VideoTrack );
+        m_mainWorkflow->previousFrame( Workflow::VideoTrack );
 }
 
 void        WorkflowRenderer::togglePlayPause( bool forcePause )

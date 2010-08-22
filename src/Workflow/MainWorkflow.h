@@ -26,6 +26,7 @@
 
 #include "Singleton.hpp"
 #include <QXmlStreamWriter>
+#include "Types.h"
 
 class   Clip;
 class   ClipHelper;
@@ -66,15 +67,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
             Workflow::AudioSample   *audio;
         };
         /**
-         *  \enum   Represents the potential Track types.
-         */
-        enum    TrackType
-        {
-            VideoTrack, ///< Represents a video track
-            AudioTrack, ///< Represents an audio track
-            NbTrackType, ///< Used to know how many types we have
-        };
-        /**
          *  \enum   Used to know which part required a change of rendered frame.
          *          The main use of this enum is to avoid infinite information propagation
          *          such as the timeline informing itself that the frame as changed, which
@@ -104,15 +96,15 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param      type    The track type (audio or video)
          *  \param      informGui  Will be false if the action is queried by the GUI.
          *                              true otherwise.
-         *  \sa         removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
-         *  \sa         clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType )
+         *  \sa         removeClip( const QUuid&, unsigned int, Workflow::TrackType )
+         *  \sa         clipAdded( Clip*, unsigned int, qint64, Workflow::TrackType )
          */
         void            addClip( ClipHelper* clipHelper, quint32 trackId, qint64 start,
-                                         TrackType type, bool informGui );
+                                 Workflow::TrackType type, bool informGui );
 
 
         void            addEffect( Effect* effect, quint32 trackId, const QUuid &uuid,
-                                   TrackType type );
+                                   Workflow::TrackType type );
 
         /**
          *  \brief      Initialize the workflow for the render.
@@ -133,7 +125,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of track you wish to get the render from.
          *  \param  paused      The paused state of the renderer
          */
-        OutputBuffers*          getOutput( TrackType trackType, bool paused );
+        OutputBuffers*          getOutput( Workflow::TrackType trackType, bool paused );
         /**
          *  \brief              Set the workflow position by the desired frame
          *  \param              currentFrame: The desired frame to render from
@@ -172,9 +164,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                      Though it seems odd to speak about frame for AudioTrack,
          *                      it's mainly a render position used for
          *                      synchronisation purpose.
-         *  \sa         previousFrame( MainWorkflow::TrackType );
+         *  \sa         previousFrame( Workflow::TrackType );
          */
-        void                    nextFrame( TrackType trackType );
+        void                    nextFrame( Workflow::TrackType trackType );
         /**
          *  \brief      Unconditionnaly switch to the previous frame.
          *
@@ -182,24 +174,24 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                          Though it seems odd to speak about frame for
          *                          AudioTrack, it's mainly a render position used for
          *                          synchronisation purpose.
-         *  \sa         nextFrame( MainWorkflow::TrackType );
+         *  \sa         nextFrame( Workflow::TrackType );
          */
-        void                    previousFrame( TrackType trackType );
+        void                    previousFrame( Workflow::TrackType trackType );
 
         /**
          *  \brief              Remove a clip from the workflow
          *
          *  The created ClipWorkflow is deleted, and the added clip is returned.
          *  Calling this method will cause
-         *  clipRemoved( Clip*, unsigned int, MainWorkflow::TrackType ) to be emitted.
+         *  clipRemoved( Clip*, unsigned int, Workflow::TrackType ) to be emitted.
          *  \param  uuid        The uuid of the clip to remove.
          *  \param  trackId     The id of the track containing the clip to remove
          *  \param  trackType   The type of the track containing the clip to remove
          *  \sa                 addClip( Clip*, unsigned int, qint64, TrackType )
-         *  \sa                 clipRemoved(Clip*, unsigned int, MainWorkflow::TrackType)
+         *  \sa                 clipRemoved(Clip*, unsigned int, Workflow::TrackType)
          */
         Clip*                   removeClip( const QUuid& uuid, unsigned int trackId,
-                                            MainWorkflow::TrackType trackType );
+                                            Workflow::TrackType trackType );
 
         /**
          *  \brief              Move a clip in the workflow
@@ -207,7 +199,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  This will move a clip, potentially from a track to anoher, to a new
          *  starting position.
          *  if undoRedoCommand is true, the
-         *  clipMoved( QUuid, unsigned int, qint64, MainWorkflow::TrackType ) will be
+         *  clipMoved( QUuid, unsigned int, qint64, Workflow::TrackType ) will be
          *  emitted.
          *  This (bad) behaviour is caused by the fact that this move is mostly required
          *  by the timeline, which has already move its graphic item.
@@ -222,11 +214,11 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                              undo/redo action. If any doubt, false seems like
          *                              a good choice.
          *  \todo       Fix the last parameter. Such a nasty hack shouldn't even exist.
-         *  \sa         clipMoved( QUuid, unsigned int, qint64, MainWorkflow::TrackType )
+         *  \sa         clipMoved( QUuid, unsigned int, qint64, Workflow::TrackType )
          */
         void                    moveClip( const QUuid& uuid, unsigned int oldTrack,
                                           unsigned int newTrack, qint64 pos,
-                                          MainWorkflow::TrackType trackType,
+                                          Workflow::TrackType trackType,
                                           bool undoRedoCommand = false );
         /**
          *  \brief              Return the given clip position.
@@ -238,7 +230,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                          is returned.
          */
         qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId,
-                                                MainWorkflow::TrackType trackType ) const;
+                                                Workflow::TrackType trackType ) const;
 
         /**
          *  \brief      Mute a track.
@@ -247,19 +239,19 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  signal. To summerize, a mutted track is an hard deactivated track.
          *  \param  trackId     The id of the track to mute
          *  \param  trackType   The type of the track to mute.
-         *  \sa     unmuteTrack( unsigned int, MainWorkflow::TrackType );
+         *  \sa     unmuteTrack( unsigned int, Workflow::TrackType );
          */
         void                    muteTrack( unsigned int trackId,
-                                           MainWorkflow::TrackType trackType );
+                                           Workflow::TrackType trackType );
         /**
          *  \brief      Unmute a track.
          *
          *  \param  trackId     The id of the track to unmute
          *  \param  trackType   The type of the track to unmute.
-         *  \sa     muteTrack( unsigned int, MainWorkflow::TrackType );
+         *  \sa     muteTrack( unsigned int, Workflow::TrackType );
          */
         void                    unmuteTrack( unsigned int trackId,
-                                             MainWorkflow::TrackType trackType );
+                                             Workflow::TrackType trackType );
 
         /**
          *  \brief      Mute a clip.
@@ -269,7 +261,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of the track containing the clip.
          */
         void                    muteClip( const QUuid& uuid, unsigned int trackId,
-                                          MainWorkflow::TrackType trackType );
+                                          Workflow::TrackType trackType );
 
         /**
          *  \brief      Unmute a clip.
@@ -279,7 +271,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of the track containing the clip.
          */
         void                    unmuteClip( const QUuid& uuid, unsigned int trackId,
-                                          MainWorkflow::TrackType trackType );
+                                          Workflow::TrackType trackType );
 
         /**
          *  \brief              Get the number of track for a specific type
@@ -287,7 +279,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  trackType   The type of the tracks to count
          *  \return             The number of track for the type trackType
          */
-        int                     getTrackCount( MainWorkflow::TrackType trackType ) const;
+        int                     getTrackCount( Workflow::TrackType trackType ) const;
 
         /**
          *  \brief      Get the width used for rendering.
@@ -329,15 +321,15 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
         ClipHelper*             split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
                                        qint64 newClipPos, qint64 newClipBegin,
-                                       MainWorkflow::TrackType trackType );
+                                       Workflow::TrackType trackType );
 
         void                    resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd,
                                           qint64 newPos, quint32 trackId,
-                                          MainWorkflow::TrackType trackType,
+                                          Workflow::TrackType trackType,
                                           bool undoRedoAction = false );
 
         void                    unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
-                                         MainWorkflow::TrackType trackType );
+                                         Workflow::TrackType trackType );
 
         /**
          *  \return     true if the current workflow contains the clip which the uuid was
@@ -379,7 +371,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \returns    The clip that matches the given UUID, or NULL.
          */
         Clip*                   getClip( const QUuid& uuid, unsigned int trackId,
-                                         MainWorkflow::TrackType trackType );
+                                         Workflow::TrackType trackType );
 
     private:
         /// Lock for the m_currentFrame atribute.
@@ -387,7 +379,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         /**
          *  \brief  An array of currently rendered frame.
          *
-         *  This must be indexed with MainWorkflow::TrackType.
+         *  This must be indexed with Workflow::TrackType.
          *  The Audio array entry is designed to synchronize the renders internally, as it
          *  is not actually a frame.
          *  If you wish to know which frame is really rendered, you must use
@@ -401,7 +393,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         bool                            m_renderStarted;
         QMutex*                         m_renderStartedMutex;
 
-        /// Contains the trackhandler, indexed by MainWorkflow::TrackType
+        /// Contains the trackhandler, indexed by Workflow::TrackType
         TrackHandler**                  m_tracks;
         /// Pre-allocated buffer, that will contain every computed outputs.
         OutputBuffers*                  m_outputBuffers;
@@ -442,7 +434,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  Calling this method will cause every clip workflow to be deleted, along with
          *  the associated Clip.
          *  This method will emit cleared() signal once finished.
-         *  \sa     removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
+         *  \sa     removeClip( const QUuid&, unsigned int, Workflow::TrackType )
          *  \sa     cleared()
          */
         void                            clear();
@@ -475,16 +467,16 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \sa                 addClip( Clip*, unsigned int, qint64, TrackType )
          */
         void                    clipAdded( ClipHelper* clip, unsigned int trackId,
-                                           qint64 pos, MainWorkflow::TrackType trackType );
+                                           qint64 pos, Workflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip is removed
          *  \param  uuid        The clip that has been removed's uuid.
          *  \param  trackId     The track that was containing the clip
          *  \param  trackType   The type of the track that was containing the clip
-         *  \sa     removeClip( const QUuid&, unsigned int, MainWorkflow::TrackType )
+         *  \sa     removeClip( const QUuid&, unsigned int, Workflow::TrackType )
          */
         void                    clipRemoved( const QUuid& uuid, unsigned int trackId,
-                                             MainWorkflow::TrackType trackType );
+                                             Workflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip has been moved
          *
@@ -493,12 +485,12 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \param  pos         The clip new position
          *  \param  trackType   The moved clip type.
          *  \sa                 moveClip( const QUuid&, unsigned int, unsigned int,
-         *                                  qint64, MainWorkflow::TrackType, bool );
+         *                                  qint64, Workflow::TrackType, bool );
          *  \warning            This is not always emitted. Check removeClip for more
          *                      details
          */
         void                    clipMoved( const QUuid& uuid, unsigned int trackId,
-                                          qint64 pos, MainWorkflow::TrackType trackType );
+                                          qint64 pos, Workflow::TrackType trackType );
         /**
          *  \brief  Emitted when the workflow is cleared.
          *

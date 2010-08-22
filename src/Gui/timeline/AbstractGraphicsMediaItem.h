@@ -76,7 +76,7 @@ public:
     TracksScene* scene();
 
     /// Return the type of the media
-    virtual MainWorkflow::TrackType mediaType() const = 0;
+    virtual Workflow::TrackType mediaType() const = 0;
 
     /// Group two items together
     void group( AbstractGraphicsMediaItem* item );

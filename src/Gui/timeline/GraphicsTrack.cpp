@@ -24,7 +24,7 @@
 #include "TracksView.h"
 #include "GraphicsTrack.h"
 
-GraphicsTrack::GraphicsTrack( MainWorkflow::TrackType type, quint32 trackNumber,
+GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                               QGraphicsItem *parent ) : QGraphicsWidget( parent )
 {
     m_type = type;
@@ -75,7 +75,7 @@ GraphicsTrack::trackNumber()
     return m_trackNumber;
 }
 
-MainWorkflow::TrackType
+Workflow::TrackType
 GraphicsTrack::mediaType()
 {
     return m_type;

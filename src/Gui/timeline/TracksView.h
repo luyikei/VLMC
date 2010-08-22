@@ -201,7 +201,7 @@ public slots:
      * \param start The position in frames.
      */
     void                    addMediaItem( ClipHelper *clipHelper, unsigned int track,
-                                          MainWorkflow::TrackType trackType, qint64 start );
+                                          Workflow::TrackType trackType, qint64 start );
     /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.
@@ -215,7 +215,7 @@ public slots:
      * \param track The current track of the item.
      * \param trackType The type of the track (Audio or Video)
      */
-    void                    removeMediaItem( const QUuid &uuid, unsigned int track, MainWorkflow::TrackType trackType );
+    void                    removeMediaItem( const QUuid &uuid, unsigned int track, Workflow::TrackType trackType );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item A pointer to AbstractGraphicsMediaItem.
@@ -289,7 +289,7 @@ private:
     /**
      * \brief DOCUMENT ME
      */
-    void                    cleanTracks( MainWorkflow::TrackType type );
+    void                    cleanTracks( Workflow::TrackType type );
 
     /**
      * \brief This is an overloaded method provided for convenience.
@@ -315,7 +315,7 @@ private:
      * \param number The track number.
      * \return A pointer to the GraphicsTrack.
      */
-    GraphicsTrack           *getTrack( MainWorkflow::TrackType type, unsigned int number );
+    GraphicsTrack           *getTrack( Workflow::TrackType type, unsigned int number );
     QGraphicsScene          *m_scene;
     int                     m_tracksHeight;
     int                     m_projectDuration;

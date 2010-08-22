@@ -29,6 +29,16 @@ namespace   Workflow
 {
     const quint32   Depth = 4;
 
+    /**
+     *  \enum   Represents the potential Track types.
+     */
+    enum    TrackType
+    {
+        VideoTrack, ///< Represents a video track
+        AudioTrack, ///< Represents an audio track
+        NbTrackType, ///< Used to know how many types we have
+    };
+
     class   Frame
     {
         public:

@@ -113,7 +113,7 @@ TracksView::createLayout()
 void
 TracksView::addVideoTrack()
 {
-    GraphicsTrack *track = new GraphicsTrack( MainWorkflow::VideoTrack, m_numVideoTrack );
+    GraphicsTrack *track = new GraphicsTrack( Workflow::VideoTrack, m_numVideoTrack );
     track->setHeight( m_tracksHeight );
     m_layout->insertItem( 0, track );
     m_layout->activate();
@@ -126,7 +126,7 @@ TracksView::addVideoTrack()
 void
 TracksView::addAudioTrack()
 {
-    GraphicsTrack *track = new GraphicsTrack( MainWorkflow::AudioTrack, m_numAudioTrack );
+    GraphicsTrack *track = new GraphicsTrack( Workflow::AudioTrack, m_numAudioTrack );
     track->setHeight( m_tracksHeight );
     m_layout->insertItem( 1000, track );
     m_layout->activate();
@@ -204,7 +204,7 @@ TracksView::removeClip( const QUuid& uuid  )
             // Saving its values
             QUuid itemUuid = item->uuid();
             quint32 itemTn = item->trackNumber();
-            MainWorkflow::TrackType itemTt = item->mediaType();
+            Workflow::TrackType itemTt = item->mediaType();
 
             // Remove the item from the timeline
             removeMediaItem( itemUuid, itemTn, itemTt );
@@ -218,13 +218,13 @@ TracksView::removeClip( const QUuid& uuid  )
 }
 
 void
-TracksView::addMediaItem( ClipHelper *ch, unsigned int track, MainWorkflow::TrackType trackType, qint64 start )
+TracksView::addMediaItem( ClipHelper *ch, unsigned int track, Workflow::TrackType trackType, qint64 start )
 {
     Q_ASSERT( ch );
 
     // If there is not enough tracks to insert
     // the clip do it now.
-    if ( trackType == MainWorkflow::VideoTrack )
+    if ( trackType == Workflow::VideoTrack )
     {
         if ( track + 1 >= m_numVideoTrack )
         {
@@ -233,7 +233,7 @@ TracksView::addMediaItem( ClipHelper *ch, unsigned int track, MainWorkflow::Trac
                 addVideoTrack();
         }
     }
-    else if ( trackType == MainWorkflow::AudioTrack )
+    else if ( trackType == Workflow::AudioTrack )
     {
         if ( track + 1 >= m_numAudioTrack )
         {
@@ -244,13 +244,13 @@ TracksView::addMediaItem( ClipHelper *ch, unsigned int track, MainWorkflow::Trac
     }
 
     AbstractGraphicsMediaItem *item = 0;
-    if ( trackType == MainWorkflow::VideoTrack )
+    if ( trackType == Workflow::VideoTrack )
     {
         item = new GraphicsMovieItem( ch );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
-    else if ( trackType == MainWorkflow::AudioTrack )
+    else if ( trackType == Workflow::AudioTrack )
     {
         item = new GraphicsAudioItem( ch );
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
@@ -360,7 +360,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
     GraphicsTrack *track = NULL;
 
     if ( !m_lastKnownTrack )
-        m_lastKnownTrack = getTrack( MainWorkflow::VideoTrack, 0 );
+        m_lastKnownTrack = getTrack( Workflow::VideoTrack, 0 );
 
     QList<QGraphicsItem*> list = items( 0, position.y() );
     for ( int i = 0; i < list.size(); ++i )
@@ -389,12 +389,12 @@ void
 TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint64 time )
 {
     // Add missing tracks
-    if ( item->mediaType() == MainWorkflow::AudioTrack )
+    if ( item->mediaType() == Workflow::AudioTrack )
     {
         while ( track >= m_numAudioTrack )
             addAudioTrack();
     }
-    else if ( item->mediaType() == MainWorkflow::VideoTrack )
+    else if ( item->mediaType() == Workflow::VideoTrack )
     {
         while ( track >= m_numVideoTrack )
             addVideoTrack();
@@ -407,12 +407,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         bool validPosFound = false;
 
         // Add missing tracks for the target
-        if ( item->groupItem()->mediaType() == MainWorkflow::AudioTrack )
+        if ( item->groupItem()->mediaType() == Workflow::AudioTrack )
         {
             while ( p.track() >= m_numAudioTrack )
                 addAudioTrack();
         }
-        else if ( item->groupItem()->mediaType() == MainWorkflow::VideoTrack )
+        else if ( item->groupItem()->mediaType() == Workflow::VideoTrack )
         {
             while ( p.track() >= m_numVideoTrack )
                 addVideoTrack();
@@ -422,12 +422,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         ItemPosition p2 = findPosition( item->groupItem(), track, time );
 
         // Add missing tracks for the source
-        if ( item->mediaType() == MainWorkflow::AudioTrack )
+        if ( item->mediaType() == Workflow::AudioTrack )
         {
             while ( p2.track() >= m_numAudioTrack )
                 addAudioTrack();
         }
-        else if ( item->mediaType() == MainWorkflow::VideoTrack )
+        else if ( item->mediaType() == Workflow::VideoTrack )
         {
             while ( p2.track() >= m_numVideoTrack )
                 addVideoTrack();
@@ -518,9 +518,9 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
                 else if ( currentItem->trackNumber() <= track )
                 {
                     int higherTrack = 0;
-                    if ( item->mediaType() == MainWorkflow::VideoTrack )
+                    if ( item->mediaType() == Workflow::VideoTrack )
                         higherTrack = m_numVideoTrack;
-                    else if ( item->mediaType() == MainWorkflow::AudioTrack )
+                    else if ( item->mediaType() == Workflow::AudioTrack )
                         higherTrack = m_numAudioTrack;
 
                     if ( track >= higherTrack - 1 )
@@ -595,7 +595,7 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
 }
 
 void
-TracksView::removeMediaItem( const QUuid &uuid, unsigned int trackId, MainWorkflow::TrackType trackType )
+TracksView::removeMediaItem( const QUuid &uuid, unsigned int trackId, Workflow::TrackType trackType )
 {
     GraphicsTrack           *track = getTrack( trackType, trackId );
 
@@ -668,7 +668,7 @@ TracksView::dropEvent( QDropEvent *event )
     if ( m_dragAudioItem )
     {
         updateDuration();
-        if ( getTrack( MainWorkflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
+        if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
             addAudioTrack();
         event->acceptProposedAction();
 
@@ -678,14 +678,14 @@ TracksView::dropEvent( QDropEvent *event )
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
                                                                 m_dragAudioItem->trackNumber(),
                                                                 (qint64)mappedXPos,
-                                                                MainWorkflow::AudioTrack ) );
+                                                                Workflow::AudioTrack ) );
         m_dragAudioItem = NULL;
     }
 
     if ( m_dragVideoItem )
     {
         updateDuration();
-        if ( getTrack( MainWorkflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
+        if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
             addVideoTrack();
         event->acceptProposedAction();
 
@@ -695,7 +695,7 @@ TracksView::dropEvent( QDropEvent *event )
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
                                                                 m_dragVideoItem->trackNumber(),
                                                                 (qint64)mappedXPos,
-                                                                MainWorkflow::VideoTrack ) );
+                                                                Workflow::VideoTrack ) );
         m_dragVideoItem = NULL;
     }
 
@@ -748,7 +748,7 @@ TracksView::drawBackground( QPainter *painter, const QRectF &rect )
         if ( !track ) continue;
 
         QRectF trackRect = track->mapRectToScene( track->boundingRect() );
-        if ( track->mediaType() == MainWorkflow::VideoTrack )
+        if ( track->mediaType() == Workflow::VideoTrack )
             painter->drawLine( rect.left(), trackRect.top(), rect.right() + 1, trackRect.top() );
         else
             painter->drawLine( rect.left(), trackRect.bottom(), rect.right() + 1, trackRect.bottom() );
@@ -923,9 +923,9 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         updateDuration();
 
-        if ( getTrack( MainWorkflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
+        if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
             addVideoTrack();
-        if ( getTrack( MainWorkflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
+        if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
             addAudioTrack();
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
@@ -1121,12 +1121,12 @@ TracksView::updateDuration()
 }
 
 void
-TracksView::cleanTracks( MainWorkflow::TrackType type )
+TracksView::cleanTracks( Workflow::TrackType type )
 {
     int tracksToCheck;
     int tracksToRemove = 0;
 
-    if ( type == MainWorkflow::VideoTrack )
+    if ( type == Workflow::VideoTrack )
         tracksToCheck = m_numVideoTrack;
     else
         tracksToCheck = m_numAudioTrack;
@@ -1147,7 +1147,7 @@ TracksView::cleanTracks( MainWorkflow::TrackType type )
 
     while ( tracksToRemove > 1 )
     {
-        if ( type == MainWorkflow::VideoTrack )
+        if ( type == Workflow::VideoTrack )
             removeVideoTrack();
         else
             removeAudioTrack();
@@ -1159,13 +1159,13 @@ void
 TracksView::cleanUnusedTracks()
 {
     // Video
-    cleanTracks( MainWorkflow::VideoTrack );
+    cleanTracks( Workflow::VideoTrack );
     // Audio
-    cleanTracks( MainWorkflow::AudioTrack );
+    cleanTracks( Workflow::AudioTrack );
 }
 
 GraphicsTrack*
-TracksView::getTrack( MainWorkflow::TrackType type, unsigned int number )
+TracksView::getTrack( Workflow::TrackType type, unsigned int number )
 {
     for (int i = 0; i < m_layout->count(); ++i )
     {

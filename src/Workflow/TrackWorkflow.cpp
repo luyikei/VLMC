@@ -40,7 +40,7 @@
 
 #include <QtDebug>
 
-TrackWorkflow::TrackWorkflow( MainWorkflow::TrackType type  ) :
+TrackWorkflow::TrackWorkflow( Workflow::TrackType type  ) :
         m_length( 0 ),
         m_trackType( type ),
         m_lastFrame( 0 )
@@ -69,7 +69,7 @@ void
 TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
 {
     ClipWorkflow* cw;
-    if ( m_trackType == MainWorkflow::VideoTrack )
+    if ( m_trackType == Workflow::VideoTrack )
     {
         if ( ch->clip()->getMedia()->fileType() == Media::Video )
             cw = new VideoClipWorkflow( ch );
@@ -310,7 +310,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         {
             ret = renderClip( cw, currentFrame, start, needRepositioning,
                               renderOneFrame, paused );
-            if ( m_trackType == MainWorkflow::VideoTrack )
+            if ( m_trackType == Workflow::VideoTrack )
             {
                 frames[frameId] = reinterpret_cast<Workflow::Frame*>( ret );
                 ++frameId;
@@ -326,7 +326,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         ++it;
     }
     //Handle mixers:
-    if ( m_trackType == MainWorkflow::VideoTrack )
+    if ( m_trackType == Workflow::VideoTrack )
     {
         EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
@@ -346,7 +346,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     m_lastFrame = subFrame;
     if ( ret == NULL )
         return NULL;
-    if ( m_trackType == MainWorkflow::VideoTrack )
+    if ( m_trackType == Workflow::VideoTrack )
         return reinterpret_cast<Workflow::Frame*>( ret );
     return reinterpret_cast<Workflow::AudioSample*>( ret );
 }

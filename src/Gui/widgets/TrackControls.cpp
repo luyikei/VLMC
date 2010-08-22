@@ -42,9 +42,9 @@ TrackControls::~TrackControls()
 
 void TrackControls::updateTextLabels()
 {
-    if ( m_track->mediaType() == MainWorkflow::VideoTrack )
+    if ( m_track->mediaType() == Workflow::VideoTrack )
         m_ui->trackLabel->setText( tr( "Video #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
-    else if ( m_track->mediaType() == MainWorkflow::AudioTrack )
+    else if ( m_track->mediaType() == Workflow::AudioTrack )
         m_ui->trackLabel->setText( tr( "Audio #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
 }
 
@@ -66,16 +66,16 @@ void TrackControls::setTrackDisabled( bool disable )
     m_track->setTrackEnabled( !disable );
     if ( !disable )
     {
-        if ( m_track->mediaType() == MainWorkflow::VideoTrack )
+        if ( m_track->mediaType() == Workflow::VideoTrack )
             m_ui->disableButton->setIcon( QIcon( ":/images/trackon" ) );
-        else if ( m_track->mediaType() == MainWorkflow::AudioTrack )
+        else if ( m_track->mediaType() == Workflow::AudioTrack )
             m_ui->disableButton->setIcon( QIcon( ":/images/hpon" ) );
     }
     else
     {
-        if ( m_track->mediaType() == MainWorkflow::VideoTrack )
+        if ( m_track->mediaType() == Workflow::VideoTrack )
             m_ui->disableButton->setIcon( QIcon( ":/images/trackoff" ) );
-        else if ( m_track->mediaType() == MainWorkflow::AudioTrack )
+        else if ( m_track->mediaType() == Workflow::AudioTrack )
             m_ui->disableButton->setIcon( QIcon( ":/images/hpoff" ) );
     }
 }

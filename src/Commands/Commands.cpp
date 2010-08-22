@@ -45,7 +45,7 @@ void Commands::trigger( Commands::Generic* command )
 
 Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch,
                                           unsigned int trackNumber, qint64 pos,
-                                          ::MainWorkflow::TrackType trackType,
+                                          Workflow::TrackType trackType,
                                           bool undoRedoAction /*= false*/ ) :
         m_trackNumber( trackNumber ),
         m_pos( pos ),
@@ -73,7 +73,7 @@ void Commands::MainWorkflow::AddClip::undo()
 
 Commands::MainWorkflow::MoveClip::MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,
           unsigned int oldTrack, unsigned int newTrack, qint64 newPos,
-          ::MainWorkflow::TrackType trackType ) :
+          Workflow::TrackType trackType ) :
     m_workflow( workflow ), m_uuid( uuid ), m_oldTrack( oldTrack ),
     m_newTrack( newTrack ), m_pos( newPos ), m_trackType( trackType )
 {
@@ -101,7 +101,7 @@ void Commands::MainWorkflow::MoveClip::undo()
 }
 
 Commands::MainWorkflow::RemoveClip::RemoveClip( ClipHelper* ch, quint32 trackNumber,
-                                                qint64 pos, ::MainWorkflow::TrackType trackType ) :
+                                                qint64 pos, Workflow::TrackType trackType ) :
         m_clipHelper( ch ), m_trackNumber( trackNumber ),
         m_pos( pos ), m_trackType( trackType )
 {
@@ -122,7 +122,7 @@ Commands::MainWorkflow::ResizeClip::ResizeClip( ClipHelper* clipHelper,
                                                 qint64 oldBegin, qint64 oldEnd,
                                                 qint64 newPos, qint64 oldPos,
                                                 quint32 trackId,
-                                                ::MainWorkflow::TrackType trackType ) :
+                                                Workflow::TrackType trackType ) :
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
     m_oldBegin( oldBegin ),
@@ -160,7 +160,7 @@ void Commands::MainWorkflow::ResizeClip::undo()
 }
 
 Commands::MainWorkflow::SplitClip::SplitClip( ClipHelper* toSplit, quint32 trackId,
-                           qint64 newClipPos, qint64 newClipBegin, ::MainWorkflow::TrackType trackType ) :
+                           qint64 newClipPos, qint64 newClipBegin, Workflow::TrackType trackType ) :
     m_toSplit( toSplit ),
     m_newClip( NULL ),
     m_trackId( trackId ),

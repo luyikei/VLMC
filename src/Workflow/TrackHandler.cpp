@@ -27,7 +27,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 
-TrackHandler::TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType ) :
+TrackHandler::TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
         m_trackType( trackType ),
         m_length( 0 )

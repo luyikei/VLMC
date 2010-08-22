@@ -66,9 +66,9 @@ GraphicsMovieItem::~GraphicsMovieItem()
 {
 }
 
-MainWorkflow::TrackType GraphicsMovieItem::mediaType() const
+Workflow::TrackType GraphicsMovieItem::mediaType() const
 {
-    return MainWorkflow::VideoTrack;
+    return Workflow::VideoTrack;
 }
 
 void GraphicsMovieItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )

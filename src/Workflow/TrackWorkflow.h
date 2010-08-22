@@ -25,6 +25,7 @@
 
 #include "EffectsEngine.h"
 #include "MainWorkflow.h"
+#include "Types.h"
 
 #include <QObject>
 #include <QMap>
@@ -45,7 +46,7 @@ class   TrackWorkflow : public QObject
     Q_OBJECT
 
     public:
-        TrackWorkflow( MainWorkflow::TrackType type );
+        TrackWorkflow( Workflow::TrackType type );
         ~TrackWorkflow();
 
         void*                                   getOutput( qint64 currentFrame,
@@ -115,7 +116,7 @@ class   TrackWorkflow : public QObject
 
         QReadWriteLock*                         m_clipsLock;
 
-        MainWorkflow::TrackType                 m_trackType;
+        Workflow::TrackType                     m_trackType;
         qint64                                  m_lastFrame;
         Workflow::Frame                         *m_mixerBuffer;
         double                                  m_fps;

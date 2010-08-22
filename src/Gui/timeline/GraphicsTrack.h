@@ -36,7 +36,7 @@ class GraphicsTrack : public QGraphicsWidget
 public:
     enum { Type = UserType + 2 };
 
-    GraphicsTrack( MainWorkflow::TrackType type, quint32 trackNumber,
+    GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                    QGraphicsItem *parent = 0 );
 
     void setHeight( int height );
@@ -44,13 +44,13 @@ public:
     void setTrackEnabled( bool enabled );
     bool isEnabled();
     quint32 trackNumber();
-    MainWorkflow::TrackType mediaType();
+    Workflow::TrackType mediaType();
     virtual int type() const { return Type; }
 
     QList<AbstractGraphicsMediaItem*> childs();
 
 private:
-    MainWorkflow::TrackType m_type;
+    Workflow::TrackType m_type;
     quint32 m_trackNumber;
     bool m_enabled;
 };

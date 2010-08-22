@@ -72,7 +72,7 @@ MainWindow::MainWindow( QWidget *parent ) :
 {
     m_ui.setupUi( this );
 
-    qRegisterMetaType<MainWorkflow::TrackType>( "MainWorkflow::TrackType" );
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
     qRegisterMetaType<MainWorkflow::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
 

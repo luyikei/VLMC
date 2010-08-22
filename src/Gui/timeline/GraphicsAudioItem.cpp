@@ -66,9 +66,9 @@ GraphicsAudioItem::~GraphicsAudioItem()
 {
 }
 
-MainWorkflow::TrackType GraphicsAudioItem::mediaType() const
+Workflow::TrackType GraphicsAudioItem::mediaType() const
 {
-    return MainWorkflow::AudioTrack;
+    return Workflow::AudioTrack;
 }
 
 void GraphicsAudioItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )

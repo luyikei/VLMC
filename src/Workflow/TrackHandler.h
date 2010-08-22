@@ -35,7 +35,7 @@ class   TrackHandler : public QObject
 {
     Q_OBJECT
     public:
-        TrackHandler( unsigned int nbTracks, MainWorkflow::TrackType trackType );
+        TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType );
         ~TrackHandler();
 
         /**
@@ -110,7 +110,7 @@ class   TrackHandler : public QObject
     private:
         Toggleable<TrackWorkflow*>*     m_tracks;
         unsigned int                    m_trackCount;
-        MainWorkflow::TrackType         m_trackType;
+        Workflow::TrackType             m_trackType;
         qint64                          m_length;
         unsigned int                    m_highestTrackNumber;
         bool                            m_endReached;

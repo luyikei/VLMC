@@ -85,20 +85,20 @@ public slots:
      * \param start The position in frames.
      * \param
      */
-    void actionAddClip( ClipHelper* clip, unsigned int track, qint64 start, MainWorkflow::TrackType trackType );
+    void actionAddClip( ClipHelper* clip, unsigned int track, qint64 start, Workflow::TrackType trackType );
     /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.
      * \param track The new track of the item.
      * \param time The new position (in frames) of the item.
      */
-    void actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, MainWorkflow::TrackType );
+    void actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, Workflow::TrackType );
     /**
      * \brief Remove an item from the timeline.
      * \param uuid The Universally Unique Identifier of the item.
      * \param track The current track of the item.
      */
-    void actionRemoveClip( const QUuid& uuid, unsigned int track, MainWorkflow::TrackType trackType );
+    void actionRemoveClip( const QUuid& uuid, unsigned int track, Workflow::TrackType trackType );
 
     void    dragEnterEvent( QDragEnterEvent *event );
     void    dropEvent( QDropEvent *event );
