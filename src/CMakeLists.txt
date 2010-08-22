@@ -32,7 +32,6 @@ SET(VLMC_SRCS
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
-    Tools/Pool.hpp
     Tools/QSingleton.hpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
