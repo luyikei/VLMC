@@ -27,7 +27,8 @@
 #include "Workflow/Types.h"
 
 AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
-        ClipWorkflow( ch )
+        ClipWorkflow( ch ),
+        m_lastReturnedBuffer( NULL )
 {
     m_ptsOffset = 0;
 }
