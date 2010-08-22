@@ -104,6 +104,14 @@ PreferenceWidget::save()
         w->save();
 }
 
+void
+PreferenceWidget::reset()
+{
+    foreach ( ISettingsCategoryWidget* w, m_settings )
+        w->setting()->restoreDefault();
+    save();
+}
+
 const char*
 PreferenceWidget::category() const
 {

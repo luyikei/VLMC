@@ -30,10 +30,11 @@
 
 #include <QAbstractButton>
 #include <QApplication>
+#include <QMessageBox>
 #include <QDialogButtonBox>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QScrollArea>
-#include <QHBoxLayout>
 #include <QStackedLayout>
 
 Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
@@ -46,7 +47,8 @@ Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
     m_buttons = new QDialogButtonBox( Qt::Horizontal, this );
     m_buttons->setStandardButtons( QDialogButtonBox::Ok |
                                    QDialogButtonBox::Cancel |
-                                   QDialogButtonBox::Apply );
+                                   QDialogButtonBox::Apply |
+                                   QDialogButtonBox::Reset );
 
     // Create the layout
     buildLayout();
@@ -105,6 +107,17 @@ Settings::buttonClicked( QAbstractButton *button )
 {
     switch ( m_buttons->standardButton( button ) )
     {
+    case QDialogButtonBox::Reset:
+        {
+            if ( QMessageBox::question( NULL, tr( "Restore default?" ),
+                                        tr( "This will restore all settings default value.\nAre you sure you want to continue?" ),
+                                        QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
+            {
+                for ( int i = 0; i < m_stackedLayout->count(); ++i )
+                    qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->reset();
+            }
+            break ;
+        }
     case QDialogButtonBox::Ok:
     case QDialogButtonBox::Apply:
         {
