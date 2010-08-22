@@ -42,7 +42,10 @@ EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *par
     m_ui->nameValueLabel->setText( effect->effect()->name() );
     m_ui->descValueLabel->setText( effect->effect()->description() );
     m_ui->typeValueLabel->setText( nameFromType( effect->effect()->type() ) );
-
+    m_ui->authorValueLabel->setText( effect->effect()->author() );
+    QString version = QString::number( effect->effect()->getMajor() ) + '.' +
+                      QString::number( effect->effect()->getMinor() );
+    m_ui->versionValueLabel->setText( version );
     EffectInstance::ParamList::iterator         it = effect->params().begin();
     EffectInstance::ParamList::iterator         ite = effect->params().end();
     while ( it != ite )
