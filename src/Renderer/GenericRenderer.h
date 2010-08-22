@@ -30,7 +30,7 @@
 # include <QWidget>
 #endif
 
-#include "MainWorkflow.h"
+#include "Types.h"
 
 class   Clip;
 class   Media;

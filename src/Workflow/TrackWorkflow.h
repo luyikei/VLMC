@@ -24,13 +24,14 @@
 #define TRACKWORKFLOW_H
 
 #include "EffectsEngine.h"
-#include "MainWorkflow.h"
 #include "Types.h"
 
 #include <QObject>
 #include <QMap>
 #include <QXmlStreamWriter>
 
+class   Clip;
+class   ClipHelper;
 class   ClipWorkflow;
 
 class   QDomElement;

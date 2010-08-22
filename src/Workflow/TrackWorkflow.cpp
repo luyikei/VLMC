@@ -27,6 +27,7 @@
 #include "ClipHelper.h"
 #include "AudioClipWorkflow.h"
 #include "ImageClipWorkflow.h"
+#include "MainWorkflow.h"
 #include "Media.h"
 #include "MixerInstance.h"
 #include "Types.h"

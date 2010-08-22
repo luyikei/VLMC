@@ -21,8 +21,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "vlmc.h"
 #include "WorkflowFileRendererDialog.h"
+
+#include "vlmc.h"
+#include "MainWorkflow.h"
 #include "WorkflowFileRenderer.h"
 
 WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* renderer,
@@ -32,7 +34,6 @@ WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* re
         m_renderer( renderer )
 {
     m_ui.setupUi( this );
-    m_workflow = MainWorkflow::getInstance();
     connect( m_ui.cancelButton, SIGNAL( clicked() ), m_renderer, SLOT( stop() ) );
     connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( close() ) );
     connect( m_renderer, SIGNAL( renderComplete() ), this, SLOT( accept() ) );
@@ -64,6 +65,6 @@ void    WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 void    WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
     m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
-                                    QString::number(m_workflow->getLengthFrame() ) ) );
-    setProgressBarValue( frame * 100 / m_workflow->getLengthFrame() );
+                                    QString::number(MainWorkflow::getInstance()->getLengthFrame() ) ) );
+    setProgressBarValue( frame * 100 / MainWorkflow::getInstance()->getLengthFrame() );
 }

@@ -35,12 +35,13 @@ class QWheelEvent;
 class QGraphicsWidget;
 class QGraphicsLinearLayout;
 
-class TracksScene;
-class GraphicsMovieItem;
-class GraphicsAudioItem;
-class WorkflowRenderer;
+class   TracksScene;
+class   GraphicsMovieItem;
+class   GraphicsAudioItem;
+class   MainWorkflow;
+class   WorkflowRenderer;
 
-class ItemPosition
+class   ItemPosition
 {
 public:
     ItemPosition() : m_track( -1 ), m_time( -1 )

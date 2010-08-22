@@ -26,8 +26,6 @@
 #include <QDialog>
 #include "ui_WorkflowFileRendererDialog.h"
 
-#include "MainWorkflow.h"
-
 class   WorkflowFileRenderer;
 
 class   WorkflowFileRendererDialog : public QDialog
@@ -41,7 +39,6 @@ public:
 
 private:
     Ui::WorkflowFileRendererDialog      m_ui;
-    MainWorkflow*                       m_workflow;
     quint32                             m_width;
     quint32                             m_height;
     WorkflowFileRenderer                *m_renderer;
