@@ -25,9 +25,9 @@
 
 #include "EffectsEngine.h"
 #include "MainWorkflow.h"
-#include "StackedBuffer.hpp"
 
 #include <QObject>
+#include <QMap>
 #include <QXmlStreamWriter>
 
 class   ClipWorkflow;
@@ -36,8 +36,6 @@ class   QDomElement;
 class   QDomElement;
 template <typename T>
 class   QList;
-template <typename T, typename U>
-class   QMap;
 class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
@@ -101,7 +99,6 @@ class   TrackWorkflow : public QObject
         void                                    preloadClip( ClipWorkflow* cw );
         void                                    stopClipWorkflow( ClipWorkflow* cw );
         void                                    adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw );
-        void                                    releasePreviousRender();
 
 
     private:
@@ -120,8 +117,6 @@ class   TrackWorkflow : public QObject
 
         MainWorkflow::TrackType                 m_trackType;
         qint64                                  m_lastFrame;
-        StackedBuffer<Workflow::Frame*>*        m_videoStackedBuffer;
-        StackedBuffer<Workflow::AudioSample*>*  m_audioStackedBuffer;
         Workflow::Frame                         *m_mixerBuffer;
         double                                  m_fps;
 };

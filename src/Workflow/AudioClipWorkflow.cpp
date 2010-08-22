@@ -82,25 +82,30 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
 
+    if ( m_lastReturnedBuffer != NULL )
+    {
+        m_availableBuffers.enqueue( m_lastReturnedBuffer );
+        m_lastReturnedBuffer = NULL;
+    }
     if ( getNbComputedBuffers() == 0 )
         return NULL;
     if ( shouldRender() == false )
         return NULL;
     if ( mode == ClipWorkflow::Get )
         qCritical() << "A sound buffer should never be asked with 'Get' mode";
-    ::StackedBuffer<Workflow::AudioSample*> *buff = new StackedBuffer(
-            m_computedBuffers.dequeue(), this, true );
+    Workflow::AudioSample   *buff = m_computedBuffers.dequeue();
     if ( m_previousPts == -1 )
     {
-        buff->get()->ptsDiff = 0;
-        m_previousPts = buff->get()->pts;
+        buff->ptsDiff = 0;
+        m_previousPts = buff->pts;
     }
     else
     {
-        buff->get()->ptsDiff = buff->get()->pts - m_previousPts;
-        m_previousPts = buff->get()->pts;
+        buff->ptsDiff = buff->pts - m_previousPts;
+        m_previousPts = buff->pts;
     }
     postGetOutput();
+    m_lastReturnedBuffer = buff;
     return buff;
 }
 
@@ -222,13 +227,6 @@ AudioClipWorkflow::getMaxComputedBuffers() const
 }
 
 void
-AudioClipWorkflow::releaseBuffer( Workflow::AudioSample *sample )
-{
-    QMutexLocker    lock( m_renderLock );
-    m_availableBuffers.enqueue( sample );
-}
-
-void
 AudioClipWorkflow::flushComputedBuffers()
 {
     QMutexLocker        lock( m_renderLock );
@@ -237,20 +235,4 @@ AudioClipWorkflow::flushComputedBuffers()
     {
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
     }
-}
-
-AudioClipWorkflow::StackedBuffer::StackedBuffer( Workflow::AudioSample *as,
-                                                AudioClipWorkflow *poolHandler,
-                                                bool mustBeReleased) :
-    ::StackedBuffer<Workflow::AudioSample*>( as, mustBeReleased ),
-    m_poolHandler( poolHandler )
-{
-}
-
-void
-AudioClipWorkflow::StackedBuffer::release()
-{
-    if ( m_mustRelease == true && m_poolHandler.isNull() == false )
-        m_poolHandler->releaseBuffer( m_buff );
-    delete this;
 }

@@ -31,8 +31,7 @@
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_buffer( NULL ),
-        m_stackedBuffer( NULL )
+        m_buffer( NULL )
 {
     //This is used to queue the media player stopping, as it can't be asked for
     //from vlc's input thread (well it can but it will deadlock)
@@ -90,7 +89,7 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
 {
     QMutexLocker    lock( m_renderLock );
 
-    return m_stackedBuffer;
+    return m_buffer;
 }
 
 void
@@ -101,7 +100,6 @@ ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int )
     {
         cw->m_buffer = new Workflow::Frame( MainWorkflow::getInstance()->getWidth(),
                                             MainWorkflow::getInstance()->getHeight() );
-        cw->m_stackedBuffer = new StackedBuffer( cw->m_buffer );
     }
     *pp_ret = cw->m_buffer->buffer();
 }
@@ -138,15 +136,4 @@ ImageClipWorkflow::stopComputation()
 void
 ImageClipWorkflow::flushComputedBuffers()
 {
-}
-
-ImageClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame ) :
-    ::StackedBuffer<Workflow::Frame*>( frame, false )
-{
-}
-
-void
-ImageClipWorkflow::StackedBuffer::release()
-{
-    return ;
 }

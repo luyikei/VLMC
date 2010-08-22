@@ -25,10 +25,8 @@
 
 #include "ClipWorkflow.h"
 #include "EffectsEngine.h"
-#include "StackedBuffer.hpp"
-#include "Pool.hpp"
 
-#include <QPointer>
+#include <QQueue>
 
 class   Clip;
 
@@ -37,16 +35,6 @@ class   VideoClipWorkflow : public ClipWorkflow
     Q_OBJECT
 
     public:
-        class   StackedBuffer : public ::StackedBuffer<Workflow::Frame*>
-        {
-            public:
-                StackedBuffer( Workflow::Frame* frame, VideoClipWorkflow* poolHandler,
-                                    bool mustBeReleased = true);
-                virtual void    release();
-            private:
-                QPointer<VideoClipWorkflow>     m_poolHandler;
-        };
-
         VideoClipWorkflow( ClipHelper* ch );
         ~VideoClipWorkflow();
         void                    *getLockCallback() const;
@@ -62,7 +50,6 @@ class   VideoClipWorkflow : public ClipWorkflow
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
-        void                    releaseBuffer( Workflow::Frame* frame );
         virtual void            flushComputedBuffers();
         /**
          *  \brief              Pre-allocate some image buffers.
@@ -83,6 +70,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         QReadWriteLock              *m_effectsLock;
         QMutex                      *m_renderedFrameMutex;
         qint64                      m_renderedFrame;
+        Workflow::Frame             *m_lastReturnedBuffer;
         QList<EffectsEngine::FilterHelper*>     m_filters;
 };
 

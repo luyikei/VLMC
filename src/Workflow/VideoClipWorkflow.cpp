@@ -24,19 +24,20 @@
 #include "FilterInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
-#include "StackedBuffer.hpp"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
 #include "WaitCondition.hpp"
 #include "Workflow/Types.h"
 
 #include <QReadWriteLock>
+#include <QtDebug>
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_width( 0 ),
         m_height( 0 ),
-        m_renderedFrame( 0 )
+        m_renderedFrame( 0 ),
+        m_lastReturnedBuffer( NULL )
 {
     m_effectsLock = new QReadWriteLock();
     m_renderedFrameMutex = new QMutex();
@@ -122,6 +123,11 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
 {
     QMutexLocker    lock( m_renderLock );
 
+    if ( m_lastReturnedBuffer != NULL )
+    {
+        m_availableBuffers.enqueue( m_lastReturnedBuffer );
+        m_lastReturnedBuffer = NULL;
+    }
     if ( shouldRender() == false )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
@@ -129,11 +135,14 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     //Recheck again, as the WaitCondition may have been awaken when stopping.
     if ( getNbComputedBuffers() == 0 )
         return NULL;
-    ::StackedBuffer<Workflow::Frame*>* buff;
+    Workflow::Frame         *buff;
     if ( mode == ClipWorkflow::Pop )
-        buff = new StackedBuffer( m_computedBuffers.dequeue(), this, true );
+    {
+        buff = m_computedBuffers.dequeue();
+        m_lastReturnedBuffer = buff;
+    }
     else if ( mode == ClipWorkflow::Get )
-        buff = new StackedBuffer( m_computedBuffers.head(), NULL, false );
+        buff = m_computedBuffers.head();
     postGetOutput();
     return buff;
 }
@@ -193,14 +202,6 @@ VideoClipWorkflow::getMaxComputedBuffers() const
 }
 
 void
-VideoClipWorkflow::releaseBuffer( Workflow::Frame *frame )
-{
-    QMutexLocker    lock( m_renderLock );
-
-    m_availableBuffers.enqueue( frame );
-}
-
-void
 VideoClipWorkflow::flushComputedBuffers()
 {
     QMutexLocker    lock( m_renderLock );
@@ -238,20 +239,4 @@ VideoClipWorkflow::setTime( qint64 time, qint64 frame )
         m_renderedFrame = frame;
     }
     ClipWorkflow::setTime( time, frame );
-}
-
-VideoClipWorkflow::StackedBuffer::StackedBuffer( Workflow::Frame *frame,
-                                                    VideoClipWorkflow *poolHandler,
-                                                    bool mustBeReleased) :
-    ::StackedBuffer<Workflow::Frame*>( frame, mustBeReleased ),
-    m_poolHandler( poolHandler )
-{
-}
-
-void
-VideoClipWorkflow::StackedBuffer::release()
-{
-    if ( m_mustRelease == true && m_poolHandler.isNull() == false )
-        m_poolHandler->releaseBuffer( m_buff );
-    delete this;
 }

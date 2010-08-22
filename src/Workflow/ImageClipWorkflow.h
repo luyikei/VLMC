@@ -24,19 +24,12 @@
 #define IMAGECLIPWORKFLOW_H
 
 #include "ClipWorkflow.h"
-#include "StackedBuffer.hpp"
 
 class   ImageClipWorkflow : public ClipWorkflow
 {
     Q_OBJECT
 
     public:
-    class   StackedBuffer : public ::StackedBuffer<Workflow::Frame*>
-        {
-            public:
-                StackedBuffer( Workflow::Frame* frame );
-                virtual void    release();
-        };
         ImageClipWorkflow( ClipHelper* ch );
         ~ImageClipWorkflow();
 
@@ -44,7 +37,7 @@ class   ImageClipWorkflow : public ClipWorkflow
         void                    *getUnlockCallback() const;
         virtual void            *getOutput( ClipWorkflow::GetMode mode );
         virtual void            saveEffects( QXmlStreamWriter & ) const {} //Nothing to do here now.
-        virtual bool            appendEffect( Effect *, qint64, qint64 ) { return false; }; //Nothing to do here now.
+        virtual bool            appendEffect( Effect *, qint64, qint64 ) { return false; } //Nothing to do here now.
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
@@ -59,7 +52,6 @@ class   ImageClipWorkflow : public ClipWorkflow
                                         qint64 pts );
     private:
         Workflow::Frame         *m_buffer;
-        StackedBuffer           *m_stackedBuffer;
 
     private slots:
         void                    stopComputation();

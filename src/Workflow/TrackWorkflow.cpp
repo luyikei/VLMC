@@ -33,18 +33,17 @@
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
 
-#include <QReadWriteLock>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QMutex>
+#include <QReadWriteLock>
 
 #include <QtDebug>
 
 TrackWorkflow::TrackWorkflow( MainWorkflow::TrackType type  ) :
         m_length( 0 ),
         m_trackType( type ),
-        m_lastFrame( 0 ),
-        m_videoStackedBuffer( NULL ),
-        m_audioStackedBuffer( NULL )
+        m_lastFrame( 0 )
 {
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
@@ -263,36 +262,19 @@ TrackWorkflow::stop()
         stopClipWorkflow( it.value() );
         ++it;
     }
-    releasePreviousRender();
     m_lastFrame = 0;
-}
-
-void
-TrackWorkflow::releasePreviousRender()
-{
-    if ( m_audioStackedBuffer != NULL )
-    {
-        m_audioStackedBuffer->release();
-        m_audioStackedBuffer = NULL;
-    }
-    if ( m_videoStackedBuffer != NULL )
-    {
-        m_videoStackedBuffer->release();
-        m_videoStackedBuffer = NULL;
-    }
 }
 
 void*
 TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 {
-    releasePreviousRender();
     QReadLocker     lock( m_clipsLock );
 
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     bool                                        needRepositioning;
     void                                        *ret = NULL;
-    StackedBuffer<Workflow::Frame*>             *frames[EffectsEngine::MaxFramesForMixer];
+    Workflow::Frame                             *frames[EffectsEngine::MaxFramesForMixer];
     quint32                                     frameId = 0;
     bool                                        renderOneFrame = false;
 
@@ -330,11 +312,9 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                               renderOneFrame, paused );
             if ( m_trackType == MainWorkflow::VideoTrack )
             {
-                frames[frameId] = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
+                frames[frameId] = reinterpret_cast<Workflow::Frame*>( ret );
                 ++frameId;
             }
-            else
-                m_audioStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*>( ret );
         }
         //Is it about to be rendered?
         else if ( start > currentFrame &&
@@ -353,40 +333,22 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         {
             //FIXME: We don't handle mixer3 yet.
             mixer->effect->process( currentFrame * 1000.0 / m_fps,
-                                    frames[0]->get()->buffer(),
-                                    frames[1] != NULL ? frames[1]->get()->buffer() : MainWorkflow::blackOutput->buffer(),
+                                    frames[0]->buffer(),
+                                    frames[1] != NULL ? frames[1]->buffer() : MainWorkflow::blackOutput->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
-            m_mixerBuffer->ptsDiff = frames[0]->get()->ptsDiff;
-            //The rest of the code uses stackedbuffer, m_mixerBuffer is just a Frame*
-            for ( quint32 i = 0; i < EffectsEngine::MaxFramesForMixer; ++i )
-            {
-                if ( frames[i] != NULL )
-                    frames[i]->release();
-                else
-                    break;
-            }
+            m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;
             m_lastFrame = subFrame;
             return m_mixerBuffer;
         }
-        else //If no mixer, clean the potentially rendered extra frames.
-        {
-            for ( quint32 i = 1; i < EffectsEngine::MaxFramesForMixer; ++i )
-            {
-                if ( frames[i] != NULL )
-                    frames[i]->release();
-                else
-                    break;
-            }
+        else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
-            m_videoStackedBuffer = reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret );
-        }
     }
     m_lastFrame = subFrame;
     if ( ret == NULL )
         return NULL;
     if ( m_trackType == MainWorkflow::VideoTrack )
-        return reinterpret_cast<StackedBuffer<Workflow::Frame*>*>( ret )->get();
-    return reinterpret_cast<StackedBuffer<Workflow::AudioSample*>*>( ret )->get();
+        return reinterpret_cast<Workflow::Frame*>( ret );
+    return reinterpret_cast<Workflow::AudioSample*>( ret );
 }
 
 void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )

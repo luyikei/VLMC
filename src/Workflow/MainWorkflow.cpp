@@ -35,6 +35,7 @@
 #include "Workflow/Types.h"
 
 #include <QDomElement>
+#include <QMutex>
 
 Workflow::Frame     *MainWorkflow::blackOutput = NULL;
 

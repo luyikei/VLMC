@@ -43,7 +43,6 @@ SET(VLMC_SRCS
     Workflow/ClipHelper.cpp
     Workflow/ImageClipWorkflow.cpp
     Workflow/MainWorkflow.cpp
-    Workflow/StackedBuffer.hpp
     Workflow/TrackHandler.cpp
     Workflow/TrackWorkflow.cpp
     Workflow/Types.cpp
