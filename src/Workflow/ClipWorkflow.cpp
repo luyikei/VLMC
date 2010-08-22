@@ -144,6 +144,7 @@ ClipWorkflow::stopRenderer()
         m_mediaPlayer = NULL;
         delete m_vlcMedia;
         m_state = Stopped;
+        flushComputedBuffers();
     }
 }
 
