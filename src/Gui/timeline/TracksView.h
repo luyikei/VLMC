@@ -24,9 +24,9 @@
 #define TRACKSVIEW_H
 
 #include "vlmc.h"
-#include "MainWorkflow.h"
 #include "AbstractGraphicsMediaItem.h"
 #include "GraphicsCursorItem.h"
+#include "Types.h"
 
 #include <QWidget>
 #include <QGraphicsView>

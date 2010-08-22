@@ -30,6 +30,8 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QSettings>
+#include <QXmlStreamWriter>
+
 #include <QtDebug>
 
 EffectsEngine::EffectsEngine()

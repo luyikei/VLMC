@@ -23,9 +23,11 @@
 #ifndef ABSTRACTGRAPHICSMEDIAITEM_H
 #define ABSTRACTGRAPHICSMEDIAITEM_H
 
+class   ClipHelper;
+#include "Types.h"
+
 #include <QGraphicsItem>
 #include <QUuid>
-#include "MainWorkflow.h"
 
 #define RESIZE_ZONE 7
 

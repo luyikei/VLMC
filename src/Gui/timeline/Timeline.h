@@ -23,16 +23,20 @@
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
+#include "ClipHelper.h"
 #include "vlmc.h"
 #include "ui_Timeline.h"
-#include "Workflow/MainWorkflow.h"
+#include "Types.h"
+
+#include <QDomElement>
 #include <QXmlStreamWriter>
 
-class TracksScene;
-class TracksView;
-class TracksControls;
-class TracksRuler;
-class WorkflowRenderer;
+class   MainWorkflow;
+class   TracksScene;
+class   TracksView;
+class   TracksControls;
+class   TracksRuler;
+class   WorkflowRenderer;
 
 /**
  * \brief Entry point of the timeline widget.

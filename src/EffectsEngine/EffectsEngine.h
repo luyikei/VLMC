@@ -24,17 +24,23 @@
 #define EFFECTSENGINE_H
 
 #include "Singleton.hpp"
-
-class   QTime;
-
 #include "Effect.h"
-#include "MainWorkflow.h"
+
+namespace Workflow
+{
+    class   Frame;
+}
 
 class   FilterInstance;
 class   MixerInstance;
 
+class   QTime;
+class   QXmlStreamWriter;
+
 #include <QObject>
 #include <QHash>
+#include <QUuid>
+
 
 class   QSettings;
 

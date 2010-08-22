@@ -24,6 +24,7 @@
 #define GRAPHICSCURSORITEM_H
 
 #include "MainWorkflow.h"
+#include "Types.h"
 #include <QObject>
 #include <QGraphicsItem>
 #include <QPen>
