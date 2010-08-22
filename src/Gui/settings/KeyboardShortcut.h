@@ -43,7 +43,6 @@ class   KeyboardShortcut : public ISettingsCategoryWidget
         virtual void            changed( const QVariant& ){}
 
     private:
-        SettingValue            *m_setting;
         KeyboardShortcutInput   *m_input;
 };
 

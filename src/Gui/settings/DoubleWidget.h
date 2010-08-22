@@ -43,7 +43,6 @@ class   DoubleWidget : public ISettingsCategoryWidget
         virtual void            changed( const QVariant& );
 
     private:
-        SettingValue            *m_setting;
         QDoubleSpinBox          *m_spinbox;
 };
 

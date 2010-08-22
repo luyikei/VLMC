@@ -43,7 +43,6 @@ class   StringWidget : public ISettingsCategoryWidget
         virtual void            changed( const QVariant& );
 
     private:
-        SettingValue            *m_setting;
         QLineEdit               *m_lineEdit;
 };
 

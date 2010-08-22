@@ -40,7 +40,6 @@ class DoubleSliderWidget : public ISettingsCategoryWidget
         void        save();
 
     private:
-        SettingValue    *m_setting;
         QSlider         *m_slider;
         QWidget         *m_container;
         QLabel          *m_valueDisplayer;

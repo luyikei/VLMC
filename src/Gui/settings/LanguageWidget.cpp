@@ -34,7 +34,7 @@
 #define TS_PREFIX "vlmc_"
 
 LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_list = new QComboBox( parent );
     QDir dir( ":/ts/", "*.qm", QDir::Name | QDir::IgnoreCase, QDir::Files );
@@ -75,8 +75,6 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     // Add the system default option (auto-detection of the locale)
     m_list->insertItem( 0, "System Locale (autodetect)", "default" );
 
-    connect( s, SIGNAL( changed( const QVariant& ) ),
-             this, SLOT( changed( const QVariant& ) ) );
     changed( s->get() );
 }
 

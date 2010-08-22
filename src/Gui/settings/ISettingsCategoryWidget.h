@@ -24,6 +24,8 @@
 #ifndef ISETTINGSCATEGORYWIDGET_H
 #define ISETTINGSCATEGORYWIDGET_H
 
+#include "SettingValue.h"
+
 class   QVariant;
 class   QWidget;
 
@@ -34,8 +36,19 @@ class   ISettingsCategoryWidget : public QObject
     Q_OBJECT
 
     public:
+        virtual SettingValue    *setting() { return m_setting; }
         virtual QWidget*        widget() = 0;
         virtual void            save() = 0;
+
+    protected:
+        ISettingsCategoryWidget( SettingValue* s ) : m_setting( s )
+        {
+            connect( s, SIGNAL( changed( const QVariant& ) ),
+                     this, SLOT( changed( const QVariant& ) ) );
+        }
+
+    protected:
+        SettingValue            *m_setting;
 
     protected slots:
         virtual void            changed( const QVariant& ) = 0;

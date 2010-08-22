@@ -26,11 +26,9 @@
 #include <QSpinBox>
 
 IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_spinbox = new QSpinBox( parent );
-    connect( s, SIGNAL( changed( const QVariant& ) ),
-             this, SLOT( changed( const QVariant& ) ) );
     if ( ( s->flags() & SettingValue::Clamped ) != 0 )
     {
         if ( s->min().isValid() )

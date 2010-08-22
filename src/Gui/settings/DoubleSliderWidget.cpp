@@ -29,7 +29,7 @@
 #include <QSlider>
 
 DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_container = new QWidget( parent );
     //Creating the slider
@@ -48,8 +48,6 @@ DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= NUL
     m_slider->setMaximum( s->max().toDouble() * 100.0 );
     m_slider->setMinimum( s->min().toDouble() * 100.0 );
     changed ( s->get() );
-    connect( s, SIGNAL( changed( const QVariant& ) ),
-             this, SLOT( changed( const QVariant& ) ) );
     connect( m_slider, SIGNAL( valueChanged( int ) ), this, SLOT( sliderMoved( int ) ) );
 }
 

@@ -29,7 +29,7 @@
 #include <QPushButton>
 
 PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_widget = new QWidget( parent );
     QHBoxLayout *layout = new QHBoxLayout;
@@ -40,8 +40,6 @@ PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     layout->addWidget( m_pushButton );
     m_widget->setLayout( layout );
 
-    connect( s, SIGNAL( changed( const QVariant& ) ),
-             this, SLOT( changed( const QVariant& ) ) );
     changed( s->get() );
     connect( m_pushButton, SIGNAL( clicked() ), this, SLOT( selectPathButtonPressed() ) );
 }

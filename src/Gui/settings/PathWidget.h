@@ -44,7 +44,6 @@ class   PathWidget : public ISettingsCategoryWidget
         virtual void            changed( const QVariant& );
         void                    selectPathButtonPressed();
     private:
-        SettingValue            *m_setting;
         QLineEdit               *m_lineEdit;
         QPushButton             *m_pushButton;
         QWidget                 *m_widget;

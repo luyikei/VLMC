@@ -26,11 +26,9 @@
 #include <QCheckBox>
 
 BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_checkbox = new QCheckBox( parent );
-    connect( s, SIGNAL( changed( const QVariant& ) ),
-             this, SLOT( changed( const QVariant& ) ) );
     changed( s->get() );
 }
 

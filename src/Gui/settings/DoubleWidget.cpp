@@ -26,7 +26,7 @@
 #include <QDoubleSpinBox>
 
 DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        m_setting( s )
+        ISettingsCategoryWidget( s )
 {
     m_spinbox = new QDoubleSpinBox( parent );
     changed( s->get() );

@@ -44,7 +44,6 @@ class   ColorWidget : public ISettingsCategoryWidget
         void                    buttonClicked();
 
     private:
-        SettingValue            *m_setting;
         QPushButton             *m_button;
         QColor                  m_color;
 

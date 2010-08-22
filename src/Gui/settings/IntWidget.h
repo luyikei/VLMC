@@ -43,7 +43,6 @@ class   IntWidget : public ISettingsCategoryWidget
         virtual void            changed( const QVariant& );
 
     private:
-        SettingValue            *m_setting;
         QSpinBox                *m_spinbox;
 };
 
