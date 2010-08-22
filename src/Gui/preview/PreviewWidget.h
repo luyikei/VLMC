@@ -62,7 +62,7 @@ private slots:
     void            on_pushButtonStop_clicked();
     void            on_pushButtonNextFrame_clicked();
     void            on_pushButtonPreviousFrame_clicked();
-    void            frameChanged( qint64, MainWorkflow::FrameChangedReason reason );
+    void            frameChanged( qint64, Vlmc::FrameChangedReason reason );
     void            videoPaused();
     void            videoPlaying();
     void            videoStopped();

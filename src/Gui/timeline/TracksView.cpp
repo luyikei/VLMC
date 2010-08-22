@@ -1038,7 +1038,7 @@ TracksView::setCursorPos( qint64 pos )
 {
     if ( pos < 0 )
         pos = 0;
-    m_cursorLine->frameChanged( pos, MainWorkflow::TimelineCursor );
+    m_cursorLine->frameChanged( pos, Vlmc::TimelineCursor );
 }
 
 qint64

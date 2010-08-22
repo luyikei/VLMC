@@ -96,9 +96,9 @@ void GraphicsCursorItem::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     QGraphicsItem::mouseReleaseEvent( event );
 }
 
-void GraphicsCursorItem::frameChanged( qint64 newFrame, MainWorkflow::FrameChangedReason reason )
+void GraphicsCursorItem::frameChanged( qint64 newFrame, Vlmc::FrameChangedReason reason )
 {
-    if ( reason != MainWorkflow::TimelineCursor )
+    if ( reason != Vlmc::TimelineCursor )
     {
         setPos( newFrame, pos().y() );
     }

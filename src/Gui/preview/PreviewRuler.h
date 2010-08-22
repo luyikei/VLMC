@@ -72,7 +72,7 @@ private:
     bool                m_isSliding;
 
 signals:
-    void                frameChanged( qint64, MainWorkflow::FrameChangedReason );
+    void                frameChanged( qint64, Vlmc::FrameChangedReason );
     void                timeChanged( int h, int m, int s, int f );
 };
 

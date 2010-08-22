@@ -204,7 +204,7 @@ signals:
      *  \param  reason      The reason for changing frame
      */
     void                            frameChanged( qint64 newFrame,
-                                                MainWorkflow::FrameChangedReason reason );
+                                                Vlmc::FrameChangedReason reason );
     /**
      *  \brief  Emmited when render end is reached.
      *

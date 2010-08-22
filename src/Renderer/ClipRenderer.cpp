@@ -126,7 +126,7 @@ ClipRenderer::togglePlayPause( bool forcePause )
 {
     if ( m_clipLoaded == false )
     {
-        emit frameChanged( 0, MainWorkflow::Renderer );
+        emit frameChanged( 0, Vlmc::Renderer );
         startPreview();
         return ;
     }
@@ -238,7 +238,7 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
 void
 ClipRenderer::__videoStopped()
 {
-    emit frameChanged( 0, MainWorkflow::Renderer );
+    emit frameChanged( 0, Vlmc::Renderer );
     emit stopped();
 }
 
@@ -255,7 +255,7 @@ ClipRenderer::__timeChanged( qint64 time )
         return ;
     }
     f = f - m_begin;
-    emit frameChanged( f, MainWorkflow::Renderer );
+    emit frameChanged( f, Vlmc::Renderer );
 }
 
 void

@@ -57,25 +57,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
     public:
         /**
-         *  \enum   Used to know which part required a change of rendered frame.
-         *          The main use of this enum is to avoid infinite information propagation
-         *          such as the timeline informing itself that the frame as changed, which
-         *          would cause a signal to be emmited to inform every other part that the
-         *          rendered frame has changed, and so on.
-         */
-        enum    FrameChangedReason
-        {
-            Renderer, ///< Used by the WorkflowRenderer
-            /**
-             *  \brief      Used by the timeline cursor.
-             *  \warning    The timeline cursor is not the timeline ruler
-             */
-            TimelineCursor,
-            PreviewCursor, ///< Used by the preview widget, when using the time cursor.
-            RulerCursor, ///< Used by the timeline's ruler.
-        };
-
-        /**
          *  \brief      Add a clip to the workflow
          *
          *  When called, this method will emit
@@ -123,7 +104,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                         (to avoid cyclic events)
         */
         void                    setCurrentFrame( qint64 currentFrame,
-                                                MainWorkflow::FrameChangedReason reason );
+                                                Vlmc::FrameChangedReason reason );
 
         /**
          *  \brief              Get the workflow length in frames.
@@ -436,7 +417,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *                          from the MainWorkflow, this should be "Renderer"
          */
         void                    frameChanged( qint64 newFrame,
-                                              MainWorkflow::FrameChangedReason reason );
+                                              Vlmc::FrameChangedReason reason );
 
         /**
          *  \brief  Emitted when workflow end is reached

@@ -46,7 +46,7 @@ void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 wi
                                        quint32 height, double fps, quint32 vbitrate,
                                        quint32 abitrate )
 {
-    m_mainWorkflow->setCurrentFrame( 0, MainWorkflow::Renderer );
+    m_mainWorkflow->setCurrentFrame( 0, Vlmc::Renderer );
 
     setupRenderer( width, height, fps );
 
@@ -61,8 +61,8 @@ void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 wi
     m_mediaPlayer->setMedia( m_media );
 
     connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( stop() ) );
-    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason) ),
-             this, SLOT( __frameChanged( qint64,MainWorkflow::FrameChangedReason ) ) );
+    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason) ),
+             this, SLOT( __frameChanged( qint64,Vlmc::FrameChangedReason ) ) );
 
     m_isRendering = true;
     m_stopping = false;
@@ -118,7 +118,7 @@ WorkflowFileRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64
 }
 
 void
-WorkflowFileRenderer::__frameChanged( qint64 frame, MainWorkflow::FrameChangedReason )
+WorkflowFileRenderer::__frameChanged( qint64 frame, Vlmc::FrameChangedReason )
 {
     emit frameChanged( frame );
 }

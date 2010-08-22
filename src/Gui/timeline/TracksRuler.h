@@ -109,7 +109,7 @@ signals:
     /**
      * \brief Emitted when the user is seeking.
      */
-    void        frameChanged( qint64, MainWorkflow::FrameChangedReason );
+    void        frameChanged( qint64, Vlmc::FrameChangedReason );
 };
 
 #endif // TRACKSRULER_H

@@ -64,7 +64,7 @@ signals:
     void cursorMoved( qint64 pos );
 
 public slots:
-    void frameChanged( qint64 position, MainWorkflow::FrameChangedReason );
+    void frameChanged( qint64 position, Vlmc::FrameChangedReason );
 };
 
 #endif // GRAPHICSCURSORITEM_H

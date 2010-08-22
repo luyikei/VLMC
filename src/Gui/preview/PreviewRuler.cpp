@@ -42,13 +42,13 @@ void PreviewRuler::setRenderer( GenericRenderer* renderer )
 {
     if ( m_renderer )
     {
-        disconnect( m_renderer, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason ) ) );
+        disconnect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason ) ) );
     }
     m_renderer = renderer;
 
-    connect( m_renderer, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
+    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              this, SLOT( update() ) );
-    connect( m_renderer, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
+    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              this, SLOT( updateTimecode( qint64 ) ) );
     connect( m_renderer, SIGNAL( stopped() ),
              this, SLOT( clear() ) );
@@ -222,7 +222,7 @@ void PreviewRuler::setFrame( qint64 frame, bool broadcastEvent /*= false*/ )
     m_frame = frame;
     if ( m_isSliding && broadcastEvent == true )
     {
-        emit frameChanged( frame, MainWorkflow::PreviewCursor );
+        emit frameChanged( frame, Vlmc::PreviewCursor );
     }
     update();
 }

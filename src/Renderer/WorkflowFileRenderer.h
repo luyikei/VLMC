@@ -64,7 +64,7 @@ protected:
 private slots:
     void                        stop();
     void                        __frameChanged( qint64 frame,
-                                                MainWorkflow::FrameChangedReason reason );
+                                                Vlmc::FrameChangedReason reason );
     void                        __endReached();
 
 signals:

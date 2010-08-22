@@ -73,7 +73,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     m_ui.setupUi( this );
 
     qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
-    qRegisterMetaType<MainWorkflow::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
 
     //We only install message handler here cause it uses configuration.

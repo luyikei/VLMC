@@ -107,12 +107,12 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
              m_tracksControls, SLOT( removeAudioTrack() ) );
 
     // Frames updates
-    connect( m_renderer, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
-             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ),
+    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
+             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
              Qt::QueuedConnection );
-    connect( m_renderer, SIGNAL( frameChanged(qint64,MainWorkflow::FrameChangedReason) ),
+    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
              m_tracksRuler, SLOT( update() ) );
-    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,MainWorkflow::FrameChangedReason) ),
+    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
              m_renderer, SLOT( rulerCursorChanged(qint64)) );
 
     // Cursor position updates

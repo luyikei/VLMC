@@ -80,10 +80,10 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
     connect( m_renderer,     SIGNAL( stopped() ),               this,       SLOT( videoStopped() ) );
     connect( m_renderer,     SIGNAL( paused() ),                this,       SLOT( videoPaused() ) );
     connect( m_renderer,     SIGNAL( playing() ),               this,       SLOT( videoPlaying() ) );
-    connect( m_renderer,     SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
-             this, SLOT( frameChanged(qint64, MainWorkflow::FrameChangedReason ) ) );
+    connect( m_renderer,     SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
+             this, SLOT( frameChanged(qint64, Vlmc::FrameChangedReason ) ) );
     connect( m_renderer,     SIGNAL( endReached() ),            this,       SLOT( endReached() ) );
-    connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, MainWorkflow::FrameChangedReason) ),
+    connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
     connect( m_renderer, SIGNAL( error() ), this, SLOT( error() ) );
 }
@@ -100,9 +100,9 @@ void    PreviewWidget::changeEvent( QEvent *e )
     }
 }
 
-void    PreviewWidget::frameChanged( qint64 currentFrame, MainWorkflow::FrameChangedReason reason )
+void    PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReason reason )
 {
-    if ( m_previewStopped == false && reason != MainWorkflow::PreviewCursor )
+    if ( m_previewStopped == false && reason != Vlmc::PreviewCursor )
     {
         m_ui->rulerWidget->setFrame( currentFrame, false );
     }

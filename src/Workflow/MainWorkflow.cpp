@@ -152,7 +152,7 @@ MainWorkflow::nextFrame( Workflow::TrackType trackType )
 
     ++m_currentFrame[trackType];
     if ( trackType == Workflow::VideoTrack )
-        emit frameChanged( m_currentFrame[Workflow::VideoTrack], Renderer );
+        emit frameChanged( m_currentFrame[Workflow::VideoTrack], Vlmc::Renderer );
 }
 
 void
@@ -162,7 +162,7 @@ MainWorkflow::previousFrame( Workflow::TrackType trackType )
 
     --m_currentFrame[trackType];
     if ( trackType == Workflow::VideoTrack )
-        emit frameChanged( m_currentFrame[Workflow::VideoTrack], Renderer );
+        emit frameChanged( m_currentFrame[Workflow::VideoTrack], Vlmc::Renderer );
 }
 
 qint64
@@ -192,7 +192,7 @@ MainWorkflow::stop()
         m_tracks[i]->stop();
         m_currentFrame[i] = 0;
     }
-    emit frameChanged( 0, Renderer );
+    emit frameChanged( 0, Vlmc::Renderer );
 }
 
 void
@@ -257,7 +257,7 @@ MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId,
 }
 
 void
-MainWorkflow::setCurrentFrame( qint64 currentFrame, MainWorkflow::FrameChangedReason reason )
+MainWorkflow::setCurrentFrame( qint64 currentFrame, Vlmc::FrameChangedReason reason )
 {
     QWriteLocker    lock( m_currentFrameLock );
 

@@ -65,8 +65,8 @@ void    WorkflowRenderer::initializeRenderer()
 
      //Workflow part
     connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( __endReached() ), Qt::QueuedConnection );
-    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ),
-             this, SIGNAL( frameChanged( qint64, MainWorkflow::FrameChangedReason ) ) );
+    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
+             this, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ) );
     connect( m_mainWorkflow, SIGNAL( lengthChanged( qint64 ) ),
              this, SLOT(mainWorkflowLenghtChanged(qint64) ) );
     //Media player part: to update PreviewWidget
@@ -339,17 +339,17 @@ float       WorkflowRenderer::getFps() const
 
 void        WorkflowRenderer::timelineCursorChanged( qint64 newFrame )
 {
-    m_mainWorkflow->setCurrentFrame( newFrame, MainWorkflow::TimelineCursor );
+    m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::TimelineCursor );
 }
 
 void        WorkflowRenderer::previewWidgetCursorChanged( qint64 newFrame )
 {
-    m_mainWorkflow->setCurrentFrame( newFrame, MainWorkflow::PreviewCursor );
+    m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::PreviewCursor );
 }
 
 void        WorkflowRenderer::rulerCursorChanged( qint64 newFrame )
 {
-    m_mainWorkflow->setCurrentFrame( newFrame, MainWorkflow::RulerCursor );
+    m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::RulerCursor );
 }
 
 void*   WorkflowRenderer::getLockCallback()
