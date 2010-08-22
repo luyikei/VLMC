@@ -107,7 +107,7 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
 
     for ( int i = m_trackCount - 1; i >= 0; --i )
     {
-        if ( m_tracks[i].activated() == false || m_tracks[i]->hasFrameToRender( currentFrame ) )
+        if ( m_tracks[i].activated() == false || m_tracks[i]->hasNoMoreFrameToRender( currentFrame ) )
             continue ;
         validTrack = true;
         Workflow::OutputBuffer  *ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
@@ -272,10 +272,5 @@ void
 TrackHandler::stopFrameComputing()
 {
     for ( unsigned int i = 0; i < m_trackCount; ++i )
-    {
-        //First stop the frame computing
         m_tracks[i]->stopFrameComputing();
-        //then deactivate the track to avoid the generation to be resumed.
-        m_tracks[i].deactivate();
-    }
 }

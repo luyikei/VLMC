@@ -90,7 +90,7 @@ class   TrackWorkflow : public QObject
         bool                                    contains( const QUuid& uuid ) const;
 
         void                                    stopFrameComputing();
-        bool                                    hasFrameToRender( qint64 currentFrame ) const;
+        bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
 
     private:
         void                                    computeLength();

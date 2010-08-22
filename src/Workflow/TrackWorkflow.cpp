@@ -234,7 +234,7 @@ TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 }
 
 bool
-TrackWorkflow::hasFrameToRender( qint64 currentFrame ) const
+TrackWorkflow::hasNoMoreFrameToRender( qint64 currentFrame ) const
 {
     if ( m_clips.size() == 0 )
         return true;
