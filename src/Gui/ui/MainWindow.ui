@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">
@@ -58,7 +58,7 @@
      </property>
      <addaction name="separator"/>
      <addaction name="actionRender"/>
-     <addaction name="actionShare_On_Youtube"/>
+     <addaction name="actionShare_On_Internet"/>
     </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionLoad_Project"/>
@@ -117,7 +117,7 @@
    <addaction name="actionImport"/>
    <addaction name="separator"/>
    <addaction name="actionRender"/>
-   <addaction name="actionShare_On_Youtube"/>
+   <addaction name="actionShare_On_Internet"/>
    <addaction name="separator"/>
    <addaction name="actionPreferences"/>
    <addaction name="actionProject_Preferences"/>
@@ -281,13 +281,13 @@
     <string>Redo</string>
    </property>
   </action>
-  <action name="actionShare_On_Youtube">
+  <action name="actionShare_On_Internet">
    <property name="icon">
     <iconset resource="../../../resources.qrc">
      <normaloff>:/images/youtube</normaloff>:/images/youtube</iconset>
    </property>
    <property name="text">
-    <string>Share on &amp;Youtube</string>
+    <string>Publish on &amp;Internet</string>
    </property>
    <property name="statusTip">
     <string>Share your project on youtube</string>
