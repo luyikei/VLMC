@@ -28,9 +28,9 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QNetworkProxy>
 #include <QSettings>
 #include <QDebug>
-#include <QTemporaryFile>
 
 #include "MainWindow.h"
 #include "config.h"
@@ -41,7 +41,7 @@
 #include "EffectsEngine/EffectsEngine.h"
 #include "MainWorkflow.h"
 #include "export/RendererSettings.h"
-#include "export/ShareOnYoutube.h"
+#include "export/ShareOnInternet.h"
 #include "WorkflowFileRenderer.h"
 #include "WorkflowRenderer.h"
 #include "ClipRenderer.h"
@@ -95,6 +95,8 @@ MainWindow::MainWindow( QWidget *parent ) :
     initializeDockWidgets();
     initToolbar();
     createStatusBar();
+    checkFolders();
+    loadGlobalProxySettings();
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
 #endif
@@ -269,40 +271,52 @@ MainWindow::initVlmcPreferences()
                                                 SLOT( languageChanged( const QVariant& ) ),
                                                 SettingsManager::Vlmc );
 
+    //Setup VLMC General Preferences...
     VLMC_CREATE_PREFERENCE_BOOL( "general/ConfirmDeletion", true,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Ask for confirmation before deleting a clip from the timeline" ) );
 
-    //Setup VLMC Youtube Preference...
-    VLMC_CREATE_PREFERENCE_STRING( "youtube/DeveloperKey", "AI39si7FOtp165Vq644xVkuka84TVQNbztQmQ1dC9stheBfh3-33RZaTu7eJkYJzvxp6XNbvlr4M6-ULjXDERFl62WIo6AQIEQ",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Developer Key" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The Youtube Developer Key" ) );
-
-    VLMC_CREATE_PREFERENCE_STRING( "youtube/Username", "username",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Username" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "VLMC won't store your passwords..." ) );
-
-    //Setup VLMC Proxy Settings
-    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUrl", "",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy " ) );
-
-    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyPort", "",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Port" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Port" ) );
-
-    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUsername", "",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Username" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Username" ) );
-
-    VLMC_CREATE_PREFERENCE_PASSWORD( "network/ProxyPassword", "",
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The HTTP Proxy Password" ) );
-
-    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath(),
+    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath() + "/VLMC",
                                     QT_TRANSLATE_NOOP( "PreferencesWidget", "Project default location" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The default location where to store projects folders" ) );
 
+    VLMC_CREATE_PREFERENCE_PATH( "general/TempFolderLocation", QDir::homePath() + "/VLMC/Temp",
+                                    QT_TRANSLATE_NOOP( "PreferencesWidget", "Temporary folder" ),
+                                    QT_TRANSLATE_NOOP( "PreferenceWidget", "The temporary folder used by VLMC to process videos." ) );
+
+    //Setup VLMC Youtube Preference...
+    VLMC_CREATE_PREFERENCE_STRING( "youtube/DeveloperKey", "AI39si7FOtp165Vq644xVkuka84TVQNbztQmQ1dC9stheBfh3-33RZaTu7eJkYJzvxp6XNbvlr4M6-ULjXDERFl62WIo6AQIEQ",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Developer Key" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "VLMC's Youtube Developer Key" ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "youtube/Username", "username",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Username" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Valid YouTube username" ) );
+
+    VLMC_CREATE_PREFERENCE_PASSWORD( "youtube/Password", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Password" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Leave this field, password will be stored in unencryped form." ) );
+
+    //Setup VLMC Proxy Settings
+    VLMC_CREATE_PREFERENCE_BOOL( "network/UseProxy", false,
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Enable Proxy for VLMC"),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Enables Global Network Proxy for VLMC." ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyHost", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Hostname" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Set Proxy Hostname." ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyPort", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Port" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Set Proxy Port." ) );
+
+    VLMC_CREATE_PREFERENCE_STRING( "network/ProxyUsername", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Username" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Set Proxy Username, if any." ) );
+
+    VLMC_CREATE_PREFERENCE_PASSWORD( "network/ProxyPassword", "",
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Set Proxy Password, if any." ) );
 
     //Load saved preferences :
     QSettings       s;
@@ -432,8 +446,7 @@ MainWindow::initializeDockWidgets( void )
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
-    //FIXME !!!
-    EffectsEngine::getInstance()->browseDirectory( "/usr/local/lib/frei0r-1" );
+    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
 
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
@@ -504,6 +517,25 @@ MainWindow::createGlobalPreferences()
 }
 
 void
+MainWindow::loadGlobalProxySettings()
+{
+    if( VLMC_GET_BOOL( "network/UseProxy" ) )
+    {
+        /* Updates Global Proxy for VLMC */
+        QNetworkProxy proxy;
+        proxy.setType( QNetworkProxy::HttpProxy );
+        proxy.setHostName( VLMC_GET_STRING( "network/ProxyHost" ) );
+        proxy.setPort( VLMC_GET_STRING( "network/ProxyPort" ).toInt() );
+        proxy.setUser( VLMC_GET_STRING( "network/ProxyUsername" ) );
+        proxy.setPassword( VLMC_GET_STRING( "network/ProxyPassword" ) );
+        QNetworkProxy::setApplicationProxy( proxy );
+        return;
+    }
+
+    QNetworkProxy::setApplicationProxy( QNetworkProxy::NoProxy );
+}
+
+void
 MainWindow::createProjectPreferences()
 {
     m_projectPreferences = new Settings( SettingsManager::Project, this );
@@ -516,6 +548,17 @@ MainWindow::createProjectPreferences()
     m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "audio" ), SettingsManager::Project,
                                    QIcon( ":/images/audio" ),
                                    tr ( "Audio" ) );
+}
+
+void
+MainWindow::checkFolders()
+{
+    QDir dirUtil;
+    if( !dirUtil.exists( VLMC_GET_STRING( "general/DefaultProjectLocation" ) ) )
+        dirUtil.mkdir( VLMC_GET_STRING( "general/DefaultProjectLocation" ) );
+
+    if( !dirUtil.exists( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
+        dirUtil.mkdir( VLMC_GET_STRING( "general/TempFolderLocation" ) );
 }
 
 
@@ -550,21 +593,57 @@ MainWindow::checkVideoLength()
     return true;
 }
 
-void
+bool
 MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height, double fps, quint32 vbitrate, quint32 abitrate )
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
     m_fileRenderer = new WorkflowFileRenderer();
 
-    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
+    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, 640, 480 );
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
 
     m_fileRenderer->initializeRenderer();
     m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
-    dialog->exec();
+
+    if ( dialog->exec() == QDialog::Rejected )
+    {
+        delete dialog;
+        return false;
+    }
+
     delete dialog;
+    return true;
+}
+
+bool
+MainWindow::renderVideoSettings( bool exportType )
+{
+    RendererSettings *settings = new RendererSettings( exportType );
+
+    if ( settings->exec() == QDialog::Rejected )
+    {
+        delete settings;
+        return false;
+    }
+
+    QString     outputFileName;
+    quint32     width          = settings->width();
+    quint32     height         = settings->height();
+    double      fps            = settings->fps();
+    quint32     vbitrate       = settings->videoBitrate();
+    quint32     abitrate       = settings->audioBitrate();
+    delete settings;
+
+    if ( exportType )
+        outputFileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
+                         VLMC_PROJECT_GET_STRING( "general/ProjectName" ) + 
+                         "-vlmc.mp4";
+    else
+        outputFileName = settings->outputFileName();
+
+    return renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
 }
 
 void
@@ -574,63 +653,37 @@ MainWindow::on_actionRender_triggered()
     {
         m_renderer->killRenderer();
         //Setup dialog box for querying render parameters.
-        RendererSettings    *settings = new RendererSettings;
-        if ( settings->exec() == QDialog::Rejected )
-        {
-            delete settings;
-            return ;
-        }
-        QString     outputFileName = settings->outputFileName();
-        quint32     width          = settings->width();
-        quint32     height         = settings->height();
-        double      fps            = settings->fps();
-        quint32     vbitrate       = settings->videoBitrate();
-        quint32     abitrate       = settings->audioBitrate();
-        delete settings;
-
-        renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
+        renderVideoSettings( false );
     }
 }
 
 void
-MainWindow::on_actionShare_On_Youtube_triggered()
+MainWindow::on_actionShare_On_Internet_triggered()
 {
     if ( checkVideoLength() )
     {
         m_renderer->killRenderer();
-        //Setup dialog box for querying youtube export parameters.
-        ShareOnYoutube *exportToYoutube = new ShareOnYoutube;
 
-        if ( exportToYoutube->exec() == QDialog::Rejected )
+        if( !renderVideoSettings( true ) )
+            return;
+                   
+        checkFolders();
+        QString fileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
+                           VLMC_PROJECT_GET_STRING( "general/ProjectName" ) + 
+                           "-vlmc.mp4";
+
+        loadGlobalProxySettings();
+
+        ShareOnInternet *shareVideo = new ShareOnInternet();
+        shareVideo->setVideoFile( fileName );
+ 
+        if ( shareVideo->exec() == QDialog::Rejected )
         {
-            delete exportToYoutube;
-            return ;
+            delete shareVideo;
+            return;
         }
-
-        QString username     = exportToYoutube->username();
-        QString password     = exportToYoutube->password();
-        QString title        = exportToYoutube->title();
-        QString category     = exportToYoutube->category();
-        QString description  = exportToYoutube->description();
-        QString tags         = exportToYoutube->tags();
-        quint32 width        = exportToYoutube->width();
-        quint32 height       = exportToYoutube->height();
-        bool    videoPrivacy = exportToYoutube->videoPrivacy();
-
-        delete exportToYoutube;
-
-        qDebug()<< username << password << title << category << description << tags << width << height << videoPrivacy;
-
-        //here add code to render video using WorkflowFileRenderer... to a temp folder, using QTemporaryFolder
-        QTemporaryFile tmp( "vlmc-youtube.avi" );
-        tmp.setAutoRemove( false );
-        tmp.open();
-
-        qDebug()<< tmp.fileTemplate() << tmp.fileName() << QDir::tempPath();
-
-        renderVideo( tmp.fileName(), width, height, 30.0, 4000, 256 );
-
-        //Add code here to init Youtube Uploader with the file, do stuff :D...
+ 
+        delete shareVideo;
     }
 }
 

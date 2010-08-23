@@ -62,12 +62,14 @@ protected:
 private:
     void        initializeDockWidgets( void );
     void        setupLibrary();
+    void        checkFolders();
     void        createStatusBar();
     void        createNotificationZone();
     void        createGlobalPreferences();
     void        createProjectPreferences();
     void        initVlmcPreferences();
     void        loadVlmcPreferences( const QString& subPart );
+    void        loadGlobalProxySettings();
     void        initToolbar();
 #ifdef WITH_CRASHBUTTON
     void        setupCrashTester();
@@ -91,9 +93,12 @@ private:
      *  \brief  Renders video by the parameters: outputFileName, width, height,
      *          fps, vbitrate, abitrate
      *          Also, displays a rendering dialog with snapshots and progress.
+     *  \return true if video renders well or not cancelled by the user.
      */
-    void        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
+    bool        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
                              double fps, quint32 vbitrate, quint32 abitrate );
+
+    bool        renderVideoSettings( bool exportType );
 
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
@@ -114,7 +119,7 @@ private slots:
     void                    on_actionAbout_triggered();
     void                    on_actionPreferences_triggered();
     void                    on_actionRender_triggered();
-    void                    on_actionShare_On_Youtube_triggered();
+    void                    on_actionShare_On_Internet_triggered();
     void                    on_actionNew_Project_triggered();
     void                    on_actionLoad_Project_triggered();
     void                    on_actionSave_triggered();
