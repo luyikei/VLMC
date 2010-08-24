@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ElidableLabel.h: Provide a QLabel with elidable text in it.
+ * ExtendedLabel.h: Provide a QLabel with elidable text in it.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -25,13 +25,13 @@
 
 #include <QLabel>
 
-class ElidableLabel : public QLabel
+class ExtendedLabel : public QLabel
 {
     Q_OBJECT
 
     public:
-        ElidableLabel( QWidget* parent );
-        ElidableLabel( const QString& text, QWidget* parent );
+        ExtendedLabel( QWidget* parent );
+        ExtendedLabel( const QString& text, QWidget* parent );
         Qt::TextElideMode       elideMode() const;
         void                    setElideMode( Qt::TextElideMode mode );
         virtual QSize           minimumSizeHint() const;
@@ -40,10 +40,16 @@ class ElidableLabel : public QLabel
 
     protected:
         virtual void            resizeEvent( QResizeEvent *event );
+        virtual void            mousePressEvent( QMouseEvent *ev );
+        virtual void            mouseDoubleClickEvent( QMouseEvent *ev );
 
     private:
         Qt::TextElideMode       m_elideMode;
         QString                 m_text;
+
+    signals:
+        void                    clicked( QWidget* sender, QMouseEvent* ev );
+        void                    doubleClicked();
 };
 
 #endif // ELIDABLELABEL_H

@@ -201,7 +201,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="ClickableLabel" name="delLabel">
+        <widget class="ExtendedLabel" name="delLabel">
          <property name="text">
           <string/>
          </property>
@@ -211,7 +211,7 @@
         </widget>
        </item>
        <item>
-        <widget class="ClickableLabel" name="arrow">
+        <widget class="ExtendedLabel" name="arrow">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -241,9 +241,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ClickableLabel</class>
+   <class>ExtendedLabel</class>
    <extends>QLabel</extends>
-   <header>ClickableLabel.h</header>
+   <header>ExtendedLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

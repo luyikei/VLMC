@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ElidableLabel.cpp: Provide a QLabel with elidable text in it.
+ * ExtendedLabel.cpp: Provide a QLabel with elidable text in it.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,16 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "ElidableLabel.h"
+#include "ExtendedLabel.h"
 
 #include <QResizeEvent>
 
-ElidableLabel::ElidableLabel( QWidget *parent ) : QLabel( parent ),
+ExtendedLabel::ExtendedLabel( QWidget *parent ) : QLabel( parent ),
     m_elideMode( Qt::ElideMiddle )
 {
 }
 
-ElidableLabel::ElidableLabel( const QString &text, QWidget *parent ) :
+ExtendedLabel::ExtendedLabel( const QString &text, QWidget *parent ) :
         QLabel( text, parent ),
         m_elideMode( Qt::ElideMiddle ),
         m_text( text )
@@ -38,7 +38,7 @@ ElidableLabel::ElidableLabel( const QString &text, QWidget *parent ) :
 }
 
 void
-ElidableLabel::resizeEvent( QResizeEvent *event )
+ExtendedLabel::resizeEvent( QResizeEvent *event )
 {
     QFontMetrics fm( fontMetrics() );
     QString     str = fm.elidedText( m_text, m_elideMode, event->size().width() );
@@ -47,37 +47,53 @@ ElidableLabel::resizeEvent( QResizeEvent *event )
 }
 
 Qt::TextElideMode
-ElidableLabel::elideMode() const
+ExtendedLabel::elideMode() const
 {
     return m_elideMode;
 }
 
 void
-ElidableLabel::setElideMode( Qt::TextElideMode mode )
+ExtendedLabel::setElideMode( Qt::TextElideMode mode )
 {
     m_elideMode = mode;
 }
 
 QSize
-ElidableLabel::minimumSizeHint() const
+ExtendedLabel::minimumSizeHint() const
 {
+    if ( pixmap() != NULL )
+        return QLabel::sizeHint();
     const QFontMetrics  &fm = fontMetrics();
     QSize               size( fm.width("..."), fm.height() );
     return size;
 }
 
 QSize
-ElidableLabel::sizeHint() const
+ExtendedLabel::sizeHint() const
 {
+    if ( pixmap() != NULL )
+        return QLabel::sizeHint();
     const QFontMetrics& fm = fontMetrics();
     QSize size( fm.width( m_text ), fm.height());
     return size;
 }
 
 void
-ElidableLabel::setText( const QString &text )
+ExtendedLabel::setText( const QString &text )
 {
     m_text = text;
     setToolTip( text );
     QLabel::setText( text );
+}
+
+void
+ExtendedLabel::mousePressEvent( QMouseEvent* ev )
+{
+    emit clicked( this, ev );
+}
+
+void
+ExtendedLabel::mouseDoubleClickEvent( QMouseEvent * )
+{
+    emit doubleClicked();
 }

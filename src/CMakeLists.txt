@@ -152,7 +152,6 @@ ELSE(NOT WITH_GUI)
         Commands/KeyboardShortcutHelper.cpp
         Gui/About.cpp
         Gui/AudioSpectrumDrawer.cpp
-        Gui/ClickableLabel.cpp
         Gui/ClipProperty.cpp
         Gui/DockWidgetManager.cpp
         Gui/IntroDialog.cpp
@@ -202,7 +201,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksRuler.cpp
         Gui/timeline/TracksScene.cpp
         Gui/timeline/TracksView.cpp
-        Gui/widgets/ElidableLabel.cpp
+        Gui/widgets/ExtendedLabel.cpp
         Gui/widgets/FramelessButton.cpp
         Gui/widgets/NotificationZone.cpp
         Gui/widgets/SearchLineEdit.cpp
@@ -219,7 +218,6 @@ ELSE(NOT WITH_GUI)
     LIST( APPEND VLMC_HDRS
         Commands/KeyboardShortcutHelper.h
         Gui/About.h
-        Gui/ClickableLabel.h
         Gui/ClipProperty.h
         Gui/DockWidgetManager.h
         Gui/IntroDialog.h
@@ -272,7 +270,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/TracksRuler.h
         Gui/timeline/TracksScene.h
         Gui/timeline/TracksView.h
-        Gui/widgets/ElidableLabel.h
+        Gui/widgets/ExtendedLabel.h
         Gui/widgets/FramelessButton.h
         Gui/widgets/NotificationZone.h
         Gui/widgets/SearchLineEdit.h
