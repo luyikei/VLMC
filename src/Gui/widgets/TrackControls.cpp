@@ -25,14 +25,23 @@
 
 #include "ui_TrackControls.h"
 
+#include <QDesktopServices>
 #include <QIcon>
 #include <QInputDialog>
+#include <QSettings>
 
 TrackControls::TrackControls( GraphicsTrack* track, QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::TrackControls ),
     m_track( track )
 {
+    QSettings   s( QSettings::UserScope, qApp->organizationName(), "timeline" );
+    if ( track->mediaType() == Workflow::VideoTrack &&
+         s.contains( "video" + QString::number( track->trackNumber() ) ) )
+        m_title = s.value( "video" + QString::number( track->trackNumber() ) ).toString();
+    else if ( track->mediaType() == Workflow::AudioTrack &&
+                s.contains( "audio" + QString::number( track->trackNumber() ) ) )
+        m_title = s.value( "audio" + QString::number( track->trackNumber() ) ).toString();
     m_ui->setupUi( this );
     setTrackDisabled( !m_track->isEnabled() );
     connect( m_ui->disableButton, SIGNAL( clicked(bool) ),
@@ -51,9 +60,19 @@ void
 TrackControls::updateTextLabels()
 {
     if ( m_track->mediaType() == Workflow::VideoTrack )
-        m_ui->trackLabel->setText( tr( "Video #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
+    {
+        if ( m_title.isEmpty() == true )
+            m_ui->trackLabel->setText( tr( "Video #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
+        else
+            m_ui->trackLabel->setText( m_title );
+    }
     else if ( m_track->mediaType() == Workflow::AudioTrack )
-        m_ui->trackLabel->setText( tr( "Audio #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
+    {
+        if ( m_title.isEmpty() )
+            m_ui->trackLabel->setText( tr( "Audio #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
+        else
+            m_ui->trackLabel->setText( m_title );
+    }
 }
 
 void
@@ -96,5 +115,13 @@ TrackControls::trackNameDoubleClicked()
     QString     name = QInputDialog::getText( NULL, tr( "Rename track" ),
                                               tr( "Enter the track new name") );
     if ( name.isEmpty() == false )
-        m_ui->trackLabel->setText( name );
+    {
+        QSettings   s( QSettings::UserScope, qApp->organizationName(), "timeline" );
+        m_title = name;
+        if ( m_track->mediaType() == Workflow::VideoTrack )
+            s.setValue("video" + QString::number( m_track->trackNumber() ), name );
+        else
+            s.setValue("audio" + QString::number( m_track->trackNumber() ), name );
+        updateTextLabels();
+    }
 }

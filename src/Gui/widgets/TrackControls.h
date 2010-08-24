@@ -39,16 +39,19 @@ public:
     ~TrackControls();
 
 protected:
-    void changeEvent( QEvent *e );
+    void    changeEvent( QEvent *e );
 
 private slots:
     void    setTrackDisabled( bool disable );
     void    trackNameDoubleClicked();
 
 private:
-    void updateTextLabels();
-    Ui::TrackControls *m_ui;
-    GraphicsTrack* m_track;
+    void    updateTextLabels();
+
+private:
+    Ui::TrackControls       *m_ui;
+    GraphicsTrack           *m_track;
+    QString                 m_title;
 };
 
 #endif // TRACKCONTROLS_H
