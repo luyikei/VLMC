@@ -177,12 +177,12 @@ TrackHandler::unmuteTrack( unsigned int trackId )
     m_tracks[trackId].activate();
 }
 
-Clip*
-TrackHandler::getClip( const QUuid& uuid, unsigned int trackId )
+ClipHelper*
+TrackHandler::getClipHelper( const QUuid& uuid, unsigned int trackId )
 {
     Q_ASSERT( trackId < m_trackCount );
 
-    return m_tracks[trackId]->getClip( uuid );
+    return m_tracks[trackId]->getClipHelper( uuid );
 }
 
 void

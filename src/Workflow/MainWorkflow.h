@@ -333,15 +333,13 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         void                    computeLength();
 
         /**
-         * \param   uuid : The clip's uuid.
-         *              Please note that the UUID must be the real clip's uuid,
-         *              and not the timeline (ClipHelper) uuid, or else nothing would match.
-         *  \param  trackId : the track id
-         *  \param  trackType : the track type (audio or video)
-         *  \returns    The clip that matches the given UUID, or NULL.
+         *  \param      uuid : The clip helper's uuid.
+         *  \param      trackId : the track id
+         *  \param      trackType : the track type (audio or video)
+         *  \returns    The clip helper that matches the given UUID, or NULL.
          */
-        Clip*                   getClip( const QUuid& uuid, unsigned int trackId,
-                                         Workflow::TrackType trackType );
+        ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
+                                               Workflow::TrackType trackType );
 
     private:
         /// Pre-filled buffer used when there's nothing to render

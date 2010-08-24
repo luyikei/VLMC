@@ -138,16 +138,16 @@ TrackWorkflow::getClipPosition( const QUuid& uuid ) const
     return -1;
 }
 
-Clip*
-TrackWorkflow::getClip( const QUuid& uuid )
+ClipHelper*
+TrackWorkflow::getClipHelper( const QUuid& uuid )
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->clip()->uuid() == uuid )
-            return it.value()->clip();
+        if ( it.value()->getClipHelper()->uuid() == uuid )
+            return it.value()->getClipHelper();
         ++it;
     }
     return NULL;

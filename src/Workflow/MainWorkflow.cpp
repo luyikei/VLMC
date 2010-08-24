@@ -264,11 +264,11 @@ MainWorkflow::setCurrentFrame( qint64 currentFrame, Vlmc::FrameChangedReason rea
     emit frameChanged( currentFrame, reason );
 }
 
-Clip*
-MainWorkflow::getClip( const QUuid &uuid, unsigned int trackId,
-                       Workflow::TrackType trackType )
+ClipHelper*
+MainWorkflow::getClipHelper( const QUuid &uuid, unsigned int trackId,
+                                Workflow::TrackType trackType )
 {
-    return m_tracks[trackType]->getClip( uuid, trackId );
+    return m_tracks[trackType]->getClipHelper( uuid, trackId );
 }
 
 /**

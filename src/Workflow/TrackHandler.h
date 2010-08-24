@@ -71,7 +71,7 @@ class   TrackHandler : public QObject
         Clip*                   removeClip( const QUuid& uuid, unsigned int trackId );
         void                    muteTrack( unsigned int trackId );
         void                    unmuteTrack( unsigned int trackId );
-        Clip*                   getClip( const QUuid& uuid, unsigned int trackId );
+        ClipHelper              *getClipHelper( const QUuid& uuid, unsigned int trackId );
         void                    clear();
 
         bool                    endIsReached() const;

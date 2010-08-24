@@ -61,7 +61,7 @@ class   TrackWorkflow : public QObject
         void                                    addClip( ClipWorkflow*, qint64 start );
         void                                    addEffect( Effect *effect, const QUuid &uuid );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
-        Clip*                                   getClip( const QUuid& uuid );
+        ClipHelper                              *getClipHelper( const QUuid& uuid );
 
         //FIXME: this won't be reliable as soon as we change the fps from the configuration
         static const unsigned int               nbFrameBeforePreload = 60;

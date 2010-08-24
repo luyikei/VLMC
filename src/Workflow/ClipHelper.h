@@ -56,7 +56,7 @@ class   ClipHelper : public QObject
          *  \return The length in frames
          */
         qint64      length() const;
-        const QUuid&    uuid() const
+        const QUuid &uuid() const
         {
             return m_uuid;
         }
