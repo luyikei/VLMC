@@ -131,7 +131,7 @@ class   WorkflowRenderer : public GenericRenderer
          */
         void                killRenderer();
 
-        void                appendEffect( Effect* effect, qint64 start = 0, qint64 end = -1 );
+        EffectsEngine::FilterHelper *appendFilter( Effect* effect, qint64 start = 0, qint64 end = -1 );
 
         void                saveProject( QXmlStreamWriter &project ) const;
         void                loadProject( const QDomElement& project );
