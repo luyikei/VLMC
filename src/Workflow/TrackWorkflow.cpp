@@ -90,7 +90,7 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     computeLength();
 }
 
-void
+EffectsEngine::FilterHelper*
 TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
@@ -99,9 +99,10 @@ TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
     while ( it != end )
     {
         if ( it.value()->getClipHelper()->clip()->fullId() == uuid )
-            it.value()->appendEffect( effect );
+            return it.value()->appendEffect( effect );
         ++it;
     }
+    return NULL;
 }
 
 //Must be called from a thread safe method (m_clipsLock locked)

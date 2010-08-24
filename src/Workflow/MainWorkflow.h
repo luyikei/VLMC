@@ -24,6 +24,7 @@
 #ifndef MAINWORKFLOW_H
 #define MAINWORKFLOW_H
 
+#include "EffectsEngine.h"
 #include "Singleton.hpp"
 #include <QXmlStreamWriter>
 #include "Types.h"
@@ -74,8 +75,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                  Workflow::TrackType type, bool informGui );
 
 
-        void            addEffect( Effect* effect, quint32 trackId, const QUuid &uuid,
-                                   Workflow::TrackType type );
+        EffectsEngine::FilterHelper     *addFilter( Effect* effect, quint32 trackId,
+                                                    const QUuid &uuid, Workflow::TrackType type );
 
         /**
          *  \brief      Initialize the workflow for the render.

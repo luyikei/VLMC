@@ -48,7 +48,7 @@ class   TrackHandler : public QObject
          */
         void            addClip( ClipHelper* clip, unsigned int trackId, qint64 start );
 
-        void            addEffect( Effect *effect, quint32 trackId, const QUuid &uuid );
+        EffectsEngine::FilterHelper     *addEffect( Effect *effect, quint32 trackId, const QUuid &uuid );
         /**
          *  Returns the number of tracks in this handler
          */

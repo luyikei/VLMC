@@ -26,7 +26,6 @@
 #include "vlmc.h"
 #include "Clip.h"
 #include "ClipHelper.h"
-#include "EffectsEngine/EffectsEngine.h"
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
@@ -82,10 +81,10 @@ MainWorkflow::addClip( ClipHelper *clipHelper, unsigned int trackId,
         emit clipAdded( clipHelper, trackId, start, trackType );
 }
 
-void
-MainWorkflow::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
+EffectsEngine::FilterHelper*
+MainWorkflow::addFilter( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
 {
-    m_tracks[type]->addEffect( effect, trackId, uuid );
+    return m_tracks[type]->addEffect( effect, trackId, uuid );
 }
 
 void
@@ -344,7 +343,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                     {
                         Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
                         if ( e != NULL )
-                            addEffect( e, trackId, uuid, type );
+                            addFilter( e, trackId, uuid, type );
                         else
                             qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
                     }
