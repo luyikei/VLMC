@@ -23,7 +23,6 @@
 #include "AbstractSharingService.h"
 #include "SettingsManager.h"
 #include "ShareOnInternet.h"
-#include "Vimeo/VimeoService.h"
 #include "YouTube/YouTubeService.h"
 
 #include <QDesktopServices>
