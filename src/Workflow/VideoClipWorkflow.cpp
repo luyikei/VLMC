@@ -176,8 +176,10 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
     {
         QWriteLocker    lock( cw->m_effectsLock );
-        EffectsEngine::applyFilters( cw->m_filters, frame, cw->m_renderedFrame,
+        quint32     *newFrame = EffectsEngine::applyFilters( cw->m_filters, frame, cw->m_renderedFrame,
                                      cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
+        if ( newFrame != NULL )
+            frame->setBuffer( newFrame );
     }
     {
         QMutexLocker    lock( cw->m_renderedFrameMutex );

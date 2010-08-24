@@ -124,7 +124,7 @@ MainWorkflow::startRender( quint32 width, quint32 height, double fps )
     computeLength();
 }
 
-Workflow::OutputBuffer*
+const Workflow::OutputBuffer*
 MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
 {
     QMutexLocker        lock( m_renderStartedMutex );

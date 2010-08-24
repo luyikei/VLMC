@@ -80,10 +80,10 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        loadEffects();
 
         //Filters methods:
-        static void applyFilters( const FilterList &effects,
-                                  Workflow::Frame *frame, qint64 currentFrame, double time );
-        static void saveFilters( const FilterList &effects, QXmlStreamWriter &project );
-        static void initFilters( const FilterList &effects, quint32 width, quint32 height );
+        static quint32  *applyFilters( const FilterList &effects,
+                                  const Workflow::Frame *frame, qint64 currentFrame, double time );
+        static void     saveFilters( const FilterList &effects, QXmlStreamWriter &project );
+        static void     initFilters( const FilterList &effects, quint32 width, quint32 height );
 
         //Mixers methods:
         static MixerHelper*     getMixer( const MixerList& mixers, qint64 currentFrame );

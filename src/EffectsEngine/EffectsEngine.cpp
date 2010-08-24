@@ -110,19 +110,19 @@ EffectsEngine::browseDirectory( const QString &path )
     }
 }
 
-void
-EffectsEngine::applyFilters( const FilterList &effects, Workflow::Frame* frame,
+quint32*
+EffectsEngine::applyFilters( const FilterList &effects, const Workflow::Frame* frame,
                              qint64 currentFrame, double time )
 {
     if ( effects.size() == 0 )
-        return ;
+        return NULL;
     FilterList::const_iterator     it = effects.constBegin();
     FilterList::const_iterator     ite = effects.constEnd();
 
-    quint32     *buff1 = NULL;
-    quint32     *buff2 = NULL;
-    quint32     *input = frame->buffer();
-    bool        firstBuff = true;
+    quint32         *buff1 = NULL;
+    quint32         *buff2 = NULL;
+    const quint32   *input = frame->buffer();
+    bool            firstBuff = true;
 
     while ( it != ite )
     {
@@ -145,18 +145,18 @@ EffectsEngine::applyFilters( const FilterList &effects, Workflow::Frame* frame,
     }
     if ( buff1 != NULL || buff2 != NULL )
     {
-        //The old input frame will automatically be deleted when setting the new buffer
         if ( firstBuff == true )
         {
             delete[] buff1;
-            frame->setBuffer( buff2 );
+            return buff2;
         }
         else
         {
             delete[] buff2;
-            frame->setBuffer( buff1 );
+            return buff1;
         }
     }
+    return NULL;
 }
 
 void

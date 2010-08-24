@@ -50,7 +50,8 @@ WorkflowRenderer::WorkflowRenderer() :
             m_height( 0 ),
             m_silencedAudioBuffer( NULL ),
             m_esHandler( NULL ),
-            m_oldLength( 0 )
+            m_oldLength( 0 ),
+            m_effectFrame( NULL )
 {
     m_effectsLock = new QReadWriteLock;
 }
@@ -159,12 +160,12 @@ int
 WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void **buffer )
 {
     qint64                          ptsDiff = 0;
-    Workflow::Frame                 *ret;
+    const Workflow::Frame           *ret;
 
     if ( m_stopping == true )
         return 1;
 
-    ret = static_cast<Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused ) );
+    ret = static_cast<const Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused ) );
     ptsDiff = ret->ptsDiff;
     if ( ptsDiff == 0 )
     {
@@ -175,12 +176,15 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
     }
     {
         QReadLocker lock( m_effectsLock );
-        EffectsEngine::applyFilters( m_filters, ret,
+        m_effectFrame = EffectsEngine::applyFilters( m_filters, ret,
                                      m_mainWorkflow->getCurrentFrame(),
                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
     }
     m_pts = *pts = ptsDiff + m_pts;
-    *buffer = ret->buffer();
+    if ( m_effectFrame != NULL )
+        *buffer = m_effectFrame;
+    else
+        *buffer = ret->buffer();
     *bufferSize = ret->size();
     return 0;
 }
@@ -190,11 +194,11 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 {
     qint64                              ptsDiff;
     quint32                             nbSample;
-    Workflow::AudioSample               *renderAudioSample;
+    const Workflow::AudioSample         *renderAudioSample;
 
     if ( m_stopping == false && m_paused == false )
     {
-        renderAudioSample = static_cast<Workflow::AudioSample*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
+        renderAudioSample = static_cast<const Workflow::AudioSample*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
                                                                                            m_paused ) );
     }
     else
@@ -222,8 +226,11 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
     return 0;
 }
 
-void    WorkflowRenderer::unlock( void*, const char*, size_t, void* )
+void    WorkflowRenderer::unlock( void *datas, const char*, size_t, void* )
 {
+    EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
+    delete[] handler->self->m_effectFrame;
+    handler->self->m_effectFrame = NULL;
 }
 
 void        WorkflowRenderer::startPreview()
