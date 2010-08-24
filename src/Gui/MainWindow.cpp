@@ -276,11 +276,11 @@ MainWindow::initVlmcPreferences()
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Ask for confirmation before deleting a clip from the timeline" ) );
 
-    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath() + "/VLMC",
+    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath(),
                                     QT_TRANSLATE_NOOP( "PreferencesWidget", "Project default location" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The default location where to store projects folders" ) );
 
-    VLMC_CREATE_PREFERENCE_PATH( "general/TempFolderLocation", QDir::homePath() + "/VLMC/Temp",
+    VLMC_CREATE_PREFERENCE_PATH( "general/TempFolderLocation", QDir::tempPath() + "/VLMC/",
                                     QT_TRANSLATE_NOOP( "PreferencesWidget", "Temporary folder" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The temporary folder used by VLMC to process videos." ) );
 
