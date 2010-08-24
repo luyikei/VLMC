@@ -25,8 +25,6 @@
 
 #include "ui_TrackControls.h"
 
-#include <QDesktopServices>
-#include <QIcon>
 #include <QInputDialog>
 #include <QSettings>
 
