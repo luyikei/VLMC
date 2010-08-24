@@ -266,7 +266,7 @@ Timeline::dropEvent( QDropEvent *event )
 {
     Effect* effect = EffectsEngine::getInstance()->effect( event->mimeData()->data( "vlmc/effect_name") );
     if ( effect != NULL )
-        m_renderer->appendFilter( effect );
+        m_renderer->appendEffect( effect );
     else
         qWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
 }

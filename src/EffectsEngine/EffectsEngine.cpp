@@ -23,8 +23,7 @@
 #include "EffectsEngine.h"
 
 #include "Effect.h"
-#include "FilterInstance.h"
-#include "MixerInstance.h"
+#include "EffectInstance.h"
 #include "Types.h"
 
 #include <QDesktopServices>
@@ -111,13 +110,13 @@ EffectsEngine::browseDirectory( const QString &path )
 }
 
 quint32*
-EffectsEngine::applyFilters( const FilterList &effects, const Workflow::Frame* frame,
+EffectsEngine::applyFilters( const EffectList &effects, const Workflow::Frame* frame,
                              qint64 currentFrame, double time )
 {
     if ( effects.size() == 0 )
         return NULL;
-    FilterList::const_iterator     it = effects.constBegin();
-    FilterList::const_iterator     ite = effects.constEnd();
+    EffectList::const_iterator     it = effects.constBegin();
+    EffectList::const_iterator     ite = effects.constEnd();
 
     quint32         *buff1 = NULL;
     quint32         *buff2 = NULL;
@@ -136,7 +135,7 @@ EffectsEngine::applyFilters( const FilterList &effects, const Workflow::Frame* f
                 buff = &buff2;
             if ( *buff == NULL )
                 *buff = new quint32[frame->nbPixels()];
-            FilterInstance      *effect = (*it)->effect;
+            EffectInstance      *effect = (*it)->effect;
             effect->process( time, input, *buff );
             input = *buff;
             firstBuff = !firstBuff;
@@ -160,12 +159,12 @@ EffectsEngine::applyFilters( const FilterList &effects, const Workflow::Frame* f
 }
 
 void
-EffectsEngine::saveFilters( const FilterList &effects, QXmlStreamWriter &project )
+EffectsEngine::saveFilters( const EffectList &effects, QXmlStreamWriter &project )
 {
     if ( effects.size() <= 0 )
         return ;
-    EffectsEngine::FilterList::const_iterator   it = effects.begin();
-    EffectsEngine::FilterList::const_iterator   ite = effects.end();
+    EffectsEngine::EffectList::const_iterator   it = effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = effects.end();
     project.writeStartElement( "effects" );
     while ( it != ite )
     {
@@ -180,10 +179,10 @@ EffectsEngine::saveFilters( const FilterList &effects, QXmlStreamWriter &project
 }
 
 void
-EffectsEngine::initFilters( const FilterList &effects, quint32 width, quint32 height )
+EffectsEngine::initFilters( const EffectList &effects, quint32 width, quint32 height )
 {
-    EffectsEngine::FilterList::const_iterator   it = effects.begin();
-    EffectsEngine::FilterList::const_iterator   ite = effects.end();
+    EffectsEngine::EffectList::const_iterator   it = effects.begin();
+    EffectsEngine::EffectList::const_iterator   ite = effects.end();
 
     while ( it != ite )
     {
@@ -192,7 +191,7 @@ EffectsEngine::initFilters( const FilterList &effects, quint32 width, quint32 he
     }
 }
 
-EffectsEngine::MixerHelper*
+EffectsEngine::EffectHelper*
 EffectsEngine::getMixer( const MixerList &mixers, qint64 currentFrame )
 {
     MixerList::const_iterator       it = mixers.constBegin();
@@ -201,7 +200,10 @@ EffectsEngine::getMixer( const MixerList &mixers, qint64 currentFrame )
     while ( it != ite )
     {
         if ( it.key() <= currentFrame && currentFrame <= it.value()->end )
+        {
+            Q_ASSERT( it.value()->effect->effect()->type() == Effect::Mixer2 );
             return it.value();
+        }
         ++it;
     }
     return NULL;

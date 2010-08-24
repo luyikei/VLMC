@@ -59,7 +59,7 @@ class   TrackWorkflow : public QObject
         ClipWorkflow*                           removeClipWorkflow( const QUuid& id );
         void                                    addClip( ClipHelper*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
-        EffectsEngine::FilterHelper             *addEffect( Effect *effect, const QUuid &uuid );
+        EffectsEngine::EffectHelper             *addEffect( Effect *effect, const QUuid &uuid );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
         ClipHelper                              *getClipHelper( const QUuid& uuid );
 

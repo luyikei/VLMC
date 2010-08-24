@@ -21,8 +21,7 @@
  *****************************************************************************/
 
 #include "Effect.h"
-#include "FilterInstance.h"
-#include "MixerInstance.h"
+#include "EffectInstance.h"
 
 #include <QtDebug>
 
@@ -145,15 +144,7 @@ EffectInstance*
 Effect::createInstance()
 {
     m_instCount.fetchAndAddAcquire( 1 );
-    switch ( type() )
-    {
-    case Filter:
-        return new FilterInstance( this );
-    case Mixer2:
-        return new MixerInstance( this );
-    default:
-        return NULL;
-    }
+    return new EffectInstance( this );
 }
 
 void

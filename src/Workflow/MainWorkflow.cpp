@@ -81,8 +81,8 @@ MainWorkflow::addClip( ClipHelper *clipHelper, unsigned int trackId,
         emit clipAdded( clipHelper, trackId, start, trackType );
 }
 
-EffectsEngine::FilterHelper*
-MainWorkflow::addFilter( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
+EffectsEngine::EffectHelper*
+MainWorkflow::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
 {
     return m_tracks[type]->addEffect( effect, trackId, uuid );
 }
@@ -343,7 +343,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                     {
                         Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
                         if ( e != NULL )
-                            addFilter( e, trackId, uuid, type );
+                            addEffect( e, trackId, uuid, type );
                         else
                             qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
                     }

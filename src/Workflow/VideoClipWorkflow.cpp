@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "Clip.h"
-#include "FilterInstance.h"
+#include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
 #include "VideoClipWorkflow.h"
@@ -212,7 +212,7 @@ VideoClipWorkflow::flushComputedBuffers()
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
 }
 
-EffectsEngine::FilterHelper*
+EffectsEngine::EffectHelper*
 VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     if ( effect->type() != Effect::Filter )
@@ -220,9 +220,9 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
         qWarning() << "VideoClipWorkflow does not handle non filter effects.";
         return NULL;
     }
-    FilterInstance  *filterInstance = static_cast<FilterInstance*>( effect->createInstance() );
+    EffectInstance      *effectInstance = effect->createInstance();
     QWriteLocker    lock( m_effectsLock );
-    EffectsEngine::FilterHelper *ret = new EffectsEngine::FilterHelper( filterInstance, start, end );
+    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
     m_filters.push_back( ret );
     return ret;
 }

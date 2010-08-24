@@ -38,6 +38,10 @@ class EffectInstance
         Effect*         effect();
         const ParamList &params() const;
         ParamList       &params();
+        void            process( double time, const quint32* input, quint32* output ) const;
+        void            process( double time, const quint32 *frame1, const quint32 *frame2,
+                                const quint32 *frame3, quint32 *output );
+
     protected:
         EffectInstance( Effect *effect );
         virtual ~EffectInstance();

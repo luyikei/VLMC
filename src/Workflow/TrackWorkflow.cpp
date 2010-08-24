@@ -29,7 +29,7 @@
 #include "ImageClipWorkflow.h"
 #include "MainWorkflow.h"
 #include "Media.h"
-#include "MixerInstance.h"
+#include "EffectInstance.h"
 #include "Types.h"
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
@@ -90,7 +90,7 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     computeLength();
 }
 
-EffectsEngine::FilterHelper*
+EffectsEngine::EffectHelper*
 TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
@@ -330,7 +330,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     //Handle mixers:
     if ( m_trackType == Workflow::VideoTrack )
     {
-        EffectsEngine::MixerHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
+        EffectsEngine::EffectHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.

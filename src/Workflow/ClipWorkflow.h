@@ -203,7 +203,7 @@ class   ClipWorkflow : public QObject
 
         void                    save( QXmlStreamWriter& project ) const;
         virtual void            saveEffects( QXmlStreamWriter& ) const = 0;
-        virtual EffectsEngine::FilterHelper     *appendEffect( Effect *effect, qint64 start = 0,
+        virtual EffectsEngine::EffectHelper     *appendEffect( Effect *effect, qint64 start = 0,
                                                                 qint64 end = -1 ) = 0;
 
     private:

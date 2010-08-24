@@ -26,7 +26,7 @@
 #include "WorkflowRenderer.h"
 
 #include "Clip.h"
-#include "FilterInstance.h"
+#include "EffectInstance.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
 #include "SettingsManager.h"
@@ -398,20 +398,20 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
          newOutputFps != fps );
 }
 
-EffectsEngine::FilterHelper*
-WorkflowRenderer::appendFilter( Effect *effect, qint64 start, qint64 end )
+EffectsEngine::EffectHelper*
+WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     if ( effect->type() != Effect::Filter )
     {
         qWarning() << "WorkflowRenderer does not handle non filter effects.";
         return NULL;
     }
-    FilterInstance  *filterInstance = static_cast<FilterInstance*>( effect->createInstance() );
+    EffectInstance      *effectInstance = effect->createInstance();
 
     if ( isRendering() == true )
-        filterInstance->init( m_width, m_height );
+        effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
-    EffectsEngine::FilterHelper *ret = new EffectsEngine::FilterHelper( filterInstance, start, end );
+    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
     m_filters.push_back( ret );
     return ret;
 }
@@ -445,7 +445,7 @@ WorkflowRenderer::loadProject( const QDomElement &project )
         {
             Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
             if ( e != NULL )
-                appendFilter( e, effect.attribute( "start" ).toLongLong(),
+                appendEffect( e, effect.attribute( "start" ).toLongLong(),
                               effect.attribute( "end" ).toLongLong() );
             else
                 qCritical() << "Renderer: Can't load effect" << effect.attribute( "name" );

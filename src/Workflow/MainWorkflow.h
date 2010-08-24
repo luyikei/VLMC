@@ -75,7 +75,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                  Workflow::TrackType type, bool informGui );
 
 
-        EffectsEngine::FilterHelper     *addFilter( Effect* effect, quint32 trackId,
+        EffectsEngine::EffectHelper     *addEffect( Effect* effect, quint32 trackId,
                                                     const QUuid &uuid, Workflow::TrackType type );
 
         /**

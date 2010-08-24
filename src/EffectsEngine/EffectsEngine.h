@@ -49,10 +49,9 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     Q_OBJECT
 
     public:
-        template <typename T>
         struct      EffectHelper
         {
-            EffectHelper( T *_effect, qint64 _start = 0, qint64 _end = -1,
+            EffectHelper( EffectInstance *_effect, qint64 _start = 0, qint64 _end = -1,
                           const QString& _uuid = QString() ) :
                 effect( _effect ),
                 start( _start ),
@@ -64,15 +63,13 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
                     uuid = _uuid;
             }
 
-            T*          effect;
-            qint64      start;
-            qint64      end;
-            QUuid       uuid;
+            EffectInstance  *effect;
+            qint64          start;
+            qint64          end;
+            QUuid           uuid;
         };
-        typedef EffectHelper<FilterInstance>    FilterHelper;
-        typedef QList<FilterHelper*>            FilterList;
-        typedef EffectHelper<MixerInstance>     MixerHelper;
-        typedef QHash<qint64, MixerHelper*>     MixerList;
+        typedef QList<EffectHelper*>            EffectList;
+        typedef QHash<qint64, EffectHelper*>    MixerList;
         static const quint32                    MaxFramesForMixer = 3;
 
         Effect*     effect( const QString& name );
@@ -80,13 +77,13 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        loadEffects();
 
         //Filters methods:
-        static quint32  *applyFilters( const FilterList &effects,
+        static quint32  *applyFilters( const EffectList &effects,
                                   const Workflow::Frame *frame, qint64 currentFrame, double time );
-        static void     saveFilters( const FilterList &effects, QXmlStreamWriter &project );
-        static void     initFilters( const FilterList &effects, quint32 width, quint32 height );
+        static void     saveFilters( const EffectList &effects, QXmlStreamWriter &project );
+        static void     initFilters( const EffectList &effects, quint32 width, quint32 height );
 
         //Mixers methods:
-        static MixerHelper*     getMixer( const MixerList& mixers, qint64 currentFrame );
+        static EffectHelper     *getMixer( const MixerList& mixers, qint64 currentFrame );
         static void             initMixers( const MixerList& mixers, quint32 width,
                                             quint32 height );
 

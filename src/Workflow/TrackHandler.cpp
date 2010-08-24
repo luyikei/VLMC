@@ -59,7 +59,7 @@ TrackHandler::addClip( ClipHelper* ch, unsigned int trackId, qint64 start )
         m_length = m_tracks[trackId]->getLength();
 }
 
-EffectsEngine::FilterHelper*
+EffectsEngine::EffectHelper*
 TrackHandler::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid )
 {
     return m_tracks[trackId]->addEffect( effect, uuid );
