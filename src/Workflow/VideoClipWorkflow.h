@@ -40,7 +40,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
-        virtual bool            appendEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
+        virtual EffectsEngine::FilterHelper     *appendEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
         virtual void            setTime( qint64 time, qint64 frame );
         virtual void            saveEffects( QXmlStreamWriter &project ) const;
 

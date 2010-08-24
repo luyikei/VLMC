@@ -212,18 +212,19 @@ VideoClipWorkflow::flushComputedBuffers()
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
 }
 
-bool
+EffectsEngine::FilterHelper*
 VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
 {
     if ( effect->type() != Effect::Filter )
     {
         qWarning() << "VideoClipWorkflow does not handle non filter effects.";
-        return false;
+        return NULL;
     }
     FilterInstance  *filterInstance = static_cast<FilterInstance*>( effect->createInstance() );
     QWriteLocker    lock( m_effectsLock );
-    m_filters.push_back( new EffectsEngine::FilterHelper( filterInstance, start, end ) );
-    return true;
+    EffectsEngine::FilterHelper *ret = new EffectsEngine::FilterHelper( filterInstance, start, end );
+    m_filters.push_back( ret );
+    return ret;
 }
 
 void

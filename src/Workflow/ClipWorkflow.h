@@ -24,6 +24,7 @@
 #define CLIPWORKFLOW_H
 
 #include "mdate.h"
+#include "EffectsEngine.h"
 #include "ClipHelper.h"
 #include "Types.h"
 
@@ -202,8 +203,8 @@ class   ClipWorkflow : public QObject
 
         void                    save( QXmlStreamWriter& project ) const;
         virtual void            saveEffects( QXmlStreamWriter& ) const = 0;
-        virtual bool            appendEffect( Effect *effect, qint64 start = 0,
-                                              qint64 end = -1 ) = 0;
+        virtual EffectsEngine::FilterHelper     *appendEffect( Effect *effect, qint64 start = 0,
+                                                                qint64 end = -1 ) = 0;
 
     private:
         void                    setState( State state );
