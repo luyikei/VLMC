@@ -71,12 +71,17 @@ EffectsEngine::loadEffect( const QString &fileName )
         else
         {
             type = static_cast<Effect::Type>( typeInt );
+            if ( m_effects.contains( name ) == true )
+            {
+                delete e;
+                return false;
+            }
             m_effects[name] = e;
             emit effectAdded( e, name, type );
             return true;
         }
     }
-    if ( e->load() == false )
+    if ( e->load() == false || m_effects.contains( e->name() ) == true )
     {
         delete e;
         return false;
@@ -94,11 +99,14 @@ void
 EffectsEngine::browseDirectory( const QString &path )
 {
     QDir    dir( path );
-    const QStringList& files = dir.entryList( QDir::Files | QDir::NoDotAndDotDot |
+    const QFileInfoList& files = dir.entryInfoList( QDir::Files | QDir::NoDotAndDotDot |
                                               QDir::Readable | QDir::Executable );
-    foreach ( const QString& file, files )
+    foreach ( const QFileInfo& file, files )
     {
-        loadEffect( path + '/' + file );
+        if ( file.isDir() )
+            browseDirectory( file.absoluteFilePath() );
+        else
+            loadEffect( file.absoluteFilePath() );
     }
 }
 
@@ -211,5 +219,24 @@ EffectsEngine::initMixers( const MixerList &mixers, quint32 width, quint32 heigh
     {
         it.value()->effect->init( width, height );
         ++it;
+    }
+}
+
+void
+EffectsEngine::loadEffects()
+{
+    //FIXME: What should we do for windows ?!
+    //Refer to http://www.piksel.org/frei0r/1.2/spec/group__pluglocations.html
+    const   QString paths[3] = {
+        QString( QDir::homePath() + "/.frei0r-1/lib/" ),
+        QString("/usr/local/lib/frei0r-1/"),
+        QString("/usr/lib/frei0r-1/" )
+    };
+    for ( quint32 i = 0; i < 3; ++i )
+    {
+        if ( QFile::exists( paths[i] ) == true )
+        {
+            browseDirectory( paths[i] );
+        }
     }
 }

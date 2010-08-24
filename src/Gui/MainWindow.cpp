@@ -446,7 +446,7 @@ MainWindow::initializeDockWidgets( void )
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
-    EffectsEngine::getInstance()->browseDirectory( "/usr/lib/frei0r-1" );
+    EffectsEngine::getInstance()->loadEffects();
 
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
@@ -638,7 +638,7 @@ MainWindow::renderVideoSettings( bool exportType )
 
     if ( exportType )
         outputFileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
-                         VLMC_PROJECT_GET_STRING( "general/ProjectName" ) + 
+                         VLMC_PROJECT_GET_STRING( "general/ProjectName" ) +
                          "-vlmc.mp4";
     else
         outputFileName = settings->outputFileName();
@@ -666,23 +666,23 @@ MainWindow::on_actionShare_On_Internet_triggered()
 
         if( !renderVideoSettings( true ) )
             return;
-                   
+
         checkFolders();
         QString fileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
-                           VLMC_PROJECT_GET_STRING( "general/ProjectName" ) + 
+                           VLMC_PROJECT_GET_STRING( "general/ProjectName" ) +
                            "-vlmc.mp4";
 
         loadGlobalProxySettings();
 
         ShareOnInternet *shareVideo = new ShareOnInternet();
         shareVideo->setVideoFile( fileName );
- 
+
         if ( shareVideo->exec() == QDialog::Rejected )
         {
             delete shareVideo;
             return;
         }
- 
+
         delete shareVideo;
     }
 }

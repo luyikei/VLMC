@@ -77,7 +77,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
-        void        browseDirectory( const QString& path );
+        void        loadEffects();
 
         //Filters methods:
         static void applyFilters( const FilterList &effects,
@@ -93,7 +93,9 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     private:
         EffectsEngine();
         ~EffectsEngine();
+        void        browseDirectory( const QString& path );
 
+    private:
         QHash<QString, Effect*> m_effects;
         QSettings               *m_cache;
         QTime                   *m_time;
