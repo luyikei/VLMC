@@ -22,10 +22,14 @@
 
 #include "config.h"
 
-#include <QtDebug>
+#include "Types.h"
+
+#include <QMetaType>
+#include <QVariant>
 
 #include <sys/wait.h>
 #include <unistd.h>
+
 
 int VLMCmain( int , char** );
 
@@ -96,6 +100,9 @@ int     main( int argc, char **argv )
         }
     }
 #else
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
     return VLMCmain( argc, argv );
 #endif
 }
