@@ -318,8 +318,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    stopFrameComputing();
 
-        /// Pre-filled buffer used when there's nothing to render
-        static Workflow::Frame*         blackOutput;
+        const Workflow::Frame   *blackOutput() const;
 
     private:
         MainWorkflow( int trackCount = 64 );
@@ -345,6 +344,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
                                          Workflow::TrackType trackType );
 
     private:
+        /// Pre-filled buffer used when there's nothing to render
+        Workflow::Frame         *m_blackOutput;
+
         /// Lock for the m_currentFrame atribute.
         QReadWriteLock*                 m_currentFrameLock;
         /**

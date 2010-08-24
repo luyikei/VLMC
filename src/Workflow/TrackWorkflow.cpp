@@ -335,7 +335,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             //FIXME: We don't handle mixer3 yet.
             mixer->effect->process( currentFrame * 1000.0 / m_fps,
                                     frames[0]->buffer(),
-                                    frames[1] != NULL ? frames[1]->buffer() : MainWorkflow::blackOutput->buffer(),
+                                    frames[1] != NULL ? frames[1]->buffer() : MainWorkflow::getInstance()->blackOutput()->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
             m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;
             m_lastFrame = subFrame;

@@ -37,8 +37,6 @@
 #include <QDomElement>
 #include <QMutex>
 
-Workflow::Frame     *MainWorkflow::blackOutput = NULL;
-
 MainWorkflow::MainWorkflow( int trackCount ) :
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
@@ -69,7 +67,7 @@ MainWorkflow::~MainWorkflow()
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
         delete m_tracks[i];
     delete[] m_tracks;
-    delete MainWorkflow::blackOutput;
+    delete m_blackOutput;
 }
 
 void
@@ -115,10 +113,10 @@ MainWorkflow::startRender( quint32 width, quint32 height, double fps )
     m_renderStarted = true;
     m_width = width;
     m_height = height;
-    if ( blackOutput != NULL )
-        delete blackOutput;
-    blackOutput = new Workflow::Frame( m_width, m_height );
-    memset( blackOutput->buffer(), 0, blackOutput->size() );
+    if ( m_blackOutput != NULL )
+        delete m_blackOutput;
+    m_blackOutput = new Workflow::Frame( m_width, m_height );
+    memset( m_blackOutput->buffer(), 0, m_blackOutput->size() );
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
         m_tracks[i]->startRender( width, height, fps );
     computeLength();
@@ -138,7 +136,7 @@ MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
         if ( trackType == Workflow::VideoTrack )
         {
             if ( ret == NULL )
-                return MainWorkflow::blackOutput;
+                return m_blackOutput;
         }
         return ret;
     }
@@ -479,4 +477,10 @@ MainWorkflow::contains( const QUuid &uuid ) const
         if ( m_tracks[type]->contains( uuid ) == true )
             return true;
     return false;
+}
+
+const Workflow::Frame*
+MainWorkflow::blackOutput() const
+{
+    return m_blackOutput;
 }
