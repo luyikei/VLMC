@@ -304,7 +304,7 @@ ELSE(NOT WITH_GUI)
         Gui/ui/MainWindow.ui
         Gui/ui/Timeline.ui
         Gui/ui/WorkflowFileRendererDialog.ui
-        Gui/widgets/TrackControls.ui
+        Gui/widgets/ui/TrackControls.ui
         Gui/widgets/ui/NotificationZone.ui
         Gui/wizard/ui/GeneralPage.ui
         Gui/wizard/ui/OpenPage.ui
@@ -320,7 +320,7 @@ ELSE(NOT WITH_GUI)
             LIST( APPEND VLMC_SRCS Tools/Win32BacktraceGenerator.cpp )
         ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
         LIST( APPEND VLMC_HDRS Gui/widgets/CrashHandler.h )
-        LIST( APPEND VLMC_UIS Gui/widgets/CrashHandler.ui )
+        LIST( APPEND VLMC_UIS Gui/widgets/ui/CrashHandler.ui )
     ENDIF(WITH_CRASHHANDLER_GUI)
 
     QT4_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})
