@@ -42,7 +42,8 @@ protected:
     void changeEvent( QEvent *e );
 
 private slots:
-    void setTrackDisabled( bool disable );
+    void    setTrackDisabled( bool disable );
+    void    trackNameDoubleClicked();
 
 private:
     void updateTextLabels();

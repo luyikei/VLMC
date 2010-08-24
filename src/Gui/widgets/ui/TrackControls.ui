@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>104</width>
-    <height>19</height>
+    <height>22</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,7 +52,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="trackLabel">
+    <widget class="ExtendedLabel" name="trackLabel">
      <property name="text">
       <string>TextLabel</string>
      </property>
@@ -60,6 +60,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtendedLabel</class>
+   <extends>QLabel</extends>
+   <header>ExtendedLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

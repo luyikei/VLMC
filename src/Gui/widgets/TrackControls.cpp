@@ -20,18 +20,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QIcon>
 #include "GraphicsTrack.h"
 #include "TrackControls.h"
+
 #include "ui_TrackControls.h"
 
+#include <QIcon>
+#include <QInputDialog>
+
 TrackControls::TrackControls( GraphicsTrack* track, QWidget *parent ) :
-    QWidget( parent ), m_ui( new Ui::TrackControls ), m_track( track )
+    QWidget( parent ),
+    m_ui( new Ui::TrackControls ),
+    m_track( track )
 {
     m_ui->setupUi( this );
     setTrackDisabled( !m_track->isEnabled() );
     connect( m_ui->disableButton, SIGNAL( clicked(bool) ),
              this, SLOT( setTrackDisabled(bool) ) );
+    connect( m_ui->trackLabel, SIGNAL( doubleClicked() ),
+             this, SLOT( trackNameDoubleClicked() ) );
     updateTextLabels();
 }
 
@@ -40,7 +47,8 @@ TrackControls::~TrackControls()
     delete m_ui;
 }
 
-void TrackControls::updateTextLabels()
+void
+TrackControls::updateTextLabels()
 {
     if ( m_track->mediaType() == Workflow::VideoTrack )
         m_ui->trackLabel->setText( tr( "Video #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
@@ -48,7 +56,8 @@ void TrackControls::updateTextLabels()
         m_ui->trackLabel->setText( tr( "Audio #%1" ).arg( QString::number( m_track->trackNumber() + 1 ) ) );
 }
 
-void TrackControls::changeEvent( QEvent *e )
+void
+TrackControls::changeEvent( QEvent *e )
 {
     QWidget::changeEvent( e );
     switch ( e->type() ) {
@@ -61,7 +70,8 @@ void TrackControls::changeEvent( QEvent *e )
     }
 }
 
-void TrackControls::setTrackDisabled( bool disable )
+void
+TrackControls::setTrackDisabled( bool disable )
 {
     m_track->setTrackEnabled( !disable );
     if ( !disable )
@@ -78,4 +88,13 @@ void TrackControls::setTrackDisabled( bool disable )
         else if ( m_track->mediaType() == Workflow::AudioTrack )
             m_ui->disableButton->setIcon( QIcon( ":/images/hpoff" ) );
     }
+}
+
+void
+TrackControls::trackNameDoubleClicked()
+{
+    QString     name = QInputDialog::getText( NULL, tr( "Rename track" ),
+                                              tr( "Enter the track new name") );
+    if ( name.isEmpty() == false )
+        m_ui->trackLabel->setText( name );
 }
