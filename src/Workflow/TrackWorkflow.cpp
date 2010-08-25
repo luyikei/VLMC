@@ -98,7 +98,7 @@ TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->clip()->fullId() == uuid )
+        if ( it.value()->getClipHelper()->uuid() == uuid )
             return it.value()->appendEffect( effect );
         ++it;
     }
