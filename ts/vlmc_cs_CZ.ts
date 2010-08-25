@@ -33,7 +33,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/About.ui" line="105"/>
         <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Běhová verze Qt&quot; %1 (kompilováná proti %2)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="113"/>
@@ -56,22 +56,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="26"/>
         <source>Media Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti média</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="51"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Trvání</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="67"/>
@@ -80,43 +80,43 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="212"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="228"/>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="80"/>
         <source>Resolution</source>
-        <translation type="unfinished">Rozlíšení</translation>
+        <translation>Rozlíšení</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="109"/>
         <source>FPS</source>
-        <translation type="unfinished">FPS</translation>
+        <translation>FPS</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="138"/>
         <source>Number of video tracks</source>
-        <translation type="unfinished">Počet video stop</translation>
+        <translation>Počet video stop</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="151"/>
         <source>Number of audio tracks</source>
-        <translation type="unfinished">Počet audio stop</translation>
+        <translation>Počet audio stop</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="167"/>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="183"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="196"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta</translation>
     </message>
     <message>
         <location filename="../src/Gui/media/ui/ClipMetadataDisplayer.ui" line="248"/>
         <source>In project workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>V pracovním prostředí</translation>
     </message>
 </context>
 <context>
@@ -164,7 +164,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="128"/>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastala chyba. Omlouváme se za obtíže, nicméně uložili jsme váš projekt. Bude znovu otevřen až příště otevřete VLMC.</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.ui" line="156"/>
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/CrashHandler.cpp" line="55"/>
         <source>A crash occurred. Signal received: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nastal pád. Přijat signál: </translation>
     </message>
 </context>
 <context>
@@ -197,22 +197,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="342"/>
         <source>Media Library</source>
-        <translation type="unfinished">Knihovna médií</translation>
+        <translation>Knihovna médií</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="438"/>
         <source>Clip Preview</source>
-        <translation type="unfinished">Náhled klipu</translation>
+        <translation>Náhled klipu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="448"/>
         <source>Project Preview</source>
-        <translation type="unfinished">Náhled projektu</translation>
+        <translation>Náhled projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="456"/>
         <source>History</source>
-        <translation type="unfinished">Historie</translation>
+        <translation>Historie</translation>
     </message>
 </context>
 <context>
@@ -220,43 +220,43 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="77"/>
         <source>The project has been modified.</source>
-        <translation type="unfinished">Projekt byl změněn.</translation>
+        <translation>Projekt byl změněn.</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="78"/>
         <source>Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejete si ho uložit?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="102"/>
         <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chystáte se přesunout projekt. Každé video bude zkopírováno do vašeho nového pracovního prostředí.</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="103"/>
         <source>Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejete si pokračovat?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
         <source>Failed to load project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se otevřít soubor projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
         <source>Backup file</source>
-        <translation type="unfinished"></translation>
+        <translation>Záložní soubor</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
         <source>A backup file exists for this project. Do you want to load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Existuje záložní soubor pro tento projekt. Přejete si ho načíst?</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
         <source>An outdated backup file was found. Do you want to erase it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Byl nalezen zastaralý záložní soubor. Přejete si ho vymazat?</translation>
     </message>
 </context>
 <context>
@@ -366,12 +366,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="246"/>
         <source>Invalid medias</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná média</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="247"/>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>Některá z médií, která jste načetli nemohou být použita pro editaci videa. Chcete je zkonvertovat VLMC, aby jste je mohly použít ve vašem projektu?</translation>
     </message>
     <message>
         <location filename="../src/Gui/import/ImportController.cpp" line="320"/>
@@ -384,7 +384,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="20"/>
         <source>VideoLAN Movie Creator</source>
-        <translation type="unfinished">VideoLAN Movie Creator</translation>
+        <translation>VideoLAN Movie Creator</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="32"/>
@@ -399,12 +399,22 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Prosím berte na vědomí&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator je &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software a není připraven na prime-time. Mnoho klíčových funkcionalit &lt;span style=&quot; font-weight:600;&quot;&gt;jednoduše chybí&lt;/span&gt;, nebo jsou ještě &lt;span style=&quot; font-weight:600;&quot;&gt;zabugované&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Náš team je složen z dobrovolníků, kteří tvrdě pracují, aby vám poskytly tu nejlepší zkušenost při editování vida.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;čtěte více&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="79"/>
         <source>I understand</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozumím</translation>
     </message>
 </context>
 <context>
@@ -431,78 +441,78 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="35"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Upravit</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="82"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zobrazit</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="77"/>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Okno</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="45"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="53"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="57"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Export</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="88"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Nástroje</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="101"/>
         <source>VLMC Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Panel nástrojů VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="195"/>
         <source>&amp;To a file</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Do souboru</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="198"/>
         <location filename="../src/Gui/ui/MainWindow.ui" line="201"/>
         <source>Render your project as a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit váš projekt jako soubor</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="290"/>
         <source>Share on &amp;Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Sdílet na &amp;Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="293"/>
         <source>Share your project on youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Sdílet váš projekt na youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="302"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opustit</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="133"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>O &amp;aplikaci</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="151"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nastavení</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="162"/>
@@ -512,52 +522,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="171"/>
         <source>&amp;New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nový projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="174"/>
         <source>Open the wizard to create a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít pocníka na vytvoření nového projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="186"/>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Celá obrazovka</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="210"/>
         <source>&amp;Load Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Načíst projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="219"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uložit</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="228"/>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Import</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="231"/>
         <source>Import new medias into the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat nová média do aktuálního projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="249"/>
         <source>Save &amp;As</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit j&amp;ako</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="258"/>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zavřít projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="240"/>
         <source>Proj&amp;ect Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení proj&amp;ektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="272"/>
@@ -578,64 +588,64 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="314"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mód výběru</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="317"/>
         <location filename="../src/Gui/ui/MainWindow.ui" line="320"/>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte nástroj myš k ovládání oblastí v časovém přehledu</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="332"/>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mód vyjmutí</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="335"/>
         <source>Use the scissors to cut regions in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte nůžky k vyjmutí oblastí v časovém přehledu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="396"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddálit</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="417"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Přiblížit</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="484"/>
         <location filename="../src/Gui/MainWindow.cpp" line="502"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlavní</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="487"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesnice</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="490"/>
         <source>Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="493"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Síť</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="505"/>
         <source>Video</source>
-        <translation type="unfinished">Video</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="508"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="537"/>
@@ -655,12 +665,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="752"/>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC nebylo zavřeno hezky. Chcete obnovit váš projekt?</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="759"/>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC nezvládlo obnovení vašeho projektu. Omlouváme se za obtíže</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="759"/>
@@ -688,22 +698,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="222"/>
         <source>This clip or some of its children are contained in the timeline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento klip nebo některý z jeho potomků je obsažen v časovém přehledu.</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="223"/>
         <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraněním bude zmazán z časového přehledu. Přejete si pokračovat?</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="286"/>
         <source>Can&apos;t copy to workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze zkopírovat do pracovního prostředí</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/MediaCellView.cpp" line="287"/>
         <source>Can&apos;t copy this media to workspace: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze kopírovat toto médium do pracovního prostředi: %1</translation>
     </message>
 </context>
 <context>
@@ -711,22 +721,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="38"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="43"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Štítky</translation>
     </message>
     <message>
         <location filename="../src/Gui/library/ui/MediaLibrary.ui" line="56"/>
         <source>Import</source>
-        <translation type="unfinished">Import</translation>
+        <translation>Import</translation>
     </message>
 </context>
 <context>
@@ -734,7 +744,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/widgets/ui/NotificationZone.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
 </context>
 <context>
@@ -781,12 +791,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="38"/>
         <source>Select path</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte cestu</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="69"/>
         <source>Select a path</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte cestu</translation>
     </message>
 </context>
 <context>
@@ -794,62 +804,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="254"/>
         <source>Select the selection tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte nástroj výběru v časovém přehledu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="257"/>
         <source>Cut mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mód vyjmutí</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="258"/>
         <source>Select the cut/razor tool in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte nástroj vyjmutí/ořezu v časovém přehledu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="181"/>
         <source>Media preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhled média</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="182"/>
         <source>Preview the selected media, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Předvést vybrané médium, nebo pozastavit aktuální ukázku</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="185"/>
         <source>Render preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit náhled</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="186"/>
         <source>Preview the project, or pause the current preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Předvést projekt, nebo pozastavit aktuální ukázku</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="191"/>
         <source>Undo</source>
-        <translation type="unfinished">Zpět</translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="192"/>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět poslední akci</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="196"/>
         <source>Redo</source>
-        <translation type="unfinished">Znovu</translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="197"/>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Zopakovat poslední akci</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="201"/>
         <source>Help</source>
-        <translation type="unfinished">Nápověda</translation>
+        <translation>Nápověda</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="202"/>
@@ -859,272 +869,272 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="205"/>
         <source>Quit</source>
-        <translation type="unfinished">Konec</translation>
+        <translation>Opustit</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="206"/>
         <source>Quit VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Opustit VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="209"/>
         <source>Preferences</source>
-        <translation type="unfinished">Preference</translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="210"/>
         <source>Open VLMC preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít nastavení VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="213"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="214"/>
         <source>Open the project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít nastavení projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="217"/>
         <source>Fullscreen</source>
-        <translation type="unfinished">Fullscreen</translation>
+        <translation>Celá obrazovka</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="218"/>
         <source>Switch to fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepnout do módu celé obrazovky</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="222"/>
         <source>New project</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="223"/>
         <source>Open the new project wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít průvodce nového projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="253"/>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mód výberu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="262"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="271"/>
         <source>Confirm clip deletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit smazaní klipu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="272"/>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádat o potvrzení před mazáním klipu z časového přehledu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="276"/>
         <source>Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube Developer Key</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="277"/>
         <source>The Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube Developer Key</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="280"/>
         <source>Youtube Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube uživatelské jméno</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="281"/>
         <source>VLMC won&apos;t store your passwords...</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC nebude ukládat vaše hesla...</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="285"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="286"/>
         <source>The HTTP Proxy </source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="289"/>
         <source>Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Port Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="290"/>
         <source>The HTTP Proxy Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Port HTTP Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="293"/>
         <source>Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelské jméno Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="294"/>
         <source>The HTTP Proxy Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelské jméno HTTP Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="297"/>
         <source>Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="298"/>
         <source>The HTTP Proxy Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo HTTP Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="302"/>
         <source>The default location where to store projects folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí umístění kde skladovat adresáře projektů</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="227"/>
         <source>Open a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="228"/>
         <source>Open an existing project</source>
-        <translation type="unfinished">Otevřít existující projekt</translation>
+        <translation>Otevřít existující projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="232"/>
         <source>Save</source>
-        <translation type="unfinished">Uložit</translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="233"/>
         <source>Save the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit aktuální projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="236"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit jako</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="237"/>
         <source>Save the current project to a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit aktální projekt do nového souboru</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="241"/>
         <source>Close the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="242"/>
         <source>Close the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít aktuální projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="245"/>
         <source>Import media</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat médium</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="246"/>
         <source>Open the import window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít okno importu</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="249"/>
         <source>Render the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit projekt</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="250"/>
         <source>Render the project to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit projekt do souboru</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="263"/>
         <source>The VLMC&apos;s UI language</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk UR VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="49"/>
         <source>Automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické uložení</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="50"/>
         <source>When this option is activated,VLMC will automatically save your project at a specified interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokud je tato možnost aktivována, VLMC bude automaticky ukládat váš projekt ve stanoveném intervalu</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="58"/>
         <source>Automatic save interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Interval automatického uložení</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="59"/>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto je interval, který bude VLMC čekat mezi dvěmi automatickými uloženími</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="50"/>
         <source>Output video FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS výstupního videa</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="51"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame Per Second používaný když předvádíte nebo vykreslujete projekt</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="53"/>
         <source>Video width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka videa</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="54"/>
         <source>Width resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozlišení šířky výstupního videa</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="58"/>
         <source>Video height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška videa</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="59"/>
         <source>Height resolution of the output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozlišení výšky výstupního videa</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="63"/>
         <source>Audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Samplerate audia</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Output project audio samplerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní audio samplerate projektu</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="67"/>
         <source>Project name</source>
-        <translation type="unfinished">Název projektu</translation>
+        <translation>Název projektu</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="68"/>
         <source>The project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název projektu</translation>
     </message>
 </context>
 <context>
@@ -1132,7 +1142,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="301"/>
         <source>Project default location</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí umístění projektu</translation>
     </message>
 </context>
 <context>
@@ -1145,48 +1155,49 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="52"/>
         <source>Go to the previous frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Jít na přechozí frame</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="90"/>
         <source>Play / Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pustit / Pozastavit</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="128"/>
         <source>Go to the next frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Jít na další frame</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="166"/>
         <source>Set marker A</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit značku A</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
         <source>Set marker B</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit značku B</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="242"/>
         <source>Cut at markers position</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyjmout na pozici značek</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="287"/>
         <source>Stop the playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavit přehrávání</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="226"/>
         <source>Rendering error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba vykreslování</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="227"/>
         <source>An error occurred while rendering.
 Please check your VLC installation before reporting the issue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyskytla se chyba při vykreslování.
+Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1205,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="126"/>
         <source>Can&apos;t open project file. (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu otevřít soubor projektu. (%1)</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="268"/>
         <source>Failed to load the project file: %1. Aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se načist soubor projektu: %1. Ruším.</translation>
     </message>
 </context>
 <context>
@@ -1269,7 +1280,7 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
         <source>Render settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení vykreslení</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
@@ -1334,33 +1345,33 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="56"/>
         <source>Videos(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Videa(%1)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="65"/>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="74"/>
         <source>Invalid parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný parametr</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="66"/>
         <source>Please enter valid rendering parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vložte platné parametry vykreslování</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="75"/>
         <source>Please provide a valid output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím poskytněte platný výstupní soubor!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="83"/>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor již existuje!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="84"/>
         <source>Output file already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor již existuje, přejete si ho přepsat?</translation>
     </message>
 </context>
 <context>
@@ -1368,12 +1379,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="35"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyčistit</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/SearchLineEdit.cpp" line="123"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtr</translation>
     </message>
 </context>
 <context>
@@ -1382,42 +1393,42 @@ Please check your VLC installation before reporting the issue.</source>
         <location filename="../src/Gui/MainWindow.cpp" line="482"/>
         <location filename="../src/Gui/MainWindow.cpp" line="500"/>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>hlavní</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="485"/>
         <source>keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>klávesnice</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="488"/>
         <source>youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="491"/>
         <source>network</source>
-        <translation type="unfinished"></translation>
+        <translation>síť</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="503"/>
         <source>video</source>
-        <translation type="unfinished"></translation>
+        <translation>video</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="506"/>
         <source>audio</source>
-        <translation type="unfinished"></translation>
+        <translation>audio</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="174"/>
         <source>Project preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení projektu</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="176"/>
         <source>VLMC Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení VLMC</translation>
     </message>
 </context>
 <context>
@@ -1425,142 +1436,142 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="14"/>
         <source>Share On Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Sdílet na Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="24"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelské jméno</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="34"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="45"/>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>Auta a Vozy</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="50"/>
         <source>Comedy</source>
-        <translation type="unfinished"></translation>
+        <translation>Komedie</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="55"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzdělání</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="60"/>
         <source>Entertainment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zábava</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="65"/>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Film a Animace</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="70"/>
         <source>Gaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Hraní</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="75"/>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Jak na to a Styl</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="80"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Hudba</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="85"/>
         <source>News &amp; Politics</source>
-        <translation type="unfinished"></translation>
+        <translation>Novinky a Politika</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="90"/>
         <source>Nonprofits &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Neziskové a Aktivizmus</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="95"/>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished"></translation>
+        <translation>Lidé a Blogy</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="100"/>
         <source>Pets &amp; Animals</source>
-        <translation type="unfinished"></translation>
+        <translation>Mazličci a Zvířata</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="105"/>
         <source>Science &amp; Technology</source>
-        <translation type="unfinished"></translation>
+        <translation>Věda a Technika</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="110"/>
         <source>Sports</source>
-        <translation type="unfinished"></translation>
+        <translation>Sporty</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="115"/>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Cestování a Události</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="123"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpis</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="133"/>
         <source>Description</source>
-        <translation type="unfinished">Popis</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="153"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Štítky</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="163"/>
         <source>Video Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost videa</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="171"/>
         <source>Small (480 x 272)</source>
-        <translation type="unfinished"></translation>
+        <translation>Malé (480 x 272)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="176"/>
         <source>Medium (640 x 360)</source>
-        <translation type="unfinished"></translation>
+        <translation>Střední (640 x 360)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="181"/>
         <source>Large (960 x 540)</source>
-        <translation type="unfinished"></translation>
+        <translation>Velké (960 x 540)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="186"/>
         <source>HD (1280 x 720)</source>
-        <translation type="unfinished"></translation>
+        <translation>HD (1280 x 720)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="194"/>
         <source>Make this video public (Default: private)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zveřejnít toto video (Výchozí: sokromé)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnYoutube.ui" line="214"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorie</translation>
     </message>
 </context>
 <context>
@@ -1633,27 +1644,27 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="78"/>
         <source>Confirm the deletion of the region?</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit smazání oblasti?</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="80"/>
         <source>Confirm the deletion of those regions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit smazání těchto oblastí?</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="84"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="85"/>
         <source>Yes, don&apos;t ask me again</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano, neptat se mě znovu</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="87"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
 </context>
 <context>
@@ -1778,17 +1789,17 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="210"/>
         <source>44100 Hz</source>
-        <translation type="unfinished">11000 Hz {44100 ?}</translation>
+        <translation>44100 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="215"/>
         <source>22050 Hz</source>
-        <translation type="unfinished">11000 Hz {22050 ?}</translation>
+        <translation>22050 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="220"/>
         <source>11025 Hz</source>
-        <translation type="unfinished">11000 Hz {11025 ?}</translation>
+        <translation>11025 Hz</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/VideoPage.cpp" line="31"/>
@@ -1859,7 +1870,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="148"/>
         <source>Do not show at startup.</source>
-        <translation>Neukazovat při startu</translation>
+        <translation>Neukazovat při startu.</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="44"/>
@@ -1922,22 +1933,22 @@ Potom klikněte na tlačítko Další...</translation>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="90"/>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor již existuje!</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="91"/>
         <source>A file with the same name already exists, do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor se stejným jménem již existuje, přejete si ho přepsat?</translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source>Workspace: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pracovní prostředí: </translation>
     </message>
     <message>
         <location filename="../src/Project/Workspace.cpp" line="123"/>
         <source> copied to </source>
-        <translation type="unfinished"></translation>
+        <translation> zkopírováno do </translation>
     </message>
 </context>
 </TS>
