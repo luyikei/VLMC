@@ -324,6 +324,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    stopFrameComputing();
 
+        TrackWorkflow           *track( Workflow::TrackType type, quint32 trackId );
+
         const Workflow::Frame   *blackOutput() const;
 
     private:

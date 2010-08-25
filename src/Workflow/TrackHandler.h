@@ -103,6 +103,8 @@ class   TrackHandler : public QObject
 
         void                    stopFrameComputing();
 
+        TrackWorkflow           *track( quint32 trackId );
+
     private:
         void                    computeLength();
         void                    allTracksEnded();

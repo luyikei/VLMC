@@ -507,3 +507,9 @@ MainWorkflow::lengthUpdated( qint64 )
         emit lengthChanged( m_lengthFrame );
     }
 }
+
+TrackWorkflow*
+MainWorkflow::track( Workflow::TrackType type, quint32 trackId )
+{
+    return m_tracks[type]->track( trackId );
+}

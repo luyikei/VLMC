@@ -293,3 +293,9 @@ TrackHandler::lengthUpdated( qint64 )
         emit lengthChanged( m_length );
     }
 }
+
+TrackWorkflow*
+TrackHandler::track( quint32 trackId )
+{
+    return m_tracks[trackId];
+}
