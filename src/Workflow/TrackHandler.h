@@ -120,6 +120,7 @@ class   TrackHandler : public QObject
 
     signals:
         void                            tracksEndReached();
+        void                            lengthChanged( qint64 );
 };
 
 #endif // TRACKHANDLER_H

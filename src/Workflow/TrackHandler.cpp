@@ -278,20 +278,18 @@ TrackHandler::stopFrameComputing()
 }
 
 void
-TrackHandler::lengthUpdated( qint64 newLength )
+TrackHandler::lengthUpdated( qint64 )
 {
-    //If the new length is bigger, or if the track that has been resized was the
-    if ( newLength > m_length )
-        m_length = newLength;
-    else
-    {
-        qint64      maxLength = 0;
+    qint64      maxLength = 0;
 
-        for ( unsigned int i = 0; i < m_trackCount; ++i )
-        {
-            if ( m_tracks[i]->getLength() > maxLength )
-                maxLength = m_tracks[i]->getLength();
-        }
+    for ( unsigned int i = 0; i < m_trackCount; ++i )
+    {
+        if ( m_tracks[i]->getLength() > maxLength )
+            maxLength = m_tracks[i]->getLength();
+    }
+    if ( maxLength != m_length )
+    {
         m_length = maxLength;
+        emit lengthChanged( m_length );
     }
 }

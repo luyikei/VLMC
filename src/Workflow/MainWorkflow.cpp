@@ -55,6 +55,8 @@ MainWorkflow::MainWorkflow( int trackCount ) :
         m_tracks[i] = new TrackHandler( trackCount, trackType );
         connect( m_tracks[i], SIGNAL( tracksEndReached() ),
                  this, SLOT( tracksEndReached() ) );
+        connect( m_tracks[i], SIGNAL( lengthChanged(qint64) ),
+                 this, SLOT( lengthUpdated( qint64 ) ) );
         m_currentFrame[i] = 0;
     }
 }
@@ -487,4 +489,21 @@ const Workflow::Frame*
 MainWorkflow::blackOutput() const
 {
     return m_blackOutput;
+}
+
+void
+MainWorkflow::lengthUpdated( qint64 )
+{
+    qint64  maxLength = 0;
+
+    for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
+    {
+        if ( m_tracks[i]->getLength() > maxLength )
+            maxLength = m_tracks[i]->getLength();
+    }
+    if ( m_lengthFrame != maxLength )
+    {
+        m_lengthFrame = maxLength;
+        emit lengthChanged( m_lengthFrame );
+    }
 }

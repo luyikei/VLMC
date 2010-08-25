@@ -414,6 +414,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                            clear();
 
+        void                            lengthUpdated( qint64 lengthUpdated );
+
     signals:
         /**
          *  \brief      Used to notify a change to the timeline and preview widget cursor
