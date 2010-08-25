@@ -48,19 +48,6 @@ TrackHandler::~TrackHandler()
     delete[] m_tracks;
 }
 
-void
-TrackHandler::addClip( ClipHelper* ch, unsigned int trackId, qint64 start )
-{
-    Q_ASSERT_X( trackId < m_trackCount, "MainWorkflow::addClip",
-                "The specified trackId isn't valid, for it's higher than the number of tracks");
-
-    m_tracks[trackId]->addClip( ch, start );
-
-    //Now check if this clip addition has changed something about the workflow's length
-    if ( m_tracks[trackId]->getLength() > m_length )
-        m_length = m_tracks[trackId]->getLength();
-}
-
 EffectsEngine::EffectHelper*
 TrackHandler::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid )
 {
@@ -71,7 +58,6 @@ void
 TrackHandler::startRender( quint32 width, quint32 height, double fps )
 {
     m_endReached = false;
-    computeLength();
     if ( m_length == 0 )
         m_endReached = true;
     else
@@ -81,19 +67,6 @@ TrackHandler::startRender( quint32 width, quint32 height, double fps )
             m_tracks[i]->initRender( width, height, fps );
         }
     }
-}
-
-void
-TrackHandler::computeLength()
-{
-    qint64      maxLength = 0;
-
-    for ( unsigned int i = 0; i < m_trackCount; ++i )
-    {
-        if ( m_tracks[i]->getLength() > maxLength )
-            maxLength = m_tracks[i]->getLength();
-    }
-    m_length = maxLength;
 }
 
 qint64
@@ -154,7 +127,6 @@ TrackHandler::moveClip(const QUuid &clipUuid, unsigned int oldTrack,
         ClipWorkflow* cw = m_tracks[oldTrack]->removeClipWorkflow( clipUuid );
         m_tracks[newTrack]->addClip( cw, startingFrame );
     }
-    computeLength();
 }
 
 Clip*
@@ -163,7 +135,6 @@ TrackHandler::removeClip( const QUuid& uuid, unsigned int trackId )
     Q_ASSERT( trackId < m_trackCount );
 
     Clip* clip = m_tracks[trackId]->removeClip( uuid );
-    computeLength();
     return clip;
 }
 

@@ -23,8 +23,9 @@
 #include "TracksScene.h"
 
 #include "Commands.h"
-#include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
+#include "GraphicsMovieItem.h"
+#include "GraphicsTrack.h"
 #include "SettingsManager.h"
 #include "Timeline.h"
 #include "UndoStack.h"
@@ -105,10 +106,7 @@ TracksScene::askRemoveSelectedItems()
         AbstractGraphicsMediaItem* item = qgraphicsitem_cast<AbstractGraphicsMediaItem*>( items.at(i) );
         if ( !item ) return;
 
-        Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clipHelper(),
-                                                                   item->trackNumber(),
-                                                                   item->startPos(),
-                                                                   item->mediaType() ) );
+        Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clipHelper(), item->track()->trackWorkflow() ) );
     }
 
     UndoStack::getInstance()->endMacro();

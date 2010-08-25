@@ -71,8 +71,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \sa         removeClip( const QUuid&, unsigned int, Workflow::TrackType )
          *  \sa         clipAdded( Clip*, unsigned int, qint64, Workflow::TrackType )
          */
-        void            addClip( ClipHelper* clipHelper, quint32 trackId, qint64 start,
-                                 Workflow::TrackType type, bool informGui );
+//        void            addClip( ClipHelper* clipHelper, quint32 trackId, qint64 start,
+//                                 Workflow::TrackType type, bool informGui );
 
 
         EffectsEngine::EffectHelper     *addEffect( Effect* effect, quint32 trackId,
@@ -83,7 +83,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *
          *  \param      width   The width to use with this render session.
          *  \param      height  The height to use with this render session.
-         *  This will basically activate all the tracks, so they can render.
+         *  This will basically activate all the tracks, newLengthso they can render.
          */
         void                    startRender( quint32 width, quint32 height, double fps );
         /**
@@ -296,9 +296,9 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    setFullSpeedRender( bool val );
 
-        ClipHelper*             split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
-                                       qint64 newClipPos, qint64 newClipBegin,
-                                       Workflow::TrackType trackType );
+//        ClipHelper*             split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
+//                                       qint64 newClipPos, qint64 newClipBegin,
+//                                       Workflow::TrackType trackType );
 
         void                    resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd,
                                           qint64 newPos, quint32 trackId,

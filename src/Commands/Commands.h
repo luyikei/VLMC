@@ -63,17 +63,14 @@ namespace Commands
         NEW_COMMAND( AddClip )
         {
             public:
-                AddClip( ClipHelper* ch, unsigned int trackNumber, qint64 pos,
-                         Workflow::TrackType trackType, bool undoRedoAction = false );
+                AddClip( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
                 virtual ~AddClip();
                 virtual void    redo();
                 virtual void    undo();
             private:
-                unsigned int                m_trackNumber;
-                qint64                      m_pos;
-                Workflow::TrackType         m_trackType;
                 ClipHelper                  *m_clipHelper;
-                bool                        m_undoRedoAction;
+                TrackWorkflow               *m_trackWorkflow;
+                qint64                      m_pos;
         };
 
         NEW_COMMAND( MoveClip )
@@ -99,16 +96,14 @@ namespace Commands
         NEW_COMMAND( RemoveClip )
         {
             public:
-                RemoveClip( ClipHelper* clip, unsigned int trackNumber,
-                            qint64 pos, Workflow::TrackType trackType );
+                RemoveClip( ClipHelper* clip, TrackWorkflow* tw );
                 virtual void redo();
                 virtual void undo();
 
             private:
-                ClipHelper*                 m_clipHelper;
-                unsigned int                m_trackNumber;
+                ClipHelper                  *m_clipHelper;
+                TrackWorkflow               *m_trackWorkflow;
                 qint64                      m_pos;
-                Workflow::TrackType         m_trackType;
         };
 
         /**

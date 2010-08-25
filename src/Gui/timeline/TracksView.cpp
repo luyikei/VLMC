@@ -676,9 +676,8 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragAudioItem->oldPosition = (qint64)mappedXPos;
 
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
-                                                                m_dragAudioItem->trackNumber(),
-                                                                (qint64)mappedXPos,
-                                                                Workflow::AudioTrack ) );
+                                                                m_dragAudioItem->track()->trackWorkflow(),
+                                                                (qint64)mappedXPos ) );
         m_dragAudioItem = NULL;
     }
 
@@ -693,9 +692,8 @@ TracksView::dropEvent( QDropEvent *event )
         m_dragVideoItem->oldPosition = (qint64)mappedXPos;
 
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
-                                                                m_dragVideoItem->trackNumber(),
-                                                                (qint64)mappedXPos,
-                                                                Workflow::VideoTrack ) );
+                                                                m_dragVideoItem->track()->trackWorkflow(),
+                                                                (qint64)mappedXPos ) );
         m_dragVideoItem = NULL;
     }
 
