@@ -394,10 +394,13 @@ MainWorkflow::getTrackCount( Workflow::TrackType trackType ) const
 }
 
 qint64
-MainWorkflow::getCurrentFrame() const
+MainWorkflow::getCurrentFrame( bool lock /*= false*/ ) const
 {
-    QReadLocker     lock( m_currentFrameLock );
-
+    if ( lock == true )
+    {
+        QReadLocker     lock( m_currentFrameLock );
+        return m_currentFrame[Workflow::VideoTrack];
+    }
     return m_currentFrame[Workflow::VideoTrack];
 }
 

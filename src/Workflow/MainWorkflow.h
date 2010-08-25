@@ -116,9 +116,14 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
         /**
          *  \brief              Get the currently rendered frame.
+         *  \param      lock    If true, m_currentFrameLock will be locked for read.
+         *                      If false, it won't be locked. This is usefull when calling
+         *                      getCurentFrame from underlying workflows
          *  \return             Returns the current frame.
+         *  \warning            Locks the m_currentFrameLock ReadWriteLock, unless false is
+         *                      passed.
          */
-        qint64                  getCurrentFrame() const;
+        qint64                  getCurrentFrame( bool lock = true ) const;
 
         /**
          *  \brief      Stops the rendering.

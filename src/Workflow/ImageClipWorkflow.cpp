@@ -101,7 +101,9 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
     QMutexLocker    lock( m_renderLock );
 
     QReadLocker     lock2( m_effectsLock );
-    quint32 *buff = EffectsEngine::applyFilters( m_filters, m_buffer, 0, 0 );
+    qint64          currentFrame = MainWorkflow::getInstance()->getCurrentFrame( false );
+    quint32 *buff = EffectsEngine::applyFilters( m_filters, m_buffer, currentFrame,
+                                                currentFrame * 1000.0 / clip()->getMedia()->fps() );
     if ( buff != NULL )
     {
         m_effectFrame->setBuffer( buff );
