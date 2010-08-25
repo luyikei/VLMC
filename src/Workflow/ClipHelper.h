@@ -24,6 +24,7 @@
 #define CLIPHELPER_H
 
 class   Clip;
+class   ClipWorkflow;
 
 #include <QObject>
 #include <QUuid>
@@ -60,12 +61,15 @@ class   ClipHelper : public QObject
         {
             return m_uuid;
         }
+        ClipWorkflow    *clipWorkflow();
+        void            setClipWorkflow( ClipWorkflow* cw );
 
     private:
-        Clip*       m_clip;
-        qint64      m_begin;
-        qint64      m_end;
-        QUuid       m_uuid;
+        Clip*           m_clip;
+        qint64          m_begin;
+        qint64          m_end;
+        QUuid           m_uuid;
+        ClipWorkflow*   m_clipWorkflow;
 
     signals:
         void        lengthUpdated();

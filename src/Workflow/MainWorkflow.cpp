@@ -26,6 +26,7 @@
 #include "vlmc.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "ClipWorkflow.h"
 #include "Library.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
@@ -329,28 +330,29 @@ MainWorkflow::loadProject( const QDomElement &root )
                 ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),
                                                   end.toLongLong(), chUuid );
                 addClip( ch, trackId, startFrame.toLongLong(), type, true );
-            }
 
-            QDomElement     effects = clip.firstChildElement( "effects" );
-            if ( effects.isNull() == false )
-            {
-                QDomElement effect = effects.firstChildElement( "effect" );
-                while ( effect.isNull() == false )
+                QDomElement     effects = clip.firstChildElement( "effects" );
+                if ( effects.isNull() == false )
                 {
-                    if ( effect.hasAttribute( "name" ) == true &&
-                         effect.hasAttribute( "start" ) == true &&
-                         effect.hasAttribute( "end" ) == true )
+                    QDomElement effect = effects.firstChildElement( "effect" );
+                    while ( effect.isNull() == false )
                     {
-                        Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
-                        if ( e != NULL )
-                            addEffect( e, trackId, uuid, type );
-                        else
-                            qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
+                        if ( effect.hasAttribute( "name" ) == true &&
+                             effect.hasAttribute( "start" ) == true &&
+                             effect.hasAttribute( "end" ) == true )
+                        {
+                            Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
+                            qint64  start = effect.attribute( "start" ).toLongLong();
+                            qint64  end = effect.attribute( "end" ).toLongLong();
+                            if ( e != NULL )
+                                ch->clipWorkflow()->appendEffect( e, start, end );
+                            else
+                                qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
+                        }
+                        effect = effect.nextSiblingElement();
                     }
-                    effect = effect.nextSiblingElement();
                 }
             }
-
             clip = clip.nextSiblingElement();
         }
         elem = elem.nextSiblingElement();

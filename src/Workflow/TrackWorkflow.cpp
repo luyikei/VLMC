@@ -79,6 +79,7 @@ TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
     }
     else
         cw = new AudioClipWorkflow( ch );
+    ch->setClipWorkflow( cw );
     addClip( cw, start );
 }
 
