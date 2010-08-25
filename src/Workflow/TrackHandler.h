@@ -115,6 +115,9 @@ class   TrackHandler : public QObject
         unsigned int                    m_highestTrackNumber;
         bool                            m_endReached;
 
+    private slots:
+        void                            lengthUpdated( qint64 newLength );
+
     signals:
         void                            tracksEndReached();
 };

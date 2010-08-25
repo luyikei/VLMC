@@ -121,6 +121,9 @@ class   TrackWorkflow : public QObject
         qint64                                  m_lastFrame;
         Workflow::Frame                         *m_mixerBuffer;
         double                                  m_fps;
+
+    signals:
+        void                                    lengthChanged( qint64 newLength );
 };
 
 #endif // TRACKWORKFLOW_H

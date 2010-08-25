@@ -36,6 +36,8 @@ TrackHandler::TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType
     for ( unsigned int i = 0; i < nbTracks; ++i )
     {
         m_tracks[i].setPtr( new TrackWorkflow( trackType ) );
+        connect( m_tracks[i], SIGNAL( lengthChanged( qint64 ) ),
+                 this, SLOT( lengthUpdated(qint64) ) );
     }
 }
 
@@ -273,4 +275,23 @@ TrackHandler::stopFrameComputing()
 {
     for ( unsigned int i = 0; i < m_trackCount; ++i )
         m_tracks[i]->stopFrameComputing();
+}
+
+void
+TrackHandler::lengthUpdated( qint64 newLength )
+{
+    //If the new length is bigger, or if the track that has been resized was the
+    if ( newLength > m_length )
+        m_length = newLength;
+    else
+    {
+        qint64      maxLength = 0;
+
+        for ( unsigned int i = 0; i < m_trackCount; ++i )
+        {
+            if ( m_tracks[i]->getLength() > maxLength )
+                maxLength = m_tracks[i]->getLength();
+        }
+        m_length = maxLength;
+    }
 }

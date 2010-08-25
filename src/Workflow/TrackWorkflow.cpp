@@ -110,13 +110,23 @@ TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
 void
 TrackWorkflow::computeLength()
 {
+    bool    changed = false;
     if ( m_clips.count() == 0 )
     {
+        if ( m_length != 0 )
+            changed = true;
         m_length = 0;
-        return ;
     }
-    QMap<qint64, ClipWorkflow*>::const_iterator it = m_clips.end() - 1;
-    m_length = (it.key() + it.value()->getClipHelper()->length() );
+    else
+    {
+        QMap<qint64, ClipWorkflow*>::const_iterator it = m_clips.end() - 1;
+        qint64  newLength = it.key() + it.value()->getClipHelper()->length();
+        if ( m_length != newLength )
+            changed = true;
+        m_length = newLength;
+    }
+    if ( changed == true )
+        emit lengthChanged( m_length );
 }
 
 qint64
