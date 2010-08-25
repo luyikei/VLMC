@@ -37,7 +37,7 @@ class   ImageClipWorkflow : public ClipWorkflow
         void                    *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
         virtual void            saveEffects( QXmlStreamWriter & ) const {} //Nothing to do here now.
-        virtual EffectsEngine::EffectHelper     *appendEffect( Effect *, qint64, qint64 ) { return NULL; } //Nothing to do here now.
+        virtual EffectsEngine::EffectHelper     *appendEffect( Effect *, qint64, qint64 );
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
@@ -51,7 +51,10 @@ class   ImageClipWorkflow : public ClipWorkflow
                                         int width, int height, int bpp, int size,
                                         qint64 pts );
     private:
-        Workflow::Frame         *m_buffer;
+        Workflow::Frame             *m_buffer;
+        EffectsEngine::EffectList   m_filters;
+        QReadWriteLock              *m_effectsLock;
+        Workflow::Frame             *m_effectFrame;
 
     private slots:
         void                    stopComputation();
