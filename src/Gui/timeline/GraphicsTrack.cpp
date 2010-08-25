@@ -26,11 +26,13 @@
 #include "MainWorkflow.h"
 
 GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
-                              QGraphicsItem *parent ) : QGraphicsWidget( parent )
+                              QGraphicsItem *parent ) :
+    QGraphicsWidget( parent )
 {
     m_type = type;
     m_trackNumber = trackNumber;
     m_enabled = true;
+    m_trackWorkflow = MainWorkflow::getInstance()->track( type, trackNumber );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
     setContentsMargins( 0, 0, 0, 0 );
@@ -97,4 +99,10 @@ GraphicsTrack::childs()
         list.append( item );
     }
     return list;
+}
+
+TrackWorkflow*
+GraphicsTrack::trackWorkflow()
+{
+    return m_trackWorkflow;
 }

@@ -27,7 +27,8 @@
 #include <QList>
 #include "Types.h"
 
-class AbstractGraphicsMediaItem;
+class   AbstractGraphicsMediaItem;
+class   TrackWorkflow;
 
 class GraphicsTrack : public QGraphicsWidget
 {
@@ -46,13 +47,15 @@ public:
     quint32 trackNumber();
     Workflow::TrackType mediaType();
     virtual int type() const { return Type; }
+    TrackWorkflow   *trackWorkflow();
 
     QList<AbstractGraphicsMediaItem*> childs();
 
 private:
     Workflow::TrackType m_type;
-    quint32 m_trackNumber;
-    bool m_enabled;
+    quint32             m_trackNumber;
+    bool                m_enabled;
+    TrackWorkflow       *m_trackWorkflow;
 };
 
 #endif // GRAPHICSTRACK_H
