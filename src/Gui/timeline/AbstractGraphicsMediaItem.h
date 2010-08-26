@@ -102,8 +102,12 @@ public:
     /// Return the position of the item (in frames) for the x-axis.
     qint64 startPos();
 
-    /// Resize an item from its beginning or from its end.
-    void resize( qint64 size, From from = BEGINNING );
+    /**
+     * \brief    Resize an item from its beginning or from its end.
+     *
+     *  \returns    True if the element may be resized.
+     */
+    bool    resize( qint64 size, qint64 newBegin, From from = BEGINNING );
 
     ClipHelper  *clipHelper();
 

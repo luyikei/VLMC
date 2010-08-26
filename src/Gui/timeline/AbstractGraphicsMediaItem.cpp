@@ -35,6 +35,9 @@
 #include <QColorDialog>
 #include <QGraphicsSceneContextMenuEvent>
 
+#include <QCoreApplication>
+#include <QtDebug>
+
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         m_oldTrack( NULL ),
         oldPosition( -1 ),
@@ -251,50 +254,36 @@ qint64 AbstractGraphicsMediaItem::startPos()
     return qRound64( QGraphicsItem::pos().x() );
 }
 
-void AbstractGraphicsMediaItem::resize( qint64 size, From from )
+bool  AbstractGraphicsMediaItem::resize( qint64 newSize, qint64 newBegin, From from )
 {
     Q_ASSERT( clipHelper() );
 
-    if ( size < 1 )
-        return;
+    if ( newSize < 1 )
+        return false;
 
     if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
-        if ( size > clipHelper()->clip()->end() )
-            size = clipHelper()->clip()->end();
+        if ( newSize > clipHelper()->clip()->end() )
+            newSize = clipHelper()->clip()->end();
 
-    if ( from == BEGINNING ) //Inverted logic ?!
+    //The from actually stands for the clip bound that stays still.
+    if ( from == BEGINNING )
     {
         if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
-            if ( clipHelper()->begin() + size > clipHelper()->clip()->end() )
-                return;
-        m_clipHelper->setEnd( m_clipHelper->begin() + size );
+        {
+            if ( clipHelper()->begin() + newSize > clipHelper()->clip()->end() )
+                return false;
+        }
+        setWidth( newSize );
     }
     else
     {
         if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
-        {
-            qint64 newBegin = qMax( m_clipHelper->end() - size, (qint64)0 );
-            if ( m_clipHelper->clip()->begin() > newBegin )
-                return;
-
-            qint64 oldLength = m_clipHelper->length();
-            qint64  newStart = startPos() + ( oldLength - size );
-            if ( newStart < 0 )
-                return ;
-            track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), newStart );
-            m_clipHelper->setBegin( m_clipHelper->end() - size );
-            setStartPos( newStart );
-        }
-        else
-        {
-            qint64 oldLength = m_clipHelper->length();
-            track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), startPos() + ( oldLength - size ) );
-            m_clipHelper->setBegin( startPos() + ( oldLength - size ) );
-            setStartPos( startPos() + ( oldLength - size ) );
-        }
+            if ( newBegin < 0 || m_clipHelper->clip()->begin() > newBegin )
+                return false;
+        setWidth( newSize );
+        setStartPos( newBegin );
     }
-
-    setWidth( m_clipHelper->length() );
+    return true;
 }
 
 void AbstractGraphicsMediaItem::adjustLength()

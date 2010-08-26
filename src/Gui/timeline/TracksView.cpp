@@ -818,13 +818,15 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         {
             if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
             {
-                qint64 distance = mapToScene( event->pos() ).x() - m_actionResizeStart;
-                qint64 newsize = qMax( m_actionResizeBase - distance, (qint64)0 );
-                m_actionItem->resize( newsize , AbstractGraphicsMediaItem::END );
+                m_actionResizeNewBegin = mapToScene( event->pos() ).x();
+                qint64 newSize = qMax( (qint64)(m_actionItem->clipHelper()->length() - mapToScene( event->pos() ).x()), (qint64)0 );
+                if ( m_actionItem->resize( newSize, mapToScene( event->pos() ).x(), AbstractGraphicsMediaItem::END ) == true )
+                    m_actionResizeSize = newSize;
             }
             else
             {
-                m_actionItem->resize( itemNewSize.x(), AbstractGraphicsMediaItem::BEGINNING );
+                if ( m_actionItem->resize( itemNewSize.x(), m_actionResizeNewBegin, AbstractGraphicsMediaItem::BEGINNING ) == true )
+                    m_actionResizeSize = itemNewSize.x();
             }
         }
     }
@@ -864,8 +866,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
             else
                 m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
             m_actionResize = true;
-            m_actionResizeStart = mapToScene( event->pos() ).x();
-            m_actionResizeBase = item->clipHelper()->length();
+            m_actionResizeNewBegin = item->pos().x();
             m_actionItem = item;
         }
         else if ( item->moveable() )
@@ -956,11 +957,11 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     else if ( m_actionResize )
     {
         ClipHelper *ch = m_actionItem->clipHelper();
-        //This is a "pointless action". The resize already occurred. However, by doing this
-        //we can have an undo action.
+        qDebug() << "Putting clip in" << m_actionResizeNewBegin << "size:" << m_actionResizeSize;
         Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->track()->trackWorkflow(),
-                                                                   ch, ch->begin(), ch->end(),
-                                                                   m_actionItem->pos().x() ) );
+                                                                   ch, m_actionResizeNewBegin,
+                                                                   m_actionResizeNewBegin + m_actionResizeSize,
+                                                                   m_actionResizeNewBegin ) );
         updateDuration();
     }
 
