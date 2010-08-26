@@ -56,9 +56,6 @@ class   TrackHandler : public QObject
                                            bool paused );
         qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
         void                    stop();
-        void                    moveClip( const QUuid& clipUuid, unsigned int oldTrack,
-                                          unsigned int newTrack, qint64 startingFrame );
-        Clip*                   removeClip( const QUuid& uuid, unsigned int trackId );
         void                    muteTrack( unsigned int trackId );
         void                    unmuteTrack( unsigned int trackId );
         ClipHelper              *getClipHelper( const QUuid& uuid, unsigned int trackId );

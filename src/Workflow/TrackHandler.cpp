@@ -112,33 +112,6 @@ TrackHandler::stop()
 }
 
 void
-TrackHandler::moveClip(const QUuid &clipUuid, unsigned int oldTrack,
-                                       unsigned int newTrack, qint64 startingFrame )
-{
-     Q_ASSERT( newTrack < m_trackCount && oldTrack < m_trackCount );
-
-    if ( oldTrack == newTrack )
-    {
-        //And now, just move the clip.
-        m_tracks[newTrack]->moveClip( clipUuid, startingFrame );
-    }
-    else
-    {
-        ClipWorkflow* cw = m_tracks[oldTrack]->removeClipWorkflow( clipUuid );
-        m_tracks[newTrack]->addClip( cw, startingFrame );
-    }
-}
-
-Clip*
-TrackHandler::removeClip( const QUuid& uuid, unsigned int trackId )
-{
-    Q_ASSERT( trackId < m_trackCount );
-
-    Clip* clip = m_tracks[trackId]->removeClip( uuid );
-    return clip;
-}
-
-void
 TrackHandler::muteTrack( unsigned int trackId )
 {
     m_tracks[trackId].deactivate();
