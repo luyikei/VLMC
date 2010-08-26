@@ -876,7 +876,6 @@ TracksView::mousePressEvent( QMouseEvent *event )
             m_actionResize = true;
             m_actionResizeStart = mapToScene( event->pos() ).x();
             m_actionResizeBase = item->clipHelper()->length();
-            m_actionResizeOldBegin = item->clipHelper()->begin();
             m_actionItem = item;
         }
         else if ( item->moveable() )
@@ -969,11 +968,9 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         ClipHelper *ch = m_actionItem->clipHelper();
         //This is a "pointless action". The resize already occurred. However, by doing this
         //we can have an undo action.
-        Commands::trigger( new Commands::MainWorkflow::ResizeClip( ch, ch->begin(),
-                                                                   ch->end(),
-                                                                   m_actionResizeOldBegin, m_actionResizeOldBegin + m_actionResizeBase,
-                                                                   m_actionItem->pos().x(), m_actionResizeStart,
-                                                                   m_actionItem->trackNumber(), m_actionItem->mediaType() ) );
+        Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->track()->trackWorkflow(),
+                                                                   ch, ch->begin(), ch->end(),
+                                                                   m_actionItem->pos().x() ) );
         updateDuration();
     }
 

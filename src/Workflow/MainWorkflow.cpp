@@ -413,20 +413,6 @@ MainWorkflow::setFullSpeedRender( bool val )
 //}
 
 void
-MainWorkflow::resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd, qint64 newPos,
-                          quint32 trackId, Workflow::TrackType trackType,
-                                      bool undoRedoAction /*= false*/ )
-{
-    QMutexLocker    lock( m_renderStartedMutex );
-
-    if ( newBegin != clipHelper->begin() )
-    {
-//        moveClip( clipHelper->uuid(), trackId, trackId, newPos, trackType, undoRedoAction );
-    }
-    clipHelper->setBoundaries( newBegin, newEnd );
-}
-
-void
 MainWorkflow::unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
                        Workflow::TrackType trackType )
 {

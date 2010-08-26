@@ -122,46 +122,38 @@ void Commands::MainWorkflow::RemoveClip::undo()
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-Commands::MainWorkflow::ResizeClip::ResizeClip( ClipHelper* clipHelper,
+Commands::MainWorkflow::ResizeClip::ResizeClip( TrackWorkflow* tw,
+                                                ClipHelper* ch,
                                                 qint64 newBegin, qint64 newEnd,
-                                                qint64 oldBegin, qint64 oldEnd,
-                                                qint64 newPos, qint64 oldPos,
-                                                quint32 trackId,
-                                                Workflow::TrackType trackType ) :
+                                                qint64 newPos ) :
+    m_trackWorkflow( tw ),
+    m_clipHelper( ch ),
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
-    m_oldBegin( oldBegin ),
-    m_oldEnd( oldEnd ),
-    m_newPos( newPos ),
-    m_oldPos( oldPos ),
-    m_trackId( trackId ),
-    m_clipHelper( clipHelper ),
-    m_trackType( trackType ),
-    m_undoRedoAction( false )
+    m_newPos( newPos )
 {
+    m_oldBegin = ch->begin();
+    m_oldEnd = ch->end();
+    m_oldPos = tw->getClipPosition( ch->uuid() );
     setText( QObject::tr( "Resizing clip" ) );
 }
 
 void Commands::MainWorkflow::ResizeClip::redo()
 {
-    ::MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_newBegin, m_newEnd, m_newPos, m_trackId, m_trackType, m_undoRedoAction );
-    m_undoRedoAction = true;
+    if ( m_newBegin != m_newEnd )
+    {
+        m_trackWorkflow->moveClip( m_clipHelper->uuid(), m_newPos );
+    }
+    m_clipHelper->setBoundaries( m_newBegin, m_newEnd );
 }
 
 void Commands::MainWorkflow::ResizeClip::undo()
 {
-    //This code is complete crap.
-    // We need to case, because when we redo a "begin-resize", we need to first resize, then move.
-    //In the other cases, we need to move, then resize.
-    if ( m_oldBegin == m_newBegin )
+    if ( m_oldBegin != m_newBegin )
     {
-        ::MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_oldBegin, m_oldEnd, m_oldPos, m_trackId, m_trackType, m_undoRedoAction );
+        m_trackWorkflow->moveClip( m_clipHelper->uuid(), m_oldPos );
     }
-    else
-    {
-        m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
-//        ::MainWorkflow::getInstance()->moveClip( m_clipHelper->uuid(), m_trackId, m_trackId, m_oldPos, m_trackType, m_undoRedoAction );
-    }
+    m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
 Commands::MainWorkflow::SplitClip::SplitClip( ClipHelper* toSplit, quint32 trackId,

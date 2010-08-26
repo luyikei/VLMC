@@ -334,7 +334,6 @@ private:
     bool                    m_actionResize;
     qint64                  m_actionResizeStart;
     qint64                  m_actionResizeBase;
-    qint64                  m_actionResizeOldBegin;
     int                     m_actionRelativeX;
     AbstractGraphicsMediaItem::From m_actionResizeType;
     AbstractGraphicsMediaItem       *m_actionItem;

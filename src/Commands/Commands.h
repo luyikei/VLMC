@@ -104,35 +104,27 @@ namespace Commands
 
         /**
          *  \brief  This command is used to resize a clip.
-         *  \param  uuid: The clip's uuid
          *  \param  newBegin: The clip's new beginning
          *  \param  newEnd: The clip's new end
          *  \param  newPos: if the clip was resized from the beginning, it is moved
          *                  so we have to know its new position
-         *  \param  trackId:The track in which the modification occurs. This is only
-         *                  used when the clip is resized from the beginning.
-         *  \param  trackType:  The track's type (Audio or Video)
         */
         NEW_COMMAND( ResizeClip )
         {
             public:
-                ResizeClip( ClipHelper* clipHelper,
-                            qint64 newBegin, qint64 newEnd, qint64 oldBegin,
-                            qint64 oldEnd, qint64 newPos, qint64 oldPos,
-                            quint32 trackId, Workflow::TrackType trackType );
+                ResizeClip( TrackWorkflow* tw, ClipHelper* clipHelper,
+                            qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    redo();
                 virtual void    undo();
             private:
+                TrackWorkflow*              m_trackWorkflow;
+                ClipHelper*                 m_clipHelper;
                 qint64                      m_newBegin;
                 qint64                      m_newEnd;
                 qint64                      m_oldBegin;
                 qint64                      m_oldEnd;
                 qint64                      m_newPos;
                 qint64                      m_oldPos;
-                quint32                     m_trackId;
-                ClipHelper*                 m_clipHelper;
-                Workflow::TrackType         m_trackType;
-                bool                        m_undoRedoAction;
         };
 
         NEW_COMMAND( SplitClip )

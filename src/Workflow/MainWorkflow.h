@@ -240,11 +240,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 //                                       qint64 newClipPos, qint64 newClipBegin,
 //                                       Workflow::TrackType trackType );
 
-        void                    resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd,
-                                          qint64 newPos, quint32 trackId,
-                                          Workflow::TrackType trackType,
-                                          bool undoRedoAction = false );
-
         void                    unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
                                          Workflow::TrackType trackType );
 

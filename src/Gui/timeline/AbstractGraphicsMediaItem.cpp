@@ -264,14 +264,12 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
         if ( size > clipHelper()->clip()->end() )
             size = clipHelper()->clip()->end();
 
-    if ( from == BEGINNING )
+    if ( from == BEGINNING ) //Inverted logic ?!
     {
         if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
             if ( clipHelper()->begin() + size > clipHelper()->clip()->end() )
                 return;
-        MainWorkflow::getInstance()->resizeClip( m_clipHelper, m_clipHelper->begin(),
-                                                 m_clipHelper->begin() + size, 0,
-                                                 trackNumber(), mediaType() );
+        m_clipHelper->setEnd( m_clipHelper->begin() + size );
     }
     else
     {
@@ -286,9 +284,8 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
             qint64  newStart = startPos() + ( oldLength - size );
             if ( newStart < 0 )
                 return ;
-            MainWorkflow::getInstance()->resizeClip( m_clipHelper, qMax( m_clipHelper->end() - size,
-                                                                         (qint64)0 ), m_clipHelper->end(),
-                                                     newStart, trackNumber(), mediaType() );
+            track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), newStart );
+            m_clipHelper->setBegin( m_clipHelper->end() - size );
             setStartPos( newStart );
         }
         else
@@ -301,8 +298,8 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
 //                                                                       startPos() + ( oldLength - size ),
 //
 //                                                                       ))
-            MainWorkflow::getInstance()->resizeClip( m_clipHelper, 0, size, startPos() + ( oldLength - size ),
-                                                     trackNumber(), mediaType() );
+            track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), startPos() + ( oldLength - size ) );
+            m_clipHelper->setBegin( startPos() + ( oldLength - size ) );
             setStartPos( startPos() + ( oldLength - size ) );
         }
     }
