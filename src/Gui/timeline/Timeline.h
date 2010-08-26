@@ -83,14 +83,6 @@ public slots:
      */
     void setTool( ToolButtons button );
     /**
-     * \brief Insert an item into the timeline.
-     * \param clip Clip to insert.
-     * \param track The track's number.
-     * \param start The position in frames.
-     * \param
-     */
-    void actionAddClip( ClipHelper* clip, unsigned int track, qint64 start, Workflow::TrackType trackType );
-    /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.
      * \param track The new track of the item.

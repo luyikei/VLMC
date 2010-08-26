@@ -41,10 +41,11 @@
 
 #include <QtDebug>
 
-TrackWorkflow::TrackWorkflow( Workflow::TrackType type  ) :
+TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_length( 0 ),
         m_trackType( type ),
-        m_lastFrame( 0 )
+        m_lastFrame( 0 ),
+        m_trackId( trackId )
 {
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
@@ -88,6 +89,7 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 {
     QWriteLocker    lock( m_clipsLock );
     m_clips.insert( start, cw );
+    emit clipAdded( this, cw->getClipHelper(), start );
     computeLength();
 }
 
@@ -587,4 +589,16 @@ TrackWorkflow::stopFrameComputing()
         cw->stopRenderer();
         ++it;
     }
+}
+
+quint32
+TrackWorkflow::trackId() const
+{
+    return m_trackId;
+}
+
+Workflow::TrackType
+TrackWorkflow::type() const
+{
+    return m_trackType;
 }

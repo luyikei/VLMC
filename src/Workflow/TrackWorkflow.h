@@ -47,7 +47,7 @@ class   TrackWorkflow : public QObject
     Q_OBJECT
 
     public:
-        TrackWorkflow( Workflow::TrackType type );
+        TrackWorkflow( Workflow::TrackType type, quint32 trackId );
         ~TrackWorkflow();
 
         Workflow::OutputBuffer                  *getOutput( qint64 currentFrame,
@@ -92,6 +92,8 @@ class   TrackWorkflow : public QObject
 
         void                                    stopFrameComputing();
         bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
+        quint32                                 trackId() const;
+        Workflow::TrackType                     type() const;
 
     private:
         void                                    computeLength();
@@ -117,13 +119,15 @@ class   TrackWorkflow : public QObject
 
         QReadWriteLock*                         m_clipsLock;
 
-        Workflow::TrackType                     m_trackType;
+        const Workflow::TrackType               m_trackType;
         qint64                                  m_lastFrame;
         Workflow::Frame                         *m_mixerBuffer;
         double                                  m_fps;
+        const quint32                           m_trackId;
 
     signals:
-        void                                    lengthChanged( qint64 newLength );
+        void                lengthChanged( qint64 newLength );
+        void                clipAdded( TrackWorkflow*, ClipHelper*, qint64 );
 };
 
 #endif // TRACKWORKFLOW_H

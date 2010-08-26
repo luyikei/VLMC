@@ -436,17 +436,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  are activated (ie. they all reached end)
          */
         void                    mainWorkflowEndReached();
-        /**
-         *  \brief  Emitted when a clip is added
-         *
-         *  \param  clip        The clip that has been added
-         *  \param  trackId     The id of the track in which the clip has been added
-         *  \param  pos         The position of the new Clip
-         *  \param  trackType   The type of the clip that has been added
-         *  \sa                 addClip( Clip*, unsigned int, qint64, TrackType )
-         */
-        void                    clipAdded( ClipHelper* clip, unsigned int trackId,
-                                           qint64 pos, Workflow::TrackType trackType );
+
         /**
          *  \brief              Emitted when a clip is removed
          *  \param  uuid        The clip that has been removed's uuid.

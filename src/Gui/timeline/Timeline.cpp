@@ -85,8 +85,6 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
     connect( m_tracksView, SIGNAL( durationChanged(int) ), this, SLOT( setDuration(int) ) );
 
     // Clip actions
-    connect( m_mainWorkflow, SIGNAL( clipAdded( ClipHelper*, uint, qint64, Workflow::TrackType ) ),
-             this, SLOT( actionAddClip(ClipHelper*, uint, qint64, Workflow::TrackType ) ) );
     connect( m_mainWorkflow, SIGNAL( clipMoved( QUuid, uint, qint64, Workflow::TrackType ) ),
              this, SLOT( actionMoveClip(QUuid, uint, qint64, Workflow::TrackType ) ) );
     connect( m_mainWorkflow, SIGNAL( clipRemoved( const QUuid&, uint, Workflow::TrackType ) ),
@@ -161,11 +159,6 @@ void Timeline::setDuration( int duration )
 void Timeline::setTool( ToolButtons button )
 {
     tracksView()->setTool( button );
-}
-
-void Timeline::actionAddClip( ClipHelper* clipHelper, unsigned int track, qint64 start, Workflow::TrackType trackType )
-{
-    tracksView()->addMediaItem( clipHelper, track, trackType, start );
 }
 
 void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, Workflow::TrackType )

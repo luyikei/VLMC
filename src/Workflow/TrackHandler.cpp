@@ -35,7 +35,7 @@ TrackHandler::TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType
     m_tracks = new Toggleable<TrackWorkflow*>[nbTracks];
     for ( unsigned int i = 0; i < nbTracks; ++i )
     {
-        m_tracks[i].setPtr( new TrackWorkflow( trackType ) );
+        m_tracks[i].setPtr( new TrackWorkflow( trackType, i ) );
         connect( m_tracks[i], SIGNAL( lengthChanged( qint64 ) ),
                  this, SLOT( lengthUpdated(qint64) ) );
     }

@@ -30,6 +30,7 @@
 
 #include <QWidget>
 #include <QGraphicsView>
+#include <QSet>
 
 class QWheelEvent;
 class QGraphicsWidget;
@@ -39,6 +40,8 @@ class   TracksScene;
 class   GraphicsMovieItem;
 class   GraphicsAudioItem;
 class   MainWorkflow;
+class   TrackWorkflow;
+class   ClipHelper;
 class   WorkflowRenderer;
 
 class   ItemPosition
@@ -201,8 +204,7 @@ public slots:
      * \param trackType The type of the track (Audio or Video)
      * \param start The position in frames.
      */
-    void                    addMediaItem( ClipHelper *clipHelper, unsigned int track,
-                                          Workflow::TrackType trackType, qint64 start );
+    void                    addMediaItem( TrackWorkflow* tw, ClipHelper *clipHelper, qint64 start );
     /**
      * \brief Move an item in the timeline.
      * \param uuid The Universally Unique Identifier of the item.
@@ -342,6 +344,7 @@ private:
     AbstractGraphicsMediaItem::From m_actionResizeType;
     AbstractGraphicsMediaItem       *m_actionItem;
     GraphicsTrack           *m_lastKnownTrack;
+    QSet<QUuid>             m_clipsLoaded;
 
 signals:
     /**

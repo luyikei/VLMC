@@ -30,8 +30,9 @@
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Media.h"
-#include "WorkflowRenderer.h"
+#include "TrackWorkflow.h"
 #include "UndoStack.h"
+#include "WorkflowRenderer.h"
 
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>
@@ -120,6 +121,8 @@ TracksView::addVideoTrack()
     m_cursorLine->setHeight( m_layout->contentsRect().height() );
     m_scene->invalidate(); // Redraw the background
     m_numVideoTrack++;
+    connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
+             this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     emit videoTrackAdded( track );
 }
 
@@ -133,6 +136,8 @@ TracksView::addAudioTrack()
     m_cursorLine->setHeight( m_layout->contentsRect().height() );
     m_scene->invalidate(); // Redraw the background
     m_numAudioTrack++;
+    connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
+             this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     emit audioTrackAdded( track );
 }
 
@@ -218,9 +223,17 @@ TracksView::removeClip( const QUuid& uuid  )
 }
 
 void
-TracksView::addMediaItem( ClipHelper *ch, unsigned int track, Workflow::TrackType trackType, qint64 start )
+TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
 {
     Q_ASSERT( ch );
+
+    //If for some reasons the clip was already loaded, don't add it twice.
+    //This would likely happen when adding a clip from the timeline, as an element will
+    //already be created (by the drag and drop operation)
+    if ( m_clipsLoaded.contains( ch->uuid() ) )
+        return ;
+    quint32                 track = tw->trackId();
+    Workflow::TrackType     trackType = tw->type();
 
     // If there is not enough tracks to insert
     // the clip do it now.
@@ -256,7 +269,7 @@ TracksView::addMediaItem( ClipHelper *ch, unsigned int track, Workflow::TrackTyp
         connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
-
+    m_clipsLoaded.insert( ch->uuid() );
     item->m_tracksView = this;
     item->setHeight( tracksHeight() );
     item->setTrack( getTrack( trackType, track ) );
