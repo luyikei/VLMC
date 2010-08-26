@@ -1188,9 +1188,9 @@ TracksView::split( AbstractGraphicsMediaItem *item, qint64 frame )
     //item->startPos() is the position of the splitted clip (in frame)
     //therefore, the position of the newly created clip is
     //the splitted clip pos + the splitting point (ie startPos() + frame)
-    Commands::trigger( new Commands::MainWorkflow::SplitClip( item->clipHelper(), item->trackNumber(),
-                                                              item->startPos() + frame, frame + item->clipHelper()->begin(),
-                                                              item->mediaType() ) );
+    Commands::trigger( new Commands::MainWorkflow::SplitClip( item->track()->trackWorkflow(),
+                                            item->clipHelper(), item->startPos() + frame,
+                                            frame + item->clipHelper()->begin() ) );
 }
 
 AbstractGraphicsMediaItem*

@@ -130,18 +130,18 @@ namespace Commands
         NEW_COMMAND( SplitClip )
         {
             public:
-                SplitClip( ClipHelper* toSplit, quint32 trackId, qint64 newClipPos,
-                           qint64 newClipBegin, Workflow::TrackType trackType );
+                SplitClip( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
+                           qint64 newClipBegin );
                 ~SplitClip();
                 virtual void    redo();
                 virtual void    undo();
             private:
+                TrackWorkflow               *m_trackWorkflow;
                 ClipHelper*                 m_toSplit;
                 ClipHelper*                 m_newClip;
-                quint32                     m_trackId;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
-                Workflow::TrackType         m_trackType;
+                qint64                      m_oldEnd;
         };
     }
 }

@@ -292,12 +292,6 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
         {
             m_resizeExpected = true;
             qint64 oldLength = m_clipHelper->length();
-//            Commands::trigger( new Commands::MainWorkflow::ResizeClip( clip()->getUuid(),
-//                                                                       0, size, startPos(),
-//                                                                       startPos() + oldLength,
-//                                                                       startPos() + ( oldLength - size ),
-//
-//                                                                       ))
             track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), startPos() + ( oldLength - size ) );
             m_clipHelper->setBegin( startPos() + ( oldLength - size ) );
             setStartPos( startPos() + ( oldLength - size ) );

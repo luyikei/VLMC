@@ -236,13 +236,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    setFullSpeedRender( bool val );
 
-//        ClipHelper*             split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
-//                                       qint64 newClipPos, qint64 newClipBegin,
-//                                       Workflow::TrackType trackType );
-
-        void                    unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
-                                         Workflow::TrackType trackType );
-
         /**
          *  \return     true if the current workflow contains the clip which the uuid was
          *              passed. Falsed otherwise.

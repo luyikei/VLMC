@@ -398,30 +398,6 @@ MainWorkflow::setFullSpeedRender( bool val )
         m_tracks[i]->setFullSpeedRender( val );
 }
 
-//ClipHelper*
-//MainWorkflow::split( ClipHelper* toSplit, ClipHelper* newClip, quint32 trackId,
-//                     qint64 newClipPos, qint64 newClipBegin, Workflow::TrackType trackType )
-//{
-//    QMutexLocker    lock( m_renderStartedMutex );
-
-//    if ( newClip == NULL )
-//        newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
-
-//    toSplit->setEnd( newClipBegin );
-//    addClip( newClip, trackId, newClipPos, trackType, true );
-//    return newClip;
-//}
-
-void
-MainWorkflow::unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId,
-                       Workflow::TrackType trackType )
-{
-    QMutexLocker    lock( m_renderStartedMutex );
-
-//    removeClip( splitted->uuid(), trackId, trackType );
-    origin->setEnd( splitted->end() );
-}
-
 bool
 MainWorkflow::contains( const QUuid &uuid ) const
 {

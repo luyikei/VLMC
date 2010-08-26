@@ -156,30 +156,32 @@ void Commands::MainWorkflow::ResizeClip::undo()
     m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::MainWorkflow::SplitClip::SplitClip( ClipHelper* toSplit, quint32 trackId,
-                           qint64 newClipPos, qint64 newClipBegin, Workflow::TrackType trackType ) :
+Commands::MainWorkflow::SplitClip::SplitClip( TrackWorkflow *tw, ClipHelper *toSplit,
+                                             qint64 newClipPos, qint64 newClipBegin ) :
+    m_trackWorkflow( tw ),
     m_toSplit( toSplit ),
     m_newClip( NULL ),
-    m_trackId( trackId ),
     m_newClipPos( newClipPos ),
-    m_newClipBegin( newClipBegin ),
-    m_trackType( trackType )
+    m_newClipBegin( newClipBegin )
 {
+    m_newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
+    m_oldEnd = toSplit->end();
     setText( QObject::tr("Splitting clip") );
 }
 
 Commands::MainWorkflow::SplitClip::~SplitClip()
 {
-    if ( m_newClip != NULL )
-        delete m_newClip;
+    delete m_newClip;
 }
 
 void    Commands::MainWorkflow::SplitClip::redo()
 {
-//    m_newClip = ::MainWorkflow::getInstance()->split( m_toSplit, m_newClip, m_trackId, m_newClipPos, m_newClipBegin, m_trackType );
+    m_trackWorkflow->addClip( m_newClip, m_newClipPos );
+    m_toSplit->setEnd( m_newClipBegin );
 }
 
 void    Commands::MainWorkflow::SplitClip::undo()
 {
-//    ::MainWorkflow::getInstance()->unsplit( m_toSplit, m_newClip, m_trackId, m_trackType );
+    m_trackWorkflow->removeClip( m_newClip->uuid() );
+    m_toSplit->setEnd( m_oldEnd );
 }
