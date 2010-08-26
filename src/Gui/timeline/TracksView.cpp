@@ -101,14 +101,14 @@ TracksView::createLayout()
     // - 1 video track
     // - a separator
     // - 1 audio track
-    addVideoTrack();
+    addTrack( Workflow::VideoTrack );
 
     m_separator = new QGraphicsWidget();
     m_separator->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
     m_separator->setPreferredHeight( 20 );
     m_layout->insertItem( 1, m_separator );
 
-    addAudioTrack();
+    addTrack( Workflow::AudioTrack );
 
     m_scene->addItem( container );
 
@@ -116,15 +116,15 @@ TracksView::createLayout()
 }
 
 void
-TracksView::addVideoTrack()
+TracksView::addTrack( Workflow::TrackType type )
 {
-    GraphicsTrack *track = new GraphicsTrack( Workflow::VideoTrack, m_numVideoTrack );
+    GraphicsTrack *track = new GraphicsTrack( type,
+                                              type == Workflow::VideoTrack ? m_numVideoTrack : m_numAudioTrack );
     track->setHeight( m_tracksHeight );
-    m_layout->insertItem( 0, track );
+    m_layout->insertItem( type == Workflow::VideoTrack ? 0 : 1000, track );
     m_layout->activate();
     m_cursorLine->setHeight( m_layout->contentsRect().height() );
     m_scene->invalidate(); // Redraw the background
-    m_numVideoTrack++;
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
@@ -132,27 +132,17 @@ TracksView::addVideoTrack()
     connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, ClipHelper*, qint64 ) ),
              this, SLOT( moveMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
 
-    emit videoTrackAdded( track );
+    if ( type == Workflow::VideoTrack )
+    {
+        m_numVideoTrack++;
+        emit videoTrackAdded( track );
+    }
+    else
+    {
+        m_numAudioTrack++;
+        emit audioTrackAdded( track );
+    }
 
-}
-
-void
-TracksView::addAudioTrack()
-{
-    GraphicsTrack *track = new GraphicsTrack( Workflow::AudioTrack, m_numAudioTrack );
-    track->setHeight( m_tracksHeight );
-    m_layout->insertItem( 1000, track );
-    m_layout->activate();
-    m_cursorLine->setHeight( m_layout->contentsRect().height() );
-    m_scene->invalidate(); // Redraw the background
-    m_numAudioTrack++;
-    connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
-             this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
-    connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
-             this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
-    connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, ClipHelper*, qint64 ) ),
-             this, SLOT( moveMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
-    emit audioTrackAdded( track );
 }
 
 void
@@ -198,8 +188,8 @@ TracksView::clear()
     m_numAudioTrack = 0;
     m_numVideoTrack = 0;
 
-    addVideoTrack();
-    addAudioTrack();
+    addTrack( Workflow::VideoTrack );
+    addTrack( Workflow::AudioTrack );
 
     updateDuration();
 }
@@ -255,7 +245,7 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
         {
             int nbTrackToAdd = ( track + 2 ) - m_numVideoTrack;
             for ( int i = 0; i < nbTrackToAdd; ++i )
-                addVideoTrack();
+                addTrack( Workflow::VideoTrack );
         }
     }
     else if ( trackType == Workflow::AudioTrack )
@@ -264,7 +254,7 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
         {
             int nbTrackToAdd = ( track + 2 ) - m_numAudioTrack;
             for ( int i = 0; i < nbTrackToAdd; ++i )
-                addAudioTrack();
+                addTrack( Workflow::AudioTrack );
         }
     }
 
@@ -403,12 +393,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
     if ( item->mediaType() == Workflow::AudioTrack )
     {
         while ( track >= m_numAudioTrack )
-            addAudioTrack();
+            addTrack( Workflow::AudioTrack );
     }
     else if ( item->mediaType() == Workflow::VideoTrack )
     {
         while ( track >= m_numVideoTrack )
-            addVideoTrack();
+            addTrack( Workflow::VideoTrack );
     }
 
     ItemPosition p = findPosition( item, track, time );
@@ -421,12 +411,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         if ( item->groupItem()->mediaType() == Workflow::AudioTrack )
         {
             while ( p.track() >= m_numAudioTrack )
-                addAudioTrack();
+                addTrack( Workflow::AudioTrack );
         }
         else if ( item->groupItem()->mediaType() == Workflow::VideoTrack )
         {
             while ( p.track() >= m_numVideoTrack )
-                addVideoTrack();
+                addTrack( Workflow::VideoTrack );
         }
 
         // Search a position for the linked item
@@ -436,12 +426,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
         if ( item->mediaType() == Workflow::AudioTrack )
         {
             while ( p2.track() >= m_numAudioTrack )
-                addAudioTrack();
+                addTrack( Workflow::AudioTrack );
         }
         else if ( item->mediaType() == Workflow::VideoTrack )
         {
             while ( p2.track() >= m_numVideoTrack )
-                addVideoTrack();
+                addTrack( Workflow::VideoTrack );
         }
 
         if ( p.time() == p2.time() &&  p.track() == p2.track() )
@@ -680,7 +670,7 @@ TracksView::dropEvent( QDropEvent *event )
     {
         updateDuration();
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
-            addAudioTrack();
+            addTrack( Workflow::AudioTrack );
         event->acceptProposedAction();
 
         m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
@@ -696,7 +686,7 @@ TracksView::dropEvent( QDropEvent *event )
     {
         updateDuration();
         if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
-            addVideoTrack();
+            addTrack( Workflow::VideoTrack );
         event->acceptProposedAction();
 
         m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
@@ -932,9 +922,9 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         updateDuration();
 
         if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
-            addVideoTrack();
+            addTrack( Workflow::VideoTrack );
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
-            addAudioTrack();
+            addTrack( Workflow::VideoTrack );
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 

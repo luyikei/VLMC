@@ -271,11 +271,7 @@ private:
     /**
      * \brief Insert an empty video track.
      */
-    void                    addVideoTrack();
-    /**
-     * \brief Insert an empty audio track.
-     */
-    void                    addAudioTrack();
+    void                    addTrack( Workflow::TrackType type );
     /**
      * \brief DOCUMENT ME
      */
