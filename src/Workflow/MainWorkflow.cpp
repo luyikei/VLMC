@@ -191,21 +191,6 @@ MainWorkflow::stopFrameComputing()
 }
 
 void
-MainWorkflow::moveClip( const QUuid &clipUuid, unsigned int oldTrack,
-                        unsigned int newTrack, qint64 startingFrame,
-                        Workflow::TrackType trackType,
-                        bool undoRedoCommand /*= false*/ )
-{
-    m_tracks[trackType]->moveClip( clipUuid, oldTrack, newTrack, startingFrame );
-    computeLength();
-
-    if ( undoRedoCommand == true )
-    {
-        emit clipMoved( clipUuid, newTrack, startingFrame, trackType );
-    }
-}
-
-void
 MainWorkflow::muteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
     m_tracks[trackType]->muteTrack( trackId );
@@ -436,7 +421,7 @@ MainWorkflow::resizeClip( ClipHelper* clipHelper, qint64 newBegin, qint64 newEnd
 
     if ( newBegin != clipHelper->begin() )
     {
-        moveClip( clipHelper->uuid(), trackId, trackId, newPos, trackType, undoRedoAction );
+//        moveClip( clipHelper->uuid(), trackId, trackId, newPos, trackType, undoRedoAction );
     }
     clipHelper->setBoundaries( newBegin, newEnd );
 }

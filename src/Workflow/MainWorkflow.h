@@ -138,33 +138,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         void                    previousFrame( Workflow::TrackType trackType );
 
         /**
-         *  \brief              Move a clip in the workflow
-         *
-         *  This will move a clip, potentially from a track to anoher, to a new
-         *  starting position.
-         *  if undoRedoCommand is true, the
-         *  clipMoved( QUuid, unsigned int, qint64, Workflow::TrackType ) will be
-         *  emitted.
-         *  This (bad) behaviour is caused by the fact that this move is mostly required
-         *  by the timeline, which has already move its graphic item.
-         *  When caused by an undo redo command, the timeline isn't aware of the change,
-         *  and needs to be.
-         *  \param      uuid        The uuid of the clip to move
-         *  \param      oldTrack    The origin track of the clip
-         *  \param      newTrack    The destination track for the clip
-         *  \param      pos         The new starting position for the clip
-         *  \param      trackType   The type of the track containing the clip to move
-         *  \param      undoRedoCommand Must be true if the method is called from an
-         *                              undo/redo action. If any doubt, false seems like
-         *                              a good choice.
-         *  \todo       Fix the last parameter. Such a nasty hack shouldn't even exist.
-         *  \sa         clipMoved( QUuid, unsigned int, qint64, Workflow::TrackType )
-         */
-        void                    moveClip( const QUuid& uuid, unsigned int oldTrack,
-                                          unsigned int newTrack, qint64 pos,
-                                          Workflow::TrackType trackType,
-                                          bool undoRedoCommand = false );
-        /**
          *  \brief              Return the given clip position.
          *
          *  \param      uuid        The clip uuid
@@ -378,7 +351,7 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  Calling this method will cause every clip workflow to be deleted, along with
          *  the associated Clip.
          *  This method will emit cleared() signal once finished.
-         *  \sa     removeClip( const QUuid&, unsigned int, Workflow::TrackType )
+         *  \sa     reCip( const QUuid&, unsigned int, Workflow::TrackType )
          *  \sa     cleared()
          */
         void                            clear();
@@ -404,20 +377,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    mainWorkflowEndReached();
 
-        /**
-         *  \brief              Emitted when a clip has been moved
-         *
-         *  \param  uuid        The uuid of the moved clip
-         *  \param  trackid     The destination track of the moved media
-         *  \param  pos         The clip new position
-         *  \param  trackType   The moved clip type.
-         *  \sa                 moveClip( const QUuid&, unsigned int, unsigned int,
-         *                                  qint64, Workflow::TrackType, bool );
-         *  \warning            This is not always emitted. Check removeClip for more
-         *                      details
-         */
-        void                    clipMoved( const QUuid& uuid, unsigned int trackId,
-                                          qint64 pos, Workflow::TrackType trackType );
         /**
          *  \brief  Emitted when the workflow is cleared.
          *

@@ -159,13 +159,13 @@ void Timeline::setTool( ToolButtons button )
     tracksView()->setTool( button );
 }
 
-void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, Workflow::TrackType )
-{
-    tracksView()->moveMediaItem( uuid, track, time );
-    Q_ASSERT( tracksView()->setItemOldTrack( uuid, track ) == true );
-    tracksView()->updateDuration();
-    tracksRuler()->update();
-}
+//void Timeline::actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, Workflow::TrackType )
+//{
+//    tracksView()->moveMediaItem( uuid, track, time );
+//    Q_ASSERT( tracksView()->setItemOldTrack( uuid, track ) == true );
+//    tracksView()->updateDuration();
+//    tracksRuler()->update();
+//}
 
 void
 Timeline::save( QXmlStreamWriter &project ) const

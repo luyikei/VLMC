@@ -174,11 +174,6 @@ public:
      */
     WorkflowRenderer        *getRenderer() { return m_renderer; }
     /**
-     * \brief Ugly hack to change the old track number of an item.
-     * \deprecated Do not use, will be removed soon.
-     */
-    bool                    setItemOldTrack( const QUuid &uuid, quint32 oldTrackNumber );
-    /**
      * \brief Remove a Clip from the timeline (and from the backend).
      * \param uuid The unique identifier of the Media.
      */

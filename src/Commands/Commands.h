@@ -76,21 +76,17 @@ namespace Commands
         NEW_COMMAND( MoveClip )
         {
             public:
-                MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,
-                        unsigned int oldTrack, unsigned int newTrack,
-                        qint64 newPos, Workflow::TrackType trackType );
+                MoveClip( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                          ClipHelper *clipHelper, qint64 newPos );
                 virtual void    redo();
                 virtual void    undo();
 
             private:
-                ::MainWorkflow*             m_workflow;
-                QUuid                       m_uuid;
-                unsigned int                m_oldTrack;
-                unsigned int                m_newTrack;
-                qint64                      m_pos;
-                qint64                      m_oldPos;
-                bool                        m_undoRedoAction;
-                Workflow::TrackType         m_trackType;
+                TrackWorkflow   *m_oldTrack;
+                TrackWorkflow   *m_newTrack;
+                ClipHelper      *m_clipHelper;
+                qint64          m_newPos;
+                qint64          m_oldPos;
         };
 
         NEW_COMMAND( RemoveClip )

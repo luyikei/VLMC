@@ -276,7 +276,7 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
     item->setHeight( tracksHeight() );
     item->setTrack( getTrack( trackType, track ) );
     item->setStartPos( start );
-    item->oldTrackNumber = track;
+    item->m_oldTrack = tw;
     item->oldPosition = start;
     moveMediaItem( item, track, start );
     updateDuration();
@@ -337,22 +337,6 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
     else
         return ;
     moveMediaItem( target, event->pos() );
-}
-
-bool
-TracksView::setItemOldTrack( const QUuid &uuid, quint32 oldTrackNumber )
-{
-    QList<QGraphicsItem*> sceneItems = m_scene->items();
-
-    for ( int i = 0; i < sceneItems.size(); ++i )
-    {
-        AbstractGraphicsMediaItem* item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( sceneItems.at( i ) );
-        if ( !item || item->uuid() != uuid ) continue;
-        item->oldTrackNumber = oldTrackNumber;
-        return true;
-    }
-    return false;
 }
 
 void
@@ -687,7 +671,7 @@ TracksView::dropEvent( QDropEvent *event )
             addAudioTrack();
         event->acceptProposedAction();
 
-        m_dragAudioItem->oldTrackNumber = m_dragAudioItem->trackNumber();
+        m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
         m_dragAudioItem->oldPosition = (qint64)mappedXPos;
 
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
@@ -703,7 +687,7 @@ TracksView::dropEvent( QDropEvent *event )
             addVideoTrack();
         event->acceptProposedAction();
 
-        m_dragVideoItem->oldTrackNumber = m_dragVideoItem->trackNumber();
+        m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
         m_dragVideoItem->oldPosition = (qint64)mappedXPos;
 
         Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
@@ -943,30 +927,26 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
-        Commands::trigger( new Commands::MainWorkflow::MoveClip( m_mainWorkflow,
-                                                                 m_actionItem->uuid(),
-                                                                 m_actionItem->oldTrackNumber,
-                                                                 m_actionItem->trackNumber(),
-                                                                 m_actionItem->startPos(),
-                                                                 m_actionItem->mediaType() ) );
+        Commands::trigger( new Commands::MainWorkflow::MoveClip( m_actionItem->m_oldTrack,
+                                                                 m_actionItem->track()->trackWorkflow(),
+                                                                 m_actionItem->clipHelper(),
+                                                                 m_actionItem->startPos() ) );
 
         // Update the linked item too
         if ( m_actionItem->groupItem() )
         {
-            Commands::trigger( new Commands::MainWorkflow::MoveClip( m_mainWorkflow,
-                                                                     m_actionItem->groupItem()->uuid(),
-                                                                     m_actionItem->groupItem()->oldTrackNumber,
-                                                                     m_actionItem->groupItem()->trackNumber(),
-                                                                     m_actionItem->groupItem()->startPos(),
-                                                                     m_actionItem->groupItem()->mediaType() ) );
+            Commands::trigger( new Commands::MainWorkflow::MoveClip( m_actionItem->m_oldTrack,
+                                                                     m_actionItem->track()->trackWorkflow(),
+                                                                     m_actionItem->clipHelper(),
+                                                                     m_actionItem->startPos() ) );
 
-            m_actionItem->groupItem()->oldTrackNumber = m_actionItem->groupItem()->trackNumber();
+            m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
             m_actionItem->groupItem()->oldPosition = m_actionItem->groupItem()->startPos();
         }
 
         UndoStack::getInstance()->endMacro();
 
-        m_actionItem->oldTrackNumber = m_actionItem->trackNumber();
+        m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionItem->oldPosition = m_actionItem->startPos();
         m_actionRelativeX = -1;
         m_actionItem = NULL;

@@ -31,10 +31,11 @@ class   ClipHelper;
 
 #define RESIZE_ZONE 7
 
-class TracksView;
-class Clip;
-class TracksScene;
-class GraphicsTrack;
+class   Clip;
+class   TracksScene;
+class   TracksView;
+class   TrackWorkflow;
+class   GraphicsTrack;
 
 /**
  * \brief Base class for Audio/Video items.
@@ -124,9 +125,9 @@ protected:
     TracksView* tracksView();
 
     /**
-     * \brief Contains the old trackNumber.
+     * \brief Contains the old track.
      */
-    unsigned int oldTrackNumber;
+    TrackWorkflow   *m_oldTrack;
     /**
      * \brief Contains the old position.
      */

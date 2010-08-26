@@ -48,8 +48,8 @@ Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch, TrackWorkflow* tw, qin
         m_clipHelper( ch ),
         m_trackWorkflow( tw ),
         m_pos( pos )
-{//Fixme !
-    setText( QObject::tr( "Adding clip to track %1" ).arg( -1 ) );
+{
+    setText( QObject::tr( "Adding clip to track %1" ).arg( tw->trackId() ) );
 }
 
 Commands::MainWorkflow::AddClip::~AddClip()
@@ -66,33 +66,44 @@ void Commands::MainWorkflow::AddClip::undo()
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
 
-Commands::MainWorkflow::MoveClip::MoveClip( ::MainWorkflow* workflow, const QUuid& uuid,
-          unsigned int oldTrack, unsigned int newTrack, qint64 newPos,
-          Workflow::TrackType trackType ) :
-    m_workflow( workflow ), m_uuid( uuid ), m_oldTrack( oldTrack ),
-    m_newTrack( newTrack ), m_pos( newPos ), m_trackType( trackType )
+Commands::MainWorkflow::MoveClip::MoveClip( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                                            ClipHelper *clipHelper, qint64 newPos ) :
+    m_oldTrack( oldTrack ),
+    m_newTrack( newTrack ),
+    m_clipHelper( clipHelper ),
+    m_newPos( newPos )
+
 {
+    Q_ASSERT( oldTrack->type() == newTrack->type() );
+
     if ( oldTrack != newTrack )
         setText( QObject::tr( "Moving clip from track %1 to %2" ).arg(
-                QString::number( oldTrack ), QString::number( newTrack ) ) );
+                QString::number( oldTrack->trackId() ), QString::number( newTrack->trackId() ) ) );
     else
         setText( QObject::tr( "Moving clip" ) );
-    m_undoRedoAction = false;
-    m_oldPos = m_workflow->getClipPosition( uuid, oldTrack, trackType );
+    m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
 }
 
 void Commands::MainWorkflow::MoveClip::redo()
 {
-//    qDebug() << "Moving clip from track" << m_oldTrack << "to" << m_newTrack << "at position:" << m_pos;
-    m_workflow->moveClip( m_uuid, m_oldTrack, m_newTrack, m_pos, m_trackType, m_undoRedoAction );
-    m_undoRedoAction = true;
+    if ( m_newTrack != m_oldTrack )
+    {
+        m_oldTrack->removeClip( m_clipHelper->uuid() );
+        m_newTrack->addClip( m_clipHelper, m_newPos );
+    }
+    else
+        m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
 }
 
 void Commands::MainWorkflow::MoveClip::undo()
 {
-//    qDebug() << "Undo moving clip from track" << m_newTrack << "to" << m_oldTrack << "at position:" << m_oldPos;
-    m_workflow->moveClip( m_uuid, m_newTrack, m_oldTrack, m_oldPos, m_trackType, m_undoRedoAction );
-    m_undoRedoAction = true;
+    if ( m_newTrack != m_oldTrack )
+    {
+        m_oldTrack->removeClip( m_clipHelper->uuid() );
+        m_newTrack->addClip( m_clipHelper, m_oldPos );
+    }
+    else
+        m_newTrack->moveClip( m_clipHelper->uuid(), m_oldPos );
 }
 
 Commands::MainWorkflow::RemoveClip::RemoveClip( ClipHelper* ch, TrackWorkflow* tw ) :
@@ -149,7 +160,7 @@ void Commands::MainWorkflow::ResizeClip::undo()
     else
     {
         m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
-        ::MainWorkflow::getInstance()->moveClip( m_clipHelper->uuid(), m_trackId, m_trackId, m_oldPos, m_trackType, m_undoRedoAction );
+//        ::MainWorkflow::getInstance()->moveClip( m_clipHelper->uuid(), m_trackId, m_trackId, m_oldPos, m_trackType, m_undoRedoAction );
     }
 }
 

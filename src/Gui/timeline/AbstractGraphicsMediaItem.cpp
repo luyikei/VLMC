@@ -23,6 +23,7 @@
 #include "AbstractGraphicsMediaItem.h"
 #include "TracksView.h"
 #include "TracksScene.h"
+#include "TrackWorkflow.h"
 #include "GraphicsTrack.h"
 
 #include "Clip.h"
@@ -35,7 +36,7 @@
 #include <QGraphicsSceneContextMenuEvent>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
-        oldTrackNumber( -1 ),
+        m_oldTrack( NULL ),
         oldPosition( -1 ),
         m_tracksView( NULL ),
         m_group( NULL ),
@@ -54,7 +55,7 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
 }
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
-        oldTrackNumber( -1 ),
+        m_oldTrack( NULL ),
         oldPosition( -1 ),
         m_clipHelper( ch ),
         m_tracksView( NULL ),
@@ -222,9 +223,7 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
         {
             item1->group( this );
             tracksView()->moveMediaItem( item1, item1->trackNumber(), startPos() );
-            MainWorkflow::getInstance()->moveClip( item1->uuid(), item1->trackNumber(),
-                                                   trackNumber(), startPos(),
-                                                   item1->mediaType() );
+            track()->trackWorkflow()->moveClip( item1->clipHelper()->uuid(), startPos() );
         }
     }
     else if ( selectedAction == unlinkAction )
