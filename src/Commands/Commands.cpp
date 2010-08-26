@@ -31,6 +31,8 @@
 #ifdef WITH_GUI
 # include "UndoStack.h"
 
+#include <QtDebug>
+
 void Commands::trigger( QUndoCommand* command )
 {
     UndoStack::getInstance()->push( command );
@@ -176,8 +178,10 @@ Commands::MainWorkflow::SplitClip::~SplitClip()
 
 void    Commands::MainWorkflow::SplitClip::redo()
 {
+    //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
+    //be rendering at the same time)
+    m_toSplit->setEnd( m_newClipBegin - 1 );
     m_trackWorkflow->addClip( m_newClip, m_newClipPos );
-    m_toSplit->setEnd( m_newClipBegin );
 }
 
 void    Commands::MainWorkflow::SplitClip::undo()
