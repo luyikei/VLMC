@@ -218,6 +218,8 @@ TracksView::removeClip( const QUuid& uuid  )
 
             // Removing the item from the backend.
             item->track()->trackWorkflow()->removeClip( itemUuid );
+
+            m_clipsLoaded.remove( item->clipHelper()->uuid() );
         }
     }
 }
