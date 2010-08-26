@@ -348,7 +348,8 @@ TracksView::moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time )
     {
         AbstractGraphicsMediaItem* item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( sceneItems.at( i ) );
-        if ( !item || item->uuid() != ch->uuid() ) continue;
+        if ( !item || item->uuid() != ch->uuid() )
+            continue;
         moveMediaItem( item, tw->trackId(), time );
     }
     updateDuration();
