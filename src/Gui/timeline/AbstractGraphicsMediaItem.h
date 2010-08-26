@@ -177,9 +177,6 @@ private:
     bool    m_muted;
 
     QColor  m_itemColor;
-
-    //FIXME: this is a nasty forest boolean
-    bool    m_resizeExpected;
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

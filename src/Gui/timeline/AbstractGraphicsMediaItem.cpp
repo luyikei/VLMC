@@ -42,8 +42,7 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         m_group( NULL ),
         m_width( 0 ),
         m_height( 0 ),
-        m_muted( false ),
-        m_resizeExpected( false )
+        m_muted( false )
 {
     m_clipHelper = new ClipHelper( clip );
     // Adjust the width
@@ -62,8 +61,7 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
         m_group( NULL ),
         m_width( 0 ),
         m_height( 0 ),
-        m_muted( false ),
-        m_resizeExpected( false )
+        m_muted( false )
 {
     // Adjust the width
     setWidth( ch->length() );
@@ -279,7 +277,6 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
             if ( m_clipHelper->clip()->begin() > newBegin )
                 return;
 
-            m_resizeExpected = true;
             qint64 oldLength = m_clipHelper->length();
             qint64  newStart = startPos() + ( oldLength - size );
             if ( newStart < 0 )
@@ -290,7 +287,6 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
         }
         else
         {
-            m_resizeExpected = true;
             qint64 oldLength = m_clipHelper->length();
             track()->trackWorkflow()->moveClip( m_clipHelper->uuid(), startPos() + ( oldLength - size ) );
             m_clipHelper->setBegin( startPos() + ( oldLength - size ) );
@@ -303,11 +299,6 @@ void AbstractGraphicsMediaItem::resize( qint64 size, From from )
 
 void AbstractGraphicsMediaItem::adjustLength()
 {
-    if ( m_resizeExpected == true )
-    {
-        m_resizeExpected = false;
-        return ;
-    }
     Q_ASSERT( m_clipHelper );
     setWidth( m_clipHelper->length() );
 }
