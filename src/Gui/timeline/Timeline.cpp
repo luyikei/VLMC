@@ -84,10 +84,6 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
     // Project duration change
     connect( m_tracksView, SIGNAL( durationChanged(int) ), this, SLOT( setDuration(int) ) );
 
-    // Clip actions
-    connect( m_mainWorkflow, SIGNAL( clipMoved( QUuid, uint, qint64, Workflow::TrackType ) ),
-             this, SLOT( actionMoveClip(QUuid, uint, qint64, Workflow::TrackType ) ) );
-
     // Clear / reset
     connect( m_mainWorkflow, SIGNAL( cleared() ), m_tracksControls, SLOT( clear() ) );
     connect( m_mainWorkflow, SIGNAL( cleared() ), tracksView(), SLOT( clear() ) );

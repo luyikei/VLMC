@@ -202,11 +202,11 @@ public slots:
     void                    addMediaItem( TrackWorkflow* tw, ClipHelper *clipHelper, qint64 start );
     /**
      * \brief Move an item in the timeline.
-     * \param uuid The Universally Unique Identifier of the item.
-     * \param track The new track of the item.
-     * \param time The new position (in frames) of the item.
+     * \param tw    The TrackWorkflow in which the track was moved
+     * \param ch    The clip that was moved.
+     * \param time  The new position (in frames) of the item.
      */
-    void                    moveMediaItem( const QUuid &uuid, unsigned int track, qint64 time );
+    void                    moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time );
     /**
      * \brief Remove an item from the timeline.
      * \param uuid The Universally Unique Identifier of the item.

@@ -30,6 +30,10 @@
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Media.h"
+//Ugly part {
+#include "Timeline.h"
+#include "TracksRuler.h"
+//} this should be fixed, it brokes the design
 #include "TrackWorkflow.h"
 #include "UndoStack.h"
 #include "WorkflowRenderer.h"
@@ -125,7 +129,11 @@ TracksView::addVideoTrack()
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
              this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, ClipHelper*, qint64 ) ),
+             this, SLOT( moveMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
+
     emit videoTrackAdded( track );
+
 }
 
 void
@@ -142,6 +150,8 @@ TracksView::addAudioTrack()
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
              this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, ClipHelper*, qint64 ) ),
+             this, SLOT( moveMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     emit audioTrackAdded( track );
 }
 
@@ -340,7 +350,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
 }
 
 void
-TracksView::moveMediaItem( const QUuid &uuid, unsigned int track, qint64 time )
+TracksView::moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time )
 {
     QList<QGraphicsItem*> sceneItems = m_scene->items();
 
@@ -348,9 +358,11 @@ TracksView::moveMediaItem( const QUuid &uuid, unsigned int track, qint64 time )
     {
         AbstractGraphicsMediaItem* item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( sceneItems.at( i ) );
-        if ( !item || item->uuid() != uuid ) continue;
-        moveMediaItem( item, track, time );
+        if ( !item || item->uuid() != ch->uuid() ) continue;
+        moveMediaItem( item, tw->trackId(), time );
     }
+    updateDuration();
+    Timeline::getInstance()->tracksRuler()->update();
 }
 
 void
