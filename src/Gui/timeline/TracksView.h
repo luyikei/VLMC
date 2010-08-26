@@ -218,7 +218,7 @@ public slots:
      * \param track The current track of the item.
      * \param trackType The type of the track (Audio or Video)
      */
-    void                    removeMediaItem( const QUuid &uuid, unsigned int track, Workflow::TrackType trackType );
+    void                    removeMediaItem( TrackWorkflow* tw, ClipHelper* ch );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item A pointer to AbstractGraphicsMediaItem.

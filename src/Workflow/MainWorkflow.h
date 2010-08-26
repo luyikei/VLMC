@@ -57,24 +57,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
     Q_OBJECT
 
     public:
-        /**
-         *  \brief      Add a clip to the workflow
-         *
-         *  When called, this method will emit
-         *  clipAdded( Clip*, unsigned int, qint64, MainWorkflow::TrackType ) SIGNAL.
-         *  \param      clip    The clip to add
-         *  \param      trackId The number of the track (starting at 0)
-         *  \param      start   The clip's starting position
-         *  \param      type    The track type (audio or video)
-         *  \param      informGui  Will be false if the action is queried by the GUI.
-         *                              true otherwise.
-         *  \sa         removeClip( const QUuid&, unsigned int, Workflow::TrackType )
-         *  \sa         clipAdded( Clip*, unsigned int, qint64, Workflow::TrackType )
-         */
-//        void            addClip( ClipHelper* clipHelper, quint32 trackId, qint64 start,
-//                                 Workflow::TrackType type, bool informGui );
-
-
         EffectsEngine::EffectHelper     *addEffect( Effect* effect, quint32 trackId,
                                                     const QUuid &uuid, Workflow::TrackType type );
 
@@ -154,21 +136,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          *  \sa         nextFrame( Workflow::TrackType );
          */
         void                    previousFrame( Workflow::TrackType trackType );
-
-        /**
-         *  \brief              Remove a clip from the workflow
-         *
-         *  The created ClipWorkflow is deleted, and the added clip is returned.
-         *  Calling this method will cause
-         *  clipRemoved( Clip*, unsigned int, Workflow::TrackType ) to be emitted.
-         *  \param  uuid        The uuid of the clip to remove.
-         *  \param  trackId     The id of the track containing the clip to remove
-         *  \param  trackType   The type of the track containing the clip to remove
-         *  \sa                 addClip( Clip*, unsigned int, qint64, TrackType )
-         *  \sa                 clipRemoved(Clip*, unsigned int, Workflow::TrackType)
-         */
-        Clip*                   removeClip( const QUuid& uuid, unsigned int trackId,
-                                            Workflow::TrackType trackType );
 
         /**
          *  \brief              Move a clip in the workflow
@@ -437,15 +404,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
          */
         void                    mainWorkflowEndReached();
 
-        /**
-         *  \brief              Emitted when a clip is removed
-         *  \param  uuid        The clip that has been removed's uuid.
-         *  \param  trackId     The track that was containing the clip
-         *  \param  trackType   The type of the track that was containing the clip
-         *  \sa     removeClip( const QUuid&, unsigned int, Workflow::TrackType )
-         */
-        void                    clipRemoved( const QUuid& uuid, unsigned int trackId,
-                                             Workflow::TrackType trackType );
         /**
          *  \brief              Emitted when a clip has been moved
          *

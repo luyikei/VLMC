@@ -72,18 +72,6 @@ MainWorkflow::~MainWorkflow()
     delete m_blackOutput;
 }
 
-//void
-//MainWorkflow::addClip( ClipHelper *clipHelper, unsigned int trackId,
-//                                        qint64 start, Workflow::TrackType trackType,
-//                                        bool informGui )
-//{
-//    m_tracks[trackType]->addClip( clipHelper, trackId, start );
-//    computeLength();
-//    //Inform the GUI
-//    if ( informGui == true )
-//        emit clipAdded( clipHelper, trackId, start, trackType );
-//}
-
 EffectsEngine::EffectHelper*
 MainWorkflow::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
 {
@@ -215,19 +203,6 @@ MainWorkflow::moveClip( const QUuid &clipUuid, unsigned int oldTrack,
     {
         emit clipMoved( clipUuid, newTrack, startingFrame, trackType );
     }
-}
-
-Clip*
-MainWorkflow::removeClip( const QUuid &uuid, unsigned int trackId,
-                          Workflow::TrackType trackType )
-{
-    Clip *clip = m_tracks[trackType]->removeClip( uuid, trackId );
-    if ( clip != NULL )
-    {
-        computeLength();
-        emit clipRemoved( uuid, trackId, trackType );
-    }
-    return clip;
 }
 
 void
@@ -472,7 +447,7 @@ MainWorkflow::unsplit( ClipHelper* origin, ClipHelper* splitted, quint32 trackId
 {
     QMutexLocker    lock( m_renderStartedMutex );
 
-    removeClip( splitted->uuid(), trackId, trackType );
+//    removeClip( splitted->uuid(), trackId, trackType );
     origin->setEnd( splitted->end() );
 }
 

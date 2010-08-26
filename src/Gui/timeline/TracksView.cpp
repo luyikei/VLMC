@@ -123,6 +123,8 @@ TracksView::addVideoTrack()
     m_numVideoTrack++;
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
+             this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
     emit videoTrackAdded( track );
 }
 
@@ -138,6 +140,8 @@ TracksView::addAudioTrack()
     m_numAudioTrack++;
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
+             this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
     emit audioTrackAdded( track );
 }
 
@@ -208,16 +212,12 @@ TracksView::removeClip( const QUuid& uuid  )
             // This item needs to be removed.
             // Saving its values
             QUuid itemUuid = item->uuid();
-            quint32 itemTn = item->trackNumber();
-            Workflow::TrackType itemTt = item->mediaType();
 
             // Remove the item from the timeline
-            removeMediaItem( itemUuid, itemTn, itemTt );
+            removeMediaItem( item->track()->trackWorkflow(), item->clipHelper() );
 
             // Removing the item from the backend.
-            MainWorkflow::getInstance()->removeClip( itemUuid,
-                                    itemTn,
-                                    itemTt );
+            item->track()->trackWorkflow()->removeClip( itemUuid );
         }
     }
 }
@@ -608,9 +608,9 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
 }
 
 void
-TracksView::removeMediaItem( const QUuid &uuid, unsigned int trackId, Workflow::TrackType trackType )
+TracksView::removeMediaItem( TrackWorkflow *tw, ClipHelper *ch )
 {
-    GraphicsTrack           *track = getTrack( trackType, trackId );
+    GraphicsTrack           *track = getTrack( tw->type(), tw->trackId() );
 
     if ( track == NULL )
         return ;
@@ -620,7 +620,7 @@ TracksView::removeMediaItem( const QUuid &uuid, unsigned int trackId, Workflow::
     {
         AbstractGraphicsMediaItem *item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != uuid ) continue;
+        if ( !item || item->uuid() != ch->uuid() ) continue;
         removeMediaItem( item );
     }
 }

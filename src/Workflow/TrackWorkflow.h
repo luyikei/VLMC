@@ -128,6 +128,7 @@ class   TrackWorkflow : public QObject
     signals:
         void                lengthChanged( qint64 newLength );
         void                clipAdded( TrackWorkflow*, ClipHelper*, qint64 );
+        void                clipRemoved( TrackWorkflow*, ClipHelper* );
 };
 
 #endif // TRACKWORKFLOW_H
