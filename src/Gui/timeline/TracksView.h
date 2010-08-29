@@ -306,9 +306,9 @@ private:
      * \param time The new position (in frames) of the item.
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
-    void                    moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint64 time );
+    void                    moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64 time );
 
-    ItemPosition            findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64 time );
+    ItemPosition            findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 time );
 
     /**
      * \brief Return a pointer to the specified track.
@@ -322,8 +322,8 @@ private:
     int                     m_projectDuration;
     GraphicsCursorItem      *m_cursorLine;
     QGraphicsLinearLayout   *m_layout;
-    quint32                 m_numVideoTrack;
-    quint32                 m_numAudioTrack;
+    qint32                  m_numVideoTrack;
+    qint32                  m_numAudioTrack;
     MainWorkflow            *m_mainWorkflow;
     GraphicsMovieItem       *m_dragVideoItem;
     GraphicsAudioItem       *m_dragAudioItem;

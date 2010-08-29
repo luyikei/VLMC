@@ -88,7 +88,7 @@ public:
     void ungroup();
 
     /// Return the current track of the item
-    quint32 trackNumber();
+    qint32 trackNumber();
 
     /// Set the item's parent track
     void setTrack( GraphicsTrack* track );

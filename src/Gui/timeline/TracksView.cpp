@@ -231,7 +231,7 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
     //already be created (by the drag and drop operation)
     if ( m_clipsLoaded.contains( ch->uuid() ) )
         return ;
-    quint32                 track = tw->trackId();
+    qint32                  track = tw->trackId();
     Workflow::TrackType     trackType = tw->type();
 
     // If there is not enough tracks to insert
@@ -385,7 +385,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
 }
 
 void
-TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint64 time )
+TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64 time )
 {
     // Add missing tracks
     if ( item->mediaType() == Workflow::AudioTrack )
@@ -480,7 +480,7 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, quint32 track, qint6
 }
 
 ItemPosition
-TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64 time )
+TracksView::findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 time )
 {
 
     // Create a fake item for computing collisions
@@ -502,9 +502,12 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
             AbstractGraphicsMediaItem *currentItem = dynamic_cast<AbstractGraphicsMediaItem*>( colliding.at( i ) );
             if ( currentItem && currentItem != item )
             {
+                qint32  trackId = currentItem->trackNumber();
+                Q_ASSERT( trackId >= 0 );
+
                 // Collision with an item of the same type
                 itemCollision = true;
-                if ( currentItem->trackNumber() > track )
+                if ( trackId > track )
                 {
                     if ( track < 1 )
                     {
@@ -514,7 +517,7 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, quint32 track, qint64
                     }
                     track -= 1;
                 }
-                else if ( currentItem->trackNumber() <= track )
+                else if ( trackId <= track )
                 {
                     int higherTrack = 0;
                     if ( item->mediaType() == Workflow::VideoTrack )
@@ -790,8 +793,11 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         QPointF itemPos = m_actionItem->mapToScene( 0, 0 );
         QPointF itemNewSize = mapToScene( event->pos() ) - itemPos;
 
+        qint32  trackId = m_actionItem->trackNumber();
+        Q_ASSERT( trackId >= 0 );
+
         //FIXME: BEGIN UGLY
-        GraphicsTrack *track = getTrack( m_actionItem->mediaType(), m_actionItem->trackNumber() );
+        GraphicsTrack *track = getTrack( m_actionItem->mediaType(), trackId );
         Q_ASSERT( track );
 
         QPointF collidePos = track->sceneBoundingRect().topRight();

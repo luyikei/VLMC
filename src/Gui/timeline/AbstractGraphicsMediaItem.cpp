@@ -106,7 +106,7 @@ void AbstractGraphicsMediaItem::setHeight( qint64 height )
     m_height = height;
 }
 
-quint32 AbstractGraphicsMediaItem::trackNumber()
+qint32 AbstractGraphicsMediaItem::trackNumber()
 {
     if ( parentItem() )
     {
@@ -114,9 +114,7 @@ quint32 AbstractGraphicsMediaItem::trackNumber()
         if ( graphicsTrack )
             return graphicsTrack->trackNumber();
     }
-    //FIXME We should probably return a negative number here (using a signed type!)
-    qWarning( "Things can go wrong beyond that point!" );
-    return 0;
+    return -1;
 }
 
 void AbstractGraphicsMediaItem::setTrack( GraphicsTrack* track )
@@ -189,17 +187,18 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
         scene()->askRemoveSelectedItems();
     else if ( selectedAction == muteAction )
     {
-
+        qint32      trackId = trackNumber();
+        Q_ASSERT( trackId >= 0 );
         if ( ( m_muted = muteAction->isChecked() ) )
         {
             tracksView()->m_mainWorkflow->muteClip( uuid(),
-                                                    trackNumber(),
+                                                    trackId,
                                                     mediaType() );
         }
         else
         {
             tracksView()->m_mainWorkflow->unmuteClip( uuid(),
-                                                    trackNumber(),
+                                                    trackId,
                                                     mediaType() );
         }
     }
@@ -222,8 +221,10 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
 
         if ( item1->mediaType() != mediaType() )
         {
+            qint32      item1TrackId = item1->trackNumber();
+            Q_ASSERT( item1TrackId >= 0 );
             item1->group( this );
-            tracksView()->moveMediaItem( item1, item1->trackNumber(), startPos() );
+            tracksView()->moveMediaItem( item1, item1TrackId , startPos() );
             track()->trackWorkflow()->moveClip( item1->clipHelper()->uuid(), startPos() );
         }
     }
