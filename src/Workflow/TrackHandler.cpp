@@ -48,12 +48,6 @@ TrackHandler::~TrackHandler()
     delete[] m_tracks;
 }
 
-EffectsEngine::EffectHelper*
-TrackHandler::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid )
-{
-    return m_tracks[trackId]->addEffect( effect, uuid );
-}
-
 void
 TrackHandler::startRender( quint32 width, quint32 height, double fps )
 {

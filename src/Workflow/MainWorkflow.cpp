@@ -72,12 +72,6 @@ MainWorkflow::~MainWorkflow()
     delete m_blackOutput;
 }
 
-EffectsEngine::EffectHelper*
-MainWorkflow::addEffect( Effect *effect, quint32 trackId, const QUuid &uuid, Workflow::TrackType type )
-{
-    return m_tracks[type]->addEffect( effect, trackId, uuid );
-}
-
 void
 MainWorkflow::computeLength()
 {

@@ -38,7 +38,6 @@ class   TrackHandler : public QObject
         TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType );
         ~TrackHandler();
 
-        EffectsEngine::EffectHelper     *addEffect( Effect *effect, quint32 trackId, const QUuid &uuid );
         /**
          *  Returns the number of tracks in this handler
          */

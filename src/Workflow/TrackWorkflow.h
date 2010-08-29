@@ -60,13 +60,6 @@ class   TrackWorkflow : public QObject
         void                                    addClip( ClipHelper*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
         /**
-         *  \brief      Add an effect to a contained ClipWorkflow
-         *
-         *  \param      effect      The effect to add.
-         *  \param      uuid        The ClipHelper's uuid
-         */
-        EffectsEngine::EffectHelper             *addEffect( Effect *effect, const QUuid &uuid );
-        /**
          *  \brief      Add an effect to the TrackWorkflow
          *
          *  \param      effect  The effect instance. Can be either mixer or filter.

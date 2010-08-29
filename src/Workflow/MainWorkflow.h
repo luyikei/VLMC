@@ -57,9 +57,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
     Q_OBJECT
 
     public:
-        EffectsEngine::EffectHelper     *addEffect( Effect* effect, quint32 trackId,
-                                                    const QUuid &uuid, Workflow::TrackType type );
-
         /**
          *  \brief      Initialize the workflow for the render.
          *

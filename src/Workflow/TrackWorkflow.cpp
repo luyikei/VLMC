@@ -96,21 +96,6 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 }
 
 EffectsEngine::EffectHelper*
-TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
-{
-    QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
-    QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
-
-    while ( it != end )
-    {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
-            return it.value()->appendEffect( effect );
-        ++it;
-    }
-    return NULL;
-}
-
-EffectsEngine::EffectHelper*
 TrackWorkflow::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
 {
     EffectInstance  *effectInstance = effect->createInstance();
