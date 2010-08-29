@@ -49,6 +49,7 @@
         <file alias="close">resources/images/close.png</file>
         <file alias="help">resources/images/help.png</file>
         <file alias="about">resources/images/about.png</file>
+        <file alias="fx">resources/images/fx.png</file>
     </qresource>
     <qresource prefix="/text">
         <file>AUTHORS</file>

@@ -40,7 +40,10 @@ TrackControls::TrackControls( GraphicsTrack* track, QWidget *parent ) :
     else if ( track->mediaType() == Workflow::AudioTrack &&
                 s.contains( "audio" + QString::number( track->trackNumber() ) ) )
         m_title = s.value( "audio" + QString::number( track->trackNumber() ) ).toString();
+
     m_ui->setupUi( this );
+    if ( track->mediaType() != Workflow::VideoTrack )
+        m_ui->fxButton->hide();
     setTrackDisabled( !m_track->isEnabled() );
     connect( m_ui->disableButton, SIGNAL( clicked(bool) ),
              this, SLOT( setTrackDisabled(bool) ) );
