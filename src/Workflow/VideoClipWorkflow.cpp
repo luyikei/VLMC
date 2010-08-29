@@ -222,6 +222,8 @@ VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
         return NULL;
     }
     EffectInstance      *effectInstance = effect->createInstance();
+    if ( shouldRender() == true )
+        effectInstance->init( m_width, m_height );
     QWriteLocker    lock( m_effectsLock );
     EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
     m_filters.push_back( ret );
