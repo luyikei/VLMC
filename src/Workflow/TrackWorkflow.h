@@ -113,7 +113,7 @@ class   TrackWorkflow : public QObject
     private:
         QMap<qint64, ClipWorkflow*>             m_clips;
         QReadWriteLock                          *m_effectsLock;
-        EffectsEngine::MixerList                m_mixers;
+        EffectsEngine::EffectList               m_mixers;
         EffectsEngine::EffectList               m_filters;
 
         /**

@@ -245,7 +245,7 @@ void        WorkflowRenderer::startPreview()
         setupRenderer( m_width, m_height, m_outputFps );
     }
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initFilters( m_filters, m_width, m_height );
+    EffectsEngine::initEffects( m_filters, m_width, m_height );
 
     //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );

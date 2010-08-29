@@ -576,8 +576,8 @@ TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
         ++it;
     }
     QReadLocker     lock2( m_effectsLock );
-    EffectsEngine::initMixers( m_mixers, width, height );
-    EffectsEngine::initFilters( m_filters, width, height );
+    EffectsEngine::initEffects( m_mixers, width, height );
+    EffectsEngine::initEffects( m_filters, width, height );
 }
 
 bool

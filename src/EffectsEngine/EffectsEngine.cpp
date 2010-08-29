@@ -179,7 +179,7 @@ EffectsEngine::saveFilters( const EffectList &effects, QXmlStreamWriter &project
 }
 
 void
-EffectsEngine::initFilters( const EffectList &effects, quint32 width, quint32 height )
+EffectsEngine::initEffects( const EffectList &effects, quint32 width, quint32 height )
 {
     EffectsEngine::EffectList::const_iterator   it = effects.begin();
     EffectsEngine::EffectList::const_iterator   ite = effects.end();
@@ -192,36 +192,21 @@ EffectsEngine::initFilters( const EffectList &effects, quint32 width, quint32 he
 }
 
 EffectsEngine::EffectHelper*
-EffectsEngine::getMixer( const MixerList &mixers, qint64 currentFrame )
+EffectsEngine::getMixer( const EffectList &mixers, qint64 currentFrame )
 {
-    MixerList::const_iterator       it = mixers.constBegin();
-    MixerList::const_iterator       ite = mixers.constEnd();
+    EffectList::const_iterator      it = mixers.constBegin();
+    EffectList::const_iterator      ite = mixers.constEnd();
 
     while ( it != ite )
     {
-        if ( it.key() <= currentFrame && currentFrame <= it.value()->end )
+        if ( (*it)->start <= currentFrame && currentFrame <= (*it)->end )
         {
-            Q_ASSERT( it.value()->effect->effect()->type() == Effect::Mixer2 );
-            return it.value();
+            Q_ASSERT( (*it)->effect->effect()->type() == Effect::Mixer2 );
+            return (*it);
         }
         ++it;
     }
     return NULL;
-}
-
-void
-EffectsEngine::initMixers( const MixerList &mixers, quint32 width, quint32 height )
-{
-    if ( mixers.size() <= 0 )
-        return ;
-    EffectsEngine::MixerList::const_iterator   it = mixers.constBegin();
-    EffectsEngine::MixerList::const_iterator   ite = mixers.constEnd();
-
-    while ( it != ite )
-    {
-        it.value()->effect->init( width, height );
-        ++it;
-    }
 }
 
 void

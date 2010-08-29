@@ -69,23 +69,20 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
             QUuid           uuid;
         };
         typedef QList<EffectHelper*>            EffectList;
-        typedef QHash<qint64, EffectHelper*>    MixerList;
         static const quint32                    MaxFramesForMixer = 3;
 
         Effect*     effect( const QString& name );
         bool        loadEffect( const QString& fileName );
         void        loadEffects();
 
+        static void     initEffects( const EffectList &effects, quint32 width, quint32 height );
         //Filters methods:
         static quint32  *applyFilters( const EffectList &effects,
                                   const Workflow::Frame *frame, qint64 currentFrame, double time );
         static void     saveFilters( const EffectList &effects, QXmlStreamWriter &project );
-        static void     initFilters( const EffectList &effects, quint32 width, quint32 height );
 
         //Mixers methods:
-        static EffectHelper     *getMixer( const MixerList& mixers, qint64 currentFrame );
-        static void             initMixers( const MixerList& mixers, quint32 width,
-                                            quint32 height );
+        static EffectHelper     *getMixer( const EffectList &mixers, qint64 currentFrame );
 
     private:
         EffectsEngine();

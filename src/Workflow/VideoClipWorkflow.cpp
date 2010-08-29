@@ -104,7 +104,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
 
     QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initFilters( m_filters, m_width, m_height );
+    EffectsEngine::initEffects( m_filters, m_width, m_height );
 }
 
 void*
