@@ -326,7 +326,6 @@ private:
 
     // Mouse actions on Medias
     bool                    m_actionMove;
-    bool                    m_actionMoveExecuted;
     bool                    m_actionResize;
     qint64                  m_actionResizeOldBegin;
     qint64                  m_actionResizeNewBegin;

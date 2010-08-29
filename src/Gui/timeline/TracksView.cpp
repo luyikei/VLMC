@@ -778,9 +778,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
          event->buttons() == Qt::LeftButton &&
          m_actionMove == true )
     {
-        // The move action is obviously executed
-        m_actionMoveExecuted = true;
-
+        //Moving item.
         m_actionItem->setOpacity( 0.6 );
         if ( m_actionRelativeX < 0 )
             m_actionRelativeX = event->pos().x() - mapFromScene( m_actionItem->pos() ).x();
@@ -875,7 +873,6 @@ TracksView::mousePressEvent( QMouseEvent *event )
         else if ( item->moveable() )
         {
             m_actionMove = true;
-            m_actionMoveExecuted = false;
             m_actionItem = item;
         }
         scene()->clearSelection();
@@ -918,10 +915,15 @@ TracksView::mousePressEvent( QMouseEvent *event )
 void
 TracksView::mouseReleaseEvent( QMouseEvent *event )
 {
-    if ( m_actionMove && m_actionMoveExecuted )
+    if ( m_actionMove )
     {
         Q_ASSERT( m_actionItem );
         m_actionItem->setOpacity( 1.0 );
+
+        //Check if the clip moved.
+        if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() &&
+             m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->clipHelper()->uuid() ) )
+            return ;
 
         updateDuration();
 
@@ -979,7 +981,6 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     }
 
     m_actionMove = false;
-    m_actionMoveExecuted = false;
     m_actionResize = false;
 
     //setDragMode( QGraphicsView::NoDrag );
