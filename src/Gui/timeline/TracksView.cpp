@@ -284,6 +284,11 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 {
     if ( event->mimeData()->hasFormat( "vlmc/uuid" ) )
         event->acceptProposedAction();
+    else
+    {
+        event->ignore();
+        return ;
+    }
 
     QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
     Clip *clip = Library::getInstance()->clip( fullId );
