@@ -50,6 +50,7 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
+    m_effectsLock = new QReadWriteLock;
 }
 
 TrackWorkflow::~TrackWorkflow()
@@ -63,6 +64,7 @@ TrackWorkflow::~TrackWorkflow()
         delete it.value();
         it = m_clips.erase( it );
     }
+    delete m_effectsLock;
     delete m_clipsLock;
     delete m_renderOneFrameMutex;
 }
@@ -106,6 +108,21 @@ TrackWorkflow::addEffect( Effect *effect, const QUuid &uuid )
         ++it;
     }
     return NULL;
+}
+
+EffectsEngine::EffectHelper*
+TrackWorkflow::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
+{
+    EffectInstance  *effectInstance = effect->createInstance();
+    if ( m_isRendering == true )
+        effectInstance->init( m_width, m_height );
+    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
+    QWriteLocker    lock( m_effectsLock );
+    if ( effect->type() == Effect::Filter )
+        m_filters.push_back( ret );
+    else
+        m_mixers[start] = ret;
+    return ret;
 }
 
 //Must be called from a thread safe method (m_clipsLock locked)
@@ -278,6 +295,7 @@ TrackWorkflow::stop()
         ++it;
     }
     m_lastFrame = 0;
+    m_isRendering = false;
 }
 
 Workflow::OutputBuffer*
@@ -539,6 +557,9 @@ TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
 
     m_mixerBuffer->resize( width, height );
     m_fps = fps;
+    m_width = width;
+    m_height = height;
+    m_isRendering = true;
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     while ( it != end )
@@ -549,7 +570,9 @@ TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
             preloadClip( cw );
         ++it;
     }
+    QReadLocker     lock2( m_effectsLock );
     EffectsEngine::initMixers( m_mixers, width, height );
+    EffectsEngine::initFilters( m_filters, width, height );
 }
 
 bool

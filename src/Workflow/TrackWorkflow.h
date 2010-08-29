@@ -59,7 +59,19 @@ class   TrackWorkflow : public QObject
         ClipWorkflow*                           removeClipWorkflow( const QUuid& id );
         void                                    addClip( ClipHelper*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
+        /**
+         *  \brief      Add an effect to a contained ClipWorkflow
+         *
+         *  \param      effect      The effect to add.
+         *  \param      uuid        The ClipHelper's uuid
+         */
         EffectsEngine::EffectHelper             *addEffect( Effect *effect, const QUuid &uuid );
+        /**
+         *  \brief      Add an effect to the TrackWorkflow
+         *
+         *  \param      effect  The effect instance. Can be either mixer or filter.
+         */
+        EffectsEngine::EffectHelper             *addEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
         ClipHelper                              *getClipHelper( const QUuid& uuid );
 
@@ -107,7 +119,9 @@ class   TrackWorkflow : public QObject
 
     private:
         QMap<qint64, ClipWorkflow*>             m_clips;
+        QReadWriteLock                          *m_effectsLock;
         EffectsEngine::MixerList                m_mixers;
+        EffectsEngine::EffectList               m_filters;
 
         /**
          *  \brief      The track length in frames.
@@ -124,6 +138,9 @@ class   TrackWorkflow : public QObject
         Workflow::Frame                         *m_mixerBuffer;
         double                                  m_fps;
         const quint32                           m_trackId;
+        quint32                                 m_width;
+        quint32                                 m_height;
+        bool                                    m_isRendering;
 
     signals:
         void                lengthChanged( qint64 newLength );
