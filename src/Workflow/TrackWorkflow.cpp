@@ -45,7 +45,8 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_length( 0 ),
         m_trackType( type ),
         m_lastFrame( 0 ),
-        m_trackId( trackId )
+        m_trackId( trackId ),
+        m_isRendering( false )
 {
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
@@ -98,6 +99,11 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 EffectsEngine::EffectHelper*
 TrackWorkflow::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
 {
+    if ( m_trackType != Workflow::VideoTrack )
+    {
+        qWarning() << "Effects are only supported for Video tracks.";
+        return NULL;
+    }
     EffectInstance  *effectInstance = effect->createInstance();
     if ( m_isRendering == true )
         effectInstance->init( m_width, m_height );
