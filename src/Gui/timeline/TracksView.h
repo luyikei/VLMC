@@ -95,6 +95,13 @@ class TracksView : public QGraphicsView
     Q_OBJECT
 
 public:
+    enum    Action
+    {
+        None,
+        Move,
+        Resize,
+    };
+
     TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow, WorkflowRenderer *renderer, QWidget *parent = 0 );
     /**
      * \brief Set the duration of the project.
@@ -325,8 +332,7 @@ private:
     WorkflowRenderer        *m_renderer;
 
     // Mouse actions on Medias
-    bool                    m_actionMove;
-    bool                    m_actionResize;
+    Action                  m_action;
     qint64                  m_actionResizeOldBegin;
     qint64                  m_actionResizeNewBegin;
     qint64                  m_actionResizeSize;

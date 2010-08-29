@@ -62,8 +62,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_dragVideoItem = NULL;
     m_dragAudioItem = NULL;
     m_lastKnownTrack = NULL;
-    m_actionMove = false;
-    m_actionResize = false;
+    m_action = None;
     m_actionRelativeX = -1;
     m_actionItem = NULL;
     m_tool = TOOL_DEFAULT;
@@ -776,7 +775,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
 {
     if ( event->modifiers() == Qt::NoModifier &&
          event->buttons() == Qt::LeftButton &&
-         m_actionMove == true )
+         m_action == TracksView::Move )
     {
         //Moving item.
         m_actionItem->setOpacity( 0.6 );
@@ -786,7 +785,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
     }
     else if ( event->modifiers() == Qt::NoModifier &&
               event->buttons() == Qt::LeftButton &&
-              m_actionResize == true )
+              m_action == TracksView::Resize )
     {
         QPointF itemPos = m_actionItem->mapToScene( 0, 0 );
         QPointF itemNewSize = mapToScene( event->pos() ) - itemPos;
@@ -865,14 +864,14 @@ TracksView::mousePressEvent( QMouseEvent *event )
                 m_actionResizeType = AbstractGraphicsMediaItem::END;
             else
                 m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
-            m_actionResize = true;
+            m_action = TracksView::Resize;
             m_actionResizeOldBegin = item->pos().x();
             m_actionResizeNewBegin = m_actionResizeOldBegin;
             m_actionItem = item;
         }
         else if ( item->moveable() )
         {
-            m_actionMove = true;
+            m_action = Move;
             m_actionItem = item;
         }
         scene()->clearSelection();
@@ -915,7 +914,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
 void
 TracksView::mouseReleaseEvent( QMouseEvent *event )
 {
-    if ( m_actionMove )
+    if ( m_action == TracksView::Move )
     {
         Q_ASSERT( m_actionItem );
         m_actionItem->setOpacity( 1.0 );
@@ -959,7 +958,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionItem = NULL;
         m_lastKnownTrack = NULL;
     }
-    else if ( m_actionResize )
+    else if ( m_action == TracksView::Resize )
     {
         ClipHelper *ch = m_actionItem->clipHelper();
         qint64  newBegin;
@@ -980,9 +979,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         updateDuration();
     }
 
-    m_actionMove = false;
-    m_actionResize = false;
-
+    m_action = TracksView::None;
     //setDragMode( QGraphicsView::NoDrag );
     QGraphicsView::mouseReleaseEvent( event );
 }
