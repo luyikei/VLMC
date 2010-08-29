@@ -346,6 +346,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     //Handle mixers:
     if ( m_trackType == Workflow::VideoTrack )
     {
+        QReadLocker     lock2( m_effectsLock );
         EffectsEngine::EffectHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
@@ -355,11 +356,15 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
                                     frames[1] != NULL ? frames[1]->buffer() : MainWorkflow::getInstance()->blackOutput()->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
             m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;
-            m_lastFrame = subFrame;
-            return m_mixerBuffer;
+            ret = m_mixerBuffer;
         }
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
+        //Now handle filters :
+        quint32     *newFrame = EffectsEngine::applyFilters( m_filters, static_cast<const Workflow::Frame*>( ret ),
+                                                             currentFrame, currentFrame * 1000.0 / m_fps );
+        if ( newFrame != NULL )
+            static_cast<Workflow::Frame*>( ret )->setBuffer( newFrame );
     }
     m_lastFrame = subFrame;
     return ret;
