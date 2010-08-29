@@ -23,7 +23,7 @@
 #ifndef EFFECTINSTANCEWIDGET_H
 #define EFFECTINSTANCEWIDGET_H
 
-#include <QDialog>
+#include <QWidget>
 
 class   EffectInstance;
 class   EffectSettingValue;
@@ -33,7 +33,7 @@ class   EffectSettingValue;
 
 class   ISettingsCategoryWidget;
 
-class EffectInstanceWidget : public QDialog
+class EffectInstanceWidget : public QWidget
 {
     Q_OBJECT
 
@@ -43,14 +43,13 @@ class EffectInstanceWidget : public QDialog
     private:
         static QString                      nameFromType( Effect::Type type );
         ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
-        void                                save();
     private:
         EffectInstance                      *m_effect;
         QList<ISettingsCategoryWidget*>     m_settings;
         Ui::EffectSettingWidget             *m_ui;
 
-    private slots:
-        void        buttonsClicked( QAbstractButton* button );
-};
+    public slots:
+        void                                save();
+    };
 
 #endif // EFFECTINSTANCEWIDGET_H

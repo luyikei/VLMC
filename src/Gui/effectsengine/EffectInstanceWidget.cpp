@@ -35,7 +35,7 @@
 #include <QVBoxLayout>
 
 EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *parent ) :
-    QDialog( parent ),
+    QWidget( parent ),
     m_ui( new Ui::EffectSettingWidget )
 {
     m_ui->setupUi( this );
@@ -58,8 +58,8 @@ EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *par
         m_settings.push_back( widget );
         ++it;
     }
-    connect( m_ui->buttons, SIGNAL( clicked( QAbstractButton* ) ),
-             this, SLOT( buttonsClicked( QAbstractButton* ) ) );
+    connect( m_ui->applyButton, SIGNAL( clicked() ),
+             this, SLOT( save() ) );
 }
 
 QString
@@ -101,17 +101,4 @@ EffectInstanceWidget::save()
 {
     foreach ( ISettingsCategoryWidget* val, m_settings )
         val->save();
-}
-
-void
-EffectInstanceWidget::buttonsClicked( QAbstractButton *button )
-{
-    switch ( m_ui->buttons->standardButton( button ) )
-    {
-    case QDialogButtonBox::Ok:
-    case QDialogButtonBox::Apply:
-        save();
-    default:
-        break ;
-    }
 }
