@@ -34,20 +34,26 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-EffectInstanceWidget::EffectInstanceWidget( EffectInstance *effect, QWidget *parent ) :
+EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::EffectSettingWidget )
 {
     m_ui->setupUi( this );
-    m_ui->nameValueLabel->setText( effect->effect()->name() );
-    m_ui->descValueLabel->setText( effect->effect()->description() );
-    m_ui->typeValueLabel->setText( nameFromType( effect->effect()->type() ) );
-    m_ui->authorValueLabel->setText( effect->effect()->author() );
-    QString version = QString::number( effect->effect()->getMajor() ) + '.' +
-                      QString::number( effect->effect()->getMinor() );
+}
+
+void
+EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
+{
+    m_effect = instance;
+    m_ui->nameValueLabel->setText( instance->effect()->name() );
+    m_ui->descValueLabel->setText( instance->effect()->description() );
+    m_ui->typeValueLabel->setText( nameFromType( instance->effect()->type() ) );
+    m_ui->authorValueLabel->setText( instance->effect()->author() );
+    QString version = QString::number( instance->effect()->getMajor() ) + '.' +
+                      QString::number( instance->effect()->getMinor() );
     m_ui->versionValueLabel->setText( version );
-    EffectInstance::ParamList::iterator         it = effect->params().begin();
-    EffectInstance::ParamList::iterator         ite = effect->params().end();
+    EffectInstance::ParamList::iterator         it = instance->params().begin();
+    EffectInstance::ParamList::iterator         ite = instance->params().end();
     while ( it != ite )
     {
         EffectSettingValue          *s = it.value();

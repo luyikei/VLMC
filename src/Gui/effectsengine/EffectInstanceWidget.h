@@ -38,8 +38,8 @@ class EffectInstanceWidget : public QWidget
     Q_OBJECT
 
     public:
-        explicit EffectInstanceWidget( EffectInstance* effect, QWidget *parent = 0);
-
+        explicit EffectInstanceWidget( QWidget *parent = 0);
+        void        setEffectInstance( EffectInstance* effectInstance );
     private:
         static QString                      nameFromType( Effect::Type type );
         ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
