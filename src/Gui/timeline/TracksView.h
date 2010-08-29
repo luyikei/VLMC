@@ -332,7 +332,9 @@ private:
     GraphicsMovieItem       *m_dragVideoItem;
     GraphicsAudioItem       *m_dragAudioItem;
     Effect                  *m_dragEffect;
-    QSet<AbstractGraphicsMediaItem*>    m_effectScaledItems;
+    QSet<AbstractGraphicsMediaItem*>    m_effectEmphasizedItems;
+    QSet<GraphicsTrack*>                m_effectEmphasizedTracks;
+
     QGraphicsWidget         *m_separator;
     ToolButtons             m_tool;
     WorkflowRenderer        *m_renderer;

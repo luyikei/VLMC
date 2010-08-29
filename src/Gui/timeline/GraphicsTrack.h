@@ -40,14 +40,15 @@ public:
     GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                    QGraphicsItem *parent = 0 );
 
-    void setHeight( int height );
-    int height();
-    void setTrackEnabled( bool enabled );
-    bool isEnabled();
-    quint32 trackNumber();
+    void                setHeight( int height );
+    int                 height();
+    void                setTrackEnabled( bool enabled );
+    bool                isEnabled();
+    quint32             trackNumber();
     Workflow::TrackType mediaType();
-    virtual int type() const { return Type; }
-    TrackWorkflow   *trackWorkflow();
+    virtual int         type() const { return Type; }
+    TrackWorkflow       *trackWorkflow();
+    void                setEmphasized( bool value );
 
     QList<AbstractGraphicsMediaItem*> childs();
 

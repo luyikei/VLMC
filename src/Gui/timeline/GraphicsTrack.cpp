@@ -25,6 +25,8 @@
 #include "GraphicsTrack.h"
 #include "MainWorkflow.h"
 
+#include <QtDebug>
+
 GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                               QGraphicsItem *parent ) :
     QGraphicsWidget( parent )
@@ -105,4 +107,10 @@ TrackWorkflow*
 GraphicsTrack::trackWorkflow()
 {
     return m_trackWorkflow;
+}
+
+void
+GraphicsTrack::setEmphasized( bool )
+{
+    //TODO
 }
