@@ -632,3 +632,15 @@ TrackWorkflow::type() const
 {
     return m_trackType;
 }
+
+EffectsEngine::EffectList*
+TrackWorkflow::filters()
+{
+    return &m_filters;
+}
+
+EffectsEngine::EffectList*
+TrackWorkflow::mixers()
+{
+    return &m_mixers;
+}

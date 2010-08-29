@@ -40,7 +40,7 @@ class   QXmlStreamWriter;
 #include <QObject>
 #include <QHash>
 #include <QUuid>
-
+#include <QMetaType>
 
 class   QSettings;
 
@@ -68,6 +68,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
             qint64          end;
             QUuid           uuid;
         };
+
         typedef QList<EffectHelper*>            EffectList;
         static const quint32                    MaxFramesForMixer = 3;
 
@@ -98,5 +99,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        effectAdded( Effect*, const QString& name, Effect::Type );
     friend class    Singleton<EffectsEngine>;
 };
+
+Q_DECLARE_METATYPE(EffectsEngine::EffectHelper*)
 
 #endif // EFFECTSENGINE_H

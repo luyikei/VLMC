@@ -1,9 +1,9 @@
 /*****************************************************************************
- * TrackControls.h: Widget used to configure a track
+ * EffectInstanceListModel.cpp: Handle the model part of displaying an effect instance list.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,39 +20,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRACKCONTROLS_H
-#define TRACKCONTROLS_H
+#ifndef EFFECTINSTANCELISTMODEL_H
+#define EFFECTINSTANCELISTMODEL_H
 
-#include <QtGui/QWidget>
+#include "EffectsEngine.h"
 
-class GraphicsTrack;
+#include <QAbstractListModel>
 
-namespace Ui {
-    class TrackControls;
-}
-
-class TrackControls : public QWidget
+class EffectInstanceListModel : public QAbstractListModel
 {
-    Q_OBJECT
-public:
-    TrackControls( GraphicsTrack* track, QWidget *parent = 0 );
-    ~TrackControls();
+    public:
+        EffectInstanceListModel( EffectsEngine::EffectList *list );
+        virtual qint32      rowCount( const QModelIndex &parent ) const;
+        virtual QVariant    data( const QModelIndex &index, int role ) const;
 
-protected:
-    void    changeEvent( QEvent *e );
-
-private slots:
-    void    setTrackDisabled( bool disable );
-    void    trackNameDoubleClicked();
-    void    fxButtonClicked();
-
-private:
-    void    updateTextLabels();
-
-private:
-    Ui::TrackControls       *m_ui;
-    GraphicsTrack           *m_track;
-    QString                 m_title;
+    private:
+        EffectsEngine::EffectList   *m_list;
 };
 
-#endif // TRACKCONTROLS_H
+#endif // EFFECTINSTANCELISTMODEL_H

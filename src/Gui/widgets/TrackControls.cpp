@@ -21,7 +21,9 @@
  *****************************************************************************/
 
 #include "GraphicsTrack.h"
+#include "EffectStack.h"
 #include "TrackControls.h"
+#include "TrackWorkflow.h"
 
 #include "ui_TrackControls.h"
 
@@ -49,6 +51,7 @@ TrackControls::TrackControls( GraphicsTrack* track, QWidget *parent ) :
              this, SLOT( setTrackDisabled(bool) ) );
     connect( m_ui->trackLabel, SIGNAL( doubleClicked() ),
              this, SLOT( trackNameDoubleClicked() ) );
+    connect( m_ui->fxButton, SIGNAL( clicked() ), this, SLOT( fxButtonClicked() ) );
     updateTextLabels();
 }
 
@@ -125,4 +128,11 @@ TrackControls::trackNameDoubleClicked()
             s.setValue("audio" + QString::number( m_track->trackNumber() ), name );
         updateTextLabels();
     }
+}
+
+void
+TrackControls::fxButtonClicked()
+{
+    EffectStack *stack = new EffectStack( m_track->trackWorkflow()->filters() );
+    stack->show();
 }

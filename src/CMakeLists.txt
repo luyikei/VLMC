@@ -158,8 +158,10 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
         Gui/effectsengine/EffectInstanceWidget.cpp
+        Gui/effectsengine/EffectInstanceListModel.cpp
         Gui/effectsengine/EffectsList.cpp
         Gui/effectsengine/EffectsListView.cpp
+        Gui/effectsengine/EffectStack.cpp
         Gui/export/RendererSettings.cpp
         Gui/export/ShareOnInternet.cpp
         Gui/import/ImportController.cpp
@@ -224,8 +226,10 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.h
         Gui/WorkflowFileRendererDialog.h
         Gui/effectsengine/EffectInstanceWidget.h
+        Gui/effectsengine/EffectInstanceListModel.h
         Gui/effectsengine/EffectsList.h
         Gui/effectsengine/EffectsListView.h
+        Gui/effectsengine/EffectStack.h
         Gui/export/RendererSettings.h
         Gui/export/ShareOnInternet.h
         Gui/import/ImportController.h
@@ -284,6 +288,7 @@ ELSE(NOT WITH_GUI)
     SET(VLMC_UIS
         Gui/effectsengine/ui/EffectsList.ui
         Gui/effectsengine/ui/EffectInstanceWidget.ui
+        Gui/effectsengine/ui/EffectStack.ui
         Gui/export/RendererSettings.ui
         Gui/export/ShareOnInternet.ui
         Gui/import/ui/ImportController.ui

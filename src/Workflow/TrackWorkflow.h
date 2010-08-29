@@ -99,6 +99,9 @@ class   TrackWorkflow : public QObject
         bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
         quint32                                 trackId() const;
         Workflow::TrackType                     type() const;
+        //FIXME: this is not thread safe if the list gets modified (but it can't be const, as it is intended to be modified...)
+        EffectsEngine::EffectList               *filters();
+        EffectsEngine::EffectList               *mixers();
 
     private:
         void                                    computeLength();

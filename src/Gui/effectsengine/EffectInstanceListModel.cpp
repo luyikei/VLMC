@@ -1,9 +1,9 @@
 /*****************************************************************************
- * TrackControls.h: Widget used to configure a track
+ * EffectInstanceListModel.cpp: Handle the model part of displaying an effect instance list.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,39 +20,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRACKCONTROLS_H
-#define TRACKCONTROLS_H
+#include "EffectInstanceListModel.h"
+#include "EffectInstance.h"
 
-#include <QtGui/QWidget>
-
-class GraphicsTrack;
-
-namespace Ui {
-    class TrackControls;
+EffectInstanceListModel::EffectInstanceListModel( EffectsEngine::EffectList *list ) :
+        m_list( list )
+{
 }
 
-class TrackControls : public QWidget
+qint32
+EffectInstanceListModel::rowCount( const QModelIndex& ) const
 {
-    Q_OBJECT
-public:
-    TrackControls( GraphicsTrack* track, QWidget *parent = 0 );
-    ~TrackControls();
+    return m_list->size();
+}
 
-protected:
-    void    changeEvent( QEvent *e );
-
-private slots:
-    void    setTrackDisabled( bool disable );
-    void    trackNameDoubleClicked();
-    void    fxButtonClicked();
-
-private:
-    void    updateTextLabels();
-
-private:
-    Ui::TrackControls       *m_ui;
-    GraphicsTrack           *m_track;
-    QString                 m_title;
-};
-
-#endif // TRACKCONTROLS_H
+QVariant
+EffectInstanceListModel::data( const QModelIndex &index, int role ) const
+{
+    switch ( role )
+    {
+    case Qt::DisplayRole:
+        return m_list->at( index.row() )->effect->effect()->name();
+    case Qt::ToolTipRole:
+        return m_list->at( index.row() )->effect->effect()->description();
+    case Qt::EditRole:
+        return QVariant::fromValue( m_list->at( index.row() ) );
+    default:
+        return QVariant();
+    }
+}

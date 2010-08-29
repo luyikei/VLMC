@@ -1,9 +1,9 @@
 /*****************************************************************************
- * TrackControls.h: Widget used to configure a track
+ * EffectStack.h: Represent an effect stack, and allow parameters editing.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,39 +20,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRACKCONTROLS_H
-#define TRACKCONTROLS_H
+#ifndef EFFECTSTACK_H
+#define EFFECTSTACK_H
 
-#include <QtGui/QWidget>
+#include <QDialog>
 
-class GraphicsTrack;
+#include "EffectsEngine.h"
 
-namespace Ui {
-    class TrackControls;
+#include <QStandardItemModel>
+
+class   EffectInstanceListModel;
+
+namespace Ui
+{
+    class EffectStack;
 }
 
-class TrackControls : public QWidget
+class EffectStack : public QDialog
 {
     Q_OBJECT
-public:
-    TrackControls( GraphicsTrack* track, QWidget *parent = 0 );
-    ~TrackControls();
 
-protected:
-    void    changeEvent( QEvent *e );
+    public:
+        explicit EffectStack( EffectsEngine::EffectList* list, QWidget *parent = 0 );
+        ~EffectStack();
 
-private slots:
-    void    setTrackDisabled( bool disable );
-    void    trackNameDoubleClicked();
-    void    fxButtonClicked();
+    private slots:
+        void        selectedChanged( const QModelIndex &index );
 
-private:
-    void    updateTextLabels();
-
-private:
-    Ui::TrackControls       *m_ui;
-    GraphicsTrack           *m_track;
-    QString                 m_title;
+    private:
+        Ui::EffectStack                 *m_ui;
+        EffectInstanceListModel         *m_model;
+        EffectsEngine::EffectList       *m_list;
 };
 
-#endif // TRACKCONTROLS_H
+#endif // EFFECTSTACK_H
