@@ -670,6 +670,8 @@ TracksView::dropEvent( QDropEvent *event )
 
     if ( m_dragAudioItem )
     {
+        m_clipsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
+
         updateDuration();
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
             addTrack( Workflow::AudioTrack );
@@ -686,6 +688,8 @@ TracksView::dropEvent( QDropEvent *event )
 
     if ( m_dragVideoItem )
     {
+        m_clipsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
+
         updateDuration();
         if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
             addTrack( Workflow::VideoTrack );
