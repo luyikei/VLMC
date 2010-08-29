@@ -935,7 +935,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
             addTrack( Workflow::VideoTrack );
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
-            addTrack( Workflow::VideoTrack );
+            addTrack( Workflow::AudioTrack );
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
