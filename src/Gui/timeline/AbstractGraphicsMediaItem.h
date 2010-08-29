@@ -115,6 +115,8 @@ public:
     QColor  itemColor();
     void    setColor( const QColor& color );
 
+    virtual void    setEmphasized( bool value );
+
     /**
      * \brief Return a pointer to the linked item.
      * \details This method will return NULL if there is no linked item.

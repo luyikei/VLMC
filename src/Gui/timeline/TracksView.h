@@ -36,12 +36,13 @@ class QWheelEvent;
 class QGraphicsWidget;
 class QGraphicsLinearLayout;
 
-class   TracksScene;
-class   GraphicsMovieItem;
-class   GraphicsAudioItem;
-class   MainWorkflow;
-class   TrackWorkflow;
 class   ClipHelper;
+class   Effect;
+class   GraphicsAudioItem;
+class   GraphicsMovieItem;
+class   MainWorkflow;
+class   TracksScene;
+class   TrackWorkflow;
 class   WorkflowRenderer;
 
 class   ItemPosition
@@ -240,6 +241,9 @@ protected:
     virtual void            dragLeaveEvent( QDragLeaveEvent *event );
     virtual void            dropEvent( QDropEvent *event );
 
+    void                    clipDragEnterEvent( QDragEnterEvent *event );
+    void                    effectDragEnterEvent( QDragEnterEvent *event );
+
 private slots:
     /**
      * \brief Ensure that the cursor is visible.
@@ -327,6 +331,8 @@ private:
     MainWorkflow            *m_mainWorkflow;
     GraphicsMovieItem       *m_dragVideoItem;
     GraphicsAudioItem       *m_dragAudioItem;
+    Effect                  *m_dragEffect;
+    QSet<AbstractGraphicsMediaItem*>    m_effectScaledItems;
     QGraphicsWidget         *m_separator;
     ToolButtons             m_tool;
     WorkflowRenderer        *m_renderer;

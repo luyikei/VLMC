@@ -23,6 +23,7 @@
 #include "TracksView.h"
 
 #include "ClipHelper.h"
+#include "ClipWorkflow.h"
 #include "Commands.h"
 #include "Library.h"
 #include "GraphicsMovieItem.h"
@@ -283,14 +284,33 @@ void
 TracksView::dragEnterEvent( QDragEnterEvent *event )
 {
     if ( event->mimeData()->hasFormat( "vlmc/uuid" ) )
-        event->acceptProposedAction();
-    else
     {
-        event->ignore();
-        return ;
+        event->acceptProposedAction();
+        clipDragEnterEvent( event );
     }
+    else if ( event->mimeData()->hasFormat( "vlmc/effect_name" ) )
+    {
+        event->acceptProposedAction();
+        effectDragEnterEvent( event );
+    }
+    else
+        event->ignore();
+}
 
-    QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
+void
+TracksView::effectDragEnterEvent( QDragEnterEvent *event )
+{
+    Effect* effect = EffectsEngine::getInstance()->effect( event->mimeData()->data( "vlmc/effect_name") );
+    if ( effect != NULL )
+        m_dragEffect = effect;
+    else
+        qWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
+}
+
+void
+TracksView::clipDragEnterEvent( QDragEnterEvent *event )
+{
+    const QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
     Clip *clip = Library::getInstance()->clip( fullId );
     if ( !clip ) return;
     if ( clip->getMedia()->hasAudioTrack() == false &&
@@ -330,15 +350,25 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 void
 TracksView::dragMoveEvent( QDragMoveEvent *event )
 {
-    AbstractGraphicsMediaItem* target;
-
     if ( m_dragVideoItem != NULL )
-        target = m_dragVideoItem;
+        moveMediaItem( m_dragVideoItem, event->pos() );
     else if ( m_dragAudioItem != NULL)
-        target = m_dragAudioItem;
-    else
-        return ;
-    moveMediaItem( target, event->pos() );
+        moveMediaItem( m_dragAudioItem, event->pos() );
+    else if ( m_dragEffect != NULL )
+    {
+        foreach ( AbstractGraphicsMediaItem *item, m_effectScaledItems )
+            item->setEmphasized( false );
+        m_effectScaledItems.clear();
+        QList<AbstractGraphicsMediaItem*>   items = mediaItems( event->pos() );
+        if ( items.size() > 0 )
+        {
+            foreach ( AbstractGraphicsMediaItem* item, items )
+            {
+                m_effectScaledItems.insert( item );
+                item->setEmphasized( true );
+            }
+        }
+    }
 }
 
 void
@@ -661,6 +691,11 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
     delete m_dragVideoItem;
     m_dragAudioItem = NULL;
     m_dragVideoItem = NULL;
+    m_dragEffect = NULL; //Don't delete the effect.
+
+    foreach ( AbstractGraphicsMediaItem *item, m_effectScaledItems )
+        item->setEmphasized( false );
+    m_effectScaledItems.clear();
 
     if ( updateDurationNeeded )
         updateDuration();
@@ -671,47 +706,60 @@ TracksView::dropEvent( QDropEvent *event )
 {
     qreal mappedXPos = ( mapToScene( event->pos() ).x() + 0.5 );;
 
-    UndoStack::getInstance()->beginMacro( "Add clip" );
-
-    if ( m_dragAudioItem )
+    if ( m_dragAudioItem != NULL || m_dragVideoItem != NULL )
     {
-        m_clipsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
+        UndoStack::getInstance()->beginMacro( "Add clip" );
 
-        updateDuration();
-        if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
-            addTrack( Workflow::AudioTrack );
-        event->acceptProposedAction();
+        if ( m_dragAudioItem )
+        {
+            m_clipsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
 
-        m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
-        m_dragAudioItem->oldPosition = (qint64)mappedXPos;
+            updateDuration();
+            if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
+                addTrack( Workflow::AudioTrack );
+            event->acceptProposedAction();
 
-        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
-                                                                m_dragAudioItem->track()->trackWorkflow(),
-                                                                (qint64)mappedXPos ) );
-        m_dragAudioItem = NULL;
+            m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
+            m_dragAudioItem->oldPosition = (qint64)mappedXPos;
+
+            Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
+                                                                    m_dragAudioItem->track()->trackWorkflow(),
+                                                                    (qint64)mappedXPos ) );
+            m_dragAudioItem = NULL;
+        }
+
+        if ( m_dragVideoItem )
+        {
+            m_clipsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
+
+            updateDuration();
+            if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
+                addTrack( Workflow::VideoTrack );
+            event->acceptProposedAction();
+
+            m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
+            m_dragVideoItem->oldPosition = (qint64)mappedXPos;
+
+            Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
+                                                                    m_dragVideoItem->track()->trackWorkflow(),
+                                                                    (qint64)mappedXPos ) );
+            m_dragVideoItem = NULL;
+        }
+
+        UndoStack::getInstance()->endMacro();
+
+        m_lastKnownTrack = NULL;
     }
-
-    if ( m_dragVideoItem )
+    else if ( m_dragEffect != NULL )
     {
-        m_clipsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
-
-        updateDuration();
-        if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
-            addTrack( Workflow::VideoTrack );
-        event->acceptProposedAction();
-
-        m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
-        m_dragVideoItem->oldPosition = (qint64)mappedXPos;
-
-        Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
-                                                                m_dragVideoItem->track()->trackWorkflow(),
-                                                                (qint64)mappedXPos ) );
-        m_dragVideoItem = NULL;
+        QList<AbstractGraphicsMediaItem*>   items = mediaItems( event->pos() );
+        foreach ( AbstractGraphicsMediaItem *item, items )
+        {
+            item->clipHelper()->clipWorkflow()->appendEffect( m_dragEffect );
+        }
+        foreach ( AbstractGraphicsMediaItem *item, m_effectScaledItems )
+            item->setEmphasized( false );
     }
-
-    UndoStack::getInstance()->endMacro();
-
-    m_lastKnownTrack = NULL;
 }
 
 void

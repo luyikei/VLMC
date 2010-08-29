@@ -342,3 +342,12 @@ AbstractGraphicsMediaItem::uuid() const
 {
     return m_clipHelper->uuid();
 }
+
+void
+AbstractGraphicsMediaItem::setEmphasized( bool value )
+{
+    if ( value == true )
+        setScale( 1.2 );
+    else
+        setScale( 1.0 );
+}

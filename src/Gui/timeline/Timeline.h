@@ -82,16 +82,6 @@ public slots:
      * \brief Change the currently selected tool.
      */
     void setTool( ToolButtons button );
-    /**
-     * \brief Move an item in the timeline.
-     * \param uuid The Universally Unique Identifier of the item.
-     * \param track The new track of the item.
-     * \param time The new position (in frames) of the item.
-     */
-//    void actionMoveClip( const QUuid& uuid, unsigned int track, qint64 time, Workflow::TrackType );
-
-    void    dragEnterEvent( QDragEnterEvent *event );
-    void    dropEvent( QDropEvent *event );
 
 protected:
     virtual void changeEvent( QEvent *e );
