@@ -105,9 +105,10 @@ public:
     /**
      * \brief    Resize an item from its beginning or from its end.
      *
-     *  \returns    True if the element may be resized.
+     *  \returns    A contextual info (depending on "from") to compute
+     *              the new length. (Either the new beginning of the new length)
      */
-    bool    resize( qint64 size, qint64 newBegin, From from = BEGINNING );
+    qint64      resize( qint64 size, qint64 newBegin, qint64 clipPos, From from = BEGINNING );
 
     ClipHelper  *clipHelper();
 

@@ -328,6 +328,7 @@ private:
     bool                    m_actionMove;
     bool                    m_actionMoveExecuted;
     bool                    m_actionResize;
+    qint64                  m_actionResizeOldBegin;
     qint64                  m_actionResizeNewBegin;
     qint64                  m_actionResizeSize;
     int                     m_actionRelativeX;

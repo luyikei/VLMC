@@ -254,12 +254,13 @@ qint64 AbstractGraphicsMediaItem::startPos()
     return qRound64( QGraphicsItem::pos().x() );
 }
 
-bool  AbstractGraphicsMediaItem::resize( qint64 newSize, qint64 newBegin, From from )
+qint64  AbstractGraphicsMediaItem::resize( qint64 newSize, qint64 newBegin, qint64 clipPos,
+                                           From from )
 {
     Q_ASSERT( clipHelper() );
 
     if ( newSize < 1 )
-        return false;
+        return 1;
 
     if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
         if ( newSize > clipHelper()->clip()->end() )
@@ -268,22 +269,25 @@ bool  AbstractGraphicsMediaItem::resize( qint64 newSize, qint64 newBegin, From f
     //The from actually stands for the clip bound that stays still.
     if ( from == BEGINNING )
     {
-        if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
+        if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
         {
-            if ( clipHelper()->begin() + newSize > clipHelper()->clip()->end() )
-                return false;
+            if ( m_clipHelper->begin() + newSize > m_clipHelper->clip()->end() )
+                return m_clipHelper->length();
         }
         setWidth( newSize );
+        return newSize;
     }
     else
     {
         if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
-            if ( newBegin < 0 || m_clipHelper->clip()->begin() > newBegin )
-                return false;
+        {
+            if ( m_clipHelper->clip()->begin() > newBegin )
+                return m_clipHelper->clip()->begin();
+        }
         setWidth( newSize );
-        setStartPos( newBegin );
+        setStartPos( clipPos );
+        return newBegin;
     }
-    return true;
 }
 
 void AbstractGraphicsMediaItem::adjustLength()

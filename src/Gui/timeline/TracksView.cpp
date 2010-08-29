@@ -818,15 +818,17 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         {
             if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
             {
+                qint64  newBegin = m_actionItem->m_clipHelper->begin() + ( mapToScene( event->pos() ).x() - m_actionResizeOldBegin );
+                qint64  newSize = qMax( m_actionItem->clipHelper()->end() - newBegin, (qint64)0 );
+                qint64  ret = m_actionItem->resize( newSize, newBegin, m_actionResizeNewBegin,
+                                                    AbstractGraphicsMediaItem::END );
+                m_actionResizeSize = m_actionItem->m_clipHelper->end() - ret;
                 m_actionResizeNewBegin = mapToScene( event->pos() ).x();
-                qint64 newSize = qMax( (qint64)(m_actionItem->clipHelper()->length() - mapToScene( event->pos() ).x()), (qint64)0 );
-                if ( m_actionItem->resize( newSize, mapToScene( event->pos() ).x(), AbstractGraphicsMediaItem::END ) == true )
-                    m_actionResizeSize = newSize;
             }
             else
             {
-                if ( m_actionItem->resize( itemNewSize.x(), m_actionResizeNewBegin, AbstractGraphicsMediaItem::BEGINNING ) == true )
-                    m_actionResizeSize = itemNewSize.x();
+                m_actionResizeSize = m_actionItem->resize( itemNewSize.x(), 0, 0, //These parameters are unused in this case.
+                                                           AbstractGraphicsMediaItem::BEGINNING );
             }
         }
     }
@@ -866,7 +868,8 @@ TracksView::mousePressEvent( QMouseEvent *event )
             else
                 m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
             m_actionResize = true;
-            m_actionResizeNewBegin = item->pos().x();
+            m_actionResizeOldBegin = item->pos().x();
+            m_actionResizeNewBegin = m_actionResizeOldBegin;
             m_actionItem = item;
         }
         else if ( item->moveable() )
@@ -957,11 +960,21 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     else if ( m_actionResize )
     {
         ClipHelper *ch = m_actionItem->clipHelper();
-        qDebug() << "Putting clip in" << m_actionResizeNewBegin << "size:" << m_actionResizeSize;
+        qint64  newBegin;
+        qint64  newEnd;
+        if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
+        {
+            newEnd = ch->end();
+            newBegin = newEnd - m_actionResizeSize;
+        }
+        else
+        {
+            newBegin = ch->begin();
+            newEnd = newBegin + m_actionResizeSize;
+        }
         Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->track()->trackWorkflow(),
-                                                                   ch, m_actionResizeNewBegin,
-                                                                   m_actionResizeNewBegin + m_actionResizeSize,
-                                                                   m_actionResizeNewBegin ) );
+                                                                   ch, newBegin, newEnd,
+                                                                   m_actionItem->pos().x() ) );
         updateDuration();
     }
 
