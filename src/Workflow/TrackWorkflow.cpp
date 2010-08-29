@@ -361,10 +361,19 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
         //Now handle filters :
-        quint32     *newFrame = EffectsEngine::applyFilters( m_filters, static_cast<const Workflow::Frame*>( ret ),
+        quint32     *newFrame = EffectsEngine::applyFilters( m_filters,
+                                                             ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : MainWorkflow::getInstance()->blackOutput(),
                                                              currentFrame, currentFrame * 1000.0 / m_fps );
         if ( newFrame != NULL )
-            static_cast<Workflow::Frame*>( ret )->setBuffer( newFrame );
+        {
+            if ( ret != NULL )
+                static_cast<Workflow::Frame*>( ret )->setBuffer( newFrame );
+            else //Use the m_mixerBuffer as the frame to return. Ugly but avoid another attribute.
+            {
+                m_mixerBuffer->setBuffer( newFrame );
+                ret = m_mixerBuffer;
+            }
+        }
     }
     m_lastFrame = subFrame;
     return ret;
