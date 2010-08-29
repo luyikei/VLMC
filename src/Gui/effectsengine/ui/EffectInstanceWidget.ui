@@ -54,7 +54,7 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QLabel" name="authorValueLabel">
+       <widget class="ExtendedLabel" name="authorValueLabel">
         <property name="text">
          <string/>
         </property>
@@ -122,7 +122,7 @@
          <string/>
         </property>
         <property name="wordWrap">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -158,6 +158,12 @@
         <width>386</width>
         <height>147</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -200,6 +206,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtendedLabel</class>
+   <extends>QLabel</extends>
+   <header>ExtendedLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../../resources.qrc"/>
  </resources>

@@ -23,6 +23,11 @@
 #include "EffectInstanceListModel.h"
 #include "EffectInstance.h"
 
+#include <QApplication>
+#include <QFontMetrics>
+
+#include <QtDebug>
+
 EffectInstanceListModel::EffectInstanceListModel( EffectsEngine::EffectList *list ) :
         m_list( list )
 {
@@ -45,6 +50,12 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
         return m_list->at( index.row() )->effect->effect()->description();
     case Qt::EditRole:
         return QVariant::fromValue( m_list->at( index.row() ) );
+    case Qt::SizeHintRole:
+        {
+            const QFontMetrics  &fm = QApplication::fontMetrics();
+            QSize               size( fm.width( m_list->at( index.row() )->effect->effect()->name() ), fm.height() );
+            return size;
+        }
     default:
         return QVariant();
     }
