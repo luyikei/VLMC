@@ -39,11 +39,13 @@ EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
     m_ui( new Ui::EffectSettingWidget )
 {
     m_ui->setupUi( this );
+    clear();
 }
 
 void
 EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
 {
+    clear();
     m_effect = instance;
     m_ui->nameValueLabel->setText( instance->effect()->name() );
     m_ui->descValueLabel->setText( instance->effect()->description() );
@@ -59,6 +61,8 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
         EffectSettingValue          *s = it.value();
         ISettingsCategoryWidget     *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
+        m_widgets.push_back( label );
+        m_widgets.push_back( widget->widget() );
         widget->widget()->setToolTip( s->description() );
         m_ui->settingsLayout->addRow( label , widget->widget() );
         m_settings.push_back( widget );
@@ -66,6 +70,20 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
     }
     connect( m_ui->applyButton, SIGNAL( clicked() ),
              this, SLOT( save() ) );
+}
+
+void
+EffectInstanceWidget::clear()
+{
+    m_ui->nameValueLabel->setText( "" );
+    m_ui->descValueLabel->setText( "" );
+    m_ui->typeValueLabel->setText( "" );
+    m_ui->authorValueLabel->setText( "" );
+    m_ui->versionValueLabel->setText( "" );
+    qDeleteAll( m_settings );
+    m_settings.clear();
+    qDeleteAll( m_widgets );
+    m_widgets.clear();
 }
 
 QString

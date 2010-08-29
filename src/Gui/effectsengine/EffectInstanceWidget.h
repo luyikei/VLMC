@@ -43,9 +43,11 @@ class EffectInstanceWidget : public QWidget
     private:
         static QString                      nameFromType( Effect::Type type );
         ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
+        void                                clear();
     private:
         EffectInstance                      *m_effect;
         QList<ISettingsCategoryWidget*>     m_settings;
+        QList<QWidget*>                     m_widgets;
         Ui::EffectSettingWidget             *m_ui;
 
     public slots:

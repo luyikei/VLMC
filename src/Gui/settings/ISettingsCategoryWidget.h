@@ -36,6 +36,7 @@ class   ISettingsCategoryWidget : public QObject
     Q_OBJECT
 
     public:
+        virtual ~ISettingsCategoryWidget(){}
         virtual SettingValue    *setting() { return m_setting; }
         virtual QWidget*        widget() = 0;
         virtual void            save() = 0;
