@@ -24,6 +24,7 @@
 
 #include "Types.h"
 
+#include <QtDebug>
 #include <QMetaType>
 #include <QVariant>
 
