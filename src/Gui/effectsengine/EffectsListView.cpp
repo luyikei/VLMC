@@ -1,9 +1,12 @@
 #include "EffectsListView.h"
-#include "EffectsEngine/EffectsEngine.h"
+#include "EffectsEngine.h"
+#include "EffectWidget.h"
 
 #include <QApplication>
+#include <QDialog>
 #include <QMouseEvent>
 #include <QStandardItem>
+#include <QVBoxLayout>
 
 #include <QtDebug>
 
@@ -16,7 +19,8 @@ EffectsListView::EffectsListView(QWidget *parent) :
              this,
              SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
     setModel( m_model );
-    setEditTriggers( QListView::NoEditTriggers );
+    connect( this, SIGNAL( activated( QModelIndex ) ),
+             this, SLOT( effectActivated( QModelIndex ) ) );
 }
 
 void
@@ -56,4 +60,20 @@ EffectsListView::mouseMoveEvent( QMouseEvent *event )
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
+}
+
+void
+EffectsListView::effectActivated( const QModelIndex &index ) const
+{
+    if ( index.isValid() == false )
+        return ;
+    Effect  *effect = EffectsEngine::getInstance()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
+    QDialog         *dialog = new QDialog();
+    QVBoxLayout     *layout = new QVBoxLayout( dialog );
+    EffectWidget    *wid = new EffectWidget( dialog );
+    layout->addWidget( wid );
+    wid->setEffect( effect );
+    dialog->setWindowTitle( tr( "%1 informations" ).arg( effect->name() ) );
+    dialog->exec();
+    delete dialog;
 }

@@ -26,6 +26,8 @@ class EffectsListView : public QListView
     public slots:
         void                effectAdded( Effect *effect, const QString& name,
                                          Effect::Type type );
+    private slots:
+        void                effectActivated( const QModelIndex& index ) const;
 };
 
 #endif // EFFECTLISTVIEW_H
