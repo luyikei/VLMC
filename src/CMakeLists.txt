@@ -162,6 +162,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/EffectsList.cpp
         Gui/effectsengine/EffectsListView.cpp
         Gui/effectsengine/EffectStack.cpp
+        Gui/effectsengine/EffectWidget.cpp
         Gui/export/RendererSettings.cpp
         Gui/export/ShareOnInternet.cpp
         Gui/import/ImportController.cpp
@@ -230,6 +231,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/EffectsList.h
         Gui/effectsengine/EffectsListView.h
         Gui/effectsengine/EffectStack.h
+        Gui/effectsengine/EffectWidget.h
         Gui/export/RendererSettings.h
         Gui/export/ShareOnInternet.h
         Gui/import/ImportController.h
@@ -289,6 +291,7 @@ ELSE(NOT WITH_GUI)
         Gui/effectsengine/ui/EffectsList.ui
         Gui/effectsengine/ui/EffectInstanceWidget.ui
         Gui/effectsengine/ui/EffectStack.ui
+        Gui/effectsengine/ui/EffectWidget.ui
         Gui/export/RendererSettings.ui
         Gui/export/ShareOnInternet.ui
         Gui/import/ui/ImportController.ui

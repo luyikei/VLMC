@@ -47,13 +47,8 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
 {
     clear();
     m_effect = instance;
-    m_ui->nameValueLabel->setText( instance->effect()->name() );
-    m_ui->descValueLabel->setText( instance->effect()->description() );
-    m_ui->typeValueLabel->setText( nameFromType( instance->effect()->type() ) );
-    m_ui->authorValueLabel->setText( instance->effect()->author() );
-    QString version = QString::number( instance->effect()->getMajor() ) + '.' +
-                      QString::number( instance->effect()->getMinor() );
-    m_ui->versionValueLabel->setText( version );
+    m_ui->effectWidget->setEffect( instance->effect() );
+
     EffectInstance::ParamList::iterator         it = instance->params().begin();
     EffectInstance::ParamList::iterator         ite = instance->params().end();
     while ( it != ite )
@@ -75,33 +70,11 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
 void
 EffectInstanceWidget::clear()
 {
-    m_ui->nameValueLabel->setText( "" );
-    m_ui->descValueLabel->setText( "" );
-    m_ui->typeValueLabel->setText( "" );
-    m_ui->authorValueLabel->setText( "" );
-    m_ui->versionValueLabel->setText( "" );
+    m_ui->effectWidget->clear();
     qDeleteAll( m_settings );
     m_settings.clear();
     qDeleteAll( m_widgets );
     m_widgets.clear();
-}
-
-QString
-EffectInstanceWidget::nameFromType( Effect::Type type )
-{
-    switch ( type )
-    {
-    case Effect::Filter:
-        return tr( "Filter" );
-    case Effect::Source:
-        return tr( "Source" );
-    case Effect::Mixer2:
-        return tr( "Mixer 2" );
-    case Effect::Mixer3:
-        return tr( "Mixer 3" );
-    default:
-        return tr( "Unknown type" );
-    }
 }
 
 ISettingsCategoryWidget*

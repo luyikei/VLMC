@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectInstanceWidget.h: Display the settings for an EffectInstance
+ * EffectWidget.h: Display info about an effect.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,37 +20,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTINSTANCEWIDGET_H
-#define EFFECTINSTANCEWIDGET_H
+#ifndef EFFECTWIDGET_H
+#define EFFECTWIDGET_H
 
 #include <QWidget>
 
-class   EffectInstance;
-class   EffectSettingValue;
-
 #include "Effect.h"
-#include "ui_EffectInstanceWidget.h"
 
-class   ISettingsCategoryWidget;
+namespace Ui
+{
+    class EffectWidget;
+}
 
-class EffectInstanceWidget : public QWidget
+class EffectWidget : public QWidget
 {
     Q_OBJECT
 
     public:
-        explicit EffectInstanceWidget( QWidget *parent = 0);
-        void        setEffectInstance( EffectInstance* effectInstance );
-    private:
-        ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
-        void                                clear();
-    private:
-        EffectInstance                      *m_effect;
-        QList<ISettingsCategoryWidget*>     m_settings;
-        QList<QWidget*>                     m_widgets;
-        Ui::EffectSettingWidget             *m_ui;
+        explicit EffectWidget( QWidget *parent = 0 );
+        ~EffectWidget();
+        void                setEffect( Effect* effect );
+        void                clear();
 
-    public slots:
-        void                                save();
-    };
+    private:
+        static QString                      nameFromType( Effect::Type type );
 
-#endif // EFFECTINSTANCEWIDGET_H
+    private:
+        Ui::EffectWidget    *m_ui;
+        Effect              *m_effect;
+};
+
+#endif // EFFECTWIDGET_H
