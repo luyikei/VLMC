@@ -38,6 +38,7 @@ class   QTime;
 class   QXmlStreamWriter;
 
 #include <QObject>
+#include <QStringList>
 #include <QHash>
 #include <QUuid>
 #include <QMetaType>
@@ -72,9 +73,10 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         typedef QList<EffectHelper*>            EffectList;
         static const quint32                    MaxFramesForMixer = 3;
 
-        Effect*     effect( const QString& name );
-        bool        loadEffect( const QString& fileName );
-        void        loadEffects();
+        Effect*             effect( const QString& name );
+        const QStringList&  effects( Effect::Type type ) const;
+        bool                loadEffect( const QString& fileName );
+        void                loadEffects();
 
         static void     initEffects( const EffectList &effects, quint32 width, quint32 height );
         //Filters methods:
@@ -92,6 +94,7 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
     private:
         QHash<QString, Effect*> m_effects;
+        QList<QStringList>      m_names;
         QSettings               *m_cache;
         QTime                   *m_time;
 

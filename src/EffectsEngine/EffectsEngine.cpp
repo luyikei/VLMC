@@ -76,6 +76,7 @@ EffectsEngine::loadEffect( const QString &fileName )
                 return false;
             }
             m_effects[name] = e;
+            m_names[type].push_back( name );
             emit effectAdded( e, name, type );
             return true;
         }
@@ -90,6 +91,7 @@ EffectsEngine::loadEffect( const QString &fileName )
     m_cache->setValue( fileName + "/type", e->type() );
     name = e->name();
     type = e->type();
+    m_names[type].push_back( name );
     emit effectAdded( e, name, type );
     return true;
 }
@@ -226,4 +228,10 @@ EffectsEngine::loadEffects()
             browseDirectory( paths[i] );
         }
     }
+}
+
+const QStringList&
+EffectsEngine::effects(Effect::Type type) const
+{
+    return m_names[type];
 }
