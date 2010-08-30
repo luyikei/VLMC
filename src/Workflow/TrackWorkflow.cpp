@@ -112,7 +112,7 @@ TrackWorkflow::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -
     if ( effect->type() == Effect::Filter )
         m_filters.push_back( ret );
     else
-        m_mixers[start] = ret;
+        m_mixers.push_back( ret );
     return ret;
 }
 
