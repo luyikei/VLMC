@@ -66,6 +66,9 @@ void    signalHandler( int sig )
 
 int     main( int argc, char **argv )
 {
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
 #ifdef WITH_CRASHHANDLER
     while ( true )
     {
@@ -101,9 +104,6 @@ int     main( int argc, char **argv )
         }
     }
 #else
-    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
-    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
-    qRegisterMetaType<QVariant>( "QVariant" );
     return VLMCmain( argc, argv );
 #endif
 }
