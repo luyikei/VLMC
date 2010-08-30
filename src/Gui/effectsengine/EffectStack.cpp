@@ -36,6 +36,8 @@ EffectStack::EffectStack( EffectsEngine::EffectList *list, QWidget *parent ):
     m_ui->list->setModel( m_model );
     connect( m_ui->list, SIGNAL( clicked( QModelIndex ) ),
              this, SLOT( selectedChanged( QModelIndex ) ) );
+    connect( m_ui->upButton, SIGNAL( clicked() ), this, SLOT( moveUp() ) );
+    connect( m_ui->downButton, SIGNAL( clicked() ), this, SLOT( moveDown() ) );
 }
 
 EffectStack::~EffectStack()
@@ -48,4 +50,16 @@ void
 EffectStack::selectedChanged( const QModelIndex &index )
 {
     m_ui->instanceWidget->setEffectInstance( m_model->data( index, Qt::EditRole ).value<EffectsEngine::EffectHelper*>()->effect );
+}
+
+void
+EffectStack::moveUp()
+{
+    m_model->moveUp( m_ui->list->currentIndex() );
+}
+
+void
+EffectStack::moveDown()
+{
+    m_model->moveDown( m_ui->list->currentIndex() );
 }

@@ -17,7 +17,59 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QListView" name="list"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="upButton">
+         <property name="toolTip">
+          <string>Move the effect up in the stack</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../resources.qrc">
+           <normaloff>:/images/up</normaloff>:/images/up</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="downButton">
+         <property name="toolTip">
+          <string>Move the effect down in the stack</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../resources.qrc">
+           <normaloff>:/images/down</normaloff>:/images/down</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListView" name="list">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="EffectInstanceWidget" name="instanceWidget" native="true"/>
@@ -44,7 +96,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttons</sender>

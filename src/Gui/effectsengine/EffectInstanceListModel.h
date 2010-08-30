@@ -33,6 +33,8 @@ class EffectInstanceListModel : public QAbstractListModel
         EffectInstanceListModel( EffectsEngine::EffectList *list );
         virtual qint32      rowCount( const QModelIndex &parent ) const;
         virtual QVariant    data( const QModelIndex &index, int role ) const;
+        void                moveUp( const QModelIndex &index );
+        void                moveDown( const QModelIndex &index );
 
     private:
         EffectsEngine::EffectList   *m_list;

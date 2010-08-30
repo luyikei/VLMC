@@ -60,3 +60,23 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
         return QVariant();
     }
 }
+
+void
+EffectInstanceListModel::moveUp( const QModelIndex &index )
+{
+    if ( index.row() == 0 || index.row() >= m_list->size() )
+        return ;
+    emit layoutAboutToBeChanged();
+    m_list->swap( index.row(), index.row() - 1 );
+    emit layoutChanged();
+}
+
+void
+EffectInstanceListModel::moveDown( const QModelIndex &index )
+{
+    if ( index.row() >= m_list->size() - 1 )
+        return ;
+    emit layoutAboutToBeChanged();
+    m_list->swap( index.row(), index.row() + 1 );
+    emit layoutChanged();
+}
