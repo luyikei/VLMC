@@ -17,8 +17,6 @@ EffectsListView::EffectsListView(QWidget *parent) :
              SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
     setModel( m_model );
     setEditTriggers( QListView::NoEditTriggers );
-    setDragEnabled( true );
-    setSelectionMode( QAbstractItemView::MultiSelection );
 }
 
 void
