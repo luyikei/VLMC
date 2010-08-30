@@ -50,6 +50,17 @@
         </widget>
        </item>
        <item>
+        <widget class="QToolButton" name="removeButton">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../resources.qrc">
+           <normaloff>:/images/remove</normaloff>:/images/remove</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

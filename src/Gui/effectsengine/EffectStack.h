@@ -48,6 +48,7 @@ class EffectStack : public QDialog
         void        selectedChanged( const QModelIndex &index );
         void        moveUp();
         void        moveDown();
+        void        remove();
 
     private:
         Ui::EffectStack                 *m_ui;

@@ -38,6 +38,7 @@ EffectStack::EffectStack( EffectsEngine::EffectList *list, QWidget *parent ):
              this, SLOT( selectedChanged( QModelIndex ) ) );
     connect( m_ui->upButton, SIGNAL( clicked() ), this, SLOT( moveUp() ) );
     connect( m_ui->downButton, SIGNAL( clicked() ), this, SLOT( moveDown() ) );
+    connect( m_ui->removeButton, SIGNAL( clicked() ), this, SLOT( remove() ) );
 }
 
 EffectStack::~EffectStack()
@@ -66,4 +67,10 @@ EffectStack::moveDown()
     m_model->moveDown( m_ui->list->currentIndex() );
     if ( m_ui->list->currentIndex().row() < m_model->rowCount( QModelIndex() ) - 1 )
         m_ui->list->setCurrentIndex( m_ui->list->currentIndex().sibling( m_ui->list->currentIndex().row() + 1, 0 ) );
+}
+
+void
+EffectStack::remove()
+{
+    m_model->removeRow( m_ui->list->currentIndex().row() );
 }

@@ -61,6 +61,19 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
     }
 }
 
+bool
+EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& index /*= QModelIndex()*/ )
+{
+    if ( count != 1 )
+        return false;
+    if ( row < 0 || row >= m_list->size() )
+        return false;
+    beginRemoveRows( index, row, row );
+    m_list->removeAt( row );
+    endRemoveRows();
+    return true;
+}
+
 void
 EffectInstanceListModel::moveUp( const QModelIndex &index )
 {
