@@ -56,10 +56,14 @@ void
 EffectStack::moveUp()
 {
     m_model->moveUp( m_ui->list->currentIndex() );
+    if ( m_ui->list->currentIndex().row() > 0 )
+        m_ui->list->setCurrentIndex( m_ui->list->currentIndex().sibling( m_ui->list->currentIndex().row() - 1, 0 ) );
 }
 
 void
 EffectStack::moveDown()
 {
     m_model->moveDown( m_ui->list->currentIndex() );
+    if ( m_ui->list->currentIndex().row() < m_model->rowCount( QModelIndex() ) - 1 )
+        m_ui->list->setCurrentIndex( m_ui->list->currentIndex().sibling( m_ui->list->currentIndex().row() + 1, 0 ) );
 }
