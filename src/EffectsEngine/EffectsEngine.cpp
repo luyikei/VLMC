@@ -38,6 +38,11 @@ EffectsEngine::EffectsEngine()
     m_cache = new QSettings( QDesktopServices::storageLocation(
                     QDesktopServices::CacheLocation ) + "/effects",
                              QSettings::IniFormat, this );
+    //Create the names entry. A bit ugly but faster (I guess...) afterward.
+    m_names.push_back( QStringList() );
+    m_names.push_back( QStringList() );
+    m_names.push_back( QStringList() );
+    m_names.push_back( QStringList() );
 }
 
 EffectsEngine::~EffectsEngine()
