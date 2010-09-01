@@ -207,3 +207,54 @@ EffectUser::saveFilters( QXmlStreamWriter &project ) const
     project.writeEndElement();
 }
 
+const EffectsEngine::EffectList&
+EffectUser::effects( Effect::Type type ) const
+{
+    if ( type == Effect::Filter )
+        return m_filters;
+    if ( type != Effect::Mixer2 )
+        qCritical() << "Only Filters and Mixer2 are handled. This is going to be nasty !";
+    return m_mixers;
+}
+
+void
+EffectUser::removeEffect( Effect::Type type, quint32 idx )
+{
+    QWriteLocker    lock( m_effectsLock );
+
+    if ( type == Effect::Filter )
+    {
+        if ( idx < m_filters.size() )
+           m_filters.removeAt( idx );
+    }
+    else if ( type == Effect::Mixer2 )
+    {
+        if ( idx < m_mixers.size() )
+            m_mixers.removeAt( idx );
+    }
+    else
+        qCritical() << "Unhandled effect type";
+}
+
+void
+EffectUser::swapFilters( quint32 idx, quint32 idx2 )
+{
+    if ( idx >= m_filters.size() || idx2 > m_filters.size() )
+        return ;
+    QWriteLocker        lock( m_effectsLock );
+
+    m_filters.swap( idx, idx2 );
+}
+
+quint32
+EffectUser::count( Effect::Type type ) const
+{
+    QReadLocker     lock( m_effectsLock );
+
+    if ( type == Effect::Filter )
+        return m_filters.count();
+    if ( type == Effect::Mixer2 )
+        return m_mixers.count();
+    qCritical() << "Unhandled effect type";
+    return 0;
+}

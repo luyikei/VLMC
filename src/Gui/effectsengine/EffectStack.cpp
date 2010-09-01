@@ -25,14 +25,14 @@
 
 #include "EffectInstanceListModel.h"
 
-EffectStack::EffectStack( EffectsEngine::EffectList *list, QWidget *parent ):
+EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     QDialog( parent ),
     m_ui( new Ui::EffectStack ),
-    m_list( list )
+    m_user( user )
 {
     m_ui->setupUi( this );
 
-    m_model = new EffectInstanceListModel( list );
+    m_model = new EffectInstanceListModel( user );
     m_ui->list->setModel( m_model );
     connect( m_ui->list, SIGNAL( clicked( QModelIndex ) ),
              this, SLOT( selectedChanged( QModelIndex ) ) );

@@ -133,6 +133,6 @@ TrackControls::trackNameDoubleClicked()
 void
 TrackControls::fxButtonClicked()
 {
-    EffectStack *stack = new EffectStack( m_track->trackWorkflow()->filters() );
+    EffectStack *stack = new EffectStack( m_track->trackWorkflow() );
     stack->show();
 }

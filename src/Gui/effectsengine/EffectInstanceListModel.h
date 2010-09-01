@@ -24,13 +24,15 @@
 #define EFFECTINSTANCELISTMODEL_H
 
 #include "EffectsEngine.h"
+class   EffectUser;
+
 
 #include <QAbstractListModel>
 
 class EffectInstanceListModel : public QAbstractListModel
 {
     public:
-        EffectInstanceListModel( EffectsEngine::EffectList *list );
+        EffectInstanceListModel( EffectUser *user );
         virtual qint32      rowCount( const QModelIndex &parent ) const;
         virtual QVariant    data( const QModelIndex &index, int role ) const;
         virtual bool        removeRows( int row, int count, const QModelIndex &parent = QModelIndex() );
@@ -38,7 +40,7 @@ class EffectInstanceListModel : public QAbstractListModel
         void                moveDown( const QModelIndex &index );
 
     private:
-        EffectsEngine::EffectList   *m_list;
+        EffectUser          *m_user;
 };
 
 #endif // EFFECTINSTANCELISTMODEL_H

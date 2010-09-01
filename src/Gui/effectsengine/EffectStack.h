@@ -25,7 +25,7 @@
 
 #include <QDialog>
 
-#include "EffectsEngine.h"
+class   EffectUser;
 
 #include <QStandardItemModel>
 
@@ -41,7 +41,7 @@ class EffectStack : public QDialog
     Q_OBJECT
 
     public:
-        explicit EffectStack( EffectsEngine::EffectList* list, QWidget *parent = 0 );
+        explicit EffectStack( EffectUser *user, QWidget *parent = 0 );
         ~EffectStack();
 
     private slots:
@@ -53,7 +53,7 @@ class EffectStack : public QDialog
     private:
         Ui::EffectStack                 *m_ui;
         EffectInstanceListModel         *m_model;
-        EffectsEngine::EffectList       *m_list;
+        EffectUser                      *m_user;
 };
 
 #endif // EFFECTSTACK_H

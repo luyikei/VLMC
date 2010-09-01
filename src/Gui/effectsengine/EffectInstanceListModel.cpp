@@ -22,21 +22,22 @@
 
 #include "EffectInstanceListModel.h"
 #include "EffectInstance.h"
+#include "EffectUser.h"
 
 #include <QApplication>
 #include <QFontMetrics>
 
 #include <QtDebug>
 
-EffectInstanceListModel::EffectInstanceListModel( EffectsEngine::EffectList *list ) :
-        m_list( list )
+EffectInstanceListModel::EffectInstanceListModel( EffectUser *user ) :
+        m_user( user )
 {
 }
 
 qint32
 EffectInstanceListModel::rowCount( const QModelIndex& ) const
 {
-    return m_list->size();
+    return m_user->effects( Effect::Filter ).size();
 }
 
 QVariant
@@ -45,15 +46,15 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
     switch ( role )
     {
     case Qt::DisplayRole:
-        return m_list->at( index.row() )->effect->effect()->name();
+        return m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->name();
     case Qt::ToolTipRole:
-        return m_list->at( index.row() )->effect->effect()->description();
+        return m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->description();
     case Qt::EditRole:
-        return QVariant::fromValue( m_list->at( index.row() ) );
+        return QVariant::fromValue( m_user->effects( Effect::Filter ).at( index.row() ) );
     case Qt::SizeHintRole:
         {
             const QFontMetrics  &fm = QApplication::fontMetrics();
-            QSize               size( fm.width( m_list->at( index.row() )->effect->effect()->name() ), fm.height() );
+            QSize               size( fm.width( m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->name() ), fm.height() );
             return size;
         }
     default:
@@ -66,10 +67,8 @@ EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& inde
 {
     if ( count != 1 )
         return false;
-    if ( row < 0 || row >= m_list->size() )
-        return false;
     beginRemoveRows( index, row, row );
-    m_list->removeAt( row );
+    m_user->removeEffect( Effect::Filter, row );
     endRemoveRows();
     return true;
 }
@@ -77,19 +76,19 @@ EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& inde
 void
 EffectInstanceListModel::moveUp( const QModelIndex &index )
 {
-    if ( index.row() == 0 || index.row() >= m_list->size() )
+    if ( index.row() == 0 || index.row() >= m_user->count( Effect::Filter ) )
         return ;
     emit layoutAboutToBeChanged();
-    m_list->swap( index.row(), index.row() - 1 );
+    m_user->swapFilters( index.row(), index.row() - 1 );
     emit layoutChanged();
 }
 
 void
 EffectInstanceListModel::moveDown( const QModelIndex &index )
 {
-    if ( index.row() >= m_list->size() - 1 )
+    if ( index.row() >= m_user->count( Effect::Filter ) - 1 )
         return ;
     emit layoutAboutToBeChanged();
-    m_list->swap( index.row(), index.row() + 1 );
+    m_user->swapFilters( index.row(), index.row() + 1 );
     emit layoutChanged();
 }

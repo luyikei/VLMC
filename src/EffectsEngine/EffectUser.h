@@ -41,6 +41,10 @@ class EffectUser : public QObject
          *  \param      effect  The effect instance. Can be either mixer or filter.
          */
         EffectsEngine::EffectHelper     *addEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
+        const EffectsEngine::EffectList &effects( Effect::Type type ) const;
+        void                            removeEffect( Effect::Type type, quint32 idx );
+        void                            swapFilters( quint32 idx, quint32 idx2 );
+        quint32                         count( Effect::Type type ) const;
 
     protected:
         EffectUser();
