@@ -53,7 +53,6 @@ WorkflowRenderer::WorkflowRenderer() :
             m_oldLength( 0 ),
             m_effectFrame( NULL )
 {
-    m_effectsLock = new QReadWriteLock;
 }
 
 void    WorkflowRenderer::initializeRenderer()
@@ -88,7 +87,6 @@ WorkflowRenderer::~WorkflowRenderer()
         delete m_media;
     if ( m_silencedAudioBuffer )
         delete m_silencedAudioBuffer;
-    delete m_effectsLock;
 }
 
 void
@@ -174,12 +172,8 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
         //this is a bit hackish though... (especially regarding the "no frame computed" detection)
         ptsDiff = 1000000 / handler->fps;
     }
-    {
-        QReadLocker lock( m_effectsLock );
-        m_effectFrame = EffectsEngine::applyFilters( m_filters, ret,
-                                     m_mainWorkflow->getCurrentFrame(),
-                                     m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
-    }
+    m_effectFrame = applyFilters( ret, m_mainWorkflow->getCurrentFrame(),
+                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
     m_pts = *pts = ptsDiff + m_pts;
     if ( m_effectFrame != NULL )
         *buffer = m_effectFrame;
@@ -244,8 +238,7 @@ void        WorkflowRenderer::startPreview()
         m_outputFps = outputFps();
         setupRenderer( m_width, m_height, m_outputFps );
     }
-    QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_filters, m_width, m_height );
+    initFilters();
 
     //Deactivating vlc's keyboard inputs.
     m_mediaPlayer->setKeyInput( false );
@@ -398,32 +391,11 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
          newOutputFps != fps );
 }
 
-EffectsEngine::EffectHelper*
-WorkflowRenderer::appendEffect( Effect *effect, qint64 start, qint64 end )
-{
-    if ( effect->type() != Effect::Filter )
-    {
-        qWarning() << "WorkflowRenderer does not handle non filter effects.";
-        return NULL;
-    }
-    EffectInstance      *effectInstance = effect->createInstance();
-
-    if ( isRendering() == true )
-        effectInstance->init( m_width, m_height );
-    QWriteLocker    lock( m_effectsLock );
-    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
-    m_filters.push_back( ret );
-    return ret;
-}
-
 void
 WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
 {
     project.writeStartElement( "renderer" );
-    {
-        QReadLocker     lock( m_effectsLock );
-        EffectsEngine::saveFilters( m_filters, project );
-    }
+    saveFilters( project );
     project.writeEndElement();
 }
 
@@ -433,25 +405,7 @@ WorkflowRenderer::loadProject( const QDomElement &project )
     QDomElement     renderer = project.firstChildElement( "renderer" );
     if ( renderer.isNull() == true )
         return ;
-    QDomElement     effects = renderer.firstChildElement( "effects" );
-    if ( effects.isNull() == true )
-        return ;
-    QDomElement     effect = effects.firstChildElement( "effect" );
-    while ( effect.isNull() == false )
-    {
-        if ( effect.hasAttribute( "name" ) == true &&
-             effect.hasAttribute( "start" ) == true &&
-             effect.hasAttribute( "end" ) == true )
-        {
-            Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
-            if ( e != NULL )
-                appendEffect( e, effect.attribute( "start" ).toLongLong(),
-                              effect.attribute( "end" ).toLongLong() );
-            else
-                qCritical() << "Renderer: Can't load effect" << effect.attribute( "name" );
-        }
-        effect = effect.nextSiblingElement();
-    }
+    loadEffects( renderer );
 }
 
 /////////////////////////////////////////////////////////////////////

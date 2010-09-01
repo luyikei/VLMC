@@ -45,8 +45,7 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_length( 0 ),
         m_trackType( type ),
         m_lastFrame( 0 ),
-        m_trackId( trackId ),
-        m_isRendering( false )
+        m_trackId( trackId )
 {
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
@@ -94,26 +93,6 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     m_clips.insert( start, cw );
     emit clipAdded( this, cw->getClipHelper(), start );
     computeLength();
-}
-
-EffectsEngine::EffectHelper*
-TrackWorkflow::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
-{
-    if ( m_trackType != Workflow::VideoTrack )
-    {
-        qWarning() << "Effects are only supported for Video tracks.";
-        return NULL;
-    }
-    EffectInstance  *effectInstance = effect->createInstance();
-    if ( m_isRendering == true )
-        effectInstance->init( m_width, m_height );
-    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
-    QWriteLocker    lock( m_effectsLock );
-    if ( effect->type() == Effect::Filter )
-        m_filters.push_back( ret );
-    else
-        m_mixers.push_back( ret );
-    return ret;
 }
 
 //Must be called from a thread safe method (m_clipsLock locked)
@@ -352,8 +331,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     //Handle mixers:
     if ( m_trackType == Workflow::VideoTrack )
     {
-        QReadLocker     lock2( m_effectsLock );
-        EffectsEngine::EffectHelper* mixer = EffectsEngine::getMixer( m_mixers, currentFrame );
+        EffectsEngine::EffectHelper* mixer = getMixer( currentFrame );
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.
@@ -367,9 +345,8 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
         //Now handle filters :
-        quint32     *newFrame = EffectsEngine::applyFilters( m_filters,
-                                                             ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : MainWorkflow::getInstance()->blackOutput(),
-                                                             currentFrame, currentFrame * 1000.0 / m_fps );
+        quint32     *newFrame = applyFilters( ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : MainWorkflow::getInstance()->blackOutput(),
+                                                currentFrame, currentFrame * 1000.0 / m_fps );
         if ( newFrame != NULL )
         {
             if ( ret != NULL )
@@ -575,9 +552,8 @@ TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
             preloadClip( cw );
         ++it;
     }
-    QReadLocker     lock2( m_effectsLock );
-    EffectsEngine::initEffects( m_mixers, width, height );
-    EffectsEngine::initEffects( m_filters, width, height );
+    initFilters();
+    initMixers();
 }
 
 bool

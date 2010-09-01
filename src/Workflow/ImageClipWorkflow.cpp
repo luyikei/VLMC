@@ -40,7 +40,6 @@ ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
     //from vlc's input thread (well it can but it will deadlock)
     connect( this, SIGNAL( computedFinished() ),
              this, SLOT( stopComputation() ), Qt::QueuedConnection );
-    m_effectsLock = new QReadWriteLock;
     m_effectFrame = new Workflow::Frame;
 }
 
@@ -49,7 +48,6 @@ ImageClipWorkflow::~ImageClipWorkflow()
     stop();
     qDeleteAll( m_filters );
     delete m_effectFrame;
-    delete m_effectsLock;
 }
 
 void
@@ -66,11 +64,11 @@ ImageClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( ":sout-transcode-vcodec=RV32" );
     m_vlcMedia->addOption( ":sout-smem-time-sync" );
 
-    sprintf( buffer, ":sout-transcode-width=%i",
-             MainWorkflow::getInstance()->getWidth() );
+    m_width = MainWorkflow::getInstance()->getWidth();
+    sprintf( buffer, ":sout-transcode-width=%i", m_width );
     m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-height=%i",
-             MainWorkflow::getInstance()->getHeight() );
+    m_height = MainWorkflow::getInstance()->getHeight();
+    sprintf( buffer, ":sout-transcode-height=%i", m_height );
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
     m_vlcMedia->addOption( buffer );
@@ -78,6 +76,7 @@ ImageClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":fake-fps=%f", m_clipHelper->clip()->getMedia()->fps() );
     m_vlcMedia->addOption( buffer );
+    m_isRendering = true;
 
     m_effectFrame->resize( MainWorkflow::getInstance()->getWidth(),
                             MainWorkflow::getInstance()->getHeight() );
@@ -100,10 +99,9 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
 {
     QMutexLocker    lock( m_renderLock );
 
-    QReadLocker     lock2( m_effectsLock );
     qint64          currentFrame = MainWorkflow::getInstance()->getCurrentFrame( false );
-    quint32 *buff = EffectsEngine::applyFilters( m_filters, m_buffer, currentFrame,
-                                                currentFrame * 1000.0 / clip()->getMedia()->fps() );
+    quint32 *buff = applyFilters( m_buffer, currentFrame,
+                                    currentFrame * 1000.0 / clip()->getMedia()->fps() );
     if ( buff != NULL )
     {
         m_effectFrame->setBuffer( buff );
@@ -156,19 +154,4 @@ ImageClipWorkflow::stopComputation()
 void
 ImageClipWorkflow::flushComputedBuffers()
 {
-}
-
-EffectsEngine::EffectHelper*
-ImageClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
-{
-    if ( effect->type() != Effect::Filter )
-    {
-        qWarning() << "VideoClipWorkflow does not handle non filter effects.";
-        return NULL;
-    }
-    EffectInstance      *effectInstance = effect->createInstance();
-    QWriteLocker        lock( m_effectsLock );
-    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
-    m_filters.push_back( ret );
-    return ret;
 }

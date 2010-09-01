@@ -83,6 +83,7 @@ ClipWorkflow::loadingComplete()
     connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
     QMutexLocker    lock( m_initWaitCond->getMutex() );
+    m_isRendering = true;
     setState( Rendering );
     m_initWaitCond->wake();
 }
@@ -114,6 +115,7 @@ void
 ClipWorkflow::stop()
 {
     stopRenderer();
+    m_isRendering = false;
     flushComputedBuffers();
     releasePrealocated();
 }
@@ -324,5 +326,5 @@ ClipWorkflow::save( QXmlStreamWriter &project ) const
     project.writeAttribute( "begin", QString::number( m_clipHelper->begin() ) );
     project.writeAttribute( "end", QString::number( m_clipHelper->end() ) );
     project.writeAttribute( "helper", m_clipHelper->uuid().toString() );
-    saveEffects( project );
+    saveFilters( project );
 }

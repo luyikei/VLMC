@@ -777,7 +777,7 @@ TracksView::dropEvent( QDropEvent *event )
         {
             foreach ( AbstractGraphicsMediaItem *item, clips )
             {
-                item->clipHelper()->clipWorkflow()->appendEffect( m_dragEffect );
+                item->clipHelper()->clipWorkflow()->addEffect( m_dragEffect );
             }
         }
         else

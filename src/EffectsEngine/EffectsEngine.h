@@ -78,15 +78,6 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         bool                loadEffect( const QString& fileName );
         void                loadEffects();
 
-        static void     initEffects( const EffectList &effects, quint32 width, quint32 height );
-        //Filters methods:
-        static quint32  *applyFilters( const EffectList &effects,
-                                  const Workflow::Frame *frame, qint64 currentFrame, double time );
-        static void     saveFilters( const EffectList &effects, QXmlStreamWriter &project );
-
-        //Mixers methods:
-        static EffectHelper     *getMixer( const EffectList &mixers, qint64 currentFrame );
-
     private:
         EffectsEngine();
         ~EffectsEngine();

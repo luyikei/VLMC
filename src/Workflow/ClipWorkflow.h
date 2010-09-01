@@ -24,7 +24,8 @@
 #define CLIPWORKFLOW_H
 
 #include "mdate.h"
-#include "EffectsEngine.h"
+
+#include "EffectUser.h"
 #include "ClipHelper.h"
 #include "Types.h"
 
@@ -51,7 +52,7 @@ namespace LibVLCpp
     class   Media;
 }
 
-class   ClipWorkflow : public QObject
+class   ClipWorkflow : public EffectUser
 {
     Q_OBJECT
 
@@ -202,9 +203,6 @@ class   ClipWorkflow : public QObject
         void                    stopRenderer();
 
         void                    save( QXmlStreamWriter& project ) const;
-        virtual void            saveEffects( QXmlStreamWriter& ) const = 0;
-        virtual EffectsEngine::EffectHelper     *appendEffect( Effect *effect, qint64 start = 0,
-                                                                qint64 end = -1 ) = 0;
 
     private:
         void                    setState( State state );

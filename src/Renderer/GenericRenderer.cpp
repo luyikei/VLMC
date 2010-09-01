@@ -24,8 +24,7 @@
 #include "VLCMediaPlayer.h"
 
 GenericRenderer::GenericRenderer() :
-        m_paused( false ),
-        m_isRendering( false )
+        m_paused( false )
 {
     m_mediaPlayer = new LibVLCpp::MediaPlayer();
 }

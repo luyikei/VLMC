@@ -30,6 +30,7 @@
 # include <QWidget>
 #endif
 
+#include "EffectUser.h"
 #include "Types.h"
 
 class   Clip;
@@ -43,7 +44,7 @@ namespace LibVLCpp
 /**
  *  \class  Common base for every renderer.
  */
-class   GenericRenderer : public QObject
+class   GenericRenderer : public EffectUser
 {
     Q_OBJECT
     Q_DISABLE_COPY( GenericRenderer );
@@ -155,12 +156,6 @@ protected:
      *  \sa         isPaused()
      */
     bool                            m_paused;
-
-    /**
-     *  \brief  Will be equal to true if a render has been started, even if it paused.
-     *  \sa     isRendering()
-     */
-    bool                            m_isRendering;
 
     /**
      *  \brief      The QWidget on which we will render.

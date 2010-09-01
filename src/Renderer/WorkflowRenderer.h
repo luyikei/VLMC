@@ -23,10 +23,8 @@
 #ifndef WORKFLOWRENDERER_H
 #define WORKFLOWRENDERER_H
 
-#include "EffectsEngine/EffectsEngine.h"
 #include "GenericRenderer.h"
 #include "MainWorkflow.h"
-
 
 #include <QObject>
 
@@ -130,9 +128,6 @@ class   WorkflowRenderer : public GenericRenderer
          *  \sa             stop();
          */
         void                killRenderer();
-
-        EffectsEngine::EffectHelper     *appendEffect( Effect* effect, qint64 start = 0,
-                                                       qint64 end = -1 );
 
         void                saveProject( QXmlStreamWriter &project ) const;
         void                loadProject( const QDomElement& project );
@@ -284,7 +279,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         qint64              m_oldLength;
 
-        QReadWriteLock      *m_effectsLock;
         EffectsEngine::EffectList     m_filters;
 
         quint32             *m_effectFrame;

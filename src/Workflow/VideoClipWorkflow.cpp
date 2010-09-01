@@ -34,8 +34,6 @@
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_width( 0 ),
-        m_height( 0 ),
         m_renderedFrame( 0 ),
         m_lastReturnedBuffer( NULL )
 {
@@ -103,8 +101,7 @@ VideoClipWorkflow::initVlcOutput()
     sprintf( buffer, ":sout-transcode-fps=%f", clip()->getMedia()->fps() );
     m_vlcMedia->addOption( buffer );
 
-    QReadLocker     lock( m_effectsLock );
-    EffectsEngine::initEffects( m_filters, m_width, m_height );
+    initFilters();
 }
 
 void*
@@ -175,13 +172,10 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
 
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
-    {
-        QWriteLocker    lock( cw->m_effectsLock );
-        quint32     *newFrame = EffectsEngine::applyFilters( cw->m_filters, frame, cw->m_renderedFrame,
-                                     cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
-        if ( newFrame != NULL )
-            frame->setBuffer( newFrame );
-    }
+    quint32     *newFrame = cw->applyFilters( frame, cw->m_renderedFrame,
+                                 cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
+    if ( newFrame != NULL )
+        frame->setBuffer( newFrame );
     {
         QMutexLocker    lock( cw->m_renderedFrameMutex );
         cw->m_renderedFrame++;
@@ -211,30 +205,6 @@ VideoClipWorkflow::flushComputedBuffers()
 
     while ( m_computedBuffers.isEmpty() == false )
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
-}
-
-EffectsEngine::EffectHelper*
-VideoClipWorkflow::appendEffect( Effect *effect, qint64 start, qint64 end )
-{
-    if ( effect->type() != Effect::Filter )
-    {
-        qWarning() << "VideoClipWorkflow does not handle non filter effects.";
-        return NULL;
-    }
-    EffectInstance      *effectInstance = effect->createInstance();
-    if ( shouldRender() == true )
-        effectInstance->init( m_width, m_height );
-    QWriteLocker    lock( m_effectsLock );
-    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
-    m_filters.push_back( ret );
-    return ret;
-}
-
-void
-VideoClipWorkflow::saveEffects( QXmlStreamWriter &project ) const
-{
-    QReadLocker lock( m_effectsLock );
-    EffectsEngine::saveFilters( m_filters, project );
 }
 
 void

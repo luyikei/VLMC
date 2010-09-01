@@ -43,8 +43,6 @@ class   AudioClipWorkflow : public ClipWorkflow
         void                        *getLockCallback() const;
         void                        *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
-        virtual void                saveEffects( QXmlStreamWriter & ) const {} //Nothing to do here now.
-        virtual EffectsEngine::EffectHelper     *appendEffect( Effect *, qint64, qint64 ) { return NULL; } //Nothing to do here now.
     protected:
         virtual quint32             getNbComputedBuffers() const;
         virtual quint32             getMaxComputedBuffers() const;

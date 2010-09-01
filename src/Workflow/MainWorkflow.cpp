@@ -301,7 +301,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                             qint64  start = effect.attribute( "start" ).toLongLong();
                             qint64  end = effect.attribute( "end" ).toLongLong();
                             if ( e != NULL )
-                                ch->clipWorkflow()->appendEffect( e, start, end );
+                                ch->clipWorkflow()->addEffect( e, start, end );
                             else
                                 qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
                         }
