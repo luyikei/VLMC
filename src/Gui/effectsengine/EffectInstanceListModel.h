@@ -38,6 +38,7 @@ class EffectInstanceListModel : public QAbstractListModel
         virtual bool        removeRows( int row, int count, const QModelIndex &parent = QModelIndex() );
         void                moveUp( const QModelIndex &index );
         void                moveDown( const QModelIndex &index );
+        void                add( const QString &effectName );
 
     private:
         EffectUser          *m_user;

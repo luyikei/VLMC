@@ -49,6 +49,7 @@ class EffectStack : public QDialog
         void        moveUp();
         void        moveDown();
         void        remove();
+        void        add();
 
     private:
         Ui::EffectStack                 *m_ui;

@@ -92,3 +92,16 @@ EffectInstanceListModel::moveDown( const QModelIndex &index )
     m_user->swapFilters( index.row(), index.row() + 1 );
     emit layoutChanged();
 }
+
+void
+EffectInstanceListModel::add( const QString &effectName )
+{
+    if ( effectName.isEmpty() == true )
+        return ;
+    Effect  *effect = EffectsEngine::getInstance()->effect( effectName );
+    if ( effect == NULL )
+        return ;
+    beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );
+    m_user->addEffect( effect );
+    endInsertRows();
+}

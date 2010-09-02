@@ -39,6 +39,9 @@ EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     connect( m_ui->upButton, SIGNAL( clicked() ), this, SLOT( moveUp() ) );
     connect( m_ui->downButton, SIGNAL( clicked() ), this, SLOT( moveDown() ) );
     connect( m_ui->removeButton, SIGNAL( clicked() ), this, SLOT( remove() ) );
+    connect( m_ui->addButton, SIGNAL( clicked() ), this, SLOT( add() ) );
+
+    m_ui->addComboBox->addItems( EffectsEngine::getInstance()->effects( Effect::Filter ) );
 }
 
 EffectStack::~EffectStack()
@@ -73,4 +76,10 @@ void
 EffectStack::remove()
 {
     m_model->removeRow( m_ui->list->currentIndex().row() );
+}
+
+void
+EffectStack::add()
+{
+    m_model->add( m_ui->addComboBox->currentText() );
 }
