@@ -59,6 +59,7 @@ class EffectSettingValue : public SettingValue
             {
                 delete[] m_paramBuff; //Won't hurt if paramBuff is NULL
                 m_paramBuff = new qint8[size];
+                m_buffSize = size;
             }
             memcpy( m_paramBuff, ptr, size );
         }
