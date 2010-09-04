@@ -120,9 +120,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="EffectInstanceWidget" name="instanceWidget" native="true"/>
-     </item>
     </layout>
    </item>
    <item>
@@ -137,14 +134,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>EffectInstanceWidget</class>
-   <extends>QWidget</extends>
-   <header>EffectInstanceWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../../../../resources.qrc"/>
  </resources>

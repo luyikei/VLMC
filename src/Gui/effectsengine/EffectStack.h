@@ -29,7 +29,11 @@ class   EffectUser;
 
 #include <QStandardItemModel>
 
+class   EffectInstance;
 class   EffectInstanceListModel;
+class   EffectInstanceWidget;
+
+class   QStackedLayout;
 
 namespace Ui
 {
@@ -44,6 +48,9 @@ class EffectStack : public QDialog
         explicit EffectStack( EffectUser *user, QWidget *parent = 0 );
         ~EffectStack();
 
+    private:
+        void        addInstanceWidget( EffectInstance *instance );
+
     private slots:
         void        selectedChanged( const QModelIndex &index );
         void        moveUp();
@@ -55,6 +62,8 @@ class EffectStack : public QDialog
         Ui::EffectStack                 *m_ui;
         EffectInstanceListModel         *m_model;
         EffectUser                      *m_user;
+        QStackedLayout                  *m_stackedLayout;
+        QHash<QString, EffectInstanceWidget*>   m_instanceWidgets;
 };
 
 #endif // EFFECTSTACK_H

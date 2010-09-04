@@ -22,8 +22,12 @@
 
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
-
+#include "EffectInstance.h"
+#include "EffectInstanceWidget.h"
+#include "EffectUser.h"
 #include "EffectInstanceListModel.h"
+
+#include <QStackedLayout>
 
 EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     QDialog( parent ),
@@ -42,6 +46,13 @@ EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     connect( m_ui->addButton, SIGNAL( clicked() ), this, SLOT( add() ) );
 
     m_ui->addComboBox->addItems( EffectsEngine::getInstance()->effects( Effect::Filter ) );
+    m_stackedLayout = new QStackedLayout;
+    m_ui->horizontalLayout->addLayout( m_stackedLayout );
+    //Add an empty instance widget.
+    m_stackedLayout->addWidget( new EffectInstanceWidget( this ) );
+    //Create instance widgets for already inserted effects
+    foreach ( EffectsEngine::EffectHelper *helper, user->effects( Effect::Filter ) )
+        addInstanceWidget( helper->effect );
 }
 
 EffectStack::~EffectStack()
@@ -51,9 +62,19 @@ EffectStack::~EffectStack()
 }
 
 void
+EffectStack::addInstanceWidget( EffectInstance *instance )
+{
+    EffectInstanceWidget    *w = new EffectInstanceWidget( this );
+    w->setEffectInstance( instance );
+    m_stackedLayout->addWidget( w );
+    m_instanceWidgets[instance->effect()->name()] = w;
+}
+
+void
 EffectStack::selectedChanged( const QModelIndex &index )
 {
-    m_ui->instanceWidget->setEffectInstance( m_model->data( index, Qt::EditRole ).value<EffectsEngine::EffectHelper*>()->effect );
+    EffectInstance  *inst = m_model->data( index, Qt::EditRole ).value<EffectsEngine::EffectHelper*>()->effect;
+    m_stackedLayout->setCurrentWidget( m_instanceWidgets[inst->effect()->name()] );
 }
 
 void
@@ -81,5 +102,6 @@ EffectStack::remove()
 void
 EffectStack::add()
 {
-    m_model->add( m_ui->addComboBox->currentText() );
+    EffectsEngine::EffectHelper *helper = m_model->add( m_ui->addComboBox->currentText() );
+    addInstanceWidget( helper->effect );
 }

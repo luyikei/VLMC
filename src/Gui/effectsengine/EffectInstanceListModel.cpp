@@ -93,15 +93,16 @@ EffectInstanceListModel::moveDown( const QModelIndex &index )
     emit layoutChanged();
 }
 
-void
+EffectsEngine::EffectHelper*
 EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
-        return ;
+        return NULL;
     Effect  *effect = EffectsEngine::getInstance()->effect( effectName );
     if ( effect == NULL )
-        return ;
+        return NULL;
     beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );
-    m_user->addEffect( effect );
+    EffectsEngine::EffectHelper    *helper = m_user->addEffect( effect );
     endInsertRows();
+    return helper;
 }
