@@ -139,7 +139,7 @@ EffectSettingValue::get()
             f0r_param_color_t   tmp;
             m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
                                                                &tmp, m_index );
-            m_val = QColor( tmp.r, tmp.g, tmp.b );
+            m_val.setValue( QColor::fromRgbF( tmp.r, tmp.g, tmp.b ) );
             break ;
         }
     case Position:

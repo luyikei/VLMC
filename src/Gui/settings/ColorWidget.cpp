@@ -34,7 +34,7 @@ ColorWidget::ColorWidget( SettingValue *s, QWidget *parent ) :
     m_button = new QPushButton( parent );
     m_button->setPalette( QPalette(  m_color ) );
     connect( m_button, SIGNAL( clicked() ), this, SLOT( buttonClicked() ) );
-    changed( s->get() );
+    changed( m_color );
 }
 
 QWidget*
