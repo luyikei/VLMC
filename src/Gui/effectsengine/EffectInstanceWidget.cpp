@@ -34,12 +34,16 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
+#include <QtDebug>
+
 EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::EffectSettingWidget )
 {
     m_ui->setupUi( this );
     clear();
+    connect( m_ui->applyButton, SIGNAL( clicked() ),
+             this, SLOT( save() ) );
 }
 
 void
@@ -63,8 +67,6 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
         m_settings.push_back( widget );
         ++it;
     }
-    connect( m_ui->applyButton, SIGNAL( clicked() ),
-             this, SLOT( save() ) );
 }
 
 void
