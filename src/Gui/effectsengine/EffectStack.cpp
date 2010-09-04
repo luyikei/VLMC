@@ -97,6 +97,10 @@ void
 EffectStack::remove()
 {
     m_model->removeRow( m_ui->list->currentIndex().row() );
+    if ( m_ui->list->currentIndex().isValid() == true )
+        selectedChanged( m_ui->list->currentIndex() );
+    else
+        m_stackedLayout->setCurrentIndex( 0 );
 }
 
 void
