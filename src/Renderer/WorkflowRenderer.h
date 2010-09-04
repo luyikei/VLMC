@@ -261,8 +261,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         qint64              m_pts;
         qint64              m_audioPts;
-        quint32             m_width;
-        quint32             m_height;
 
     private:
         /**
@@ -278,8 +276,6 @@ class   WorkflowRenderer : public GenericRenderer
          *                  has to be performed.
          */
         qint64              m_oldLength;
-
-        EffectsEngine::EffectList     m_filters;
 
         quint32             *m_effectFrame;
 

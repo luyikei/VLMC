@@ -59,15 +59,13 @@ class   VideoClipWorkflow : public ClipWorkflow
         QQueue<Workflow::Frame*>    m_computedBuffers;
         QQueue<Workflow::Frame*>    m_availableBuffers;
         static void                 lock( VideoClipWorkflow* clipWorkflow, void** pp_ret,
-                                      int size );
+                                            int size );
         static void                 unlock( VideoClipWorkflow* clipWorkflow, void* buffer,
-                                        int width, int height, int bpp, int size,
-                                        qint64 pts );
-        QReadWriteLock              *m_effectsLock;
+                                            int width, int height, int bpp, int size,
+                                            qint64 pts );
         QMutex                      *m_renderedFrameMutex;
         qint64                      m_renderedFrame;
         Workflow::Frame             *m_lastReturnedBuffer;
-        EffectsEngine::EffectList   m_filters;
 };
 
 #endif // VIDEOCLIPWORKFLOW_H

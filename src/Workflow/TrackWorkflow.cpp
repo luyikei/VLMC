@@ -50,7 +50,6 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
-    m_effectsLock = new QReadWriteLock;
 }
 
 TrackWorkflow::~TrackWorkflow()
@@ -64,7 +63,6 @@ TrackWorkflow::~TrackWorkflow()
         delete it.value();
         it = m_clips.erase( it );
     }
-    delete m_effectsLock;
     delete m_clipsLock;
     delete m_renderOneFrameMutex;
 }

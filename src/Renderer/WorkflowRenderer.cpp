@@ -46,8 +46,6 @@ WorkflowRenderer::WorkflowRenderer() :
             m_media( NULL ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
-            m_width( 0 ),
-            m_height( 0 ),
             m_silencedAudioBuffer( NULL ),
             m_esHandler( NULL ),
             m_oldLength( 0 ),

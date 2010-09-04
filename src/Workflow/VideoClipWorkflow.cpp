@@ -44,9 +44,7 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
 VideoClipWorkflow::~VideoClipWorkflow()
 {
     stop();
-    qDeleteAll( m_filters );
     delete m_renderedFrameMutex;
-    delete m_effectsLock;
 }
 
 void

@@ -48,7 +48,7 @@ class EffectUser : public QObject
 
     protected:
         EffectUser();
-        ~EffectUser();
+        virtual ~EffectUser();
         void                            initFilters();
         void                            initMixers();
 
