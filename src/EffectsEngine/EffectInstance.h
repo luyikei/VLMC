@@ -23,8 +23,9 @@
 #ifndef EFFECTINSTANCE_H
 #define EFFECTINSTANCE_H
 
-class   Effect;
 class   EffectSettingValue;
+
+#include "Effect.h"
 
 #include <QHash>
 #include "frei0r.h"
@@ -45,7 +46,7 @@ class EffectInstance
     protected:
         EffectInstance( Effect *effect );
         virtual ~EffectInstance();
-        EffectSettingValue*         settingValueFactory( f0r_param_info_t* info, quint32 index );
+        EffectSettingValue*         settingValueFactory( Effect::Parameter* info, quint32 index );
     protected:
 
         Effect                      *m_effect;

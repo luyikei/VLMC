@@ -91,8 +91,9 @@ Effect::load()
     }
     for ( qint32 i = 0; i < m_nbParams; ++i )
     {
-        f0r_param_info_t    *param = new f0r_param_info_t;
-        m_f0r_get_param_info( param, i );
+        f0r_param_info_t    fParam;
+        m_f0r_get_param_info( &fParam, i );
+        Parameter           *param = new Parameter( fParam.name, fParam.explanation, fParam.type );
         m_params.push_back( param );
     }
     return true;

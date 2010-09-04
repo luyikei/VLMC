@@ -40,7 +40,16 @@ class Effect : public QLibrary
             Mixer2 = F0R_PLUGIN_TYPE_MIXER2,
             Mixer3 = F0R_PLUGIN_TYPE_MIXER3
         };
-        typedef     QList<f0r_param_info_t*>    ParamList;
+        struct  Parameter
+        {
+            char*   name;
+            char*   desc;
+            int     type;
+            Parameter( const char *_name, const char* _desc, int _type ) :
+                    name( strdup( _name ) ), desc( strdup( _desc ) ), type( _type ) {}
+        };
+
+        typedef     QList<Parameter*>       ParamList;
 
         typedef     int (*f0r_init_t)();
         typedef     void (*f0r_deinit_t)();

@@ -41,7 +41,7 @@ EffectInstance::EffectInstance( Effect *effect ) :
 
     while ( it != ite )
     {
-        f0r_param_info_t    *info = *it;
+        Effect::Parameter   *info = *it;
         m_params[info->name] = settingValueFactory( info, i );
         ++it;
         ++i;
@@ -54,14 +54,14 @@ EffectInstance::~EffectInstance()
 }
 
 EffectSettingValue*
-EffectInstance::settingValueFactory( f0r_param_info_t *info, quint32 index )
+EffectInstance::settingValueFactory( Effect::Parameter *info, quint32 index )
 {
     SettingValue::Flag      flags = SettingValue::Nothing;
 
     if ( info->type == F0R_PARAM_DOUBLE )
         flags = SettingValue::Clamped;
     EffectSettingValue  *val = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
-                                                        this, index, info->name, info->explanation );
+                                                        this, index, info->name, info->desc );
     if ( info->type == F0R_PARAM_DOUBLE )
         val->setLimits( 0.0, 1.0 );
     return val;
