@@ -401,6 +401,7 @@ TracksView::moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time )
         if ( !item || item->uuid() != ch->uuid() )
             continue;
         moveMediaItem( item, tw->trackId(), time );
+        break ;
     }
     updateDuration();
     Timeline::getInstance()->tracksRuler()->update();
