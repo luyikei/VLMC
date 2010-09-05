@@ -29,7 +29,8 @@
 
 GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                               QGraphicsItem *parent ) :
-    QGraphicsWidget( parent )
+    QGraphicsWidget( parent ),
+    m_emphasizer( NULL )
 {
     m_type = type;
     m_trackNumber = trackNumber;
@@ -110,7 +111,34 @@ GraphicsTrack::trackWorkflow()
 }
 
 void
-GraphicsTrack::setEmphasized( bool )
+GraphicsTrack::setEmphasized( bool value )
 {
-    //TODO
+    if ( m_emphasizer == NULL )
+        m_emphasizer = new EmphasizedTrackItem( this, maximumWidth(), preferredHeight() );
+    if ( value == true )
+        m_emphasizer->show();
+    else
+        m_emphasizer->hide();
+}
+
+
+EmphasizedTrackItem::EmphasizedTrackItem( GraphicsTrack *parent, qreal width, qreal height ) :
+    QGraphicsItem( parent ),
+    m_width( width ),
+    m_height( height )
+{
+}
+
+    QRectF
+EmphasizedTrackItem::boundingRect() const
+{
+    return QRectF( 0, 0, m_width, m_height );
+}
+
+void
+EmphasizedTrackItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                     QWidget *widget)
+{
+    painter->setBrush( QBrush( Qt::darkBlue ));
+    painter->drawRect( boundingRect() );
 }

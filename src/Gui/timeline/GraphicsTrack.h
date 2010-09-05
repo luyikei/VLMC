@@ -57,6 +57,18 @@ private:
     quint32             m_trackNumber;
     bool                m_enabled;
     TrackWorkflow       *m_trackWorkflow;
+    QGraphicsItem       *m_emphasizer;
+};
+
+class   EmphasizedTrackItem : public QGraphicsItem
+{
+    public:
+        EmphasizedTrackItem( GraphicsTrack *parent, qreal width, qreal height );
+        QRectF  boundingRect() const;
+        void    paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
+    private:
+        qreal   m_width;
+        qreal   m_height;
 };
 
 #endif // GRAPHICSTRACK_H
