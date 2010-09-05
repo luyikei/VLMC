@@ -1,10 +1,9 @@
 /*****************************************************************************
- * GraphicsAudioItem.cpp: Represent an audio region graphically in the
- * timeline
+ * GraphicsEffectItem.cpp: Represent an effect in the timeline.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,68 +20,58 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "GraphicsAudioItem.h"
+#include "GraphicsEffectItem.h"
 
-#include "ClipHelper.h"
-#include "Media.h"
-#include "TracksView.h"
 #include "Timeline.h"
+#include "TracksView.h"
 
 #include <QPainter>
-#include <QLinearGradient>
-#include <QTime>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSceneHoverEvent>
 
-GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
-        AbstractGraphicsMediaItem( clip )
+GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
+        m_effect( effect ),
+        m_effectHelper( NULL )
 {
-    QTime length = QTime().addMSecs( clip->getMedia()->lengthMS() );
-    QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
-                     "<br><b>Length:</b> %2" )
-                     .arg( clip->getMedia()->fileName() )
-                     .arg( length.toString("hh:mm:ss.zzz") ) );
-    setToolTip( tooltip );
+    setOpacity( 0.8 );
 }
 
-GraphicsAudioItem::GraphicsAudioItem( ClipHelper* ch ) :
-        AbstractGraphicsMediaItem( ch )
+const QUuid&
+GraphicsEffectItem::uuid() const
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
-    QTime length = QTime().addMSecs( ch->clip()->getMedia()->lengthMS() );
-    QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
-                     "<br><b>Length:</b> %2" )
-                     .arg( ch->clip()->getMedia()->fileName() )
-                     .arg( length.toString("hh:mm:ss.zzz") ) );
-    setToolTip( tooltip );
-    setAcceptHoverEvents( true );
+    return m_effectHelper->uuid;
 }
 
-GraphicsAudioItem::~GraphicsAudioItem()
+int
+GraphicsEffectItem::type() const
 {
+    return Type;
+}
+
+bool
+GraphicsEffectItem::expandable() const
+{
+    return true;
+}
+
+bool
+GraphicsEffectItem::moveable() const
+{
+    return true;
+}
+
+bool
+GraphicsEffectItem::hasResizeBoundaries() const
+{
+    return false;
 }
 
 Workflow::TrackType
-GraphicsAudioItem::trackType() const
+GraphicsEffectItem::trackType() const
 {
-    return Workflow::AudioTrack;
+    return Workflow::VideoTrack;
 }
 
 void
-GraphicsAudioItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )
-{
-    painter->save();
-    paintRect( painter, option );
-    painter->restore();
-
-    painter->save();
-    paintTitle( painter, option );
-    painter->restore();
-}
-
-void
-GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
+GraphicsEffectItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
 {
     QRectF drawRect;
     bool drawRound;
@@ -118,10 +107,8 @@ GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
 
     QLinearGradient gradient( mapped.topLeft(), mapped.bottomLeft() );
 
-    gradient.setColorAt( 0, QColor::fromRgb( 88, 88, 88 ) );
-    gradient.setColorAt( 0.4, QColor::fromRgb( 82, 82, 82 ) );
-    gradient.setColorAt( 0.4, QColor::fromRgb( 60, 60, 60 ) );
-    gradient.setColorAt( 1, QColor::fromRgb( 55, 55, 55 ) );
+    gradient.setColorAt( 0, Qt::darkBlue );
+    gradient.setColorAt( 1, Qt::blue );
 
     painter->setPen( Qt::NoPen );
     painter->setBrush( QBrush( gradient ) );
@@ -141,7 +128,6 @@ GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
 
     if ( isSelected() )
     {
-        setZValue( AbstractGraphicsItem::ZSelected );
         painter->setPen( Qt::yellow );
         painter->setBrush( Qt::NoBrush );
         mapped.adjust( 0, 0, 0, -1 );
@@ -151,12 +137,23 @@ GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
         else
             painter->drawRect( mapped );
     }
-    else
-        setZValue( AbstractGraphicsItem::ZSelected );
+}
+
+
+void
+GraphicsEffectItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )
+{
+    painter->save();
+    paintRect( painter, option );
+    painter->restore();
+
+    painter->save();
+    paintTitle( painter, option );
+    painter->restore();
 }
 
 void
-GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )
+GraphicsEffectItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )
 {
     Q_UNUSED( option );
 
@@ -170,7 +167,7 @@ GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = m_clipHelper->clip()->getMedia()->fileName();
+    QString text = m_effect->name();
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::getInstance()->tracksView()->viewportTransform();
@@ -181,4 +178,10 @@ GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem
 
     painter->setPen( Qt::white );
     painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( text, Qt::ElideRight, mapped.width() ) );
+}
+
+Effect*
+GraphicsEffectItem::effect()
+{
+    return m_effect;
 }

@@ -198,6 +198,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/AbstractGraphicsMediaItem.cpp
         Gui/timeline/GraphicsAudioItem.cpp
         Gui/timeline/GraphicsCursorItem.cpp
+        Gui/timeline/GraphicsEffectItem.cpp
         Gui/timeline/GraphicsMovieItem.cpp
         Gui/timeline/GraphicsTrack.cpp
         Gui/timeline/Timeline.cpp
@@ -271,6 +272,7 @@ ELSE(NOT WITH_GUI)
         Gui/timeline/AbstractGraphicsMediaItem.h
         Gui/timeline/GraphicsAudioItem.h 
         Gui/timeline/GraphicsCursorItem.h
+        Gui/timeline/GraphicsEffectItem.h 
         Gui/timeline/GraphicsMovieItem.h 
         Gui/timeline/GraphicsTrack.h
         Gui/timeline/Timeline.h

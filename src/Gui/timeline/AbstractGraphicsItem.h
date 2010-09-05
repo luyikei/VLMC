@@ -142,6 +142,10 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual qint64      maxEnd() const { return -1; }
 
     protected:
+        static const quint32    ZSelected = 4;
+        static const quint32    ZNotSelected = 3;
+        static const quint32    RounderRectRadius = 5;
+
         /// This pointer will be set when inserted in the tracksView.
         TracksView*                 m_tracksView;
         QColor                      m_itemColor;

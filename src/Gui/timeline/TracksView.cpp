@@ -28,6 +28,7 @@
 #include "Library.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
+#include "GraphicsEffectItem.h"
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Media.h"
@@ -301,7 +302,9 @@ TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
     Effect* effect = EffectsEngine::getInstance()->effect( event->mimeData()->data( "vlmc/effect_name") );
     if ( effect != NULL )
-        m_dragEffect = effect;
+    {
+        m_dragEffectItem = new GraphicsEffectItem( effect );
+    }
     else
         qWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
 }
@@ -353,25 +356,17 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         moveMediaItem( m_dragVideoItem, event->pos() );
     else if ( m_dragAudioItem != NULL)
         moveMediaItem( m_dragAudioItem, event->pos() );
-    else if ( m_dragEffect != NULL )
+    else if ( m_dragEffectItem != NULL )
     {
-        //first, some cleaning:
-        foreach ( AbstractGraphicsMediaItem *item, m_effectEmphasizedItems )
-            item->setEmphasized( false );
-        foreach ( GraphicsTrack *item, m_effectEmphasizedTracks )
-            item->setEmphasized( false );
-
-        m_effectEmphasizedItems.clear();
         QList<AbstractGraphicsMediaItem*>   clips = mediaItems( event->pos() );
         if ( clips.size() > 0 )
         {
-            foreach ( AbstractGraphicsMediaItem* item, clips )
-            {
-                if ( item->trackType() != Workflow::VideoTrack )
-                    continue ;
-                m_effectEmphasizedItems.insert( item );
-                item->setEmphasized( true );
-            }
+            AbstractGraphicsMediaItem   *item = clips.first();
+            m_dragEffectItem->setWidth( item->clipHelper()->length() );
+            m_dragEffectItem->setStartPos( item->startPos() );
+            m_dragEffectItem->setHeight( tracksHeight() / 2 );
+            m_dragEffectItem->setTrack( getTrack( m_dragEffectItem->trackType(), 0 ) );
+            m_dragEffectItem->setZValue( 100 );
         }
         else
         {
@@ -381,8 +376,11 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
                 if ( track != NULL && track->mediaType() == Workflow::VideoTrack )
                 {
-                    m_effectEmphasizedTracks.insert( track );
-                    track->setEmphasized( true );
+                    m_dragEffectItem->setWidth( track->maximumWidth() );
+                    m_dragEffectItem->setStartPos( 0 );
+                    m_dragEffectItem->setHeight( tracksHeight() / 2 );
+                    m_dragEffectItem->setTrack( track );
+                    break ;
                 }
             }
         }
@@ -708,16 +706,10 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
 
     delete m_dragAudioItem;
     delete m_dragVideoItem;
+    delete m_dragEffectItem;
     m_dragAudioItem = NULL;
     m_dragVideoItem = NULL;
-    m_dragEffect = NULL; //Don't delete the effect.
-
-    foreach ( AbstractGraphicsMediaItem *item, m_effectEmphasizedItems )
-        item->setEmphasized( false );
-    m_effectEmphasizedItems.clear();
-    foreach ( GraphicsTrack *item, m_effectEmphasizedTracks )
-        item->setEmphasized( false );
-    m_effectEmphasizedTracks.clear();
+    m_dragEffectItem = NULL;
 
     if ( updateDurationNeeded )
         updateDuration();
@@ -770,14 +762,14 @@ TracksView::dropEvent( QDropEvent *event )
 
         m_lastKnownTrack = NULL;
     }
-    else if ( m_dragEffect != NULL )
+    else if ( m_dragEffectItem != NULL )
     {
         QList<AbstractGraphicsMediaItem*>   clips = mediaItems( event->pos() );
         if ( clips.size() > 0 )
         {
             foreach ( AbstractGraphicsMediaItem *item, clips )
             {
-                item->clipHelper()->clipWorkflow()->addEffect( m_dragEffect );
+                item->clipHelper()->clipWorkflow()->addEffect( m_dragEffectItem->effect() );
             }
         }
         else
@@ -787,13 +779,9 @@ TracksView::dropEvent( QDropEvent *event )
             {
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
                 if ( track != NULL )
-                    track->trackWorkflow()->addEffect( m_dragEffect );
+                    track->trackWorkflow()->addEffect( m_dragEffectItem->effect() );
             }
         }
-        foreach ( AbstractGraphicsMediaItem *item, m_effectEmphasizedItems )
-            item->setEmphasized( false );
-        foreach ( GraphicsTrack *item, m_effectEmphasizedTracks )
-            item->setEmphasized( false );
     }
 }
 

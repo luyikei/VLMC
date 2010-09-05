@@ -39,6 +39,7 @@ class QGraphicsLinearLayout;
 class   ClipHelper;
 class   Effect;
 class   GraphicsAudioItem;
+class   GraphicsEffectItem;
 class   GraphicsMovieItem;
 class   MainWorkflow;
 class   TracksScene;
@@ -331,9 +332,7 @@ private:
     MainWorkflow            *m_mainWorkflow;
     GraphicsMovieItem       *m_dragVideoItem;
     GraphicsAudioItem       *m_dragAudioItem;
-    Effect                  *m_dragEffect;
-    QSet<AbstractGraphicsMediaItem*>    m_effectEmphasizedItems;
-    QSet<GraphicsTrack*>                m_effectEmphasizedTracks;
+    GraphicsEffectItem      *m_dragEffectItem;
 
     QGraphicsWidget         *m_separator;
     ToolButtons             m_tool;

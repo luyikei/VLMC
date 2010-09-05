@@ -90,8 +90,8 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
     QTransform viewPortTransform = Timeline::getInstance()->tracksView()->viewportTransform();
 
     // Determine if a drawing optimization can be used
-    if ( option->exposedRect.left() > ROUNDED_RECT_RADIUS &&
-         option->exposedRect.right() < boundingRect().right() - ROUNDED_RECT_RADIUS )
+    if ( option->exposedRect.left() > AbstractGraphicsItem::RounderRectRadius &&
+         option->exposedRect.right() < boundingRect().right() - AbstractGraphicsItem::RounderRectRadius )
     {
         // Optimized: paint only the exposed (horizontal) area
         drawRect = QRectF( option->exposedRect.left(),
@@ -120,7 +120,8 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
     painter->setBrush( QBrush( gradient ) );
 
     if ( drawRound )
-        painter->drawRoundedRect( mapped, ROUNDED_RECT_RADIUS, ROUNDED_RECT_RADIUS );
+        painter->drawRoundedRect( mapped, AbstractGraphicsItem::RounderRectRadius,
+                                  AbstractGraphicsItem::RounderRectRadius );
     else
         painter->drawRect( mapped );
 
@@ -133,17 +134,18 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
 
     if ( isSelected() )
     {
-        setZValue( Z_SELECTED );
+        setZValue( AbstractGraphicsItem::ZSelected );
         painter->setPen( Qt::yellow );
         painter->setBrush( Qt::NoBrush );
         mapped.adjust( 0, 0, 0, -1 );
         if ( drawRound )
-            painter->drawRoundedRect( mapped, ROUNDED_RECT_RADIUS, ROUNDED_RECT_RADIUS );
+            painter->drawRoundedRect( mapped, AbstractGraphicsItem::RounderRectRadius,
+                                      AbstractGraphicsItem::RounderRectRadius);
         else
             painter->drawRect( mapped );
     }
     else
-        setZValue( Z_NOT_SELECTED );
+        setZValue( AbstractGraphicsItem::ZSelected );
 }
 
 void GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )

@@ -28,11 +28,6 @@
 #include "Clip.h"
 #include "TracksView.h"
 
-#define Z_SELECTED 4
-#define Z_NOT_SELECTED 3
-
-#define ROUNDED_RECT_RADIUS 5
-
 /**
  * \brief Represents an audio item.
  */

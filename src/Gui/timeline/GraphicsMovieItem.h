@@ -28,11 +28,6 @@
 
 class   Clip;
 
-#define Z_SELECTED 4
-#define Z_NOT_SELECTED 3
-
-#define ROUNDED_RECT_RADIUS 5
-
 /**
  * \brief Represents a video item.
  */
