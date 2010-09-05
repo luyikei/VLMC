@@ -41,6 +41,10 @@ class   ClipHelper : public QObject
         {
             return m_clip;
         }
+        const Clip* clip() const
+        {
+            return m_clip;
+        }
         qint64      begin() const
         {
             return m_begin;

@@ -194,6 +194,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/PreferenceWidget.cpp
         Gui/settings/Settings.cpp
         Gui/settings/StringWidget.cpp
+        Gui/timeline/AbstractGraphicsItem.cpp
         Gui/timeline/AbstractGraphicsMediaItem.cpp
         Gui/timeline/GraphicsAudioItem.cpp
         Gui/timeline/GraphicsCursorItem.cpp
@@ -266,6 +267,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/PreferenceWidget.h
         Gui/settings/Settings.h
         Gui/settings/StringWidget.h
+        Gui/timeline/AbstractGraphicsItem.h
         Gui/timeline/AbstractGraphicsMediaItem.h
         Gui/timeline/GraphicsAudioItem.h 
         Gui/timeline/GraphicsCursorItem.h

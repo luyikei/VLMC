@@ -39,16 +39,9 @@
 #include <QtDebug>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
-        m_oldTrack( NULL ),
-        oldPosition( -1 ),
-        m_tracksView( NULL ),
         m_group( NULL ),
-        m_width( 0 ),
-        m_height( 0 ),
         m_muted( false )
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
     m_clipHelper = new ClipHelper( clip );
     // Adjust the width
     setWidth( clip->length() );
@@ -56,80 +49,24 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
     connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
-    setAcceptHoverEvents( true );
 }
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
-        m_oldTrack( NULL ),
-        oldPosition( -1 ),
         m_clipHelper( ch ),
-        m_tracksView( NULL ),
         m_group( NULL ),
-        m_width( 0 ),
-        m_height( 0 ),
         m_muted( false )
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
     // Adjust the width
     setWidth( ch->length() );
     // Automatically adjust future changes
     connect( ch, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( ch->clip(), SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
-    setAcceptHoverEvents( true );
 }
 
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
 {
     ungroup();
-}
-
-TracksScene* AbstractGraphicsMediaItem::scene()
-{
-    return qobject_cast<TracksScene*>( QGraphicsItem::scene() );
-}
-
-TracksView* AbstractGraphicsMediaItem::tracksView()
-{
-    return m_tracksView;
-}
-
-QRectF AbstractGraphicsMediaItem::boundingRect() const
-{
-    return QRectF( 0, 0, (qreal)m_width, (qreal)m_height );
-}
-
-void AbstractGraphicsMediaItem::setWidth( qint64 width )
-{
-    prepareGeometryChange();
-    m_width = width;
-}
-
-void AbstractGraphicsMediaItem::setHeight( qint64 height )
-{
-    prepareGeometryChange();
-    m_height = height;
-}
-
-qint32 AbstractGraphicsMediaItem::trackNumber()
-{
-    if ( parentItem() )
-    {
-        GraphicsTrack* graphicsTrack = qgraphicsitem_cast<GraphicsTrack*>( parentItem() );
-        if ( graphicsTrack )
-            return graphicsTrack->trackNumber();
-    }
-    return -1;
-}
-
-void AbstractGraphicsMediaItem::setTrack( GraphicsTrack* track )
-{
-    setParentItem( track );
-}
-
-GraphicsTrack* AbstractGraphicsMediaItem::track()
-{
-    return qgraphicsitem_cast<GraphicsTrack*>( parentItem() );
 }
 
 void AbstractGraphicsMediaItem::group( AbstractGraphicsMediaItem* item )
@@ -250,85 +187,6 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
 
 }
 
-void AbstractGraphicsMediaItem::setStartPos( qint64 position )
-{
-    QGraphicsItem::setPos( (qreal)position, 0 );
-}
-
-qint64 AbstractGraphicsMediaItem::startPos()
-{
-    return qRound64( QGraphicsItem::pos().x() );
-}
-
-qint64  AbstractGraphicsMediaItem::resize( qint64 newSize, qint64 newBegin, qint64 clipPos,
-                                           From from )
-{
-    Q_ASSERT( clipHelper() );
-
-    if ( newSize < 1 )
-        return 1;
-
-    if ( clipHelper()->clip()->getMedia()->fileType() != Media::Image )
-        if ( newSize > clipHelper()->clip()->end() )
-            newSize = clipHelper()->clip()->end();
-
-    //The from actually stands for the clip bound that stays still.
-    if ( from == BEGINNING )
-    {
-        if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
-        {
-            if ( m_clipHelper->begin() + newSize > m_clipHelper->clip()->end() )
-                return m_clipHelper->length();
-        }
-        setWidth( newSize );
-        return newSize;
-    }
-    else
-    {
-        if ( m_clipHelper->clip()->getMedia()->fileType() != Media::Image )
-        {
-            if ( m_clipHelper->clip()->begin() > newBegin )
-                return m_clipHelper->clip()->begin();
-        }
-        setWidth( newSize );
-        setStartPos( clipPos );
-        return newBegin;
-    }
-}
-
-void AbstractGraphicsMediaItem::adjustLength()
-{
-    Q_ASSERT( m_clipHelper );
-    setWidth( m_clipHelper->length() );
-}
-
-bool AbstractGraphicsMediaItem::resizeZone( const QPointF& position )
-{
-    // Get the current transformation of the view and invert it.
-    QTransform transform = tracksView()->transform().inverted();
-    // Map the RESIZE_ZONE distance from the view to the item coordinates.
-    QLineF line = transform.map( QLineF( 0, 0, RESIZE_ZONE, 0 ) );
-
-    if ( position.x() < line.x2() ||
-         position.x() > ( boundingRect().width() - line.x2() ) )
-    {
-        return true;
-    }
-    return false;
-}
-
-QColor
-AbstractGraphicsMediaItem::itemColor()
-{
-    return m_itemColor;
-}
-
-void
-AbstractGraphicsMediaItem::setColor( const QColor &color )
-{
-    m_itemColor = color;
-}
-
 void
 AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
 {
@@ -338,6 +196,12 @@ AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
 
 ClipHelper*
 AbstractGraphicsMediaItem::clipHelper()
+{
+    return m_clipHelper;
+}
+
+const ClipHelper*
+AbstractGraphicsMediaItem::clipHelper() const
 {
     return m_clipHelper;
 }
@@ -355,6 +219,32 @@ AbstractGraphicsMediaItem::setEmphasized( bool value )
         setScale( 1.2 );
     else
         setScale( 1.0 );
+}
+
+bool
+AbstractGraphicsMediaItem::hasResizeBoundaries() const
+{
+    return ( clipHelper()->clip()->getMedia()->fileType() != Media::Image );
+}
+
+qint64
+AbstractGraphicsMediaItem::maxBegin() const
+{
+    return ( m_clipHelper->clip()->begin() );
+}
+
+qint64
+AbstractGraphicsMediaItem::maxEnd() const
+{
+    return clipHelper()->clip()->end();
+}
+
+
+void
+AbstractGraphicsMediaItem::adjustLength()
+{
+    Q_ASSERT( m_clipHelper );
+    setWidth( m_clipHelper->length() );
 }
 
 void
@@ -378,20 +268,6 @@ AbstractGraphicsMediaItem::hoverEnterEvent( QGraphicsSceneHoverEvent* event )
 }
 
 void
-AbstractGraphicsMediaItem::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
-{
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-    {
-        if ( resizeZone( event->pos() ) )
-            setCursor( Qt::SizeHorCursor );
-        else
-            setCursor( Qt::OpenHandCursor );
-    }
-}
-
-void
 AbstractGraphicsMediaItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if ( !tracksView() ) return;
@@ -405,14 +281,4 @@ AbstractGraphicsMediaItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
     }
     else if ( tracksView()->tool() == TOOL_CUT )
         emit split( this, qRound64( event->pos().x() ) );
-}
-
-void
-AbstractGraphicsMediaItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
-{
-    Q_UNUSED( event );
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-        setCursor( Qt::OpenHandCursor );
 }

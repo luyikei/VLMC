@@ -275,7 +275,6 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
     item->setTrack( getTrack( trackType, track ) );
     item->setStartPos( start );
     item->m_oldTrack = tw;
-    item->oldPosition = start;
     moveMediaItem( item, track, start );
     updateDuration();
 }
@@ -742,7 +741,6 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
-            m_dragAudioItem->oldPosition = (qint64)mappedXPos;
 
             Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
                                                                     m_dragAudioItem->track()->trackWorkflow(),
@@ -760,7 +758,6 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
-            m_dragVideoItem->oldPosition = (qint64)mappedXPos;
 
             Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
@@ -915,16 +912,17 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         {
             if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
             {
-                qint64  newBegin = m_actionItem->m_clipHelper->begin() + ( mapToScene( event->pos() ).x() - m_actionResizeOldBegin );
+                qint64  newBegin = m_actionItem->clipHelper()->begin() + ( mapToScene( event->pos() ).x() - m_actionResizeOldBegin );
                 qint64  newSize = qMax( m_actionItem->clipHelper()->end() - newBegin, (qint64)0 );
                 qint64  ret = m_actionItem->resize( newSize, newBegin, m_actionResizeNewBegin,
                                                     AbstractGraphicsMediaItem::END );
-                m_actionResizeSize = m_actionItem->m_clipHelper->end() - ret;
+                m_actionResizeSize = m_actionItem->clipHelper()->end() - ret;
                 m_actionResizeNewBegin = mapToScene( event->pos() ).x();
             }
             else
             {
-                m_actionResizeSize = m_actionItem->resize( itemNewSize.x(), 0, 0, //These parameters are unused in this case.
+                m_actionResizeSize = m_actionItem->resize( itemNewSize.x(),
+                                                           m_actionItem->clipHelper()->begin(), 0, //This parameters is unused in this case.
                                                            AbstractGraphicsMediaItem::BEGINNING );
             }
         }
@@ -1047,13 +1045,11 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
                                                                      m_actionItem->startPos() ) );
 
             m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
-            m_actionItem->groupItem()->oldPosition = m_actionItem->groupItem()->startPos();
         }
 
         UndoStack::getInstance()->endMacro();
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
-        m_actionItem->oldPosition = m_actionItem->startPos();
         m_actionRelativeX = -1;
         m_actionItem = NULL;
         m_lastKnownTrack = NULL;

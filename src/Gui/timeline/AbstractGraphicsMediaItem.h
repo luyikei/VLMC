@@ -24,59 +24,31 @@
 #define ABSTRACTGRAPHICSMEDIAITEM_H
 
 class   ClipHelper;
+#include "AbstractGraphicsItem.h"
 #include "Types.h"
 
-#include <QGraphicsItem>
 #include <QUuid>
 
 #define RESIZE_ZONE 7
 
 class   Clip;
-class   TracksScene;
 class   TracksView;
 class   TrackWorkflow;
-class   GraphicsTrack;
 
 /**
  * \brief Base class for Audio/Video items.
  */
-class AbstractGraphicsMediaItem : public QObject, public QGraphicsItem
+class AbstractGraphicsMediaItem : public AbstractGraphicsItem
 {
     Q_OBJECT
 
-#if QT_VERSION >= 0x40600
-    Q_INTERFACES( QGraphicsItem )
-#endif
-
-    friend class TracksView;
 public:
-    enum From
-    {
-        BEGINNING,
-        END
-    };
-
     AbstractGraphicsMediaItem( Clip* clip );
     AbstractGraphicsMediaItem( ClipHelper* ch );
     virtual ~AbstractGraphicsMediaItem();
 
-    /// Defines the outer bounds of the item as a rectangle
-    virtual QRectF boundingRect() const;
-
-    /// Return the Type of the MediaItem (see http://doc.trolltech.com/4.5/qgraphicsitem.html#type)
-    virtual int type() const = 0;
-
-    /// The item length can be expanded or shrinked by the user.
-    virtual bool expandable() const = 0;
-
-    /// The item can be moved by the user.
-    virtual bool moveable() const = 0;
-
     /// Should return the unique uid of the contained media.
     virtual const QUuid& uuid() const;
-
-    /// Return a pointer to the TracksScene
-    TracksScene* scene();
 
     /// Return the type of the media
     virtual Workflow::TrackType mediaType() const = 0;
@@ -87,33 +59,8 @@ public:
     /// Ungroup two items
     void ungroup();
 
-    /// Return the current track of the item
-    qint32 trackNumber();
-
-    /// Set the item's parent track
-    void setTrack( GraphicsTrack* track );
-
-    /// Return the item's parent track
-    GraphicsTrack* track();
-
-    /// Set the position of the item (in frames) for the x-axis.
-    void setStartPos( qint64 position );
-
-    /// Return the position of the item (in frames) for the x-axis.
-    qint64 startPos();
-
-    /**
-     * \brief    Resize an item from its beginning or from its end.
-     *
-     *  \returns    A contextual info (depending on "from") to compute
-     *              the new length. (Either the new beginning of the new length)
-     */
-    qint64      resize( qint64 size, qint64 newBegin, qint64 clipPos, From from = BEGINNING );
-
     ClipHelper  *clipHelper();
-
-    QColor  itemColor();
-    void    setColor( const QColor& color );
+    const ClipHelper*   clipHelper() const;
 
     virtual void    setEmphasized( bool value );
 
@@ -123,71 +70,31 @@ public:
      */
     AbstractGraphicsMediaItem* groupItem();
 
-
 protected:
-    /**
-     * \details Returns a pointer to the tracksView which contains the item,
-     * or NULL if the item is not stored in a tracksView.
-     */
-    TracksView* tracksView();
-
-    /**
-     * \brief Contains the old track.
-     */
-    TrackWorkflow   *m_oldTrack;
-    /**
-     * \brief Contains the old position.
-     */
-    qint64 oldPosition;
-
-    ClipHelper* m_clipHelper;
-
-    /**
-     * \brief Set the width of the item.
-     * \param width Width in frames.
-     */
-    void setWidth( qint64 width );
-    /**
-     * \brief Set the height of the item.
-     * \param height Height in pixels.
-     */
-    void setHeight( qint64 height );
-
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
     virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
-    virtual void        hoverMoveEvent( QGraphicsSceneHoverEvent* event );
     virtual void        mousePressEvent( QGraphicsSceneMouseEvent* event );
-    virtual void        mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
+    virtual bool        hasResizeBoundaries() const;
+    virtual qint64      maxBegin() const;
+    virtual qint64      maxEnd() const;
 
-protected slots:
+protected:
+    ClipHelper*         m_clipHelper;
+
+private slots:
     /**
      * \brief Adjust the length of the item according to the associated Clip.
      * \details This method should be called when the clip size change
      */
     void adjustLength();
 
-    /**
-     * \brief Check if the position given as parameter could be taken as a resize request.
-     * \return Returns True if the point is in a resize zone.
-     */
-    bool resizeZone( const QPointF& position );
-
-private slots:
     void    clipDestroyed( Clip* clip );
 
 private:
-    /// This pointer will be set when inserted in the tracksView.
-    TracksView* m_tracksView;
-
     /// Pointer used to save the address of a linked item.
     AbstractGraphicsMediaItem* m_group;
 
-    qint64  m_width;
-    qint64  m_height;
-
     bool    m_muted;
-
-    QColor  m_itemColor;
 
 signals:
     /**
