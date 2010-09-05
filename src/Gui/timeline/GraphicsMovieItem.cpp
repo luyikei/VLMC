@@ -60,7 +60,7 @@ GraphicsMovieItem::~GraphicsMovieItem()
 {
 }
 
-Workflow::TrackType GraphicsMovieItem::mediaType() const
+Workflow::TrackType GraphicsMovieItem::trackType() const
 {
     return Workflow::VideoTrack;
 }

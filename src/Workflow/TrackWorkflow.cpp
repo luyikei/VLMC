@@ -376,7 +376,7 @@ void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
             m_clips[startingFrame] = cw;
             cw->requireResync();
             computeLength();
-            emit clipMoved( this, cw->getClipHelper(), startingFrame );
+            emit clipMoved( this, cw->getClipHelper()->uuid(), startingFrame );
             return ;
         }
         ++it;

@@ -32,7 +32,8 @@ AbstractGraphicsItem::AbstractGraphicsItem() :
         m_tracksView( NULL ),
         m_oldTrack( NULL ),
         m_width( 0 ),
-        m_height( 0 )
+        m_height( 0 ),
+        m_group( NULL )
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
     setAcceptHoverEvents( true );
@@ -215,4 +216,29 @@ AbstractGraphicsItem::resizeZone( const QPointF& position )
         return true;
     }
     return false;
+}
+
+AbstractGraphicsItem*
+AbstractGraphicsItem::groupItem()
+{
+    return m_group;
+}
+
+void
+AbstractGraphicsItem::group( AbstractGraphicsItem* item )
+{
+    Q_ASSERT( item );
+    if ( m_group )
+        ungroup();
+    item->m_group = this;
+    m_group = item;
+}
+
+void
+AbstractGraphicsItem::ungroup()
+{
+    if ( m_group == NULL )
+        return;
+    m_group->m_group = NULL;
+    m_group = NULL;
 }

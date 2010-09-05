@@ -63,7 +63,7 @@ GraphicsAudioItem::~GraphicsAudioItem()
 {
 }
 
-Workflow::TrackType GraphicsAudioItem::mediaType() const
+Workflow::TrackType GraphicsAudioItem::trackType() const
 {
     return Workflow::AudioTrack;
 }

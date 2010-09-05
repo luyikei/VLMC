@@ -39,7 +39,6 @@
 #include <QtDebug>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
-        m_group( NULL ),
         m_muted( false )
 {
     m_clipHelper = new ClipHelper( clip );
@@ -53,7 +52,6 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
         m_clipHelper( ch ),
-        m_group( NULL ),
         m_muted( false )
 {
     // Adjust the width
@@ -67,27 +65,6 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
 {
     ungroup();
-}
-
-void AbstractGraphicsMediaItem::group( AbstractGraphicsMediaItem* item )
-{
-    Q_ASSERT( item );
-    if ( m_group )
-        ungroup();
-    item->m_group = this;
-    m_group = item;
-}
-
-void AbstractGraphicsMediaItem::ungroup()
-{
-    if ( !m_group ) return;
-    m_group->m_group = NULL;
-    m_group = NULL;
-}
-
-AbstractGraphicsMediaItem* AbstractGraphicsMediaItem::groupItem()
-{
-    return m_group;
 }
 
 void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
@@ -135,13 +112,13 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
         {
             tracksView()->m_mainWorkflow->muteClip( uuid(),
                                                     trackId,
-                                                    mediaType() );
+                                                    trackType() );
         }
         else
         {
             tracksView()->m_mainWorkflow->unmuteClip( uuid(),
                                                     trackId,
-                                                    mediaType() );
+                                                    trackType() );
         }
     }
     else if ( selectedAction == linkAction )
@@ -161,7 +138,7 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
             item1 = item2;
         //From here, the item we click on is "this" and the item to group is "item1"
 
-        if ( item1->mediaType() != mediaType() )
+        if ( item1->trackType() != trackType() )
         {
             qint32      item1TrackId = item1->trackNumber();
             Q_ASSERT( item1TrackId >= 0 );

@@ -129,8 +129,8 @@ TracksView::addTrack( Workflow::TrackType type )
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
              this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
-    connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, ClipHelper*, qint64 ) ),
-             this, SLOT( moveMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
+             this, SLOT( moveMediaItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
 
     if ( type == Workflow::VideoTrack )
     {
@@ -322,7 +322,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         m_dragAudioItem = new GraphicsAudioItem( clip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( tracksHeight() );
-        m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->mediaType(), 0 ) );
+        m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->trackType(), 0 ) );
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
@@ -332,7 +332,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         m_dragVideoItem = new GraphicsMovieItem( clip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( tracksHeight() );
-        m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->mediaType(), 0 ) );
+        m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->trackType(), 0 ) );
         connect( m_dragVideoItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
@@ -367,7 +367,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         {
             foreach ( AbstractGraphicsMediaItem* item, clips )
             {
-                if ( item->mediaType() != Workflow::VideoTrack )
+                if ( item->trackType() != Workflow::VideoTrack )
                     continue ;
                 m_effectEmphasizedItems.insert( item );
                 item->setEmphasized( true );
@@ -390,15 +390,15 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
 }
 
 void
-TracksView::moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time )
+TracksView::moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
 {
     QList<QGraphicsItem*> sceneItems = m_scene->items();
 
     for ( int i = 0; i < sceneItems.size(); ++i )
     {
-        AbstractGraphicsMediaItem* item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( sceneItems.at( i ) );
-        if ( !item || item->uuid() != ch->uuid() )
+        AbstractGraphicsItem* item =
+                dynamic_cast<AbstractGraphicsItem*>( sceneItems.at( i ) );
+        if ( !item || item->uuid() != uuid )
             continue;
         moveMediaItem( item, tw->trackId(), time );
         break ;
@@ -439,15 +439,15 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
 }
 
 void
-TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64 time )
+TracksView::moveMediaItem( AbstractGraphicsItem *item, qint32 track, qint64 time )
 {
     // Add missing tracks
-    if ( item->mediaType() == Workflow::AudioTrack )
+    if ( item->trackType() == Workflow::AudioTrack )
     {
         while ( track >= m_numAudioTrack )
             addTrack( Workflow::AudioTrack );
     }
-    else if ( item->mediaType() == Workflow::VideoTrack )
+    else if ( item->trackType() == Workflow::VideoTrack )
     {
         while ( track >= m_numVideoTrack )
             addTrack( Workflow::VideoTrack );
@@ -460,12 +460,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64
         bool validPosFound = false;
 
         // Add missing tracks for the target
-        if ( item->groupItem()->mediaType() == Workflow::AudioTrack )
+        if ( item->groupItem()->trackType() == Workflow::AudioTrack )
         {
             while ( p.track() >= m_numAudioTrack )
                 addTrack( Workflow::AudioTrack );
         }
-        else if ( item->groupItem()->mediaType() == Workflow::VideoTrack )
+        else if ( item->groupItem()->trackType() == Workflow::VideoTrack )
         {
             while ( p.track() >= m_numVideoTrack )
                 addTrack( Workflow::VideoTrack );
@@ -475,12 +475,12 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64
         ItemPosition p2 = findPosition( item->groupItem(), track, time );
 
         // Add missing tracks for the source
-        if ( item->mediaType() == Workflow::AudioTrack )
+        if ( item->trackType() == Workflow::AudioTrack )
         {
             while ( p2.track() >= m_numAudioTrack )
                 addTrack( Workflow::AudioTrack );
         }
-        else if ( item->mediaType() == Workflow::VideoTrack )
+        else if ( item->trackType() == Workflow::VideoTrack )
         {
             while ( p2.track() >= m_numVideoTrack )
                 addTrack( Workflow::VideoTrack );
@@ -516,11 +516,11 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64
             // We've found a valid position that fit for the two items.
             // Move the primary item to the target destination.
             item->setStartPos( p.time() );
-            item->setTrack( getTrack( item->mediaType(), p.track() ) );
+            item->setTrack( getTrack( item->trackType(), p.track() ) );
 
             // Move the linked item to the target destination.
             item->groupItem()->setStartPos( p2.time() );
-            item->groupItem()->setTrack( getTrack( item->groupItem()->mediaType(), p2.track() ) );
+            item->groupItem()->setTrack( getTrack( item->groupItem()->trackType(), p2.track() ) );
         }
     }
     else
@@ -528,18 +528,18 @@ TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64
         if ( p.isValid() )
         {
             item->setStartPos( p.time() );
-            item->setTrack( getTrack( item->mediaType(), p.track() ) );
+            item->setTrack( getTrack( item->trackType(), p.track() ) );
         }
     }
 }
 
 ItemPosition
-TracksView::findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 time )
+TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time )
 {
 
     // Create a fake item for computing collisions
     QGraphicsRectItem *chkItem = new QGraphicsRectItem( item->boundingRect() );
-    chkItem->setParentItem( getTrack( item->mediaType(), track ) );
+    chkItem->setParentItem( getTrack( item->trackType(), track ) );
     chkItem->setPos( time, 0 );
 
     QGraphicsItem *oldParent = item->parentItem();
@@ -574,9 +574,9 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 
                 else if ( trackId <= track )
                 {
                     int higherTrack = 0;
-                    if ( item->mediaType() == Workflow::VideoTrack )
+                    if ( item->trackType() == Workflow::VideoTrack )
                         higherTrack = m_numVideoTrack;
-                    else if ( item->mediaType() == Workflow::AudioTrack )
+                    else if ( item->trackType() == Workflow::AudioTrack )
                         higherTrack = m_numAudioTrack;
 
                     if ( track >= higherTrack - 1 )
@@ -587,8 +587,8 @@ TracksView::findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 
                     }
                     track += 1;
                 }
-                Q_ASSERT( getTrack( item->mediaType(), track ) != NULL );
-                chkItem->setParentItem( getTrack( item->mediaType(), track ) );
+                Q_ASSERT( getTrack( item->trackType(), track ) != NULL );
+                chkItem->setParentItem( getTrack( item->trackType(), track ) );
             }
         }
         if ( !itemCollision )
@@ -889,7 +889,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         Q_ASSERT( trackId >= 0 );
 
         //FIXME: BEGIN UGLY
-        GraphicsTrack *track = getTrack( m_actionItem->mediaType(), trackId );
+        GraphicsTrack *track = getTrack( m_actionItem->trackType(), trackId );
         Q_ASSERT( track );
 
         QPointF collidePos = track->sceneBoundingRect().topRight();

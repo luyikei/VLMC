@@ -25,7 +25,6 @@
 
 class   ClipHelper;
 #include "AbstractGraphicsItem.h"
-#include "Types.h"
 
 #include <QUuid>
 
@@ -50,25 +49,10 @@ public:
     /// Should return the unique uid of the contained media.
     virtual const QUuid& uuid() const;
 
-    /// Return the type of the media
-    virtual Workflow::TrackType mediaType() const = 0;
-
-    /// Group two items together
-    void group( AbstractGraphicsMediaItem* item );
-
-    /// Ungroup two items
-    void ungroup();
-
     ClipHelper  *clipHelper();
     const ClipHelper*   clipHelper() const;
 
     virtual void    setEmphasized( bool value );
-
-    /**
-     * \brief Return a pointer to the linked item.
-     * \details This method will return NULL if there is no linked item.
-     */
-    AbstractGraphicsMediaItem* groupItem();
 
 protected:
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
@@ -91,9 +75,6 @@ private slots:
     void    clipDestroyed( Clip* clip );
 
 private:
-    /// Pointer used to save the address of a linked item.
-    AbstractGraphicsMediaItem* m_group;
-
     bool    m_muted;
 
 signals:

@@ -214,7 +214,7 @@ public slots:
      * \param ch    The clip that was moved.
      * \param time  The new position (in frames) of the item.
      */
-    void                    moveMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 time );
+    void                    moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time );
     /**
      * \brief Remove an item from the timeline.
      * \param uuid The Universally Unique Identifier of the item.
@@ -310,9 +310,9 @@ private:
      * \param time The new position (in frames) of the item.
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
-    void                    moveMediaItem( AbstractGraphicsMediaItem *item, qint32 track, qint64 time );
+    void                    moveMediaItem( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
-    ItemPosition            findPosition( AbstractGraphicsMediaItem *item, qint32 track, qint64 time );
+    ItemPosition            findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
     /**
      * \brief Return a pointer to the specified track.

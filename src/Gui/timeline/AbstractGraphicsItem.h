@@ -30,6 +30,10 @@ class   TrackWorkflow;
 class   TracksScene;
 class   TracksView;
 
+class   QUuid;
+
+#include "Types.h"
+
 class AbstractGraphicsItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -46,6 +50,11 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         };
         AbstractGraphicsItem();
         virtual ~AbstractGraphicsItem();
+
+        virtual const QUuid& uuid() const = 0;
+
+        /// Return the type of the media
+        virtual Workflow::TrackType trackType() const = 0;
 
         /// Return the Type of the MediaItem (see http://doc.trolltech.com/4.5/qgraphicsitem.html#type)
         virtual int type() const = 0;
@@ -87,6 +96,18 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
          */
         qint64      resize( qint64 size, qint64 newBegin, qint64 clipPos, From from = BEGINNING );
 
+        /**
+         * \brief Return a pointer to the linked item.
+         * \details This method will return NULL if there is no linked item.
+         */
+        AbstractGraphicsItem*   groupItem();
+
+        /// Group two items together
+        void                group( AbstractGraphicsItem* item );
+
+        /// Ungroup two items
+        void                ungroup();
+
     protected:
         virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
         virtual void        hoverMoveEvent( QGraphicsSceneHoverEvent* event );
@@ -122,13 +143,15 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
 
     protected:
         /// This pointer will be set when inserted in the tracksView.
-        TracksView*         m_tracksView;
-        QColor              m_itemColor;
+        TracksView*                 m_tracksView;
+        QColor                      m_itemColor;
 
     private:
-        TrackWorkflow       *m_oldTrack;
-        qint64              m_width;
-        qint64              m_height;
+        TrackWorkflow               *m_oldTrack;
+        qint64                      m_width;
+        qint64                      m_height;
+        /// Pointer used to save the address of a linked item.
+        AbstractGraphicsItem*       m_group;
 
     protected slots:
         /**
