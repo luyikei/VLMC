@@ -67,19 +67,6 @@ protected:
      * \param option Painting options.
      */
     void                paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option );
-    virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
-    virtual void        hoverLeaveEvent( QGraphicsSceneHoverEvent* event );
-    virtual void        hoverMoveEvent( QGraphicsSceneHoverEvent* event );
-    virtual void        mousePressEvent( QGraphicsSceneMouseEvent* event );
-    virtual void        mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
-
-signals:
-    /**
-     * \brief Emitted when the item detect a cut request.
-     * \param self A pointer to the sender.
-     * \param frame Frame's number where the cut takes place.
-     */
-    void                split( AbstractGraphicsMediaItem* self, qint64 frame );
 };
 
 #endif // GRAPHICSAUDIOITEM_H

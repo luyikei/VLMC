@@ -136,8 +136,7 @@ EmphasizedTrackItem::boundingRect() const
 }
 
 void
-EmphasizedTrackItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                     QWidget *widget)
+EmphasizedTrackItem::paint(QPainter *painter, const QStyleOptionGraphicsItem* , QWidget* )
 {
     painter->setBrush( QBrush( Qt::darkBlue ));
     painter->drawRect( boundingRect() );

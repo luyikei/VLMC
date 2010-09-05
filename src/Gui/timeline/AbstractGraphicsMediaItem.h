@@ -153,7 +153,11 @@ protected:
      */
     void setHeight( qint64 height );
 
-    virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+    virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+    virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
+    virtual void        hoverMoveEvent( QGraphicsSceneHoverEvent* event );
+    virtual void        mousePressEvent( QGraphicsSceneMouseEvent* event );
+    virtual void        mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
 
 protected slots:
     /**
@@ -184,6 +188,14 @@ private:
     bool    m_muted;
 
     QColor  m_itemColor;
+
+signals:
+    /**
+     * \brief Emitted when the item detect a cut request.
+     * \param self A pointer to the sender.
+     * \param frame Frame's number where the cut takes place.
+     */
+    void                split( AbstractGraphicsMediaItem* self, qint64 frame );
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

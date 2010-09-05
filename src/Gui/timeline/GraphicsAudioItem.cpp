@@ -37,15 +37,12 @@
 GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
     QTime length = QTime().addMSecs( clip->getMedia()->lengthMS() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( clip->getMedia()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
-    setAcceptHoverEvents( true );
 }
 
 GraphicsAudioItem::GraphicsAudioItem( ClipHelper* ch ) :
@@ -178,59 +175,4 @@ void GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphic
 
     painter->setPen( Qt::white );
     painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( text, Qt::ElideRight, mapped.width() ) );
-}
-
-void GraphicsAudioItem::hoverEnterEvent( QGraphicsSceneHoverEvent* event )
-{
-    TracksView* tv = Timeline::getInstance()->tracksView();
-    if ( tv )
-    {
-        switch ( tv->tool() )
-        {
-            case TOOL_DEFAULT:
-            setCursor( Qt::OpenHandCursor );
-            break;
-
-            case TOOL_CUT:
-            setCursor( QCursor( QPixmap( ":/images/editcut" ) ) );
-            break;
-        }
-    }
-
-    AbstractGraphicsMediaItem::hoverEnterEvent( event );
-}
-
-void GraphicsAudioItem::hoverLeaveEvent( QGraphicsSceneHoverEvent* event )
-{
-    AbstractGraphicsMediaItem::hoverLeaveEvent( event );
-}
-
-void GraphicsAudioItem::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
-{
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-    {
-        if ( resizeZone( event->pos() ) )
-            setCursor( Qt::SizeHorCursor );
-        else
-            setCursor( Qt::OpenHandCursor );
-    }
-}
-
-void GraphicsAudioItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
-{
-    TracksView* tv = Timeline::getInstance()->tracksView();
-    if ( tv->tool() == TOOL_DEFAULT )
-        setCursor( Qt::ClosedHandCursor );
-    else if ( tv->tool() == TOOL_CUT )
-        emit split( this, qRound64( event->pos().x() ) );
-}
-
-void GraphicsAudioItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
-{
-    Q_UNUSED( event );
-    TracksView* tv = Timeline::getInstance()->tracksView();
-    if ( tv->tool() == TOOL_DEFAULT )
-        setCursor( Qt::OpenHandCursor );
 }

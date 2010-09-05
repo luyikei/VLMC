@@ -37,29 +37,23 @@
 GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
     QTime length = QTime().addMSecs( clip->getMedia()->lengthMS() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( clip->getMedia()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
-    setAcceptHoverEvents( true );
 }
 
 GraphicsMovieItem::GraphicsMovieItem( ClipHelper* ch ) :
         AbstractGraphicsMediaItem( ch )
 {
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
     QTime length = QTime().addMSecs( ch->clip()->getMedia()->lengthMS() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( ch->clip()->getMedia()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
-    setAcceptHoverEvents( true );
 }
 
 GraphicsMovieItem::~GraphicsMovieItem()
@@ -177,66 +171,4 @@ void GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphic
 
     painter->setPen( Qt::white );
     painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( text, Qt::ElideRight, mapped.width() ) );
-}
-
-void GraphicsMovieItem::hoverEnterEvent( QGraphicsSceneHoverEvent* event )
-{
-    TracksView* tv = Timeline::getInstance()->tracksView();
-    if ( tv )
-    {
-        switch ( tv->tool() )
-        {
-            case TOOL_DEFAULT:
-            setCursor( Qt::OpenHandCursor );
-            break;
-
-            case TOOL_CUT:
-            setCursor( QCursor( QPixmap( ":/images/editcut" ) ) );
-            break;
-        }
-    }
-
-    AbstractGraphicsMediaItem::hoverEnterEvent( event );
-}
-
-void GraphicsMovieItem::hoverLeaveEvent( QGraphicsSceneHoverEvent* event )
-{
-    AbstractGraphicsMediaItem::hoverLeaveEvent( event );
-}
-
-void GraphicsMovieItem::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
-{
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-    {
-        if ( resizeZone( event->pos() ) )
-            setCursor( Qt::SizeHorCursor );
-        else
-            setCursor( Qt::OpenHandCursor );
-    }
-}
-
-void GraphicsMovieItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
-{
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-    {
-        if ( resizeZone( event->pos() ) )
-            setCursor( Qt::SizeHorCursor );
-        else
-            setCursor( Qt::ClosedHandCursor );
-    }
-    else if ( tracksView()->tool() == TOOL_CUT )
-        emit split( this, qRound64( event->pos().x() ) );
-}
-
-void GraphicsMovieItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
-{
-    Q_UNUSED( event );
-    if ( !tracksView() ) return;
-
-    if ( tracksView()->tool() == TOOL_DEFAULT )
-        setCursor( Qt::OpenHandCursor );
 }

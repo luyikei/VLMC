@@ -47,6 +47,8 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         m_height( 0 ),
         m_muted( false )
 {
+    setFlags( QGraphicsItem::ItemIsSelectable );
+
     m_clipHelper = new ClipHelper( clip );
     // Adjust the width
     setWidth( clip->length() );
@@ -54,6 +56,7 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
     connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
+    setAcceptHoverEvents( true );
 }
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
@@ -66,12 +69,14 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
         m_height( 0 ),
         m_muted( false )
 {
+    setFlags( QGraphicsItem::ItemIsSelectable );
     // Adjust the width
     setWidth( ch->length() );
     // Automatically adjust future changes
     connect( ch, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( ch->clip(), SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
+    setAcceptHoverEvents( true );
 }
 
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
@@ -350,4 +355,64 @@ AbstractGraphicsMediaItem::setEmphasized( bool value )
         setScale( 1.2 );
     else
         setScale( 1.0 );
+}
+
+void
+AbstractGraphicsMediaItem::hoverEnterEvent( QGraphicsSceneHoverEvent* event )
+{
+    TracksView* tv = tracksView();
+    if ( tv )
+    {
+        switch ( tv->tool() )
+        {
+            case TOOL_DEFAULT:
+            setCursor( Qt::OpenHandCursor );
+            break;
+
+            case TOOL_CUT:
+            setCursor( QCursor( QPixmap( ":/images/editcut" ) ) );
+            break;
+        }
+    }
+    QGraphicsItem::hoverEnterEvent( event );
+}
+
+void
+AbstractGraphicsMediaItem::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
+{
+    if ( !tracksView() ) return;
+
+    if ( tracksView()->tool() == TOOL_DEFAULT )
+    {
+        if ( resizeZone( event->pos() ) )
+            setCursor( Qt::SizeHorCursor );
+        else
+            setCursor( Qt::OpenHandCursor );
+    }
+}
+
+void
+AbstractGraphicsMediaItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
+{
+    if ( !tracksView() ) return;
+
+    if ( tracksView()->tool() == TOOL_DEFAULT )
+    {
+        if ( resizeZone( event->pos() ) )
+            setCursor( Qt::SizeHorCursor );
+        else
+            setCursor( Qt::ClosedHandCursor );
+    }
+    else if ( tracksView()->tool() == TOOL_CUT )
+        emit split( this, qRound64( event->pos().x() ) );
+}
+
+void
+AbstractGraphicsMediaItem::mouseReleaseEvent( QGraphicsSceneMouseEvent*  event )
+{
+    Q_UNUSED( event );
+    if ( !tracksView() ) return;
+
+    if ( tracksView()->tool() == TOOL_DEFAULT )
+        setCursor( Qt::OpenHandCursor );
 }
