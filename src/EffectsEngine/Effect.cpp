@@ -36,7 +36,11 @@ Effect::Effect( const QString &fileName ) :
 
 Effect::~Effect()
 {
-    m_f0r_deinit();
+    if ( isLoaded() == true )
+    {
+        m_f0r_deinit();
+        unload();
+    }
     qDeleteAll( m_params );
     m_params.clear();
 }
