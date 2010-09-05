@@ -368,6 +368,8 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         {
             foreach ( AbstractGraphicsMediaItem* item, clips )
             {
+                if ( item->mediaType() != Workflow::VideoTrack )
+                    continue ;
                 m_effectEmphasizedItems.insert( item );
                 item->setEmphasized( true );
             }
@@ -378,7 +380,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             foreach ( QGraphicsItem* item, tracks )
             {
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
-                if ( track != NULL )
+                if ( track != NULL && track->mediaType() == Workflow::VideoTrack )
                 {
                     m_effectEmphasizedTracks.insert( track );
                     track->setEmphasized( true );
