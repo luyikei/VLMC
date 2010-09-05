@@ -57,7 +57,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_renderer( renderer )
 {
     //TODO should be defined by the settings
-    m_tracksHeight = 25;
+    m_tracksHeight = 35;
 
     m_numAudioTrack = 0;
     m_numVideoTrack = 0;
@@ -121,7 +121,7 @@ TracksView::addTrack( Workflow::TrackType type )
 {
     GraphicsTrack *track = new GraphicsTrack( type,
                                               type == Workflow::VideoTrack ? m_numVideoTrack : m_numAudioTrack );
-    track->setHeight( m_tracksHeight );
+    track->setHeight( tracksHeight() );
     m_layout->insertItem( type == Workflow::VideoTrack ? 0 : 1000, track );
     m_layout->activate();
     m_cursorLine->setHeight( m_layout->contentsRect().height() );
