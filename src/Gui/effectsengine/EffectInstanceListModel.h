@@ -26,7 +26,6 @@
 #include "EffectsEngine.h"
 class   EffectUser;
 
-
 #include <QAbstractListModel>
 
 class EffectInstanceListModel : public QAbstractListModel

@@ -60,9 +60,6 @@ ENDIF(WIN32)
 
 SET (VLMC_HDRS
     EffectsEngine/EffectsEngine.h
-    EffectsEngine/Effect.h
-    EffectsEngine/EffectUser.h
-    EffectsEngine/EffectInstance.h
     EffectsEngine/EffectSettingValue.h
     Library/Library.h
     Library/MediaContainer.h
@@ -231,7 +228,6 @@ ELSE(NOT WITH_GUI)
         Gui/UndoStack.h
         Gui/WorkflowFileRendererDialog.h
         Gui/effectsengine/EffectInstanceWidget.h
-        Gui/effectsengine/EffectInstanceListModel.h
         Gui/effectsengine/EffectsList.h
         Gui/effectsengine/EffectsListView.h
         Gui/effectsengine/EffectStack.h
@@ -270,10 +266,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/StringWidget.h
         Gui/timeline/AbstractGraphicsItem.h
         Gui/timeline/AbstractGraphicsMediaItem.h
-        Gui/timeline/GraphicsAudioItem.h 
         Gui/timeline/GraphicsCursorItem.h
-        Gui/timeline/GraphicsEffectItem.h 
-        Gui/timeline/GraphicsMovieItem.h 
         Gui/timeline/GraphicsTrack.h
         Gui/timeline/Timeline.h
         Gui/timeline/TracksControls.h
