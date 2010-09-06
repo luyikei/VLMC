@@ -654,7 +654,8 @@ TracksView::removeMediaItem( TrackWorkflow *tw, const QUuid &uuid )
     {
         AbstractGraphicsMediaItem *item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != uuid ) continue;
+        if ( !item || item->uuid() != uuid )
+            continue;
         removeMediaItem( item );
     }
 }
@@ -662,31 +663,9 @@ TracksView::removeMediaItem( TrackWorkflow *tw, const QUuid &uuid )
 void
 TracksView::removeMediaItem( AbstractGraphicsMediaItem *item )
 {
-    QList<AbstractGraphicsMediaItem*> items;
-    items.append( item );
-    removeMediaItem( items );
+    delete item;
     m_clipsLoaded.remove( item->clipHelper()->uuid() );
-}
-
-void
-TracksView::removeMediaItem( const QList<AbstractGraphicsMediaItem*> &items )
-{
-    bool needUpdate = false;
-    for ( int i = 0; i < items.size(); ++i )
-    {
-        GraphicsMovieItem *movieItem = qgraphicsitem_cast<GraphicsMovieItem*>( items.at( i ) );
-        if ( !movieItem )
-        {
-            //TODO add support for audio tracks
-            qWarning() << tr( "Action not supported." );
-            continue;
-        }
-
-        delete movieItem;
-        needUpdate = true;
-    }
-
-    if ( needUpdate ) updateDuration();
+    updateDuration();
 }
 
 void

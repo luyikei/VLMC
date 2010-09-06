@@ -160,12 +160,6 @@ public:
      */
     QList<AbstractGraphicsItem*> timelineItems();
     /**
-     * \brief Remove multiple items from the timeline.
-     * \param items A QList of pointers to AbstractGraphicsMediaItem.
-     * \sa removeMediaItem( AbstractGraphicsMediaItem* )
-     */
-    void                    removeMediaItem( const QList<AbstractGraphicsMediaItem*> &items );
-    /**
      * \brief Change the currently selected tool.
      * \param button The selected tool button.
      * \sa tool, ToolButtons
