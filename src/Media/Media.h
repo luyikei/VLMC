@@ -35,7 +35,6 @@
 #include <QUuid>
 #include <QObject>
 #include <QFileInfo>
-#include <QHash>
 #include <QXmlStreamWriter>
 
 #ifdef WITH_GUI
