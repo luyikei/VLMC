@@ -56,10 +56,4 @@
         <file>COPYING</file>
         <file>TRANSLATORS</file>
     </qresource>
-    <qresource prefix="/images/scalable">
-        <file alias="audio-scalable">resources/images/scalable/audio.svg</file>
-        <file alias="image-scalable">resources/images/scalable/image.svg</file>
-        <file alias="video-scalable">resources/images/scalable/video.svg</file>
-        <file alias="youtube-scalable">resources/images/scalable/youtube.svg</file>
-    </qresource>
 </RCC>
