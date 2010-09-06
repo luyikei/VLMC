@@ -32,6 +32,7 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effectHelper( NULL )
 {
     setOpacity( 0.8 );
+    m_effectHelper = new EffectsEngine::EffectHelper( effect->createInstance() );
 }
 
 const QUuid&
