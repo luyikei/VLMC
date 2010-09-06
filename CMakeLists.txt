@@ -117,6 +117,16 @@ IF (NOT WIN32)
 
     INCLUDE(${QT_USE_FILE})
     ADD_DEFINITIONS(${QT_DEFINITIONS})
+ELSE (NOT WIN32)
+    SET (VLMC_LIBS
+            /usr/win32/lib/libQtNetwork.a /usr/win32/lib/libQtXml.a
+            /usr/win32/lib/libqtaccessiblewidgets.a
+            /usr/win32/lib/libQtGui.a /usr/win32/lib/libqjpeg.a
+            /usr/win32/lib/libqtaccessiblewidgets.a
+            /usr/win32/lib/libQtCore.a
+            ${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib/libvlccore.dll.a
+            ${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib/libvlc.dll.a
+            ws2_32 winmm imm32)
 ENDIF(NOT WIN32)
 
 # layout of VLMC installation
