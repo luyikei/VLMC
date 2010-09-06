@@ -596,7 +596,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
         delete m_fileRenderer;
     m_fileRenderer = new WorkflowFileRenderer();
 
-    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, 640, 480 );
+    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
 
