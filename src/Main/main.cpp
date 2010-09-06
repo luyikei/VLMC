@@ -46,8 +46,8 @@ VLMCmain( int argc, char **argv )
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
-    qRegisterMetaType<MainWorkflow::TrackType>( "MainWorkflow::TrackType" );
-    qRegisterMetaType<MainWorkflow::FrameChangedReason>( "MainWorkflow::FrameChangedReason" );
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
 
     if ( app.arguments().count() < 3 )

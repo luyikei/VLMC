@@ -31,6 +31,7 @@
 #include "project/GuiProjectManager.h"
 #include "IntroDialog.h"
 #include "LanguageHelper.h"
+#include "Types.h"
 
 #include <QApplication>
 #include <QSettings>
@@ -60,6 +61,10 @@ VLMCmain( int argc, char **argv )
     app.setOrganizationName( "vlmc" );
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
+
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
 
     QSettings s;
     LanguageHelper::getInstance()->languageChanged(
