@@ -129,7 +129,7 @@ class   TrackWorkflow : public EffectUser
     signals:
         void                lengthChanged( qint64 newLength );
         void                clipAdded( TrackWorkflow*, ClipHelper*, qint64 );
-        void                clipRemoved( TrackWorkflow*, ClipHelper* );
+        void                clipRemoved( TrackWorkflow*, const QUuid& );
         void                clipMoved( TrackWorkflow*, const QUuid&, qint64 );
 };
 

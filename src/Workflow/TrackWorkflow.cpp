@@ -400,7 +400,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             stopClipWorkflow( cw );
             computeLength();
             cw->disconnect();
-            emit clipRemoved( this, cw->getClipHelper() );
+            emit clipRemoved( this, cw->getClipHelper()->uuid() );
             delete cw;
             return clip;
         }

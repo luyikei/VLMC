@@ -158,7 +158,7 @@ public:
      * \warning Calling this method can be excessively slow!
      * \sa mediaItems( const QPoint& pos )
      */
-    QList<AbstractGraphicsMediaItem*> mediaItems();
+    QList<AbstractGraphicsItem*> timelineItems();
     /**
      * \brief Remove multiple items from the timeline.
      * \param items A QList of pointers to AbstractGraphicsMediaItem.
@@ -218,11 +218,10 @@ public slots:
     void                    moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time );
     /**
      * \brief Remove an item from the timeline.
+     * \param tw    The targeted TrackWorkflow
      * \param uuid The Universally Unique Identifier of the item.
-     * \param track The current track of the item.
-     * \param trackType The type of the track (Audio or Video)
      */
-    void                    removeMediaItem( TrackWorkflow* tw, ClipHelper* ch );
+    void                    removeMediaItem( TrackWorkflow* tw, const QUuid& uuid );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item A pointer to AbstractGraphicsMediaItem.

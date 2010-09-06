@@ -128,8 +128,8 @@ TracksView::addTrack( Workflow::TrackType type )
     m_scene->invalidate(); // Redraw the background
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
              this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
-    connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, ClipHelper* ) ),
-             this, SLOT( removeMediaItem( TrackWorkflow*, ClipHelper* ) ) );
+    connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
+             this, SLOT( removeMediaItem( TrackWorkflow*, const QUuid& ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
              this, SLOT( moveMediaItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
 
@@ -198,27 +198,20 @@ TracksView::clear()
 void
 TracksView::removeClip( const QUuid& uuid  )
 {
-    AbstractGraphicsMediaItem*      item;
-
     // Get the list of all items in the timeline
-    QList<AbstractGraphicsMediaItem*> items = mediaItems();
+    QList<AbstractGraphicsItem*> items = timelineItems();
 
     // Iterate over each item to check if their parent's uuid
     // is the one we would like to remove.
-    foreach( item, items )
+    foreach( AbstractGraphicsItem *item, items )
     {
-        if ( item->clipHelper()->clip()->uuid() == uuid ||
-             item->clipHelper()->clip()->isChild( uuid ) == true ) //This is probably useless now
+        if ( item->uuid() == uuid )
         {
-            // This item needs to be removed.
-            // Saving its values
-            QUuid itemUuid = item->uuid();
-
             // Remove the item from the timeline
-            removeMediaItem( item->track()->trackWorkflow(), item->clipHelper() );
+            removeMediaItem( item->track()->trackWorkflow(), item->uuid() );
 
             // Removing the item from the backend.
-            item->track()->trackWorkflow()->removeClip( itemUuid );
+            item->track()->trackWorkflow()->removeClip( item->uuid() );
         }
     }
 }
@@ -649,7 +642,7 @@ TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time 
 }
 
 void
-TracksView::removeMediaItem( TrackWorkflow *tw, ClipHelper *ch )
+TracksView::removeMediaItem( TrackWorkflow *tw, const QUuid &uuid )
 {
     GraphicsTrack           *track = getTrack( tw->type(), tw->trackId() );
 
@@ -661,7 +654,7 @@ TracksView::removeMediaItem( TrackWorkflow *tw, ClipHelper *ch )
     {
         AbstractGraphicsMediaItem *item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != ch->uuid() ) continue;
+        if ( !item || item->uuid() != uuid ) continue;
         removeMediaItem( item );
     }
 }
@@ -1101,18 +1094,17 @@ TracksView::mediaItems( const QPoint &pos )
     return mediaCollisionList;
 }
 
-QList<AbstractGraphicsMediaItem*>
-TracksView::mediaItems()
+QList<AbstractGraphicsItem*>
+TracksView::timelineItems()
 {
     //TODO optimization needed!
     QGraphicsItem *item;
-    AbstractGraphicsMediaItem *ami;
-    QList<AbstractGraphicsMediaItem*> outlist;
+    QList<AbstractGraphicsItem*> outlist;
     QList<QGraphicsItem*> list = items();
     foreach( item, list )
     {
-        ami = dynamic_cast<AbstractGraphicsMediaItem*>( item );
-        if ( ami )
+        AbstractGraphicsItem *ami = dynamic_cast<AbstractGraphicsItem*>( item );
+        if ( ami != NULL )
             outlist.append( ami );
     }
     return outlist;
