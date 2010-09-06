@@ -87,12 +87,27 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
 # search for Qt4
 IF (WITH_GUI)
-    FIND_PACKAGE (Qt4 4.5.1 COMPONENTS QtCore QtGui QtNetwork QtXml REQUIRED)
+    IF(WIN32)
+        #FindQt4.cmake is so brain-dead when Xcompiling
+        SET(QT_LIBRARY_DIR "/usr/win32/lib")
+        SET(QT_INCLUDE_DIR "/usr/win32/include/qt4")
+        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtCore)
+        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtGui)
+        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtXml)
+        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtNetwork)
+        ADD_DEFINITIONS( -I/usr/win32/include/qt4/)
+        ADD_DEFINITIONS( -DQT_NO_OPENSSL)
+        FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
+    ELSE(WIN32)
+        FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
+    ENDIF(WIN32)
 ELSE(WITH_GUI)
     FIND_PACKAGE (Qt4 4.5.1 COMPONENTS QtCore QtNetwork QtXml REQUIRED)
 ENDIF(WITH_GUI)
 
-SET (VLMC_LIBS ${QT_QTCORE_LIBRARY}
+IF (NOT WIN32)
+    #FindQt4.cmake is so brain-dead when Xcompiling
+    SET (VLMC_LIBS ${QT_QTCORE_LIBRARY}
           ${QT_QTGUI_LIBRARY}
           ${QT_QTNETWORK_LIBRARY}
           ${QT_QTSVG_LIBRARY}
@@ -100,8 +115,9 @@ SET (VLMC_LIBS ${QT_QTCORE_LIBRARY}
           ${LIBVLC_LIBRARY}
           ${LIBVLCCORE_LIBRARY})
 
-INCLUDE(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+    INCLUDE(${QT_USE_FILE})
+    ADD_DEFINITIONS(${QT_DEFINITIONS})
+ENDIF(NOT WIN32)
 
 # layout of VLMC installation
 # (default values are platform-specific)

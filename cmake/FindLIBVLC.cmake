@@ -20,15 +20,17 @@
 FIND_PATH(LIBVLC_INCLUDE_DIR vlc/vlc.h
   HINTS "$ENV{LIBVLC_INCLUDE_PATH}"
   PATHS
+    #Mac OS and Contribs
+    "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include/vlc"
+    # Env
     "$ENV{LIB_DIR}/include"
     "$ENV{LIB_DIR}/include/vlc"
+    #
     "/usr/include"
     "/usr/include/vlc"
     "/usr/local/include"
     "/usr/local/include/vlc"
-    #Mac OS
-    "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/contribs/include/vlc"
     #mingw
     c:/msys/local/include
   )
