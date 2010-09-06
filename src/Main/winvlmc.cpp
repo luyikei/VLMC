@@ -38,5 +38,15 @@ LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *lpExceptionInfo)
 
 int main( int argc, char **argv )
 {
+    HINSTANCE h_Kernel32 = LoadLibraryW( L"kernel32.dll" );
+    if( h_Kernel32 )
+    {
+        BOOL (WINAPI * mySetDllDirectoryA)(const char* lpPathName);
+        /* Do NOT load any library from cwd. */
+        mySetDllDirectoryA = (BOOL WINAPI (*)(const char*)) GetProcAddress( h_Kernel32, "SetDllDirectoryA" );
+        if ( mySetDllDirectoryA )
+            mySetDllDirectoryA( "" );
+        FreeLibrary( h_kernel32 );
+    }
     return VLMCmain( argc, argv );
 }
