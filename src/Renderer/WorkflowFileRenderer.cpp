@@ -56,7 +56,7 @@ void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 wi
                                ",no-hurry-up}"
                                ":standard{access=file,mux=ps,dst=\""
                           + outputFileName + "\"}";
-    m_media->addOption( transcodeStr.toStdString().c_str() );
+    m_media->addOption( transcodeStr.toUtf8().constData() );
 
     m_mediaPlayer->setMedia( m_media );
 

@@ -44,8 +44,8 @@ WorkspaceWorker::run()
     bool            hardLinkOk = false;
 
 #ifdef Q_OS_UNIX
-    if ( link( m_media->fileInfo()->absoluteFilePath().toStdString().c_str(),
-          m_dest.toStdString().c_str() ) < 0 )
+    if ( link( m_media->fileInfo()->absoluteFilePath().toUtf8().constData(),
+          m_dest.toUtf8().constData() ) < 0 )
     {
         qDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
                 " hard copy mode.";

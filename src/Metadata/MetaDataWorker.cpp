@@ -171,7 +171,7 @@ MetaDataWorker::renderSnapshot()
              this, SLOT( setSnapshot( const char* ) ), Qt::QueuedConnection );
 
     //The slot should be triggered in this methode
-    m_mediaPlayer->takeSnapshot( tmp.fileName().toStdString().c_str(), 0, 0 );
+    m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
     //Snapshot slot should has been called (but maybe not in next version...)
 }
 

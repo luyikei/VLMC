@@ -107,20 +107,20 @@ void        Media::flushVolatileParameters()
     QString     defaultValue;
     foreach ( defaultValue, m_volatileParameters )
     {
-        m_vlcMedia->addOption( defaultValue.toStdString().c_str() );
+        m_vlcMedia->addOption( defaultValue.toUtf8().constData() );
     }
     m_volatileParameters.clear();
 }
 
 void        Media::addVolatileParam( const QString& param, const QString& defaultValue )
 {
-    m_vlcMedia->addOption( param.toStdString().c_str() );
+    m_vlcMedia->addOption( param.toUtf8().constData() );
     m_volatileParameters.append( defaultValue );
 }
 
 void        Media::addConstantParam( const QString& param )
 {
-    m_vlcMedia->addOption( param.toStdString().c_str() );
+    m_vlcMedia->addOption( param.toUtf8().constData() );
 }
 
 const QFileInfo*    Media::fileInfo() const
