@@ -213,3 +213,10 @@ GraphicsEffectItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrac
 {
     //FIXME
 }
+
+void
+GraphicsEffectItem::triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
+                                   qint64 newBegin, qint64 newEnd, qint64 pos )
+{
+    //FIXME
+}

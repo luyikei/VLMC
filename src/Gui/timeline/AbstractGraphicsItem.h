@@ -111,12 +111,14 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         /// Ungroup two items
         void                ungroup();
 
-        virtual             qint64      begin() const = 0;
-        virtual             qint64      end() const = 0;
+        virtual qint64      begin() const = 0;
+        virtual qint64      end() const = 0;
         qint64              width() const;
 
         virtual void        triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                                          Workflow::Helper *helper, qint64 pos ) = 0;
+        virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
+                                           qint64 newBegin, qint64 newEnd, qint64 pos ) = 0;
         virtual Workflow::Helper    *helper() = 0;
 
     protected:

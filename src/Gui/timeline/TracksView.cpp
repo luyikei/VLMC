@@ -351,10 +351,11 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         moveMediaItem( m_dragAudioItem, event->pos() );
     else if ( m_dragEffectItem != NULL )
     {
-        QList<AbstractGraphicsMediaItem*>   clips = mediaItems( event->pos() );
-        if ( clips.size() > 0 )
+        //Only get medias from here, as we much drag an effect to a media or a track
+        QList<AbstractGraphicsMediaItem*>   itemList = mediaItems<AbstractGraphicsMediaItem>( event->pos() );
+        if ( itemList.size() > 0 )
         {
-            AbstractGraphicsMediaItem   *item = clips.first();
+            AbstractGraphicsMediaItem   *item = itemList.first();
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setHeight( tracksHeight() / 2 );
@@ -399,7 +400,7 @@ TracksView::moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
 }
 
 void
-TracksView::moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position )
+TracksView::moveMediaItem( AbstractGraphicsItem *item, QPoint position )
 {
     GraphicsTrack *track = NULL;
 
@@ -736,7 +737,7 @@ TracksView::dropEvent( QDropEvent *event )
     }
     else if ( m_dragEffectItem != NULL )
     {
-        QList<AbstractGraphicsMediaItem*>   clips = mediaItems( event->pos() );
+        QList<AbstractGraphicsMediaItem*>   clips = mediaItems<AbstractGraphicsMediaItem>( event->pos() );
         if ( clips.size() > 0 )
         {
             foreach ( AbstractGraphicsMediaItem *item, clips )
@@ -893,7 +894,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
 void
 TracksView::mousePressEvent( QMouseEvent *event )
 {
-    QList<AbstractGraphicsMediaItem*> mediaCollisionList = mediaItems( event->pos() );
+    QList<AbstractGraphicsItem*> mediaCollisionList = mediaItems<AbstractGraphicsItem>( event->pos() );
 
     // Reset the drag mode
     setDragMode( QGraphicsView::NoDrag );
@@ -908,7 +909,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
          tool() == TOOL_DEFAULT &&
          mediaCollisionList.count() == 1 )
     {
-        AbstractGraphicsMediaItem *item = mediaCollisionList.at( 0 );
+        AbstractGraphicsItem *item = mediaCollisionList.at( 0 );
 
         QPoint itemEndPos = mapFromScene( item->mapToScene( item->boundingRect().bottomRight() ) );
         QPoint itemPos = mapFromScene( item->mapToScene( 0, 0 ) );
@@ -938,7 +939,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
          tool() == TOOL_DEFAULT &&
          mediaCollisionList.count() == 1 )
     {
-        AbstractGraphicsMediaItem *item = mediaCollisionList.at( 0 );
+        AbstractGraphicsItem    *item = mediaCollisionList.at( 0 );
 
         if ( !scene()->selectedItems().contains( item ) )
         {
@@ -951,7 +952,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
               tool() == TOOL_DEFAULT &&
               mediaCollisionList.count() == 1 )
     {
-        AbstractGraphicsMediaItem *item = mediaCollisionList.at( 0 );
+        AbstractGraphicsItem        *item = mediaCollisionList.at( 0 );
         item->setSelected( !item->isSelected() );
         event->accept();
     }
@@ -976,7 +977,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         //Check if the clip moved.
         if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() &&
-             m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->clipHelper()->uuid() ) )
+             m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->uuid() ) )
             return ;
 
         updateDuration();
@@ -1010,22 +1011,20 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     }
     else if ( m_action == TracksView::Resize )
     {
-        ClipHelper *ch = m_actionItem->clipHelper();
         qint64  newBegin;
         qint64  newEnd;
         if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
         {
-            newEnd = ch->end();
+            newEnd = m_actionItem->helper()->end();
             newBegin = newEnd - m_actionItem->width();
         }
         else
         {
-            newBegin = ch->begin();
+            newBegin = m_actionItem->helper()->begin();
             newEnd = newBegin + m_actionItem->width();
         }
-        Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->track()->trackWorkflow(),
-                                                                   ch, newBegin, newEnd,
-                                                                   m_actionItem->pos().x() ) );
+        m_actionItem->triggerResize( m_actionItem->track()->trackWorkflow(), m_actionItem->helper(),
+                                     newBegin, newEnd, m_actionItem->pos().x() );
         updateDuration();
     }
 
@@ -1052,22 +1051,6 @@ TracksView::wheelEvent( QWheelEvent *event )
         event->ignore();
         QGraphicsView::wheelEvent( event );
     }
-}
-
-QList<AbstractGraphicsMediaItem*>
-TracksView::mediaItems( const QPoint &pos )
-{
-    //TODO optimization needed!
-    QList<QGraphicsItem*> collisionList = items( pos );
-    QList<AbstractGraphicsMediaItem*> mediaCollisionList;
-    for ( int i = 0; i < collisionList.size(); ++i )
-    {
-        AbstractGraphicsMediaItem* item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( collisionList.at( i ) );
-        if ( item )
-            mediaCollisionList.append( item );
-    }
-    return mediaCollisionList;
 }
 
 QList<AbstractGraphicsItem*>

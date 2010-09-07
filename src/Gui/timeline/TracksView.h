@@ -152,7 +152,22 @@ public:
      * \warning Calling this method can be excessively slow!
      * \sa mediaItems()
      */
-    QList<AbstractGraphicsMediaItem*> mediaItems( const QPoint &pos );
+    template <typename T>
+    QList<T*>       mediaItems( const QPoint &pos )
+    {
+        //TODO optimization needed!
+        QList<QGraphicsItem*>               collisionList = items( pos );
+        QList<T*>                           mediaCollisionList;
+
+        for ( int i = 0; i < collisionList.size(); ++i )
+        {
+            T   *item = dynamic_cast<T*>( collisionList.at( i ) );
+            if ( item != NULL )
+                mediaCollisionList.append( item );
+        }
+        return mediaCollisionList;
+    }
+
     /**
      * \brief This is an overloaded method provided for convenience.
      * \warning Calling this method can be excessively slow!
@@ -296,7 +311,7 @@ private:
      * \param position New position of the item.
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
-    void                    moveMediaItem( AbstractGraphicsMediaItem *item, QPoint position );
+    void                    moveMediaItem( AbstractGraphicsItem *item, QPoint position );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item Item to move.
@@ -334,8 +349,8 @@ private:
     // Mouse actions on Medias
     Action                  m_action;
     int                     m_actionRelativeX;
-    AbstractGraphicsMediaItem::From m_actionResizeType;
-    AbstractGraphicsMediaItem       *m_actionItem;
+    AbstractGraphicsItem::From  m_actionResizeType;
+    AbstractGraphicsItem    *m_actionItem;
     GraphicsTrack           *m_lastKnownTrack;
     QSet<QUuid>             m_clipsLoaded;
 

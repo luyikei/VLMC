@@ -59,6 +59,8 @@ public:
     virtual Workflow::Helper    *helper();
     virtual void        triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                                      Workflow::Helper *helper, qint64 pos );
+    virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
+                                       qint64 newBegin, qint64 newEnd, qint64 pos );
 
 protected:
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
