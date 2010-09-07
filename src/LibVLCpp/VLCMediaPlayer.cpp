@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +78,8 @@ MediaPlayer::registerEvents()
 /**
  * Event dispatcher.
  */
-void                            MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
+void
+MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
 {
     MediaPlayer* self = reinterpret_cast<MediaPlayer*>( ptr );
     switch ( event->type )
@@ -131,79 +132,89 @@ void                            MediaPlayer::callbacks( const libvlc_event_t* ev
     }
 }
 
-void                            MediaPlayer::play()
+void
+MediaPlayer::play()
 {
     //qDebug() << "Asking for play media player";
     libvlc_media_player_play( m_internalPtr );
 }
 
-void                            MediaPlayer::pause()
+void
+MediaPlayer::pause()
 {
     libvlc_media_player_pause( m_internalPtr );
 }
 
-void                            MediaPlayer::stop()
+void
+MediaPlayer::stop()
 {
     //qDebug() << "Asking for stop media player";
     libvlc_media_player_stop( m_internalPtr );
 }
 
-qint64                          MediaPlayer::getTime()
+qint64
+MediaPlayer::getTime()
 {
     qint64 t = libvlc_media_player_get_time( m_internalPtr );
     return t;
 }
 
-void                            MediaPlayer::setTime( qint64 time )
+void
+MediaPlayer::setTime( qint64 time )
 {
     libvlc_media_player_set_time( m_internalPtr, time );
 }
 
-float                           MediaPlayer::getPosition()
+float
+MediaPlayer::getPosition()
 {
-    float p = libvlc_media_player_get_position( m_internalPtr );
-    return p;
+    return libvlc_media_player_get_position( m_internalPtr );
 }
 
-void                            MediaPlayer::setPosition( float pos )
+void
+MediaPlayer::setPosition( float pos )
 {
     libvlc_media_player_set_position( m_internalPtr, pos );
 }
 
-qint64                          MediaPlayer::getLength()
+qint64
+MediaPlayer::getLength()
 {
-    qint64 length = libvlc_media_player_get_length( m_internalPtr );
-    return length;
+    return libvlc_media_player_get_length( m_internalPtr );
 }
 
-void                            MediaPlayer::takeSnapshot( const char* outputFile, unsigned int width, unsigned int heigth )
+void
+MediaPlayer::takeSnapshot( const char* outputFile, unsigned int width, unsigned int heigth )
 {
     libvlc_video_take_snapshot( *this, 0, outputFile, width, heigth );
 }
 
-bool                            MediaPlayer::isPlaying()
+bool
+MediaPlayer::isPlaying()
 {
-    int res = libvlc_media_player_is_playing( m_internalPtr );
-    return (res == 1);
+    return ( libvlc_media_player_is_playing( m_internalPtr ) == 1 );
 }
 
-bool                                MediaPlayer::isSeekable()
+bool
+MediaPlayer::isSeekable()
 {
-    int res = libvlc_media_player_is_seekable( m_internalPtr );
-    return (res == 1);
+    return ( libvlc_media_player_is_seekable( m_internalPtr ) == 1 );
 }
 
-void                                MediaPlayer::setDrawable( void* hwnd )
+void
+MediaPlayer::setDrawable( void* hwnd )
 {
     libvlc_media_player_set_hwnd( m_internalPtr, hwnd );
 }
 
-void                                MediaPlayer::setDrawable( uint32_t drawable )
+void
+MediaPlayer::setDrawable( uint32_t drawable )
 {
     libvlc_media_player_set_xwindow( m_internalPtr, drawable );
 }
 
-void                                MediaPlayer::setMedia( Media* media )
+void
+MediaPlayer::setMedia( Media* media )
 {
     libvlc_media_player_set_media( m_internalPtr, media->getInternalPtr() );
 }
@@ -214,29 +225,32 @@ MediaPlayer::getSize( quint32 *outWidth, quint32 *outHeight )
     libvlc_video_get_size( m_internalPtr, 0, outWidth, outHeight );
 }
 
-float                               MediaPlayer::getFps()
+float
+MediaPlayer::getFps()
 {
-    float   fps = libvlc_media_player_get_fps( m_internalPtr );
-    return fps;
+    return libvlc_media_player_get_fps( m_internalPtr );
 }
 
-void                                MediaPlayer::nextFrame()
+void
+MediaPlayer::nextFrame()
 {
     libvlc_media_player_next_frame( m_internalPtr );
 }
 
-bool                                MediaPlayer::hasVout()
+bool
+MediaPlayer::hasVout()
 {
-    bool    res = libvlc_media_player_has_vout( m_internalPtr );
-    return res;
+    return libvlc_media_player_has_vout( m_internalPtr );
 }
 
-const QString&                      MediaPlayer::getLoadedFileName() const
+const QString&
+MediaPlayer::getLoadedFileName() const
 {
     return m_media->getFileName();
 }
 
-QString                             MediaPlayer::getLoadedMRL()
+QString
+MediaPlayer::getLoadedMRL()
 {
     Media::internalPtr     media = libvlc_media_player_get_media( m_internalPtr );
     char* str = libvlc_media_get_mrl( media );

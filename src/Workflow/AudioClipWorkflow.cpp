@@ -26,6 +26,8 @@
 #include "VLCMedia.h"
 #include "Workflow/Types.h"
 
+#include <QMutexLocker>
+
 AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_lastReturnedBuffer( NULL )

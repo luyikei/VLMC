@@ -26,7 +26,6 @@
 #include "vlc/vlc.h"
 
 #include <QString>
-#include <QMutex>
 
 #include "VLCpp.hpp"
 
