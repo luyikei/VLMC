@@ -31,6 +31,7 @@ namespace Workflow
     class   Frame;
 }
 
+class   EffectHelper;
 class   FilterInstance;
 class   MixerInstance;
 
@@ -50,28 +51,8 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
     Q_OBJECT
 
     public:
-        struct      EffectHelper
-        {
-            EffectHelper( EffectInstance *_effect, qint64 _start = 0, qint64 _end = -1,
-                          const QString& _uuid = QString() ) :
-                effect( _effect ),
-                start( _start ),
-                end( _end )
-            {
-                if ( _uuid.isNull() == true )
-                    uuid = QUuid::createUuid();
-                else
-                    uuid = _uuid;
-            }
-
-            EffectInstance  *effect;
-            qint64          start;
-            qint64          end;
-            QUuid           uuid;
-        };
-
-        typedef QList<EffectHelper*>            EffectList;
-        static const quint32                    MaxFramesForMixer = 3;
+        typedef QList<EffectHelper*>    EffectList;
+        static const quint32            MaxFramesForMixer = 3;
 
         Effect*             effect( const QString& name );
         const QStringList&  effects( Effect::Type type ) const;
@@ -93,7 +74,5 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         void        effectAdded( Effect*, const QString& name, Effect::Type );
     friend class    Singleton<EffectsEngine>;
 };
-
-Q_DECLARE_METATYPE(EffectsEngine::EffectHelper*)
 
 #endif // EFFECTSENGINE_H

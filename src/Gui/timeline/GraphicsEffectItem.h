@@ -62,7 +62,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
 
     private:
         Effect                      *m_effect;
-        EffectsEngine::EffectHelper *m_effectHelper;
+        EffectHelper                *m_effectHelper;
 };
 
 #endif // GRAPHICSEFFECTITEM_H

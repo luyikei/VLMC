@@ -22,6 +22,7 @@
 
 #include "EffectUser.h"
 
+#include "EffectHelper.h"
 #include "EffectInstance.h"
 #include "Types.h"
 
@@ -42,14 +43,14 @@ EffectUser::~EffectUser()
     delete m_effectsLock;
 }
 
-EffectsEngine::EffectHelper*
+EffectHelper*
 EffectUser::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
 {
     //FIXME: Check it the effect type is supported
     EffectInstance  *effectInstance = effect->createInstance();
     if ( m_isRendering == true )
         effectInstance->init( m_width, m_height );
-    EffectsEngine::EffectHelper *ret = new EffectsEngine::EffectHelper( effectInstance, start, end );
+    EffectHelper *ret = new EffectHelper( effectInstance, start, end );
 
     QWriteLocker    lock( m_effectsLock );
     if ( effect->type() == Effect::Filter )
@@ -78,8 +79,8 @@ EffectUser::applyFilters( const Workflow::Frame* frame,
 
     while ( it != ite )
     {
-        if ( (*it)->start < currentFrame &&
-             ( (*it)->end < 0 || (*it)->end > currentFrame ) )
+        if ( (*it)->begin() < currentFrame &&
+             ( (*it)->end() < 0 || (*it)->end() > currentFrame ) )
         {
             quint32     **buff;
             if ( firstBuff == true )
@@ -88,7 +89,7 @@ EffectUser::applyFilters( const Workflow::Frame* frame,
                 buff = &buff2;
             if ( *buff == NULL )
                 *buff = new quint32[frame->nbPixels()];
-            EffectInstance      *effect = (*it)->effect;
+            EffectInstance      *effect = (*it)->effectInstance();
             effect->process( time, input, *buff );
             input = *buff;
             firstBuff = !firstBuff;
@@ -121,7 +122,7 @@ EffectUser::initFilters()
 
     while ( it != ite )
     {
-        (*it)->effect->init( m_width, m_height );
+        (*it)->effectInstance()->init( m_width, m_height );
         ++it;
     }
 }
@@ -136,12 +137,12 @@ EffectUser::initMixers()
 
     while ( it != ite )
     {
-        (*it)->effect->init( m_width, m_height );
+        (*it)->effectInstance()->init( m_width, m_height );
         ++it;
     }
 }
 
-EffectsEngine::EffectHelper*
+EffectHelper*
 EffectUser::getMixer( qint64 currentFrame )
 {
     QReadLocker     lock( m_effectsLock );
@@ -151,9 +152,9 @@ EffectUser::getMixer( qint64 currentFrame )
 
     while ( it != ite )
     {
-        if ( (*it)->start <= currentFrame && currentFrame <= (*it)->end )
+        if ( (*it)->begin() <= currentFrame && currentFrame <= (*it)->end() )
         {
-            Q_ASSERT( (*it)->effect->effect()->type() == Effect::Mixer2 );
+            Q_ASSERT( (*it)->effectInstance()->effect()->type() == Effect::Mixer2 );
             return (*it);
         }
         ++it;
@@ -198,9 +199,9 @@ EffectUser::saveFilters( QXmlStreamWriter &project ) const
     while ( it != ite )
     {
         project.writeStartElement( "effect" );
-        project.writeAttribute( "name", (*it)->effect->effect()->name() );
-        project.writeAttribute( "start", QString::number( (*it)->start ) );
-        project.writeAttribute( "end", QString::number( (*it)->end ) );
+        project.writeAttribute( "name", (*it)->effectInstance()->effect()->name() );
+        project.writeAttribute( "start", QString::number( (*it)->begin() ) );
+        project.writeAttribute( "end", QString::number( (*it)->end() ) );
         project.writeEndElement();
         ++it;
     }

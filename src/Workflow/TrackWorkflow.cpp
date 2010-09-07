@@ -26,10 +26,11 @@
 #include "Clip.h"
 #include "ClipHelper.h"
 #include "AudioClipWorkflow.h"
+#include "EffectInstance.h"
+#include "EffectHelper.h"
 #include "ImageClipWorkflow.h"
 #include "MainWorkflow.h"
 #include "Media.h"
-#include "EffectInstance.h"
 #include "Types.h"
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
@@ -329,11 +330,11 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     //Handle mixers:
     if ( m_trackType == Workflow::VideoTrack )
     {
-        EffectsEngine::EffectHelper* mixer = getMixer( currentFrame );
+        EffectHelper*   mixer = getMixer( currentFrame );
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.
-            mixer->effect->process( currentFrame * 1000.0 / m_fps,
+            mixer->effectInstance()->process( currentFrame * 1000.0 / m_fps,
                                     frames[0]->buffer(),
                                     frames[1] != NULL ? frames[1]->buffer() : MainWorkflow::getInstance()->blackOutput()->buffer(),
                                     NULL, m_mixerBuffer->buffer() );

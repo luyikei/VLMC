@@ -22,6 +22,8 @@
 
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
+
+#include "EffectHelper.h"
 #include "EffectInstance.h"
 #include "EffectInstanceWidget.h"
 #include "EffectUser.h"
@@ -51,8 +53,8 @@ EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     //Add an empty instance widget.
     m_stackedLayout->addWidget( new EffectInstanceWidget( this ) );
     //Create instance widgets for already inserted effects
-    foreach ( EffectsEngine::EffectHelper *helper, user->effects( Effect::Filter ) )
-        addInstanceWidget( helper->effect );
+    foreach ( EffectHelper *helper, user->effects( Effect::Filter ) )
+        addInstanceWidget( helper->effectInstance() );
 }
 
 EffectStack::~EffectStack()
@@ -73,7 +75,7 @@ EffectStack::addInstanceWidget( EffectInstance *instance )
 void
 EffectStack::selectedChanged( const QModelIndex &index )
 {
-    EffectInstance  *inst = m_model->data( index, Qt::EditRole ).value<EffectsEngine::EffectHelper*>()->effect;
+    EffectInstance  *inst = m_model->data( index, Qt::EditRole ).value<EffectHelper*>()->effectInstance();
     m_stackedLayout->setCurrentWidget( m_instanceWidgets[inst->effect()->name()] );
 }
 
@@ -106,6 +108,6 @@ EffectStack::remove()
 void
 EffectStack::add()
 {
-    EffectsEngine::EffectHelper *helper = m_model->add( m_ui->addComboBox->currentText() );
-    addInstanceWidget( helper->effect );
+    EffectHelper    *helper = m_model->add( m_ui->addComboBox->currentText() );
+    addInstanceWidget( helper->effectInstance() );
 }

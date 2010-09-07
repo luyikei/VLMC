@@ -22,6 +22,7 @@
 
 #include "GraphicsEffectItem.h"
 
+#include "EffectHelper.h"
 #include "Timeline.h"
 #include "TracksView.h"
 
@@ -32,13 +33,13 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effectHelper( NULL )
 {
     setOpacity( 0.8 );
-    m_effectHelper = new EffectsEngine::EffectHelper( effect->createInstance() );
+    m_effectHelper = new EffectHelper( effect->createInstance() );
 }
 
 const QUuid&
 GraphicsEffectItem::uuid() const
 {
-    return m_effectHelper->uuid;
+    return m_effectHelper->uuid();
 }
 
 int

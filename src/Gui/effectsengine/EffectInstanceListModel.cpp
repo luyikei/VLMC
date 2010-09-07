@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 #include "EffectInstanceListModel.h"
+
+#include "EffectHelper.h"
 #include "EffectInstance.h"
 #include "EffectUser.h"
 
@@ -46,15 +48,15 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
     switch ( role )
     {
     case Qt::DisplayRole:
-        return m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->name();
+        return m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->name();
     case Qt::ToolTipRole:
-        return m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->description();
+        return m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->description();
     case Qt::EditRole:
         return QVariant::fromValue( m_user->effects( Effect::Filter ).at( index.row() ) );
     case Qt::SizeHintRole:
         {
             const QFontMetrics  &fm = QApplication::fontMetrics();
-            QSize               size( fm.width( m_user->effects( Effect::Filter ).at( index.row() )->effect->effect()->name() ), fm.height() );
+            QSize               size( fm.width( m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->name() ), fm.height() );
             return size;
         }
     default:
@@ -93,7 +95,7 @@ EffectInstanceListModel::moveDown( const QModelIndex &index )
     emit layoutChanged();
 }
 
-EffectsEngine::EffectHelper*
+EffectHelper*
 EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
@@ -102,7 +104,7 @@ EffectInstanceListModel::add( const QString &effectName )
     if ( effect == NULL )
         return NULL;
     beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );
-    EffectsEngine::EffectHelper    *helper = m_user->addEffect( effect );
+    EffectHelper        *helper = m_user->addEffect( effect );
     endInsertRows();
     return helper;
 }
