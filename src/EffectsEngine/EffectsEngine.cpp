@@ -28,6 +28,7 @@
 
 #include <QDesktopServices>
 #include <QDir>
+#include <QProcess>
 #include <QSettings>
 #include <QXmlStreamWriter>
 
@@ -122,10 +123,22 @@ EffectsEngine::loadEffects()
     QStringList     pathList;
 
 #if defined( Q_OS_UNIX )
-    //Refer to http://www.piksel.org/frei0r/1.2/spec/group__pluglocations.html
-    pathList << QString( QDir::homePath() + "/.frei0r-1/lib/" ) <<
-                QString("/usr/local/lib/frei0r-1/") <<
-                QString("/usr/lib/frei0r-1/" );
+    const QStringList &env = QProcess::systemEnvironment();
+    foreach ( const QString &e, env )
+    {
+        if ( e.startsWith( "FREI0R_PATH=" ) == true )
+        {
+            const QString   list = e.mid( 12 );
+            pathList = list.split( ':' );
+        }
+    }
+    if ( pathList.isEmpty() == true )
+    {
+        //Refer to http://www.piksel.org/frei0r/1.2/spec/group__pluglocations.html
+        pathList << QString( QDir::homePath() + "/.frei0r-1/lib/" ) <<
+                    QString("/usr/local/lib/frei0r-1/") <<
+                    QString("/usr/lib/frei0r-1/" );
+    }
 #elif defined ( Q_OS_WIN32 )
     pathList << QDir::currentPath();
 #endif
