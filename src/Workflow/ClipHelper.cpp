@@ -59,7 +59,7 @@ ClipHelper::setBoundaries( qint64 begin, qint64 end )
         begin = begin;
     if ( end <= m_clip->m_end )
         end = end;
-    setBoundaries( begin, end );
+    Workflow::Helper::setBoundaries( begin, end );
 }
 
 ClipWorkflow*
