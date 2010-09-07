@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -141,9 +141,6 @@ public:
     InputType                   inputType() const;
 
     void                        emitMetaDataComputed();
-    void                        emitAudioSpectrumComuted();
-
-    QList<int>*                 audioValues() { return m_audioValueList; }
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
@@ -161,7 +158,7 @@ private:
 protected:
     LibVLCpp::Media*            m_vlcMedia;
     QString                     m_mrl;
-    QList<QString>              m_volatileParameters;
+    QStringList                 m_volatileParameters;
     QFileInfo*                  m_fileInfo;
     qint64                      m_lengthMS;
     qint64                      m_nbFrames;
@@ -172,7 +169,6 @@ protected:
     InputType                   m_inputType;
     QString                     m_fileName;
     Clip*                       m_baseClip;
-    QList<int>*                 m_audioValueList;
     int                         m_nbAudioTracks;
     int                         m_nbVideoTracks;
     bool                        m_metadataComputed;
@@ -181,7 +177,6 @@ protected:
 
 signals:
     void                        metaDataComputed( const Media* );
-    void                        audioSpectrumComputed( const QUuid& );
     void                        workspaceStateChanged( bool );
 };
 

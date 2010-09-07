@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +78,6 @@ Media::Media( const QString& filePath )
         m_fileName = m_mrl;
         m_vlcMedia = new LibVLCpp::Media( m_mrl );
     }
-    m_audioValueList = new QList<int>();
 }
 
 Media::~Media()
@@ -89,9 +88,10 @@ Media::~Media()
         delete m_fileInfo;
 }
 
-void        Media::setFileType()
+void
+Media::setFileType()
 {
-    QString filter = "*." + m_fileInfo->suffix().toLower();
+    const QString filter = "*." + m_fileInfo->suffix().toLower();
     if ( Media::VideoExtensions.contains( filter ) )
         m_fileType = Media::Video;
     else if ( Media::AudioExtensions.contains( filter ) )
@@ -102,109 +102,120 @@ void        Media::setFileType()
         qDebug() << "What the hell is this extension? And how did you loaded it?!";
 }
 
-void        Media::flushVolatileParameters()
+void
+Media::flushVolatileParameters()
 {
-    QString     defaultValue;
-    foreach ( defaultValue, m_volatileParameters )
-    {
+    foreach ( const QString &defaultValue, m_volatileParameters )
         m_vlcMedia->addOption( defaultValue.toUtf8().constData() );
-    }
     m_volatileParameters.clear();
 }
 
-void        Media::addVolatileParam( const QString& param, const QString& defaultValue )
+void
+Media::addVolatileParam( const QString& param, const QString& defaultValue )
 {
     m_vlcMedia->addOption( param.toUtf8().constData() );
     m_volatileParameters.append( defaultValue );
 }
 
-void        Media::addConstantParam( const QString& param )
+void
+Media::addConstantParam( const QString& param )
 {
     m_vlcMedia->addOption( param.toUtf8().constData() );
 }
 
-const QFileInfo*    Media::fileInfo() const
+const QFileInfo*
+Media::fileInfo() const
 {
     return m_fileInfo;
 }
 
-void                Media::setLength( qint64 length )
+void
+Media::setLength( qint64 length )
 {
     m_lengthMS = length;
 }
 
-qint64              Media::lengthMS() const
+qint64
+Media::lengthMS() const
 {
     return m_lengthMS;
 }
 
-int                 Media::width() const
+int
+Media::width() const
 {
     return m_width;
 }
 
-void                Media::setWidth( int width )
+void
+Media::setWidth( int width )
 {
     m_width = width;
 }
 
-int                 Media::height() const
+int
+Media::height() const
 {
     return m_height;
 }
 
-void                Media::setHeight( int height )
+void
+Media::setHeight( int height )
 {
     m_height = height;
 }
 
-float               Media::fps() const
+float
+Media::fps() const
 {
     return m_fps;
 }
 
-void                Media::setFps( float fps )
+void
+Media::setFps( float fps )
 {
     m_fps = fps;
 }
 
-Media::FileType     Media::fileType() const
+Media::FileType
+Media::fileType() const
 {
     return m_fileType;
 }
 
-void            Media::emitMetaDataComputed()
+void
+Media::emitMetaDataComputed()
 {
     m_metadataComputed = true;
     emit metaDataComputed( this );
 }
 
-void            Media::emitAudioSpectrumComuted()
-{
-    emit audioSpectrumComputed( baseClip()->uuid() );
-}
-
-Media::InputType    Media::inputType() const
+Media::InputType
+Media::inputType() const
 {
     return m_inputType;
 }
 
-void                Media::setNbFrames( qint64 nbFrames )
+void
+Media::setNbFrames( qint64 nbFrames )
 {
     m_nbFrames = nbFrames;
 }
 
-qint64              Media::nbFrames() const
+qint64
+Media::nbFrames() const
 {
     return m_nbFrames;
 }
 
-const QString&      Media::mrl() const
+const QString&
+Media::mrl() const
 {
     return m_mrl;
 }
 
-const QString&      Media::fileName() const
+const QString&
+Media::fileName() const
 {
     return m_fileName;
 }
