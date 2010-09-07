@@ -340,9 +340,6 @@ private:
 
     // Mouse actions on Medias
     Action                  m_action;
-    qint64                  m_actionResizeOldBegin;
-    qint64                  m_actionResizeNewBegin;
-    qint64                  m_actionResizeSize;
     int                     m_actionRelativeX;
     AbstractGraphicsMediaItem::From m_actionResizeType;
     AbstractGraphicsMediaItem       *m_actionItem;

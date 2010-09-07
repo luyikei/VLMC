@@ -28,6 +28,8 @@
 
 #include <QGraphicsSceneEvent>
 
+#include <QtDebug>
+
 AbstractGraphicsItem::AbstractGraphicsItem() :
         m_tracksView( NULL ),
         m_oldTrack( NULL ),
@@ -112,37 +114,50 @@ AbstractGraphicsItem::startPos()
     return qRound64( QGraphicsItem::pos().x() );
 }
 
-qint64
-AbstractGraphicsItem::resize( qint64 newSize, qint64 newBegin, qint64 clipPos,
-                                           From from )
+void
+AbstractGraphicsItem::resize( qint64 newSize, qint64 newMovingBoundary,
+                              qint64 currentStillBoundary, From from )
 {
     if ( newSize < 1 )
-        return 1;
+    {
+//        if ( from == END )
+//            setStartPos( currentStillBoundary - 1 );
+//        setWidth( 1 );
+        return ;
+    }
 
-    if ( hasResizeBoundaries() == true )
-        newSize = qMin( newSize, maxEnd() );
-
-    //The from actually stands for the clip bound that stays still.
+    qint64      maxSize = maxEnd() - maxBegin();
+    //The "from" actually stands for the clip bound that stays still.
     if ( from == BEGINNING )
     {
         if ( hasResizeBoundaries() == true )
         {
-            if ( newBegin + newSize > maxEnd() )
-                return newBegin + maxEnd();
+            qint64      beginOffset = begin() - maxBegin();
+            qint64      absoluteStartPos = currentStillBoundary - beginOffset;
+            if ( absoluteStartPos + maxSize < newMovingBoundary )
+            {
+                setWidth( maxSize - beginOffset );
+                return ;
+            }
         }
         setWidth( newSize );
-        return newSize;
     }
     else
     {
-        if ( hasResizeBoundaries() )
+        if ( hasResizeBoundaries() == true )
         {
-            if ( maxBegin() > newBegin )
-                return maxBegin();
+            qint64      endOffset = maxEnd() - end();
+            qint64      absoluteEnd = currentStillBoundary + endOffset;
+            if ( newMovingBoundary < absoluteEnd - maxSize )
+            {
+//                qint64  size = end() - begin();
+//                setWidth( size );
+//                setStartPos( currentStillBoundary - size );
+                return ;
+            }
         }
         setWidth( newSize );
-        setStartPos( clipPos );
-        return newBegin;
+        setStartPos( newMovingBoundary );
     }
 }
 
@@ -241,4 +256,10 @@ AbstractGraphicsItem::ungroup()
         return;
     m_group->m_group = NULL;
     m_group = NULL;
+}
+
+qint64
+AbstractGraphicsItem::width() const
+{
+    return m_width;
 }

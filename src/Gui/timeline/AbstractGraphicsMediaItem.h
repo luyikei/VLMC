@@ -52,7 +52,9 @@ public:
     ClipHelper  *clipHelper();
     const ClipHelper*   clipHelper() const;
 
-    virtual void    setEmphasized( bool value );
+    virtual void        setEmphasized( bool value );
+    virtual qint64      begin() const;
+    virtual qint64      end() const;
 
 protected:
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );

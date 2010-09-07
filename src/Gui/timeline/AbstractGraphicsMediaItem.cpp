@@ -259,3 +259,16 @@ AbstractGraphicsMediaItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
     else if ( tracksView()->tool() == TOOL_CUT )
         emit split( this, qRound64( event->pos().x() ) );
 }
+
+qint64
+AbstractGraphicsMediaItem::begin() const
+{
+    return m_clipHelper->begin();
+}
+
+
+qint64
+AbstractGraphicsMediaItem::end() const
+{
+    return m_clipHelper->end();
+}

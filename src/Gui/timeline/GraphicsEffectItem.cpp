@@ -185,3 +185,17 @@ GraphicsEffectItem::effect()
 {
     return m_effect;
 }
+
+
+qint64
+GraphicsEffectItem::begin() const
+{
+    return 0;
+}
+
+
+qint64
+GraphicsEffectItem::end() const
+{
+    return -1;
+}

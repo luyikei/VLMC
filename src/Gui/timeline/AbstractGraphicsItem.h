@@ -90,11 +90,9 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
 
         /**
          * \brief    Resize an item from its beginning or from its end.
-         *
-         *  \returns    A contextual info (depending on "from") to compute
-         *              the new length. (Either the new beginning of the new length)
          */
-        qint64      resize( qint64 size, qint64 newBegin, qint64 clipPos, From from = BEGINNING );
+        void        resize( qint64 newSize, qint64 newMovingBoundary,
+                            qint64 currentStillBoundary, From from = BEGINNING );
 
         /**
          * \brief Return a pointer to the linked item.
@@ -107,6 +105,10 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
 
         /// Ungroup two items
         void                ungroup();
+
+        virtual             qint64      begin() const = 0;
+        virtual             qint64      end() const = 0;
+        qint64              width() const;
 
     protected:
         virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );

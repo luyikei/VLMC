@@ -870,8 +870,12 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
               event->buttons() == Qt::LeftButton &&
               m_action == TracksView::Resize )
     {
-        QPointF itemPos = m_actionItem->mapToScene( 0, 0 );
-        QPointF itemNewSize = mapToScene( event->pos() ) - itemPos;
+        qint64  itemPos = m_actionItem->mapToScene( 0, 0 ).x();
+        qint64  itemNewSize;
+        if ( m_actionResizeType == AbstractGraphicsItem::BEGINNING )
+            itemNewSize = mapToScene( event->pos() ).x() - itemPos;
+        else
+            itemNewSize = itemPos + m_actionItem->width() - mapToScene( event->pos() ).x();
 
         qint32  trackId = m_actionItem->trackNumber();
         Q_ASSERT( trackId >= 0 );
@@ -881,7 +885,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         Q_ASSERT( track );
 
         QPointF collidePos = track->sceneBoundingRect().topRight();
-        collidePos.setX( itemPos.x() + itemNewSize.x() );
+        collidePos.setX( itemPos + itemNewSize );
 
         QList<QGraphicsItem*> gi = scene()->items( collidePos );
 
@@ -896,23 +900,17 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
             }
         }
         // END UGLY
-
         if ( !collide )
         {
-            if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
+            if ( m_actionResizeType == AbstractGraphicsItem::END )
             {
-                qint64  newBegin = m_actionItem->clipHelper()->begin() + ( mapToScene( event->pos() ).x() - m_actionResizeOldBegin );
-                qint64  newSize = qMax( m_actionItem->clipHelper()->end() - newBegin, (qint64)0 );
-                qint64  ret = m_actionItem->resize( newSize, newBegin, m_actionResizeNewBegin,
-                                                    AbstractGraphicsMediaItem::END );
-                m_actionResizeSize = m_actionItem->clipHelper()->end() - ret;
-                m_actionResizeNewBegin = mapToScene( event->pos() ).x();
+                m_actionItem->resize( itemNewSize, mapToScene( event->pos() ).x(),
+                                      itemPos + itemNewSize, AbstractGraphicsItem::END );
             }
             else
             {
-                m_actionResizeSize = m_actionItem->resize( itemNewSize.x(),
-                                                           m_actionItem->clipHelper()->begin(), 0, //This parameters is unused in this case.
-                                                           AbstractGraphicsMediaItem::BEGINNING );
+                m_actionItem->resize( itemNewSize, itemPos + itemNewSize,
+                                      itemPos, AbstractGraphicsItem::BEGINNING );
             }
         }
     }
@@ -952,8 +950,6 @@ TracksView::mousePressEvent( QMouseEvent *event )
             else
                 m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
             m_action = TracksView::Resize;
-            m_actionResizeOldBegin = item->pos().x();
-            m_actionResizeNewBegin = m_actionResizeOldBegin;
             m_actionItem = item;
         }
         else if ( item->moveable() )
@@ -1051,12 +1047,12 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
         {
             newEnd = ch->end();
-            newBegin = newEnd - m_actionResizeSize;
+            newBegin = newEnd - m_actionItem->width();
         }
         else
         {
             newBegin = ch->begin();
-            newEnd = newBegin + m_actionResizeSize;
+            newEnd = newBegin + m_actionItem->width();
         }
         Commands::trigger( new Commands::MainWorkflow::ResizeClip( m_actionItem->track()->trackWorkflow(),
                                                                    ch, newBegin, newEnd,

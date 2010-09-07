@@ -42,6 +42,8 @@ class GraphicsEffectItem : public AbstractGraphicsItem
                                            QWidget *widget );
         virtual Workflow::TrackType trackType() const;
         Effect*                     effect();
+        virtual qint64              begin() const;
+        virtual qint64              end() const;
 
     protected:
         virtual bool                hasResizeBoundaries() const;
