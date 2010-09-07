@@ -119,18 +119,21 @@ EffectsEngine::browseDirectory( const QString &path )
 void
 EffectsEngine::loadEffects()
 {
-    //FIXME: What should we do for windows ?!
+    QStringList     pathList;
+
+#if defined( Q_OS_UNIX )
     //Refer to http://www.piksel.org/frei0r/1.2/spec/group__pluglocations.html
-    const   QString paths[3] = {
-        QString( QDir::homePath() + "/.frei0r-1/lib/" ),
-        QString("/usr/local/lib/frei0r-1/"),
-        QString("/usr/lib/frei0r-1/" )
-    };
-    for ( quint32 i = 0; i < 3; ++i )
+    pathList << QString( QDir::homePath() + "/.frei0r-1/lib/" ) <<
+                QString("/usr/local/lib/frei0r-1/") <<
+                QString("/usr/lib/frei0r-1/" );
+#elif defined ( Q_OS_WIN32 )
+    pathList << QDir::currentPath();
+#endif
+    foreach ( const QString &path, pathList )
     {
-        if ( QFile::exists( paths[i] ) == true )
+        if ( QFile::exists( path ) == true )
         {
-            browseDirectory( paths[i] );
+            browseDirectory( path );
         }
     }
 }
