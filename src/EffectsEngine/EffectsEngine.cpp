@@ -123,16 +123,10 @@ EffectsEngine::loadEffects()
     QStringList     pathList;
 
 #if defined( Q_OS_UNIX )
-    const QStringList &env = QProcess::systemEnvironment();
-    foreach ( const QString &e, env )
-    {
-        if ( e.startsWith( "FREI0R_PATH=" ) == true )
-        {
-            const QString   list = e.mid( 12 );
-            pathList = list.split( ':' );
-        }
-    }
-    if ( pathList.isEmpty() == true )
+    const QProcessEnvironment &env = QProcessEnvironment::systemEnvironment();
+    if ( env.contains( "FREI0R_PATH" ) == true )
+        pathList = env.value( "FREI0R_PATH" ).split( ':' );
+    else
     {
         //Refer to http://www.piksel.org/frei0r/1.2/spec/group__pluglocations.html
         pathList << QString( QDir::homePath() + "/.frei0r-1/lib/" ) <<
