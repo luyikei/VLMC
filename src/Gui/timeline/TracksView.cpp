@@ -988,19 +988,16 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
-        Commands::trigger( new Commands::MainWorkflow::MoveClip( m_actionItem->m_oldTrack,
-                                                                 m_actionItem->track()->trackWorkflow(),
-                                                                 m_actionItem->clipHelper(),
-                                                                 m_actionItem->startPos() ) );
-
+        m_actionItem->triggerMove( m_actionItem->m_oldTrack, m_actionItem->track()->trackWorkflow(),
+                                   m_actionItem->helper(), m_actionItem->startPos() );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
         {
-            Commands::trigger( new Commands::MainWorkflow::MoveClip( m_actionItem->m_oldTrack,
-                                                                     m_actionItem->track()->trackWorkflow(),
-                                                                     m_actionItem->clipHelper(),
-                                                                     m_actionItem->startPos() ) );
-
+            //CHECK: This used to use m_actionItem and not m_actionItem->groupItem().
+            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->m_oldTrack,
+                                                    m_actionItem->groupItem()->track()->trackWorkflow(),
+                                                    m_actionItem->groupItem()->helper(),
+                                                    m_actionItem->startPos() );
             m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
         }
 

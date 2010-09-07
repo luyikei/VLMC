@@ -272,3 +272,20 @@ AbstractGraphicsMediaItem::end() const
 {
     return m_clipHelper->end();
 }
+
+void
+AbstractGraphicsMediaItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                                   Workflow::Helper *helper, qint64 pos )
+{
+    ClipHelper      *clipHelper = qobject_cast<ClipHelper*>( helper );
+    if ( clipHelper == NULL )
+        return ;
+    Commands::trigger( new Commands::MainWorkflow::MoveClip( oldTrack, newTrack,
+                                                             clipHelper, pos ) );
+}
+
+Workflow::Helper*
+AbstractGraphicsMediaItem::helper()
+{
+    return m_clipHelper;
+}

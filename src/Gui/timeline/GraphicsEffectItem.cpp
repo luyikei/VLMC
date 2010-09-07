@@ -195,9 +195,21 @@ GraphicsEffectItem::begin() const
     return 0;
 }
 
-
 qint64
 GraphicsEffectItem::end() const
 {
     return -1;
+}
+
+Workflow::Helper*
+GraphicsEffectItem::helper()
+{
+    return m_effectHelper;
+}
+
+void
+GraphicsEffectItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                                 Workflow::Helper *helper, qint64 pos )
+{
+    //FIXME
 }

@@ -32,6 +32,11 @@ class   TracksView;
 
 class   QUuid;
 
+namespace Workflow
+{
+    class   Helper;
+}
+
 #include "Types.h"
 
 class AbstractGraphicsItem : public QObject, public QGraphicsItem
@@ -109,6 +114,10 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual             qint64      begin() const = 0;
         virtual             qint64      end() const = 0;
         qint64              width() const;
+
+        virtual void        triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                                         Workflow::Helper *helper, qint64 pos ) = 0;
+        virtual Workflow::Helper    *helper() = 0;
 
     protected:
         virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
