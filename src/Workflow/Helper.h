@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectHelper: Contains informations about effects
+ * Helper.h: Describes a common interface for all workflow helpers.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,32 +20,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTHELPER_H
-#define EFFECTHELPER_H
-
-class   EffectInstance;
-
-#include "Helper.h"
+#ifndef IHELPER_H
+#define IHELPER_H
 
 #include <QObject>
 #include <QUuid>
-#include <QMetaType>
 
-class   EffectHelper : public Workflow::Helper
+namespace   Workflow
 {
-    Q_OBJECT
+    class   Helper : public QObject
+    {
+        Q_OBJECT
 
-    public:
-        EffectHelper( EffectInstance *effectInstance, qint64 begin = 0, qint64 end = -1,
-                      const QString& uuid = QString() );
+        protected: //This class is not meant to be used by itself.
+            Helper( qint64 begin = 0, qint64 end = -1, const QString &uuid = QString() );
 
-        EffectInstance          *effectInstance();
-        const EffectInstance    *effectInstance() const;
+        public:
+            virtual const QUuid&    uuid() const;
+            virtual qint64          begin() const;
+            virtual qint64          end() const;
+            virtual void            setBegin( qint64 begin );
+            virtual void            setEnd( qint64 end );
+            virtual qint64          length() const;
+            virtual void            setBoundaries( qint64 begin, qint64 end );
 
-    private:
-        EffectInstance          *m_effectInstance;
-};
+        protected:
+            qint64                  m_begin;
+            qint64                  m_end;
+            QUuid                   m_uuid;
 
-Q_DECLARE_METATYPE( EffectHelper* );
+        signals:
+            void                    lengthUpdated();
+    };
+}
 
-#endif // EFFECTHELPER_H
+#endif // IHELPER_H

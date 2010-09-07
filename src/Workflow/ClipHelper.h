@@ -26,10 +26,12 @@
 class   Clip;
 class   ClipWorkflow;
 
+#include "Helper.h"
+
 #include <QObject>
 #include <QUuid>
 
-class   ClipHelper : public QObject
+class   ClipHelper : public Workflow::Helper
 {
     Q_OBJECT
 
@@ -45,38 +47,17 @@ class   ClipHelper : public QObject
         {
             return m_clip;
         }
-        qint64      begin() const
-        {
-            return m_begin;
-        }
         void        setBegin( qint64 begin );
-
-        qint64      end() const
-        {
-            return m_end;
-        }
         void        setEnd( qint64 end );
         void        setBoundaries( qint64 begin, qint64 end );
-        /**
-         *  \return The length in frames
-         */
-        qint64      length() const;
-        const QUuid &uuid() const
-        {
-            return m_uuid;
-        }
         ClipWorkflow    *clipWorkflow();
         void            setClipWorkflow( ClipWorkflow* cw );
 
     private:
         Clip*           m_clip;
-        qint64          m_begin;
-        qint64          m_end;
-        QUuid           m_uuid;
         ClipWorkflow*   m_clipWorkflow;
 
     signals:
-        void        lengthUpdated();
         void        error();
 };
 

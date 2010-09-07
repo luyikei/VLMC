@@ -24,60 +24,9 @@
 
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
                             const QString &uuid ) :
-    m_effectInstance( effectInstance ),
-    m_begin( begin ),
-    m_end( end )
+    Helper( begin, end, uuid ),
+    m_effectInstance( effectInstance )
 {
-    if ( uuid.isNull() == true )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = uuid;
-}
-
-qint64
-EffectHelper::begin() const
-{
-    return m_begin;
-}
-
-qint64
-EffectHelper::end() const
-{
-    return m_end;
-}
-
-void
-EffectHelper::setBegin( qint64 begin )
-{
-    m_begin = begin;
-    emit lengthUpdated();
-}
-
-void
-EffectHelper::setEnd(qint64 end)
-{
-    m_end = end;
-    emit lengthUpdated();
-}
-
-void
-EffectHelper::setBoundaries( qint64 begin, qint64 end )
-{
-    m_begin = begin;
-    m_end = end;
-    emit lengthUpdated();
-}
-
-qint64
-EffectHelper::length() const
-{
-    return m_end - m_begin;
-}
-
-const QUuid&
-EffectHelper::uuid() const
-{
-    return m_uuid;
 }
 
 EffectInstance*

@@ -45,6 +45,7 @@ SET(VLMC_SRCS
     Workflow/AudioClipWorkflow.cpp 
     Workflow/ClipWorkflow.cpp
     Workflow/ClipHelper.cpp
+    Workflow/Helper.cpp
     Workflow/ImageClipWorkflow.cpp
     Workflow/MainWorkflow.cpp
     Workflow/TrackHandler.cpp
@@ -89,6 +90,7 @@ SET (VLMC_HDRS
     Workflow/AudioClipWorkflow.h 
     Workflow/ClipWorkflow.h
     Workflow/ClipHelper.h
+    Workflow/Helper.h
     Workflow/ImageClipWorkflow.h
     Workflow/MainWorkflow.h
     Workflow/TrackHandler.h

@@ -26,19 +26,14 @@
 
 ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
                         const QString& uuid /*= QString()*/ ) :
+    Helper( begin, end, uuid ),
     m_clip( clip ),
-    m_begin( begin ),
-    m_end( end ),
     m_clipWorkflow( NULL )
 {
     if ( begin == -1 )
         m_begin = clip->begin();
     if ( end == -1 )
         m_end = clip->end();
-    if ( uuid.isEmpty() == true )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = QUuid( uuid );
 }
 
 void
@@ -46,8 +41,7 @@ ClipHelper::setBegin( qint64 begin )
 {
     if ( begin < m_clip->m_begin )
         return ;
-    m_begin = begin;
-    emit lengthUpdated();
+    Workflow::Helper::setBegin( begin );
 }
 
 void
@@ -55,24 +49,17 @@ ClipHelper::setEnd( qint64 end )
 {
     if ( end > m_clip->m_end )
         return ;
-    m_end = end;
-    emit lengthUpdated();
+    Workflow::Helper::setEnd( end );
 }
 
 void
 ClipHelper::setBoundaries( qint64 begin, qint64 end )
 {
     if ( begin >= m_clip->m_begin )
-        m_begin = begin;
+        begin = begin;
     if ( end <= m_clip->m_end )
-        m_end = end;
-    emit lengthUpdated();
-}
-
-qint64
-ClipHelper::length() const
-{
-    return m_end - m_begin;
+        end = end;
+    setBoundaries( begin, end );
 }
 
 ClipWorkflow*

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectHelper: Contains informations about effects
+ * Helper.cpp: Describes a common interface for all workflow helpers.
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,32 +20,62 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef EFFECTHELPER_H
-#define EFFECTHELPER_H
-
-class   EffectInstance;
-
 #include "Helper.h"
 
-#include <QObject>
-#include <QUuid>
-#include <QMetaType>
+using namespace Workflow;
 
-class   EffectHelper : public Workflow::Helper
+Helper::Helper( qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString &uuid/* = QString()*/ ) :
+    m_begin( begin ),
+    m_end( end )
 {
-    Q_OBJECT
+    if ( uuid.isNull() == true )
+        m_uuid = QUuid::createUuid();
+    else
+        m_uuid = uuid;
+}
 
-    public:
-        EffectHelper( EffectInstance *effectInstance, qint64 begin = 0, qint64 end = -1,
-                      const QString& uuid = QString() );
+qint64
+Helper::begin() const
+{
+    return m_begin;
+}
 
-        EffectInstance          *effectInstance();
-        const EffectInstance    *effectInstance() const;
+qint64
+Helper::end() const
+{
+    return m_end;
+}
 
-    private:
-        EffectInstance          *m_effectInstance;
-};
+void
+Helper::setBegin( qint64 begin )
+{
+    m_begin = begin;
+    emit lengthUpdated();
+}
 
-Q_DECLARE_METATYPE( EffectHelper* );
+void
+Helper::setEnd(qint64 end)
+{
+    m_end = end;
+    emit lengthUpdated();
+}
 
-#endif // EFFECTHELPER_H
+void
+Helper::setBoundaries( qint64 begin, qint64 end )
+{
+    m_begin = begin;
+    m_end = end;
+    emit lengthUpdated();
+}
+
+qint64
+Helper::length() const
+{
+    return m_end - m_begin;
+}
+
+const QUuid&
+Helper::uuid() const
+{
+    return m_uuid;
+}
