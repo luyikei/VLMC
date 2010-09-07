@@ -140,7 +140,7 @@ EffectsEngine::loadEffects()
                     QString("/usr/lib/frei0r-1/" );
     }
 #elif defined ( Q_OS_WIN32 )
-    pathList << QDir::currentPath();
+    pathList << QDir::currentPath() + "/effects/";
 #endif
     foreach ( const QString &path, pathList )
     {
