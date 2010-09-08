@@ -30,6 +30,8 @@
 
 #include <QPainter>
 
+#include <QtDebug>
+
 GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effect( effect ),
         m_effectHelper( NULL )
@@ -184,10 +186,10 @@ GraphicsEffectItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsIte
     painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( text, Qt::ElideRight, mapped.width() ) );
 }
 
-Effect*
-GraphicsEffectItem::effect()
+EffectHelper*
+GraphicsEffectItem::effectHelper()
 {
-    return m_effect;
+    return m_effectHelper;
 }
 
 

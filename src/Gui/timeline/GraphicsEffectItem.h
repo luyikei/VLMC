@@ -41,7 +41,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual void                paint( QPainter *painter, const QStyleOptionGraphicsItem *option,
                                            QWidget *widget );
         virtual Workflow::TrackType trackType() const;
-        Effect*                     effect();
+        EffectHelper*               effectHelper();
         virtual qint64              begin() const;
         virtual qint64              end() const;
         virtual Workflow::Helper    *helper();
