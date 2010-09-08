@@ -192,6 +192,25 @@ void    Commands::Clip::Split::undo()
     m_toSplit->setEnd( m_oldEnd );
 }
 
+Commands::Effect::Add::Add( EffectHelper *helper, EffectUser *target ) :
+        m_helper( helper ),
+        m_target( target )
+{
+    setText( QObject::tr( "Adding effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+}
+
+void
+Commands::Effect::Add::redo()
+{
+    m_target->addEffect( m_helper );
+}
+
+void
+Commands::Effect::Add::undo()
+{
+    m_target->removeEffect( m_helper );
+}
+
 Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser,
                               qint64 pos) :
     m_helper( helper ),
@@ -200,6 +219,7 @@ Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser 
     m_newPos( pos )
 {
     m_oldPos = helper->begin();
+    setText( QObject::tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void

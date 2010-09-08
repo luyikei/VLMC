@@ -147,6 +147,17 @@ namespace Commands
     }
     namespace   Effect
     {
+        NEW_COMMAND( Add )
+        {
+            public:
+                Add( EffectHelper *helper, EffectUser *target );
+                virtual void    redo();
+                virtual void    undo();
+            private:
+                EffectHelper    *m_helper;
+                EffectUser      *m_target;
+        };
+
         NEW_COMMAND( Move )
         {
             public:
