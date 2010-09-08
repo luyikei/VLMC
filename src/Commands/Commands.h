@@ -35,6 +35,7 @@
 
 class   Clip;
 class   ClipHelper;
+class   EffectUser;
 
 #define NEW_COMMAND(x)      class   x : public Generic
 
@@ -142,6 +143,22 @@ namespace Commands
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;
+        };
+    }
+    namespace   Effect
+    {
+        NEW_COMMAND( Move )
+        {
+            public:
+                Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser, qint64 pos );
+                virtual void    redo();
+                virtual void    undo();
+            private:
+                EffectHelper    *m_helper;
+                EffectUser      *m_old;
+                EffectUser      *m_new;
+                qint64          m_oldPos;
+                qint64          m_newPos;
         };
     }
 }

@@ -24,6 +24,7 @@
 #include "config.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "EffectHelper.h"
 #include "Commands.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
@@ -188,4 +189,38 @@ void    Commands::Clip::Split::undo()
 {
     m_trackWorkflow->removeClip( m_newClip->uuid() );
     m_toSplit->setEnd( m_oldEnd );
+}
+
+Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser,
+                              qint64 pos) :
+    m_helper( helper ),
+    m_old( old ),
+    m_new( newUser ),
+    m_newPos( pos )
+{
+    m_oldPos = helper->begin();
+}
+
+void
+Commands::Effect::Move::redo()
+{
+    if ( m_old != m_new )
+    {
+        m_old->removeEffect( m_helper );
+        m_new->addEffect( m_helper );
+    }
+    else
+        m_new->moveEffect( m_helper, m_newPos );
+}
+
+void
+Commands::Effect::Move::undo()
+{
+    if ( m_old != m_new )
+    {
+        m_new->removeEffect( m_helper );
+        m_old->addEffect( m_helper );
+    }
+    else
+        m_new->moveEffect( m_helper, m_oldPos );
 }
