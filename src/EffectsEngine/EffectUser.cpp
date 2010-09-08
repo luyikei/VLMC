@@ -225,8 +225,10 @@ EffectUser::effects( Effect::Type type ) const
 }
 
 void
-EffectUser::removeEffect( Effect::Type type, quint32 idx )
+EffectUser::removeEffect( Effect::Type type, qint32 idx )
 {
+    Q_ASSERT( idx >= 0 );
+
     QWriteLocker    lock( m_effectsLock );
 
     if ( type == Effect::Filter )
@@ -269,16 +271,18 @@ EffectUser::removeEffect(EffectHelper *helper)
 }
 
 void
-EffectUser::swapFilters( quint32 idx, quint32 idx2 )
+EffectUser::swapFilters( qint32 idx, qint32 idx2 )
 {
-    if ( idx >= m_filters.size() || idx2 > m_filters.size() )
+    Q_ASSERT( idx >= 0 && idx2 >= 0 );
+
+    if ( idx >= m_filters.size() || idx2 >= m_filters.size() )
         return ;
     QWriteLocker        lock( m_effectsLock );
 
     m_filters.swap( idx, idx2 );
 }
 
-quint32
+qint32
 EffectUser::count( Effect::Type type ) const
 {
     QReadLocker     lock( m_effectsLock );

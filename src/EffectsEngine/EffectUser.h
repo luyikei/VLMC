@@ -47,9 +47,9 @@ class EffectUser : public QObject
         void                            moveEffect( EffectHelper *helper, qint64 newPos );
         void                            removeEffect( EffectHelper *helper );
         const EffectsEngine::EffectList &effects( Effect::Type type ) const;
-        void                            removeEffect( Effect::Type type, quint32 idx );
-        void                            swapFilters( quint32 idx, quint32 idx2 );
-        quint32                         count( Effect::Type type ) const;
+        void                            removeEffect( Effect::Type type, qint32 idx );
+        void                            swapFilters( qint32 idx, qint32 idx2 );
+        qint32                          count( Effect::Type type ) const;
         void                            cleanEffects();
 
     protected:
