@@ -40,6 +40,7 @@ EffectUser::EffectUser() :
 
 EffectUser::~EffectUser()
 {
+    cleanEffects();
     delete m_effectsLock;
 }
 
@@ -48,18 +49,23 @@ EffectUser::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/
 {
     //FIXME: Check it the effect type is supported
     EffectInstance  *effectInstance = effect->createInstance();
-    if ( m_isRendering == true )
-        effectInstance->init( m_width, m_height );
     EffectHelper *ret = new EffectHelper( effectInstance, start, end );
-
-    QWriteLocker    lock( m_effectsLock );
-    if ( effect->type() == Effect::Filter )
-        m_filters.push_back( ret );
-    else
-        m_mixers.push_back( ret );
+    addEffect( ret );
     return ret;
 }
 
+void
+EffectUser::addEffect( EffectHelper *effectHelper )
+{
+    if ( m_isRendering == true )
+        effectHelper->effectInstance()->init( m_width, m_height );
+    QWriteLocker    lock( m_effectsLock );
+    if ( effectHelper->effectInstance()->effect()->type() == Effect::Filter )
+        m_filters.push_back( effectHelper );
+    else
+        m_mixers.push_back( effectHelper );
+    emit effectAdded( effectHelper );
+}
 
 quint32*
 EffectUser::applyFilters( const Workflow::Frame* frame,
@@ -301,4 +307,15 @@ EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
         }
     }
     qWarning() << "Can't find effect" << helper->uuid();
+}
+
+void
+EffectUser::cleanEffects()
+{
+    QWriteLocker    lock( m_effectsLock );
+
+    qDeleteAll( m_filters );
+    qDeleteAll( m_mixers );
+    m_filters.clear();
+    m_mixers.clear();
 }
