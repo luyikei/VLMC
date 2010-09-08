@@ -22,9 +22,11 @@
 
 #include "GraphicsEffectItem.h"
 
+#include "Commands.h"
 #include "EffectHelper.h"
 #include "Timeline.h"
 #include "TracksView.h"
+#include "TrackWorkflow.h"
 
 #include <QPainter>
 
@@ -211,7 +213,10 @@ void
 GraphicsEffectItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                                  Workflow::Helper *helper, qint64 pos )
 {
-    //FIXME
+    EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
+    if ( eh == NULL )
+        return ;
+    Commands::trigger( new Commands::Effect::Move( eh, oldTrack, newTrack, pos ) );
 }
 
 void
