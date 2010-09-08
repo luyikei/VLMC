@@ -160,6 +160,20 @@ namespace Commands
                 qint64          m_oldPos;
                 qint64          m_newPos;
         };
+
+        NEW_COMMAND( Resize )
+        {
+            public:
+                Resize( EffectHelper *helper, qint64 newBegin, qint64 newEnd );
+                virtual void        redo();
+                virtual void        undo();
+            private:
+                EffectHelper        *m_helper;
+                qint64              m_newBegin;
+                qint64              m_newEnd;
+                qint64              m_oldBegin;
+                qint64              m_oldEnd;
+        };
     }
 }
 

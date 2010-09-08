@@ -220,8 +220,11 @@ GraphicsEffectItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrac
 }
 
 void
-GraphicsEffectItem::triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
-                                   qint64 newBegin, qint64 newEnd, qint64 pos )
+GraphicsEffectItem::triggerResize( TrackWorkflow *, Workflow::Helper *helper,
+                                   qint64 newBegin, qint64 newEnd, qint64 )
 {
-    //FIXME
+    EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
+    if ( eh == NULL )
+        return ;
+    Commands::trigger( new Commands::Effect::Resize( eh, newBegin, newEnd ) );
 }

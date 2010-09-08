@@ -25,6 +25,7 @@
 #include "Clip.h"
 #include "ClipHelper.h"
 #include "EffectHelper.h"
+#include "EffectInstance.h"
 #include "Commands.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
@@ -223,4 +224,26 @@ Commands::Effect::Move::undo()
     }
     else
         m_new->moveEffect( m_helper, m_oldPos );
+}
+
+Commands::Effect::Resize::Resize( EffectHelper *helper, qint64 newBegin, qint64 newEnd ) :
+        m_helper( helper ),
+        m_newBegin( newBegin ),
+        m_newEnd( newEnd )
+{
+    setText( QObject::tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    m_oldBegin = helper->begin();
+    m_oldEnd = helper->end();
+}
+
+void
+Commands::Effect::Resize::redo()
+{
+    m_helper->setBoundaries( m_newBegin, m_newEnd );
+}
+
+void
+Commands::Effect::Resize::undo()
+{
+    m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
