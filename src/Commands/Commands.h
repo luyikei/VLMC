@@ -50,7 +50,9 @@ namespace Commands
         public:
             virtual void    redo() = 0;
             virtual void    undo() = 0;
-            void            setText( const QString& ) {}
+#ifndef WITH_GUI
+            virtual void    setText( const QString& ) {}
+#endif
     };
 
 #ifdef WITH_GUI
