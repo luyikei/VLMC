@@ -58,13 +58,13 @@ namespace Commands
     void        trigger( Generic* command );
 #endif
 
-    namespace   MainWorkflow
+    namespace   Clip
     {
-        NEW_COMMAND( AddClip )
+        NEW_COMMAND( Add )
         {
             public:
-                AddClip( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
-                virtual ~AddClip();
+                Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
+                virtual ~Add();
                 virtual void    redo();
                 virtual void    undo();
             private:
@@ -73,11 +73,11 @@ namespace Commands
                 qint64                      m_pos;
         };
 
-        NEW_COMMAND( MoveClip )
+        NEW_COMMAND( Move )
         {
             public:
-                MoveClip( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                          ClipHelper *clipHelper, qint64 newPos );
+                Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+                        ClipHelper *clipHelper, qint64 newPos );
                 virtual void    redo();
                 virtual void    undo();
 
@@ -89,10 +89,10 @@ namespace Commands
                 qint64          m_oldPos;
         };
 
-        NEW_COMMAND( RemoveClip )
+        NEW_COMMAND( Remove )
         {
             public:
-                RemoveClip( ClipHelper* clip, TrackWorkflow* tw );
+                Remove( ClipHelper* clip, TrackWorkflow* tw );
                 virtual void redo();
                 virtual void undo();
 
@@ -109,10 +109,10 @@ namespace Commands
          *  \param  newPos: if the clip was resized from the beginning, it is moved
          *                  so we have to know its new position
         */
-        NEW_COMMAND( ResizeClip )
+        NEW_COMMAND( Resize )
         {
             public:
-                ResizeClip( TrackWorkflow* tw, ClipHelper* clipHelper,
+                Resize( TrackWorkflow* tw, ClipHelper* clipHelper,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    redo();
                 virtual void    undo();
@@ -127,12 +127,12 @@ namespace Commands
                 qint64                      m_oldPos;
         };
 
-        NEW_COMMAND( SplitClip )
+        NEW_COMMAND( Split )
         {
             public:
-                SplitClip( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
+                Split( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
-                ~SplitClip();
+                ~Split();
                 virtual void    redo();
                 virtual void    undo();
             private:

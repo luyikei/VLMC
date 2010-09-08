@@ -280,7 +280,7 @@ AbstractGraphicsMediaItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *
     ClipHelper      *clipHelper = qobject_cast<ClipHelper*>( helper );
     if ( clipHelper == NULL )
         return ;
-    Commands::trigger( new Commands::MainWorkflow::MoveClip( oldTrack, newTrack,
+    Commands::trigger( new Commands::Clip::Move( oldTrack, newTrack,
                                                              clipHelper, pos ) );
 }
 
@@ -297,6 +297,6 @@ AbstractGraphicsMediaItem::triggerResize( TrackWorkflow *tw, Workflow::Helper *h
     ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( helper );
     if ( clipHelper == NULL )
         return ;
-    Commands::trigger( new Commands::MainWorkflow::ResizeClip( tw, clipHelper, newBegin,
+    Commands::trigger( new Commands::Clip::Resize( tw, clipHelper, newBegin,
                                                                newEnd, pos ) );
 }

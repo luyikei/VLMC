@@ -708,7 +708,7 @@ TracksView::dropEvent( QDropEvent *event )
 
             m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
 
-            Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragAudioItem->clipHelper(),
+            Commands::trigger( new Commands::Clip::Add( m_dragAudioItem->clipHelper(),
                                                                     m_dragAudioItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
             m_dragAudioItem = NULL;
@@ -725,7 +725,7 @@ TracksView::dropEvent( QDropEvent *event )
 
             m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
 
-            Commands::trigger( new Commands::MainWorkflow::AddClip( m_dragVideoItem->clipHelper(),
+            Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clipHelper(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
             m_dragVideoItem = NULL;
@@ -1222,7 +1222,7 @@ TracksView::split( AbstractGraphicsMediaItem *item, qint64 frame )
     //item->startPos() is the position of the splitted clip (in frame)
     //therefore, the position of the newly created clip is
     //the splitted clip pos + the splitting point (ie startPos() + frame)
-    Commands::trigger( new Commands::MainWorkflow::SplitClip( item->track()->trackWorkflow(),
+    Commands::trigger( new Commands::Clip::Split( item->track()->trackWorkflow(),
                                             item->clipHelper(), item->startPos() + frame,
                                             frame + item->clipHelper()->begin() ) );
 }

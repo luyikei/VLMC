@@ -46,7 +46,7 @@ void Commands::trigger( Commands::Generic* command )
 
 
 
-Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
+Commands::Clip::Add::Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
         m_clipHelper( ch ),
         m_trackWorkflow( tw ),
         m_pos( pos )
@@ -54,21 +54,21 @@ Commands::MainWorkflow::AddClip::AddClip( ClipHelper* ch, TrackWorkflow* tw, qin
     setText( QObject::tr( "Adding clip to track %1" ).arg( tw->trackId() ) );
 }
 
-Commands::MainWorkflow::AddClip::~AddClip()
+Commands::Clip::Add::~Add()
 {
 }
 
-void Commands::MainWorkflow::AddClip::redo()
+void Commands::Clip::Add::redo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-void Commands::MainWorkflow::AddClip::undo()
+void Commands::Clip::Add::undo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
 
-Commands::MainWorkflow::MoveClip::MoveClip( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
+Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                                             ClipHelper *clipHelper, qint64 newPos ) :
     m_oldTrack( oldTrack ),
     m_newTrack( newTrack ),
@@ -86,7 +86,7 @@ Commands::MainWorkflow::MoveClip::MoveClip( TrackWorkflow *oldTrack, TrackWorkfl
     m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
 }
 
-void Commands::MainWorkflow::MoveClip::redo()
+void Commands::Clip::Move::redo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -97,7 +97,7 @@ void Commands::MainWorkflow::MoveClip::redo()
         m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
 }
 
-void Commands::MainWorkflow::MoveClip::undo()
+void Commands::Clip::Move::undo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -108,23 +108,23 @@ void Commands::MainWorkflow::MoveClip::undo()
         m_newTrack->moveClip( m_clipHelper->uuid(), m_oldPos );
 }
 
-Commands::MainWorkflow::RemoveClip::RemoveClip( ClipHelper* ch, TrackWorkflow* tw ) :
+Commands::Clip::Remove::Remove( ClipHelper* ch, TrackWorkflow* tw ) :
         m_clipHelper( ch ), m_trackWorkflow( tw )
 {
     setText( QObject::tr( "Remove clip" ) );
     m_pos = tw->getClipPosition( ch->uuid() );
 }
 
-void Commands::MainWorkflow::RemoveClip::redo()
+void Commands::Clip::Remove::redo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
-void Commands::MainWorkflow::RemoveClip::undo()
+void Commands::Clip::Remove::undo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-Commands::MainWorkflow::ResizeClip::ResizeClip( TrackWorkflow* tw,
+Commands::Clip::Resize::Resize( TrackWorkflow* tw,
                                                 ClipHelper* ch,
                                                 qint64 newBegin, qint64 newEnd,
                                                 qint64 newPos ) :
@@ -140,7 +140,7 @@ Commands::MainWorkflow::ResizeClip::ResizeClip( TrackWorkflow* tw,
     setText( QObject::tr( "Resizing clip" ) );
 }
 
-void Commands::MainWorkflow::ResizeClip::redo()
+void Commands::Clip::Resize::redo()
 {
     if ( m_newBegin != m_newEnd )
     {
@@ -149,7 +149,7 @@ void Commands::MainWorkflow::ResizeClip::redo()
     m_clipHelper->setBoundaries( m_newBegin, m_newEnd );
 }
 
-void Commands::MainWorkflow::ResizeClip::undo()
+void Commands::Clip::Resize::undo()
 {
     if ( m_oldBegin != m_newBegin )
     {
@@ -158,7 +158,7 @@ void Commands::MainWorkflow::ResizeClip::undo()
     m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::MainWorkflow::SplitClip::SplitClip( TrackWorkflow *tw, ClipHelper *toSplit,
+Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
                                              qint64 newClipPos, qint64 newClipBegin ) :
     m_trackWorkflow( tw ),
     m_toSplit( toSplit ),
@@ -171,12 +171,12 @@ Commands::MainWorkflow::SplitClip::SplitClip( TrackWorkflow *tw, ClipHelper *toS
     setText( QObject::tr("Splitting clip") );
 }
 
-Commands::MainWorkflow::SplitClip::~SplitClip()
+Commands::Clip::Split::~Split()
 {
     delete m_newClip;
 }
 
-void    Commands::MainWorkflow::SplitClip::redo()
+void    Commands::Clip::Split::redo()
 {
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
@@ -184,7 +184,7 @@ void    Commands::MainWorkflow::SplitClip::redo()
     m_trackWorkflow->addClip( m_newClip, m_newClipPos );
 }
 
-void    Commands::MainWorkflow::SplitClip::undo()
+void    Commands::Clip::Split::undo()
 {
     m_trackWorkflow->removeClip( m_newClip->uuid() );
     m_toSplit->setEnd( m_oldEnd );

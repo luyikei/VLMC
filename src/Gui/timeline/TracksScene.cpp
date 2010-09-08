@@ -106,7 +106,7 @@ TracksScene::askRemoveSelectedItems()
         AbstractGraphicsMediaItem* item = qgraphicsitem_cast<AbstractGraphicsMediaItem*>( items.at(i) );
         if ( !item ) return;
 
-        Commands::trigger( new Commands::MainWorkflow::RemoveClip( item->clipHelper(), item->track()->trackWorkflow() ) );
+        Commands::trigger( new Commands::Clip::Remove( item->clipHelper(), item->track()->trackWorkflow() ) );
     }
 
     UndoStack::getInstance()->endMacro();
