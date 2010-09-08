@@ -471,13 +471,11 @@ MainWindow::initializeDockWidgets( void )
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
 
-    QDockWidget* dock = dockManager->addDockedWidget( UndoStack::getInstance( this ),
+    dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                   Qt::AllDockWidgetAreas,
                                   QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
-    if ( dock != 0 )
-        dock->hide();
     setupLibrary();
 }
 
