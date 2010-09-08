@@ -62,6 +62,7 @@ ENDIF(WIN32)
 
 SET (VLMC_HDRS
     EffectsEngine/EffectHelper.h
+    EffectsEngine/EffectUser.h
     EffectsEngine/EffectsEngine.h
     EffectsEngine/EffectSettingValue.h
     Library/Library.h

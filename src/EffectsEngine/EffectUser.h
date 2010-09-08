@@ -34,6 +34,8 @@ class   QReadWriteLock;
 
 class EffectUser : public QObject
 {
+    Q_OBJECT
+
     public:
         /**
          *  \brief      Add an effect to the TrackWorkflow
@@ -41,6 +43,8 @@ class EffectUser : public QObject
          *  \param      effect  The effect instance. Can be either mixer or filter.
          */
         EffectHelper                    *addEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
+        void                            moveEffect( EffectHelper *helper, qint64 newPos );
+        void                            removeEffect( EffectHelper *helper );
         const EffectsEngine::EffectList &effects( Effect::Type type ) const;
         void                            removeEffect( Effect::Type type, quint32 idx );
         void                            swapFilters( quint32 idx, quint32 idx2 );
@@ -75,6 +79,10 @@ class EffectUser : public QObject
         QReadWriteLock                          *m_effectsLock;
         EffectsEngine::EffectList               m_mixers;
         EffectsEngine::EffectList               m_filters;
+
+    signals:
+        void                                    effectMoved( EffectHelper *helper, qint64 newPos );
+        void                                    effectRemoved( EffectHelper *helper );
 };
 
 #endif // EFFECTUSER_H

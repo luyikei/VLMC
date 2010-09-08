@@ -226,15 +226,40 @@ EffectUser::removeEffect( Effect::Type type, quint32 idx )
     if ( type == Effect::Filter )
     {
         if ( idx < m_filters.size() )
-           m_filters.removeAt( idx );
+        {
+            EffectHelper    *helper = m_filters.takeAt( idx );
+            emit    effectRemoved( helper );
+        }
     }
     else if ( type == Effect::Mixer2 )
     {
         if ( idx < m_mixers.size() )
-            m_mixers.removeAt( idx );
+        {
+            EffectHelper    *helper = m_mixers.takeAt( idx );
+            emit    effectRemoved( helper );
+        }
     }
     else
         qCritical() << "Unhandled effect type";
+}
+
+void
+EffectUser::removeEffect(EffectHelper *helper)
+{
+    QWriteLocker    lock( m_effectsLock );
+
+    EffectsEngine::EffectList::iterator     it = m_filters.begin();
+    EffectsEngine::EffectList::iterator     ite = m_filters.end();
+    while ( it != ite )
+    {
+        if ( (*it)->uuid() == helper->uuid() )
+        {
+            m_filters.erase( it );
+            emit effectRemoved( (*it) );
+            return ;
+        }
+    }
+    qWarning() << "Can't find EffectHelper" << helper->uuid() << "for removal.";
 }
 
 void
@@ -258,4 +283,22 @@ EffectUser::count( Effect::Type type ) const
         return m_mixers.count();
     qCritical() << "Unhandled effect type";
     return 0;
+}
+
+void
+EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
+{
+    QWriteLocker    lock( m_effectsLock );
+
+    foreach ( EffectHelper *eh, m_filters )
+    {
+        if ( helper->uuid() == eh->uuid() )
+        {
+            qint64  offset = helper->begin() - newPos;
+            helper->setBoundaries( newPos, helper->end() - offset );
+            emit effectMoved( helper, newPos );
+            return ;
+        }
+    }
+    qWarning() << "Can't find effect" << helper->uuid();
 }
