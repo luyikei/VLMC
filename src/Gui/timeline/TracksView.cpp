@@ -779,12 +779,14 @@ TracksView::dropEvent( QDropEvent *event )
                 if ( track != NULL )
                 {
                     m_itemsLoaded.insert( m_dragEffectItem->helper()->uuid() );
-                    Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                                  track->trackWorkflow() ) );
-                    m_dragEffectItem->m_oldTrack = track->trackWorkflow();
-                    event->acceptProposedAction();
+                    updateDuration();
                     if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
                         addTrack( Workflow::VideoTrack );
+                    m_dragEffectItem->m_oldTrack = track->trackWorkflow();
+                    Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
+                                                                  track->trackWorkflow() ) );
+
+                    event->acceptProposedAction();
                     break ;
                 }
             }
@@ -953,9 +955,9 @@ TracksView::mousePressEvent( QMouseEvent *event )
         if ( clickPos.x() < RESIZE_ZONE || clickPos.x() > ( itemSize.x() - RESIZE_ZONE ) )
         {
             if ( clickPos.x() < RESIZE_ZONE )
-                m_actionResizeType = AbstractGraphicsMediaItem::END;
+                m_actionResizeType = AbstractGraphicsItem::END;
             else
-                m_actionResizeType = AbstractGraphicsMediaItem::BEGINNING;
+                m_actionResizeType = AbstractGraphicsItem::BEGINNING;
             m_action = TracksView::Resize;
             m_actionItem = item;
         }
@@ -1047,7 +1049,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     {
         qint64  newBegin;
         qint64  newEnd;
-        if ( m_actionResizeType == AbstractGraphicsMediaItem::END )
+        if ( m_actionResizeType == AbstractGraphicsItem::END )
         {
             newEnd = m_actionItem->helper()->end();
             newBegin = newEnd - m_actionItem->width();
@@ -1207,7 +1209,7 @@ TracksView::cleanTracks( Workflow::TrackType type )
         if ( !track )
             continue;
 
-        QList<AbstractGraphicsMediaItem*> items = track->childs();
+        QList<AbstractGraphicsItem*> items = track->childs();
 
         if ( items.count() == 0 )
             tracksToRemove++;

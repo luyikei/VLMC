@@ -27,6 +27,7 @@
 #include <QList>
 #include "Types.h"
 
+class   AbstractGraphicsItem;
 class   AbstractGraphicsMediaItem;
 class   TrackWorkflow;
 
@@ -50,7 +51,7 @@ public:
     TrackWorkflow       *trackWorkflow();
     void                setEmphasized( bool value );
 
-    QList<AbstractGraphicsMediaItem*> childs();
+    QList<AbstractGraphicsItem*> childs();
 
 private:
     Workflow::TrackType m_type;

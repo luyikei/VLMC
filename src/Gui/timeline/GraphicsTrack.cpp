@@ -87,16 +87,16 @@ GraphicsTrack::mediaType()
     return m_type;
 }
 
-QList<AbstractGraphicsMediaItem*>
+QList<AbstractGraphicsItem*>
 GraphicsTrack::childs()
 {
-    QList<AbstractGraphicsMediaItem*> list;
+    QList<AbstractGraphicsItem*> list;
     QList<QGraphicsItem*> items = childItems();
-    AbstractGraphicsMediaItem* item;
+    AbstractGraphicsItem* item;
 
     for ( int i = 0; i < items.count(); ++i )
     {
-        item = dynamic_cast<AbstractGraphicsMediaItem*>( items.at( i ) );
+        item = dynamic_cast<AbstractGraphicsItem*>( items.at( i ) );
         if ( !item )
             continue;
         list.append( item );
