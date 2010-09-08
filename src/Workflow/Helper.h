@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QUuid>
+#include <QMetaType>
 
 namespace   Workflow
 {
@@ -53,5 +54,7 @@ namespace   Workflow
             void                    lengthUpdated();
     };
 }
+
+Q_DECLARE_METATYPE( Workflow::Helper* );
 
 #endif // IHELPER_H

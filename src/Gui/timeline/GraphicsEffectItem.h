@@ -33,6 +33,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
     public:
         enum { Type = UserType + 3 };
         GraphicsEffectItem( Effect *effect );
+        GraphicsEffectItem( EffectHelper *helper );
 
         virtual const QUuid&        uuid() const;
         virtual int                 type() const;

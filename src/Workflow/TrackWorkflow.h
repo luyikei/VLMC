@@ -33,6 +33,10 @@
 class   Clip;
 class   ClipHelper;
 class   ClipWorkflow;
+namespace   Workflow
+{
+    class   Helper;
+}
 
 class   QDomElement;
 class   QDomElement;
@@ -126,11 +130,22 @@ class   TrackWorkflow : public EffectUser
         double                                  m_fps;
         const quint32                           m_trackId;
 
+    private slots:
+        void                __effectAdded( EffectHelper*, qint64 );
+        void                __effectRemoved( const QUuid& );
+        void                __effectMoved( const QUuid&, qint64 );
+
     signals:
         void                lengthChanged( qint64 newLength );
-        void                clipAdded( TrackWorkflow*, ClipHelper*, qint64 );
+        void                clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
         void                clipRemoved( TrackWorkflow*, const QUuid& );
         void                clipMoved( TrackWorkflow*, const QUuid&, qint64 );
+
+        //these signals are here to ease connection with tracksview, as it only
+        //monitors tracks, and not generics EffectUsers
+        void                effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
+        void                effectRemoved( TrackWorkflow*, const QUuid& );
+        void                effectMoved( TrackWorkflow*, const QUuid&, qint64 );
 };
 
 #endif // TRACKWORKFLOW_H

@@ -143,7 +143,7 @@ void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent
             qint32      item1TrackId = item1->trackNumber();
             Q_ASSERT( item1TrackId >= 0 );
             item1->group( this );
-            tracksView()->moveMediaItem( item1, item1TrackId , startPos() );
+            tracksView()->moveItem( item1, item1TrackId , startPos() );
             track()->trackWorkflow()->moveClip( item1->clipHelper()->uuid(), startPos() );
         }
     }

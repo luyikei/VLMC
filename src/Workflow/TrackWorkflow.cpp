@@ -51,6 +51,13 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
     m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
+
+    connect( this, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
+             this, SLOT( __effectAdded( EffectHelper*, qint64) ) );
+    connect( this, SIGNAL( effectMoved( QUuid, qint64 ) ),
+             this, SLOT( __effectMoved( QUuid, qint64 ) ) );
+    connect( this, SIGNAL( effectRemoved( QUuid ) ),
+             this, SLOT( __effectRemoved(QUuid ) ) );
 }
 
 TrackWorkflow::~TrackWorkflow()
@@ -618,4 +625,22 @@ EffectsEngine::EffectList*
 TrackWorkflow::mixers()
 {
     return &m_mixers;
+}
+
+void
+TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
+{
+    emit effectAdded( this, helper, pos );
+}
+
+void
+TrackWorkflow::__effectRemoved( const QUuid& uuid )
+{
+    emit effectRemoved( this, uuid );
+}
+
+void
+TrackWorkflow::__effectMoved( const QUuid& uuid, qint64 pos )
+{
+    emit effectMoved( this, uuid, pos );
 }

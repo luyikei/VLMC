@@ -83,9 +83,9 @@ class EffectUser : public QObject
         EffectsEngine::EffectList               m_filters;
 
     signals:
-        void                                    effectAdded( EffectHelper *helper );
-        void                                    effectMoved( EffectHelper *helper, qint64 newPos );
-        void                                    effectRemoved( EffectHelper *helper );
+        void                                    effectAdded( EffectHelper *helper, qint64 pos );
+        void                                    effectMoved( const QUuid&, qint64 newPos );
+        void                                    effectRemoved( const QUuid& );
 };
 
 #endif // EFFECTUSER_H

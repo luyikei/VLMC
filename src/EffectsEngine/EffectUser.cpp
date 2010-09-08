@@ -64,7 +64,7 @@ EffectUser::addEffect( EffectHelper *effectHelper )
         m_filters.push_back( effectHelper );
     else
         m_mixers.push_back( effectHelper );
-    emit effectAdded( effectHelper );
+    emit effectAdded( effectHelper, effectHelper->begin() );
 }
 
 quint32*
@@ -236,7 +236,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_filters.size() )
         {
             EffectHelper    *helper = m_filters.takeAt( idx );
-            emit    effectRemoved( helper );
+            emit    effectRemoved( helper->uuid() );
         }
     }
     else if ( type == Effect::Mixer2 )
@@ -244,7 +244,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_mixers.size() )
         {
             EffectHelper    *helper = m_mixers.takeAt( idx );
-            emit    effectRemoved( helper );
+            emit    effectRemoved( helper->uuid() );
         }
     }
     else
@@ -263,7 +263,7 @@ EffectUser::removeEffect(EffectHelper *helper)
         if ( (*it)->uuid() == helper->uuid() )
         {
             m_filters.erase( it );
-            emit effectRemoved( (*it) );
+            emit effectRemoved( (*it)->uuid() );
             return ;
         }
     }
@@ -306,7 +306,7 @@ EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
         {
             qint64  offset = helper->begin() - newPos;
             helper->setBoundaries( newPos, helper->end() - offset );
-            emit effectMoved( helper, newPos );
+            emit effectMoved( helper->uuid(), newPos );
             return ;
         }
     }

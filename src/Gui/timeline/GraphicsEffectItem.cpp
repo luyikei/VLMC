@@ -24,6 +24,7 @@
 
 #include "Commands.h"
 #include "EffectHelper.h"
+#include "EffectInstance.h"
 #include "Timeline.h"
 #include "TracksView.h"
 #include "TrackWorkflow.h"
@@ -38,6 +39,15 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
 {
     setOpacity( 0.8 );
     m_effectHelper = new EffectHelper( effect->createInstance() );
+    setWidth( m_effectHelper->length() );
+}
+
+GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
+        m_effectHelper( helper )
+{
+    setWidth( m_effectHelper->length() );
+    m_effect = helper->effectInstance()->effect();
+    setOpacity( 0.8 );
 }
 
 const QUuid&

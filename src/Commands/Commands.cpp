@@ -251,7 +251,6 @@ Commands::Effect::Resize::Resize( EffectHelper *helper, qint64 newBegin, qint64 
         m_newBegin( newBegin ),
         m_newEnd( newEnd )
 {
-    setText( QObject::tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
     m_oldBegin = helper->begin();
     m_oldEnd = helper->end();
 }

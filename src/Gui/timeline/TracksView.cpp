@@ -25,12 +25,14 @@
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "Commands.h"
-#include "Library.h"
+#include "EffectHelper.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsEffectItem.h"
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
+#include "Helper.h"
+#include "Library.h"
 #include "Media.h"
 //Ugly part {
 #include "Timeline.h"
@@ -126,12 +128,20 @@ TracksView::addTrack( Workflow::TrackType type )
     m_layout->activate();
     m_cursorLine->setHeight( m_layout->contentsRect().height() );
     m_scene->invalidate(); // Redraw the background
-    connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, ClipHelper*, qint64 ) ),
-             this, SLOT( addMediaItem( TrackWorkflow*, ClipHelper*, qint64 ) ) );
+    //Clips part:
+    connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
+             this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
-             this, SLOT( removeMediaItem( TrackWorkflow*, const QUuid& ) ) );
+             this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
-             this, SLOT( moveMediaItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
+             this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
+    //Effect part:
+    connect( track->trackWorkflow(), SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
+             this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
+    connect( track->trackWorkflow(), SIGNAL( effectRemoved( TrackWorkflow*, QUuid ) ),
+             this, SLOT( removeItem( TrackWorkflow*, QUuid ) ) );
+    connect( track->trackWorkflow(), SIGNAL( effectMoved( TrackWorkflow*, QUuid, qint64 ) ),
+             this, SLOT( moveItem( TrackWorkflow*, QUuid, qint64 ) ) );
 
     if ( type == Workflow::VideoTrack )
     {
@@ -208,7 +218,7 @@ TracksView::removeClip( const QUuid& uuid  )
         if ( item->uuid() == uuid )
         {
             // Remove the item from the timeline
-            removeMediaItem( item->track()->trackWorkflow(), item->uuid() );
+            removeItem( item->track()->trackWorkflow(), item->uuid() );
 
             // Removing the item from the backend.
             item->track()->trackWorkflow()->removeClip( item->uuid() );
@@ -217,14 +227,14 @@ TracksView::removeClip( const QUuid& uuid  )
 }
 
 void
-TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
+TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
 {
-    Q_ASSERT( ch );
+    Q_ASSERT( helper );
 
     //If for some reasons the clip was already loaded, don't add it twice.
     //This would likely happen when adding a clip from the timeline, as an element will
     //already be created (by the drag and drop operation)
-    if ( m_clipsLoaded.contains( ch->uuid() ) )
+    if ( m_itemsLoaded.contains( helper->uuid() ) )
         return ;
     qint32                  track = tw->trackId();
     Workflow::TrackType     trackType = tw->type();
@@ -250,26 +260,38 @@ TracksView::addMediaItem( TrackWorkflow *tw, ClipHelper *ch, qint64 start )
         }
     }
 
-    AbstractGraphicsMediaItem *item = 0;
-    if ( trackType == Workflow::VideoTrack )
+    AbstractGraphicsItem        *item = NULL;
+    ClipHelper                  *clipHelper = qobject_cast<ClipHelper*>( helper );
+    if ( clipHelper != NULL )
     {
-        item = new GraphicsMovieItem( ch );
-        connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
-                 this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        AbstractGraphicsMediaItem   *mediaItem = NULL;
+        if ( trackType == Workflow::VideoTrack )
+        {
+            mediaItem = new GraphicsMovieItem( clipHelper );
+            connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
+                     this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        }
+        else if ( trackType == Workflow::AudioTrack )
+        {
+            mediaItem = new GraphicsAudioItem( clipHelper );
+            connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
+                     this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        }
+        item = mediaItem;
     }
-    else if ( trackType == Workflow::AudioTrack )
+    else
     {
-        item = new GraphicsAudioItem( ch );
-        connect( item, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
-                 this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
+        Q_ASSERT( effectHelper != NULL );
+        item = new GraphicsEffectItem( effectHelper );
     }
-    m_clipsLoaded.insert( ch->uuid() );
+    m_itemsLoaded.insert( helper->uuid() );
     item->m_tracksView = this;
     item->setHeight( tracksHeight() );
     item->setTrack( getTrack( trackType, track ) );
     item->setStartPos( start );
     item->m_oldTrack = tw;
-    moveMediaItem( item, track, start );
+    moveItem( item, track, start );
     updateDuration();
 }
 
@@ -337,18 +359,18 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
          clip->getMedia()->hasVideoTrack() == true  )
         m_dragVideoItem->group( m_dragAudioItem );
     if ( clip->getMedia()->hasVideoTrack() == false )
-        moveMediaItem( m_dragAudioItem, event->pos() );
+        moveItem( m_dragAudioItem, event->pos() );
     else
-        moveMediaItem( m_dragVideoItem, event->pos() );
+        moveItem( m_dragVideoItem, event->pos() );
 }
 
 void
 TracksView::dragMoveEvent( QDragMoveEvent *event )
 {
     if ( m_dragVideoItem != NULL )
-        moveMediaItem( m_dragVideoItem, event->pos() );
+        moveItem( m_dragVideoItem, event->pos() );
     else if ( m_dragAudioItem != NULL)
-        moveMediaItem( m_dragAudioItem, event->pos() );
+        moveItem( m_dragAudioItem, event->pos() );
     else if ( m_dragEffectItem != NULL )
     {
         //Only get medias from here, as we much drag an effect to a media or a track
@@ -382,7 +404,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
 }
 
 void
-TracksView::moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
+TracksView::moveItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
 {
     QList<QGraphicsItem*> sceneItems = m_scene->items();
 
@@ -392,7 +414,7 @@ TracksView::moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
                 dynamic_cast<AbstractGraphicsItem*>( sceneItems.at( i ) );
         if ( !item || item->uuid() != uuid )
             continue;
-        moveMediaItem( item, tw->trackId(), time );
+        moveItem( item, tw->trackId(), time );
         break ;
     }
     updateDuration();
@@ -400,7 +422,7 @@ TracksView::moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
 }
 
 void
-TracksView::moveMediaItem( AbstractGraphicsItem *item, QPoint position )
+TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
 {
     GraphicsTrack *track = NULL;
 
@@ -427,11 +449,11 @@ TracksView::moveMediaItem( AbstractGraphicsItem *item, QPoint position )
     m_lastKnownTrack = track;
 
     qreal time = ( mapToScene( position ).x() + 0.5 );
-    moveMediaItem( item, track->trackNumber(), (qint64)time);
+    moveItem( item, track->trackNumber(), (qint64)time);
 }
 
 void
-TracksView::moveMediaItem( AbstractGraphicsItem *item, qint32 track, qint64 time )
+TracksView::moveItem( AbstractGraphicsItem *item, qint32 track, qint64 time )
 {
     // Add missing tracks
     if ( item->trackType() == Workflow::AudioTrack )
@@ -643,7 +665,7 @@ TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time 
 }
 
 void
-TracksView::removeMediaItem( TrackWorkflow *tw, const QUuid &uuid )
+TracksView::removeItem( TrackWorkflow *tw, const QUuid &uuid )
 {
     GraphicsTrack           *track = getTrack( tw->type(), tw->trackId() );
 
@@ -653,19 +675,18 @@ TracksView::removeMediaItem( TrackWorkflow *tw, const QUuid &uuid )
 
     for ( int i = 0; i < trackItems.size(); ++i )
     {
-        AbstractGraphicsMediaItem *item =
-                dynamic_cast<AbstractGraphicsMediaItem*>( trackItems.at( i ) );
+        AbstractGraphicsItem    *item = dynamic_cast<AbstractGraphicsItem*>( trackItems.at( i ) );
         if ( !item || item->uuid() != uuid )
             continue;
-        removeMediaItem( item );
+        removeItem( item );
     }
 }
 
 void
-TracksView::removeMediaItem( AbstractGraphicsMediaItem *item )
+TracksView::removeItem( AbstractGraphicsItem *item )
 {
+    m_itemsLoaded.remove( item->uuid() );
     delete item;
-    m_clipsLoaded.remove( item->clipHelper()->uuid() );
     updateDuration();
 }
 
@@ -699,7 +720,7 @@ TracksView::dropEvent( QDropEvent *event )
 
         if ( m_dragAudioItem )
         {
-            m_clipsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
+            m_itemsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
 
             updateDuration();
             if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
@@ -716,7 +737,7 @@ TracksView::dropEvent( QDropEvent *event )
 
         if ( m_dragVideoItem )
         {
-            m_clipsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
+            m_itemsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
 
             updateDuration();
             if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
@@ -844,7 +865,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         m_actionItem->setOpacity( 0.6 );
         if ( m_actionRelativeX < 0 )
             m_actionRelativeX = event->pos().x() - mapFromScene( m_actionItem->pos() ).x();
-        moveMediaItem( m_actionItem, QPoint( event->pos().x() - m_actionRelativeX, event->pos().y() ) );
+        moveItem( m_actionItem, QPoint( event->pos().x() - m_actionRelativeX, event->pos().y() ) );
     }
     else if ( event->modifiers() == Qt::NoModifier &&
               event->buttons() == Qt::LeftButton &&

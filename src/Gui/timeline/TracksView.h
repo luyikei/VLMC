@@ -38,6 +38,7 @@ class QGraphicsLinearLayout;
 
 class   ClipHelper;
 class   Effect;
+class   EffectHelper;
 class   GraphicsAudioItem;
 class   GraphicsEffectItem;
 class   GraphicsMovieItem;
@@ -59,11 +60,11 @@ public:
         m_time = time;
     }
 
-    qint32      track()
+    qint32      track() const
     {
         return m_track;
     }
-    qint64      time()
+    qint64      time() const
     {
         return m_time;
     }
@@ -77,7 +78,7 @@ public:
         m_time = time;
     }
 
-    bool        isValid()
+    bool        isValid() const
     {
         if ( m_track < 0 || m_time < 0 )
             return false;
@@ -212,31 +213,30 @@ public slots:
     void                    clear();
     /**
      * \brief Insert an item into the timeline.
-     * \param clip Clip to insert.
-     * \param track The track's number.
-     * \param trackType The type of the track (Audio or Video)
-     * \param start The position in frames.
+     * \param tw        The track the item was added in.
+     * \param helper    The helper's item.
+     * \param start     The position in frames.
      */
-    void                    addMediaItem( TrackWorkflow* tw, ClipHelper *clipHelper, qint64 start );
+    void                    addItem( TrackWorkflow* tw, Workflow::Helper *helper, qint64 start );
     /**
      * \brief Move an item in the timeline.
      * \param tw    The TrackWorkflow in which the track was moved
      * \param ch    The clip that was moved.
      * \param time  The new position (in frames) of the item.
      */
-    void                    moveMediaItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time );
+    void                    moveItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time );
     /**
      * \brief Remove an item from the timeline.
      * \param tw    The targeted TrackWorkflow
      * \param uuid The Universally Unique Identifier of the item.
      */
-    void                    removeMediaItem( TrackWorkflow* tw, const QUuid& uuid );
+    void                    removeItem( TrackWorkflow* tw, const QUuid& uuid );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item A pointer to AbstractGraphicsMediaItem.
      * \sa removeMediaItem( const QList<AbstractGraphicsMediaItem*>& )
      */
-    void                    removeMediaItem( AbstractGraphicsMediaItem *item );
+    void                    removeItem( AbstractGraphicsItem *item );
 
 protected:
     virtual void            resizeEvent( QResizeEvent *event );
@@ -311,7 +311,7 @@ private:
      * \param position New position of the item.
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
-    void                    moveMediaItem( AbstractGraphicsItem *item, QPoint position );
+    void                    moveItem( AbstractGraphicsItem *item, QPoint position );
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item Item to move.
@@ -319,7 +319,7 @@ private:
      * \param time The new position (in frames) of the item.
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
-    void                    moveMediaItem( AbstractGraphicsItem *item, qint32 track, qint64 time );
+    void                    moveItem( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
     ItemPosition            findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
@@ -352,7 +352,7 @@ private:
     AbstractGraphicsItem::From  m_actionResizeType;
     AbstractGraphicsItem    *m_actionItem;
     GraphicsTrack           *m_lastKnownTrack;
-    QSet<QUuid>             m_clipsLoaded;
+    QSet<QUuid>             m_itemsLoaded;
 
 signals:
     /**
