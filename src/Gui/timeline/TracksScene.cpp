@@ -23,11 +23,14 @@
 #include "TracksScene.h"
 
 #include "Commands.h"
+#include "ClipHelper.h"
+#include "EffectHelper.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsTrack.h"
 #include "SettingsManager.h"
 #include "Timeline.h"
+#include "TrackWorkflow.h"
 #include "UndoStack.h"
 
 #include <QMessageBox>
@@ -103,10 +106,20 @@ TracksScene::askRemoveSelectedItems()
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
     {
-        AbstractGraphicsMediaItem* item = qgraphicsitem_cast<AbstractGraphicsMediaItem*>( items.at(i) );
-        if ( !item ) return;
-
-        Commands::trigger( new Commands::Clip::Remove( item->clipHelper(), item->track()->trackWorkflow() ) );
+        AbstractGraphicsItem* item = dynamic_cast<AbstractGraphicsItem*>( items.at(i) );
+        if ( !item )
+            return;
+        ClipHelper  *ch = qobject_cast<ClipHelper*>( item->helper() );
+        if ( ch != NULL )
+        {
+            Commands::trigger( new Commands::Clip::Remove( ch, item->track()->trackWorkflow() ) );
+        }
+        else
+        {
+            EffectHelper    *eh = qobject_cast<EffectHelper*>( item->helper() );
+            Q_ASSERT( eh != NULL );
+            Commands::trigger( new Commands::Effect::Remove( eh, item->track()->trackWorkflow() ) );
+        }
     }
 
     UndoStack::getInstance()->endMacro();

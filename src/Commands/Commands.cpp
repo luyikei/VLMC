@@ -253,6 +253,7 @@ Commands::Effect::Resize::Resize( EffectHelper *helper, qint64 newBegin, qint64 
 {
     m_oldBegin = helper->begin();
     m_oldEnd = helper->end();
+    setText( QObject::tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
@@ -265,4 +266,23 @@ void
 Commands::Effect::Resize::undo()
 {
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
+}
+
+Commands::Effect::Remove::Remove( EffectHelper *helper, EffectUser *user ) :
+        m_helper( helper ),
+        m_user( user )
+{
+    setText( QObject::tr( "Deleting effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+}
+
+void
+Commands::Effect::Remove::redo()
+{
+    m_user->removeEffect( m_helper );
+}
+
+void
+Commands::Effect::Remove::undo()
+{
+    m_user->addEffect( m_helper );
 }

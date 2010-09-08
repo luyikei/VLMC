@@ -187,6 +187,17 @@ namespace Commands
                 qint64              m_oldBegin;
                 qint64              m_oldEnd;
         };
+
+        NEW_COMMAND( Remove )
+        {
+            public:
+                Remove( EffectHelper *helper, EffectUser *user );
+                virtual void    redo();
+                virtual void    undo();
+            private:
+                EffectHelper    *m_helper;
+                EffectUser      *m_user;
+        };
     }
 }
 
