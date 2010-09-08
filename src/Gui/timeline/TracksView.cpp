@@ -740,10 +740,10 @@ TracksView::dropEvent( QDropEvent *event )
         QList<AbstractGraphicsMediaItem*>   clips = mediaItems<AbstractGraphicsMediaItem>( event->pos() );
         if ( clips.size() > 0 )
         {
-            foreach ( AbstractGraphicsMediaItem *item, clips )
-            {
-                item->clipHelper()->clipWorkflow()->addEffect( m_dragEffectItem->effect() );
-            }
+            AbstractGraphicsMediaItem   *item = clips.first();
+            item->clipHelper()->clipWorkflow()->addEffect( m_dragEffectItem->effect() );
+            m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
+            event->acceptProposedAction();
         }
         else
         {
@@ -752,7 +752,12 @@ TracksView::dropEvent( QDropEvent *event )
             {
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
                 if ( track != NULL )
+                {
                     track->trackWorkflow()->addEffect( m_dragEffectItem->effect() );
+                    m_dragEffectItem->m_oldTrack = track->trackWorkflow();
+                    event->acceptProposedAction();
+                    break ;
+                }
             }
         }
     }
