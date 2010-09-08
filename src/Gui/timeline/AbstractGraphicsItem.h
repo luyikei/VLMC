@@ -72,6 +72,8 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         /// The item can be moved by the user.
         virtual bool moveable() const = 0;
 
+        virtual qint64      itemHeight() const = 0;
+
         /// Return a pointer to the TracksScene
         TracksScene* scene();
 

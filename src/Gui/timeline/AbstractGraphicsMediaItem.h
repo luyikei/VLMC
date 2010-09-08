@@ -61,6 +61,7 @@ public:
                                      Workflow::Helper *helper, qint64 pos );
     virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
                                        qint64 newBegin, qint64 newEnd, qint64 pos );
+    virtual qint64              itemHeight() const;
 
 protected:
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );

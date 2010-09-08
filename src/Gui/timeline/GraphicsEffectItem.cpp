@@ -86,6 +86,12 @@ GraphicsEffectItem::trackType() const
     return Workflow::VideoTrack;
 }
 
+qint64
+GraphicsEffectItem::itemHeight() const
+{
+    return 15;
+}
+
 void
 GraphicsEffectItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
 {

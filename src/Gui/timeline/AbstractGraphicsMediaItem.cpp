@@ -300,3 +300,9 @@ AbstractGraphicsMediaItem::triggerResize( TrackWorkflow *tw, Workflow::Helper *h
     Commands::trigger( new Commands::Clip::Resize( tw, clipHelper, newBegin,
                                                                newEnd, pos ) );
 }
+
+qint64
+AbstractGraphicsMediaItem::itemHeight() const
+{
+    return 35;
+}

@@ -289,7 +289,7 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
     }
     m_itemsLoaded.insert( helper->uuid() );
     item->m_tracksView = this;
-    item->setHeight( tracksHeight() );
+    item->setHeight( item->itemHeight() );
     item->setTrack( getTrack( trackType, track ) );
     item->setStartPos( start );
     item->m_oldTrack = tw;
@@ -341,7 +341,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         if ( m_dragAudioItem ) delete m_dragAudioItem;
         m_dragAudioItem = new GraphicsAudioItem( clip );
         m_dragAudioItem->m_tracksView = this;
-        m_dragAudioItem->setHeight( tracksHeight() );
+        m_dragAudioItem->setHeight( m_dragAudioItem->itemHeight() );
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->trackType(), 0 ) );
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
@@ -351,7 +351,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         if ( m_dragVideoItem ) delete m_dragVideoItem;
         m_dragVideoItem = new GraphicsMovieItem( clip );
         m_dragVideoItem->m_tracksView = this;
-        m_dragVideoItem->setHeight( tracksHeight() );
+        m_dragVideoItem->setHeight( m_dragVideoItem->itemHeight() );
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->trackType(), 0 ) );
         connect( m_dragVideoItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
@@ -382,7 +382,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             AbstractGraphicsMediaItem   *item = itemList.first();
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
-            m_dragEffectItem->setHeight( tracksHeight() / 2 );
+            m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
             m_dragEffectItem->setTrack( getTrack( m_dragEffectItem->trackType(), 0 ) );
             m_dragEffectItem->setZValue( 100 );
         }
@@ -396,7 +396,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                 {
                     m_dragEffectItem->setWidth( track->maximumWidth() );
                     m_dragEffectItem->setStartPos( 0 );
-                    m_dragEffectItem->setHeight( tracksHeight() / 2 );
+                    m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
                     m_dragEffectItem->setTrack( track );
                     break ;
                 }
