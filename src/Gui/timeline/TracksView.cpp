@@ -783,6 +783,8 @@ TracksView::dropEvent( QDropEvent *event )
                                                                   track->trackWorkflow() ) );
                     m_dragEffectItem->m_oldTrack = track->trackWorkflow();
                     event->acceptProposedAction();
+                    if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
+                        addTrack( Workflow::VideoTrack );
                     break ;
                 }
             }
