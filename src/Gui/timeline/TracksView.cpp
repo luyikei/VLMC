@@ -321,6 +321,8 @@ TracksView::effectDragEnterEvent( QDragEnterEvent *event )
     if ( effect != NULL )
     {
         m_dragEffectItem = new GraphicsEffectItem( effect );
+        m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
+        m_dragEffectItem->m_tracksView = this;
     }
     else
         qWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
@@ -382,7 +384,6 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             AbstractGraphicsMediaItem   *item = itemList.first();
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
-            m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
             m_dragEffectItem->setTrack( getTrack( m_dragEffectItem->trackType(), 0 ) );
             m_dragEffectItem->setZValue( 100 );
         }
@@ -396,7 +397,6 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                 {
                     m_dragEffectItem->setWidth( track->maximumWidth() );
                     m_dragEffectItem->setStartPos( 0 );
-                    m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
                     m_dragEffectItem->setTrack( track );
                     break ;
                 }
