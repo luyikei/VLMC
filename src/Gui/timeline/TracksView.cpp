@@ -943,7 +943,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
     else if ( event->modifiers() == Qt::NoModifier &&
          event->button() == Qt::LeftButton &&
          tool() == TOOL_DEFAULT &&
-         mediaCollisionList.count() == 1 )
+         mediaCollisionList.count() >= 1 )
     {
         AbstractGraphicsItem *item = mediaCollisionList.at( 0 );
 
