@@ -435,7 +435,8 @@ TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
     for ( int i = 0; i < list.size(); ++i )
     {
         track = qgraphicsitem_cast<GraphicsTrack*>( list.at(i) );
-        if (track) break;
+        if ( track )
+            break;
     }
 
     if ( !track )
@@ -552,7 +553,8 @@ TracksView::moveItem( AbstractGraphicsItem *item, qint32 track, qint64 time )
 ItemPosition
 TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time )
 {
-
+    if ( qgraphicsitem_cast<GraphicsEffectItem*>( item ) != NULL )
+        return ItemPosition( track, time );
     // Create a fake item for computing collisions
     QGraphicsRectItem *chkItem = new QGraphicsRectItem( item->boundingRect() );
     chkItem->setParentItem( getTrack( item->trackType(), track ) );
