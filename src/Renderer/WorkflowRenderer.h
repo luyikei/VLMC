@@ -107,7 +107,7 @@ class   WorkflowRenderer : public GenericRenderer
          */
         virtual qint64      getLengthMs() const;
 
-        virtual qint64      getLength() const;
+        virtual qint64      length() const;
 
         /**
          *  \brief  Return the current frame number

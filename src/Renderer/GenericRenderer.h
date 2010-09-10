@@ -121,7 +121,7 @@ public:
      *  \return     The length that has to be rendered in frames
      *  \sa         getLengthMs()
      */
-    virtual qint64                  getLength() const = 0;
+    virtual qint64                  length() const = 0;
 
     /**
      *  \brief  Return true if the renderer is paused

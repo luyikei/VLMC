@@ -51,6 +51,7 @@ class EffectUser : public QObject
         void                            swapFilters( qint32 idx, qint32 idx2 );
         qint32                          count( Effect::Type type ) const;
         void                            cleanEffects();
+        virtual qint64                  length() const = 0;
 
     protected:
         EffectUser();

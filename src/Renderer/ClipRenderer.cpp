@@ -171,7 +171,7 @@ ClipRenderer::previousFrame()
 }
 
 qint64
-ClipRenderer::getLength() const
+ClipRenderer::length() const
 {
     return m_end - m_begin;
 }

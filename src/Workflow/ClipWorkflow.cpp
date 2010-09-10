@@ -328,3 +328,9 @@ ClipWorkflow::save( QXmlStreamWriter &project ) const
     project.writeAttribute( "helper", m_clipHelper->uuid().toString() );
     saveFilters( project );
 }
+
+qint64
+ClipWorkflow::length() const
+{
+    return m_clipHelper->length();
+}

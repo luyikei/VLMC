@@ -644,3 +644,9 @@ TrackWorkflow::__effectMoved( const QUuid& uuid, qint64 pos )
 {
     emit effectMoved( this, uuid, pos );
 }
+
+qint64
+TrackWorkflow::length() const
+{
+    return m_length;
+}
