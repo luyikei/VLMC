@@ -150,6 +150,7 @@ GraphicsEffectItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem
 
     if ( isSelected() )
     {
+        setZValue( zSelected() );
         painter->setPen( Qt::yellow );
         painter->setBrush( Qt::NoBrush );
         mapped.adjust( 0, 0, 0, -1 );
@@ -159,6 +160,8 @@ GraphicsEffectItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem
         else
             painter->drawRect( mapped );
     }
+    else
+        setZValue( zNotSelected() );
 }
 
 
@@ -248,3 +251,16 @@ GraphicsEffectItem::triggerResize( TrackWorkflow *, Workflow::Helper *helper,
         return ;
     Commands::trigger( new Commands::Effect::Resize( eh, newBegin, newEnd ) );
 }
+
+qint32
+GraphicsEffectItem::zSelected() const
+{
+    return 300;
+}
+
+qint32
+GraphicsEffectItem::zNotSelected() const
+{
+    return 200;
+}
+

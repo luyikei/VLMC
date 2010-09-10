@@ -306,3 +306,15 @@ AbstractGraphicsMediaItem::itemHeight() const
 {
     return 35;
 }
+
+qint32
+AbstractGraphicsMediaItem::zSelected() const
+{
+    return 100;
+}
+
+qint32
+AbstractGraphicsMediaItem::zNotSelected() const
+{
+    return 50;
+}

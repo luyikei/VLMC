@@ -385,7 +385,6 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( getTrack( m_dragEffectItem->trackType(), 0 ) );
-            m_dragEffectItem->setZValue( 100 );
         }
         else
         {

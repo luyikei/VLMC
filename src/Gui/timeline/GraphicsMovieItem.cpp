@@ -134,7 +134,7 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
 
     if ( isSelected() )
     {
-        setZValue( AbstractGraphicsItem::ZSelected );
+        setZValue( zSelected() );
         painter->setPen( Qt::yellow );
         painter->setBrush( Qt::NoBrush );
         mapped.adjust( 0, 0, 0, -1 );
@@ -145,7 +145,7 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
             painter->drawRect( mapped );
     }
     else
-        setZValue( AbstractGraphicsItem::ZSelected );
+        setZValue( zNotSelected() );
 }
 
 void GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )

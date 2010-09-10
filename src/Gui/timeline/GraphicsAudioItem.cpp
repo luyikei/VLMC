@@ -141,7 +141,7 @@ GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
 
     if ( isSelected() )
     {
-        setZValue( AbstractGraphicsItem::ZSelected );
+        setZValue( zSelected() );
         painter->setPen( Qt::yellow );
         painter->setBrush( Qt::NoBrush );
         mapped.adjust( 0, 0, 0, -1 );
@@ -152,7 +152,7 @@ GraphicsAudioItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
             painter->drawRect( mapped );
     }
     else
-        setZValue( AbstractGraphicsItem::ZSelected );
+        setZValue( zNotSelected() );
 }
 
 void

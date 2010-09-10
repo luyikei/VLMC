@@ -122,6 +122,9 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos ) = 0;
         virtual Workflow::Helper    *helper() = 0;
+        virtual qint32      zSelected() const = 0;
+        virtual qint32      zNotSelected() const = 0;
+
 
     protected:
         virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
@@ -157,8 +160,6 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual qint64      maxEnd() const { return -1; }
 
     protected:
-        static const quint32    ZSelected = 4;
-        static const quint32    ZNotSelected = 3;
         static const quint32    RounderRectRadius = 5;
 
         /// This pointer will be set when inserted in the tracksView.
