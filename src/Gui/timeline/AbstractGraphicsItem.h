@@ -153,11 +153,11 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         /**
          *  \brief          Return the begin boundaries for the item.
          */
-        virtual qint64      maxBegin() const { return 0; }
+        virtual qint64      maxBegin() const = 0;
         /**
          *  \brief          Return the end boundaries for the item.
          */
-        virtual qint64      maxEnd() const { return -1; }
+        virtual qint64      maxEnd() const = 0;
 
     protected:
         static const quint32    RounderRectRadius = 5;

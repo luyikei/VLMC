@@ -45,6 +45,8 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         EffectHelper*               effectHelper();
         virtual qint64              begin() const;
         virtual qint64              end() const;
+        virtual qint64              maxBegin() const;
+        virtual qint64              maxEnd() const;
         virtual Workflow::Helper    *helper();
         virtual void                triggerMove(TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                                                 Workflow::Helper *helper, qint64 pos);

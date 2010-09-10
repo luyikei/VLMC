@@ -226,6 +226,18 @@ GraphicsEffectItem::end() const
     return m_effectHelper->end();
 }
 
+qint64
+GraphicsEffectItem::maxBegin() const
+{
+    return 0;
+}
+
+qint64
+GraphicsEffectItem::maxEnd() const
+{
+    return m_effectHelper->target()->length();
+}
+
 Workflow::Helper*
 GraphicsEffectItem::helper()
 {
