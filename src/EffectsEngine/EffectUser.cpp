@@ -64,6 +64,7 @@ EffectUser::addEffect( EffectHelper *effectHelper )
         m_filters.push_back( effectHelper );
     else
         m_mixers.push_back( effectHelper );
+    effectHelper->setTarget( this );
     emit effectAdded( effectHelper, effectHelper->begin() );
 }
 
@@ -236,6 +237,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_filters.size() )
         {
             EffectHelper    *helper = m_filters.takeAt( idx );
+            helper->setTarget( NULL );
             emit    effectRemoved( helper->uuid() );
         }
     }
@@ -244,6 +246,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_mixers.size() )
         {
             EffectHelper    *helper = m_mixers.takeAt( idx );
+            helper->setTarget( NULL );
             emit    effectRemoved( helper->uuid() );
         }
     }
@@ -262,8 +265,10 @@ EffectUser::removeEffect(EffectHelper *helper)
     {
         if ( (*it)->uuid() == helper->uuid() )
         {
+            EffectHelper    *eh = *it;
+            eh->setTarget( NULL );
             m_filters.erase( it );
-            emit effectRemoved( (*it)->uuid() );
+            emit effectRemoved( eh->uuid() );
             return ;
         }
     }

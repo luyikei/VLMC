@@ -24,6 +24,7 @@
 #define EFFECTHELPER_H
 
 class   EffectInstance;
+class   EffectUser;
 
 #include "Helper.h"
 
@@ -41,9 +42,12 @@ class   EffectHelper : public Workflow::Helper
 
         EffectInstance          *effectInstance();
         const EffectInstance    *effectInstance() const;
+        const EffectUser        *target() const;
+        void                    setTarget( const EffectUser *target );
 
     private:
         EffectInstance          *m_effectInstance;
+        const EffectUser        *m_target;
 };
 
 Q_DECLARE_METATYPE( EffectHelper* );

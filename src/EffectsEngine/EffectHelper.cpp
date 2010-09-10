@@ -25,7 +25,8 @@
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
                             const QString &uuid ) :
     Helper( begin, end, uuid ),
-    m_effectInstance( effectInstance )
+    m_effectInstance( effectInstance ),
+    m_target( NULL )
 {
 }
 
@@ -39,4 +40,16 @@ const EffectInstance*
 EffectHelper::effectInstance() const
 {
     return m_effectInstance;
+}
+
+const EffectUser*
+EffectHelper::target() const
+{
+    return m_target;
+}
+
+void
+EffectHelper::setTarget( const EffectUser *target )
+{
+    m_target = target;
 }
