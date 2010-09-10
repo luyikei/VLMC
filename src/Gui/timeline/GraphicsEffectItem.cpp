@@ -77,7 +77,7 @@ GraphicsEffectItem::moveable() const
 bool
 GraphicsEffectItem::hasResizeBoundaries() const
 {
-    return false;
+    return ( m_effectHelper->end() != -1 );
 }
 
 Workflow::TrackType
@@ -212,13 +212,15 @@ GraphicsEffectItem::effectHelper()
 qint64
 GraphicsEffectItem::begin() const
 {
-    return 0;
+    return m_effectHelper->begin();
 }
 
 qint64
 GraphicsEffectItem::end() const
 {
-    return -1;
+    if ( m_effectHelper->end() < 0 )
+        return m_effectHelper->target()->length();
+    return m_effectHelper->end();
 }
 
 Workflow::Helper*

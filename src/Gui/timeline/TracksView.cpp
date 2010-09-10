@@ -901,13 +901,16 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         QList<QGraphicsItem*> gi = scene()->items( collidePos );
 
         bool collide = false;
-        for ( int i = 0; i < gi.count(); ++i )
+        if ( m_actionItem->type() != GraphicsEffectItem::Type )
         {
-            AbstractGraphicsMediaItem* mi = dynamic_cast<AbstractGraphicsMediaItem*>( gi.at( i ) );
-            if ( mi && mi != m_actionItem )
+            for ( int i = 0; i < gi.count(); ++i )
             {
-                collide = true;
-                break;
+                AbstractGraphicsMediaItem* mi = dynamic_cast<AbstractGraphicsMediaItem*>( gi.at( i ) );
+                if ( mi && mi != m_actionItem )
+                {
+                    collide = true;
+                    break;
+                }
             }
         }
         // END UGLY
