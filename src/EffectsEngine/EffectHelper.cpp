@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #include "EffectHelper.h"
+#include "EffectUser.h"
 
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
                             const QString &uuid ) :
@@ -52,4 +53,9 @@ void
 EffectHelper::setTarget( const EffectUser *target )
 {
     m_target = target;
+    m_begin = 0;
+    if ( target != NULL )
+        m_end = target->length();
+    else
+        m_end = -1;
 }
