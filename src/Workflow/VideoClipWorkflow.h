@@ -39,8 +39,7 @@ class   VideoClipWorkflow : public ClipWorkflow
         ~VideoClipWorkflow();
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
-        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
-        virtual void            setTime( qint64 time, qint64 frame );
+        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
 
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30
 
@@ -63,8 +62,6 @@ class   VideoClipWorkflow : public ClipWorkflow
         static void                 unlock( VideoClipWorkflow* clipWorkflow, void* buffer,
                                             int width, int height, int bpp, int size,
                                             qint64 pts );
-        QMutex                      *m_renderedFrameMutex;
-        qint64                      m_renderedFrame;
         Workflow::Frame             *m_lastReturnedBuffer;
 };
 

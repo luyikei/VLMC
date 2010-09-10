@@ -109,7 +109,7 @@ class   ClipWorkflow : public EffectUser
          *  therefore, you can call this method blindly, without taking care
          *  of the rendering process advancement.
          */
-        virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode ) = 0;
+        virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame ) = 0;
         void                    postGetOutput();
         virtual void            initVlcOutput() = 0;
         void                    initialize();

@@ -34,17 +34,14 @@
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_renderedFrame( 0 ),
         m_lastReturnedBuffer( NULL )
 {
     m_effectsLock = new QReadWriteLock();
-    m_renderedFrameMutex = new QMutex();
 }
 
 VideoClipWorkflow::~VideoClipWorkflow()
 {
     stop();
-    delete m_renderedFrameMutex;
 }
 
 void
@@ -115,7 +112,7 @@ VideoClipWorkflow::getUnlockCallback() const
 }
 
 Workflow::OutputBuffer*
-VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
+VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
 {
     QMutexLocker    lock( m_renderLock );
 
@@ -139,6 +136,12 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode )
     }
     else if ( mode == ClipWorkflow::Get )
         buff = m_computedBuffers.head();
+
+    quint32     *newFrame = applyFilters( buff, currentFrame,
+                                 currentFrame * 1000.0 / clip()->getMedia()->fps() );
+    if ( newFrame != NULL )
+        buff->setBuffer( newFrame );
+
     postGetOutput();
     return buff;
 }
@@ -170,14 +173,6 @@ VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
 
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
-    quint32     *newFrame = cw->applyFilters( frame, cw->m_renderedFrame,
-                                 cw->m_renderedFrame * 1000.0 / cw->clip()->getMedia()->fps() );
-    if ( newFrame != NULL )
-        frame->setBuffer( newFrame );
-    {
-        QMutexLocker    lock( cw->m_renderedFrameMutex );
-        cw->m_renderedFrame++;
-    }
     frame->ptsDiff = cw->m_currentPts - cw->m_previousPts;
     cw->commonUnlock();
     cw->m_renderWaitCond->wakeAll();
@@ -203,14 +198,4 @@ VideoClipWorkflow::flushComputedBuffers()
 
     while ( m_computedBuffers.isEmpty() == false )
         m_availableBuffers.enqueue( m_computedBuffers.dequeue() );
-}
-
-void
-VideoClipWorkflow::setTime( qint64 time, qint64 frame )
-{
-    {
-        QMutexLocker    lock( m_renderedFrameMutex );
-        m_renderedFrame = frame;
-    }
-    ClipWorkflow::setTime( time, frame );
 }

@@ -95,11 +95,10 @@ ImageClipWorkflow::getUnlockCallback() const
 }
 
 Workflow::OutputBuffer*
-ImageClipWorkflow::getOutput( ClipWorkflow::GetMode )
+ImageClipWorkflow::getOutput( ClipWorkflow::GetMode, qint64 currentFrame )
 {
     QMutexLocker    lock( m_renderLock );
 
-    qint64          currentFrame = MainWorkflow::getInstance()->getCurrentFrame( false );
     quint32 *buff = applyFilters( m_buffer, currentFrame,
                                     currentFrame * 1000.0 / clip()->getMedia()->fps() );
     if ( buff != NULL )

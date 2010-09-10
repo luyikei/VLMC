@@ -42,7 +42,7 @@ class   AudioClipWorkflow : public ClipWorkflow
         ~AudioClipWorkflow();
         void                        *getLockCallback() const;
         void                        *getUnlockCallback() const;
-        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
+        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
     protected:
         virtual quint32             getNbComputedBuffers() const;
         virtual quint32             getMaxComputedBuffers() const;

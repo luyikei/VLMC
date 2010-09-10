@@ -178,7 +178,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
 
         if ( cw->isResyncRequired() == true || needRepositioning == true )
             adjustClipTime( currentFrame, start, cw );
-        return cw->getOutput( mode );
+        return cw->getOutput( mode, currentFrame );
     }
     else if ( cw->getState() == ClipWorkflow::Stopped )
     {
@@ -193,7 +193,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
             //Clip was not started at its real begining: adjust the position
             adjustClipTime( currentFrame, start, cw );
         }
-        return cw->getOutput( mode );
+        return cw->getOutput( mode, currentFrame );
     }
     else if ( cw->getState() == ClipWorkflow::EndReached ||
               cw->getState() == ClipWorkflow::Muted ||

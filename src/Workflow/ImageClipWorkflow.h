@@ -35,7 +35,7 @@ class   ImageClipWorkflow : public ClipWorkflow
 
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
-        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode );
+        virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
