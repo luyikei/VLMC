@@ -334,3 +334,9 @@ ClipWorkflow::length() const
 {
     return m_clipHelper->length();
 }
+
+EffectUser::Type
+ClipWorkflow::effectType() const
+{
+    return EffectUser::ClipEffectUser;
+}

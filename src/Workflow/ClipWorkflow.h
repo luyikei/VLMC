@@ -204,6 +204,7 @@ class   ClipWorkflow : public EffectUser
 
         void                    save( QXmlStreamWriter& project ) const;
         virtual qint64          length() const;
+        virtual Type            effectType() const;
 
     private:
         void                    setState( State state );

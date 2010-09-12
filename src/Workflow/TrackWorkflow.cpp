@@ -650,3 +650,9 @@ TrackWorkflow::length() const
 {
     return m_length;
 }
+
+EffectUser::Type
+TrackWorkflow::effectType() const
+{
+    return TrackEffectUser;
+}

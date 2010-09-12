@@ -37,6 +37,12 @@ class EffectUser : public QObject
     Q_OBJECT
 
     public:
+        enum    Type
+        {
+            ClipEffectUser,
+            TrackEffectUser,
+            GlobalEffectUser,
+        };
         /**
          *  \brief      Add an effect to the TrackWorkflow
          *
@@ -52,6 +58,7 @@ class EffectUser : public QObject
         qint32                          count( Effect::Type type ) const;
         void                            cleanEffects();
         virtual qint64                  length() const = 0;
+        virtual Type                    effectType() const = 0;
 
     protected:
         EffectUser();

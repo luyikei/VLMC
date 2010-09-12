@@ -142,6 +142,10 @@ public:
     {
         return m_isRendering;
     }
+    EffectUser::Type                effectType() const
+    {
+        return EffectUser::GlobalEffectUser;
+    }
 
 protected:
     /**

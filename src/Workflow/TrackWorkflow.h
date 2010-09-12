@@ -100,7 +100,8 @@ class   TrackWorkflow : public EffectUser
         //FIXME: this is not thread safe if the list gets modified (but it can't be const, as it is intended to be modified...)
         EffectsEngine::EffectList               *filters();
         EffectsEngine::EffectList               *mixers();
-        qint64                                  length() const;
+        virtual qint64                          length() const;
+        virtual Type                            effectType() const;
 
     private:
         void                                    computeLength();
