@@ -229,6 +229,7 @@ TracksView::removeClip( const QUuid& uuid  )
 void
 TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
 {
+    qDebug() << "Adding item:" << helper->uuid();
     Q_ASSERT( helper );
 
     //If for some reasons the clip was already loaded, don't add it twice.
@@ -422,6 +423,26 @@ TracksView::moveItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
     Timeline::getInstance()->tracksRuler()->update();
 }
 
+QPoint
+TracksView::boundEffectInClip( GraphicsEffectItem *effectItem, QPoint position )
+{
+    if ( effectItem->effectHelper()->target()->effectType() == EffectUser::ClipEffectUser )
+    {
+        QList<QGraphicsItem*>   list = effectItem->collidingItems( Qt::IntersectsItemShape );
+        foreach ( QGraphicsItem *graphicsItem, list )
+        {
+            AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( graphicsItem );
+            if ( mediaItem == NULL )
+                continue ;
+            if ( position.x() < mediaItem->pos().x() )
+                position.setX( mediaItem->pos().x() );
+            if ( position.x() + effectItem->width() > mediaItem->pos().x() + mediaItem->width() )
+                position.setX( mediaItem->pos().x() + mediaItem->width() - effectItem->width() );
+        }
+    }
+    return position;
+}
+
 void
 TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
 {
@@ -429,6 +450,12 @@ TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
 
     if ( !m_lastKnownTrack )
         m_lastKnownTrack = getTrack( Workflow::VideoTrack, 0 );
+
+    QPoint  mappedPos = mapToScene( position ).toPoint();
+
+    GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( item );
+    if ( effectItem != NULL )
+        mappedPos = boundEffectInClip( effectItem, mappedPos );
 
     QList<QGraphicsItem*> list = items( 0, position.y() );
     for ( int i = 0; i < list.size(); ++i )
@@ -450,7 +477,7 @@ TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
 
     m_lastKnownTrack = track;
 
-    qreal time = ( mapToScene( position ).x() + 0.5 );
+    qreal time = mappedPos.x() + 0.5;
     moveItem( item, track->trackNumber(), (qint64)time);
 }
 
@@ -752,6 +779,7 @@ TracksView::dropEvent( QDropEvent *event )
             Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clipHelper(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
+            qDebug() << m_dragVideoItem->pos();
             m_dragVideoItem = NULL;
         }
 

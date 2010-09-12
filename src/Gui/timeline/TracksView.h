@@ -312,6 +312,8 @@ private:
      * \sa moveMediaItem( const QUuid& uuid, unsigned int track, qint64 time );
      */
     void                    moveItem( AbstractGraphicsItem *item, QPoint position );
+    QPoint                  boundEffectInClip( GraphicsEffectItem *effectItem, QPoint position );
+
     /**
      * \brief This is an overloaded method provided for convenience.
      * \param item Item to move.
