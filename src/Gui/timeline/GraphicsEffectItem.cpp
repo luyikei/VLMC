@@ -25,6 +25,7 @@
 #include "Commands.h"
 #include "EffectHelper.h"
 #include "EffectInstance.h"
+#include "GraphicsTrack.h"
 #include "Timeline.h"
 #include "TracksView.h"
 #include "TrackWorkflow.h"
@@ -245,13 +246,10 @@ GraphicsEffectItem::helper()
 }
 
 void
-GraphicsEffectItem::triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                                 Workflow::Helper *helper, qint64 pos )
+GraphicsEffectItem::triggerMove( EffectUser *target )
 {
-    EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
-    if ( eh == NULL )
-        return ;
-    Commands::trigger( new Commands::Effect::Move( eh, oldTrack, newTrack, pos ) );
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->oldTarget(),
+                                                   target, startPos() ) );
 }
 
 void

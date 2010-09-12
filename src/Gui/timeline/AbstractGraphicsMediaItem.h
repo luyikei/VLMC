@@ -57,8 +57,7 @@ public:
     virtual qint64      end() const;
 
     virtual Workflow::Helper    *helper();
-    virtual void        triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                                     Workflow::Helper *helper, qint64 pos );
+    virtual void        triggerMove( EffectUser *target );
     virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
                                        qint64 newBegin, qint64 newEnd, qint64 pos );
     virtual qint64              itemHeight() const;

@@ -43,15 +43,22 @@ EffectHelper::effectInstance() const
     return m_effectInstance;
 }
 
-const EffectUser*
-EffectHelper::target() const
+EffectUser*
+EffectHelper::target()
 {
     return m_target;
 }
 
-void
-EffectHelper::setTarget( const EffectUser *target )
+EffectUser*
+EffectHelper::oldTarget()
 {
+    return m_oldTarget;
+}
+
+void
+EffectHelper::setTarget( EffectUser *target )
+{
+    m_oldTarget = m_target;
     m_target = target;
     m_begin = 0;
     if ( target != NULL )

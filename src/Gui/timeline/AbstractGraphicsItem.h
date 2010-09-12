@@ -29,6 +29,7 @@ class   GraphicsTrack;
 class   TrackWorkflow;
 class   TracksScene;
 class   TracksView;
+class   EffectUser;
 
 class   QUuid;
 
@@ -117,8 +118,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual qint64      end() const = 0;
         qint64              width() const;
 
-        virtual void        triggerMove( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                                         Workflow::Helper *helper, qint64 pos ) = 0;
+        virtual void        triggerMove( EffectUser *target ) = 0;
         virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos ) = 0;
         virtual Workflow::Helper    *helper() = 0;
@@ -165,9 +165,9 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         /// This pointer will be set when inserted in the tracksView.
         TracksView*                 m_tracksView;
         QColor                      m_itemColor;
+        TrackWorkflow               *m_oldTrack;
 
     private:
-        TrackWorkflow               *m_oldTrack;
         qint64                      m_width;
         qint64                      m_height;
         /// Pointer used to save the address of a linked item.

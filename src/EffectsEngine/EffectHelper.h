@@ -42,12 +42,14 @@ class   EffectHelper : public Workflow::Helper
 
         EffectInstance          *effectInstance();
         const EffectInstance    *effectInstance() const;
-        const EffectUser        *target() const;
-        void                    setTarget( const EffectUser *target );
+        EffectUser              *target();
+        EffectUser              *oldTarget();
+        void                    setTarget( EffectUser *target );
 
     private:
         EffectInstance          *m_effectInstance;
-        const EffectUser        *m_target;
+        EffectUser              *m_target;
+        EffectUser              *m_oldTarget;
 };
 
 Q_DECLARE_METATYPE( EffectHelper* );

@@ -229,7 +229,6 @@ TracksView::removeClip( const QUuid& uuid  )
 void
 TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
 {
-    qDebug() << "Adding item:" << helper->uuid();
     Q_ASSERT( helper );
 
     //If for some reasons the clip was already loaded, don't add it twice.
@@ -1057,16 +1056,19 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
-        m_actionItem->triggerMove( m_actionItem->m_oldTrack, m_actionItem->track()->trackWorkflow(),
-                                   m_actionItem->helper(), m_actionItem->startPos() );
+//        m_actionItem->triggerMove( m_oldTrack, m_actionItem->track()->trackWorkflow(),
+//                                   m_actionItem->helper(), m_actionItem->startPos() );
+        EffectUser  *target = m_actionItem->track()->trackWorkflow();
+//        GraphicsEffectItem  *effectItem = qobject_cast<GraphicsEffectItem*>( m_actionItem );
+//        if ( effectItem != NULL )
+//        {
+
+//        }
+        m_actionItem->triggerMove( target );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
         {
-            //CHECK: This used to use m_actionItem and not m_actionItem->groupItem().
-            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->m_oldTrack,
-                                                    m_actionItem->groupItem()->track()->trackWorkflow(),
-                                                    m_actionItem->groupItem()->helper(),
-                                                    m_actionItem->startPos() );
+            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->track()->trackWorkflow() );
             m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
         }
 
