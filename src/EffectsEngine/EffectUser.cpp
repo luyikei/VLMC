@@ -271,6 +271,7 @@ EffectUser::removeEffect(EffectHelper *helper)
             emit effectRemoved( eh->uuid() );
             return ;
         }
+        ++it;
     }
     qWarning() << "Can't find EffectHelper" << helper->uuid() << "for removal.";
 }
