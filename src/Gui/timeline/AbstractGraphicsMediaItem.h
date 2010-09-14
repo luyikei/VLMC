@@ -33,7 +33,6 @@ class   ClipHelper;
 class   Clip;
 class   TracksView;
 class   TrackWorkflow;
-class   EffectHelper;
 
 /**
  * \brief Base class for Audio/Video items.
@@ -85,8 +84,6 @@ private slots:
 
     void    clipDestroyed( Clip* clip );
 
-    void    effectAdded( EffectHelper *helper, qint64 pos );
-
 private:
     bool    m_muted;
 
@@ -97,8 +94,6 @@ signals:
      * \param frame Frame's number where the cut takes place.
      */
     void                split( AbstractGraphicsMediaItem* self, qint64 frame );
-
-    void                effectAdded( AbstractGraphicsMediaItem*, EffectHelper*, qint64 );
 };
 
 #endif // ABSTRACTGRAPHICSMEDIAITEM_H

@@ -193,12 +193,17 @@ public:
      */
     WorkflowRenderer        *getRenderer() { return m_renderer; }
     /**
+     * \brief Remove a Clip from the timeline (and from the backend).
+     * \param uuid The unique identifier of the Media.
+     */
+    void                    removeClip( const QUuid& uuid );
+
+    /**
      *  \returns            The AbstractGraphicsMediaItem identified by the given uuid.
      *                      or NULL if there's no such item.
      *  \param              uuid    The ClipHelper's uuid
      */
     AbstractGraphicsMediaItem*  item( const QUuid& uuid );
-    void                    removeClip( const QUuid &uuid );
 
 public slots:
     /**
@@ -232,11 +237,6 @@ public slots:
      * \sa removeMediaItem( const QList<AbstractGraphicsMediaItem*>& )
      */
     void                    removeItem( AbstractGraphicsItem *item );
-    /**
-     * \brief Remove a Clip from the timeline (and from the backend).
-     * \param uuid The unique identifier of the Media.
-     */
-    void                    effectRemoved( const QUuid& uuid );
 
 protected:
     virtual void            resizeEvent( QResizeEvent *event );
@@ -282,8 +282,6 @@ private slots:
      * \param frame the frame number where the cut should takes place.
      */
     void                    split( AbstractGraphicsMediaItem *item, qint64 frame );
-
-    void                    effectAddedToClip( AbstractGraphicsMediaItem* mediaItem, EffectHelper* helper, qint64 pos );
 
 private:
     /**

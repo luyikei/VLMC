@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include "AbstractGraphicsMediaItem.h"
-#include "ClipWorkflow.h"
 #include "TracksView.h"
 #include "TracksScene.h"
 #include "TrackWorkflow.h"
@@ -49,8 +48,6 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
     connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
-    connect( m_clipHelper->clipWorkflow(), SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
-             this, SLOT( effectAdded( EffectHelper*, qint64 ) ) );
 }
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
@@ -63,8 +60,6 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
     connect( ch, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( ch->clip(), SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
-    connect( m_clipHelper->clipWorkflow(), SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
-             this, SLOT( effectAdded( EffectHelper*, qint64 ) ) );
 }
 
 AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
@@ -320,10 +315,4 @@ qint32
 AbstractGraphicsMediaItem::zNotSelected() const
 {
     return 50;
-}
-
-void
-AbstractGraphicsMediaItem::effectAdded( EffectHelper *helper, qint64 pos )
-{
-    emit effectAdded( this, helper, pos );
 }
