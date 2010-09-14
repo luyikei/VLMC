@@ -384,7 +384,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             AbstractGraphicsMediaItem   *item = itemList.first();
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
-            m_dragEffectItem->setTrack( getTrack( m_dragEffectItem->trackType(), 0 ) );
+            m_dragEffectItem->setTrack( item->track() );
         }
         else
         {
@@ -455,7 +455,6 @@ TracksView::moveItem( AbstractGraphicsItem *item, QPoint position )
     GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( item );
     if ( effectItem != NULL )
         mappedPos = boundEffectInClip( effectItem, mappedPos );
-
     QList<QGraphicsItem*> list = items( 0, position.y() );
     for ( int i = 0; i < list.size(); ++i )
     {
@@ -778,7 +777,6 @@ TracksView::dropEvent( QDropEvent *event )
             Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clipHelper(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
-            qDebug() << m_dragVideoItem->pos();
             m_dragVideoItem = NULL;
         }
 
