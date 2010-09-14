@@ -207,6 +207,27 @@ TracksView::clear()
 }
 
 void
+TracksView::effectRemoved( const QUuid& uuid  )
+{
+    // Get the list of all items in the timeline
+    QList<AbstractGraphicsItem*> items = timelineItems();
+
+    // Iterate over each item to check if their parent's uuid
+    // is the one we would like to remove.
+    foreach( AbstractGraphicsItem *item, items )
+    {
+        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( item );
+        if ( effectItem == NULL )
+            continue ;
+        if ( effectItem->uuid() == uuid )
+        {
+            // Remove the item from the timeline
+            removeItem( effectItem );
+        }
+    }
+}
+
+void
 TracksView::removeClip( const QUuid& uuid  )
 {
     // Get the list of all items in the timeline
@@ -271,12 +292,20 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
             mediaItem = new GraphicsMovieItem( clipHelper );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+            connect( mediaItem, SIGNAL( effectAdded( AbstractGraphicsMediaItem*, EffectHelper*, qint64) ),
+                     this, SLOT( effectAddedToClip( AbstractGraphicsMediaItem*, EffectHelper*,qint64) ) );
+            connect( mediaItem->clipHelper()->clipWorkflow(), SIGNAL( effectRemoved( QUuid ) ),
+                     this, SLOT( effectRemoved( QUuid ) ) );
         }
         else if ( trackType == Workflow::AudioTrack )
         {
             mediaItem = new GraphicsAudioItem( clipHelper );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+            connect( mediaItem, SIGNAL( effectAdded( AbstractGraphicsMediaItem*, EffectHelper*, qint64) ),
+                     this, SLOT( effectAddedToClip( AbstractGraphicsMediaItem*, EffectHelper*,qint64) ) );
+            connect( mediaItem->clipHelper()->clipWorkflow(), SIGNAL( effectRemoved( QUuid ) ),
+                     this, SLOT( effectRemoved( QUuid ) ) );
         }
         item = mediaItem;
     }
@@ -348,6 +377,10 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->trackType(), 0 ) );
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        connect( m_dragAudioItem, SIGNAL( effectAdded( AbstractGraphicsMediaItem*, EffectHelper*, qint64) ),
+                 this, SLOT( effectAddedToClip( AbstractGraphicsMediaItem*, EffectHelper*,qint64) ) );
+        connect( m_dragAudioItem->clipHelper()->clipWorkflow(), SIGNAL( effectRemoved( QUuid ) ),
+                 this, SLOT( effectRemoved( QUuid ) ) );
     }
     if ( clip->getMedia()->hasVideoTrack() == true )
     {
@@ -358,6 +391,10 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->trackType(), 0 ) );
         connect( m_dragVideoItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
+        connect( m_dragVideoItem, SIGNAL( effectAdded( AbstractGraphicsMediaItem*, EffectHelper*, qint64) ),
+                 this, SLOT( effectAddedToClip( AbstractGraphicsMediaItem*, EffectHelper*,qint64) ) );
+        connect( m_dragVideoItem->clipHelper()->clipWorkflow(), SIGNAL( effectRemoved( QUuid ) ),
+                 this, SLOT( effectRemoved( QUuid ) ) );
     }
     // Group the items together
     if ( clip->getMedia()->hasAudioTrack() == true &&
@@ -1314,4 +1351,18 @@ TracksView::item( const QUuid &uuid )
             return item;
     }
     return NULL;
+}
+
+void
+TracksView::effectAddedToClip( AbstractGraphicsMediaItem *mediaItem, EffectHelper *helper, qint64 pos )
+{
+    if ( m_itemsLoaded.contains( helper->uuid() ) )
+        return ;
+    GraphicsEffectItem  *item = new GraphicsEffectItem( helper );
+    item->setHeight( item->itemHeight() );
+    item->m_tracksView = this;
+    item->setWidth( helper->length() );
+    item->setStartPos( mediaItem->startPos() + pos );
+    item->setTrack( mediaItem->track() );
+    item->m_oldTrack = mediaItem->track()->trackWorkflow();
 }
