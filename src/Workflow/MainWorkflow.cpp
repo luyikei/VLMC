@@ -38,6 +38,7 @@
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( int trackCount ) :
+        m_blackOutput( NULL ),
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
         m_width( 0 ),
