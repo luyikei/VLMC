@@ -66,6 +66,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_dragVideoItem = NULL;
     m_dragAudioItem = NULL;
     m_lastKnownTrack = NULL;
+    m_effectMoveTarget = NULL;
     m_action = None;
     m_actionRelativeX = -1;
     m_actionItem = NULL;
@@ -899,7 +900,15 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         m_actionItem->setOpacity( 0.6 );
         if ( m_actionRelativeX < 0 )
             m_actionRelativeX = event->pos().x() - mapFromScene( m_actionItem->pos() ).x();
-        moveItem( m_actionItem, QPoint( event->pos().x() - m_actionRelativeX, event->pos().y() ) );
+        QPoint  pos( event->pos().x() - m_actionRelativeX, event->pos().y() );
+        moveItem( m_actionItem, pos );
+        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
+        if ( effectItem != NULL )
+        {
+            QList<AbstractGraphicsMediaItem*>   list = mediaItems<AbstractGraphicsMediaItem>( pos );
+            if ( list.size() >= 1 )
+                m_effectMoveTarget = list.at( 0 );
+        }
     }
     else if ( event->modifiers() == Qt::NoModifier &&
               event->buttons() == Qt::LeftButton &&
@@ -994,6 +1003,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
         {
             m_action = Move;
             m_actionItem = item;
+            m_effectMoveTarget = NULL;
         }
         scene()->clearSelection();
         item->setSelected( true );
@@ -1054,14 +1064,10 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         UndoStack::getInstance()->beginMacro( "Move clip" );
 
-//        m_actionItem->triggerMove( m_oldTrack, m_actionItem->track()->trackWorkflow(),
-//                                   m_actionItem->helper(), m_actionItem->startPos() );
         EffectUser  *target = m_actionItem->track()->trackWorkflow();
-//        GraphicsEffectItem  *effectItem = qobject_cast<GraphicsEffectItem*>( m_actionItem );
-//        if ( effectItem != NULL )
-//        {
-
-//        }
+        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
+        if ( effectItem != NULL && m_effectMoveTarget != NULL )
+            target = m_effectMoveTarget->clipHelper()->clipWorkflow();
         m_actionItem->triggerMove( target );
         // Update the linked item too
         if ( m_actionItem->groupItem() )

@@ -343,6 +343,7 @@ private:
     GraphicsMovieItem       *m_dragVideoItem;
     GraphicsAudioItem       *m_dragAudioItem;
     GraphicsEffectItem      *m_dragEffectItem;
+    AbstractGraphicsMediaItem   *m_effectMoveTarget;
 
     QGraphicsWidget         *m_separator;
     ToolButtons             m_tool;

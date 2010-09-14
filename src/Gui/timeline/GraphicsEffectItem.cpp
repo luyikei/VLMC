@@ -248,7 +248,7 @@ GraphicsEffectItem::helper()
 void
 GraphicsEffectItem::triggerMove( EffectUser *target )
 {
-    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->oldTarget(),
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->target(),
                                                    target, startPos() ) );
 }
 
