@@ -49,16 +49,9 @@ EffectHelper::target()
     return m_target;
 }
 
-EffectUser*
-EffectHelper::oldTarget()
-{
-    return m_oldTarget;
-}
-
 void
 EffectHelper::setTarget( EffectUser *target )
 {
-    m_oldTarget = m_target;
     m_target = target;
     m_begin = 0;
     if ( target != NULL )
