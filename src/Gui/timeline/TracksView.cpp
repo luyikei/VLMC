@@ -314,7 +314,7 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
         EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
         Q_ASSERT( effectHelper != NULL );
         item = new GraphicsEffectItem( effectHelper );
-        if ( helper->length() < 0 )
+        if ( helper->length() <= 0 )
             item->setWidth( maximumWidth() );
     }
     m_itemsLoaded.insert( helper->uuid() );
