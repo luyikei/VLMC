@@ -114,10 +114,17 @@ MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
 
     if ( m_renderStarted == true )
     {
-        QReadLocker         lock2( m_currentFrameLock );
+        qint64              currentFrame;
+        qint64              subFrame;
 
-        Workflow::OutputBuffer  *ret = m_tracks[trackType]->getOutput( m_currentFrame[Workflow::VideoTrack],
-                                                                        m_currentFrame[trackType], paused );
+        {
+            QReadLocker         lock2( m_currentFrameLock );
+            currentFrame = m_currentFrame[Workflow::VideoTrack];
+            subFrame = m_currentFrame[trackType];
+        }
+
+        Workflow::OutputBuffer  *ret = m_tracks[trackType]->getOutput( currentFrame,
+                                                                       subFrame, paused );
         if ( trackType == Workflow::VideoTrack )
         {
             if ( ret == NULL )
