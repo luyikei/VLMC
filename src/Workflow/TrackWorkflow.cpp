@@ -54,8 +54,8 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
 
     connect( this, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
              this, SLOT( __effectAdded( EffectHelper*, qint64) ) );
-    connect( this, SIGNAL( effectMoved( QUuid, qint64 ) ),
-             this, SLOT( __effectMoved( QUuid, qint64 ) ) );
+    connect( this, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
+             this, SLOT( __effectMoved( EffectHelper*, qint64 ) ) );
     connect( this, SIGNAL( effectRemoved( QUuid ) ),
              this, SLOT( __effectRemoved(QUuid ) ) );
 }
@@ -99,8 +99,8 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     m_clips.insert( start, cw );
     connect( cw, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
              this, SLOT( __effectAdded( EffectHelper*, qint64 ) ) );
-    connect( cw, SIGNAL( effectMoved( QUuid, qint64 ) ),
-             this, SLOT( __effectMoved( QUuid, qint64) ) );
+    connect( cw, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
+             this, SLOT( __effectMoved( EffectHelper*, qint64) ) );
     connect( cw, SIGNAL( effectRemoved( QUuid ) ),
              this, SLOT( __effectRemoved( QUuid ) ) );
     emit clipAdded( this, cw->getClipHelper(), start );
@@ -652,9 +652,15 @@ TrackWorkflow::__effectRemoved( const QUuid& uuid )
 }
 
 void
-TrackWorkflow::__effectMoved( const QUuid& uuid, qint64 pos )
+TrackWorkflow::__effectMoved( EffectHelper* helper, qint64 pos )
 {
-    emit effectMoved( this, uuid, pos );
+    if ( helper->target()->effectType() == ClipEffectUser )
+    {
+        ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
+        Q_ASSERT( cw != NULL );
+        pos += getClipPosition( cw->getClipHelper()->uuid() );
+    }
+    emit effectMoved( this, helper->uuid(), pos );
 }
 
 qint64

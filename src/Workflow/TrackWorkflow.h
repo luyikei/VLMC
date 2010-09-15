@@ -135,7 +135,7 @@ class   TrackWorkflow : public EffectUser
     private slots:
         void                __effectAdded( EffectHelper*, qint64 );
         void                __effectRemoved( const QUuid& );
-        void                __effectMoved( const QUuid&, qint64 );
+        void                __effectMoved( EffectHelper*, qint64 );
 
     signals:
         void                lengthChanged( qint64 newLength );

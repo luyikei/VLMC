@@ -92,7 +92,7 @@ class EffectUser : public QObject
 
     signals:
         void                                    effectAdded( EffectHelper *helper, qint64 pos );
-        void                                    effectMoved( const QUuid&, qint64 newPos );
+        void                                    effectMoved( EffectHelper *helper, qint64 newPos );
         void                                    effectRemoved( const QUuid& );
 };
 

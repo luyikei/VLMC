@@ -312,7 +312,7 @@ EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
         {
             qint64  offset = helper->begin() - newPos;
             helper->setBoundaries( newPos, helper->end() - offset );
-            emit effectMoved( helper->uuid(), newPos );
+            emit effectMoved( helper, newPos );
             return ;
         }
     }
