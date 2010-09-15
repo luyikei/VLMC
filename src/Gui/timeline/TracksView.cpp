@@ -66,7 +66,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_dragVideoItem = NULL;
     m_dragAudioItem = NULL;
     m_lastKnownTrack = NULL;
-    m_effectMoveTarget = NULL;
+    m_effectTarget = NULL;
     m_action = None;
     m_actionRelativeX = -1;
     m_actionItem = NULL;
@@ -911,7 +911,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                 AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
                 if ( mediaItem != NULL )
                 {
-                    m_effectMoveTarget = mediaItem;
+                    m_effectTarget = mediaItem;
                     break ;
                 }
             }
@@ -956,6 +956,20 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         // END UGLY
         if ( !collide )
         {
+            GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
+            if ( effectItem != NULL )
+            {
+                QList<QGraphicsItem*>   list = m_actionItem->collidingItems();
+                foreach ( QGraphicsItem *collidingItem, list )
+                {
+                    AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
+                    if ( mediaItem != NULL )
+                    {
+                        m_effectTarget = mediaItem;
+                        break ;
+                    }
+                }
+            }
             if ( m_actionResizeType == AbstractGraphicsItem::END )
             {
                 m_actionItem->resize( itemNewSize, mapToScene( event->pos() ).x(),
@@ -1010,7 +1024,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
         {
             m_action = Move;
             m_actionItem = item;
-            m_effectMoveTarget = NULL;
+            m_effectTarget = NULL;
         }
         scene()->clearSelection();
         item->setSelected( true );
@@ -1074,10 +1088,10 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         EffectUser  *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         qint64      targetPos = m_actionItem->startPos();
-        if ( effectItem != NULL && m_effectMoveTarget != NULL )
+        if ( effectItem != NULL && m_effectTarget != NULL )
         {
-            target = m_effectMoveTarget->clipHelper()->clipWorkflow();
-            targetPos = m_actionItem->startPos() - m_effectMoveTarget->startPos();
+            target = m_effectTarget->clipHelper()->clipWorkflow();
+            targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
         }
         m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
@@ -1094,7 +1108,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionRelativeX = -1;
         m_actionItem = NULL;
         m_lastKnownTrack = NULL;
-        m_effectMoveTarget = NULL;
+        m_effectTarget = NULL;
     }
     else if ( m_action == TracksView::Resize )
     {
@@ -1110,9 +1124,15 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             newBegin = m_actionItem->helper()->begin();
             newEnd = newBegin + m_actionItem->width();
         }
-        m_actionItem->triggerResize( m_actionItem->track()->trackWorkflow(), m_actionItem->helper(),
+        EffectUser          *target = m_actionItem->track()->trackWorkflow();
+        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
+        if ( effectItem != NULL && m_effectTarget != NULL )
+            target = m_effectTarget->clipHelper()->clipWorkflow();
+        m_actionItem->triggerResize( target, m_actionItem->helper(),
                                      newBegin, newEnd, m_actionItem->pos().x() );
         updateDuration();
+        m_effectTarget = NULL;
+        m_actionItem = NULL;
     }
 
     m_action = TracksView::None;

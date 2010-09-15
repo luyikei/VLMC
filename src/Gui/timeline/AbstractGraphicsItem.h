@@ -119,7 +119,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         qint64              width() const;
 
         virtual void        triggerMove( EffectUser *target, qint64 startPos ) = 0;
-        virtual void        triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
+        virtual void        triggerResize( EffectUser *tw, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos ) = 0;
         virtual Workflow::Helper    *helper() = 0;
         virtual qint32      zSelected() const = 0;

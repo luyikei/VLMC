@@ -250,7 +250,8 @@ Commands::Effect::Move::undo()
         m_new->moveEffect( m_helper, m_oldPos );
 }
 
-Commands::Effect::Resize::Resize( EffectHelper *helper, qint64 newBegin, qint64 newEnd ) :
+Commands::Effect::Resize::Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd ) :
+        m_target( target ),
         m_helper( helper ),
         m_newBegin( newBegin ),
         m_newEnd( newEnd )
@@ -263,12 +264,16 @@ Commands::Effect::Resize::Resize( EffectHelper *helper, qint64 newBegin, qint64 
 void
 Commands::Effect::Resize::redo()
 {
+    if ( m_newBegin != m_oldBegin )
+        m_target->moveEffect( m_helper, m_newBegin );
     m_helper->setBoundaries( m_newBegin, m_newEnd );
 }
 
 void
 Commands::Effect::Resize::undo()
 {
+    if ( m_oldBegin != m_newBegin )
+        m_target->moveEffect( m_helper, m_oldBegin );
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 

@@ -177,10 +177,11 @@ namespace Commands
         NEW_COMMAND( Resize )
         {
             public:
-                Resize( EffectHelper *helper, qint64 newBegin, qint64 newEnd );
+                Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd );
                 virtual void        redo();
                 virtual void        undo();
             private:
+                EffectUser          *m_target;
                 EffectHelper        *m_helper;
                 qint64              m_newBegin;
                 qint64              m_newEnd;

@@ -281,11 +281,14 @@ AbstractGraphicsMediaItem::helper()
 }
 
 void
-AbstractGraphicsMediaItem::triggerResize( TrackWorkflow *tw, Workflow::Helper *helper,
+AbstractGraphicsMediaItem::triggerResize( EffectUser *target, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos )
 {
     ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( helper );
     if ( clipHelper == NULL )
+        return ;
+    TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
+    if ( tw == NULL )
         return ;
     Commands::trigger( new Commands::Clip::Resize( tw, clipHelper, newBegin,
                                                                newEnd, pos ) );
