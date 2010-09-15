@@ -40,6 +40,7 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
 {
     setOpacity( 0.8 );
     m_effectHelper = new EffectHelper( effect->createInstance() );
+    connect( m_effectHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setWidth( m_effectHelper->length() );
 }
 
@@ -48,6 +49,7 @@ GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
 {
     setWidth( m_effectHelper->length() );
     m_effect = helper->effectInstance()->effect();
+    connect( helper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setOpacity( 0.8 );
 }
 

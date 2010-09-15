@@ -216,14 +216,6 @@ AbstractGraphicsMediaItem::maxEnd() const
     return clipHelper()->clip()->end();
 }
 
-
-void
-AbstractGraphicsMediaItem::adjustLength()
-{
-    Q_ASSERT( m_clipHelper );
-    setWidth( m_clipHelper->length() );
-}
-
 void
 AbstractGraphicsMediaItem::hoverEnterEvent( QGraphicsSceneHoverEvent* event )
 {

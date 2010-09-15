@@ -22,6 +22,7 @@
 
 #include "AbstractGraphicsItem.h"
 
+#include "Helper.h"
 #include "GraphicsTrack.h"
 #include "TracksView.h"
 #include "TracksScene.h"
@@ -262,4 +263,11 @@ qint64
 AbstractGraphicsItem::width() const
 {
     return m_width;
+}
+
+
+void
+AbstractGraphicsItem::adjustLength()
+{
+    setWidth( helper()->length() );
 }

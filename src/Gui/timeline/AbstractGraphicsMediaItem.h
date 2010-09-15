@@ -76,12 +76,6 @@ protected:
     ClipHelper*         m_clipHelper;
 
 private slots:
-    /**
-     * \brief Adjust the length of the item according to the associated Clip.
-     * \details This method should be called when the clip size change
-     */
-    void adjustLength();
-
     void    clipDestroyed( Clip* clip );
 
 private:
