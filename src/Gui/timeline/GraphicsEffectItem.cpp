@@ -248,10 +248,10 @@ GraphicsEffectItem::helper()
 }
 
 void
-GraphicsEffectItem::triggerMove( EffectUser *target )
+GraphicsEffectItem::triggerMove( EffectUser *target, qint64 startPos )
 {
     Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->target(),
-                                                   target, startPos() ) );
+                                                   target, startPos ) );
 }
 
 void

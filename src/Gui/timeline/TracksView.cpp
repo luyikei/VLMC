@@ -905,9 +905,16 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         if ( effectItem != NULL )
         {
-            QList<AbstractGraphicsMediaItem*>   list = mediaItems<AbstractGraphicsMediaItem>( pos );
-            if ( list.size() >= 1 )
-                m_effectMoveTarget = list.at( 0 );
+            QList<QGraphicsItem*>   list = m_actionItem->collidingItems();
+            foreach ( QGraphicsItem *collidingItem, list )
+            {
+                AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
+                if ( mediaItem != NULL )
+                {
+                    m_effectMoveTarget = mediaItem;
+                    break ;
+                }
+            }
         }
     }
     else if ( event->modifiers() == Qt::NoModifier &&
@@ -1066,13 +1073,18 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         EffectUser  *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
+        qint64      targetPos = m_actionItem->startPos();
         if ( effectItem != NULL && m_effectMoveTarget != NULL )
+        {
             target = m_effectMoveTarget->clipHelper()->clipWorkflow();
-        m_actionItem->triggerMove( target );
+            targetPos = m_actionItem->startPos() - m_effectMoveTarget->startPos();
+        }
+        m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
         {
-            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->track()->trackWorkflow() );
+            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->track()->trackWorkflow(),
+                                                    m_actionItem->groupItem()->startPos() );
             m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
         }
 
@@ -1082,6 +1094,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionRelativeX = -1;
         m_actionItem = NULL;
         m_lastKnownTrack = NULL;
+        m_effectMoveTarget = NULL;
     }
     else if ( m_action == TracksView::Resize )
     {

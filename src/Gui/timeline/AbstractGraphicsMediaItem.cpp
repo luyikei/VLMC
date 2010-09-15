@@ -266,12 +266,12 @@ AbstractGraphicsMediaItem::end() const
 }
 
 void
-AbstractGraphicsMediaItem::triggerMove( EffectUser *target )
+AbstractGraphicsMediaItem::triggerMove( EffectUser *target, qint64 startPos )
 {
     TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
     if ( tw == NULL )
         return ;
-    Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clipHelper, startPos() ) );
+    Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clipHelper, startPos ) );
 }
 
 Workflow::Helper*

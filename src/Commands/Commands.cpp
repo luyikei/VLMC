@@ -103,8 +103,8 @@ void Commands::Clip::Move::undo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        m_oldTrack->removeClip( m_clipHelper->uuid() );
-        m_newTrack->addClip( m_clipHelper, m_oldPos );
+        m_newTrack->removeClip( m_clipHelper->uuid() );
+        m_oldTrack->addClip( m_clipHelper, m_oldPos );
     }
     else
         m_newTrack->moveClip( m_clipHelper->uuid(), m_oldPos );
@@ -229,6 +229,8 @@ Commands::Effect::Move::redo()
     {
         m_old->removeEffect( m_helper );
         m_new->addEffect( m_helper );
+        qint64  offset = m_helper->begin() - m_newPos;
+        m_helper->setBoundaries( m_newPos, m_helper->end() - offset );
     }
     else
         m_new->moveEffect( m_helper, m_newPos );
@@ -241,6 +243,8 @@ Commands::Effect::Move::undo()
     {
         m_new->removeEffect( m_helper );
         m_old->addEffect( m_helper );
+        qint64  offset = m_helper->begin() - m_oldPos;
+        m_helper->setBoundaries( m_oldPos, m_helper->end() - offset );
     }
     else
         m_new->moveEffect( m_helper, m_oldPos );
