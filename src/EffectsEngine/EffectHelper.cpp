@@ -53,7 +53,6 @@ void
 EffectHelper::setTarget( EffectUser *target )
 {
     m_target = target;
-    m_begin = 0;
     if ( target != NULL )
         m_end = target->length();
     if ( m_end <= 0 ) //Clip can't be 0lengthed, so this case would be a track.

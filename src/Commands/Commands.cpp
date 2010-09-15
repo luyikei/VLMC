@@ -219,6 +219,8 @@ Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser 
     m_newPos( pos )
 {
     m_oldPos = helper->begin();
+    m_oldEnd = helper->end();
+    m_newEnd = m_helper->end() - ( m_helper->begin() - pos );
     setText( QObject::tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
@@ -228,12 +230,9 @@ Commands::Effect::Move::redo()
     if ( m_old != m_new )
     {
         m_old->removeEffect( m_helper );
+        m_helper->setBoundaries( m_newPos, m_newEnd );
         m_new->addEffect( m_helper );
-        qint64  offset = m_helper->begin() - m_newPos;
-        if ( m_helper->end() <= 0 )
-            m_helper->setBoundaries( m_newPos, ::Effect::TrackEffectDefaultLength );
-        else
-            m_helper->setBoundaries( m_newPos, m_helper->end() - offset );
+
     }
     else
         m_new->moveEffect( m_helper, m_newPos );
@@ -245,9 +244,9 @@ Commands::Effect::Move::undo()
     if ( m_old != m_new )
     {
         m_new->removeEffect( m_helper );
+        m_helper->setBoundaries( m_oldPos, m_oldEnd );
+        //This must be called after setting boundaries, as the effect's begin is its begin boundary
         m_old->addEffect( m_helper );
-        qint64  offset = m_helper->begin() - m_oldPos;
-        m_helper->setBoundaries( m_oldPos, m_helper->end() - offset );
     }
     else
         m_new->moveEffect( m_helper, m_oldPos );

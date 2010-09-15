@@ -172,6 +172,8 @@ namespace Commands
                 EffectUser      *m_new;
                 qint64          m_oldPos;
                 qint64          m_newPos;
+                qint64          m_newEnd;
+                qint64          m_oldEnd;
         };
 
         NEW_COMMAND( Resize )

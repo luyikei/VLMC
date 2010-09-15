@@ -915,7 +915,6 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                     break ;
                 }
             }
-            qDebug() << (void*)m_effectTarget;
         }
     }
     else if ( event->modifiers() == Qt::NoModifier &&
