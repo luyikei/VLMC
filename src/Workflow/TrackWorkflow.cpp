@@ -97,6 +97,12 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 {
     QWriteLocker    lock( m_clipsLock );
     m_clips.insert( start, cw );
+    connect( cw, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
+             this, SLOT( __effectAdded( EffectHelper*, qint64 ) ) );
+    connect( cw, SIGNAL( effectMoved( QUuid, qint64 ) ),
+             this, SLOT( __effectMoved( QUuid, qint64) ) );
+    connect( cw, SIGNAL( effectRemoved( QUuid ) ),
+             this, SLOT( __effectRemoved( QUuid ) ) );
     emit clipAdded( this, cw->getClipHelper(), start );
     computeLength();
 }
@@ -630,6 +636,12 @@ TrackWorkflow::mixers()
 void
 TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
 {
+    if ( helper->target()->effectType() == ClipEffectUser )
+    {
+        ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
+        Q_ASSERT( cw != NULL );
+        pos += getClipPosition( cw->getClipHelper()->uuid() );
+    }
     emit effectAdded( this, helper, pos );
 }
 
