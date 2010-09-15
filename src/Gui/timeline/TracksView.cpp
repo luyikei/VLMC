@@ -905,6 +905,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         if ( effectItem != NULL )
         {
             QList<QGraphicsItem*>   list = m_actionItem->collidingItems();
+            m_effectTarget = NULL;
             foreach ( QGraphicsItem *collidingItem, list )
             {
                 AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
@@ -914,6 +915,7 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                     break ;
                 }
             }
+            qDebug() << (void*)m_effectTarget;
         }
     }
     else if ( event->modifiers() == Qt::NoModifier &&
