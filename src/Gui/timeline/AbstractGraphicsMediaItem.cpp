@@ -311,3 +311,10 @@ AbstractGraphicsMediaItem::zNotSelected() const
 {
     return 50;
 }
+
+void
+AbstractGraphicsMediaItem::setStartPos( qint64 position )
+{
+    emit moved( position );
+    AbstractGraphicsItem::setStartPos( position );
+}

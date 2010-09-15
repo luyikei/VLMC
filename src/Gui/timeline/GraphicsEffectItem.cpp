@@ -276,3 +276,8 @@ GraphicsEffectItem::zNotSelected() const
     return 200;
 }
 
+void
+GraphicsEffectItem::containerMoved( qint64 pos )
+{
+    setStartPos( m_effectHelper->begin() + pos );
+}

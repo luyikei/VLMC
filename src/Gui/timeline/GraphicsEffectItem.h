@@ -70,6 +70,8 @@ class GraphicsEffectItem : public AbstractGraphicsItem
          * \param option Painting options.
          */
         void                paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option );
+    private slots:
+        void                containerMoved( qint64 pos );
 
     private:
         Effect                      *m_effect;

@@ -185,6 +185,9 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
          */
         void adjustLength();
 
+    signals:
+        void                moved( qint64 pos );
+
         friend class        TracksView;
 
 };

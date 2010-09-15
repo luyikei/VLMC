@@ -63,6 +63,7 @@ public:
     virtual qint64              itemHeight() const;
     virtual qint32      zSelected() const;
     virtual qint32      zNotSelected() const;
+    virtual void        setStartPos( qint64 position );
 
 protected:
     virtual void        contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
