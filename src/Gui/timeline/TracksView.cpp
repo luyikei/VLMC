@@ -1084,16 +1084,20 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
             addTrack( Workflow::AudioTrack );
 
-        UndoStack::getInstance()->beginMacro( "Move clip" );
-
         EffectUser  *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         qint64      targetPos = m_actionItem->startPos();
-        if ( effectItem != NULL && m_effectTarget != NULL )
+        if ( effectItem != NULL )
         {
-            target = m_effectTarget->clipHelper()->clipWorkflow();
-            targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
+            if ( m_effectTarget != NULL )
+            {
+                target = m_effectTarget->clipHelper()->clipWorkflow();
+                targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
+            }
+            UndoStack::getInstance()->beginMacro( "Move effect" );
         }
+        else
+            UndoStack::getInstance()->beginMacro( "Move clip" );
         m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
