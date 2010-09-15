@@ -202,6 +202,7 @@ TracksView::clear()
 
     addTrack( Workflow::VideoTrack );
     addTrack( Workflow::AudioTrack );
+    m_itemsLoaded.clear();
 
     updateDuration();
 }
