@@ -56,6 +56,6 @@ EffectHelper::setTarget( EffectUser *target )
     m_begin = 0;
     if ( target != NULL )
         m_end = target->length();
-    else
-        m_end = -1;
+    if ( m_end <= 0 ) //Clip can't be 0lengthed, so this case would be a track.
+        m_end = Effect::TrackEffectDefaultLength; //Have a reasonable default length.
 }

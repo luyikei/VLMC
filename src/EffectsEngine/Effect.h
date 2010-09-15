@@ -32,6 +32,7 @@ class   EffectInstance;
 class Effect : public QLibrary
 {
     public:
+        static const quint32        TrackEffectDefaultLength = 25 * 60 * 10; //10 minutes at 25fps
         enum    Type
         {
             Unknown = -1,

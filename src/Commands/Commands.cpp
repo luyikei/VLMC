@@ -230,7 +230,10 @@ Commands::Effect::Move::redo()
         m_old->removeEffect( m_helper );
         m_new->addEffect( m_helper );
         qint64  offset = m_helper->begin() - m_newPos;
-        m_helper->setBoundaries( m_newPos, m_helper->end() - offset );
+        if ( m_helper->end() <= 0 )
+            m_helper->setBoundaries( m_newPos, ::Effect::TrackEffectDefaultLength );
+        else
+            m_helper->setBoundaries( m_newPos, m_helper->end() - offset );
     }
     else
         m_new->moveEffect( m_helper, m_newPos );
