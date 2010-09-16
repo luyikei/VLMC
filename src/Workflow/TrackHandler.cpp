@@ -159,12 +159,13 @@ TrackHandler::save( QXmlStreamWriter& project ) const
 {
     for ( unsigned int i = 0; i < m_trackCount; ++i)
     {
-        if ( m_tracks[i]->getLength() > 0 )
+        if ( m_tracks[i]->getLength() > 0 || m_tracks[i]->count( Effect::Filter ) > 0 )
         {
             project.writeStartElement( "track" );
             project.writeAttribute( "type", QString::number( (int)m_trackType ) );
             project.writeAttribute( "id", QString::number( i ) );
             m_tracks[i]->save( project );
+            m_tracks[i]->saveFilters( project );
             project.writeEndElement();
         }
     }
