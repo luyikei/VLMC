@@ -453,6 +453,7 @@ void    TrackWorkflow::save( QXmlStreamWriter& project ) const
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
 
+    project.writeStartElement( "clips" );
     for ( ; it != end ; ++it )
     {
         project.writeStartElement( "clip" );
@@ -460,6 +461,7 @@ void    TrackWorkflow::save( QXmlStreamWriter& project ) const
         it.value()->save( project );
         project.writeEndElement();
     }
+    project.writeEndElement();
 }
 
 void    TrackWorkflow::clear()
