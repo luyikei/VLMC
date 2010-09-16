@@ -47,7 +47,8 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
 }
 
 GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
-        m_effectHelper( helper )
+        m_effectHelper( helper ),
+        m_container( NULL )
 {
     setWidth( m_effectHelper->length() );
     m_effect = helper->effectInstance()->effect();
