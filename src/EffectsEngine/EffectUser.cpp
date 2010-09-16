@@ -184,10 +184,14 @@ EffectUser::loadEffects( const QDomElement &parent )
         {
             Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
             if ( e != NULL )
-                addEffect( e, effect.attribute( "start" ).toLongLong(),
-                              effect.attribute( "end" ).toLongLong() );
+            {
+                EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),
+                                                    effect.attribute( "end" ).toLongLong() );
+                if ( helper == NULL )
+                    qCritical() << "Can't load effect" << effect.attribute( "name" );
+            }
             else
-                qCritical() << "Renderer: Can't load effect" << effect.attribute( "name" );
+                qCritical() << "Can't load effect" << effect.attribute( "name" );
         }
         effect = effect.nextSiblingElement();
     }

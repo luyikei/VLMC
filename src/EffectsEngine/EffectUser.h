@@ -59,6 +59,7 @@ class EffectUser : public QObject
         void                            cleanEffects();
         virtual qint64                  length() const = 0;
         virtual Type                    effectType() const = 0;
+        void                            loadEffects( const QDomElement &project );
 
     protected:
         EffectUser();
@@ -69,7 +70,6 @@ class EffectUser : public QObject
         //Filters:
         quint32                         *applyFilters( const Workflow::Frame *frame,
                                                        qint64 currentFrame, double time );
-        void                            loadEffects( const QDomElement &project );
         void                            saveFilters( QXmlStreamWriter &project ) const;
 
         //Mixers methods:

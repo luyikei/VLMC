@@ -295,27 +295,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                                                   end.toLongLong(), chUuid );
                 track( type, trackId )->addClip( ch, startFrame.toLongLong() );
 
-                QDomElement     effects = clip.firstChildElement( "effects" );
-                if ( effects.isNull() == false )
-                {
-                    QDomElement effect = effects.firstChildElement( "effect" );
-                    while ( effect.isNull() == false )
-                    {
-                        if ( effect.hasAttribute( "name" ) == true &&
-                             effect.hasAttribute( "start" ) == true &&
-                             effect.hasAttribute( "end" ) == true )
-                        {
-                            Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
-                            qint64  start = effect.attribute( "start" ).toLongLong();
-                            qint64  end = effect.attribute( "end" ).toLongLong();
-                            if ( e != NULL )
-                                ch->clipWorkflow()->addEffect( e, start, end );
-                            else
-                                qCritical() << "Workflow: Can't load effect" << effect.attribute( "name" );
-                        }
-                        effect = effect.nextSiblingElement();
-                    }
-                }
+                ch->clipWorkflow()->loadEffects( clip );
             }
             clip = clip.nextSiblingElement();
         }
