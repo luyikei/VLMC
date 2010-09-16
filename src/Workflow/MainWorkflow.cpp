@@ -266,6 +266,8 @@ MainWorkflow::loadProject( const QDomElement &root )
         }
         type = static_cast<Workflow::TrackType>( utype );
 
+        track( type, trackId )->loadEffects( elem );
+
         QDomElement clips = elem.firstChildElement( "clips" );
         if ( clips.isNull() == false )
         {
