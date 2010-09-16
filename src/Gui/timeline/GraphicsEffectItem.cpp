@@ -300,6 +300,12 @@ GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
     if ( item != NULL )
     {
         connect( item, SIGNAL( moved( qint64 ) ), this, SLOT( containerMoved( qint64 ) ) );
+        if ( m_effectHelper->length() > item->helper()->length() )
+            m_effectHelper->setBoundaries( 0, item->helper()->length() );
+        if ( startPos() < item->pos().x() )
+            setStartPos( item->pos().x() );
+        if ( startPos() + width() > item->pos().x() + item->width() )
+            setStartPos( item->pos().x() + item->width() - width() );
     }
 }
 
