@@ -23,6 +23,8 @@
 #include <QLabel>
 #include "TracksControls.h"
 
+#include "GraphicsTrack.h"
+
 TracksControls::TracksControls( QWidget* parent )
         : QScrollArea( parent )
 {
@@ -55,7 +57,7 @@ void TracksControls::addVideoTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
     item->setMinimumWidth( 108 );
-    item->setMinimumHeight( 25 );
+    item->setMinimumHeight( track->height() );
     item->setContentsMargins( 0, 0, 0, 0 );
     m_layout->insertWidget( 0, item );
 }
@@ -64,7 +66,7 @@ void TracksControls::addAudioTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
     item->setMinimumWidth( 108 );
-    item->setMinimumHeight( 25 );
+    item->setMinimumHeight( track->height() );
     item->setContentsMargins( 0, 0, 0, 0 );
     m_layout->insertWidget( -1, item );
 }
