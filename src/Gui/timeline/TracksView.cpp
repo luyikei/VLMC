@@ -280,20 +280,39 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
         }
         item = mediaItem;
+        m_itemsLoaded.insert( helper->uuid() );
+        item->m_tracksView = this;
+        item->setHeight( item->itemHeight() );
+        item->setTrack( getTrack( trackType, track ) );
+        item->setStartPos( start );
+        item->m_oldTrack = tw;
+        moveItem( item, track, start );
     }
     else
     {
         EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
         Q_ASSERT( effectHelper != NULL );
-        item = new GraphicsEffectItem( effectHelper );
+        GraphicsEffectItem *effectItem = new GraphicsEffectItem( effectHelper );
+        item = effectItem;
+        m_itemsLoaded.insert( helper->uuid() );
+        item->m_tracksView = this;
+        item->setHeight( item->itemHeight() );
+        item->setTrack( getTrack( trackType, track ) );
+        item->setStartPos( start );
+        item->m_oldTrack = tw;
+        moveItem( item, track, start );
+        QList<QGraphicsItem*>     collidingItems = item->collidingItems();
+        effectItem->setContainer( NULL );
+        foreach ( QGraphicsItem *collider, collidingItems )
+        {
+            AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collider );
+            if ( mediaItem != NULL )
+            {
+                effectItem->setContainer( mediaItem );
+                break ;
+            }
+        }
     }
-    m_itemsLoaded.insert( helper->uuid() );
-    item->m_tracksView = this;
-    item->setHeight( item->itemHeight() );
-    item->setTrack( getTrack( trackType, track ) );
-    item->setStartPos( start );
-    item->m_oldTrack = tw;
-    moveItem( item, track, start );
     updateDuration();
 }
 
@@ -795,6 +814,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                           item->clipHelper()->clipWorkflow() ) );
             m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
             event->acceptProposedAction();
+            m_dragEffectItem->setContainer( item );
         }
         else
         {
@@ -813,6 +833,7 @@ TracksView::dropEvent( QDropEvent *event )
                                                                   track->trackWorkflow() ) );
 
                     event->acceptProposedAction();
+                    m_dragEffectItem->setContainer( NULL );
                     break ;
                 }
             }
@@ -1088,10 +1109,12 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         qint64      targetPos = m_actionItem->startPos();
         if ( effectItem != NULL )
         {
+            effectItem->setContainer( NULL );
             if ( m_effectTarget != NULL )
             {
                 target = m_effectTarget->clipHelper()->clipWorkflow();
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
+                effectItem->setContainer( m_effectTarget );
             }
             UndoStack::getInstance()->beginMacro( "Move effect" );
         }

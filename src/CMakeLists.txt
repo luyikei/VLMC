@@ -271,6 +271,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/StringWidget.h
         Gui/timeline/AbstractGraphicsItem.h
         Gui/timeline/AbstractGraphicsMediaItem.h
+        Gui/timeline/GraphicsEffectItem.h
         Gui/timeline/GraphicsCursorItem.h
         Gui/timeline/GraphicsTrack.h
         Gui/timeline/Timeline.h

@@ -27,11 +27,14 @@
 #include "EffectsEngine.h"
 
 class   EffectUser;
+class   AbstractGraphicsMediaItem;
 
 class   QUuid;
 
 class GraphicsEffectItem : public AbstractGraphicsItem
 {
+    Q_OBJECT
+
     public:
         enum { Type = UserType + 3 };
         GraphicsEffectItem( Effect *effect );
@@ -56,6 +59,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual qint64              itemHeight() const;
         virtual qint32              zSelected() const;
         virtual qint32              zNotSelected() const;
+        void                        setContainer( AbstractGraphicsMediaItem *item );
     protected:
         virtual bool                hasResizeBoundaries() const;
         /**
@@ -76,6 +80,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
     private:
         Effect                      *m_effect;
         EffectHelper                *m_effectHelper;
+        AbstractGraphicsMediaItem   *m_container;
 };
 
 #endif // GRAPHICSEFFECTITEM_H

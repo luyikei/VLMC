@@ -88,7 +88,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         GraphicsTrack* track();
 
         /// Set the position of the item (in frames) for the x-axis.
-        void setStartPos( qint64 position );
+        virtual void setStartPos( qint64 position );
 
         /// Return the position of the item (in frames) for the x-axis.
         qint64 startPos();

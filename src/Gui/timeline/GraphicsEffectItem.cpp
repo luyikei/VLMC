@@ -22,6 +22,7 @@
 
 #include "GraphicsEffectItem.h"
 
+#include "AbstractGraphicsMediaItem.h"
 #include "Commands.h"
 #include "EffectHelper.h"
 #include "EffectInstance.h"
@@ -36,7 +37,8 @@
 
 GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effect( effect ),
-        m_effectHelper( NULL )
+        m_effectHelper( NULL ),
+        m_container( NULL )
 {
     setOpacity( 0.8 );
     m_effectHelper = new EffectHelper( effect->createInstance() );
@@ -280,4 +282,16 @@ void
 GraphicsEffectItem::containerMoved( qint64 pos )
 {
     setStartPos( m_effectHelper->begin() + pos );
+}
+
+void
+GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
+{
+    if ( m_container != NULL )
+        m_container->disconnect( this );
+    m_container = item;
+    if ( item != NULL )
+    {
+        connect( item, SIGNAL( moved( qint64 ) ), this, SLOT( containerMoved( qint64 ) ) );
+    }
 }
