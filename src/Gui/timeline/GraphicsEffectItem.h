@@ -62,6 +62,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         void                        setContainer( AbstractGraphicsMediaItem *item );
     protected:
         virtual bool                hasResizeBoundaries() const;
+        virtual void                contextMenuEvent( QGraphicsSceneContextMenuEvent *event );
         /**
          * \brief Paint the item's rectangle.
          * \param painter Pointer to a QPainter.

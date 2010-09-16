@@ -28,9 +28,13 @@
 #include "EffectInstance.h"
 #include "GraphicsTrack.h"
 #include "Timeline.h"
+#include "TracksScene.h"
 #include "TracksView.h"
 #include "TrackWorkflow.h"
 
+#include <QColorDialog>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
 #include <QPainter>
 
 #include <QtDebug>
@@ -44,6 +48,7 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
     m_effectHelper = new EffectHelper( effect->createInstance() );
     connect( m_effectHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setWidth( m_effectHelper->length() );
+    m_itemColor = Qt::blue;
 }
 
 GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
@@ -54,6 +59,7 @@ GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
     m_effect = helper->effectInstance()->effect();
     connect( helper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setOpacity( 0.8 );
+    m_itemColor = Qt::blue;
 }
 
 const QUuid&
@@ -135,8 +141,8 @@ GraphicsEffectItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem
 
     QLinearGradient gradient( mapped.topLeft(), mapped.bottomLeft() );
 
-    gradient.setColorAt( 0, Qt::darkBlue );
-    gradient.setColorAt( 1, Qt::blue );
+    gradient.setColorAt( 0, m_itemColor );
+    gradient.setColorAt( 1, m_itemColor.darker() );
 
     painter->setPen( Qt::NoPen );
     painter->setBrush( QBrush( gradient ) );
@@ -294,5 +300,29 @@ GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
     if ( item != NULL )
     {
         connect( item, SIGNAL( moved( qint64 ) ), this, SLOT( containerMoved( qint64 ) ) );
+    }
+}
+
+void
+GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
+{
+    if ( !tracksView() )
+        return;
+
+    QMenu menu( tracksView() );
+
+    QAction* removeAction = menu.addAction( "Remove" );
+    QAction* changeColorAction = menu.addAction( "Set color" );
+
+    QAction* selectedAction = menu.exec( event->screenPos() );
+    if ( !selectedAction )
+        return;
+
+    if ( selectedAction == removeAction )
+        scene()->askRemoveSelectedItems();
+    else if ( selectedAction == changeColorAction )
+    {
+        m_itemColor = QColorDialog::getColor( m_itemColor, tracksView() );
+        update();
     }
 }
