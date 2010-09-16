@@ -439,7 +439,6 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
             m_clips.erase( it );
             computeLength();
             return cw;
-
         }
         ++it;
     }

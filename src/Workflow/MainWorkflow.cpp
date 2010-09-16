@@ -266,38 +266,42 @@ MainWorkflow::loadProject( const QDomElement &root )
         }
         type = static_cast<Workflow::TrackType>( utype );
 
-        QDomElement clip = elem.firstChildElement();
-        while ( clip.isNull() == false )
+        QDomElement clips = elem.firstChildElement( "clips" );
+        if ( clips.isNull() == false )
         {
-            //Iterate over clip fields:
-            QString                     uuid;
-            QString                     begin;
-            QString                     end;
-            QString                     startFrame;
-            QString                     chUuid;
-
-            uuid = clip.attribute( "uuid" );
-            begin = clip.attribute( "begin" );
-            end = clip.attribute( "end" );
-            startFrame = clip.attribute( "startFrame" );
-            chUuid = clip.attribute( "helper" );
-
-            if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
+            QDomElement clip = clips.firstChildElement();
+            while ( clip.isNull() == false )
             {
-                qWarning() << "Invalid clip node";
-                return ;
-            }
+                //Iterate over clip fields:
+                QString                     uuid;
+                QString                     begin;
+                QString                     end;
+                QString                     startFrame;
+                QString                     chUuid;
 
-            Clip* c = Library::getInstance()->clip( uuid );
-            if ( c != NULL )
-            {
-                ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),
-                                                  end.toLongLong(), chUuid );
-                track( type, trackId )->addClip( ch, startFrame.toLongLong() );
+                uuid = clip.attribute( "uuid" );
+                begin = clip.attribute( "begin" );
+                end = clip.attribute( "end" );
+                startFrame = clip.attribute( "startFrame" );
+                chUuid = clip.attribute( "helper" );
 
-                ch->clipWorkflow()->loadEffects( clip );
+                if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
+                {
+                    qWarning() << "Invalid clip node";
+                    return ;
+                }
+
+                Clip* c = Library::getInstance()->clip( uuid );
+                if ( c != NULL )
+                {
+                    ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),
+                                                      end.toLongLong(), chUuid );
+                    track( type, trackId )->addClip( ch, startFrame.toLongLong() );
+
+                    ch->clipWorkflow()->loadEffects( clip );
+                }
+                clip = clip.nextSiblingElement();
             }
-            clip = clip.nextSiblingElement();
         }
         elem = elem.nextSiblingElement();
     }
