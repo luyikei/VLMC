@@ -128,13 +128,13 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
     //Recheck again, as the WaitCondition may have been awaken when stopping.
     if ( getNbComputedBuffers() == 0 )
         return NULL;
-    Workflow::Frame         *buff;
+    Workflow::Frame         *buff = NULL;
     if ( mode == ClipWorkflow::Pop )
     {
         buff = m_computedBuffers.dequeue();
         m_lastReturnedBuffer = buff;
     }
-    else if ( mode == ClipWorkflow::Get )
+    else
         buff = m_computedBuffers.head();
 
     quint32     *newFrame = applyFilters( buff, currentFrame,
