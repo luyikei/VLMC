@@ -19,7 +19,7 @@ SET(PROJECT_NAME_SHORT "VLMC")
 SET(PROJECT_NAME_LONG "VideoLAN Movie Creator")
 STRING(TOLOWER ${PROJECT_NAME_SHORT} PROJECT_NAME_SHORT_LOWER)
 PROJECT(${PROJECT_NAME_SHORT_LOWER}-${PROJECT_VERSION})
-
+SET(CONTRIBS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/contribs)
 SITE_NAME(HOSTNAME)
 
 #CMake Settings
@@ -89,13 +89,13 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 IF (WITH_GUI)
     IF(WIN32)
         #FindQt4.cmake is so brain-dead when Xcompiling
-        SET(QT_LIBRARY_DIR "/usr/win32/lib")
-        SET(QT_INCLUDE_DIR "/usr/win32/include/qt4")
-        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtCore)
-        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtGui)
-        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtXml)
-        ADD_DEFINITIONS( -I/usr/win32/include/qt4/QtNetwork)
-        ADD_DEFINITIONS( -I/usr/win32/include/qt4/)
+        SET(QT_LIBRARY_DIR ${CONTRIBS_PATH}/lib)
+        SET(QT_INCLUDE_DIR ${CONTRIBS_PATH}/include/qt4)
+        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtCore)
+        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtGui)
+        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtXml)
+        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtNetwork)
+        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/)
         ADD_DEFINITIONS( -DQT_NO_OPENSSL)
         FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
     ELSE(WIN32)
@@ -119,13 +119,13 @@ IF (NOT WIN32)
     ADD_DEFINITIONS(${QT_DEFINITIONS})
 ELSE (NOT WIN32)
     SET (VLMC_LIBS
-            /usr/win32/lib/libQtNetwork.a /usr/win32/lib/libQtXml.a
-            /usr/win32/lib/libqtaccessiblewidgets.a
-            /usr/win32/lib/libQtGui.a /usr/win32/lib/libqjpeg.a
-            /usr/win32/lib/libqtaccessiblewidgets.a
-            /usr/win32/lib/libQtCore.a
-            ${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib/libvlccore.dll.a
-            ${CMAKE_CURRENT_SOURCE_DIR}/contribs/lib/libvlc.dll.a
+            ${CONTRIBS_PATH}/lib/libQtNetwork.a ${CONTRIBS_PATH}/lib/libQtXml.a
+            ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
+            ${CONTRIBS_PATH}/lib/libQtGui.a ${CONTRIBS_PATH}/lib/libqjpeg.a
+            ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
+            ${CONTRIBS_PATH}/lib/libQtCore.a
+            ${CONTRIBS_PATH}/lib/libvlccore.dll.a
+            ${CONTRIBS_PATH}/lib/libvlc.dll.a
             ws2_32 winmm imm32)
 ENDIF(NOT WIN32)
 
