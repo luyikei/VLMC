@@ -46,7 +46,7 @@ int main( int argc, char **argv )
         mySetDllDirectoryA = (BOOL WINAPI (*)(const char*)) GetProcAddress( h_Kernel32, "SetDllDirectoryA" );
         if ( mySetDllDirectoryA )
             mySetDllDirectoryA( "" );
-        FreeLibrary( h_kernel32 );
+        FreeLibrary( h_Kernel32 );
     }
     return VLMCmain( argc, argv );
 }
