@@ -46,7 +46,6 @@ ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
 ImageClipWorkflow::~ImageClipWorkflow()
 {
     stop();
-    qDeleteAll( m_filters );
     delete m_effectFrame;
 }
 
