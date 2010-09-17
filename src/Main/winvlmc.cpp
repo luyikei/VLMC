@@ -24,7 +24,7 @@
 
 int VLMCmain( int, char** );
 
-LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *lpExceptionInfo)
+LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *)
 {
     if(IsDebuggerPresent())
     {
