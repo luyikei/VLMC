@@ -110,11 +110,11 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     m_media = new LibVLCpp::Media( "imem://" + QString( videoString ) );
     m_media->addOption( inputSlave );
 
-    sprintf( buffer, "imem-get=%p", getLockCallback() );
+    sprintf( buffer, "imem-get=%"PRId64, (intptr_t)getLockCallback() );
     m_media->addOption( buffer );
-    sprintf( buffer, ":imem-release=%p", getUnlockCallback() );
+    sprintf( buffer, ":imem-release=%"PRId64, (intptr_t)getUnlockCallback() );
     m_media->addOption( buffer );
-    sprintf( buffer, ":imem-data=%p", m_esHandler );
+    sprintf( buffer, ":imem-data=%"PRId64, (intptr_t)m_esHandler );
     m_media->addOption( buffer );
     m_media->addOption( ":text-renderer dummy" );
 }
