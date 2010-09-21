@@ -34,6 +34,10 @@
 
 #include <QtDebug>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 EffectsEngine::EffectsEngine()
 {
     m_cache = new QSettings( QDesktopServices::storageLocation(
@@ -134,7 +138,14 @@ EffectsEngine::loadEffects()
                     QString("/usr/lib/frei0r-1/" );
     }
 #elif defined ( Q_OS_WIN32 )
-    pathList << QDir::currentPath() + "/effects/";
+    TCHAR       appDir[128];
+    if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
+        pathList << QString( appDir );
+    else
+    {
+        qWarning() << "Failed to get application directory. Using current path.";
+        pathList << QDir::currentPath() + "/effects/";
+    }
 #endif
     foreach ( const QString &path, pathList )
     {
