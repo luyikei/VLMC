@@ -247,6 +247,8 @@ GraphicsEffectItem::maxBegin() const
 qint64
 GraphicsEffectItem::maxEnd() const
 {
+    if ( m_effectHelper->target()->length() <= 0 )
+        return Effect::TrackEffectDefaultLength;
     return m_effectHelper->target()->length();
 }
 
