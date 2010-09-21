@@ -325,6 +325,9 @@ private:
 
     ItemPosition            findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
+    void                    addEffectItem(EffectHelper *effectHelper, Workflow::TrackType trackType,
+                                          qint32 trackId, qint64 start );
+
     /**
      * \brief Return a pointer to the specified track.
      * \param type The track's type.

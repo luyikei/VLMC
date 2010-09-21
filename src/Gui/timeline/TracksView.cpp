@@ -287,33 +287,45 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
         item->setStartPos( start );
         item->m_oldTrack = tw;
         moveItem( item, track, start );
+        //If the item has some effects:
+        foreach ( EffectHelper *effectHelper, clipHelper->clipWorkflow()->effects( Effect::Filter ) )
+        {
+            addEffectItem( effectHelper, trackType, track, start );
+        }
     }
     else
     {
         EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
-        Q_ASSERT( effectHelper != NULL );
-        GraphicsEffectItem *effectItem = new GraphicsEffectItem( effectHelper );
-        item = effectItem;
-        m_itemsLoaded.insert( helper->uuid() );
-        item->m_tracksView = this;
-        item->setHeight( item->itemHeight() );
-        item->setTrack( getTrack( trackType, track ) );
-        item->setStartPos( start );
-        item->m_oldTrack = tw;
-        moveItem( item, track, start );
-        QList<QGraphicsItem*>     collidingItems = item->collidingItems();
-        effectItem->setContainer( NULL );
-        foreach ( QGraphicsItem *collider, collidingItems )
-        {
-            AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collider );
-            if ( mediaItem != NULL )
-            {
-                effectItem->setContainer( mediaItem );
-                break ;
-            }
-        }
+        addEffectItem( effectHelper, trackType, track, start );
     }
     updateDuration();
+}
+
+void
+TracksView::addEffectItem( EffectHelper *effectHelper, Workflow::TrackType trackType,
+                           qint32 trackId, qint64 start )
+{
+    Q_ASSERT( effectHelper != NULL );
+    GraphicsEffectItem *item = new GraphicsEffectItem( effectHelper );
+    m_itemsLoaded.insert( effectHelper->uuid() );
+    item->m_tracksView = this;
+    item->setHeight( item->itemHeight() );
+    GraphicsTrack   *track = getTrack( trackType, trackId );
+    item->setTrack( track );
+    item->setStartPos( start );
+    item->m_oldTrack = track->trackWorkflow();
+    moveItem( item, trackId, start );
+    QList<QGraphicsItem*>     collidingItems = item->collidingItems();
+    item->setContainer( NULL );
+    foreach ( QGraphicsItem *collider, collidingItems )
+    {
+        AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collider );
+        if ( mediaItem != NULL )
+        {
+            item->setContainer( mediaItem );
+            break ;
+        }
+    }
 }
 
 void
