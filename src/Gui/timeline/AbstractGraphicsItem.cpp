@@ -146,6 +146,8 @@ AbstractGraphicsItem::resize( qint64 newSize, qint64 newMovingBoundary,
     }
     else
     {
+        if ( newMovingBoundary < 0 )
+            return ;
         if ( hasResizeBoundaries() == true )
         {
             qint64      endOffset = maxEnd() - end();
