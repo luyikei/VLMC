@@ -300,6 +300,8 @@ GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
     if ( item != NULL )
     {
         connect( item, SIGNAL( moved( qint64 ) ), this, SLOT( containerMoved( qint64 ) ) );
+        connect( item, SIGNAL( trackChanged( GraphicsTrack* ) ),
+                 this, SLOT( setTrack( GraphicsTrack* ) ) );
         if ( m_effectHelper->length() > item->helper()->length() )
             m_effectHelper->setBoundaries( 0, item->helper()->length() );
         if ( startPos() < item->pos().x() )
@@ -332,3 +334,4 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
         update();
     }
 }
+

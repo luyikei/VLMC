@@ -81,9 +81,6 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         /// Return the current track of the item
         qint32 trackNumber();
 
-        /// Set the item's parent track
-        void setTrack( GraphicsTrack* track );
-
         /// Return the item's parent track
         GraphicsTrack* track();
 
@@ -185,8 +182,13 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
          */
         void adjustLength();
 
+        /// Set the item's parent track
+        void setTrack( GraphicsTrack* track );
+
+
     signals:
         void                moved( qint64 pos );
+        void                trackChanged( GraphicsTrack *tracks );
 
         friend class        TracksView;
 

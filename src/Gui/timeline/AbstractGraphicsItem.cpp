@@ -95,6 +95,7 @@ void
 AbstractGraphicsItem::setTrack( GraphicsTrack* track )
 {
     setParentItem( track );
+    emit trackChanged( track );
 }
 
 GraphicsTrack*
