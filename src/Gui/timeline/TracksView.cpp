@@ -425,7 +425,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
                 if ( track != NULL && track->mediaType() == Workflow::VideoTrack )
                 {
-                    m_dragEffectItem->setWidth( track->maximumWidth() );
+                    m_dragEffectItem->setWidth( m_dragEffectItem->helper()->length() );
                     m_dragEffectItem->setStartPos( 0 );
                     m_dragEffectItem->setTrack( track );
                     break ;

@@ -89,7 +89,7 @@ GraphicsEffectItem::moveable() const
 bool
 GraphicsEffectItem::hasResizeBoundaries() const
 {
-    return ( m_effectHelper->end() != -1 );
+    return ( m_container != NULL );
 }
 
 Workflow::TrackType
@@ -247,8 +247,7 @@ GraphicsEffectItem::maxBegin() const
 qint64
 GraphicsEffectItem::maxEnd() const
 {
-    if ( m_effectHelper->target()->length() <= 0 )
-        return Effect::TrackEffectDefaultLength;
+    Q_ASSERT( m_effectHelper->target() );
     return m_effectHelper->target()->length();
 }
 

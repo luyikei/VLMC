@@ -22,6 +22,7 @@
 
 #include "EffectHelper.h"
 #include "EffectUser.h"
+#include "MainWorkflow.h"
 
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
                             const QString &uuid ) :
@@ -29,6 +30,10 @@ EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64
     m_effectInstance( effectInstance ),
     m_target( NULL )
 {
+    if ( MainWorkflow::getInstance()->getLengthFrame() > 0 )
+        m_end = MainWorkflow::getInstance()->getLengthFrame();
+    else
+        m_end = Effect::TrackEffectDefaultLength;
 }
 
 EffectInstance*
@@ -54,7 +59,8 @@ EffectHelper::setTarget( EffectUser *target )
 {
     m_target = target;
     if ( target != NULL )
-        m_end = target->length();
-    if ( m_end <= 0 ) //Clip can't be 0lengthed, so this case would be a track.
-        m_end = Effect::TrackEffectDefaultLength; //Have a reasonable default length.
+    {
+        if ( target->length() > 0 && target->length() < m_end )
+            m_end = target->length();
+    }
 }
