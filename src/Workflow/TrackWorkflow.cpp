@@ -438,6 +438,7 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
             cw->disconnect();
             m_clips.erase( it );
             computeLength();
+            emit clipRemoved( this, cw->getClipHelper()->uuid() );
             return cw;
         }
         ++it;

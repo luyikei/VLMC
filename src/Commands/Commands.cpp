@@ -92,8 +92,8 @@ void Commands::Clip::Move::redo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        m_oldTrack->removeClip( m_clipHelper->uuid() );
-        m_newTrack->addClip( m_clipHelper, m_newPos );
+        ClipWorkflow    *cw = m_oldTrack->removeClipWorkflow( m_clipHelper->uuid() );
+        m_newTrack->addClip( cw, m_newPos );
     }
     else
         m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
@@ -103,8 +103,8 @@ void Commands::Clip::Move::undo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        m_newTrack->removeClip( m_clipHelper->uuid() );
-        m_oldTrack->addClip( m_clipHelper, m_oldPos );
+        ClipWorkflow    *cw = m_newTrack->removeClipWorkflow( m_clipHelper->uuid() );
+        m_oldTrack->addClip( cw, m_oldPos );
     }
     else
         m_newTrack->moveClip( m_clipHelper->uuid(), m_oldPos );
