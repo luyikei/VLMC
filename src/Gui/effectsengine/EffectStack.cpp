@@ -108,6 +108,7 @@ EffectStack::remove()
 void
 EffectStack::add()
 {
-    EffectHelper    *helper = m_model->add( m_ui->addComboBox->currentText() );
-    addInstanceWidget( helper->effectInstance() );
+    EffectHelper *helper = m_model->add( m_ui->addComboBox->currentText() );
+    if( helper != NULL )
+        addInstanceWidget( helper->effectInstance() );
 }
