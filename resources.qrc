@@ -54,6 +54,7 @@
     <qresource prefix="/text">
         <file>AUTHORS</file>
         <file>COPYING</file>
+        <file>THANKS</file>
         <file>TRANSLATORS</file>
     </qresource>
 </RCC>
