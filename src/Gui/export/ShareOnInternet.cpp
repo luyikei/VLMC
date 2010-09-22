@@ -119,7 +119,7 @@ ShareOnInternet::authFinished()
     /*On Finish, extract out the auth token and upload a test video */
     disconnect( m_service, SIGNAL(authOver()), this, SLOT(authFinished()) );
 
-    VideoData videoData = getVideoData();
+    AbstractVideoData videoData = getVideoData();
 
     m_service->setVideoParameters( m_fileName, videoData );
 
@@ -201,10 +201,10 @@ ShareOnInternet::getPassword() const
     return m_ui.password->text();
 }
 
-VideoData
+AbstractVideoData
 ShareOnInternet::getVideoData() const
 {
-    VideoData data;
+    AbstractVideoData data;
 
     data.title       = m_ui.title->text();
     data.category    = m_ui.category->currentText().split(" & ").at( 0 );

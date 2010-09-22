@@ -27,7 +27,7 @@
 #include "ui_ShareOnInternet.h"
 
 class AbstractSharingService;
-class VideoData;
+class AbstractVideoData;
 
 class ShareOnInternet : public QDialog
 {
@@ -45,7 +45,7 @@ class ShareOnInternet : public QDialog
 
         QString                  getUsername() const;
         QString                  getPassword() const;
-        VideoData                getVideoData() const;
+        AbstractVideoData        getVideoData() const;
 
         void                     setVideoFile( QString& fileName );
 
