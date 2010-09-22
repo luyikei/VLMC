@@ -36,7 +36,6 @@ UploaderIODevice::~UploaderIODevice()
 {
     delete m_head;
     delete m_tail;
-    delete m_file;
 }
 
 void
