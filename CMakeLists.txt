@@ -240,7 +240,7 @@ IF ( DPKG_FOUND )
     SET(CPACK_GENERATOR "DEB")
     SET(CPACK_SET_DESTDIR TRUE)
     # FIXME: Check stuff: libvlc2 etc. in future as VLC 1.1+ releases
-    SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 ), frei0r-plugins-dev")
 ENDIF ( DPKG_FOUND )
 
 #Mac
