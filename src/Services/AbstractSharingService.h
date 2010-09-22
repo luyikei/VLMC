@@ -25,7 +25,15 @@
 
 #include <QObject>
 
-class VideoData;
+/* Abstract Video Data structure for pass video meta data */
+struct AbstractVideoData
+{
+    QString title;
+    QString category;
+    QString description;
+    QString keywords;
+    bool    isPrivate;
+};
 
 class AbstractSharingService : public QObject
 {
@@ -35,11 +43,11 @@ class AbstractSharingService : public QObject
         virtual void    authenticate() = 0;        // Authenticate the service
         virtual bool    upload() = 0;              // Upload video
 
-        virtual const   VideoData& getVideoData() = 0;
+        virtual const   AbstractVideoData& getVideoData() = 0;
 
         virtual void    setCredentials( const QString&, const QString& ) = 0;
         virtual void    setDeveloperKey( const QString& ) = 0;
-        virtual void    setVideoParameters( const QString&, const VideoData& ) = 0;
+        virtual void    setVideoParameters( const QString&, const AbstractVideoData& ) = 0;
 
     signals:
         void            authOver();
