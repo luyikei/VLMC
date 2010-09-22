@@ -48,7 +48,7 @@ About::About( QWidget *parent ) : QDialog( parent )
         m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
 
     m_ui.labelBuild->setText(
-        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME, qVersion(), QT_VERSION_STR ) );
+        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME, QT_VERSION_STR, qVersion() ) );
 
     m_ui.labelCopyright->setText( 
         m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT, PROJECT_CONTACT, ORG_WEBSITE ) );

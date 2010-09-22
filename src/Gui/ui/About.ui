@@ -151,8 +151,12 @@ p, li { white-space: pre-wrap; }
         <widget class="QLabel" name="labelBuild">
          <property name="text">
           <string>This version of VLMC was compiled on:
-%1 running  %2
-You're using Qt %3 (binary compiled against Qt %4)\n</string>
+%1 running  %2 compiled against Qt %3
+Your Qt runtime version: %4
+</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
