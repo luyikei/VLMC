@@ -27,6 +27,8 @@
 #include "MediaContainer.h"
 #include "StackViewController.h"
 
+#include <QApplication>
+
 MediaListView::MediaListView( StackViewController *nav, MediaContainer *mc ) :
         ListViewController( nav ),
         m_nav( nav ),
@@ -78,8 +80,8 @@ MediaListView::cellSelection( const QUuid &uuid )
             MediaCellView   *cell = m_cells.value( m_currentUuid );
             cell->setPalette( m_cells.value( uuid )->palette() );
         }
-        QPalette    p = m_cells.value( uuid )->palette();
-        p.setColor( QPalette::Window, QColor( Qt::darkBlue ) );
+        QPalette p = m_cells.value( uuid )->palette();
+        p.setColor( QPalette::Window, QApplication::palette().brush( QPalette::Active, QPalette::Highlight ).color() );
         m_cells.value( uuid )->setPalette( p );
         m_currentUuid = uuid;
         emit clipSelected( m_mediaContainer->clip( uuid ) );
