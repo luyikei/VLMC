@@ -67,7 +67,7 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
 bool
 EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& index /*= QModelIndex()*/ )
 {
-    if ( count != 1 )
+    if ( count != 1 || row < 0 )
         return false;
     beginRemoveRows( index, row, row );
     m_user->removeEffect( Effect::Filter, row );
@@ -78,7 +78,7 @@ EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& inde
 void
 EffectInstanceListModel::moveUp( const QModelIndex &index )
 {
-    if ( index.row() == 0 || index.row() >= m_user->count( Effect::Filter ) )
+    if ( index.row() <= 0 || index.row() >= m_user->count( Effect::Filter ) )
         return ;
     emit layoutAboutToBeChanged();
     m_user->swapFilters( index.row(), index.row() - 1 );
