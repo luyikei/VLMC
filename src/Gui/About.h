@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2010 VideoLAN
  *
  * Authors: Christophe Courtaut <christophe.courtaut@gmail.com>
+ *          Rohit Yadav <rohityadav89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,10 +24,10 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
-#include <QDialog>
-
 #include "QSingleton.hpp"
 #include "ui_About.h"
+
+#include <QDialog>
 
 class QPlainTextEdit;
 
@@ -34,6 +35,9 @@ class About : public QDialog, public QSingleton<About>
 {
     Q_OBJECT
     Q_DISABLE_COPY( About )
+
+    friend class    QSingleton<About>;
+
 protected:
     virtual void    changeEvent( QEvent *e );
 
@@ -41,8 +45,6 @@ private:
     explicit        About( QWidget *parent = 0 );
     void            setText( const QString& filename, QPlainTextEdit* widget );
     Ui::AboutVLMC   m_ui;
-
-    friend class    QSingleton<About>;
 };
 
 #endif // ABOUT_H

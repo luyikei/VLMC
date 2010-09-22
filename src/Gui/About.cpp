@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2010 VideoLAN
  *
  * Authors: Christophe Courtaut <christophe.courtaut@gmail.com>
+ *          Rohit Yadav <rohityadav89@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,27 +21,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "About.h"
+#include "config.h"
+
 #include <QApplication>
 #include <QFile>
-#include <QString>
 #include <QPlainTextEdit>
+#include <QString>
 #include <QtGlobal>
-#include "About.h"
 
-About::About( QWidget *parent ) :
-    QDialog( parent )
+About::About( QWidget *parent ) : QDialog( parent )
 {
     m_ui.setupUi( this );
     m_ui.tabWidget->setCurrentIndex( 0 );
+
     setText( ":/text/AUTHORS", m_ui.plainTextEditAuthors );
+    setText( ":/text/THANKS", m_ui.plainTextEditThanks );
     setText( ":/text/TRANSLATORS", m_ui.plainTextEditTranslators );
     setText( ":/text/COPYING", m_ui.plainTextEditLicense );
-    m_ui.labelVersion->setText(
-            m_ui.labelVersion->text().arg( qApp->applicationVersion() )
-            );
-    m_ui.labelQtVersion->setText(
-            m_ui.labelQtVersion->text().arg( qVersion(), QT_VERSION_STR )
-            );
+
+    m_ui.labelAbout->setText( tr( "VLMC (VideoLAN Movie Creator) is a "
+        "cross-platform, non-linear video editing software based on the VLC "
+        "Media Player.\n" ) );
+
+    m_ui.labelTitle->setText( 
+        m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
+
+    m_ui.labelBuild->setText(
+        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME, qVersion(), QT_VERSION_STR ) );
+
+    m_ui.labelCopyright->setText( 
+        m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT, PROJECT_CONTACT, ORG_WEBSITE ) );
+
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( deleteLater() ) );
 }
 
@@ -49,18 +61,20 @@ void About::changeEvent( QEvent *e )
     QDialog::changeEvent( e );
     switch ( e->type() )
     {
-    case QEvent::LanguageChange:
-        m_ui.retranslateUi( this );
-        break;
-    default:
-        break;
+        case QEvent::LanguageChange:
+            m_ui.retranslateUi( this );
+            break;
+        default:
+            break;
     }
 }
 
 void About::setText( const QString& filename, QPlainTextEdit* widget )
 {
     QFile file( filename );
+
     if ( file.open( QIODevice::ReadOnly | QIODevice::Text ) )
         widget->insertPlainText( QString::fromUtf8( file.readAll() ) );
+
     widget->moveCursor( QTextCursor::Start );
 }
