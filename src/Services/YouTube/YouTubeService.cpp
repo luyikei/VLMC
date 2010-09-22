@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "AbstractSharingService.h"
 #include "YouTubeAuthenticator.h"
 #include "YouTubeService.h"
 #include "YouTubeUploader.h"
@@ -33,6 +32,8 @@
 #include <QSslError>
 
 #include <QDebug>
+
+using namespace YouTube;
 
 YouTubeService::YouTubeService( const QString& devKey,
                                 const QString& username, 

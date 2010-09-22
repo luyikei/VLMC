@@ -33,6 +33,8 @@
 
 #include <QDebug>
 
+using namespace YouTube;
+
 YouTubeAuthenticator::YouTubeAuthenticator( YouTubeService* service, 
                                             const QString& username,
                                             const QString& password )

@@ -33,6 +33,8 @@
 
 #include <QDebug>
 
+using namespace YouTube;
+
 YouTubeUploader::YouTubeUploader( YouTubeService* service, 
                                   const QString& fileName )
 {

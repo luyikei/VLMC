@@ -23,54 +23,52 @@
 #ifndef YOUTUBECOMMON_H
 #define YOUTUBECOMMON_H
 
+#include "AbstractSharingService.h"
 #include <QString>
 
-/* VideoData structure used throught YouTube Service to pass video meta data */
-struct VideoData
+namespace YouTube
 {
-    QString title;
-    QString category;
-    QString description;
-    QString keywords;
-    bool    isPrivate;
-};
+    /* Status codes for YouTubeService */
+    enum ServiceState
+    {
+        AuthStart = 0,
+        AuthFinish,
+        UploadStart,
+        UploadFinish,
+        SearchStart,
+        SearchFinish
+    };
 
-/* Status codes for YouTubeService */
-enum YouTubeServiceState
-{
-    AuthStart = 0,
-    AuthFinish,
-    UploadStart,
-    UploadFinish,
-    SearchStart,
-    SearchFinish
-};
+    /* Error Code References:
+     * Auth: 
+     *   http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Errors
+     */
 
-/* Error Code References:
- * Auth: 
- *   http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html#Errors
- */
+    /* Error codes for YouTubeService */
+    enum Error
+    {
+        Ok = 0,
+        Abort,                      // Service was aborted
 
-/* Error codes for YouTubeService */
-enum YouTubeError
-{
-    Ok = 0,
-    Abort,                      // Service was aborted
+        BadAuthentication,          // Incorrect User credentials
+        CaptchaRequired,            // If server is trying to challenge captcha
+        ServiceUnavailable,         // YT Service Unavailable
+        UnknownError,               // Unknown Error
 
-    BadAuthentication,          // Incorrect User credentials
-    CaptchaRequired,            // If server is trying to challenge captcha
-    ServiceUnavailable,         // YT Service Unavailable
-    UnknownError,               // Unknown Error
+        NetworkError,               // Some Network Error
+        ConnectionError,            // Connection error
+        ContentError,               // Remote Content error on server
+        SSLError,                   // SSL Error
+        ProxyError,                 // Proxy Error
+        ProxyAuthError,             // Proxy Authentication Error
 
-    NetworkError,               // Some Network Error
-    ConnectionError,            // Connection error
-    ContentError,               // Remote Content error on server
-    SSLError,                   // SSL Error
-    ProxyError,                 // Proxy Error
-    ProxyAuthError,             // Proxy Authentication Error
+        FileMissing,                // File not file
+        XmlError                    // XML Parsing Error
+    };
+}
 
-    FileMissing,                // File not file
-    XmlError                    // XML Parsing Error
-};
+typedef AbstractVideoData       VideoData;
+typedef YouTube::ServiceState   YouTubeServiceState;
+typedef YouTube::Error          YouTubeError;
 
 #endif // YOUTUBECOMMON_H
