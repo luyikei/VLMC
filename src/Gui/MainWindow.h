@@ -98,6 +98,13 @@ private:
     bool        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
                              double fps, quint32 vbitrate, quint32 abitrate );
 
+    /**
+     *  \brief  Gets video parameters from RendererSettings Dialog
+     *          exportType when set to true, renders video to user defined location
+     *          and when set to false, renders video to temporary folder.
+     *  \return same as renderVideo(), 
+     *          true if video renders well or not cancelled by the user.
+     */
     bool        renderVideoSettings( bool exportType );
 
     Ui::MainWindow          m_ui;
