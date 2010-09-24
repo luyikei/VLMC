@@ -622,19 +622,12 @@ MainWindow::renderVideoSettings( bool exportType )
         return false;
     }
 
-    QString     outputFileName;
+    QString     outputFileName = settings->outputFileName();
     quint32     width          = settings->width();
     quint32     height         = settings->height();
     double      fps            = settings->fps();
     quint32     vbitrate       = settings->videoBitrate();
     quint32     abitrate       = settings->audioBitrate();
-
-    if ( exportType )
-        outputFileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
-                         VLMC_PROJECT_GET_STRING( "general/ProjectName" ) +
-                         "-vlmc.mp4";
-    else
-        outputFileName = settings->outputFileName();
 
     delete settings;
 
