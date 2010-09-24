@@ -313,6 +313,12 @@ GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
     }
 }
 
+const AbstractGraphicsMediaItem*
+GraphicsEffectItem::container() const
+{
+    return m_container;
+}
+
 void
 GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
 {
@@ -336,4 +342,3 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
         update();
     }
 }
-

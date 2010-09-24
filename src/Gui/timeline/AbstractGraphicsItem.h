@@ -88,7 +88,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual void setStartPos( qint64 position );
 
         /// Return the position of the item (in frames) for the x-axis.
-        qint64 startPos();
+        qint64 startPos() const;
 
         void    setColor( const QColor& color );
         QColor  itemColor();

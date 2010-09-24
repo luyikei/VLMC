@@ -60,6 +60,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual qint32              zSelected() const;
         virtual qint32              zNotSelected() const;
         void                        setContainer( AbstractGraphicsMediaItem *item );
+        const AbstractGraphicsMediaItem  *container() const;
     protected:
         virtual bool                hasResizeBoundaries() const;
         virtual void                contextMenuEvent( QGraphicsSceneContextMenuEvent *event );

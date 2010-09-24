@@ -1103,11 +1103,26 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
     {
         Q_ASSERT( m_actionItem );
         m_actionItem->setOpacity( 1.0 );
+        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
 
-        //Check if the clip moved.
-        if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() &&
-             m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->uuid() ) )
-            return ;
+        //Check if the item moved.
+        if ( effectItem != NULL )
+        {
+            if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() )
+            {
+                const AbstractGraphicsMediaItem *container = effectItem->container();
+                if ( container != NULL && container->startPos() + effectItem->begin() == effectItem->startPos() )
+                    return ;
+                else if ( container == NULL && effectItem->startPos() == effectItem->begin() )
+                    return ;
+            }
+        }
+        else
+        {
+            if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() &&
+                 m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->uuid() ) )
+                return ;
+        }
 
         updateDuration();
 
@@ -1117,7 +1132,6 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             addTrack( Workflow::AudioTrack );
 
         EffectUser  *target = m_actionItem->track()->trackWorkflow();
-        GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         qint64      targetPos = m_actionItem->startPos();
         if ( effectItem != NULL )
         {
