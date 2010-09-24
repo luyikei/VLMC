@@ -628,7 +628,6 @@ MainWindow::renderVideoSettings( bool exportType )
     double      fps            = settings->fps();
     quint32     vbitrate       = settings->videoBitrate();
     quint32     abitrate       = settings->audioBitrate();
-    delete settings;
 
     if ( exportType )
         outputFileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
@@ -636,6 +635,8 @@ MainWindow::renderVideoSettings( bool exportType )
                          "-vlmc.mp4";
     else
         outputFileName = settings->outputFileName();
+
+    delete settings;
 
     return renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
 }
