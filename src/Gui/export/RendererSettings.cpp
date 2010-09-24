@@ -20,18 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "RendererSettings.h"
-
 #include "Media.h"
+#include "RendererSettings.h"
 #include "SettingsManager.h"
-
 #include "ui_RendererSettings.h"
 
-#include <QFileDialog>
-#include <QMessageBox>
 #include <QCompleter>
 #include <QDirModel>
+#include <QFileDialog>
 #include <QFileInfo>
+#include <QMessageBox>
 
 RendererSettings::RendererSettings( bool exportType )
 {
@@ -39,9 +37,10 @@ RendererSettings::RendererSettings( bool exportType )
 
     if( exportType )
     {
-        m_ui.outputFileName->setEnabled( false );
-        m_ui.outputFileNameButton->setEnabled( false );
-        m_ui.outputFileName->setText("Export to Web");
+        m_ui.outputLabel->setVisible( false );
+        m_ui.outputFileName->setVisible( false );
+        m_ui.outputFileNameButton->setVisible( false );
+        setWindowTitle( tr("Export Settings: Publish on Internet") );
     }
 
     m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
@@ -68,7 +67,7 @@ RendererSettings::selectOutputFileName()
 }
 
 void
-RendererSettings::setPreset( quint32 width, quint32 height, quint32 fps )
+RendererSettings::setPreset( quint32 width, quint32 height, double fps )
 {
     m_ui.width->setValue( width );
     m_ui.height->setValue( height );
@@ -88,10 +87,10 @@ RendererSettings::updateVideoPreset( int index )
         case VGA:   setPreset( 640, 480, 30);   break;
         case SVGA:  setPreset( 800, 600, 30);   break;
         case XVGA:  setPreset( 1024, 768, 30);  break;
-        case P480:  setPreset( 720, 480, 30);   break;
+        case P480:  setPreset( 720, 480, 29.97);   break;
         case P576:  setPreset( 720, 576, 25);   break;
-        case P720:  setPreset( 1280, 720, 30);  break;
-        case P1080: setPreset( 1920, 1080, 30); break;
+        case P720:  setPreset( 1280, 720, 29.97);  break;
+        case P1080: setPreset( 1920, 1080, 29.97); break;
         case Custom:
         default:
              m_ui.width->setEnabled( true );
