@@ -60,7 +60,7 @@ class   RendererSettings : public QDialog
 
     private:
         Ui::RendererSettings    m_ui;
-        void                    setPreset( quint32 width, quint32 height, quint32 fps );
+        void                    setPreset( quint32 width, quint32 height, double fps );
 };
 
 #endif // RENDERERSETTINGS_H
