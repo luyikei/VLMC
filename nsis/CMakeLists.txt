@@ -4,7 +4,7 @@
 #
 
 # Output file name
-SET(NSIS_OUTPUT_FILE "${PROJECT_NAME}.exe")
+SET(NSIS_OUTPUT_FILE "${PROJECT_NAME}${PROJECT_VERSION}.exe")
 
 # NSIS is only available for Win32 builds (native or cross compilation)
 IF(WIN32)

@@ -5,6 +5,7 @@
 /qtc-gdbmacros
 Makefile*
 /include
+/win32
 
 /contribs/bin
 /contribs/include
