@@ -111,7 +111,7 @@ AbstractGraphicsItem::setStartPos( qint64 position )
 }
 
 qint64
-AbstractGraphicsItem::startPos()
+AbstractGraphicsItem::startPos() const
 {
     return qRound64( QGraphicsItem::pos().x() );
 }
