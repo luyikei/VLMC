@@ -34,10 +34,11 @@
 #include "Types.h"
 
 #include <QApplication>
-#include <QSettings>
-#include <QFile>
 #include <QColor>
+#include <QFile>
 #include <QPalette>
+#include <QSettings>
+#include <QUuid>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
@@ -65,6 +66,7 @@ VLMCmain( int argc, char **argv )
     qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
     qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
+    qRegisterMetaType<QUuid>( "QUuid" );
 
     QSettings s;
     LanguageHelper::getInstance()->languageChanged(

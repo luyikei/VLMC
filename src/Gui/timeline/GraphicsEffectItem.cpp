@@ -101,7 +101,7 @@ GraphicsEffectItem::trackType() const
 qint64
 GraphicsEffectItem::itemHeight() const
 {
-    return 15;
+    return 10;
 }
 
 void
@@ -341,4 +341,18 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
         m_itemColor = QColorDialog::getColor( m_itemColor, tracksView() );
         update();
     }
+}
+
+void
+GraphicsEffectItem::setStartPos( qint64 position )
+{
+    if ( m_effectHelper != NULL && m_effectHelper->target() != NULL )
+    {
+        int     nbEffect = m_effectHelper->target()->count( Effect::Filter );
+        if ( m_effectHelper->target()->contains( Effect::Filter, m_effectHelper->uuid() ) == true )
+            --nbEffect;
+        QGraphicsItem::setPos( position, nbEffect * itemHeight() );
+    }
+    else
+        QGraphicsItem::setPos( position, 0 );
 }

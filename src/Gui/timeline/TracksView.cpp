@@ -132,18 +132,18 @@ TracksView::addTrack( Workflow::TrackType type )
     m_scene->invalidate(); // Redraw the background
     //Clips part:
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-             this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
+             this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
-             this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
+             this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ), Qt::QueuedConnection );
     connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
-             this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
+             this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ), Qt::QueuedConnection );
     //Effect part:
     connect( track->trackWorkflow(), SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-             this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
+             this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
     connect( track->trackWorkflow(), SIGNAL( effectRemoved( TrackWorkflow*, QUuid ) ),
-             this, SLOT( removeItem( TrackWorkflow*, QUuid ) ) );
+             this, SLOT( removeItem( TrackWorkflow*, QUuid ) ), Qt::QueuedConnection );
     connect( track->trackWorkflow(), SIGNAL( effectMoved( TrackWorkflow*, QUuid, qint64 ) ),
-             this, SLOT( moveItem( TrackWorkflow*, QUuid, qint64 ) ) );
+             this, SLOT( moveItem( TrackWorkflow*, QUuid, qint64 ) ), Qt::QueuedConnection );
 
     if ( type == Workflow::VideoTrack )
     {
@@ -414,9 +414,13 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         if ( itemList.size() > 0 )
         {
             AbstractGraphicsMediaItem   *item = itemList.first();
+            ClipHelper                  *clipHelper = qobject_cast<ClipHelper*>( item->helper() );
+            Q_ASSERT( clipHelper != NULL );
+
             m_dragEffectItem->setWidth( item->clipHelper()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
+            m_dragEffectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
         }
         else
         {
@@ -429,6 +433,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                     m_dragEffectItem->setWidth( m_dragEffectItem->helper()->length() );
                     m_dragEffectItem->setStartPos( 0 );
                     m_dragEffectItem->setTrack( track );
+                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow() );
                     break ;
                 }
             }
@@ -945,9 +950,17 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                 AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
                 if ( mediaItem != NULL )
                 {
+                    ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( mediaItem->helper() );
+                    Q_ASSERT( clipHelper != NULL );
                     m_effectTarget = mediaItem;
+                    effectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
                     break ;
                 }
+            }
+            if ( m_effectTarget == NULL ) //Avoid doing this all the time.
+            {
+                GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
+                effectItem->effectHelper()->setTarget( track->trackWorkflow() );
             }
         }
     }

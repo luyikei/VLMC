@@ -122,7 +122,6 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         virtual qint32      zSelected() const = 0;
         virtual qint32      zNotSelected() const = 0;
 
-
     protected:
         virtual void        hoverEnterEvent( QGraphicsSceneHoverEvent* event );
         virtual void        hoverMoveEvent( QGraphicsSceneHoverEvent* event );

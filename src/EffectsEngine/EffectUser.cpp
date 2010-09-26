@@ -35,7 +35,7 @@ EffectUser::EffectUser() :
         m_width( 0 ),
         m_height( 0 )
 {
-    m_effectsLock = new QReadWriteLock;
+    m_effectsLock = new QReadWriteLock();
 }
 
 EffectUser::~EffectUser()
@@ -332,4 +332,20 @@ EffectUser::cleanEffects()
     qDeleteAll( m_mixers );
     m_filters.clear();
     m_mixers.clear();
+}
+
+bool
+EffectUser::contains( Effect::Type, const QUuid &uuid ) const
+{
+    QReadLocker     lock( m_effectsLock );
+
+    EffectsEngine::EffectList::const_iterator     it = m_filters.constBegin();
+    EffectsEngine::EffectList::const_iterator     ite = m_filters.constEnd();
+    while ( it != ite )
+    {
+        if ( (*it)->uuid() == uuid )
+            return true;
+        ++it;
+    }
+    return false;
 }

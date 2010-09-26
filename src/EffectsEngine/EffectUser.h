@@ -61,6 +61,7 @@ class EffectUser : public QObject
         virtual Type                    effectType() const = 0;
         void                            loadEffects( const QDomElement &project );
         void                            saveFilters( QXmlStreamWriter &project ) const;
+        bool                            contains( Effect::Type, const QUuid &uuid ) const;
 
     protected:
         EffectUser();
