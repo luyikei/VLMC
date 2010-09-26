@@ -180,7 +180,7 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
 
         case QNetworkReply::OperationCanceledError:
             errString = "Operation Aborted";
-            m_error = NetworkError; break;
+            m_error = Abort; break;
 
         case QNetworkReply::SslHandshakeFailedError:
             errString = "SSL Error";
@@ -215,8 +215,8 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
     qDebug() << "[NETWORK ERROR]: " << e << ": " << errString;
     emit error( errString );
 
-    /* Ignore Content errors */
-    if( m_error == ContentError )
+    /* Ignore Content and Abort errors */
+    if( m_error == ContentError || m_error == Abort )
         return;
 
     QNetworkReply *reply = static_cast<QNetworkReply *>( sender() );
