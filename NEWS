@@ -1,12 +1,18 @@
-Changes between 0.1.1 and 0.1.2:
+Changes between 0.1.1 and 0.2.0:
 
 Interface:
 * Do not display video informations when an audio file is displayed
 * Adding a filter by name/tags feature
+* Adding a toolbar
+* Import media by dragging them to the media library
+* Adding a volume slider
 
 General:
-* Fixed crash (deadlock) with very short videos. 
-
+* Adding video filters
+* Adding Youtube export
+* Projects are now stored in a workspace
+* Fixed crash (deadlock) with very short videos.
+* Fixed many other crashes.
 
 -------------------------------------------------------------------------------
 Changes between 0.1.0 and 0.1.1:
