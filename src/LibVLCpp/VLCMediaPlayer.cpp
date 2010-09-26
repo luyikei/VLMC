@@ -117,8 +117,11 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
         qDebug() << '[' << (void*)self << "] libvlc_MediaPlayerEncounteredError received."
                 << "This is not looking good...";
         self->emit errorEncountered();
-        break ;
+        break;
     case libvlc_MediaPlayerSeekableChanged:
+        // TODO: Later change it to an event that corresponds volume change, when this thing gets fixed in libvlc
+        self->emit volumeChanged();
+        break;
     case libvlc_MediaPlayerPausableChanged:
     case libvlc_MediaPlayerTitleChanged:
     case libvlc_MediaPlayerNothingSpecial:
@@ -150,6 +153,20 @@ MediaPlayer::stop()
 {
     //qDebug() << "Asking for stop media player";
     libvlc_media_player_stop( m_internalPtr );
+}
+
+int
+MediaPlayer::getVolume()
+{
+    int volume = libvlc_audio_get_volume( m_internalPtr );
+    return volume;
+}
+
+int
+MediaPlayer::setVolume( int volume )
+{
+    //Returns 0 if the volume was set, -1 if it was out of range
+    return libvlc_audio_set_volume( m_internalPtr, volume / 2 );
 }
 
 qint64

@@ -27,6 +27,9 @@
 #include <QObject>
 #include "VLCpp.hpp"
 
+#define VOLUME_MAX         100
+#define AOUT_VOLUME_MAX    1024
+
 struct  libvlc_media_player_t;
 struct  libvlc_event_t;
 struct  libvlc_event_manager_t;
@@ -44,6 +47,8 @@ namespace   LibVLCpp
         void                                play();
         void                                pause();
         void                                stop();
+        int                                 getVolume();
+        int                                 setVolume( int volume );
         qint64                              getTime();
         void                                setTime( qint64 time );
         float                               getPosition();
@@ -79,6 +84,7 @@ namespace   LibVLCpp
         void                                paused();
         void                                stopped();
         void                                endReached();
+        void                                volumeChanged();
         void                                positionChanged( float );
         void                                lengthChanged( qint64 );
         void                                errorEncountered();
