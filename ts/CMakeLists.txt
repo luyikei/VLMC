@@ -37,7 +37,7 @@ MACRO(QT4_ADD_TRANSLATIONS outfiles)
 ENDMACRO(QT4_ADD_TRANSLATIONS)
 
 ## Collect all translations files
-FILE (GLOB vlmc_TS ${CMAKE_SOURCE_DIR}/ts/*.ts)
+FILE (GLOB vlmc_TS ${CMAKE_SOURCE_DIR}/ts/vlmc*.ts)
 
 IF(QT_LRELEASE_EXECUTABLE)
     ## Wraps the collected translations
