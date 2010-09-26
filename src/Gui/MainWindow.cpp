@@ -48,7 +48,7 @@
 
 /* Widgets */
 #include "DockWidgetManager.h"
-#include "EffectsList.h"
+#include "EffectsListView.h"
 #include "ImportController.h"
 #include "MediaLibrary.h"
 #include "NotificationZone.h"
@@ -437,7 +437,8 @@ MainWindow::initializeDockWidgets( void )
 {
     DockWidgetManager *dockManager = DockWidgetManager::getInstance();
 
-    EffectsList *effectsList = new EffectsList( this );
+    EffectsListView *effectsList = new EffectsListView( this );
+    effectsList->setType( Effect::Filter );
     dockManager->addDockedWidget( effectsList,
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
                                   Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
