@@ -89,7 +89,6 @@ MediaContainer::addMedia( const QFileInfo& fileInfo )
             return NULL;
     }
     Media* media = new Media( fileInfo.filePath() );
-    MetaDataManager::getInstance()->computeMediaMetadata( media );
     return media;
 }
 

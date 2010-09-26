@@ -73,6 +73,7 @@ Library::loadProject( const QDomElement& doc )
                      this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
             m_medias[mrl] = m;
             m_nbMediaToLoad.fetchAndAddAcquire( 1 );
+            m->computeMetadata();
         }
         media = media.nextSiblingElement();
     }

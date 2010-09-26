@@ -149,6 +149,8 @@ ImportController::importMedia( const QString &filePath )
         return ;
 
     Media*  media = m_temporaryMedias->addMedia( filePath );
+    connect( media, SIGNAL( metaDataComputed( const Media* ) ), this, SLOT( mediaLoaded() ) );
+    media->computeMetadata();
     if ( media == NULL )
     {
         qCritical() << "An error occurred while loading media:" << filePath;
@@ -159,7 +161,6 @@ ImportController::importMedia( const QString &filePath )
     m_temporaryMedias->addClip( clip );
     ++m_nbMediaToLoad;
     m_ui->progressBar->setMaximum( m_nbMediaToLoad );
-    connect( media, SIGNAL( metaDataComputed( const Media* ) ), this, SLOT( mediaLoaded() ) );
 }
 
 void

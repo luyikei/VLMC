@@ -152,6 +152,13 @@ public:
 
     bool                        isInWorkspace() const;
 
+    /**
+     *  \brief      Just an helper to compute metadata.
+     *
+     *  Actual computing is performed by MetadataManager
+     */
+    void                        computeMetadata();
+
 private:
     void                        setFileType();
 

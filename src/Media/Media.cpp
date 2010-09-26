@@ -315,3 +315,9 @@ Media::setFilePath( const QString &filePath )
     }
     emit workspaceStateChanged( m_inWorkspace );
 }
+
+void
+Media::computeMetadata()
+{
+    MetaDataManager::getInstance()->computeMediaMetadata( this );
+}
