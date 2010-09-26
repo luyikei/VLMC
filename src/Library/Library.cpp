@@ -69,11 +69,10 @@ Library::loadProject( const QDomElement& doc )
                 mrl = projectPath + mrl.mid( Workspace::workspacePrefix.length() );
             }
             Media*  m = addMedia( mrl );
-            connect( m, SIGNAL( metaDataComputed( const Media* ) ),
-                     this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
-            m_medias[mrl] = m;
-            m_nbMediaToLoad.fetchAndAddAcquire( 1 );
-            m->computeMetadata();
+            if ( m == NULL )
+                qWarning() << "Failed to load media" << mrl << "when loading project.";
+            else
+                m_nbMediaToLoad.fetchAndAddAcquire( 1 );
         }
         media = media.nextSiblingElement();
     }
@@ -128,7 +127,13 @@ Library::addMedia( const QFileInfo &fileInfo )
 {
     Media* media = MediaContainer::addMedia( fileInfo );
     if ( media != NULL )
+    {
         setCleanState( false );
+        connect( media, SIGNAL( metaDataComputed( const Media* ) ),
+                 this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
+        m_medias[fileInfo.absoluteFilePath()] = media;
+        media->computeMetadata();
+    }
     return media;
 }
 

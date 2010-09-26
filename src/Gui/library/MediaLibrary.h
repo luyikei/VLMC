@@ -39,6 +39,10 @@ class MediaLibrary : public QWidget
         typedef bool    (*Filter)( const Clip*, const QString& filter );
         explicit MediaLibrary( QWidget *parent = 0);
 
+    protected:
+        void        dragEnterEvent( QDragEnterEvent *event );
+        void        dropEvent( QDropEvent *event );
+
     private:
         /**
          *  \return     The appropriate filter function

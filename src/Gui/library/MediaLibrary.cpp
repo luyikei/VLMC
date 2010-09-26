@@ -111,3 +111,43 @@ MediaLibrary::filterTypeChanged()
 {
     filterUpdated( m_ui->filterInput->text() );
 }
+
+void
+MediaLibrary::dragEnterEvent( QDragEnterEvent *event )
+{
+    if ( event->mimeData()->hasFormat( "TEXT" ) &&
+         event->mimeData()->data( "TEXT" ).startsWith( "file://" ) )
+    {
+        event->accept();
+    }
+    else
+        event->ignore();
+}
+
+void
+MediaLibrary::dropEvent( QDropEvent *event )
+{
+    if ( event->mimeData()->hasFormat( "TEXT" ) == true )
+    {
+        const QString   &data = event->mimeData()->data( "TEXT" );
+        qDebug() << data;
+        if ( data.startsWith( "file://" ) == false )
+        {
+            event->ignore();
+            return ;
+        }
+        Media   *media = Library::getInstance()->addMedia( data.mid( 7 ) );
+        if ( media != NULL )
+        {
+            Clip*   clip = new Clip( media );
+            media->setBaseClip( clip );
+            Library::getInstance()->addClip( clip );
+
+            event->accept();
+            return ;
+        }
+        else
+            qDebug() << "Failed to load media:" << data.mid(7);
+    }
+    event->ignore();
+}
