@@ -166,7 +166,7 @@ int
 MediaPlayer::setVolume( int volume )
 {
     //Returns 0 if the volume was set, -1 if it was out of range
-    return libvlc_audio_set_volume( m_internalPtr, volume / 2 );
+    return libvlc_audio_set_volume( m_internalPtr, volume );
 }
 
 qint64
