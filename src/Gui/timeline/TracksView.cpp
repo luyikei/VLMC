@@ -65,6 +65,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     m_numVideoTrack = 0;
     m_dragVideoItem = NULL;
     m_dragAudioItem = NULL;
+    m_dragEffectItem = NULL;
     m_lastKnownTrack = NULL;
     m_effectTarget = NULL;
     m_action = None;
