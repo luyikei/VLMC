@@ -33,7 +33,7 @@ namespace Ui {
     class PreviewWidget;
 }
 
-class   PreviewWidget : public QWidget
+class PreviewWidget : public QWidget
 {
     Q_OBJECT
     Q_DISABLE_COPY( PreviewWidget )
@@ -66,6 +66,8 @@ private slots:
     void            videoPaused();
     void            videoPlaying();
     void            videoStopped();
+    void            volumeChanged();
+    void            updateVolume( int );
     void            endReached();
     void            markerStartClicked();
     void            markerStopClicked();

@@ -28,6 +28,7 @@
 #include "Clip.h"
 
 #include <QMessageBox>
+#include <QDebug>
 
 PreviewWidget::PreviewWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -85,10 +86,17 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
     connect( m_renderer,     SIGNAL( endReached() ),            this,       SLOT( endReached() ) );
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
-    connect( m_renderer, SIGNAL( error() ), this, SLOT( error() ) );
+    connect( m_renderer,     SIGNAL( error() ),                 this,       SLOT( error() ) );
+    connect( m_renderer,     SIGNAL( volumeChanged() ),         this,       SLOT( volumeChanged() ) );
+
+    connect( m_ui->volumeSlider, SIGNAL( valueChanged ( int ) ),
+             this, SLOT( updateVolume( int ) ) );
+    connect( m_ui->volumeSlider, SIGNAL( sliderMoved( int ) ),
+             this, SLOT( updateVolume( int ) ) );
 }
 
-void    PreviewWidget::changeEvent( QEvent *e )
+void
+PreviewWidget::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -100,7 +108,8 @@ void    PreviewWidget::changeEvent( QEvent *e )
     }
 }
 
-void    PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReason reason )
+void
+PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReason reason )
 {
     if ( m_previewStopped == false && reason != Vlmc::PreviewCursor )
     {
@@ -108,7 +117,8 @@ void    PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReas
     }
 }
 
-void    PreviewWidget::on_pushButtonStop_clicked()
+void
+PreviewWidget::on_pushButtonStop_clicked()
 {
     if ( m_previewStopped == false )
     {
@@ -117,29 +127,48 @@ void    PreviewWidget::on_pushButtonStop_clicked()
     }
 }
 
-void    PreviewWidget::on_pushButtonPlay_clicked()
+void
+PreviewWidget::on_pushButtonPlay_clicked()
 {
     if ( m_previewStopped == true )
         m_previewStopped = false;
     m_renderer->togglePlayPause();
 }
 
-void    PreviewWidget::videoPaused()
+void
+PreviewWidget::videoPaused()
 {
     m_ui->pushButtonPlay->setIcon( QIcon( ":/images/play" ) );
 }
 
-void    PreviewWidget::videoStopped()
+void
+PreviewWidget::videoStopped()
 {
     m_ui->pushButtonPlay->setIcon( QIcon( ":/images/play" ) );
 }
 
-void    PreviewWidget::videoPlaying()
+void
+PreviewWidget::videoPlaying()
 {
     m_ui->pushButtonPlay->setIcon( QIcon( ":/images/pause" ) );
 }
 
-void    PreviewWidget::endReached()
+void
+PreviewWidget::volumeChanged()
+{
+    int volume = m_renderer->getVolume();
+    m_ui->volumeSlider->setValue( volume );
+}
+
+void
+PreviewWidget::updateVolume( int volume )
+{
+    // Returns 0 if the volume was set, -1 if it was out of range
+    m_renderer->setVolume( volume );
+}
+
+void
+PreviewWidget::endReached()
 {
     m_previewStopped = true;
 
@@ -149,30 +178,35 @@ void    PreviewWidget::endReached()
     m_ui->renderWidget->setPalette( m_videoPalette );
 }
 
-void        PreviewWidget::on_pushButtonNextFrame_clicked()
+void
+PreviewWidget::on_pushButtonNextFrame_clicked()
 {
     if ( m_previewStopped == false )
         m_renderer->nextFrame();
 }
 
-void        PreviewWidget::on_pushButtonPreviousFrame_clicked()
+void
+PreviewWidget::on_pushButtonPreviousFrame_clicked()
 {
     if ( m_previewStopped == false )
         m_renderer->previousFrame();
 }
 
-const GenericRenderer*      PreviewWidget::getGenericRenderer() const
+const GenericRenderer*
+PreviewWidget::getGenericRenderer() const
 {
     return m_renderer;
 }
 
-void                        PreviewWidget::stop()
+void
+PreviewWidget::stop()
 {
     //Ugly but avoid code dupplication.
     on_pushButtonStop_clicked();
 }
 
-void                        PreviewWidget::markerStartClicked()
+void
+PreviewWidget::markerStartClicked()
 {
     m_ui->rulerWidget->setMarker( PreviewRuler::Start );
 
@@ -184,7 +218,8 @@ void                        PreviewWidget::markerStartClicked()
     }
 }
 
-void                        PreviewWidget::markerStopClicked()
+void
+PreviewWidget::markerStopClicked()
 {
     m_ui->rulerWidget->setMarker( PreviewRuler::Stop );
     qint64  beg = m_ui->rulerWidget->getMarker( PreviewRuler::Start );
@@ -195,7 +230,8 @@ void                        PreviewWidget::markerStopClicked()
     }
 }
 
-void        PreviewWidget::createNewClipFromMarkers()
+void
+PreviewWidget::createNewClipFromMarkers()
 {
     ClipRenderer* clipRenderer = qobject_cast<ClipRenderer*>( m_renderer );
     Q_ASSERT( clipRenderer != NULL );
