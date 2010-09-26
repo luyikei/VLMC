@@ -151,6 +151,8 @@ ShareOnInternet::authFinished()
 void
 ShareOnInternet::uploadFinished( QString result )
 {
+    qDebug() << "[SHARE ON INTERNET]: UPLOAD FINISHED";
+
     /* Add code here to abort stuff */
     m_ui.progressBar->setEnabled( false );
     m_ui.progressBar->setVisible( false );
@@ -177,14 +179,13 @@ ShareOnInternet::uploadProgress(qint64 received, qint64 total)
     {
         qint64 progress = received * 100 / total;
         m_ui.progressBar->setValue( progress );
-        m_ui.statusLabel->setText( tr("%1 Bytes Uploaded").arg( received ) );
+        m_ui.statusLabel->setText( tr("%1 kB Uploaded").arg( received / 1024 ) );
     }
 }
 
 void
 ShareOnInternet::serviceError(QString e)
 {
-    qDebug() << "[SHARE ON INTERNET]: ERROR = " << e;
     m_ui.statusLabel->setText( e );
     emit error( e );
 }
