@@ -47,6 +47,8 @@ public:
 
     virtual void            togglePlayPause( bool forcePause );
     virtual void            stop();
+    virtual int             setVolume( int volume );
+    virtual int             getVolume() const;
     virtual void            nextFrame();
     virtual void            previousFrame();
     virtual qint64          length() const;

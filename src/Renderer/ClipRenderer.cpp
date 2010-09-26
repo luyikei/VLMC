@@ -44,6 +44,7 @@ ClipRenderer::ClipRenderer() :
     connect( m_mediaPlayer,     SIGNAL( stopped() ),            this,   SLOT( __videoStopped() ) );
     connect( m_mediaPlayer,     SIGNAL( paused() ),             this,   SIGNAL( paused() ) );
     connect( m_mediaPlayer,     SIGNAL( playing() ),            this,   SIGNAL( playing() ) );
+    connect( m_mediaPlayer,     SIGNAL( volumeChanged() ),      this,   SIGNAL( volumeChanged() ) );
     connect( m_mediaPlayer,     SIGNAL( timeChanged( qint64 ) ),        this,   SLOT( __timeChanged( qint64 ) ) );
     connect( m_mediaPlayer,     SIGNAL( endReached() ),         this,   SLOT( __endReached() ) );
 }
@@ -147,6 +148,19 @@ ClipRenderer::togglePlayPause( bool forcePause )
             m_mediaPlayer->play();
         m_paused = false;
     }
+}
+
+int
+ClipRenderer::getVolume() const
+{
+    return m_mediaPlayer->getVolume();
+}
+
+int
+ClipRenderer::setVolume( int volume )
+{
+    //Returns 0 if the volume was set, -1 if it was out of range
+    return m_mediaPlayer->setVolume( volume );
 }
 
 void
