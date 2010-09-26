@@ -90,6 +90,22 @@ class   WorkflowRenderer : public GenericRenderer
          *  \sa killRenderer();
          */
         virtual void        stop();
+
+        /**
+         *  \brief  Set the output volume.
+         *  \param  volume the volume (int)
+         *  \return 0 if the volume was set, -1 if it was out of range
+         *  \sa     getVolume()
+         */
+        virtual int         setVolume( int volume );
+
+        /**
+         *  \brief   Return the volume
+         *  \return  The Return the volume the audio level (int)
+         *  \sa     setVolume( int )
+         */
+        virtual int         getVolume() const;
+
         /**
          *  \brief Render the next frame
          *  \sa     previousFrame()

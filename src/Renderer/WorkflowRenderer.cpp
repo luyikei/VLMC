@@ -53,7 +53,8 @@ WorkflowRenderer::WorkflowRenderer() :
 {
 }
 
-void    WorkflowRenderer::initializeRenderer()
+void
+WorkflowRenderer::initializeRenderer()
 {
     m_esHandler = new EsHandler;
     m_esHandler->self = this;
@@ -218,14 +219,16 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
     return 0;
 }
 
-void    WorkflowRenderer::unlock( void *datas, const char*, size_t, void* )
+void
+WorkflowRenderer::unlock( void *datas, const char*, size_t, void* )
 {
     EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
     delete[] handler->self->m_effectFrame;
     handler->self->m_effectFrame = NULL;
 }
 
-void        WorkflowRenderer::startPreview()
+void
+WorkflowRenderer::startPreview()
 {
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
         return ;
@@ -252,19 +255,22 @@ void        WorkflowRenderer::startPreview()
     m_mediaPlayer->play();
 }
 
-void        WorkflowRenderer::nextFrame()
+void
+WorkflowRenderer::nextFrame()
 {
     if ( m_paused == true )
         m_mainWorkflow->renderOneFrame();
 }
 
-void        WorkflowRenderer::previousFrame()
+void
+WorkflowRenderer::previousFrame()
 {
     if ( m_paused == true )
         m_mainWorkflow->previousFrame( Workflow::VideoTrack );
 }
 
-void        WorkflowRenderer::togglePlayPause( bool forcePause )
+void
+WorkflowRenderer::togglePlayPause( bool forcePause )
 {
     if ( m_isRendering == false && forcePause == false )
         startPreview();
@@ -272,7 +278,8 @@ void        WorkflowRenderer::togglePlayPause( bool forcePause )
         internalPlayPause( forcePause );
 }
 
-void        WorkflowRenderer::internalPlayPause( bool forcePause )
+void
+WorkflowRenderer::internalPlayPause( bool forcePause )
 {
     //If force pause is true, we just ensure that this render is paused... no need to start it.
     if ( m_isRendering == true )
@@ -293,7 +300,8 @@ void        WorkflowRenderer::internalPlayPause( bool forcePause )
     }
 }
 
-void        WorkflowRenderer::stop()
+void
+WorkflowRenderer::stop()
 {
     //Since we want permanent render (to have a permanent render update, we shouldn't
     //stop, but pause
@@ -315,47 +323,69 @@ WorkflowRenderer::killRenderer()
     m_silencedAudioBuffer = NULL;
 }
 
-qint64      WorkflowRenderer::getCurrentFrame() const
+int
+WorkflowRenderer::getVolume() const
+{
+    return m_mediaPlayer->getVolume();
+}
+
+int
+WorkflowRenderer::setVolume( int volume )
+{
+    //Returns 0 if the volume was set, -1 if it was out of range
+    return m_mediaPlayer->setVolume( volume );
+}
+
+qint64
+WorkflowRenderer::getCurrentFrame() const
 {
     return m_mainWorkflow->getCurrentFrame();
 }
 
-qint64      WorkflowRenderer::length() const
+qint64
+WorkflowRenderer::length() const
 {
     return qRound64( (qreal)getLengthMs() / 1000.0 * (qreal)getFps() );
 }
 
-qint64      WorkflowRenderer::getLengthMs() const
+qint64
+WorkflowRenderer::getLengthMs() const
 {
     return m_mainWorkflow->getLengthFrame() / getFps() * 1000;
 }
 
-float       WorkflowRenderer::getFps() const
+float
+WorkflowRenderer::getFps() const
 {
     return m_outputFps;
 }
 
-void        WorkflowRenderer::timelineCursorChanged( qint64 newFrame )
+void
+WorkflowRenderer::timelineCursorChanged( qint64 newFrame )
 {
     m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::TimelineCursor );
 }
 
-void        WorkflowRenderer::previewWidgetCursorChanged( qint64 newFrame )
+void
+WorkflowRenderer::previewWidgetCursorChanged( qint64 newFrame )
 {
     m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::PreviewCursor );
 }
 
-void        WorkflowRenderer::rulerCursorChanged( qint64 newFrame )
+void
+WorkflowRenderer::rulerCursorChanged( qint64 newFrame )
 {
     m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::RulerCursor );
 }
 
-void*   WorkflowRenderer::getLockCallback()
+void*
+WorkflowRenderer::getLockCallback()
 {
     return (void*)&WorkflowRenderer::lock;
 }
 
-void*   WorkflowRenderer::getUnlockCallback()
+void*
+WorkflowRenderer::getUnlockCallback()
 {
     return (void*)&WorkflowRenderer::unlock;
 }
@@ -410,7 +440,8 @@ WorkflowRenderer::loadProject( const QDomElement &project )
 /////SLOTS :
 /////////////////////////////////////////////////////////////////////
 
-void        WorkflowRenderer::__endReached()
+void
+WorkflowRenderer::__endReached()
 {
     stop();
     emit endReached();
