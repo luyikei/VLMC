@@ -61,6 +61,15 @@ public:
      */
     void                setRenderWidget( QWidget* renderWidget );
 #endif
+
+    /**
+     *  \brief  Set the output volume.
+     *  \param  volume the volume (int)
+     *  \return 0 if the volume was set, -1 if it was out of range
+     *  \sa     getVolume()
+     */
+    virtual int         setVolume( int volume ) = 0;
+
     /**
      *  \brief          Play or pause the media.
      *
@@ -94,6 +103,13 @@ public:
      *  \sa togglePlayPause( bool );
      */
     virtual void                    stop() = 0;
+
+    /**
+     *  \brief   Return the volume
+     *  \return  The Return the volume the audio level (int)
+     *  \sa     setVolume( int )
+     */
+    virtual int                     getVolume() const = 0;
 
     /**
      * \brief   Return the length in milliseconds
@@ -197,6 +213,10 @@ signals:
      *  \sa     paused()
      */
     void                            playing();
+    /**
+     *  \brief  Emmited when volume change occurs.
+     */
+    void                            volumeChanged();
     /**
      *  \brief  Emmited when rendered frame has been changed.
      *  \param  newFrame    The new current frame
