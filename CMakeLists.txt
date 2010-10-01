@@ -21,8 +21,8 @@ IF(GIT)
         COMMAND ${GIT} rev-parse --short HEAD 
         OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    SET(PROJECT_VERSION_PATCH "${GIT_OUT}git")
-    MESSAGE(STATUS "Git Version Patch: git_${GIT_OUT}")
+    SET(PROJECT_VERSION_PATCH "${GIT_OUT}-git")
+    MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
 ELSE(GIT)
     SET(GIT_OUT 0)
 ENDIF(GIT)
@@ -211,12 +211,12 @@ INSTALL (FILES share/vlmc.desktop DESTINATION ${VLMC_DESKTOP_DIR})
 # Copy the VLMC pixmap
 INSTALL (FILES share/vlmc.png DESTINATION ${VLMC_PIXMAPS_DIR})
 
-# Copy the share directory
-INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
-         PATTERN "*.desktop" EXCLUDE
-         PATTERN "*.ico" EXCLUDE
-         PATTERN "*.icns" EXCLUDE
-         PATTERN "vlmc.png" EXCLUDE)
+# Copy the share directory (TODO: add checks if the dir is empty, don't install)
+# INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
+#         PATTERN "*.desktop" EXCLUDE
+#         PATTERN "*.ico" EXCLUDE
+#         PATTERN "*.icns" EXCLUDE
+#         PATTERN "vlmc.png" EXCLUDE)
 
 #############################################################
 # Package Settings
