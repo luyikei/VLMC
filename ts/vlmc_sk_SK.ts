@@ -3,28 +3,18 @@
 <TS version="2.0" language="sk_SK">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
+    <name>About</name>
+    <message>
+        <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
+</source>
+        <translation>VLMC (VideoLAN Movie Creator) je multiplatformný, nelineárny softvér na úpravu videa, založený na prehrávači VLC Media Player.</translation>
+    </message>
+</context>
+<context>
     <name>AboutVLMC</name>
     <message>
         <source>About</source>
         <translation>O programe</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b1ca00;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b1ca00;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation>Verzia: %1</translation>
     </message>
     <message>
         <source>Authors</source>
@@ -39,8 +29,42 @@ p, li { white-space: pre-wrap; }
         <translation>Licencia</translation>
     </message>
     <message>
-        <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation>Verzia Qt Runtime: %1.(kompilované: %2)</translation>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
+</source>
+        <translation>VLMC (VideoLAN Movie Creator) je multiplatformný, nelineárny softvér na úpravu videa, založený na prehrávači VLC Media Player.</translation>
+    </message>
+    <message>
+        <source>This version of VLMC was compiled on:
+%1 running  %2 compiled against Qt %3
+Your Qt runtime version: %4
+</source>
+        <translation>Táto verzia programu VLMC bola skompilovaná na:
+%1 fungujúce pod %2, kompilované pre Qt %3
+Verzia Vášho prostredia Qt: %4</translation>
+    </message>
+    <message>
+        <source>%1
+%2, %3</source>
+        <translation>%1
+%2, %3</translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation>Ďakujeme</translation>
     </message>
 </context>
 <context>
@@ -169,6 +193,98 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>History</source>
         <translation>História</translation>
+    </message>
+    <message>
+        <source>Effects List</source>
+        <translation>Zoznam efektov</translation>
+    </message>
+</context>
+<context>
+    <name>EffectSettingWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation>Dialóg</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Použiť</translation>
+    </message>
+</context>
+<context>
+    <name>EffectStack</name>
+    <message>
+        <source>Effect stack</source>
+        <translation>Zásobník efektov</translation>
+    </message>
+    <message>
+        <source>Move the effect up in the stack</source>
+        <translation>Posunúť efekt nahor</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <source>Move the effect down in the stack</source>
+        <translation>Posunúť efekt nadol</translation>
+    </message>
+</context>
+<context>
+    <name>EffectWidget</name>
+    <message>
+        <source>Filter</source>
+        <translation>Filter</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Zdroj</translation>
+    </message>
+    <message>
+        <source>Mixer 2</source>
+        <translation>Mixér 2</translation>
+    </message>
+    <message>
+        <source>Mixer 3</source>
+        <translation>Mixér 3</translation>
+    </message>
+    <message>
+        <source>Unknown type</source>
+        <translation>Neznámy typ</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation>Formulár</translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation>Prehľad</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Názov</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Typ</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>Verzia</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Opis</translation>
+    </message>
+</context>
+<context>
+    <name>EffectsListView</name>
+    <message>
+        <source>%1 informations</source>
+        <translation>%1 informácií</translation>
     </message>
 </context>
 <context>
@@ -519,10 +635,6 @@ p, li { white-space: pre-wrap; }
         <translation>Renderovať projekt ako súbor</translation>
     </message>
     <message>
-        <source>Share on &amp;Youtube</source>
-        <translation>Zdieľať na &amp;Youtube</translation>
-    </message>
-    <message>
         <source>Share your project on youtube</source>
         <translation>Zdieľajte svoj projekt na portáli Youtube</translation>
     </message>
@@ -541,6 +653,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cut mode</source>
         <translation>Režim vystrihovania</translation>
+    </message>
+    <message>
+        <source>Publish on &amp;Internet</source>
+        <translation>Zverejniť na &amp;Internete</translation>
     </message>
 </context>
 <context>
@@ -857,48 +973,20 @@ p, li { white-space: pre-wrap; }
         <translation>Vývojársky kľúč pre portál Youtube</translation>
     </message>
     <message>
-        <source>The Youtube Developer Key</source>
-        <translation>Vývojársky kľúč pre portál Youtube</translation>
-    </message>
-    <message>
         <source>Youtube Username</source>
         <translation>Meno používateľa na serveri Youtube</translation>
-    </message>
-    <message>
-        <source>VLMC won&apos;t store your passwords...</source>
-        <translation>Program VLMC neukladá žiadne Vami zadané heslá...</translation>
-    </message>
-    <message>
-        <source>Proxy</source>
-        <translation>Proxy</translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy </source>
-        <translation>HTTP proxy </translation>
     </message>
     <message>
         <source>Proxy Port</source>
         <translation>Port Proxy</translation>
     </message>
     <message>
-        <source>The HTTP Proxy Port</source>
-        <translation>Port HTTP proxy</translation>
-    </message>
-    <message>
         <source>Proxy Username</source>
         <translation>Meno používateľa na proxy serveri</translation>
     </message>
     <message>
-        <source>The HTTP Proxy Username</source>
-        <translation>Meno používateľa na HTTP proxy serveri</translation>
-    </message>
-    <message>
         <source>Proxy Password</source>
         <translation>Heslo na prosxy server</translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy Password</source>
-        <translation>Heslo na HTTP proxy server</translation>
     </message>
     <message>
         <source>The default location where to store projects folders</source>
@@ -916,12 +1004,64 @@ p, li { white-space: pre-wrap; }
         <source>Selection mode</source>
         <translation>Režim výberu</translation>
     </message>
+    <message>
+        <source>The temporary folder used by VLMC to process videos.</source>
+        <translation>Dočasný priečinok používaný programom VLMC na spracovanie videa.</translation>
+    </message>
+    <message>
+        <source>VLMC&apos;s Youtube Developer Key</source>
+        <translation>VLMC vývojársky kľúč pre Youtube </translation>
+    </message>
+    <message>
+        <source>Valid YouTube username</source>
+        <translation>Platné meno používateľa na serveri YouTube</translation>
+    </message>
+    <message>
+        <source>Youtube Password</source>
+        <translation>Heslo pre server Youtube</translation>
+    </message>
+    <message>
+        <source>Leave this field, password will be stored in unencryped form.</source>
+        <translation>Ak necháte toto políčko prázdne, heslo sa uloží v nekryptovanom tvare.</translation>
+    </message>
+    <message>
+        <source>Enable Proxy for VLMC</source>
+        <translation>Zapnúť proxy pre program VLMC</translation>
+    </message>
+    <message>
+        <source>Enables Global Network Proxy for VLMC.</source>
+        <translation>Zapnúť globálny sieťový proxy pre program VLMC.</translation>
+    </message>
+    <message>
+        <source>Proxy Hostname</source>
+        <translation>Host. meno proxy</translation>
+    </message>
+    <message>
+        <source>Set Proxy Hostname.</source>
+        <translation>Nastaviť host. meno proxy.</translation>
+    </message>
+    <message>
+        <source>Set Proxy Port.</source>
+        <translation>Port proxy.</translation>
+    </message>
+    <message>
+        <source>Set Proxy Username, if any.</source>
+        <translation>Nastavte meno používateľa pre proxy, ak je k dispozícii.</translation>
+    </message>
+    <message>
+        <source>Set Proxy Password, if any.</source>
+        <translation>Nastavte heslo pre proxy, ak je k dispozícii.</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Predvolené umiestnenie projektu</translation>
+    </message>
+    <message>
+        <source>Temporary folder</source>
+        <translation>Dočasný priečinok</translation>
     </message>
 </context>
 <context>
@@ -968,6 +1108,10 @@ Please check your VLC installation before reporting the issue.</source>
         <translation>Nastala chyba počas renderovania.
 Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.</translation>
     </message>
+    <message>
+        <source>Adjust Volume</source>
+        <translation>Prispôsobiť hlasitosť</translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -978,6 +1122,14 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Nepodarilo sa načítať súbor s projektom: %1. Akcia bola prerušená.</translation>
+    </message>
+    <message>
+        <source>Untitled Project</source>
+        <translation>Projekt bez názvu</translation>
+    </message>
+    <message>
+        <source>Unsaved Project</source>
+        <translation>Neuložený projekt</translation>
     </message>
 </context>
 <context>
@@ -1029,16 +1181,32 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <source>Unable to get backtrace</source>
         <translation>Nemožno získať spätné volanie</translation>
     </message>
+    <message>
+        <source>The XMLStream is not a valid YouTube Feed</source>
+        <translation>XML stream nie je platným prvkom YouTube Feed</translation>
+    </message>
+    <message>
+        <source>Adding effect %1</source>
+        <translation>Pridávanie efektu %1</translation>
+    </message>
+    <message>
+        <source>Moving effect %1</source>
+        <translation>Presúvanie efektu %1</translation>
+    </message>
+    <message>
+        <source>Resizing effect %1</source>
+        <translation>Zmena veľkosti v efekte %1</translation>
+    </message>
+    <message>
+        <source>Deleting effect %1</source>
+        <translation>Vymazávanie efektu %1</translation>
+    </message>
 </context>
 <context>
     <name>RendererSettings</name>
     <message>
         <source>Enter the output file name</source>
         <translation>Zadajte názov výstupného súboru</translation>
-    </message>
-    <message>
-        <source>Output file</source>
-        <translation>Výstupný súbor</translation>
     </message>
     <message>
         <source>Select...</source>
@@ -1053,36 +1221,12 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <translation>Výška</translation>
     </message>
     <message>
-        <source>FPS</source>
-        <translation>snímkov za sekundu</translation>
-    </message>
-    <message>
-        <source>Video quality</source>
-        <translation>Kvalita videa</translation>
-    </message>
-    <message>
-        <source>Audio quality</source>
-        <translation>Kvalita zvuku</translation>
-    </message>
-    <message>
-        <source>Video codec</source>
-        <translation>Kodek videa</translation>
-    </message>
-    <message>
         <source>H264</source>
         <translation>H264</translation>
     </message>
     <message>
-        <source>Audio codec</source>
-        <translation>Kodek zvuku</translation>
-    </message>
-    <message>
         <source>AAC</source>
         <translation>AAC</translation>
-    </message>
-    <message>
-        <source>Render settings</source>
-        <translation>Nastavenia vykresľovania</translation>
     </message>
     <message>
         <source>Invalid parameters</source>
@@ -1107,6 +1251,78 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Videos(%1)</source>
         <translation>Videá(%1)</translation>
+    </message>
+    <message>
+        <source>Export Settings: Publish on Internet</source>
+        <translation>Export nastavení: Zverejniť na internete</translation>
+    </message>
+    <message>
+        <source>Export Settings</source>
+        <translation>Exportovať nastavenia</translation>
+    </message>
+    <message>
+        <source>Output File</source>
+        <translation>Výstupný súbor</translation>
+    </message>
+    <message>
+        <source>Frame Rate</source>
+        <translation>Frekvencia snímok</translation>
+    </message>
+    <message>
+        <source>Video Quality</source>
+        <translation>Kvalita videa</translation>
+    </message>
+    <message>
+        <source>Audio Quality</source>
+        <translation>Kvalita zvuku</translation>
+    </message>
+    <message>
+        <source>Video Codec</source>
+        <translation>Kodek videa</translation>
+    </message>
+    <message>
+        <source>Audio Codec</source>
+        <translation>Kodek pre zvuk</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Určené používateľom</translation>
+    </message>
+    <message>
+        <source>QVGA (320x240) - 30 fps</source>
+        <translation>QVGA (320x240) - 30 fps</translation>
+    </message>
+    <message>
+        <source>VGA (640x480) - 30 fps</source>
+        <translation>VGA (640x480) - 30 fps</translation>
+    </message>
+    <message>
+        <source>SVGA (800x600) - 30 fps</source>
+        <translation>SVGA (800x600) - 30 fps</translation>
+    </message>
+    <message>
+        <source>XVGA (1024x768) - 30 fps</source>
+        <translation>XVGA (1024x768) - 30 fps</translation>
+    </message>
+    <message>
+        <source>480p NTSC (720x480) - 29.97 fps</source>
+        <translation>480p NTSC (720x480) - 29,97 fps</translation>
+    </message>
+    <message>
+        <source>576p PAL (720x576) - 25 fps</source>
+        <translation>576p PAL (720x576) - 25 fps</translation>
+    </message>
+    <message>
+        <source>720p (1280x720) - 29.97 fps</source>
+        <translation>720p (1280x720) - 29,97 fps</translation>
+    </message>
+    <message>
+        <source>1080p (1920x1080) - 29.97 fps</source>
+        <translation>1080p (1920x1080) - 29,97 fps</translation>
+    </message>
+    <message>
+        <source>Preset</source>
+        <translation>Predvolené</translation>
     </message>
 </context>
 <context>
@@ -1154,12 +1370,66 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <source>VLMC Settings</source>
         <translation>Nastavenia VLMC</translation>
     </message>
+    <message>
+        <source>Restore default?</source>
+        <translation>Obnoviť predvolené?</translation>
+    </message>
+    <message>
+        <source>This will restore all settings default value.
+Are you sure you want to continue?</source>
+        <translation>Týmto príkazom obnovíte všetky nastavenia na ich predvolené hodnoty.
+Naozaj chcete pokračovať?</translation>
+    </message>
 </context>
 <context>
-    <name>ShareOnYoutube</name>
+    <name>ShareOnInternet</name>
     <message>
-        <source>Share On Youtube</source>
-        <translation>Zdieľať na portáli Youtube</translation>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
+        <translation>Políčka &apos;Meno používateľa&apos; alebo &apos;Heslo&apos; alebo &apos;Titul&apos; nemôžu byť prázdne. Skontrolujte prosím tieto políčka ešte raz.</translation>
+    </message>
+    <message>
+        <source>Authenticating...</source>
+        <translation>Autentifikácia...</translation>
+    </message>
+    <message>
+        <source>Authenticated!</source>
+        <translation>Autentifikované!</translation>
+    </message>
+    <message>
+        <source>Video Uploaded</source>
+        <translation>Video bolo odoslané</translation>
+    </message>
+    <message>
+        <source>Your video has been uploaded.
+URL (copied to your clipboard):
+%1
+
+Open video in your default web browser?</source>
+        <translation>Vaše video bolo odoslané.
+URL adresa (skopírovaná aj do schránky)
+%1
+
+Chcete video otvoriť vo svojom predvolenom prehliadači?</translation>
+    </message>
+    <message>
+        <source>%1 kB Uploaded</source>
+        <translation>Odoslaných %1 kB</translation>
+    </message>
+    <message>
+        <source>Share Video On Internet</source>
+        <translation>Zdieľať video na internete</translation>
+    </message>
+    <message>
+        <source>Service</source>
+        <translation>Služba</translation>
+    </message>
+    <message>
+        <source>YouTube</source>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1168,6 +1438,10 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Password</source>
         <translation>Heslo</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Kategória</translation>
     </message>
     <message>
         <source>Autos &amp; Vehicles</source>
@@ -1190,7 +1464,7 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <translation>Film &amp; animácia</translation>
     </message>
     <message>
-        <source>Gaming</source>
+        <source>Games</source>
         <translation>Hry</translation>
     </message>
     <message>
@@ -1206,19 +1480,19 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <translation>Správy &amp; politika</translation>
     </message>
     <message>
-        <source>Nonprofits &amp; Activism</source>
-        <translation>Neziskové aktivity &amp; aktivisti</translation>
+        <source>Nonprofit &amp; Activism</source>
+        <translation>Neziskové organizácie &amp; aktivisti</translation>
     </message>
     <message>
         <source>People &amp; Blogs</source>
         <translation>Ľudia &amp; blogy</translation>
     </message>
     <message>
-        <source>Pets &amp; Animals</source>
-        <translation>Domáci miláčikovia &amp; zvieratá</translation>
+        <source>Animals &amp; Pets</source>
+        <translation>Zvieratá &amp; domáci miláčikovia</translation>
     </message>
     <message>
-        <source>Science &amp; Technology</source>
+        <source>Tech &amp; Science</source>
         <translation>Veda &amp; technika</translation>
     </message>
     <message>
@@ -1238,36 +1512,32 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <translation>Opis</translation>
     </message>
     <message>
-        <source>Tags</source>
-        <translation>Tagy</translation>
+        <source>Keywords</source>
+        <translation>Kľúčové slová</translation>
     </message>
     <message>
-        <source>Video Size</source>
-        <translation>Veľkosť videa</translation>
+        <source>Make this video private</source>
+        <translation>Označiť video ako súkromné</translation>
     </message>
     <message>
-        <source>Small (480 x 272)</source>
-        <translation>Malé (480 x 272)</translation>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zverejnením súhlasíte s podmienkami služby &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Medium (640 x 360)</source>
-        <translation>Stredné (640 x 360)</translation>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
-        <source>Large (960 x 540)</source>
-        <translation>Veľké (950 x 540)</translation>
-    </message>
-    <message>
-        <source>HD (1280 x 720)</source>
-        <translation>HD (1280 x 720)</translation>
-    </message>
-    <message>
-        <source>Make this video public (Default: private)</source>
-        <translation>Zverejniť toto video (predvolená voľba: súkromné)</translation>
-    </message>
-    <message>
-        <source>Category</source>
-        <translation>Kategória</translation>
+        <source>&amp;Publish</source>
+        <translation>Z&amp;verejniť</translation>
     </message>
 </context>
 <context>
@@ -1321,6 +1591,14 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <source>Audio #%1</source>
         <translation>Audio #%1</translation>
     </message>
+    <message>
+        <source>Rename track</source>
+        <translation>Premenovať stopu</translation>
+    </message>
+    <message>
+        <source>Enter the track new name</source>
+        <translation>Zadajte nový názov stopy</translation>
+    </message>
 </context>
 <context>
     <name>TracksScene</name>
@@ -1343,13 +1621,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>No</source>
         <translation>Nie</translation>
-    </message>
-</context>
-<context>
-    <name>TracksView</name>
-    <message>
-        <source>Action not supported.</source>
-        <translation>Akcia nie je podporovaná.</translation>
     </message>
 </context>
 <context>
@@ -1578,6 +1849,17 @@ Potom kliknite na tlačidlo Ďalej...</translation>
     <message>
         <source> copied to </source>
         <translation> skopírované do </translation>
+    </message>
+</context>
+<context>
+    <name>YouTubeService</name>
+    <message>
+        <source>YouTube Authentication</source>
+        <translation>Autentifikácia pre server YouTube</translation>
+    </message>
+    <message>
+        <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
+        <translation>Spojenie môže byť nezabezpečené, chcete v ňom pokračovať? Nastala jedna alebo viacero chýb zabezpečenia SSL: %1</translation>
     </message>
 </context>
 </TS>
