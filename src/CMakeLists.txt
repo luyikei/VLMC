@@ -60,7 +60,7 @@ ELSE (WIN32)
     LIST( APPEND VLMC_SRCS Main/vlmc.cpp )
 ENDIF(WIN32)
 
-SET (VLMC_HDRS
+SET (VLMC_MOC_HDRS
     EffectsEngine/EffectHelper.h
     EffectsEngine/EffectUser.h
     EffectsEngine/EffectsEngine.h
@@ -142,9 +142,9 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 IF (NOT WITH_GUI)
     LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
-    LIST (APPEND VLMC_HDRS Renderer/ConsoleRenderer.h)
+    LIST (APPEND VLMC_MOC_HDRS Renderer/ConsoleRenderer.h)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
-    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
+    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_MOC_HDRS})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     TARGET_LINK_LIBRARIES(vlmc ${VLMC_LIBS})
 
@@ -221,7 +221,7 @@ ELSE(NOT WITH_GUI)
         Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 
-    LIST( APPEND VLMC_HDRS
+    LIST( APPEND VLMC_MOC_HDRS
         Commands/KeyboardShortcutHelper.h
         Gui/About.h
         Gui/ClipProperty.h
@@ -325,13 +325,13 @@ ELSE(NOT WITH_GUI)
         ELSE ( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
             LIST( APPEND VLMC_SRCS Tools/Win32BacktraceGenerator.cpp )
         ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-        LIST( APPEND VLMC_HDRS Gui/widgets/CrashHandler.h )
+        LIST( APPEND VLMC_MOC_HDRS Gui/widgets/CrashHandler.h )
         LIST( APPEND VLMC_UIS Gui/widgets/ui/CrashHandler.ui )
     ENDIF(WITH_CRASHHANDLER_GUI)
 
     QT4_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
-    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_HDRS})
+    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_MOC_HDRS})
 
     IF( MINGW )
         # resource compilation for MinGW
