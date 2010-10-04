@@ -1,3 +1,8 @@
+#
+# VLMC build system
+# Authors: Ludovic Fauvet <etix@vlmc.org>
+#          Rohit Yadav <rohityadav89@gmail.com>
+#
 
 ## RCC file
 SET(TS_QRC ${CMAKE_SOURCE_DIR}/ts/resources-ts.qrc)
@@ -36,8 +41,53 @@ MACRO(QT4_ADD_TRANSLATIONS outfiles)
     FILE(APPEND ${TS_QRC} "</qresource></RCC>")
 ENDMACRO(QT4_ADD_TRANSLATIONS)
 
-## Collect all translations files
-FILE (GLOB vlmc_TS ${CMAKE_SOURCE_DIR}/ts/vlmc*.ts)
+## Set availbale translations file ids here
+OPTION(LANGUAGES "Using translations")
+SET(ALL_LANGUAGES
+        ca
+        cs
+        de
+        es
+        fr
+        gl
+        it
+        ja
+        nl
+        pl
+        pt
+        ro
+        ru
+        sk
+        sv
+        ta
+        tr
+        uk
+        zh
+   )
+
+## Check if user has provided specific LANGS option
+IF(NOT DEFINED LANGS)
+    SET(LANGUAGES ${ALL_LANGUAGES} CACHE STRING "Using translations" FORCE)
+ELSE(NOT DEFINED LANGS)
+    IF(NOT LANGS)
+        SET(LANGUAGES "" CACHE STRING "Using translations" FORCE)
+    ELSEIF(LANGS STREQUAL *)
+        SET(LANGUAGES ${ALL_LANGUAGES} CACHE STRING "Using translations" FORCE)
+    ELSE(NOT LANGS)
+        STRING(REGEX MATCHALL [a-zA-Z_]+
+               langs1 ${LANGS})
+        SET(LANGUAGES ${langs1} CACHE STRING "Using translations" FORCE)
+    ENDIF(NOT LANGS)
+ENDIF(NOT DEFINED LANGS)
+
+## Display what translations files will be processed
+MESSAGE(STATUS "Translations: ${LANGUAGES}")
+
+## Collect all translations files that are to be processed
+FOREACH(LANGUAGE ${LANGUAGES})
+    FILE(GLOB temp_TS ${CMAKE_SOURCE_DIR}/ts/vlmc*${LANGUAGE}*.ts)
+    LIST(APPEND vlmc_TS ${temp_TS})
+ENDFOREACH()
 
 IF(QT_LRELEASE_EXECUTABLE)
     ## Wraps the collected translations
