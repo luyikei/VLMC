@@ -190,8 +190,8 @@ SET (VLMC_PIXMAPS_DIR ${CMAKE_INSTALL_PREFIX}/${VLMC_DATA_SUBDIR}/pixmaps/)
 
 # manual page - makes sense only on unix systems
 IF (UNIX)
-    SET (DEFAULT_MANUAL_SUBDIR  man)
-    SET (VLMC_MANUAL_SUBDIR  ${DEFAULT_MANUAL_SUBDIR}  CACHE STRING "Subdirectory where manual files will be installed")
+    SET (DEFAULT_MANUAL_SUBDIR  ${VLMC_DATA_SUBDIR}/man)
+    SET (VLMC_MANUAL_SUBDIR  "${DEFAULT_MANUAL_SUBDIR}"  CACHE STRING "Subdirectory where manual files will be installed")
     MARK_AS_ADVANCED (VLMC_MANUAL_SUBDIR)
     SET (VLMC_MANUAL_DIR  ${CMAKE_INSTALL_PREFIX}/${VLMC_MANUAL_SUBDIR})
 ENDIF (UNIX)
@@ -210,6 +210,12 @@ INSTALL (FILES share/vlmc.desktop DESTINATION ${VLMC_DESKTOP_DIR})
 
 # Copy the VLMC pixmap
 INSTALL (FILES share/vlmc.png DESTINATION ${VLMC_PIXMAPS_DIR})
+
+# On UNIX copy the man page
+IF (UNIX)
+    INSTALL (FILES ${CMAKE_SOURCE_DIR}/doc/vlmc.1
+             DESTINATION ${VLMC_MANUAL_DIR}/man1)
+ENDIF (UNIX)
 
 # Copy the share directory (TODO: add checks if the dir is empty, don't install)
 # INSTALL (DIRECTORY share/ DESTINATION ${VLMC_DATA_DIR}
