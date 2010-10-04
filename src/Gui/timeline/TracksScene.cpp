@@ -118,7 +118,7 @@ TracksScene::askRemoveSelectedItems()
         {
             EffectHelper    *eh = qobject_cast<EffectHelper*>( item->helper() );
             Q_ASSERT( eh != NULL );
-            Commands::trigger( new Commands::Effect::Remove( eh, item->track()->trackWorkflow() ) );
+            Commands::trigger( new Commands::Effect::Remove( eh, eh->target() ) );
         }
     }
 
