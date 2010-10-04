@@ -5,4 +5,5 @@ Exec=vlmc %U
 Icon=vlmc
 Terminal=false
 Type=Application
+MimeType=application/x-vlmc;application/x-wine-extension-vlmc;
 Categories=AudioVideoEditing;AudioVideo;Qt;
