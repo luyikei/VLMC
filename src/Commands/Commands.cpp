@@ -121,6 +121,7 @@ void Commands::Clip::Remove::redo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
+
 void Commands::Clip::Remove::undo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
