@@ -13,19 +13,42 @@ SET(PROJECT_CONTACT      "vlmc-devel@videolan.org")
 SET(PROJECT_VENDOR       "VLMC Team")
 SET(ORG_WEBSITE          "videolan.org")
 
-# Find Git Version Patch   
-FIND_PROGRAM(GIT git)
-IF(GIT)
-    EXECUTE_PROCESS(
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMAND ${GIT} rev-parse --short HEAD 
-        OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
-    SET(PROJECT_VERSION_PATCH "${GIT_OUT}-git")
-    MESSAGE(STATUS "Git Version Patch: ${GIT_OUT}")
-ELSE(GIT)
-    SET(GIT_OUT 0)
-ENDIF(GIT)
+# Configuring build type
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING
+        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+    MESSAGE("Setting build type to '${CMAKE_BUILD_TYPE}'")
+ELSE(NOT CMAKE_BUILD_TYPE)
+    MESSAGE("Build type set to '${CMAKE_BUILD_TYPE}'")
+ENDIF(NOT CMAKE_BUILD_TYPE)
+
+IF(WIN32)
+    # Building in release for WIN32
+    SET(CMAKE_BUILD_TYPE "Release")
+    SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELEASE QT_NO_DEBUG)
+    # Use mingw's sprintf instead of windows's
+    ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
+ENDIF(WIN32)
+
+IF("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+    SET(PATCH_OUT "0")
+ELSE("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+    # Find Git Version Patch   
+    FIND_PROGRAM(GIT git)
+    IF(GIT)
+        EXECUTE_PROCESS(
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMAND ${GIT} rev-parse --short HEAD 
+            OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        SET(PATCH_OUT "0~git-${GIT_OUT}")
+    ELSE(GIT)
+        SET(PATCH_OUT "0")
+    ENDIF(GIT)
+ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+
+SET(PROJECT_VERSION_PATCH ${PATCH_OUT})
 
 # version: 0.2.x
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")
@@ -33,6 +56,8 @@ SET(CPACK_PACKAGE_VERSION_MINOR "2")
 SET(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 SET(CPACK_PACKAGE_VERSION ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})
 SET(PROJECT_VERSION ${CPACK_PACKAGE_VERSION})
+
+MESSAGE(STATUS "VLMC Version: ${PROJECT_VERSION}")
 
 STRING(TOLOWER ${PROJECT_NAME_SHORT} PROJECT_NAME_SHORT_LOWER)
 PROJECT(${PROJECT_NAME_SHORT_LOWER}-${PROJECT_VERSION})
@@ -54,24 +79,6 @@ SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 # Path to contribs
 SET(CONTRIBS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/contribs)
-
-# Configuring build type
-IF(NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-        FORCE)
-    MESSAGE("Setting build type to '${CMAKE_BUILD_TYPE}'")
-ELSE(NOT CMAKE_BUILD_TYPE)
-    MESSAGE("Build type set to '${CMAKE_BUILD_TYPE}'")
-ENDIF(NOT CMAKE_BUILD_TYPE)
-
-IF(WIN32)
-    # Building in release for WIN32
-    SET(CMAKE_BUILD_TYPE "Release")
-    SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELEASE QT_NO_DEBUG)
-    # Use mingw's sprintf instead of windows's
-    ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
-ENDIF(WIN32)
 
 # Optionally allow embedding libvlc into the binary as
 # VLMC requires libVLC
