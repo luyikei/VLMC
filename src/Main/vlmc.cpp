@@ -37,57 +37,25 @@ int VLMCmain( int , char** );
 
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
-# ifdef WITH_GUI
-#  include "project/GuiProjectManager.h"
-#  ifdef WITH_CRASHHANDLER_GUI
-#   include "CrashHandler.h"
-#  endif
-# else
-#  include "ProjectManager.h"
+#ifdef WITH_GUI
+    #include "project/GuiProjectManager.h"
+    #ifdef WITH_CRASHHANDLER_GUI
+        #include "CrashHandler.h"
+    #endif
+#else
+    #include "ProjectManager.h"
 #endif
-
-/** 
- * Print version text
- */
-void
-version( void )
-{
-    QTextStream out(stdout);
-    out << "VLMC-" << PROJECT_VERSION << " '" << CODENAME << "'\n"
-        << "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
-        << "video editing software.\n"
-        << "Copyright (C) 2008-10 VideoLAN\n"
-        << "This is free software; see the source for copying conditions. There is NO\n"
-        << "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
-}
-
-/** 
- * Print usage text
- */
-void
-usage( QString const& appName )
-{
-    QTextStream out(stdout);
-    out << "Usage: " << appName << " [options] [filename|URI]...\n"
-        << "Options:\n"
-        << "\t[--project|-p projectfile]\tload the given VLMC project\n"
-        << "\t[--version|-v]\tversion information\n"
-        << "\t[--help|-?]\tthis text\n\n"
-        << "\tFILES:\n"
-        << "\t\tFiles specified on the command line should include \n"
-        << "\t\tVLMC project files (.vlmc)\n";
-}
 
 void
 signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
-#ifdef WITH_GUI
-    GUIProjectManager::getInstance()->emergencyBackup();
-#else
-    ProjectManager::getInstance()->emergencyBackup();
-#endif
+    #ifdef WITH_GUI
+        GUIProjectManager::getInstance()->emergencyBackup();
+    #else
+        ProjectManager::getInstance()->emergencyBackup();
+    #endif
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );
@@ -98,61 +66,93 @@ signalHandler( int sig )
 }
 #endif
 
+/**
+ * Print version text
+ */
+void
+version( void )
+{
+    QTextStream out( stdout );
+    out << "VLMC-" << PROJECT_VERSION << " '" << CODENAME << "'\n"
+        << "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
+        << "video editing software.\n"
+        << "Copyright (C) 2008-10 VideoLAN\n"
+        << "This is free software; see the source for copying conditions. There is NO\n"
+        << "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
+}
+
+/**
+ * Print usage text
+ */
+void
+usage( QString const& appName )
+{
+    QTextStream out( stdout );
+    out << "Usage: " << appName << " [options] [filename|URI]...\n"
+        << "Options:\n"
+        << "\t[--project|-p projectfile]\tload the given VLMC project\n"
+        << "\t[--version|-v]\tversion information\n"
+        << "\t[--help|-?]\tthis text\n\n"
+        << "\tFILES:\n"
+        << "\t\tFiles specified on the command line should include \n"
+        << "\t\tVLMC project files (.vlmc)\n";
+}
+
 int
 main( int argc, char **argv )
 {
     /* Check for command arguments */
-    for ( int i = 1; i < argc; i++ )
+    for( int i = 1; i < argc; i++ )
     {
         QString arg = argv[i];
 
-        if ( arg == "--help" || arg == "-?" )
+        if( arg == "--help" || arg == "-?" )
         {
-            usage( QString(argv[0]) );
+            ::usage( QString(argv[0]) );
             return 2;
         }
-        else if ( arg == "--version" || arg == "-v" )
+        else if( arg == "--version" || arg == "-v" )
         {
-            version();
+            ::version();
             return 2;
         }
     }
 
-#ifdef WITH_CRASHHANDLER
-    while ( true )
-    {
-        pid_t       pid = fork();
-        if ( pid < 0 )
-            qFatal("Can't fork to launch VLMC. Exiting.");
-        if ( pid == 0 )
+    #ifdef WITH_CRASHHANDLER
+        while( true )
         {
-            signal( SIGSEGV, signalHandler );
-            signal( SIGFPE, signalHandler );
-            signal( SIGABRT, signalHandler );
-            signal( SIGILL, signalHandler );
-            return VLMCmain( argc, argv );
-        }
-        else
-        {
-            int     status;
-
-            wait( &status );
-            if ( WIFEXITED(status) )
+            pid_t pid = fork();
+            if( pid < 0 )
+                qFatal("Can't fork to launch VLMC. Exiting.");
+            if( pid == 0 )
             {
-                int ret = WEXITSTATUS( status );
-                if ( ret == 2 )
-                    continue ;
-                else
-                    break ;
+                signal( SIGSEGV, signalHandler );
+                signal( SIGFPE, signalHandler );
+                signal( SIGABRT, signalHandler );
+                signal( SIGILL, signalHandler );
+                return VLMCmain( argc, argv );
             }
             else
             {
-                qCritical() << "Unhandled crash.";
-                break ;
+                int status;
+
+                wait( &status );
+                if( WIFEXITED(status) )
+                {
+                    int ret = WEXITSTATUS( status );
+                    if ( ret == 2 )
+                        continue ;
+                    else
+                        break ;
+                }
+                else
+                {
+                    qCritical() << "Unhandled crash.";
+                    break ;
+                }
             }
         }
-    }
-#else
-    return VLMCmain( argc, argv );
-#endif
+    #else
+        return VLMCmain( argc, argv );
+    #endif
 }
