@@ -115,8 +115,19 @@ VLMCmain( int argc, char **argv )
     d.exec();
 #endif
     MainWindow w;
-    if ( argc > 1 )
-        GUIProjectManager::getInstance()->loadProject( argv[argc - 1] );
+
+    /* Check for project file */
+    for ( int i = 1; i < argc; i++ )
+    {
+        QString arg = argv[i];
+
+        if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
+        {
+            GUIProjectManager::getInstance()->loadProject( argv[i+1] );
+            break;
+        }
+    }
+
     w.show();
     return app.exec();
 }
