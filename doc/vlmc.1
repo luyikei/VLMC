@@ -1,0 +1,49 @@
+.\" Copyright (C) 2008-10 VideoLAN
+.\" Author: Rohit Yadav <rohityadav89@gmail.com>
+.\"
+.\" This is free software; you may redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 2,
+.\" or (at your option) any later version.
+.\"
+.\" This is distributed in the hope that it will be useful, but
+.\" WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License 
+.\" along with this; if not write to the Free Software Foundation, Inc.
+.\" 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+.TH VLMC 1 "Oct 4, 2010"
+.SH NAME
+vlmc \- VideoLAN Movie Creator
+.SH SYNOPSIS
+.B vlmc
+.RI [ OPTIONS ]...
+.RI [ filenames|URI ]...
+.SH DESCRIPTION
+VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear video editing
+software based on libVLC and running on Windows, Linux and Mac OS X.
+It is a free software distributed under the terms of the GPL v2.
+This manual page documents briefly the
+.B VLMC
+video editor.
+
+.SH OPTIONS
+.TP
+.B \-\-version
+Outputs version information and exits.
+.TP
+.B filename(s)...
+Specifies the file to open when VLMC starts.
+If this is not specified, gedit will load a blank file with an "Untitled Project" label.
+.SH FILES
+.I ~/.config/vlmc/vlmc.conf
+.RS
+The configuration file of the VLMC.
+.SH BUGS
+If you find a bug, please report it at http://trac.videolan.org/vlmc/newticket?type=defect
+.PP
+.SH AUTHOR
+This manual page was written by Rohit Yadav <rohityadav89@gmail.com>, for the Debian
+GNU/Linux system (but may be used by others).
