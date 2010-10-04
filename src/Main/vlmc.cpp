@@ -26,6 +26,7 @@
 
 #include <QtDebug>
 #include <QMetaType>
+#include <QTextStream>
 #include <QVariant>
 
 #include <sys/wait.h>
@@ -45,7 +46,40 @@ int VLMCmain( int , char** );
 #  include "ProjectManager.h"
 #endif
 
-void    signalHandler( int sig )
+/** 
+ * Print version text
+ */
+void
+version( void )
+{
+    QTextStream out(stdout);
+    out << "VLMC-" << PROJECT_VERSION << " '" << CODENAME << "'\n"
+        << "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
+        << "video editing software.\n"
+        << "Copyright (C) 2008-10 VideoLAN\n"
+        << "This is free software; see the source for copying conditions. There is NO\n"
+        << "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
+}
+
+/** 
+ * Print usage text
+ */
+void
+usage( QString const& appName )
+{
+    QTextStream out(stdout);
+    out << "Usage: " << appName << " [options] [filename|URI]...\n"
+        << "Options:\n"
+        << "\t[--project|-p projectfile]\tload the given VLMC project\n"
+        << "\t[--version|-v]\tversion information\n"
+        << "\t[--help|-?]\tthis text\n\n"
+        << "\tFILES:\n"
+        << "\t\tFiles specified on the command line should include \n"
+        << "\t\tVLMC project files (.vlmc)\n";
+}
+
+void
+signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
@@ -64,8 +98,26 @@ void    signalHandler( int sig )
 }
 #endif
 
-int     main( int argc, char **argv )
+int
+main( int argc, char **argv )
 {
+    /* Check for command arguments */
+    for ( int i = 1; i < argc; i++ )
+    {
+        QString arg = argv[i];
+
+        if ( arg == "--help" || arg == "-?" )
+        {
+            usage( QString(argv[0]) );
+            return 2;
+        }
+        else if ( arg == "--version" || arg == "-v" )
+        {
+            version();
+            return 2;
+        }
+    }
+
 #ifdef WITH_CRASHHANDLER
     while ( true )
     {
