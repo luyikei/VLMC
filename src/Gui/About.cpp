@@ -44,32 +44,44 @@ About::About( QWidget *parent ) : QDialog( parent )
         "cross-platform, non-linear video editing software based on the VLC "
         "Media Player.\n" ) );
 
-    m_ui.labelTitle->setText( 
+    m_ui.labelTitle->setText(
         m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
 
     m_ui.labelBuild->setText(
-        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME, QT_VERSION_STR, qVersion() ) );
+        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME,
+                                     QT_VERSION_STR, qVersion() ) );
 
-    m_ui.labelCopyright->setText( 
-        m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT, PROJECT_CONTACT, ORG_WEBSITE ) );
+    m_ui.labelCopyright->setText(
+        m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT, PROJECT_CONTACT,
+                                         ORG_WEBSITE ) );
 
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( deleteLater() ) );
 }
 
-void About::changeEvent( QEvent *e )
+void
+About::changeEvent( QEvent *e )
 {
     QDialog::changeEvent( e );
     switch ( e->type() )
     {
         case QEvent::LanguageChange:
             m_ui.retranslateUi( this );
+            m_ui.labelTitle->setText(
+                m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
+            m_ui.labelBuild->setText(
+                m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME,
+                                             QT_VERSION_STR, qVersion() ) );
+            m_ui.labelCopyright->setText( 
+                m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT,
+                                                 PROJECT_CONTACT, ORG_WEBSITE ) );
             break;
         default:
             break;
     }
 }
 
-void About::setText( const QString& filename, QPlainTextEdit* widget )
+void
+About::setText( const QString& filename, QPlainTextEdit* widget )
 {
     QFile file( filename );
 
