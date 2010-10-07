@@ -132,11 +132,11 @@ TracksView::addTrack( Workflow::TrackType type )
     m_scene->invalidate(); // Redraw the background
     //Clips part:
     connect( track->trackWorkflow(), SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-             this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
+             this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
-             this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ), Qt::QueuedConnection );
+             this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
     connect( track->trackWorkflow(), SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
-             this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ), Qt::QueuedConnection );
+             this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
     //Effect part:
     connect( track->trackWorkflow(), SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
              this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );

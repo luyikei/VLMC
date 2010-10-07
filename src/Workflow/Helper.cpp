@@ -34,6 +34,10 @@ Helper::Helper( qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString &uuid/*
         m_uuid = uuid;
 }
 
+Helper::~Helper()
+{
+}
+
 qint64
 Helper::begin() const
 {

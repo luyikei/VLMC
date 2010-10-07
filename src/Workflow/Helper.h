@@ -35,6 +35,7 @@ namespace   Workflow
 
         protected: //This class is not meant to be used by itself.
             Helper( qint64 begin = 0, qint64 end = -1, const QString &uuid = QString() );
+            ~Helper();
 
         public:
             virtual const QUuid&    uuid() const;

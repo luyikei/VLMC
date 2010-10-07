@@ -417,7 +417,7 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
             computeLength();
             cw->disconnect();
             cw->getClipHelper()->disconnect( this );
-            emit clipRemoved( this, cw->getClipHelper()->uuid() );
+            emit clipRemoved( this, id );
             cw->deleteLater();
             return ;
         }
