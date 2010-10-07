@@ -32,13 +32,15 @@
 #include "config.h"
 #include "ui_MainWindow.h"
 
-class Timeline;
-class PreviewWidget;
-class Settings;
-class ProjectWizard;
-class ImportController;
-class WorkflowFileRenderer;
-class WorkflowRenderer;
+class   EffectsListView;
+class   ImportController;
+class   MediaLibrary;
+class   PreviewWidget;
+class   ProjectWizard;
+class   Settings;
+class   Timeline;
+class   WorkflowFileRenderer;
+class   WorkflowRenderer;
 
 class MainWindow : public QMainWindow
 {
@@ -61,8 +63,8 @@ protected:
 
 private:
     void        initializeDockWidgets( void );
-    void        setupLibrary();
     void        checkFolders();
+    void        setupDockedWidgets();
     void        createStatusBar();
     void        createNotificationZone();
     void        createGlobalPreferences();
@@ -102,7 +104,7 @@ private:
      *  \brief  Gets video parameters from RendererSettings Dialog
      *          exportType when set to true, renders video to user defined location
      *          and when set to false, renders video to temporary folder.
-     *  \return same as renderVideo(), 
+     *  \return same as renderVideo(),
      *          true if video renders well or not cancelled by the user.
      */
     bool        renderVideoSettings( bool exportType );
@@ -119,6 +121,8 @@ private:
     Settings*               m_projectPreferences;
     ProjectWizard*          m_pWizard;
     ImportController*       m_importController;
+    MediaLibrary            *m_mediaLibrary;
+    EffectsListView         *m_effectsList;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );
