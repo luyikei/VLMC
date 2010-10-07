@@ -103,6 +103,8 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
              this, SLOT( __effectMoved( EffectHelper*, qint64) ) );
     connect( cw, SIGNAL( effectRemoved( QUuid ) ),
              this, SLOT( __effectRemoved( QUuid ) ) );
+    connect( cw->getClipHelper(), SIGNAL( destroyed( QUuid ) ),
+             this, SLOT( clipDestroyed( QUuid ) ) );
     emit clipAdded( this, cw->getClipHelper(), start );
     computeLength();
 }
@@ -397,6 +399,32 @@ void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
     }
 }
 
+void
+TrackWorkflow::clipDestroyed( const QUuid& id )
+{
+    QWriteLocker    lock( m_clipsLock );
+
+    QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
+    QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
+
+    while ( it != end )
+    {
+        if ( it.value()->getClipHelper()->uuid() == id )
+        {
+            ClipWorkflow*   cw = it.value();
+            m_clips.erase( it );
+            stopClipWorkflow( cw );
+            computeLength();
+            cw->disconnect();
+            cw->getClipHelper()->disconnect( this );
+            emit clipRemoved( this, cw->getClipHelper()->uuid() );
+            cw->deleteLater();
+            return ;
+        }
+        ++it;
+    }
+}
+
 Clip*       TrackWorkflow::removeClip( const QUuid& id )
 {
     QWriteLocker    lock( m_clipsLock );
@@ -414,6 +442,7 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
             stopClipWorkflow( cw );
             computeLength();
             cw->disconnect();
+            cw->getClipHelper()->disconnect( this );
             emit clipRemoved( this, cw->getClipHelper()->uuid() );
             cw->deleteLater();
             return clip;
@@ -438,6 +467,7 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
             cw->disconnect();
             m_clips.erase( it );
             computeLength();
+            cw->getClipHelper()->disconnect( this );
             emit clipRemoved( this, cw->getClipHelper()->uuid() );
             return cw;
         }
