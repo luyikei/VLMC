@@ -130,6 +130,11 @@ MainWindow::MainWindow( QWidget *parent ) :
 #endif
     QSettings s;
 
+    // Restore the geometry
+    restoreGeometry( s.value( "MainWindowGeometry" ).toByteArray() );
+    // Restore the layout
+    restoreState( s.value( "MainWindowState" ).toByteArray() );
+
     if ( s.value( "ShowWizardStartup", true ).toBool() )
     {
         //If a project was opened from the command line: don't show the wizard.
@@ -793,11 +798,6 @@ MainWindow::restoreSession()
     if ( fileCreated == true )
     {
         bool        cleanQuit = s.value( "CleanQuit", true ).toBool();
-
-        // Restore the geometry
-        restoreGeometry( s.value( "MainWindowGeometry" ).toByteArray() );
-        // Restore the layout
-        restoreState( s.value( "MainWindowState" ).toByteArray() );
 
         if ( cleanQuit == false )
         {

@@ -39,11 +39,7 @@ DockWidgetManager::DockWidgetManager( QObject *parent )
 
 DockWidgetManager::~DockWidgetManager()
 {
-    QList<QDockWidget*> widgets = m_dockWidgets.values();
-    QDockWidget* dockWidget;
-
-    foreach( dockWidget, widgets )
-        delete dockWidget;
+    qDeleteAll( m_dockWidgets );
 }
 
 void DockWidgetManager::setMainWindow( MainWindow *mainWin )
