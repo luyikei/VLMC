@@ -34,6 +34,7 @@ ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
         m_begin = clip->begin();
     if ( end == -1 )
         m_end = clip->end();
+    connect( clip, SIGNAL( destroyed() ), this, SLOT( clipDestroyed() ) );
 }
 
 void
@@ -72,4 +73,12 @@ void
 ClipHelper::setClipWorkflow( ClipWorkflow* cw )
 {
     m_clipWorkflow = cw;
+}
+
+void
+ClipHelper::clipDestroyed()
+{
+    emit destroyed( m_uuid );
+    //A clip helper is useless without a clip.
+    deleteLater();
 }

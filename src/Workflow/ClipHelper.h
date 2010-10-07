@@ -57,6 +57,9 @@ class   ClipHelper : public Workflow::Helper
         Clip*           m_clip;
         ClipWorkflow*   m_clipWorkflow;
 
+    private slots:
+        void        clipDestroyed();
+
     signals:
         void        error();
 };

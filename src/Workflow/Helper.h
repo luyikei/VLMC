@@ -52,6 +52,7 @@ namespace   Workflow
 
         signals:
             void                    lengthUpdated();
+            void                    destroyed( const QUuid &uuid );
     };
 }
 
