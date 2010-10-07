@@ -30,12 +30,15 @@
 #include "StackViewController.h"
 #include "ViewController.h"
 
-#include <QtDebug>
+#include <QDebug>
+#include <QUrl>
 
 MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
     m_ui( new Ui::MediaLibrary() )
 {
     m_ui->setupUi( this );
+    setAcceptDrops( true );
+
     StackViewController *nav = new StackViewController( m_ui->mediaListContainer );
     m_mediaListView = new MediaListView( nav, Library::getInstance() );
     nav->pushViewController( m_mediaListView );
@@ -56,8 +59,8 @@ void
 MediaLibrary::filterUpdated( const QString &filter )
 {
     const MediaListView::MediaList  &medias = m_mediaListView->mediaList();
-    MediaListView::MediaList::const_iterator        it = medias.begin();
-    MediaListView::MediaList::const_iterator        ite = medias.end();
+    MediaListView::MediaList::const_iterator it = medias.begin();
+    MediaListView::MediaList::const_iterator ite = medias.end();
 
     while ( it != ite )
     {
@@ -73,22 +76,23 @@ MediaLibrary::currentFilter()
 {
     switch ( m_ui->filterType->currentIndex() )
     {
-    case 0:
-        return &filterByName;
-    case 1:
-        return &filterByTags;
-    default:
-        return &filterByName;
+        case 0:
+            return &filterByName;
+        case 1:
+            return &filterByTags;
+        default:
+            return &filterByName;
     }
 }
 
 void
 MediaLibrary::viewChanged( ViewController *view )
 {
-    MediaListView   *mlv = qobject_cast<MediaListView*>( view );
+    MediaListView *mlv = qobject_cast<MediaListView*>( view );
 
     if ( mlv == NULL )
         return ;
+
     m_mediaListView = mlv;
     //Force an update as the media has changed
     filterUpdated( m_ui->filterInput->text() );
@@ -115,39 +119,58 @@ MediaLibrary::filterTypeChanged()
 void
 MediaLibrary::dragEnterEvent( QDragEnterEvent *event )
 {
-    if ( event->mimeData()->hasFormat( "TEXT" ) &&
-         event->mimeData()->data( "TEXT" ).startsWith( "file://" ) )
+    if ( event->mimeData()->hasFormat( "text/uri-list" ) )
     {
-        event->accept();
+        event->acceptProposedAction();
     }
     else
         event->ignore();
 }
 
 void
+MediaLibrary::dragMoveEvent( QDragMoveEvent *event )
+{
+    event->acceptProposedAction();
+}
+
+void
+MediaLibrary::dragLeaveEvent( QDragLeaveEvent *event )
+{
+   event->accept();
+}
+
+void
 MediaLibrary::dropEvent( QDropEvent *event )
 {
-    if ( event->mimeData()->hasFormat( "TEXT" ) == true )
+    QList<QUrl> fileList = event->mimeData()->urls();
+
+    if ( fileList.isEmpty() )
     {
-        const QString   &data = event->mimeData()->data( "TEXT" );
-        qDebug() << data;
-        if ( data.startsWith( "file://" ) == false )
-        {
-            event->ignore();
-            return ;
-        }
-        Media   *media = Library::getInstance()->addMedia( data.mid( 7 ) );
+        event->ignore();
+        return;
+    }
+
+    Q_ASSERT( Library::getInstance() != NULL );
+
+    foreach ( QUrl url, fileList )
+    {
+        const QString &fileName = url.toLocalFile();
+
+        if ( fileName.isEmpty() )
+            continue;
+
+        Media *media = Library::getInstance()->addMedia( fileName );
+
         if ( media != NULL )
         {
-            Clip*   clip = new Clip( media );
+            Clip* clip = new Clip( media );
             media->setBaseClip( clip );
             Library::getInstance()->addClip( clip );
-
             event->accept();
-            return ;
         }
         else
-            qDebug() << "Failed to load media:" << data.mid(7);
+            qCritical() << "Clip already present in library or an error occurred while loading media:" << fileName;
+
     }
-    event->ignore();
+    event->accept();
 }
