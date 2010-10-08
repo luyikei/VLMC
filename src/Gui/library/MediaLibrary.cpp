@@ -58,9 +58,9 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
 void
 MediaLibrary::filterUpdated( const QString &filter )
 {
-    const MediaListView::MediaList  &medias = m_mediaListView->mediaList();
-    MediaListView::MediaList::const_iterator it = medias.begin();
-    MediaListView::MediaList::const_iterator ite = medias.end();
+    const MediaListView::MediaList              &medias = m_mediaListView->mediaList();
+    MediaListView::MediaList::const_iterator    it = medias.begin();
+    MediaListView::MediaList::const_iterator    ite = medias.end();
 
     while ( it != ite )
     {
@@ -88,7 +88,7 @@ MediaLibrary::currentFilter()
 void
 MediaLibrary::viewChanged( ViewController *view )
 {
-    MediaListView *mlv = qobject_cast<MediaListView*>( view );
+    MediaListView       *mlv = qobject_cast<MediaListView*>( view );
 
     if ( mlv == NULL )
         return ;
@@ -142,7 +142,7 @@ MediaLibrary::dragLeaveEvent( QDragLeaveEvent *event )
 void
 MediaLibrary::dropEvent( QDropEvent *event )
 {
-    QList<QUrl> fileList = event->mimeData()->urls();
+    const QList<QUrl>         &fileList = event->mimeData()->urls();
 
     if ( fileList.isEmpty() )
     {
@@ -152,25 +152,24 @@ MediaLibrary::dropEvent( QDropEvent *event )
 
     Q_ASSERT( Library::getInstance() != NULL );
 
-    foreach ( QUrl url, fileList )
+    foreach ( const QUrl &url, fileList )
     {
-        const QString &fileName = url.toLocalFile();
+        const QString       &fileName = url.toLocalFile();
 
         if ( fileName.isEmpty() )
             continue;
 
-        Media *media = Library::getInstance()->addMedia( fileName );
+        Media       *media = Library::getInstance()->addMedia( fileName );
 
         if ( media != NULL )
         {
-            Clip* clip = new Clip( media );
+            Clip*       clip = new Clip( media );
             media->setBaseClip( clip );
             Library::getInstance()->addClip( clip );
             event->accept();
         }
         else
             qCritical() << "Clip already present in library or an error occurred while loading media:" << fileName;
-
     }
     event->accept();
 }
