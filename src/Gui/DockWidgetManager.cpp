@@ -42,23 +42,26 @@ DockWidgetManager::~DockWidgetManager()
     qDeleteAll( m_dockWidgets );
 }
 
-void DockWidgetManager::setMainWindow( MainWindow *mainWin )
+void
+DockWidgetManager::setMainWindow( MainWindow *mainWin )
 {
     m_mainWin = mainWin;
 }
 
-QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
+QDockWidget*
+DockWidgetManager::addDockedWidget( QWidget *widget,
                                        const char *qs_name,
                                        Qt::DockWidgetAreas areas,
                                        QDockWidget::DockWidgetFeature features,
                                        Qt::DockWidgetArea startArea)
 {
     if ( m_dockWidgets.contains( qs_name ) )
-        return 0;
+        return NULL;
 
-    QDockWidget* dock = new QDockWidget( tr( qs_name ), m_mainWin );
+    QDockWidget*    dock = new QDockWidget( tr( qs_name ), m_mainWin );
 
     m_dockWidgets.insert( qs_name, dock );
+    dock->setObjectName( QString( "docked_" ) + qs_name );
     dock->setWidget( widget );
     dock->setAllowedAreas( areas );
     dock->setFeatures( features );
@@ -68,7 +71,8 @@ QDockWidget* DockWidgetManager::addDockedWidget( QWidget *widget,
     return dock;
 }
 
-void DockWidgetManager::retranslateUi()
+void
+DockWidgetManager::retranslateUi()
 {
     QMapIterator<const char*, QDockWidget*> i( m_dockWidgets );
 

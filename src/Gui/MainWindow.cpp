@@ -145,14 +145,6 @@ MainWindow::MainWindow( QWidget *parent ) :
 
 MainWindow::~MainWindow()
 {
-    QSettings s;
-    // Save the current geometry
-    s.setValue( "MainWindowGeometry", saveGeometry() );
-    // Save the current layout
-    s.setValue( "MainWindowState", saveState() );
-    s.setValue( "CleanQuit", true );
-    s.sync();
-
     if ( m_fileRenderer )
         delete m_fileRenderer;
     delete m_importController;
@@ -476,7 +468,8 @@ MainWindow::setupDockedWidgets()
                                   Qt::TopDockWidgetArea );
     dockManager->addDockedWidget( m_effectsList,
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
-                                  Qt::AllDockWidgetAreas, QDockWidget::AllDockWidgetFeatures,
+                                  Qt::AllDockWidgetAreas,
+                                  QDockWidget::AllDockWidgetFeatures,
                                   Qt::LeftDockWidgetArea );
     dockManager->addDockedWidget( UndoStack::getInstance( this ),
                                   QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
@@ -745,7 +738,17 @@ MainWindow::closeEvent( QCloseEvent* e )
     if ( pm->askForSaveIfModified() )
         e->accept();
     else
+    {
         e->ignore();
+        return ;
+    }
+    QSettings s;
+    // Save the current geometry
+    s.setValue( "MainWindowGeometry", saveGeometry() );
+    // Save the current layout
+    s.setValue( "MainWindowState", saveState() );
+    s.setValue( "CleanQuit", true );
+    s.sync();
 }
 
 void
