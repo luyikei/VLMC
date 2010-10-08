@@ -67,7 +67,12 @@ Class, Function, Enums & Variable Naming
   * A getter is variable()
   * If it's a getter for a boolean, prefix with 'is', so isCondition()
   * A setter is setVariable( arg ).
+* Variable declaration must contain indentation between type and variable name
 
+Good:
+ | MyType       *ptr;
+Wrong:
+ | MyType *ptr;
 
 Best Practices
 --------------
@@ -207,6 +212,20 @@ Correct:
  |     pButton->setFlat( true );
  | }
 
+Moreover, try to use Qt's cast when applicable :
+ | MyParentClass    *ptr;
+ | MyClass          *ptr2 = qobject_cast<MyClass*>( ptr );
+ | if ( ptr2 != NULL )
+ | {
+ | ...
+ | }
+Is much faster than
+ | MyParentClass    *ptr;
+ | MyClass          *ptr2 = dynamic_cast<MyClass*>( ptr );
+ | if ( ptr2 != NULL )
+ | {
+ | ...
+ | }
 
 Commenting Out Code
 -------------------
@@ -301,3 +320,4 @@ URL). The complete license header needs to be written everytime.
 
 Thanks, now have fun!
   -- the VLMC developers
+
