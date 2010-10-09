@@ -118,6 +118,15 @@ MainWindow::MainWindow( QWidget *parent ) :
     canRedoChanged( UndoStack::getInstance( this )->canRedo() );
     canUndoChanged( UndoStack::getInstance( this )->canUndo() );
 
+    //Connecting Library stuff:
+    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
+    Q_ASSERT( clipRenderer != NULL );
+    connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
+             clipRenderer, SLOT( setClip( Clip* ) ) );
+    connect( m_mediaLibrary, SIGNAL( importRequired() ),
+             this, SLOT( on_actionImport_triggered() ) );
+    connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
+             clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     // Wizard
     m_pWizard = new ProjectWizard( this );
@@ -409,7 +418,7 @@ MainWindow::createStatusBar()
 }
 
 void
-MainWindow::initializeDockWidgets( void )
+MainWindow::initializeDockWidgets()
 {
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
@@ -420,11 +429,10 @@ MainWindow::initializeDockWidgets( void )
 
     m_importController = new ImportController();
 
+    setupLibrary();
     setupEffectsList();
     setupClipPreview();
     setupProjectPreview();
-    //Clip renderer must exist before this method is called, as it connects the library with the renderer.
-    setupLibrary();
     setupUndoRedoWidget();
 }
 
@@ -455,21 +463,12 @@ MainWindow::setupEffectsList()
 void
 MainWindow::setupLibrary()
 {
-    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
-    Q_ASSERT( clipRenderer != NULL );
-
     QDockWidget     *dockedLibrary = DockWidgetManager::getInstance()->createDockedWidget(
                                                     QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
                                                     Qt::AllDockWidgetAreas,
                                                     QDockWidget::AllDockWidgetFeatures );
     m_mediaLibrary = new MediaLibrary( dockedLibrary );
-    connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
-             clipRenderer, SLOT( setClip( Clip* ) ) );
-    connect( m_mediaLibrary, SIGNAL( importRequired() ),
-             this, SLOT( on_actionImport_triggered() ) );
-    connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
-             clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedLibrary, m_mediaLibrary, Qt::LeftDockWidgetArea );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedLibrary, m_mediaLibrary, Qt::TopDockWidgetArea );
 }
 
 void

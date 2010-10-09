@@ -62,7 +62,7 @@ protected:
     virtual void    closeEvent( QCloseEvent* e );
 
 private:
-    void        initializeDockWidgets( void );
+    void        initializeDockWidgets();
     void        checkFolders();
     void        createStatusBar();
     void        createNotificationZone();
