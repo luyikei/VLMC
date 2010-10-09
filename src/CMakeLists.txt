@@ -332,6 +332,10 @@ ELSE(NOT WITH_GUI)
     QT4_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_MOC_HDRS})
+    
+    #Handle non-MOC headers:
+    LIST( APPEND VLMC_HDRS ${VLMC_MOC_HDRS}
+        )
 
     IF( MINGW )
         # resource compilation for MinGW
