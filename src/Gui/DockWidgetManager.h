@@ -36,25 +36,23 @@ class MainWindow;
 class DockWidgetManager : public QObject, public QSingleton<DockWidgetManager>
 {
     Q_OBJECT
+    Q_DISABLE_COPY( DockWidgetManager );
 
     public:
-        static DockWidgetManager *instance( QObject *parent = 0 );
-        void setMainWindow( MainWindow *mainWin );
-        QDockWidget* addDockedWidget( QWidget *widget,
-                              const char *qs_name,
-                              Qt::DockWidgetAreas areas,
-                              QDockWidget::DockWidgetFeature features,
-                              Qt::DockWidgetArea startArea );
-        void retranslateUi();
+        void                setMainWindow( MainWindow *mainWin );
+        QDockWidget*        createDockedWidget( const char *qs_name,
+                                                Qt::DockWidgetAreas areas,
+                                                QDockWidget::DockWidgetFeature features );
+        void        addDockedWidget( QDockWidget *dockWidget, QWidget *containedWidget,
+                                     Qt::DockWidgetArea startArea );
+        void        retranslateUi();
 
     private:
         explicit DockWidgetManager( QObject *parent = 0 );
         virtual ~DockWidgetManager();
-        DockWidgetManager(const DockWidgetManager &);
-        DockWidgetManager & operator = ( const DockWidgetManager & );
 
-        MainWindow *m_mainWin;
-        QMap<const char*, QDockWidget*> m_dockWidgets;
+        MainWindow                          *m_mainWin;
+        QMap<const char*, QDockWidget*>     m_dockWidgets;
 
         friend  class   QSingleton<DockWidgetManager>;
 };

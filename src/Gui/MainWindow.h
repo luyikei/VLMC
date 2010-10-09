@@ -64,7 +64,6 @@ protected:
 private:
     void        initializeDockWidgets( void );
     void        checkFolders();
-    void        setupDockedWidgets();
     void        createStatusBar();
     void        createNotificationZone();
     void        createGlobalPreferences();
@@ -73,6 +72,11 @@ private:
     void        loadVlmcPreferences( const QString& subPart );
     void        loadGlobalProxySettings();
     void        initToolbar();
+    void        setupLibrary();
+    void        setupClipPreview();
+    void        setupProjectPreview();
+    void        setupEffectsList();
+    void        setupUndoRedoWidget();
 #ifdef WITH_CRASHBUTTON
     void        setupCrashTester();
 #endif

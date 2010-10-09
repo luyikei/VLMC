@@ -411,10 +411,6 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets( void )
 {
-    m_effectsList = new EffectsListView( this );
-    m_effectsList->setType( Effect::Filter );
-    EffectsEngine::getInstance()->loadEffects();
-
     m_renderer = new WorkflowRenderer();
     m_renderer->initializeRenderer();
     m_timeline = new Timeline( m_renderer, this );
@@ -422,60 +418,88 @@ MainWindow::initializeDockWidgets( void )
     m_timeline->show();
     setCentralWidget( m_timeline );
 
-    m_clipPreview = new PreviewWidget( this );
-    m_clipPreview->setRenderer( new ClipRenderer );
-
-    KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
-    connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
-
-    m_projectPreview = new PreviewWidget( this );
-    m_projectPreview->setRenderer( m_renderer );
-    KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
-    connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
-
     m_importController = new ImportController();
+
+    setupEffectsList();
+    setupClipPreview();
+    setupProjectPreview();
+    //Clip renderer must exist before this method is called, as it connects the library with the renderer.
+    setupLibrary();
+    setupUndoRedoWidget();
+}
+
+void
+MainWindow::setupUndoRedoWidget()
+{
+    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
+                                      QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
+                                      Qt::AllDockWidgetAreas,
+                                      QDockWidget::AllDockWidgetFeatures );
+    QWidget         *undoRedoWidget = UndoStack::getInstance( dockedWidget );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::LeftDockWidgetArea );
+}
+
+void
+MainWindow::setupEffectsList()
+{
+    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
+                                        QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
+                                        Qt::AllDockWidgetAreas,
+                                        QDockWidget::AllDockWidgetFeatures );
+    m_effectsList = new EffectsListView( dockedWidget );
+    m_effectsList->setType( Effect::Filter );
+    EffectsEngine::getInstance()->loadEffects();
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_effectsList, Qt::LeftDockWidgetArea );
+}
+
+void
+MainWindow::setupLibrary()
+{
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
 
-    m_mediaLibrary = new MediaLibrary( this );
+    QDockWidget     *dockedLibrary = DockWidgetManager::getInstance()->createDockedWidget(
+                                                    QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
+                                                    Qt::AllDockWidgetAreas,
+                                                    QDockWidget::AllDockWidgetFeatures );
+    m_mediaLibrary = new MediaLibrary( dockedLibrary );
     connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaLibrary, SIGNAL( importRequired() ),
              this, SLOT( on_actionImport_triggered() ) );
     connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
-    setupDockedWidgets();
+    DockWidgetManager::getInstance()->addDockedWidget( dockedLibrary, m_mediaLibrary, Qt::LeftDockWidgetArea );
 }
 
 void
-MainWindow::setupDockedWidgets()
+MainWindow::setupClipPreview()
 {
-    DockWidgetManager *dockManager = DockWidgetManager::getInstance();
+    QDockWidget *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
+                                                QT_TRANSLATE_NOOP( "DockWidgetManager", "Clip Preview" ),
+                                                Qt::AllDockWidgetAreas,
+                                                QDockWidget::AllDockWidgetFeatures );
+    m_clipPreview = new PreviewWidget( dockedWidget );
+    m_clipPreview->setRenderer( new ClipRenderer );
 
-    dockManager->addDockedWidget( m_mediaLibrary, QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
-                                                    Qt::AllDockWidgetAreas,
-                                                    QDockWidget::AllDockWidgetFeatures,
-                                                    Qt::TopDockWidgetArea );
-    dockManager->addDockedWidget( m_clipPreview,
-                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Clip Preview" ),
-                                  Qt::AllDockWidgetAreas,
-                                  QDockWidget::AllDockWidgetFeatures,
-                                  Qt::TopDockWidgetArea );
-    dockManager->addDockedWidget( m_projectPreview,
-                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Project Preview" ),
-                                  Qt::AllDockWidgetAreas,
-                                  QDockWidget::AllDockWidgetFeatures,
-                                  Qt::TopDockWidgetArea );
-    dockManager->addDockedWidget( m_effectsList,
-                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
-                                  Qt::AllDockWidgetAreas,
-                                  QDockWidget::AllDockWidgetFeatures,
-                                  Qt::LeftDockWidgetArea );
-    dockManager->addDockedWidget( UndoStack::getInstance( this ),
-                                  QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
-                                  Qt::AllDockWidgetAreas,
-                                  QDockWidget::AllDockWidgetFeatures,
-                                  Qt::LeftDockWidgetArea );
+    KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
+    connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_clipPreview, Qt::TopDockWidgetArea );
+}
+
+void
+MainWindow::setupProjectPreview()
+{
+    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
+                                        QT_TRANSLATE_NOOP( "DockWidgetManager", "Project Preview" ),
+                                        Qt::AllDockWidgetAreas,
+                                        QDockWidget::AllDockWidgetFeatures );
+
+    m_projectPreview = new PreviewWidget( dockedWidget );
+    m_projectPreview->setRenderer( m_renderer );
+    KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
+    connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_projectPreview, Qt::TopDockWidgetArea );
 }
 
 void

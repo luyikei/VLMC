@@ -49,26 +49,28 @@ DockWidgetManager::setMainWindow( MainWindow *mainWin )
 }
 
 QDockWidget*
-DockWidgetManager::addDockedWidget( QWidget *widget,
-                                       const char *qs_name,
-                                       Qt::DockWidgetAreas areas,
-                                       QDockWidget::DockWidgetFeature features,
-                                       Qt::DockWidgetArea startArea)
+DockWidgetManager::createDockedWidget( const char *qs_name,
+                                    Qt::DockWidgetAreas areas,
+                                    QDockWidget::DockWidgetFeature features )
 {
     if ( m_dockWidgets.contains( qs_name ) )
         return NULL;
 
     QDockWidget*    dock = new QDockWidget( tr( qs_name ), m_mainWin );
 
-    m_dockWidgets.insert( qs_name, dock );
     dock->setObjectName( QString( "docked_" ) + qs_name );
-    dock->setWidget( widget );
     dock->setAllowedAreas( areas );
     dock->setFeatures( features );
-    m_mainWin->addDockWidget( startArea, dock );
-    m_mainWin->registerWidgetInWindowMenu( dock );
-    widget->show();
+    m_dockWidgets.insert( qs_name, dock );
     return dock;
+}
+
+void
+DockWidgetManager::addDockedWidget( QDockWidget *dockWidget, QWidget *containedWidget, Qt::DockWidgetArea startArea )
+{
+    dockWidget->setWidget( containedWidget );
+    m_mainWin->addDockWidget( startArea, dockWidget );
+    m_mainWin->registerWidgetInWindowMenu( dockWidget );
 }
 
 void
