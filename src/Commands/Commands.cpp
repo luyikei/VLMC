@@ -46,13 +46,29 @@ void Commands::trigger( Commands::Generic* command )
 }
 #endif
 
+Commands::Generic::Generic() :
+        m_valid( true )
+{
+}
 
+void
+Commands::Generic::invalidate()
+{
+    m_valid = false;
+}
+
+bool
+Commands::Generic::isValid() const
+{
+    return m_valid;
+}
 
 Commands::Clip::Add::Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
         m_clipHelper( ch ),
         m_trackWorkflow( tw ),
         m_pos( pos )
 {
+    connect( ch->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     setText( QObject::tr( "Adding clip to track %1" ).arg( tw->trackId() ) );
 }
 
@@ -78,6 +94,7 @@ Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
     m_newPos( newPos )
 
 {
+    connect( clipHelper->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     Q_ASSERT( oldTrack->type() == newTrack->type() );
 
     if ( oldTrack != newTrack )
@@ -113,6 +130,7 @@ void Commands::Clip::Move::undo()
 Commands::Clip::Remove::Remove( ClipHelper* ch, TrackWorkflow* tw ) :
         m_clipHelper( ch ), m_trackWorkflow( tw )
 {
+    connect( ch->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     setText( QObject::tr( "Remove clip" ) );
     m_pos = tw->getClipPosition( ch->uuid() );
 }
@@ -127,16 +145,15 @@ void Commands::Clip::Remove::undo()
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-Commands::Clip::Resize::Resize( TrackWorkflow* tw,
-                                                ClipHelper* ch,
-                                                qint64 newBegin, qint64 newEnd,
-                                                qint64 newPos ) :
+Commands::Clip::Resize::Resize( TrackWorkflow* tw, ClipHelper* ch, qint64 newBegin,
+                                qint64 newEnd, qint64 newPos ) :
     m_trackWorkflow( tw ),
     m_clipHelper( ch ),
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
+    connect( ch->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     m_oldBegin = ch->begin();
     m_oldEnd = ch->end();
     m_oldPos = tw->getClipPosition( ch->uuid() );
@@ -169,6 +186,7 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {
+    connect( toSplit->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     m_newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
     m_oldEnd = toSplit->end();
     setText( QObject::tr("Splitting clip") );

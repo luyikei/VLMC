@@ -42,14 +42,24 @@ class   EffectUser;
 namespace Commands
 {
 #ifdef WITH_GUI
-    class       Generic : public QUndoCommand
+    class       Generic : public QObject, public QUndoCommand
 #else
-    class       Generic
+    class       Generic : public QObject
 #endif
     {
+        Q_OBJECT
+
         public:
+            Generic();
             virtual void    redo() = 0;
             virtual void    undo() = 0;
+            bool            isValid() const;
+        private:
+            bool            m_valid;
+        protected slots:
+            void            invalidate();
+        signals:
+            void            invalidated();
 #ifndef WITH_GUI
             virtual void    setText( const QString& ) {}
 #endif

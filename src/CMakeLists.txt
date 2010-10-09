@@ -222,6 +222,7 @@ ELSE(NOT WITH_GUI)
         )
 
     LIST( APPEND VLMC_MOC_HDRS
+        Commands/Commands.h
         Commands/KeyboardShortcutHelper.h
         Gui/About.h
         Gui/ClipProperty.h
