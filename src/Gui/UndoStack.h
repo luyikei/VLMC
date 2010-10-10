@@ -43,6 +43,9 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
         bool        canUndo();
         bool        canRedo();
 
+    protected:
+        void        changeEvent( QEvent *event );
+
     private:
         UndoStack( QWidget* parent );
 
@@ -57,6 +60,7 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
         void            cleanChanged( bool val );
         void            canRedoChanged( bool canRedo );
         void            canUndoChanged( bool canUndo );
+        void            retranslateRequired();
 
     friend class        QSingleton<UndoStack>;
 };

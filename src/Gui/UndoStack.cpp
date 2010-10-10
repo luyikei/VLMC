@@ -22,9 +22,12 @@
  *****************************************************************************/
 
 #include "UndoStack.h"
+
+#include "Commands.h"
 #include "project/GuiProjectManager.h"
 #include "SettingsManager.h"
 
+#include <QEvent>
 #include <QUndoStack>
 #include <QUndoCommand>
 
@@ -91,4 +94,19 @@ void
 UndoStack::redo()
 {
     m_undoStack->redo();
+}
+
+void
+UndoStack::changeEvent( QEvent *event )
+{
+    switch ( event->type() )
+    {
+    case QEvent::LanguageChange:
+        setEmptyLabel( tr( "Nothing to undo" ) );
+        emit retranslateRequired();
+        update( rootIndex() );
+        break;
+    default:
+        break;
+    }
 }

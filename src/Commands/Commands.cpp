@@ -49,6 +49,10 @@ void Commands::trigger( Commands::Generic* command )
 Commands::Generic::Generic() :
         m_valid( true )
 {
+    //This is connected using a direct connection to ensure the view can be refreshed
+    //just after the signal has been emited.
+    connect( UndoStack::getInstance(), SIGNAL( retranslateRequired() ),
+             this, SLOT( retranslate() ), Qt::DirectConnection );
 }
 
 void

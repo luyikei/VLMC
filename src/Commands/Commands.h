@@ -53,13 +53,13 @@ namespace Commands
             Generic();
             virtual void    internalRedo() = 0;
             virtual void    internalUndo() = 0;
-            virtual void    retranslate() = 0;
             void            redo();
             void            undo();
             bool            isValid() const;
         private:
             bool            m_valid;
         protected slots:
+            virtual void    retranslate() = 0;
             void            invalidate();
         signals:
             void            invalidated();
