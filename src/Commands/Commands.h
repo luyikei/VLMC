@@ -53,6 +53,7 @@ namespace Commands
             Generic();
             virtual void    internalRedo() = 0;
             virtual void    internalUndo() = 0;
+            virtual void    retranslate() = 0;
             void            redo();
             void            undo();
             bool            isValid() const;
@@ -82,6 +83,7 @@ namespace Commands
                 virtual ~Add();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
             private:
                 ClipHelper                  *m_clipHelper;
                 TrackWorkflow               *m_trackWorkflow;
@@ -95,6 +97,7 @@ namespace Commands
                         ClipHelper *clipHelper, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
 
             private:
                 TrackWorkflow   *m_oldTrack;
@@ -110,6 +113,7 @@ namespace Commands
                 Remove( ClipHelper* clip, TrackWorkflow* tw );
                 virtual void internalRedo();
                 virtual void internalUndo();
+                virtual void    retranslate();
 
             private:
                 ClipHelper                  *m_clipHelper;
@@ -131,6 +135,8 @@ namespace Commands
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
+
             private:
                 TrackWorkflow*              m_trackWorkflow;
                 ClipHelper*                 m_clipHelper;
@@ -150,6 +156,7 @@ namespace Commands
                 ~Split();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
             private:
                 TrackWorkflow               *m_trackWorkflow;
                 ClipHelper*                 m_toSplit;
@@ -167,6 +174,7 @@ namespace Commands
                 Add( EffectHelper *helper, EffectUser *target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_target;
@@ -178,6 +186,7 @@ namespace Commands
                 Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser, qint64 pos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_old;
@@ -194,6 +203,7 @@ namespace Commands
                 Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd );
                 virtual void        internalRedo();
                 virtual void        internalUndo();
+                virtual void        retranslate();
             private:
                 EffectUser          *m_target;
                 EffectHelper        *m_helper;
@@ -209,6 +219,7 @@ namespace Commands
                 Remove( EffectHelper *helper, EffectUser *user );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
+                virtual void    retranslate();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_user;

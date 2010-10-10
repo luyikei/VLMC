@@ -56,6 +56,7 @@ Commands::Generic::invalidate()
 {
     setText( tr( "Invalid action" ) );
     m_valid = false;
+    emit invalidated();
 }
 
 bool
@@ -84,21 +85,29 @@ Commands::Clip::Add::Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
         m_pos( pos )
 {
     connect( ch->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
-    setText( QObject::tr( "Adding clip to track %1" ).arg( tw->trackId() ) );
+    retranslate();
 }
 
 Commands::Clip::Add::~Add()
 {
 }
 
-void Commands::Clip::Add::internalRedo()
+void
+Commands::Clip::Add::internalRedo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-void Commands::Clip::Add::internalUndo()
+void
+Commands::Clip::Add::internalUndo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
+}
+
+void
+Commands::Clip::Add::retranslate()
+{
+    setText( tr( "Adding clip to track %1" ).arg( m_trackWorkflow->trackId() ) );
 }
 
 Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
@@ -109,18 +118,25 @@ Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
     m_newPos( newPos )
 
 {
-    connect( clipHelper->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     Q_ASSERT( oldTrack->type() == newTrack->type() );
 
-    if ( oldTrack != newTrack )
-        setText( QObject::tr( "Moving clip from track %1 to %2" ).arg(
-                QString::number( oldTrack->trackId() ), QString::number( newTrack->trackId() ) ) );
-    else
-        setText( QObject::tr( "Moving clip" ) );
     m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
+    connect( clipHelper->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
+    retranslate();
 }
 
-void Commands::Clip::Move::internalRedo()
+void
+Commands::Clip::Move::retranslate()
+{
+    if ( m_oldTrack != m_newTrack )
+        setText( tr( "Moving clip from track %1 to %2" ).arg(
+                QString::number( m_oldTrack->trackId() ), QString::number( m_newTrack->trackId() ) ) );
+    else
+        setText( QObject::tr( "Moving clip" ) );
+}
+
+void
+Commands::Clip::Move::internalRedo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -131,7 +147,8 @@ void Commands::Clip::Move::internalRedo()
         m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
 }
 
-void Commands::Clip::Move::internalUndo()
+void
+Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -146,16 +163,24 @@ Commands::Clip::Remove::Remove( ClipHelper* ch, TrackWorkflow* tw ) :
         m_clipHelper( ch ), m_trackWorkflow( tw )
 {
     connect( ch->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
-    setText( QObject::tr( "Remove clip" ) );
+    retranslate();
     m_pos = tw->getClipPosition( ch->uuid() );
 }
 
-void Commands::Clip::Remove::internalRedo()
+void
+Commands::Clip::Remove::retranslate()
+{
+   setText( tr( "Removing clip " ) );
+}
+
+void
+Commands::Clip::Remove::internalRedo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
 
-void Commands::Clip::Remove::internalUndo()
+void
+Commands::Clip::Remove::internalUndo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
@@ -172,10 +197,17 @@ Commands::Clip::Resize::Resize( TrackWorkflow* tw, ClipHelper* ch, qint64 newBeg
     m_oldBegin = ch->begin();
     m_oldEnd = ch->end();
     m_oldPos = tw->getClipPosition( ch->uuid() );
-    setText( QObject::tr( "Resizing clip" ) );
+    retranslate();
 }
 
-void Commands::Clip::Resize::internalRedo()
+void
+Commands::Clip::Resize::retranslate()
+{
+    setText( tr( "Resizing clip" ) );
+}
+
+void
+Commands::Clip::Resize::internalRedo()
 {
     if ( m_newBegin != m_newEnd )
     {
@@ -184,7 +216,8 @@ void Commands::Clip::Resize::internalRedo()
     m_clipHelper->setBoundaries( m_newBegin, m_newEnd );
 }
 
-void Commands::Clip::Resize::internalUndo()
+void
+Commands::Clip::Resize::internalUndo()
 {
     if ( m_oldBegin != m_newBegin )
     {
@@ -204,7 +237,7 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
     connect( toSplit->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     m_newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
     m_oldEnd = toSplit->end();
-    setText( QObject::tr("Splitting clip") );
+    retranslate();
 }
 
 Commands::Clip::Split::~Split()
@@ -212,7 +245,14 @@ Commands::Clip::Split::~Split()
     delete m_newClip;
 }
 
-void    Commands::Clip::Split::internalRedo()
+void
+Commands::Clip::Split::retranslate()
+{
+    setText( tr("Splitting clip") );
+}
+
+void
+Commands::Clip::Split::internalRedo()
 {
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
@@ -220,7 +260,8 @@ void    Commands::Clip::Split::internalRedo()
     m_trackWorkflow->addClip( m_newClip, m_newClipPos );
 }
 
-void    Commands::Clip::Split::internalUndo()
+void
+Commands::Clip::Split::internalUndo()
 {
     m_trackWorkflow->removeClip( m_newClip->uuid() );
     m_toSplit->setEnd( m_oldEnd );
@@ -230,7 +271,13 @@ Commands::Effect::Add::Add( EffectHelper *helper, EffectUser *target ) :
         m_helper( helper ),
         m_target( target )
 {
-    setText( QObject::tr( "Adding effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    retranslate();
+}
+
+void
+Commands::Effect::Add::retranslate()
+{
+    setText( tr( "Adding effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
@@ -255,7 +302,13 @@ Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser 
     m_oldPos = helper->begin();
     m_oldEnd = helper->end();
     m_newEnd = m_helper->end() - ( m_helper->begin() - pos );
-    setText( QObject::tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    retranslate();
+}
+
+void
+Commands::Effect::Move::retranslate()
+{
+    setText( tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
@@ -294,7 +347,13 @@ Commands::Effect::Resize::Resize( EffectUser *target, EffectHelper *helper, qint
 {
     m_oldBegin = helper->begin();
     m_oldEnd = helper->end();
-    setText( QObject::tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    retranslate();
+}
+
+void
+Commands::Effect::Resize::retranslate()
+{
+    setText( tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
@@ -317,7 +376,13 @@ Commands::Effect::Remove::Remove( EffectHelper *helper, EffectUser *user ) :
         m_helper( helper ),
         m_user( user )
 {
-    setText( QObject::tr( "Deleting effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    retranslate();
+}
+
+void
+Commands::Effect::Remove::retranslate()
+{
+    setText( tr( "Deleting effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
