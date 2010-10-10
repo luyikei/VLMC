@@ -37,8 +37,8 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
     Q_DISABLE_COPY( UndoStack );
 
     public:
-        void        push( QUndoCommand* command );
-        void        beginMacro( const QString& text );
+        void        push( QUndoCommand *command );
+        void        beginMacro( const QString &text );
         void        endMacro();
         bool        canUndo();
         bool        canRedo();
@@ -46,7 +46,7 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
     private:
         UndoStack( QWidget* parent );
 
-        QUndoStack*                 m_undoStack;
+        QUndoStack*     m_undoStack;
 
     public slots:
         void            clear();

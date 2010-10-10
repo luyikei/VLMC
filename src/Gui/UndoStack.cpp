@@ -21,15 +21,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QUndoStack>
-#include <QUndoCommand>
-
 #include "UndoStack.h"
 #include "project/GuiProjectManager.h"
 #include "SettingsManager.h"
-#include "KeyboardShortcutHelper.h"
 
-UndoStack::UndoStack( QWidget* parent ) : QUndoView( parent )
+#include <QUndoStack>
+#include <QUndoCommand>
+
+UndoStack::UndoStack( QWidget *parent ) : QUndoView( parent )
 {
     setEmptyLabel( tr( "Nothing to undo" ) );
 
@@ -40,48 +39,56 @@ UndoStack::UndoStack( QWidget* parent ) : QUndoView( parent )
     connect( GUIProjectManager::getInstance(), SIGNAL( projectSaved() ),
              m_undoStack, SLOT( setClean() ) );
 
-    connect( m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
-    connect( m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool) ) );
+    connect( m_undoStack, SIGNAL( canRedoChanged( bool ) ), this, SIGNAL( canRedoChanged( bool ) ) );
+    connect( m_undoStack, SIGNAL( canUndoChanged( bool ) ), this, SIGNAL( canUndoChanged( bool ) ) );
 
     connect( GUIProjectManager::getInstance(), SIGNAL( projectClosed() ), this, SLOT( clear() ) );
 }
 
-void    UndoStack::push( QUndoCommand* command )
+void
+UndoStack::push( QUndoCommand *command )
 {
     m_undoStack->push( command );
 }
 
-void    UndoStack::beginMacro( const QString& text )
+void
+UndoStack::beginMacro( const QString& text )
 {
     m_undoStack->beginMacro( text );
 }
 
-void    UndoStack::endMacro()
+void
+UndoStack::endMacro()
 {
     m_undoStack->endMacro();
 }
 
-bool    UndoStack::canUndo()
+bool
+UndoStack::canUndo()
 {
     return m_undoStack->canUndo();
 }
 
-bool    UndoStack::canRedo()
+bool
+UndoStack::canRedo()
 {
     return m_undoStack->canRedo();
 }
 
-void    UndoStack::clear()
+void
+UndoStack::clear()
 {
     m_undoStack->clear();
 }
 
-void    UndoStack::undo()
+void
+UndoStack::undo()
 {
     m_undoStack->undo();
 }
 
-void    UndoStack::redo()
+void
+UndoStack::redo()
 {
     m_undoStack->redo();
 }
