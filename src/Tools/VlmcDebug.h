@@ -38,6 +38,13 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
     Q_OBJECT
 
     public:
+        enum    VerboseLevel
+        {
+            Quiet,
+            Verbose,
+            Debug
+        };
+
         static void     vlmcMessageHandler( QtMsgType type, const char* msg );
         void            setup();
     private:

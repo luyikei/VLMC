@@ -23,13 +23,16 @@
 #include "VLCInstance.h"
 #include "vlc/vlc.h"
 
+#include "SettingsManager.h"
+#include "VlmcDebug.h"
+
 using namespace LibVLCpp;
 
 Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
 {
     char const *argv[] =
     {
-//        "-vvvvv",
+        "", //Keep this array entry empty. It will be replaced later if required.
 //        "--ffmpeg-debug", "3",
         "--no-skip-frames",
 //        "--intf", "dummy",
@@ -41,6 +44,13 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         "--no-overlay",
     };
     int argc = sizeof( argv ) / sizeof( *argv );
+
+    int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
+    qDebug() << debugLevel;
+    if ( debugLevel == VlmcDebug::Debug )
+        argv[0] = "-vv";
+    else if ( debugLevel == VlmcDebug::Verbose )
+        argv[0] = "-v";
 
     m_internalPtr = libvlc_new( argc, argv );
     Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",

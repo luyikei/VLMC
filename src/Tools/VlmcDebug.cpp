@@ -29,24 +29,25 @@
 VlmcDebug::VlmcDebug() : m_logFile( NULL )
 {
     //setup log level :
+    VLMC_CREATE_PRIVATE_PREFERENCE_INT( "private/LogLevel", 0 );
     QStringList args = qApp->arguments();
-    if ( args.indexOf( QRegExp( "-vvv*" ) ) >= 0 )
-        SettingsManager::getInstance()->setValue( "private/LogLevel", QtDebugMsg, SettingsManager::Vlmc );
+    if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
+        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Debug, SettingsManager::Vlmc );
     else if ( args.contains( "-v" ) == true )
-        SettingsManager::getInstance()->setValue( "private/LogLevel", QtWarningMsg, SettingsManager::Vlmc );
+        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Verbose, SettingsManager::Vlmc );
     else
-        SettingsManager::getInstance()->setValue( "private/LogLevel", QtCriticalMsg, SettingsManager::Vlmc );
+        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Quiet, SettingsManager::Vlmc );
 
-    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
-    if ( pos > 0 )
-    {
-        QString arg = args[pos];
-        QString logFile = arg.mid( 10 );
-        if ( logFile.length() <= 0 )
-            qWarning() << tr("Invalid value supplied for argument --logfile" );
-        else
-            SettingsManager::getInstance()->setValue( "private/LogFile", logFile, SettingsManager::Vlmc );
-    }
+//    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
+//    if ( pos > 0 )
+//    {
+//        QString arg = args[pos];
+//        QString logFile = arg.mid( 10 );
+//        if ( logFile.length() <= 0 )
+//            qWarning() << tr("Invalid value supplied for argument --logfile" );
+//        else
+//            SettingsManager::getInstance()->setValue( "private/LogFile", logFile, SettingsManager::Vlmc );
+//    }
 
 
 //    QVariant setVal = SettingsManager::getInstance()->value( "private/LogFile", "log.vlmc", SettingsManager::Vlmc );

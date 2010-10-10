@@ -90,6 +90,8 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
 //Convenience maccros :
 #define VLMC_CREATE_PRIVATE_PREFERENCE_STRING( key, defaultValue )  \
         VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
+#define VLMC_CREATE_PRIVATE_PREFERENCE_INT( key, defaultValue )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, "", "", SettingValue::Private )
 #define VLMC_CREATE_PRIVATE_PROJECT_STRING( key, defaultValue )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 #define VLMC_CREATE_PREFERENCE_PASSWORD( key, defaultValue, name, desc )  \

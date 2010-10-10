@@ -73,7 +73,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     m_ui.setupUi( this );
 
     //We only install message handler here cause it uses configuration.
-//    VlmcDebug::getInstance()->setup();
+    VlmcDebug::getInstance()->setup();
 
     //VLC Instance:
     LibVLCpp::Instance::getInstance();
