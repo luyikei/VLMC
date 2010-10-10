@@ -111,7 +111,7 @@ main( int argc, char **argv )
             ::usage( QString(argv[0]) );
             return 2;
         }
-        else if( arg == "--version" || arg == "-v" )
+        else if( arg == "--version" )
         {
             ::version();
             return 2;
