@@ -54,6 +54,7 @@ Commands::Generic::Generic() :
 void
 Commands::Generic::invalidate()
 {
+    setText( tr( "Invalid action" ) );
     m_valid = false;
 }
 
@@ -61,6 +62,20 @@ bool
 Commands::Generic::isValid() const
 {
     return m_valid;
+}
+
+void
+Commands::Generic::redo()
+{
+    if ( m_valid == true )
+        internalRedo();
+}
+
+void
+Commands::Generic::undo()
+{
+    if ( m_valid == true )
+        internalUndo();
 }
 
 Commands::Clip::Add::Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
@@ -76,12 +91,12 @@ Commands::Clip::Add::~Add()
 {
 }
 
-void Commands::Clip::Add::redo()
+void Commands::Clip::Add::internalRedo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
 
-void Commands::Clip::Add::undo()
+void Commands::Clip::Add::internalUndo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
@@ -105,7 +120,7 @@ Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
     m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
 }
 
-void Commands::Clip::Move::redo()
+void Commands::Clip::Move::internalRedo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -116,7 +131,7 @@ void Commands::Clip::Move::redo()
         m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
 }
 
-void Commands::Clip::Move::undo()
+void Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
@@ -135,12 +150,12 @@ Commands::Clip::Remove::Remove( ClipHelper* ch, TrackWorkflow* tw ) :
     m_pos = tw->getClipPosition( ch->uuid() );
 }
 
-void Commands::Clip::Remove::redo()
+void Commands::Clip::Remove::internalRedo()
 {
     m_trackWorkflow->removeClip( m_clipHelper->uuid() );
 }
 
-void Commands::Clip::Remove::undo()
+void Commands::Clip::Remove::internalUndo()
 {
     m_trackWorkflow->addClip( m_clipHelper, m_pos );
 }
@@ -160,7 +175,7 @@ Commands::Clip::Resize::Resize( TrackWorkflow* tw, ClipHelper* ch, qint64 newBeg
     setText( QObject::tr( "Resizing clip" ) );
 }
 
-void Commands::Clip::Resize::redo()
+void Commands::Clip::Resize::internalRedo()
 {
     if ( m_newBegin != m_newEnd )
     {
@@ -169,7 +184,7 @@ void Commands::Clip::Resize::redo()
     m_clipHelper->setBoundaries( m_newBegin, m_newEnd );
 }
 
-void Commands::Clip::Resize::undo()
+void Commands::Clip::Resize::internalUndo()
 {
     if ( m_oldBegin != m_newBegin )
     {
@@ -197,7 +212,7 @@ Commands::Clip::Split::~Split()
     delete m_newClip;
 }
 
-void    Commands::Clip::Split::redo()
+void    Commands::Clip::Split::internalRedo()
 {
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
@@ -205,7 +220,7 @@ void    Commands::Clip::Split::redo()
     m_trackWorkflow->addClip( m_newClip, m_newClipPos );
 }
 
-void    Commands::Clip::Split::undo()
+void    Commands::Clip::Split::internalUndo()
 {
     m_trackWorkflow->removeClip( m_newClip->uuid() );
     m_toSplit->setEnd( m_oldEnd );
@@ -219,13 +234,13 @@ Commands::Effect::Add::Add( EffectHelper *helper, EffectUser *target ) :
 }
 
 void
-Commands::Effect::Add::redo()
+Commands::Effect::Add::internalRedo()
 {
     m_target->addEffect( m_helper );
 }
 
 void
-Commands::Effect::Add::undo()
+Commands::Effect::Add::internalUndo()
 {
     m_target->removeEffect( m_helper );
 }
@@ -244,7 +259,7 @@ Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser 
 }
 
 void
-Commands::Effect::Move::redo()
+Commands::Effect::Move::internalRedo()
 {
     if ( m_old != m_new )
     {
@@ -258,7 +273,7 @@ Commands::Effect::Move::redo()
 }
 
 void
-Commands::Effect::Move::undo()
+Commands::Effect::Move::internalUndo()
 {
     if ( m_old != m_new )
     {
@@ -283,7 +298,7 @@ Commands::Effect::Resize::Resize( EffectUser *target, EffectHelper *helper, qint
 }
 
 void
-Commands::Effect::Resize::redo()
+Commands::Effect::Resize::internalRedo()
 {
     if ( m_newBegin != m_oldBegin )
         m_target->moveEffect( m_helper, m_newBegin );
@@ -291,7 +306,7 @@ Commands::Effect::Resize::redo()
 }
 
 void
-Commands::Effect::Resize::undo()
+Commands::Effect::Resize::internalUndo()
 {
     if ( m_oldBegin != m_newBegin )
         m_target->moveEffect( m_helper, m_oldBegin );
@@ -306,13 +321,13 @@ Commands::Effect::Remove::Remove( EffectHelper *helper, EffectUser *user ) :
 }
 
 void
-Commands::Effect::Remove::redo()
+Commands::Effect::Remove::internalRedo()
 {
     m_user->removeEffect( m_helper );
 }
 
 void
-Commands::Effect::Remove::undo()
+Commands::Effect::Remove::internalUndo()
 {
     m_user->addEffect( m_helper );
 }

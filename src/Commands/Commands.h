@@ -51,8 +51,10 @@ namespace Commands
 
         public:
             Generic();
-            virtual void    redo() = 0;
-            virtual void    undo() = 0;
+            virtual void    internalRedo() = 0;
+            virtual void    internalUndo() = 0;
+            void            redo();
+            void            undo();
             bool            isValid() const;
         private:
             bool            m_valid;
@@ -78,8 +80,8 @@ namespace Commands
             public:
                 Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
                 virtual ~Add();
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 ClipHelper                  *m_clipHelper;
                 TrackWorkflow               *m_trackWorkflow;
@@ -91,8 +93,8 @@ namespace Commands
             public:
                 Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                         ClipHelper *clipHelper, qint64 newPos );
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
 
             private:
                 TrackWorkflow   *m_oldTrack;
@@ -106,8 +108,8 @@ namespace Commands
         {
             public:
                 Remove( ClipHelper* clip, TrackWorkflow* tw );
-                virtual void redo();
-                virtual void undo();
+                virtual void internalRedo();
+                virtual void internalUndo();
 
             private:
                 ClipHelper                  *m_clipHelper;
@@ -127,8 +129,8 @@ namespace Commands
             public:
                 Resize( TrackWorkflow* tw, ClipHelper* clipHelper,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 TrackWorkflow*              m_trackWorkflow;
                 ClipHelper*                 m_clipHelper;
@@ -146,8 +148,8 @@ namespace Commands
                 Split( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
                 ~Split();
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 TrackWorkflow               *m_trackWorkflow;
                 ClipHelper*                 m_toSplit;
@@ -163,8 +165,8 @@ namespace Commands
         {
             public:
                 Add( EffectHelper *helper, EffectUser *target );
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_target;
@@ -174,8 +176,8 @@ namespace Commands
         {
             public:
                 Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser, qint64 pos );
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_old;
@@ -190,8 +192,8 @@ namespace Commands
         {
             public:
                 Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd );
-                virtual void        redo();
-                virtual void        undo();
+                virtual void        internalRedo();
+                virtual void        internalUndo();
             private:
                 EffectUser          *m_target;
                 EffectHelper        *m_helper;
@@ -205,8 +207,8 @@ namespace Commands
         {
             public:
                 Remove( EffectHelper *helper, EffectUser *user );
-                virtual void    redo();
-                virtual void    undo();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
             private:
                 EffectHelper    *m_helper;
                 EffectUser      *m_user;
