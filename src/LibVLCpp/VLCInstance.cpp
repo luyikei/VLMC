@@ -46,7 +46,6 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
     int argc = sizeof( argv ) / sizeof( *argv );
 
     int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
-    qDebug() << debugLevel;
     if ( debugLevel == VlmcDebug::Debug )
         argv[0] = "-vv";
     else if ( debugLevel == VlmcDebug::Verbose )
