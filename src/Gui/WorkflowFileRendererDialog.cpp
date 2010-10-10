@@ -59,7 +59,7 @@ void    WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 {
     m_ui.previewLabel->setPixmap(
             QPixmap::fromImage( QImage( buff, m_width, m_height,
-                                        QImage::Format_RGB888 ).rgbSwapped() ) );
+                                        QImage::Format_RGB32 ) ) );
 }
 
 void    WorkflowFileRendererDialog::frameChanged( qint64 frame )
