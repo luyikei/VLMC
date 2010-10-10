@@ -31,11 +31,11 @@
 #include <QFileInfo>
 #include <QMessageBox>
 
-RendererSettings::RendererSettings( bool exportType )
+RendererSettings::RendererSettings( bool shareOnInternet )
 {
-    m_ui.setupUi( this );    
+    m_ui.setupUi( this );
 
-    if( exportType )
+    if( shareOnInternet )
     {
         m_ui.outputLabel->setVisible( false );
         m_ui.outputFileName->setVisible( false );

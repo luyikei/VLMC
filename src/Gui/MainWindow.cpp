@@ -634,9 +634,9 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 }
 
 bool
-MainWindow::renderVideoSettings( bool exportType )
+MainWindow::renderVideoSettings( bool shareOnInternet )
 {
-    RendererSettings *settings = new RendererSettings( exportType );
+    RendererSettings *settings = new RendererSettings( shareOnInternet );
 
     if ( settings->exec() == QDialog::Rejected )
     {

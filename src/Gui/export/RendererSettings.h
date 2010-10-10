@@ -44,7 +44,7 @@ class   RendererSettings : public QDialog
     };
 
     public:
-        RendererSettings( bool exportType = false );
+        RendererSettings( bool shareOnInternet = false );
 
         quint32         width() const;
         quint32         height() const;
