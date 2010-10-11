@@ -266,8 +266,7 @@ ELSE(WIN32 AND NOT UNIX)
     #SET(CPACK_SOURCE_STRIP_FILES "")
 ENDIF(WIN32 AND NOT UNIX)
 
-# TODO: Check stuff: libvlc2 etc. in future as VLC 1.1+ releases
-SET(PACKAGE_REQUIRES "libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 ), frei0r-plugins-dev")
+SET(PACKAGE_REQUIRES "libvlc-dev ( >= 1.1.4 ), frei0r-plugins-dev, libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
 
 # RPM packages
 INCLUDE ( ${CMAKE_MODULE_PATH}/RpmBuild.cmake )
