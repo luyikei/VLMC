@@ -750,6 +750,10 @@ TracksView::removeItem( TrackWorkflow *tw, const QUuid &uuid )
 void
 TracksView::removeItem( AbstractGraphicsItem *item )
 {
+    // Is it the same item captured by mouse events
+    if( item == m_actionItem )
+        m_actionItem = NULL;
+
     m_itemsLoaded.remove( item->uuid() );
     delete item;
     updateDuration();
@@ -934,8 +938,12 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
          event->buttons() == Qt::LeftButton &&
          m_action == TracksView::Move )
     {
+        // Check if the item exists or has been removed
+        if ( m_actionItem == NULL )
+            return;
+
         //Moving item.
-        m_actionItem->setOpacity( 0.6 );
+        m_actionItem->setOpacity( 0.6F );
         if ( m_actionRelativeX < 0 )
             m_actionRelativeX = event->pos().x() - mapFromScene( m_actionItem->pos() ).x();
         QPoint  pos( event->pos().x() - m_actionRelativeX, event->pos().y() );
@@ -1115,8 +1123,11 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 {
     if ( m_action == TracksView::Move )
     {
-        Q_ASSERT( m_actionItem );
-        m_actionItem->setOpacity( 1.0 );
+        // Check if the item exists or has been removed
+        if ( m_actionItem == NULL )
+            return;
+
+        m_actionItem->setOpacity( 1.0F );
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
 
         //Check if the item moved.
