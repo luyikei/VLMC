@@ -37,8 +37,6 @@ class   Clip;
 class   ClipHelper;
 class   EffectUser;
 
-#define NEW_COMMAND(x)      class   x : public Generic
-
 namespace Commands
 {
 #ifdef WITH_GUI
@@ -76,8 +74,10 @@ namespace Commands
 
     namespace   Clip
     {
-        NEW_COMMAND( Add )
+        class   Add : public Generic
         {
+            Q_OBJECT
+
             public:
                 Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
                 virtual ~Add();
@@ -90,8 +90,10 @@ namespace Commands
                 qint64                      m_pos;
         };
 
-        NEW_COMMAND( Move )
+        class   Move : public Generic
         {
+            Q_OBJECT
+
             public:
                 Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                         ClipHelper *clipHelper, qint64 newPos );
@@ -107,8 +109,10 @@ namespace Commands
                 qint64          m_oldPos;
         };
 
-        NEW_COMMAND( Remove )
+        class   Remove : public Generic
         {
+            Q_OBJECT
+
             public:
                 Remove( ClipHelper* clip, TrackWorkflow* tw );
                 virtual void internalRedo();
@@ -128,8 +132,10 @@ namespace Commands
          *  \param  newPos: if the clip was resized from the beginning, it is moved
          *                  so we have to know its new position
         */
-        NEW_COMMAND( Resize )
+        class   Resize : public Generic
         {
+            Q_OBJECT
+
             public:
                 Resize( TrackWorkflow* tw, ClipHelper* clipHelper,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
@@ -148,8 +154,10 @@ namespace Commands
                 qint64                      m_oldPos;
         };
 
-        NEW_COMMAND( Split )
+        class   Split : public Generic
         {
+            Q_OBJECT
+
             public:
                 Split( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
@@ -168,8 +176,10 @@ namespace Commands
     }
     namespace   Effect
     {
-        NEW_COMMAND( Add )
+        class   Add : public Generic
         {
+            Q_OBJECT
+
             public:
                 Add( EffectHelper *helper, EffectUser *target );
                 virtual void    internalRedo();
@@ -180,8 +190,10 @@ namespace Commands
                 EffectUser      *m_target;
         };
 
-        NEW_COMMAND( Move )
+        class   Move : public Generic
         {
+            Q_OBJECT
+
             public:
                 Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser, qint64 pos );
                 virtual void    internalRedo();
@@ -197,8 +209,10 @@ namespace Commands
                 qint64          m_oldEnd;
         };
 
-        NEW_COMMAND( Resize )
+        class   Resize : public Generic
         {
+            Q_OBJECT
+
             public:
                 Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd );
                 virtual void        internalRedo();
@@ -213,8 +227,10 @@ namespace Commands
                 qint64              m_oldEnd;
         };
 
-        NEW_COMMAND( Remove )
+        class   Remove : public Generic
         {
+            Q_OBJECT
+
             public:
                 Remove( EffectHelper *helper, EffectUser *user );
                 virtual void    internalRedo();

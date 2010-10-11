@@ -21,12 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Commands.h"
+
 #include "config.h"
 #include "Clip.h"
 #include "ClipHelper.h"
 #include "EffectHelper.h"
 #include "EffectInstance.h"
-#include "Commands.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
 
