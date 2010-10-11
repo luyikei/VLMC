@@ -91,7 +91,7 @@ usage( QString const& appName )
     out << "Usage: " << appName << " [options] [filename|URI]...\n"
         << "Options:\n"
         << "\t[--project|-p projectfile]\tload the given VLMC project\n"
-        << "\t[--version|-v]\tversion information\n"
+        << "\t[--version]\tversion information\n"
         << "\t[--help|-?]\tthis text\n\n"
         << "\tFILES:\n"
         << "\t\tFiles specified on the command line should include \n"
