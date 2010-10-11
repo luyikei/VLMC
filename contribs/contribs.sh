@@ -1,10 +1,10 @@
 #! /bin/sh
 
-QT4_FILE="qt4-4.6.2-win32-bin.tar.bz2"
-QT4_URL="http://download.videolan.org/pub/videolan/contrib/qt4-4.6.2-win32-bin.tar.bz2"
-VLC_FILE="vlc-1.1.5-git-win32.7z"
+QT4_FILE="qt4-4.7.1-win32-bin.tar.bz2"
+QT4_URL="http://download.videolan.org/pub/videolan/contrib/qt4-4.7.1-win32-bin.tar.bz2"
+VLC_FILE="vlc-1.1.5-git-20101011-0202-win32.7z"
 VLC_VERSION_PREFIX="vlc-1.1.5-git"
-VLC_URL="http://nightlies.videolan.org/build/win32/branch-20100917-0203/vlc-1.1.5-git-win32.7z"
+VLC_URL="http://nightlies.videolan.org/build/win32/branch-20101011-0202/vlc-1.1.5-git-20101011-0202-win32.7z"
 FREI0R_FILE="frei0r-latest.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/snapshot/frei0r-latest.tar.gz"
 
