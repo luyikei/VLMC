@@ -3,7 +3,7 @@
 QT4_FILE="qt4-4.7.1-win32-bin.tar.bz2"
 QT4_URL="http://download.videolan.org/pub/videolan/contrib/qt4-4.7.1-win32-bin.tar.bz2"
 VLC_FILE="vlc-1.1.5-git-20101011-0202-win32.7z"
-VLC_VERSION_PREFIX="vlc-1.1.5-git"
+VLC_VERSION_PREFIX="vlc-1.1.5-git-20101011-0202"
 VLC_URL="http://nightlies.videolan.org/build/win32/branch-20101011-0202/vlc-1.1.5-git-20101011-0202-win32.7z"
 FREI0R_FILE="frei0r-latest.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/snapshot/frei0r-latest.tar.gz"
@@ -36,7 +36,7 @@ mkdir bin && mkdir include && mkdir temp
 
 7z e src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/libvlc.dll" -otemp
 7z e src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/libvlccore.dll" -otemp
-7z e src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/plugins/" -otemp/plugins
+7z e src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/plugins/*" -otemp/plugins
 cd temp
   for i in libvlc.dll libvlccore.dll; do
     cp -v $i $ROOT_FOLDER/bin/
