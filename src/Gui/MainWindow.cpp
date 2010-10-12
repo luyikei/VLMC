@@ -398,7 +398,6 @@ MainWindow::createStatusBar()
     // Zoom slider
     m_zoomSlider = new QSlider( this );
     m_zoomSlider->setOrientation( Qt::Horizontal );
-    m_zoomSlider->setLayoutDirection( Qt::LeftToRight );
     m_zoomSlider->setTickInterval( 1 );
     m_zoomSlider->setSingleStep( 1 );
     m_zoomSlider->setPageStep( 1 );
@@ -406,6 +405,7 @@ MainWindow::createStatusBar()
     m_zoomSlider->setMaximum( 13 );
     m_zoomSlider->setValue( 10 );
     m_zoomSlider->setFixedWidth( 80 );
+    m_zoomSlider->setInvertedAppearance( true );
     m_ui.statusbar->addPermanentWidget( m_zoomSlider );
 
     // Zoom IN
