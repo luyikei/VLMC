@@ -33,7 +33,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/About.ui" line="105"/>
         <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished">Běhová verze Qt&quot; %1 (kompilováná proti %2)</translation>
+        <translation>Běhová verze Qt&quot; %1 (kompilováná proti %2)</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="113"/>
@@ -864,7 +864,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="202"/>
         <source>Toggle the help page</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I need to see place where is it used</translatorcomment>
+        <translation type="unfinished">Přepnout stránku nápovědy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="205"/>
