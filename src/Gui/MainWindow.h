@@ -72,6 +72,7 @@ private:
     void        loadVlmcPreferences( const QString& subPart );
     void        loadGlobalProxySettings();
     void        initToolbar();
+    bool        saveSettings();
     void        setupLibrary();
     void        setupClipPreview();
     void        setupProjectPreview();

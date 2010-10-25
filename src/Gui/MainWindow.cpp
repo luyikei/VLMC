@@ -570,10 +570,10 @@ void
 MainWindow::checkFolders()
 {
     QDir dirUtil;
-    if( !dirUtil.exists( VLMC_GET_STRING( "general/DefaultProjectLocation" ) ) )
+    if ( !dirUtil.exists( VLMC_GET_STRING( "general/DefaultProjectLocation" ) ) )
         dirUtil.mkdir( VLMC_GET_STRING( "general/DefaultProjectLocation" ) );
 
-    if( !dirUtil.exists( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
+    if ( !dirUtil.exists( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
         dirUtil.mkdir( VLMC_GET_STRING( "general/TempFolderLocation" ) );
 }
 
@@ -583,6 +583,7 @@ MainWindow::checkFolders()
 void
 MainWindow::on_actionQuit_triggered()
 {
+    saveSettings();
     QApplication::quit();
 }
 
@@ -754,24 +755,31 @@ MainWindow::on_actionProject_Preferences_triggered()
   m_projectPreferences->show();
 }
 
-void
-MainWindow::closeEvent( QCloseEvent* e )
+bool
+MainWindow::saveSettings()
 {
     GUIProjectManager   *pm = GUIProjectManager::getInstance();
     if ( pm->askForSaveIfModified() )
+    {
+        QSettings s;
+        // Save the current geometry
+        s.setValue( "MainWindowGeometry", saveGeometry() );
+        // Save the current layout
+        s.setValue( "MainWindowState", saveState() );
+        s.setValue( "CleanQuit", true );
+        s.sync();
+        return true;
+    }
+    return false;
+}
+
+void
+MainWindow::closeEvent( QCloseEvent* e )
+{
+    if ( saveSettings() )
         e->accept();
     else
-    {
         e->ignore();
-        return ;
-    }
-    QSettings s;
-    // Save the current geometry
-    s.setValue( "MainWindowGeometry", saveGeometry() );
-    // Save the current layout
-    s.setValue( "MainWindowState", saveState() );
-    s.setValue( "CleanQuit", true );
-    s.sync();
 }
 
 void
