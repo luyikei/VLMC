@@ -40,10 +40,6 @@ About::About( QWidget *parent ) : QDialog( parent )
     setText( ":/text/TRANSLATORS", m_ui.plainTextEditTranslators );
     setText( ":/text/COPYING", m_ui.plainTextEditLicense );
 
-    m_ui.labelAbout->setText( tr( "VLMC (VideoLAN Movie Creator) is a "
-        "cross-platform, non-linear video editing software based on the VLC "
-        "Media Player.\n" ) );
-
     m_ui.labelTitle->setText(
         m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
 
@@ -71,7 +67,7 @@ About::changeEvent( QEvent *e )
             m_ui.labelBuild->setText(
                 m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME,
                                              QT_VERSION_STR, qVersion() ) );
-            m_ui.labelCopyright->setText( 
+            m_ui.labelCopyright->setText(
                 m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT,
                                                  PROJECT_CONTACT, ORG_WEBSITE ) );
             break;

@@ -35,7 +35,7 @@ PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     QHBoxLayout *layout = new QHBoxLayout;
     m_lineEdit = new QLineEdit( m_widget );
     m_pushButton = new QPushButton( m_widget );
-    m_pushButton->setText( tr( "Select path" ) );
+    m_pushButton->setText( tr( "Select a path" ) );
     layout->addWidget( m_lineEdit );
     layout->addWidget( m_pushButton );
     m_widget->setLayout( layout );
