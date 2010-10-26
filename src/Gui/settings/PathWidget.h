@@ -39,6 +39,10 @@ class   PathWidget : public ISettingsCategoryWidget
         PathWidget( SettingValue *s, QWidget *parent = NULL );
         void                    save();
 
+    protected:
+        void                    changeEvent( QEvent *event );
+        void                    retranslate();
+
     private slots:
         virtual void            changed( const QVariant& );
         void                    selectPathButtonPressed();

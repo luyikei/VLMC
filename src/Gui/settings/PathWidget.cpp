@@ -23,6 +23,7 @@
 #include "PathWidget.h"
 #include "SettingValue.h"
 
+#include <QEvent>
 #include <QFileDialog>
 #include <QLineEdit>
 #include <QPushButton>
@@ -32,7 +33,7 @@ PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
 {
     m_lineEdit = new QLineEdit( this );
     m_pushButton = new QPushButton( this );
-    m_pushButton->setText( tr( "Select a path" ) );
+    retranslate();
     layout()->addWidget( m_lineEdit );
     layout()->addWidget( m_pushButton );
 
@@ -41,10 +42,24 @@ PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
 }
 
 void
+PathWidget::retranslate()
+{
+    m_pushButton->setText( tr( "Select a path" ) );
+}
+
+void
+PathWidget::changeEvent( QEvent *event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+        retranslate();
+}
+
+void
 PathWidget::save()
 {
     m_setting->set( m_lineEdit->text() );
 }
+
 void
 PathWidget::changed( const QVariant &val )
 {
