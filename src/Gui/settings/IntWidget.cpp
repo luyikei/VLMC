@@ -26,9 +26,9 @@
 #include <QSpinBox>
 
 IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_spinbox = new QSpinBox( parent );
+    m_spinbox = new QSpinBox( this );
     if ( ( s->flags() & SettingValue::Clamped ) != 0 )
     {
         if ( s->min().isValid() )
@@ -40,13 +40,8 @@ IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     {
         m_spinbox->setSingleStep( 8 );
     }
+    layout()->addWidget( m_spinbox );
     changed( s->get() );
-}
-
-QWidget*
-IntWidget::widget()
-{
-    return m_spinbox;
 }
 
 void

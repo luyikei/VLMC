@@ -28,19 +28,14 @@
 #include <QPushButton>
 
 ColorWidget::ColorWidget( SettingValue *s, QWidget *parent ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
     m_color = s->get().value<QColor>();
-    m_button = new QPushButton( parent );
+    m_button = new QPushButton( this );
     m_button->setPalette( QPalette(  m_color ) );
+    layout()->addWidget( m_button );
     connect( m_button, SIGNAL( clicked() ), this, SLOT( buttonClicked() ) );
     changed( m_color );
-}
-
-QWidget*
-ColorWidget::widget()
-{
-    return m_button;
 }
 
 void

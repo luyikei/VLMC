@@ -36,7 +36,6 @@ class   IntWidget : public ISettingsCategoryWidget
 
     public:
         IntWidget( SettingValue *s, QWidget *parent = NULL );
-        QWidget*                widget();
         void                    save();
 
     private slots:

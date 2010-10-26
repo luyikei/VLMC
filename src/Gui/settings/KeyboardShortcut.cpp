@@ -25,15 +25,10 @@
 #include "SettingValue.h"
 
 KeyboardShortcut::KeyboardShortcut( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_input = new KeyboardShortcutInput( s->name(), s->get().toString(), parent );
-}
-
-QWidget*
-KeyboardShortcut::widget()
-{
-    return m_input;
+    m_input = new KeyboardShortcutInput( s->name(), s->get().toString(), this );
+    layout()->addWidget( m_input );
 }
 
 void

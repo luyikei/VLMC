@@ -29,32 +29,24 @@
 #include <QSlider>
 
 DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_container = new QWidget( parent );
     //Creating the slider
-    m_slider = new QSlider( m_container );
+    m_slider = new QSlider( this );
     m_slider->setOrientation( Qt::Horizontal );
     //Creating the label
-    m_valueDisplayer = new QLabel( QString::number( s->get().toDouble() ), m_container );
+    m_valueDisplayer = new QLabel( QString::number( s->get().toDouble() ), this  );
     //Avoid label resizing due to roundups
     const QFontMetrics  &fm = m_valueDisplayer->fontMetrics();
     m_valueDisplayer->setFixedWidth( fm.width( "0.00" ) );
     //Setting the layout:
-    QHBoxLayout *layout = new QHBoxLayout( m_container );
-    layout->addWidget( m_slider );
-    layout->addWidget( m_valueDisplayer );
+    layout()->addWidget( m_slider );
+    layout()->addWidget( m_valueDisplayer );
     //TODO: check if the value is clamped
     m_slider->setMaximum( s->max().toDouble() * 100.0 );
     m_slider->setMinimum( s->min().toDouble() * 100.0 );
     changed ( s->get() );
     connect( m_slider, SIGNAL( valueChanged( int ) ), this, SLOT( sliderMoved( int ) ) );
-}
-
-QWidget*
-DoubleSliderWidget::widget()
-{
-    return m_container;
 }
 
 void

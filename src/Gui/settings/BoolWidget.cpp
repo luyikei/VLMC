@@ -26,16 +26,11 @@
 #include <QCheckBox>
 
 BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_checkbox = new QCheckBox( parent );
+    m_checkbox = new QCheckBox( this );
+    layout()->addWidget( m_checkbox );
     changed( s->get() );
-}
-
-QWidget*
-BoolWidget::widget()
-{
-    return m_checkbox;
 }
 
 void

@@ -27,25 +27,28 @@
 #include "SettingValue.h"
 
 class   QVariant;
-class   QWidget;
 
-#include <QObject>
+#include <QWidget>
+#include <QHBoxLayout>
 
-class   ISettingsCategoryWidget : public QObject
+class   ISettingsCategoryWidget : public QWidget
 {
     Q_OBJECT
 
     public:
         virtual ~ISettingsCategoryWidget(){}
         virtual SettingValue    *setting() { return m_setting; }
-        virtual QWidget*        widget() = 0;
         virtual void            save() = 0;
 
     protected:
-        ISettingsCategoryWidget( SettingValue* s ) : m_setting( s )
+        ISettingsCategoryWidget( QWidget *parent, SettingValue* s ) :
+                QWidget( parent ),
+                m_setting( s )
         {
             connect( s, SIGNAL( changed( const QVariant& ) ),
                      this, SLOT( changed( const QVariant& ) ) );
+            QHBoxLayout *layout = new QHBoxLayout;
+            setLayout( layout );
         }
 
     protected:

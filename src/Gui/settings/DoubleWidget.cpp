@@ -26,9 +26,10 @@
 #include <QDoubleSpinBox>
 
 DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_spinbox = new QDoubleSpinBox( parent );
+    m_spinbox = new QDoubleSpinBox( this );
+    layout()->addWidget( m_spinbox );
     changed( s->get() );
 
     if ( ( s->flags() & SettingValue::Clamped ) != 0 )
@@ -38,12 +39,6 @@ DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         if ( s->max().isValid() )
             m_spinbox->setMaximum( s->max().toDouble() );
     }
-}
-
-QWidget*
-DoubleWidget::widget()
-{
-    return m_spinbox;
 }
 
 void

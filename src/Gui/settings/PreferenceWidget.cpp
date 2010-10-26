@@ -63,8 +63,8 @@ PreferenceWidget::PreferenceWidget( const QString &name, const char *label, Sett
         QLabel                      *label = new QLabel( tr( s->name() ), this );
         label->setToolTip( tr( s->description() ) );
         m_labels.insert( s, label );
-        widget->widget()->setToolTip( s->description() );
-        layout->addRow( label, widget->widget() );
+        widget->setToolTip( s->description() );
+        layout->addRow( label, widget );
         m_settings.push_back( widget );
     }
 

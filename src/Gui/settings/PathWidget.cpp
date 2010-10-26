@@ -24,30 +24,20 @@
 #include "SettingValue.h"
 
 #include <QFileDialog>
-#include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
 
 PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_widget = new QWidget( parent );
-    QHBoxLayout *layout = new QHBoxLayout;
-    m_lineEdit = new QLineEdit( m_widget );
-    m_pushButton = new QPushButton( m_widget );
+    m_lineEdit = new QLineEdit( this );
+    m_pushButton = new QPushButton( this );
     m_pushButton->setText( tr( "Select a path" ) );
-    layout->addWidget( m_lineEdit );
-    layout->addWidget( m_pushButton );
-    m_widget->setLayout( layout );
+    layout()->addWidget( m_lineEdit );
+    layout()->addWidget( m_pushButton );
 
     changed( s->get() );
     connect( m_pushButton, SIGNAL( clicked() ), this, SLOT( selectPathButtonPressed() ) );
-}
-
-QWidget*
-PathWidget::widget()
-{
-    return m_widget;
 }
 
 void

@@ -61,9 +61,9 @@ EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
         ISettingsCategoryWidget     *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
         m_widgets.push_back( label );
-        m_widgets.push_back( widget->widget() );
-        widget->widget()->setToolTip( s->description() );
-        m_ui->settingsLayout->addRow( label , widget->widget() );
+        m_widgets.push_back( widget );
+        widget->setToolTip( s->description() );
+        m_ui->settingsLayout->addRow( label , widget );
         m_settings.push_back( widget );
         ++it;
     }

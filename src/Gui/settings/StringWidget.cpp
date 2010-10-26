@@ -26,18 +26,13 @@
 #include <QLineEdit>
 
 StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
-        ISettingsCategoryWidget( s )
+        ISettingsCategoryWidget( parent, s )
 {
-    m_lineEdit = new QLineEdit( parent );
+    m_lineEdit = new QLineEdit( this );
     if ( ( s->flags() & SettingValue::Password ) != 0 )
         m_lineEdit->setEchoMode( QLineEdit::Password );
+    layout()->addWidget( m_lineEdit );
     changed( s->get() );
-}
-
-QWidget*
-StringWidget::widget()
-{
-    return m_lineEdit;
 }
 
 void
