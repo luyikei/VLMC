@@ -26,11 +26,13 @@
 
 #include <QWidget>
 #include <QString>
+#include <QMap>
 
-class QVBoxLayout;
-class QButtonGroup;
+class   QVBoxLayout;
+class   QButtonGroup;
 
-class QButtonGroup;
+class   QButtonGroup;
+class   QToolButton;
 
 class   Panel : public QWidget
 {
@@ -41,15 +43,19 @@ public:
     Panel( QWidget* parent = 0 );
     virtual ~Panel() { }
 
-    void    addButton( const QString& label,
+    void    addButton( const char* label,
                        const QIcon& icon,
                        int index );
+    void    retranslate();
 
 private:
     virtual void        showEvent( QShowEvent * );
-    QVBoxLayout*        m_layout;
-    QButtonGroup*       m_buttons;
-    static const int    M_ICON_HEIGHT;
+
+private:
+    QVBoxLayout*                    m_layout;
+    QButtonGroup*                   m_buttons;
+    static const int                M_ICON_HEIGHT;
+    QMap<QToolButton*, const char*> m_buttonsNames;
 
 signals:
     void   changePanel( int index );

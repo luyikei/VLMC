@@ -49,8 +49,7 @@ class   Settings : public QDialog
 
         void                        addCategory( const char *name,
                                                  SettingsManager::Type type,
-                                                 const QIcon &icon,
-                                                 const QString &label );
+                                                 const QIcon &icon );
 
     protected:
         void                        changeEvent( QEvent *e );

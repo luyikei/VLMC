@@ -22,6 +22,7 @@
  *****************************************************************************/
 
 #include "Panel.h"
+#include "Settings.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -32,7 +33,6 @@
 #include <QSizePolicy>
 #include <QSize>
 #include <QShowEvent>
-
 
 const int   Panel::M_ICON_HEIGHT = 64;
 
@@ -53,13 +53,14 @@ Panel::Panel( QWidget* parent ) : QWidget( parent )
                    QSizePolicy::Expanding );
 }
 
-void    Panel::addButton( const QString& label,
+void    Panel::addButton( const char* name,
                           const QIcon& icon,
                           int index )
 {
     QToolButton*    button = new QToolButton( this );
 
-    button->setText( label );
+    m_buttonsNames[button] = name;
+    button->setText( tr( name ) );
     button->setIcon( icon );
     button->setAutoRaise( true );
     button->setCheckable( true );
@@ -81,4 +82,17 @@ void    Panel::showEvent( QShowEvent *event )
     // Reset the selection when the dialog is shown.
     if ( !event->spontaneous() && !m_buttons->buttons().isEmpty() )
         m_buttons->buttons().first()->setChecked( true );
+}
+
+void
+Panel::retranslate()
+{
+    QMap<QToolButton*, const char*>::iterator       it = m_buttonsNames.begin();
+    QMap<QToolButton*, const char*>::iterator       ite = m_buttonsNames.end();
+
+    while ( it != ite )
+    {
+        it.key()->setText( Settings::tr( it.value() ) );
+        ++it;
+    }
 }

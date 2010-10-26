@@ -518,18 +518,14 @@ void
 MainWindow::createGlobalPreferences()
 {
     m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
-    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/vlmc" ),
-                                     tr ( "General" ) );
-    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "keyboard" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/keyboard" ),
-                                     tr( "Keyboard" ) );
-    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "youtube" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/youtube" ),
-                                     tr( "Youtube" ) );
-    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "network" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/network" ),
-                                     tr( "Network" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/vlmc" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/keyboard" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "YouTube" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/youtube" ) );
+    m_globalPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "Network" ), SettingsManager::Vlmc,
+                                     QIcon( ":/images/network" ) );
 }
 
 void
@@ -555,15 +551,12 @@ void
 MainWindow::createProjectPreferences()
 {
     m_projectPreferences = new Settings( SettingsManager::Project, this );
-    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "general" ), SettingsManager::Project,
-                                   QIcon( ":/images/vlmc" ),
-                                   tr ( "General" ) );
-    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "video" ), SettingsManager::Project,
-                                   QIcon( ":/images/video" ),
-                                   tr ( "Video" ) );
-    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "audio" ), SettingsManager::Project,
-                                   QIcon( ":/images/audio" ),
-                                   tr ( "Audio" ) );
+    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Project,
+                                   QIcon( ":/images/vlmc" ) );
+    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "Video" ), SettingsManager::Project,
+                                   QIcon( ":/images/video" ) );
+    m_projectPreferences->addCategory( QT_TRANSLATE_NOOP( "Settings", "Audio" ), SettingsManager::Project,
+                                   QIcon( ":/images/audio" ) );
 }
 
 void

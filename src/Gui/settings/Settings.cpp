@@ -64,15 +64,14 @@ Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
 void
 Settings::addCategory( const char *name,
                        SettingsManager::Type type,
-                       const QIcon &icon,
-                       const QString &label )
+                       const QIcon &icon )
 {
     PreferenceWidget    *pWidget = new PreferenceWidget( name, type, this );
 
     m_stackedLayout->addWidget( pWidget );
 
     // Create a button linked to the widget using its index
-    m_panel->addButton( label, icon, m_stackedLayout->count() - 1 );
+    m_panel->addButton( name, icon, m_stackedLayout->count() - 1 );
 
     switchWidget( 0 );
 }
@@ -171,4 +170,5 @@ Settings::retranslateUi()
         setWindowTitle( tr( "Project preferences" ) );
     else
         setWindowTitle( tr( "VLMC Settings" ) );
+    m_panel->retranslate();
 }
