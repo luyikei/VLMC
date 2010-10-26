@@ -3,14 +3,6 @@
 <TS version="2.0" language="sk_SK">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
-    <name>About</name>
-    <message>
-        <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
-</source>
-        <translation>VLMC (VideoLAN Movie Creator) je multiplatformný, nelineárny softvér na úpravu videa, založený na prehrávači VLC Media Player.</translation>
-    </message>
-</context>
-<context>
     <name>AboutVLMC</name>
     <message>
         <source>About</source>
@@ -55,12 +47,6 @@ Your Qt runtime version: %4
         <translation>Táto verzia programu VLMC bola skompilovaná na:
 %1 fungujúce pod %2, kompilované pre Qt %3
 Verzia Vášho prostredia Qt: %4</translation>
-    </message>
-    <message>
-        <source>%1
-%2, %3</source>
-        <translation>%1
-%2, %3</translation>
     </message>
     <message>
         <source>Thanks</source>
@@ -143,6 +129,76 @@ Verzia Vášho prostredia Qt: %4</translation>
     <message>
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
         <translation>Zadajte tagy (môžete zadať viac tagov oddelených čiarkou</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Add</name>
+    <message>
+        <source>Adding clip to track %1</source>
+        <translation type="unfinished">Pridávanie klipu k stope %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Move</name>
+    <message>
+        <source>Moving clip from track %1 to %2</source>
+        <translation type="unfinished">Presúvanie klipu zo stopy %1 do stopy %2</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Remove</name>
+    <message>
+        <source>Removing clip </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Resize</name>
+    <message>
+        <source>Resizing clip</source>
+        <translation type="unfinished">Zmena veľkosti klipu</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Split</name>
+    <message>
+        <source>Splitting clip</source>
+        <translation type="unfinished">Rozdeľovanie klipu</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Add</name>
+    <message>
+        <source>Adding effect %1</source>
+        <translation type="unfinished">Pridávanie efektu %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Move</name>
+    <message>
+        <source>Moving effect %1</source>
+        <translation type="unfinished">Presúvanie efektu %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Remove</name>
+    <message>
+        <source>Deleting effect %1</source>
+        <translation type="unfinished">Vymazávanie efektu %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Resize</name>
+    <message>
+        <source>Resizing effect %1</source>
+        <translation type="unfinished">Zmena veľkosti v efekte %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Generic</name>
+    <message>
+        <source>Invalid action</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -754,10 +810,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PathWidget</name>
     <message>
-        <source>Select path</source>
-        <translation>Výber cesty</translation>
-    </message>
-    <message>
         <source>Select a path</source>
         <translation>Vyberte cestu</translation>
     </message>
@@ -1123,14 +1175,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Nepodarilo sa načítať súbor s projektom: %1. Akcia bola prerušená.</translation>
     </message>
-    <message>
-        <source>Untitled Project</source>
-        <translation>Projekt bez názvu</translation>
-    </message>
-    <message>
-        <source>Unsaved Project</source>
-        <translation>Neuložený projekt</translation>
-    </message>
 </context>
 <context>
     <name>ProjectWizard</name>
@@ -1153,29 +1197,9 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
 </context>
 <context>
     <name>QObject</name>
-    <message id="false">
-        <source>Adding clip to track %1</source>
-        <translation>Pridávanie klipu k stope %1</translation>
-    </message>
-    <message>
-        <source>Moving clip from track %1 to %2</source>
-        <translation>Presúvanie klipu zo stopy %1 do stopy %2</translation>
-    </message>
     <message>
         <source>Moving clip</source>
         <translation>Presúvanie klipu</translation>
-    </message>
-    <message>
-        <source>Remove clip</source>
-        <translation>Odstrániť klip</translation>
-    </message>
-    <message>
-        <source>Resizing clip</source>
-        <translation>Zmena veľkosti klipu</translation>
-    </message>
-    <message>
-        <source>Splitting clip</source>
-        <translation>Rozdeľovanie klipu</translation>
     </message>
     <message>
         <source>Unable to get backtrace</source>
@@ -1184,22 +1208,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>The XMLStream is not a valid YouTube Feed</source>
         <translation>XML stream nie je platným prvkom YouTube Feed</translation>
-    </message>
-    <message>
-        <source>Adding effect %1</source>
-        <translation>Pridávanie efektu %1</translation>
-    </message>
-    <message>
-        <source>Moving effect %1</source>
-        <translation>Presúvanie efektu %1</translation>
-    </message>
-    <message>
-        <source>Resizing effect %1</source>
-        <translation>Zmena veľkosti v efekte %1</translation>
-    </message>
-    <message>
-        <source>Deleting effect %1</source>
-        <translation>Vymazávanie efektu %1</translation>
     </message>
 </context>
 <context>
@@ -1731,13 +1739,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>11025 Hz</source>
         <translation>11 025 Hz</translation>
-    </message>
-</context>
-<context>
-    <name>VlmcDebug</name>
-    <message>
-        <source>Invalid value supplied for argument --logfile</source>
-        <translation>Nesprávna hodnota argumentu --logfile</translation>
     </message>
 </context>
 <context>

@@ -9,24 +9,6 @@
         <translation>Sobre</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b1ca00;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b1ca00;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation>Versio: %1</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Autors/es</translation>
     </message>
@@ -39,7 +21,28 @@ p, li { white-space: pre-wrap; }
         <translation>Llicencia</translation>
     </message>
     <message>
-        <source>Runtime Qt version: %1 (compiled against %2)</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This version of VLMC was compiled on:
+%1 running  %2 compiled against Qt %3
+Your Qt runtime version: %4
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -122,6 +125,76 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Commands::Clip::Add</name>
+    <message>
+        <source>Adding clip to track %1</source>
+        <translation type="unfinished">Afegint clip a pista %1</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Move</name>
+    <message>
+        <source>Moving clip from track %1 to %2</source>
+        <translation type="unfinished">Movent clip de la pista %1 a la %2</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Remove</name>
+    <message>
+        <source>Removing clip </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Resize</name>
+    <message>
+        <source>Resizing clip</source>
+        <translation type="unfinished">Canviar de mida el clip</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Split</name>
+    <message>
+        <source>Splitting clip</source>
+        <translation type="unfinished">Dividir el clip</translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Add</name>
+    <message>
+        <source>Adding effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Move</name>
+    <message>
+        <source>Moving effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Remove</name>
+    <message>
+        <source>Deleting effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Resize</name>
+    <message>
+        <source>Resizing effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Generic</name>
+    <message>
+        <source>Invalid action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CrashHandler</name>
     <message>
         <source>VLMC Crash handler</source>
@@ -169,6 +242,98 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>History</source>
         <translation type="unfinished">Historic</translation>
+    </message>
+    <message>
+        <source>Effects List</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectSettingWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Dialeg</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectStack</name>
+    <message>
+        <source>Effect stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the effect up in the stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Move the effect down in the stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Formulari</translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nom</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripcio</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mixer 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mixer 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectsListView</name>
+    <message>
+        <source>%1 informations</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -489,10 +654,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share on &amp;Youtube</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Share your project on youtube</source>
         <translation type="unfinished"></translation>
     </message>
@@ -530,6 +691,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publish on &amp;Internet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -627,10 +792,6 @@ p, li { white-space: pre-wrap; }(new line)
 </context>
 <context>
     <name>PathWidget</name>
-    <message>
-        <source>Select path</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Select a path</source>
         <translation type="unfinished"></translation>
@@ -859,23 +1020,7 @@ p, li { white-space: pre-wrap; }(new line)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Youtube Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VLMC won&apos;t store your passwords...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proxy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -883,15 +1028,7 @@ p, li { white-space: pre-wrap; }(new line)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The HTTP Proxy Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Proxy Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -899,11 +1036,55 @@ p, li { white-space: pre-wrap; }(new line)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The HTTP Proxy Password</source>
+        <source>The default location where to store projects folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The default location where to store projects folders</source>
+        <source>The temporary folder used by VLMC to process videos.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC&apos;s Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid YouTube username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Youtube Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave this field, password will be stored in unencryped form.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Proxy for VLMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables Global Network Proxy for VLMC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Hostname.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Port.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Username, if any.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Password, if any.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -911,6 +1092,10 @@ p, li { white-space: pre-wrap; }(new line)
     <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -957,6 +1142,10 @@ p, li { white-space: pre-wrap; }(new line)
 Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Adjust Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -990,41 +1179,21 @@ Please check your VLC installation before reporting the issue.</source>
 </context>
 <context>
     <name>QObject</name>
-    <message id="false">
-        <source>Adding clip to track %1</source>
-        <translation>Afegint clip a pista %1</translation>
-    </message>
-    <message>
-        <source>Moving clip from track %1 to %2</source>
-        <translation>Movent clip de la pista %1 a la %2</translation>
-    </message>
     <message>
         <source>Moving clip</source>
         <translation>Movent el clip</translation>
     </message>
     <message>
-        <source>Remove clip</source>
-        <translation>Esborrar el clip</translation>
-    </message>
-    <message>
-        <source>Resizing clip</source>
-        <translation>Canviar de mida el clip</translation>
-    </message>
-    <message>
-        <source>Splitting clip</source>
-        <translation>Dividir el clip</translation>
-    </message>
-    <message>
         <source>Unable to get backtrace</source>
         <translation>Impossible aconseguir la marxa enrera</translation>
+    </message>
+    <message>
+        <source>The XMLStream is not a valid YouTube Feed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RendererSettings</name>
-    <message>
-        <source>Output file</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Select...</source>
         <translation type="unfinished"></translation>
@@ -1038,27 +1207,7 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished">Alçada</translation>
     </message>
     <message>
-        <source>FPS</source>
-        <translation type="unfinished">FPS</translation>
-    </message>
-    <message>
-        <source>Video quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video codec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>H264</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio codec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1068,10 +1217,6 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <source>Enter the output file name</source>
         <translation type="unfinished">Escriu el nom de l&apos;arxiu de sortida</translation>
-    </message>
-    <message>
-        <source>Render settings</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid parameters</source>
@@ -1095,6 +1240,78 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>Videos(%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio Codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Personalitzar</translation>
+    </message>
+    <message>
+        <source>QVGA (320x240) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VGA (640x480) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SVGA (800x600) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XVGA (1024x768) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>480p NTSC (720x480) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>576p PAL (720x576) - 25 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>720p (1280x720) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1080p (1920x1080) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Settings: Publish on Internet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1143,11 +1360,28 @@ Please check your VLC installation before reporting the issue.</source>
         <source>network</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Restore default?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will restore all settings default value.
+Are you sure you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>ShareOnYoutube</name>
+    <name>ShareOnInternet</name>
     <message>
-        <source>Share On Youtube</source>
+        <source>Share Video On Internet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>YouTube</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1156,6 +1390,10 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1179,7 +1417,7 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gaming</source>
+        <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1195,7 +1433,7 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nonprofits &amp; Activism</source>
+        <source>Nonprofit &amp; Activism</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1203,11 +1441,11 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pets &amp; Animals</source>
+        <source>Animals &amp; Pets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Science &amp; Technology</source>
+        <source>Tech &amp; Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1227,35 +1465,59 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished">Descripcio</translation>
     </message>
     <message>
-        <source>Tags</source>
+        <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Video Size</source>
+        <source>Make this video private</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Small (480 x 272)</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Medium (640 x 360)</source>
+        <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Large (960 x 540)</source>
+        <source>&amp;Publish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HD (1280 x 720)</source>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Make this video public (Default: private)</source>
+        <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Authenticating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authenticated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Uploaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your video has been uploaded.
+URL (copied to your clipboard):
+%1
+
+Open video in your default web browser?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 kB Uploaded</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1310,6 +1572,14 @@ Please check your VLC installation before reporting the issue.</source>
         <source>Audio #%1</source>
         <translation>Audio #%1</translation>
     </message>
+    <message>
+        <source>Rename track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the track new name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TracksScene</name>
@@ -1332,13 +1602,6 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <source>No</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TracksView</name>
-    <message>
-        <source>Action not supported.</source>
-        <translation>Accion no possible.</translation>
     </message>
 </context>
 <context>
@@ -1452,13 +1715,6 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
 </context>
 <context>
-    <name>VlmcDebug</name>
-    <message>
-        <source>Invalid value supplied for argument --logfile</source>
-        <translation>Valor invalid per a l&apos;argument --logfile</translation>
-    </message>
-</context>
-<context>
     <name>WelcomePage</name>
     <message>
         <source>Form</source>
@@ -1565,6 +1821,17 @@ Then click next to continue...</source>
     </message>
     <message>
         <source> copied to </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>YouTubeService</name>
+    <message>
+        <source>YouTube Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
