@@ -19,6 +19,9 @@
 /* OS Name */
 #cmakedefine SYSNAME "@SYSNAME@"
 
+/* VLMC's major version */
+#cmakedefine PROJECT_VERSION_MAJOR "@PROJECT_VERSION_MAJOR@"
+
 /* VLMC's version */
 #cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
 

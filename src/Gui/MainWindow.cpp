@@ -322,7 +322,7 @@ MainWindow::initVlmcPreferences()
 
     //Load saved preferences :
     QSettings       s;
-    if ( s.value( "VlmcVersion" ).toString() != PROJECT_VERSION )
+    if ( s.value( "VlmcVersion" ).toString() != PROJECT_VERSION_MAJOR )
         s.clear();
     else
     {
@@ -331,7 +331,7 @@ MainWindow::initVlmcPreferences()
         loadVlmcPreferences( "youtube" );
         loadVlmcPreferences( "network" );
     }
-    s.setValue( "VlmcVersion", PROJECT_VERSION );
+    s.setValue( "VlmcVersion", PROJECT_VERSION_MAJOR );
 }
 
 void
