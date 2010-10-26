@@ -42,14 +42,14 @@
 #include <QHashIterator>
 #include <QEvent>
 
-PreferenceWidget::PreferenceWidget( const char *category, SettingsManager::Type type,
+PreferenceWidget::PreferenceWidget( const QString &name, const char *label, SettingsManager::Type type,
                                     QWidget *parent ) :
     QScrollArea( parent ),
-    m_category( category )
+    m_category( label )
 {
     QWidget     *container = new QWidget( this );
     SettingsManager::SettingList    settings =
-            SettingsManager::getInstance()->group( QString( category ), type );
+            SettingsManager::getInstance()->group( name, type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 

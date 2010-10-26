@@ -62,16 +62,16 @@ Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
 }
 
 void
-Settings::addCategory( const char *name,
+Settings::addCategory( const QString &name, const char *label,
                        SettingsManager::Type type,
                        const QIcon &icon )
 {
-    PreferenceWidget    *pWidget = new PreferenceWidget( name, type, this );
+    PreferenceWidget    *pWidget = new PreferenceWidget( name, label, type, this );
 
     m_stackedLayout->addWidget( pWidget );
 
     // Create a button linked to the widget using its index
-    m_panel->addButton( name, icon, m_stackedLayout->count() - 1 );
+    m_panel->addButton( label, icon, m_stackedLayout->count() - 1 );
 
     switchWidget( 0 );
 }
