@@ -18,13 +18,19 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="142"/>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC (VideoLAN Movie Creator) 是一款跨平台的非线视频编辑软件，它基于 VLC Media Player。
+</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="153"/>
@@ -32,7 +38,10 @@ p, li { white-space: pre-wrap; }
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation>此版本的 VLMC 编译于:
+%1 运行  %2 编译基础 Qt %3
+您的 Qt 运行时版本: %4
+</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="204"/>
@@ -42,7 +51,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/ui/About.ui" line="218"/>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>致谢</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="232"/>
@@ -163,7 +172,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="115"/>
         <source>Adding clip to track %1</source>
-        <translation type="unfinished">正在将剪辑添加到轨道 %1</translation>
+        <translation>正在将剪辑添加到轨道 %1</translation>
     </message>
 </context>
 <context>
@@ -171,7 +180,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="137"/>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">正在将剪辑从轨道 %1 移动到轨道 %2</translation>
+        <translation>正在将剪辑从轨道 %1 移动到轨道 %2</translation>
     </message>
 </context>
 <context>
@@ -179,7 +188,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="178"/>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation>正在移除剪辑 </translation>
     </message>
 </context>
 <context>
@@ -187,7 +196,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="211"/>
         <source>Resizing clip</source>
-        <translation type="unfinished">正在调整剪辑尺寸</translation>
+        <translation>正在调整剪辑尺寸</translation>
     </message>
 </context>
 <context>
@@ -195,7 +204,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="256"/>
         <source>Splitting clip</source>
-        <translation type="unfinished">正在切割剪辑</translation>
+        <translation>正在切割剪辑</translation>
     </message>
 </context>
 <context>
@@ -203,7 +212,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="285"/>
         <source>Adding effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>正在添加特效 %1</translation>
     </message>
 </context>
 <context>
@@ -211,7 +220,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="316"/>
         <source>Moving effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>正在移动特效 %1</translation>
     </message>
 </context>
 <context>
@@ -219,7 +228,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="390"/>
         <source>Deleting effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>正在删除特效 %1</translation>
     </message>
 </context>
 <context>
@@ -227,7 +236,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="361"/>
         <source>Resizing effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>正在调整特效尺寸 %1</translation>
     </message>
 </context>
 <context>
@@ -235,7 +244,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="62"/>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>无效操作</translation>
     </message>
 </context>
 <context>
@@ -282,7 +291,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="454"/>
         <source>Effects List</source>
-        <translation type="unfinished"></translation>
+        <translation>特效列表</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="467"/>
@@ -310,12 +319,12 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">对话框</translation>
+        <translation>对话框</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="72"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>应用</translation>
     </message>
 </context>
 <context>
@@ -323,24 +332,24 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="14"/>
         <source>Effect stack</source>
-        <translation type="unfinished"></translation>
+        <translation>特效堆叠</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="27"/>
         <source>Move the effect up in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>上移特效</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="30"/>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="55"/>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="104"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="41"/>
         <source>Move the effect down in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>下移特效</translation>
     </message>
 </context>
 <context>
@@ -348,62 +357,62 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">窗体</translation>
+        <translation>窗体</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="32"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>总览</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="44"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="64"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>作者</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="84"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="104"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="124"/>
         <source>Description</source>
-        <translation type="unfinished">描述</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="69"/>
         <source>Filter</source>
-        <translation type="unfinished">滤镜</translation>
+        <translation>滤镜</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="71"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>来源</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="73"/>
         <source>Mixer 2</source>
-        <translation type="unfinished"></translation>
+        <translation>混音器 2</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="75"/>
         <source>Mixer 3</source>
-        <translation type="unfinished"></translation>
+        <translation>混音器 3</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="77"/>
         <source>Unknown type</source>
-        <translation type="unfinished"></translation>
+        <translation>未知类型</translation>
     </message>
 </context>
 <context>
@@ -411,7 +420,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/EffectsListView.cpp" line="76"/>
         <source>%1 informations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 信息</translation>
     </message>
 </context>
 <context>
@@ -870,7 +879,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="287"/>
         <source>Publish on &amp;Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>在 &amp;Internet 上发布</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="311"/>
@@ -1135,7 +1144,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="287"/>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation type="unfinished"></translation>
+        <translation>用于 VLMC 处理视频的临时文件夹。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="291"/>
@@ -1145,57 +1154,57 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="292"/>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 的 Youtube 开发者 Key</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="296"/>
         <source>Valid YouTube username</source>
-        <translation type="unfinished"></translation>
+        <translation>有效的 YouTube 用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="299"/>
         <source>Youtube Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube 密码</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="300"/>
         <source>Leave this field, password will be stored in unencryped form.</source>
-        <translation type="unfinished"></translation>
+        <translation>若此字段留空，密码将以明文形式储存。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="304"/>
         <source>Enable Proxy for VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>为 VLMC 启用代理</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="305"/>
         <source>Enables Global Network Proxy for VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>为 VLMC 启用全局网络代理。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="308"/>
         <source>Proxy Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>代理主机名</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="309"/>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置代理主机名。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="313"/>
         <source>Set Proxy Port.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置代理端口。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="317"/>
         <source>Set Proxy Username, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置代理用户名，若有。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="321"/>
         <source>Set Proxy Password, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>设置代理密码，若有。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="295"/>
@@ -1368,7 +1377,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="286"/>
         <source>Temporary folder</source>
-        <translation type="unfinished"></translation>
+        <translation>临时文件夹</translation>
     </message>
 </context>
 <context>
@@ -1417,7 +1426,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="357"/>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="360"/>
         <source>Adjust Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>调整音量</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="262"/>
@@ -1483,7 +1492,7 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Services/YouTube/YouTubeFeedParser.cpp" line="46"/>
         <source>The XMLStream is not a valid YouTube Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>XML 流不是有效的 YouTube Feed</translation>
     </message>
 </context>
 <context>
@@ -1491,12 +1500,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>导出设置</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
         <source>Output File</source>
-        <translation type="unfinished"></translation>
+        <translation>输出文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="36"/>
@@ -1516,77 +1525,77 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="97"/>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>帧率</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="114"/>
         <source>Video Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>视频质量</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="121"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>音频质量</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="144"/>
         <source>Video Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>视频编解码器</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="163"/>
         <source>Audio Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>音频编解码器</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="225"/>
         <source>Custom</source>
-        <translation type="unfinished">自定义</translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="230"/>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>QVGA (320x240) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="235"/>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>VGA (640x480) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="240"/>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>SVGA (800x600) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="245"/>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>XVGA (1024x768) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="250"/>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>480p NTSC (720x480) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="255"/>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>576p PAL (720x576) - 25 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="260"/>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>720p (1280x720) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="265"/>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>1080p (1920x1080) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="273"/>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>预设</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="155"/>
@@ -1601,7 +1610,7 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="46"/>
         <source>Export Settings: Publish on Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>导出设置: 在 Internet 上发布</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="67"/>
@@ -1689,13 +1698,14 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="112"/>
         <source>Restore default?</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复默认?</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="113"/>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>这将将所有设置恢复为默认值。
+您确定要继续吗?</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="171"/>
@@ -1713,127 +1723,127 @@ Are you sure you want to continue?</source>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="23"/>
         <source>Share Video On Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>在 Internet 上分享视频</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="46"/>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>服务</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="54"/>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="66"/>
         <source>Username</source>
-        <translation type="unfinished">用户名</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="76"/>
         <source>Password</source>
-        <translation type="unfinished">密码</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="90"/>
         <source>Category</source>
-        <translation type="unfinished">分类</translation>
+        <translation>分类</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="98"/>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished">汽车 &amp; 交通工具</translation>
+        <translation>汽车 &amp; 交通工具</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="103"/>
         <source>Comedy</source>
-        <translation type="unfinished">喜剧</translation>
+        <translation>喜剧</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="108"/>
         <source>Education</source>
-        <translation type="unfinished">教育</translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="113"/>
         <source>Entertainment</source>
-        <translation type="unfinished">娱乐</translation>
+        <translation>娱乐</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="118"/>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished">电影 &amp; 动画</translation>
+        <translation>电影 &amp; 动画</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="123"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="128"/>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished">教程 &amp; 生活百科</translation>
+        <translation>教程 &amp; 生活百科</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="133"/>
         <source>Music</source>
-        <translation type="unfinished">音乐</translation>
+        <translation>音乐</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="138"/>
         <source>News &amp; Politics</source>
-        <translation type="unfinished">新闻 &amp; 政治</translation>
+        <translation>新闻 &amp; 政治</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="143"/>
         <source>Nonprofit &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>非盈利 &amp; 行动主义</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="148"/>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished">人物 &amp; 博客</translation>
+        <translation>人物 &amp; 博客</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="153"/>
         <source>Animals &amp; Pets</source>
-        <translation type="unfinished"></translation>
+        <translation>动物 &amp; 宠物</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="158"/>
         <source>Tech &amp; Science</source>
-        <translation type="unfinished"></translation>
+        <translation>科学 &amp; 技术</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="163"/>
         <source>Sports</source>
-        <translation type="unfinished">体育</translation>
+        <translation>运动</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="168"/>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished">旅游 &amp; 事件</translation>
+        <translation>旅游 &amp; 事件</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="176"/>
         <source>Title</source>
-        <translation type="unfinished">标题</translation>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="186"/>
         <source>Description</source>
-        <translation type="unfinished">描述</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="206"/>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>关键词</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="216"/>
         <source>Make this video private</source>
-        <translation type="unfinished"></translation>
+        <translation>将视频设为私有</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="226"/>
@@ -1842,42 +1852,46 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;若发布视频，即代表您同意 &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt; 的服务条款。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="304"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="314"/>
         <source>&amp;Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>发布(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="68"/>
         <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
-        <translation type="unfinished"></translation>
+        <translation>“用户名”“密码”“标题”均不能为空。请检查这些字段。</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="107"/>
         <source>Authenticating...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在进行身份认证...</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="143"/>
         <source>Authenticated!</source>
-        <translation type="unfinished"></translation>
+        <translation>身份已认证!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="162"/>
         <source>Video Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>视频已上传</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="163"/>
@@ -1886,12 +1900,16 @@ URL (copied to your clipboard):
 %1
 
 Open video in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>您的视频已被上传。
+URL (已复制到您的剪贴板):
+%1
+
+在默认的网页浏览器中打开视频?</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="182"/>
         <source>%1 kB Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>已上传 %1 kB</translation>
     </message>
 </context>
 <context>
@@ -1961,12 +1979,12 @@ Open video in your default web browser?</source>
     <message>
         <location filename="../src/Gui/widgets/TrackControls.cpp" line="119"/>
         <source>Rename track</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名轨道</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/TrackControls.cpp" line="120"/>
         <source>Enter the track new name</source>
-        <translation type="unfinished"></translation>
+        <translation>输入轨道的新名称</translation>
     </message>
 </context>
 <context>
@@ -2271,12 +2289,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Services/YouTube/YouTubeService.cpp" line="251"/>
         <source>YouTube Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube 身份认证</translation>
     </message>
     <message>
         <location filename="../src/Services/YouTube/YouTubeService.cpp" line="252"/>
         <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>连接可能不安全，是否继续? 出现了 SSL 错误: %1</translation>
     </message>
 </context>
 </TS>
