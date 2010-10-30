@@ -577,6 +577,14 @@ MainWindow::checkFolders()
         dirUtil.mkdir( VLMC_GET_STRING( "general/TempFolderLocation" ) );
 }
 
+void
+MainWindow::clearTemporaryFiles()
+{
+    QDir dirUtil;
+    if( dirUtil.cd( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
+        foreach ( const QString &file, dirUtil.entryList( QDir::Files ) )
+            dirUtil.remove( file );
+}
 
 //Private slots definition
 
@@ -759,6 +767,7 @@ bool
 MainWindow::saveSettings()
 {
     GUIProjectManager   *pm = GUIProjectManager::getInstance();
+    clearTemporaryFiles();
     if ( pm->askForSaveIfModified() )
     {
         QSettings s;
