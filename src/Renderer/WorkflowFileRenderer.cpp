@@ -42,7 +42,8 @@ WorkflowFileRenderer::~WorkflowFileRenderer()
 }
 #endif
 
-void        WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
+void
+WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
                                        quint32 height, double fps, quint32 vbitrate,
                                        quint32 abitrate )
 {

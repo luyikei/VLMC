@@ -376,7 +376,8 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     return ret;
 }
 
-void            TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
+void
+TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 {
     QWriteLocker    lock( m_clipsLock );
 
@@ -425,7 +426,8 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
     }
 }
 
-Clip*       TrackWorkflow::removeClip( const QUuid& id )
+Clip*
+TrackWorkflow::removeClip( const QUuid& id )
 {
     QWriteLocker    lock( m_clipsLock );
 
@@ -452,7 +454,8 @@ Clip*       TrackWorkflow::removeClip( const QUuid& id )
     return NULL;
 }
 
-ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
+ClipWorkflow*
+TrackWorkflow::removeClipWorkflow( const QUuid& id )
 {
     QWriteLocker    lock( m_clipsLock );
 
@@ -476,7 +479,8 @@ ClipWorkflow*       TrackWorkflow::removeClipWorkflow( const QUuid& id )
     return NULL;
 }
 
-void    TrackWorkflow::save( QXmlStreamWriter& project ) const
+void
+TrackWorkflow::save( QXmlStreamWriter& project ) const
 {
     QReadLocker     lock( m_clipsLock );
 
@@ -494,7 +498,8 @@ void    TrackWorkflow::save( QXmlStreamWriter& project ) const
     project.writeEndElement();
 }
 
-void    TrackWorkflow::clear()
+void
+TrackWorkflow::clear()
 {
     QWriteLocker    lock( m_clipsLock );
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
@@ -510,7 +515,8 @@ void    TrackWorkflow::clear()
     m_length = 0;
 }
 
-void    TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw )
+void
+TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw )
 {
     qint64  nbMs = ( currentFrame - start ) / cw->clip()->getMedia()->fps() * 1000;
     qint64  beginInMs = cw->getClipHelper()->begin() / cw->clip()->getMedia()->fps() * 1000;
