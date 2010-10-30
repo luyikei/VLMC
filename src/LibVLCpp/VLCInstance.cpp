@@ -35,12 +35,10 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         "", //Keep this array entry empty. It will be replaced later if required.
 //        "--ffmpeg-debug", "3",
         "--no-skip-frames",
-//        "--intf", "dummy",
         "--text-renderer", "dummy",
         //"--no-audio",
         //"--plugin-path", VLC_TREE "/modules",
         "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
-        "--ignore-config", //Don't use VLC's config files
         "--no-overlay",
     };
     int argc = sizeof( argv ) / sizeof( *argv );
