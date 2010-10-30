@@ -27,30 +27,38 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC (VideoLAN Movie Creator) ist ein plattformübergreifende, nicht-lineare Videoschnitt-Software auf Basis des VLC Media Players.</translation>
     </message>
     <message>
         <source>This version of VLMC was compiled on:
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Version des VLMC wurde kompiliert durch:
+%1 durchlaufen %2 kompliert durch QT %3
+Ihre QT Runtiime Version: %4
+</translation>
     </message>
     <message>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Danke</translation>
     </message>
 </context>
 <context>
     <name>ClipMetadataDisplayer</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Media Properties</source>
@@ -128,81 +136,81 @@ Your Qt runtime version: %4
     <name>Commands::Clip::Add</name>
     <message>
         <source>Adding clip to track %1</source>
-        <translation type="unfinished">Video zu Track %1 hinzufügen</translation>
+        <translation>Video zu Track %1 hinzufügen</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Move</name>
     <message>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">Video von Track %1 zu %2 verschieben</translation>
+        <translation>Video von Track %1 zu %2 verschieben</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Remove</name>
     <message>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation>Video entfernen</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Resize</name>
     <message>
         <source>Resizing clip</source>
-        <translation type="unfinished">Videogrösse verändern</translation>
+        <translation>Videogrösse verändern</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Split</name>
     <message>
         <source>Splitting clip</source>
-        <translation type="unfinished">Video teilen</translation>
+        <translation>Video teilen</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Add</name>
     <message>
         <source>Adding effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt %1 hinzufügen</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Move</name>
     <message>
         <source>Moving effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt %1 verschieben</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Remove</name>
     <message>
         <source>Deleting effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt %1 löschen</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Resize</name>
     <message>
         <source>Resizing effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe des Effekts %1 ändern</translation>
     </message>
 </context>
 <context>
     <name>Commands::Generic</name>
     <message>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Aktion</translation>
     </message>
 </context>
 <context>
     <name>CrashHandler</name>
     <message>
         <source>VLMC Crash handler</source>
-        <translation>VLMC Crash handler</translation>
+        <translation>VLMC Absturz-Behandlung</translation>
     </message>
     <message>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>Ein Fehler ist aufgetreten Es tut uns leid, dass die Datei nicht gespeichert werden konnte. Sie wird geöffnet werden, wenn sie VLMC das nächste mal starten.</translation>
+        <translation>Ein Fehler ist aufgetreten Es tut uns leid, dass die Datei nicht gespeichert werden konnte. Sie wird geöffnet, wenn sie VLMC das nächste mal starten.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -214,7 +222,7 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Crash_Description</source>
-        <translation>Crash_Beschreibung</translation>
+        <translation>Absturz_Beschreibung</translation>
     </message>
     <message>
         <source>Unknown signal</source>
@@ -222,7 +230,7 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>A crash occurred. Signal received: </source>
-        <translation>VLMC ist abgestürzt. Crashsignal: </translation>
+        <translation>VLMC ist abgestürzt. Absturzsignal: </translation>
     </message>
 </context>
 <context>
@@ -245,95 +253,95 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Effects List</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt-Liste</translation>
     </message>
 </context>
 <context>
     <name>EffectSettingWidget</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
     <name>EffectStack</name>
     <message>
         <source>Effect stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt-Stapel</translation>
     </message>
     <message>
         <source>Move the effect up in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt im Stapel nach oben verschieben</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Move the effect down in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Effekt im Stapel nach unten verschieben</translation>
     </message>
 </context>
 <context>
     <name>EffectWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Übersicht</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished">Filter</translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle</translation>
     </message>
     <message>
         <source>Mixer 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mischer 2</translation>
     </message>
     <message>
         <source>Mixer 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Mischer 3</translation>
     </message>
     <message>
         <source>Unknown type</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannter Typ</translation>
     </message>
 </context>
 <context>
     <name>EffectsListView</name>
     <message>
         <source>%1 informations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Informationen</translation>
     </message>
 </context>
 <context>
@@ -352,7 +360,7 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Do you want to proceed?</source>
-        <translation>Wollen sie fortfahren?</translation>
+        <translation>Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Failed to load project file</source>
@@ -411,11 +419,11 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Form is incomplete</source>
-        <translation>Form ist nicht vollständig</translation>
+        <translation>Formular ist nicht vollständig</translation>
     </message>
     <message>
         <source>The project name must be filled.</source>
-        <translation>Das Projektnamenfeld ist leer.</translation>
+        <translation>Das Projektnamenfeld muss ausgefüllt werden.</translation>
     </message>
     <message>
         <source>The workspace location must be set.</source>
@@ -452,19 +460,19 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation>Text-Label</translation>
     </message>
     <message>
         <source>Invalid medias</source>
-        <translation>ungültige Medien</translation>
+        <translation>Ungültige Medien</translation>
     </message>
     <message>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
-        <translation>Einige Medien, die sie geladen haben, können nicht für Videobearbeitung verwendet werden. Wollen sie, dass VLMC diese konvertiert, damit sie in ihrem Projekt verwendet werden können?</translation>
+        <translation>Einige Medien, die sie geladen haben, können nicht für Videobearbeitung verwendet werden. Wollen Sie, dass VLMC diese konvertiert, damit sie in ihrem Projekt verwendet werden können?</translation>
     </message>
     <message>
         <source>Failed to load %1</source>
-        <translation>Fehler beim laden von %1</translation>
+        <translation>Fehler beim Laden von %1</translation>
     </message>
 </context>
 <context>
@@ -705,14 +713,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Publish on &amp;Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Im &amp;Internet veröffentlichen</translation>
     </message>
 </context>
 <context>
     <name>MediaCellView</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>clip count</source>
@@ -728,7 +736,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Removing it will delete it from the timeline. Do you want to proceed?</source>
-        <translation>Dies wird die Datei aus der Zeitleiste löschen. Wollen sie fortfahren?</translation>
+        <translation>Dies wird die Datei aus der Zeitleiste löschen. Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Can&apos;t copy to workspace</source>
@@ -743,7 +751,7 @@ p, li { white-space: pre-wrap; }
     <name>MediaLibrary</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Name</source>
@@ -762,7 +770,7 @@ p, li { white-space: pre-wrap; }
     <name>NotificationZone</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -1051,51 +1059,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der temporäre Ordner für VLMC, um die Videos zu bearbeiten.</translation>
     </message>
     <message>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC&apos;s Youtube Entwickler-Schlüssel</translation>
     </message>
     <message>
         <source>Valid YouTube username</source>
-        <translation type="unfinished"></translation>
+        <translation>Gültiger YouTube-Benutzername</translation>
     </message>
     <message>
         <source>Youtube Password</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube Passwort</translation>
     </message>
     <message>
         <source>Leave this field, password will be stored in unencryped form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lassen Sie dieses Feld leer, das Kennwort wird unverschlüsselt gespeichert.</translation>
     </message>
     <message>
         <source>Enable Proxy for VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy für VLMC aktivieren</translation>
     </message>
     <message>
         <source>Enables Global Network Proxy for VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert den allgemeinen Netzwerk-Proxy für den VLMC.</translation>
     </message>
     <message>
         <source>Proxy Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des Proxys</translation>
     </message>
     <message>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des Proxys eingeben.</translation>
     </message>
     <message>
         <source>Set Proxy Port.</source>
-        <translation type="unfinished"></translation>
+        <translation>Port des Proxys eingeben.</translation>
     </message>
     <message>
         <source>Set Proxy Username, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy Benutzername eingeben, wenn verfügbar.</translation>
     </message>
     <message>
         <source>Set Proxy Password, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy Passwort eingeben, wenn verfügbar.</translation>
     </message>
 </context>
 <context>
@@ -1106,7 +1114,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Temporary folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporärer Ordner</translation>
     </message>
 </context>
 <context>
@@ -1155,7 +1163,7 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>Adjust Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lautstärke ändern</translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1208,7 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>The XMLStream is not a valid YouTube Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Der XML-Stream ist kein gültiger YouTube-Feed</translation>
     </message>
 </context>
 <context>
@@ -1255,75 +1263,75 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen exportieren</translation>
     </message>
     <message>
         <source>Output File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabe-Datei</translation>
     </message>
     <message>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame-Rate</translation>
     </message>
     <message>
         <source>Video Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoqualität</translation>
     </message>
     <message>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Audioqualität</translation>
     </message>
     <message>
         <source>Video Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Video-Codec</translation>
     </message>
     <message>
         <source>Audio Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio-Codec</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Benutzerdefiniert</translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>QVGA (320x240) - 30 fps</translation>
     </message>
     <message>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>VGA (640x480) - 30 fps</translation>
     </message>
     <message>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>SVGA (800x600) - 30 fps</translation>
     </message>
     <message>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>XVGA (1024x768) - 30 fps</translation>
     </message>
     <message>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>480p NTSC (720x480) - 29.97 fps</translation>
     </message>
     <message>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>576p PAL (720x576) - 25 fps</translation>
     </message>
     <message>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>720p (1280x720) - 29.97 fps</translation>
     </message>
     <message>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>1080p (1920x1080) - 29.97 fps</translation>
     </message>
     <message>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Voreinstellung</translation>
     </message>
     <message>
         <source>Export Settings: Publish on Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen exportieren: Im Internet veröffentlichen</translation>
     </message>
 </context>
 <context>
@@ -1373,115 +1381,116 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>Restore default?</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Standardwerte zurückstellen?</translation>
     </message>
     <message>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies wird alle Einstellungen auf die Standardwerte zurücksetzen.
+Sie sind sicher, dass Sie den Vorgang fortsetzen möchten?</translation>
     </message>
 </context>
 <context>
     <name>ShareOnInternet</name>
     <message>
         <source>Share Video On Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Video im Internet freigeben</translation>
     </message>
     <message>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Service</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">Benutzername</translation>
+        <translation>Benutzername</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Passwort</translation>
+        <translation>Passwort</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Kategorie</translation>
+        <translation>Kategorie</translation>
     </message>
     <message>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished">Autos &amp; Fahrzeuge</translation>
+        <translation>Autos &amp; Fahrzeuge</translation>
     </message>
     <message>
         <source>Comedy</source>
-        <translation type="unfinished">Comedy</translation>
+        <translation>Comedy</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished">Bidlung</translation>
+        <translation>Bildung</translation>
     </message>
     <message>
         <source>Entertainment</source>
-        <translation type="unfinished">Unterhaltung</translation>
+        <translation>Unterhaltung</translation>
     </message>
     <message>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished">Film &amp; Animation</translation>
+        <translation>Film &amp; Animation</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiele</translation>
     </message>
     <message>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished">Tipps &amp; Tricks</translation>
+        <translation>Tipps &amp; Tricks</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished">Musik</translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <source>News &amp; Politics</source>
-        <translation type="unfinished">Nachrichten &amp; Politik</translation>
+        <translation>Nachrichten &amp; Politik</translation>
     </message>
     <message>
         <source>Nonprofit &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemeinnützig &amp; Aktivismus</translation>
     </message>
     <message>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished">Leute &amp; Blogs</translation>
+        <translation>Leute &amp; Blogs</translation>
     </message>
     <message>
         <source>Animals &amp; Pets</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiere &amp; Haustiere</translation>
     </message>
     <message>
         <source>Tech &amp; Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Technik &amp; Bildung</translation>
     </message>
     <message>
         <source>Sports</source>
-        <translation type="unfinished">Sport</translation>
+        <translation>Sport</translation>
     </message>
     <message>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished">Reisen &amp; Events</translation>
+        <translation>Reisen &amp; Events</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlagwörter</translation>
     </message>
     <message>
         <source>Make this video private</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Video ist Privat</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1489,35 +1498,39 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Durch die Veröffentlichung, akzeptieren Sie die Allgemeinen Geschäftsbedingungen von &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Abbrechen</translation>
     </message>
     <message>
         <source>&amp;Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Veröffentlichen</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Benutzername&apos; oder &apos;Passwort&apos; oder &apos;Titel&apos; dürfen nicht leer sein. Bitte prüfen Sie diese Felder.</translation>
     </message>
     <message>
         <source>Authenticating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Authentifizieren ...</translation>
     </message>
     <message>
         <source>Authenticated!</source>
-        <translation type="unfinished"></translation>
+        <translation>Authentifiziert!</translation>
     </message>
     <message>
         <source>Video Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Video hochgeladen</translation>
     </message>
     <message>
         <source>Your video has been uploaded.
@@ -1525,11 +1538,15 @@ URL (copied to your clipboard):
 %1
 
 Open video in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Video wurde hochgeladen.
+URL (in die Zwischenablage kopiert):
+%1
+
+Das Video in Ihrem Standardbrowser öffnen?</translation>
     </message>
     <message>
         <source>%1 kB Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kB hochgeladen</translation>
     </message>
 </context>
 <context>
@@ -1569,11 +1586,11 @@ Open video in your default web browser?</source>
     <name>TrackControls</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation>Text-Label</translation>
     </message>
     <message>
         <source>Video #%1</source>
@@ -1585,11 +1602,11 @@ Open video in your default web browser?</source>
     </message>
     <message>
         <source>Rename track</source>
-        <translation type="unfinished"></translation>
+        <translation>Track umbenennen</translation>
     </message>
     <message>
         <source>Enter the track new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie den neuen Namen für den Track ein</translation>
     </message>
 </context>
 <context>
@@ -1840,11 +1857,11 @@ Dann wählen sie Weiter um fortzufahren...</translation>
     <name>YouTubeService</name>
     <message>
         <source>YouTube Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube-Authentifizierung</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Anschluss ist vielleicht unsicher, wollen Sie fortsetzen? Ein oder mehrere SSL-Fehler sind aufgetreten:%1</translation>
     </message>
 </context>
 </TS>
