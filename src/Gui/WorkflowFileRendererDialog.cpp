@@ -43,28 +43,37 @@ WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* re
              Qt::QueuedConnection );
 }
 
-void    WorkflowFileRendererDialog::setOutputFileName( const QString& outputFileName )
+void
+WorkflowFileRendererDialog::setOutputFileName( const QString& outputFileName )
 {
     m_ui.nameLabel->setText( outputFileName );
     m_ui.previewLabel->setMinimumSize( m_width, m_height );
     setWindowTitle( "Rendering to " + outputFileName );
 }
 
-void    WorkflowFileRendererDialog::setProgressBarValue( int val )
+void
+WorkflowFileRendererDialog::setProgressBarValue( int val )
 {
     m_ui.progressBar->setValue( val );
 }
 
-void    WorkflowFileRendererDialog::updatePreview( const uchar* buff )
+void
+WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 {
     m_ui.previewLabel->setPixmap(
             QPixmap::fromImage( QImage( buff, m_width, m_height,
                                         QImage::Format_RGB32 ) ) );
 }
 
-void    WorkflowFileRendererDialog::frameChanged( qint64 frame )
+void
+WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
-    m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
-                                    QString::number(MainWorkflow::getInstance()->getLengthFrame() ) ) );
-    setProgressBarValue( frame * 100 / MainWorkflow::getInstance()->getLengthFrame() );
+    qint64 totalFrames = MainWorkflow::getInstance()->getLengthFrame();
+
+    if ( frame <= totalFrames )
+    {
+        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
+                                        QString::number( totalFrames ) ) );
+        setProgressBarValue( frame * 100 / totalFrames );
+    }
 }
