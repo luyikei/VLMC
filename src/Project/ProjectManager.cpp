@@ -61,10 +61,11 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
                              SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );
     height->setLimits( 0, 2048 );
-    VLMC_CREATE_PROJECT_INT( "audio/AudioSampleRate", 0,
+    SettingValue    *sampleRate = VLMC_CREATE_PROJECT_VAR( SettingValue::Double, "audio/AudioSampleRate", 44100,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ) );
-
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ),
+                             SettingValue::Flag( SettingValue::Clamped ) );
+    sampleRate->setLimits( 11025, 48000 );
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
