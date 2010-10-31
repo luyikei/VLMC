@@ -231,8 +231,7 @@ ImportController::accept()
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
-        if ( ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->fileType() != Media::Image ) &&
-             clip->getMedia()->inputType() == Media::File )
+        if ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->inputType() == Media::File )
             invalidMedias = true;
         Library::getInstance()->addClip( clip );
     }
