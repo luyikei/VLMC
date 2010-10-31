@@ -59,22 +59,25 @@ MetaDataWorker::~MetaDataWorker()
 void
 MetaDataWorker::compute()
 {
-    if ( m_media->fileType() == Media::Video ||
-         m_media->fileType() == Media::Audio )
+    if ( m_media->fileType() == Media::Video || m_media->fileType() == Media::Audio )
         computeDynamicFileMetaData();
     else if ( m_media->fileType() == Media::Image )
         computeImageMetaData();
 
     m_media->addConstantParam( ":vout=dummy" );
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
-    connect( m_lengthChangedTimer, SIGNAL( timeout() ),
-             this, SLOT( lengthChangedTimeout() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( playing() ),
              this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ) );
     connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
     m_mediaPlayer->play();
-    m_lengthChangedTimer->start( 3000 );
+
+    if ( m_media->fileType() == Media::Video || m_media->fileType() == Media::Audio )
+    {
+        connect( m_lengthChangedTimer, SIGNAL( timeout() ),
+                 this, SLOT( lengthChangedTimeout() ), Qt::QueuedConnection );
+        m_lengthChangedTimer->start( 3000 );
+    }
     m_media->flushVolatileParameters();
 }
 
@@ -211,6 +214,11 @@ MetaDataWorker::finalize()
 void
 MetaDataWorker::lengthChangedTimeout()
 {
+    /**
+     *  If we fail to compute a length, let's assume the file can't be used for video editing.
+     *  In that case, the ImportManager will ask the user if he wishes to convert it.
+     *  In any case, load the file for now.
+     */
     //No race condition possible, since both lengthChanged methods are called from the Qt event loop.
     m_lengthChangedTimer->disconnect();
     if ( m_lengthHasChanged == true )
@@ -250,7 +258,6 @@ MetaDataWorker::failure()
     emit failed( m_media );
     deleteLater();
 }
-
 
 //void
 //MetaDataWorker::prepareAudioSpectrumComputing()
