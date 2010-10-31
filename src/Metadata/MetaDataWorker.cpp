@@ -139,7 +139,10 @@ MetaDataWorker::metaDataAvailable()
         double fps = VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
         m_media->setFps( fps );
     }
-    m_media->setLength( m_mediaPlayer->getLength() );
+    if ( m_media->fileType() == Media::Image )
+        m_media->setLength( 10000 );
+    else
+        m_media->setLength( m_mediaPlayer->getLength() );
 
     m_media->setNbAudioTrack( m_mediaPlayer->getNbAudioTrack() );
     m_media->setNbVideoTrack( m_mediaPlayer->getNbVideoTrack() );

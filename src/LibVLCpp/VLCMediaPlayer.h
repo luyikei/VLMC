@@ -53,6 +53,9 @@ namespace   LibVLCpp
         void                                setTime( qint64 time );
         float                               getPosition();
         void                                setPosition( float pos );
+        /**
+         \return        The length, in milliseconds.
+        */
         qint64                              getLength();
         void                                takeSnapshot( const char* outputFile, unsigned int width, unsigned int heigth );
         bool                                isPlaying();
