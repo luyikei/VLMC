@@ -148,15 +148,20 @@ MetaDataWorker::metaDataAvailable()
     m_media->emitMetaDataComputed();
 #ifdef WITH_GUI
     //Setting time for snapshot :
-    if ( ( m_media->fileType() == Media::Video ||
-         m_media->fileType() == Media::Image ) && m_media->hasSnapshot() == false )
+    if ( m_media->fileType() == Media::Video && m_media->hasSnapshot() == false )
     {
         connect( m_mediaPlayer, SIGNAL( positionChanged( float ) ), this, SLOT( renderSnapshot() ) );
         m_mediaPlayer->setTime( m_mediaPlayer->getLength() / 3 );
+        return ;
     }
-    else
+    else if ( m_media->fileType() == Media::Image && m_media->hasSnapshot() == false )
+    {
+        QPixmap *pixmap = new QPixmap( m_media->fileInfo()->absoluteFilePath() );
+        m_media->setSnapshot( pixmap );
+        m_media->emitSnapshotComputed();
+    }
 #endif
-        finalize();
+    finalize();
 }
 
 #ifdef WITH_GUI

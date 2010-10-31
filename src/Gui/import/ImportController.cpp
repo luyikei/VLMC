@@ -144,6 +144,7 @@ ImportController::clipSelection( Clip* clip )
 void
 ImportController::importMedia( const QString &filePath )
 {
+    qDebug() << "Importing" << filePath;
     if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true ||
          m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
