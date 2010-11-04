@@ -27,23 +27,30 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC (VideoLAN Movie Creator) este un  program de editare video non-liniar cross-platform, bazat pe Media VLC Player.</translation>
     </message>
     <message>
         <source>This version of VLMC was compiled on:
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Aceasta versiune de VLMC a fost compilata pe:
+%1 rulare  %2 compilare  Qt %3
+Versiune Qt: %4</translation>
     </message>
     <message>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Mulţumesc</translation>
     </message>
 </context>
 <context>
@@ -128,70 +135,70 @@ Your Qt runtime version: %4
     <name>Commands::Clip::Add</name>
     <message>
         <source>Adding clip to track %1</source>
-        <translation type="unfinished">Adauga clipul pe pista %1</translation>
+        <translation>Adauga clipul pe pista %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Move</name>
     <message>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">Mutare clip de pe pista %1 pe %2</translation>
+        <translation>Mutare clip de pe pista %1 pe %2</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Remove</name>
     <message>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation>Şterge clip</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Resize</name>
     <message>
         <source>Resizing clip</source>
-        <translation type="unfinished">Redimensionare clip</translation>
+        <translation>Redimensionare clip</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Split</name>
     <message>
         <source>Splitting clip</source>
-        <translation type="unfinished">Scindare clip</translation>
+        <translation>Scindare clip</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Add</name>
     <message>
         <source>Adding effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Adaugare efect%1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Move</name>
     <message>
         <source>Moving effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mutare efect %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Remove</name>
     <message>
         <source>Deleting effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sterge efect %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Resize</name>
     <message>
         <source>Resizing effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionare efect %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Generic</name>
     <message>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Acţiune invalidă</translation>
     </message>
 </context>
 <context>
@@ -245,95 +252,95 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Effects List</source>
-        <translation type="unfinished"></translation>
+        <translation>Listă efecte</translation>
     </message>
 </context>
 <context>
     <name>EffectSettingWidget</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplică</translation>
     </message>
 </context>
 <context>
     <name>EffectStack</name>
     <message>
         <source>Effect stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Stivă efect</translation>
     </message>
     <message>
         <source>Move the effect up in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută efectul sus in stivă</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Move the effect down in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută efectul jos in stivă</translation>
     </message>
 </context>
 <context>
     <name>EffectWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Prezentare generală</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nume</translation>
+        <translation>Nume</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versiune</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Descriere</translation>
+        <translation>Descriere</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished">Filtru</translation>
+        <translation>Filtru</translation>
     </message>
     <message>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Sursă</translation>
     </message>
     <message>
         <source>Mixer 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mixer 2</translation>
     </message>
     <message>
         <source>Mixer 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Mixer 3</translation>
     </message>
     <message>
         <source>Unknown type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tip necunoscut</translation>
     </message>
 </context>
 <context>
     <name>EffectsListView</name>
     <message>
         <source>%1 informations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 informaţii</translation>
     </message>
 </context>
 <context>
@@ -705,7 +712,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Publish on &amp;Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Publică pe &amp;internet</translation>
     </message>
 </context>
 <context>
@@ -1051,51 +1058,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation type="unfinished"></translation>
+        <translation>Folderul temporar utilizat de către VLMC pentru procesarea  videoclipurilor.</translation>
     </message>
     <message>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC Youtube Developer</translation>
     </message>
     <message>
         <source>Valid YouTube username</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizator valid YouTube</translation>
     </message>
     <message>
         <source>Youtube Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Parola YouTube</translation>
     </message>
     <message>
         <source>Leave this field, password will be stored in unencryped form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lăsaţi acest câmp, parola va fi stocată în formă unencryped.</translation>
     </message>
     <message>
         <source>Enable Proxy for VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Activează Proxy pentru VLMC</translation>
     </message>
     <message>
         <source>Enables Global Network Proxy for VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permite Proxy Reţeaua Globală pentru VLMC.</translation>
     </message>
     <message>
         <source>Proxy Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy Hostname</translation>
     </message>
     <message>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează Proxy Hostname.</translation>
     </message>
     <message>
         <source>Set Proxy Port.</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează Proxy Port.</translation>
     </message>
     <message>
         <source>Set Proxy Username, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează Proxy Utilizator, dacă e necesar.</translation>
     </message>
     <message>
         <source>Set Proxy Password, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează Proxy Parolă, dacă e necesar.</translation>
     </message>
 </context>
 <context>
@@ -1106,7 +1113,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Temporary folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder temporar</translation>
     </message>
 </context>
 <context>
@@ -1155,7 +1162,7 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     </message>
     <message>
         <source>Adjust Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustează volumul</translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1207,7 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     </message>
     <message>
         <source>The XMLStream is not a valid YouTube Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>XMLStream nu este YouTube Feed</translation>
     </message>
 </context>
 <context>
@@ -1255,75 +1262,75 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     </message>
     <message>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Setări export</translation>
     </message>
     <message>
         <source>Output File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier rezultat</translation>
     </message>
     <message>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Frame Rate</translation>
     </message>
     <message>
         <source>Video Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate video</translation>
     </message>
     <message>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate audio</translation>
     </message>
     <message>
         <source>Video Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec video</translation>
     </message>
     <message>
         <source>Audio Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Codec audio</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Particularizare</translation>
+        <translation>Particularizare</translation>
     </message>
     <message>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>QVGA (320x240) - 30 fps</translation>
     </message>
     <message>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>VGA (640x480) - 30 fps</translation>
     </message>
     <message>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>SVGA (800x600) - 30 fps</translation>
     </message>
     <message>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>XVGA (1024x768) - 30 fps</translation>
     </message>
     <message>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>480p NTSC (720x480) - 29.97 fps</translation>
     </message>
     <message>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>576p PAL (720x576) - 25 fps</translation>
     </message>
     <message>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>720p (1280x720) - 29.97 fps</translation>
     </message>
     <message>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>1080p (1920x1080) - 29.97 fps</translation>
     </message>
     <message>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Presetate</translation>
     </message>
     <message>
         <source>Export Settings: Publish on Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Setări export:publică pe Internet</translation>
     </message>
 </context>
 <context>
@@ -1373,115 +1380,116 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     </message>
     <message>
         <source>Restore default?</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurare la setările implicite?</translation>
     </message>
     <message>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Se va face restaurarea la valorile implicite.
+Vrei să continui?</translation>
     </message>
 </context>
 <context>
     <name>ShareOnInternet</name>
     <message>
         <source>Share Video On Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Partajeză Video pe Internet</translation>
     </message>
     <message>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Serviciu</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">Utilizator</translation>
+        <translation>Utilizator</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Parola</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Categorie</translation>
+        <translation>Categorie</translation>
     </message>
     <message>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished">Automobile &amp; Vehicule</translation>
+        <translation>Automobile &amp; Vehicule</translation>
     </message>
     <message>
         <source>Comedy</source>
-        <translation type="unfinished">Comedie</translation>
+        <translation>Comedie</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished">Educatie</translation>
+        <translation>Educatie</translation>
     </message>
     <message>
         <source>Entertainment</source>
-        <translation type="unfinished">Divertisment</translation>
+        <translation>Divertisment</translation>
     </message>
     <message>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished">Film&amp;Animatie</translation>
+        <translation>Film&amp;Animatie</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jocuri</translation>
     </message>
     <message>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished">Cum sa&amp;Stil</translation>
+        <translation>Cum sa&amp;Stil</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished">Muzica</translation>
+        <translation>Muzica</translation>
     </message>
     <message>
         <source>News &amp; Politics</source>
-        <translation type="unfinished">Stiri&amp;Politici</translation>
+        <translation>Stiri&amp;Politici</translation>
     </message>
     <message>
         <source>Nonprofit &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Nonprofit &amp; Activism</translation>
     </message>
     <message>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished">Oameni&amp;bloguri</translation>
+        <translation>Oameni&amp;bloguri</translation>
     </message>
     <message>
         <source>Animals &amp; Pets</source>
-        <translation type="unfinished"></translation>
+        <translation>Animale &amp; Animale de companie</translation>
     </message>
     <message>
         <source>Tech &amp; Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Tehnologie &amp; Stiinţă</translation>
     </message>
     <message>
         <source>Sports</source>
-        <translation type="unfinished">Sporturi</translation>
+        <translation>Sporturi</translation>
     </message>
     <message>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished">Calatorie&amp;Evenimente</translation>
+        <translation>Calatorie&amp;Evenimente</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished">Titlu</translation>
+        <translation>Titlu</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Descriere</translation>
+        <translation>Descriere</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuvinte cheie</translation>
     </message>
     <message>
         <source>Make this video private</source>
-        <translation type="unfinished"></translation>
+        <translation>Fă acest clip privat</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1489,35 +1497,39 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prin publicare, eşti de acord cu termenii şi condiţiile serviciului &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ignoră</translation>
     </message>
     <message>
         <source>&amp;Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Publică</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare</translation>
     </message>
     <message>
         <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Utilizator&apos; sau &apos;Parola sau &apos;Titlu&apos; nu pot fi lăsate necompletate. Te rog verifică aceste campuri.</translation>
     </message>
     <message>
         <source>Authenticating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Se autentifică...</translation>
     </message>
     <message>
         <source>Authenticated!</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentificat!</translation>
     </message>
     <message>
         <source>Video Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier video încărcat</translation>
     </message>
     <message>
         <source>Your video has been uploaded.
@@ -1525,11 +1537,15 @@ URL (copied to your clipboard):
 %1
 
 Open video in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul tău a fost încărcat.
+URL (copiază-l în clipboard):
+%1
+
+Deschide fişierul in browserul implicit?</translation>
     </message>
     <message>
         <source>%1 kB Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kB încărcat</translation>
     </message>
 </context>
 <context>
@@ -1585,11 +1601,11 @@ Open video in your default web browser?</source>
     </message>
     <message>
         <source>Rename track</source>
-        <translation type="unfinished"></translation>
+        <translation>Redenumeşte track</translation>
     </message>
     <message>
         <source>Enter the track new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Introdu numele noului track</translation>
     </message>
 </context>
 <context>
@@ -1840,11 +1856,11 @@ Apoi faceţi clic pe Next pentru a continua ......</translation>
     <name>YouTubeService</name>
     <message>
         <source>YouTube Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentificare YouTube</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectarea poate fi nesigură, doriţi să continuaţi? Unul sau mai multe erori SSL au apărut: %1</translation>
     </message>
 </context>
 </TS>
