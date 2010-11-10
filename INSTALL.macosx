@@ -1,23 +1,23 @@
-Building VLMC on 
+Building VLMC on Mac OSX
+========================
 
-Dependencies
-============
+Dependencies:
+- Build tools: g++, make, cmake etc.
+- Qt framework >= 4.6.0
 
-- Latest VLC Contribs
-- Qt framework >= 4.5.0
+Get the sources:
+  git clone git://git.videolan.org/vlmc.git
 
-Get the sources
-===============
+Building and Packaging
+======================
 
-  $git clone git://git.videolan.org/vlmc.git
+Right now only Intel 32 bit Macs are supported.
 
-Building and Packaging on Mac OS
-================================
+Get Contribs:
+ cd contribs
+ sh contribs-mac.sh
 
-Download and unzip (libVLC) contribs for Mac OSX (i386), in /contribs from:
-  http://rohityadav.in/projects/videolan/vlmc/contribs/
-
-On Mac OS:
+Now cd to root source directory and build:
   mkdir build && cd build
   cmake ..
   make
