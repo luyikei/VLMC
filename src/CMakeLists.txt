@@ -389,9 +389,18 @@ IF( APPLE )
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
         POST_BUILD
-        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/* ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/include ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
     )
-
+    ADD_CUSTOM_COMMAND(
+        TARGET vlmc
+        POST_BUILD
+        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/lib ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+    )
+    ADD_CUSTOM_COMMAND(
+        TARGET vlmc
+        POST_BUILD
+        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/plugins ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+    )
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
         POST_BUILD
