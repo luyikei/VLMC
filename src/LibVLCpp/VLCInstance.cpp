@@ -39,7 +39,7 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         //"--no-audio",
         //"--plugin-path", VLC_TREE "/modules",
         "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
-        "--no-overlay",
+//        "--no-overlay",
     };
     int argc = sizeof( argv ) / sizeof( *argv );
 
