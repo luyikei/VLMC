@@ -8,7 +8,7 @@
         <location filename="../src/Gui/ui/About.ui" line="20"/>
         <location filename="../src/Gui/ui/About.ui" line="82"/>
         <source>About</source>
-        <translation>O</translation>
+        <translation>O aplikaci</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="54"/>
@@ -18,13 +18,13 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="142"/>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC (VideoLAN Movie Creator) je multi-platformní, nelineární editor videa, založený na Mediálním přehrávačí VLC.</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="153"/>
@@ -32,7 +32,10 @@ p, li { white-space: pre-wrap; }
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tato verze VLMC byla kompilována na:
+%1 běžícím na  %2 kompilovano proti Qt %3
+Verze vašeho běhového prostředí: %4
+</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="204"/>
@@ -42,7 +45,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/ui/About.ui" line="218"/>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Poděkování</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/About.ui" line="232"/>
@@ -170,7 +173,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="137"/>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">Přesouvám klip ze stopy %1 do stopy %2</translation>
+        <translation>Přesouvám klip ze stopy %1 do %2</translation>
     </message>
 </context>
 <context>
@@ -234,7 +237,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="62"/>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná akce</translation>
     </message>
 </context>
 <context>
@@ -281,7 +284,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="454"/>
         <source>Effects List</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam efektů</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="467"/>
@@ -309,12 +312,12 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="72"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít</translation>
     </message>
 </context>
 <context>
@@ -322,24 +325,24 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="14"/>
         <source>Effect stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Zásobník efektů</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="27"/>
         <source>Move the effect up in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout efekt nahoru v zásobníku</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="30"/>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="55"/>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="104"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectStack.ui" line="41"/>
         <source>Move the effect down in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout efekt níž v zásobníku</translation>
     </message>
 </context>
 <context>
@@ -347,62 +350,62 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished">Formulář</translation>
+        <translation>Formulář</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="32"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Přehled</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="44"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="64"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="84"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="104"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectWidget.ui" line="124"/>
         <source>Description</source>
-        <translation type="unfinished">Popis</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="69"/>
         <source>Filter</source>
-        <translation type="unfinished">Filtr</translation>
+        <translation>Filtr</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="71"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="73"/>
         <source>Mixer 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mixér 2</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="75"/>
         <source>Mixer 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Mixér 3</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="77"/>
         <source>Unknown type</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý typ</translation>
     </message>
 </context>
 <context>
@@ -410,7 +413,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/EffectsListView.cpp" line="76"/>
         <source>%1 informations</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 informace</translation>
     </message>
 </context>
 <context>
@@ -605,7 +608,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator je &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software a není připraven na prime-time. Mnoho klíčových funkcionalit &lt;span style=&quot; font-weight:600;&quot;&gt;jednoduše chybí&lt;/span&gt;, nebo jsou ještě &lt;span style=&quot; font-weight:600;&quot;&gt;zabugované&lt;/span&gt;.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Náš team je složen z dobrovolníků, kteří tvrdě pracují, aby vám poskytly tu nejlepší zkušenost při editování vida.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Náš team je složen z dobrovolníků, kteří tvrdě pracují, aby vám poskytly tu nejlepší zkušenost při editování videa.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;čtěte více&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -781,7 +784,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="287"/>
         <source>Publish on &amp;Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Zveřejnit na &amp;Internetu</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/MainWindow.ui" line="311"/>
@@ -1134,7 +1137,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="287"/>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dočasný adresář používaný VLMC ke zpracování videí.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="291"/>
@@ -1144,17 +1147,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="292"/>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Youtube vývojářský klíč pro VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="296"/>
         <source>Valid YouTube username</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Platné uživatelské jméno z YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="299"/>
         <source>Youtube Password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Heslo na Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="300"/>
@@ -1164,37 +1167,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="304"/>
         <source>Enable Proxy for VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit Proxy pro VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="305"/>
         <source>Enables Global Network Proxy for VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit Globální Síťovou Proxy pro VLMC.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="308"/>
         <source>Proxy Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jméno stroje Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="309"/>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nastavit název stroje Proxy.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="313"/>
         <source>Set Proxy Port.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit port Proxy.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="317"/>
         <source>Set Proxy Username, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit uživatelské jméno proxy, pokud nějké je.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="321"/>
         <source>Set Proxy Password, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit heslo Proxy, pokud nějaké je.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="295"/>
@@ -1367,7 +1370,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="286"/>
         <source>Temporary folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dočasný adresář</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1419,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="357"/>
         <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="360"/>
         <source>Adjust Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit hlasitost</translation>
     </message>
     <message>
         <location filename="../src/Gui/preview/PreviewWidget.cpp" line="262"/>
@@ -1483,7 +1486,7 @@ Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</transla
     <message>
         <location filename="../src/Services/YouTube/YouTubeFeedParser.cpp" line="46"/>
         <source>The XMLStream is not a valid YouTube Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>XML proud není platný YouTube Feed</translation>
     </message>
 </context>
 <context>
@@ -1491,12 +1494,12 @@ Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</transla
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="14"/>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovat nastavení</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="20"/>
         <source>Output File</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="36"/>
@@ -1516,77 +1519,77 @@ Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</transla
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="97"/>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet snímků</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="114"/>
         <source>Video Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalita videa</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="121"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalita audia</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="144"/>
         <source>Video Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Video kodek</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="163"/>
         <source>Audio Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio kodek</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="225"/>
         <source>Custom</source>
-        <translation type="unfinished">Vlastní</translation>
+        <translation>Vlastní</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="230"/>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>QVGA (320x240) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="235"/>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>VGA (640x480) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="240"/>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>SVGA (800x600) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="245"/>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>XVGA (1024x768) - 30 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="250"/>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>480p NTSC (720x480) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="255"/>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>576p PAL (720x576) - 25 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="260"/>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>720p (1280x720) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="265"/>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>1080p (1920x1080) - 29.97 fps</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="273"/>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Přednastavení</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="155"/>
@@ -1601,7 +1604,7 @@ Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</transla
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="46"/>
         <source>Export Settings: Publish on Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovat nastavení: Publikovat na Internetu</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="67"/>
@@ -1689,13 +1692,14 @@ Prosím zkontrolujte vaší instalaci VLC než budete reportovat chybu.</transla
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="112"/>
         <source>Restore default?</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovit výchozí?</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="113"/>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto obnoví všechny výchozí hodnoty nastavení.
+Jste si jistí, že chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="171"/>
@@ -1713,127 +1717,127 @@ Are you sure you want to continue?</source>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="23"/>
         <source>Share Video On Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Sdílet na Internetu</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="46"/>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Služba</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="54"/>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="66"/>
         <source>Username</source>
-        <translation type="unfinished">Uživatelské jméno</translation>
+        <translation>Uživatelské jméno</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="76"/>
         <source>Password</source>
-        <translation type="unfinished">Heslo</translation>
+        <translation>Heslo</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="90"/>
         <source>Category</source>
-        <translation type="unfinished">Kategorie</translation>
+        <translation>Kategorie</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="98"/>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished">Auta a Vozy</translation>
+        <translation>Auta a Vozidla</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="103"/>
         <source>Comedy</source>
-        <translation type="unfinished">Komedie</translation>
+        <translation>Komedie</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="108"/>
         <source>Education</source>
-        <translation type="unfinished">Vzdělání</translation>
+        <translation>Vzdělání</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="113"/>
         <source>Entertainment</source>
-        <translation type="unfinished">Zábava</translation>
+        <translation>Zábava</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="118"/>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished">Film a Animace</translation>
+        <translation>Film a Animace</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="123"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Hry</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="128"/>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished">Jak na to a Styl</translation>
+        <translation>Jak na to a Styl</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="133"/>
         <source>Music</source>
-        <translation type="unfinished">Hudba</translation>
+        <translation>Hudba</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="138"/>
         <source>News &amp; Politics</source>
-        <translation type="unfinished">Novinky a Politika</translation>
+        <translation>Novinky a Politika</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="143"/>
         <source>Nonprofit &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Neziskové a aktivizmus</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="148"/>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished">Lidé a Blogy</translation>
+        <translation>Lidé a Blogy</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="153"/>
         <source>Animals &amp; Pets</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvířata a mazlíčci</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="158"/>
         <source>Tech &amp; Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Technika a věda</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="163"/>
         <source>Sports</source>
-        <translation type="unfinished">Sporty</translation>
+        <translation>Sporty</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="168"/>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished">Cestování a Události</translation>
+        <translation>Cestování a Události</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="176"/>
         <source>Title</source>
-        <translation type="unfinished">Nadpis</translation>
+        <translation>Titulek</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="186"/>
         <source>Description</source>
-        <translation type="unfinished">Popis</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="206"/>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Klíčová slova</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="216"/>
         <source>Make this video private</source>
-        <translation type="unfinished"></translation>
+        <translation>Učinit toto video privátní</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="226"/>
@@ -1842,42 +1846,46 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zveřejněním souhlasíte s Podmínkami užívání Služby &lt;a href=&quot;http://code.google.com/intl/cs-CZ/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="304"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zrušit</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="314"/>
         <source>&amp;Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zveřejnit</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="68"/>
         <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Uživatelské jméno&quot; ani &quot;Heslo&quot; ani &quot;Titulek&quot; nesmí být prázdné. Prosím zkontrolujte tato políčka.</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="107"/>
         <source>Authenticating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentizuji...</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="143"/>
         <source>Authenticated!</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentizováno!</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="162"/>
         <source>Video Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Video uploadnuto</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="163"/>
@@ -1886,12 +1894,16 @@ URL (copied to your clipboard):
 %1
 
 Open video in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše video bylo uploadnuto.
+URL (zkopírována do vaší schránky):
+%1
+
+Otevřít video ve vašem výchozím prohlížeči?</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="182"/>
         <source>%1 kB Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kB uploadnuto</translation>
     </message>
 </context>
 <context>
@@ -1961,12 +1973,12 @@ Open video in your default web browser?</source>
     <message>
         <location filename="../src/Gui/widgets/TrackControls.cpp" line="119"/>
         <source>Rename track</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejmenovat stopu</translation>
     </message>
     <message>
         <location filename="../src/Gui/widgets/TrackControls.cpp" line="120"/>
         <source>Enter the track new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte nový nazev stopy</translation>
     </message>
 </context>
 <context>
@@ -2271,12 +2283,12 @@ Potom klikněte na tlačítko Další...</translation>
     <message>
         <location filename="../src/Services/YouTube/YouTubeService.cpp" line="251"/>
         <source>YouTube Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentizace YouTube</translation>
     </message>
     <message>
         <location filename="../src/Services/YouTube/YouTubeService.cpp" line="252"/>
         <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojení může být nazabezpečené, přejete si pokračovat? Nastala jedna nebo více SSL chyb: %1</translation>
     </message>
 </context>
 </TS>
