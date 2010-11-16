@@ -143,8 +143,11 @@ YouTubeUploader::uploadFinished()
     parser.read();
 
     /* Checks VideoID parsed by the parser */
-    Q_ASSERT( parser.getVideoId() != "" );
-    QString videoUrl = VIDEO_URL + parser.getVideoId();
+    QString videoUrl;
+    if ( parser.getVideoId() != "" )
+        videoUrl = VIDEO_URL + parser.getVideoId();
+    else
+        videoUrl = ""; /* Some error may've occured at YouTube */
 
     emit uploadOver( QString( videoUrl ) );
 
