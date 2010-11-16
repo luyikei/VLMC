@@ -36,6 +36,10 @@ class   ImageClipWorkflow : public ClipWorkflow
         void                    *getLockCallback() const;
         void                    *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
+        /**
+         *  \brief      Deactivate time seeking in an ImageClipWorkflow
+         */
+        virtual void            setTime( qint64 , qint64 ){}
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
