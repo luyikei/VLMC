@@ -36,7 +36,7 @@
 using namespace YouTube;
 
 YouTubeService::YouTubeService( const QString& devKey,
-                                const QString& username, 
+                                const QString& username,
                                 const QString& password )
 {
     /* Stores Credentials */
@@ -173,7 +173,7 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
     {
         case QNetworkReply::ConnectionRefusedError:
         case QNetworkReply::RemoteHostClosedError:
-        case QNetworkReply::HostNotFoundError: 
+        case QNetworkReply::HostNotFoundError:
         case QNetworkReply::TimeoutError:
             errString = "Network Connection Error";
             m_error = NetworkError; break;
@@ -223,7 +223,7 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
 
     if( m_state == UploadStart )
     {
-        disconnect( reply, SIGNAL( finished() ), 
+        disconnect( reply, SIGNAL( finished() ),
                     m_uploader, SLOT( uploadFinished() ) );
         disconnect( reply, SIGNAL( uploadProgress( qint64, qint64 ) ),
                     m_uploader, SIGNAL( uploadProgress( qint64, qint64 ) ) );
@@ -250,7 +250,7 @@ YouTubeService::sslErrors( QNetworkReply* reply, const QList<QSslError> &errors 
     /* Prompt for insecure connection */
     if ( QMessageBox::warning(NULL, tr("YouTube Authentication"),
                              tr("Connection may be insecure, do you want to continue?"
-                                "One or more SSL errors has occurred: %1").arg(errorString),
+                                " One or more SSL errors has occurred: %1").arg(errorString),
                              QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore )
     {
         reply->ignoreSslErrors();

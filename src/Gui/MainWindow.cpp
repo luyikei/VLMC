@@ -297,7 +297,7 @@ MainWindow::initVlmcPreferences()
 
     VLMC_CREATE_PREFERENCE_PASSWORD( "youtube/Password", "",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Password" ),
-                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Leave this field, password will be stored in unencryped form." ) );
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Leave this field empty, password will be stored in unencrypted form." ) );
 
     //Setup VLMC Proxy Settings
     VLMC_CREATE_PREFERENCE_BOOL( "network/UseProxy", false,
