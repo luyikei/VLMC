@@ -157,12 +157,19 @@ ShareOnInternet::uploadFinished( QString result )
     m_ui.progressBar->setEnabled( false );
     m_ui.progressBar->setVisible( false );
 
-    QApplication::clipboard()->setText( result );
+    QString msg;
+    if( result != "" )
+    {
+        msg = tr( "Your video has been uploaded."
+                  "\nURL (copied to your clipboard):\n%1"
+                  "\n\nOpen this in your default web browser?" ).arg( result );
+        QApplication::clipboard()->setText( result );
+    }
+    else
+        msg = tr( "Some error has occured while processing your video."
+                  "\nPlease check with your video service provider." );
 
-    if( QMessageBox::information( NULL, tr("Video Uploaded"),
-            tr("Your video has been uploaded."
-               "\nURL (copied to your clipboard):\n%1"
-               "\n\nOpen video in your default web browser?").arg( result ),
+    if( QMessageBox::information( NULL, tr("Video Uploaded"), msg,
             QMessageBox::Open | QMessageBox::Close ) == QMessageBox::Open )
     {
         QDesktopServices::openUrl( result );
