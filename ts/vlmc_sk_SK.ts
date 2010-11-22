@@ -135,70 +135,70 @@ Verzia Vášho prostredia Qt: %4</translation>
     <name>Commands::Clip::Add</name>
     <message>
         <source>Adding clip to track %1</source>
-        <translation type="unfinished">Pridávanie klipu k stope %1</translation>
+        <translation>Pridávanie klipu k stope %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Move</name>
     <message>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">Presúvanie klipu zo stopy %1 do stopy %2</translation>
+        <translation>Presúvanie klipu zo stopy %1 do %2</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Remove</name>
     <message>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraňuje sa klip </translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Resize</name>
     <message>
         <source>Resizing clip</source>
-        <translation type="unfinished">Zmena veľkosti klipu</translation>
+        <translation>Zmena veľkosti klipu</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Split</name>
     <message>
         <source>Splitting clip</source>
-        <translation type="unfinished">Rozdeľovanie klipu</translation>
+        <translation>Rozdeľovanie klipu</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Add</name>
     <message>
         <source>Adding effect %1</source>
-        <translation type="unfinished">Pridávanie efektu %1</translation>
+        <translation>Pridávanie efektu %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Move</name>
     <message>
         <source>Moving effect %1</source>
-        <translation type="unfinished">Presúvanie efektu %1</translation>
+        <translation>Presúvanie efektu %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Remove</name>
     <message>
         <source>Deleting effect %1</source>
-        <translation type="unfinished">Vymazávanie efektu %1</translation>
+        <translation>Vymazávanie efektu %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Resize</name>
     <message>
         <source>Resizing effect %1</source>
-        <translation type="unfinished">Zmena veľkosti v efekte %1</translation>
+        <translation>Zmena veľkosti efektu %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Generic</name>
     <message>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná akcia</translation>
     </message>
 </context>
 <context>
