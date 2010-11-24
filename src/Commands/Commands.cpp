@@ -261,7 +261,7 @@ Commands::Clip::Split::internalRedo()
 {
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
-    m_toSplit->setEnd( m_newClipBegin - 1 );
+    m_toSplit->setEnd( m_newClipBegin );
     m_trackWorkflow->addClip( m_newClip, m_newClipPos );
 }
 
