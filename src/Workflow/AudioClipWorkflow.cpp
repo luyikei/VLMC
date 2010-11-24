@@ -126,6 +126,7 @@ AudioClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( ":sout-transcode-samplerate=48000" );
     m_vlcMedia->addOption( ":sout-transcode-channels=2" );
     m_vlcMedia->addOption( ":no-sout-transcode-hurry-up" );
+    m_vlcMedia->addOption( ":sout-transcode-audio-sync");
     if ( m_fullSpeedRender == false )
         m_vlcMedia->addOption( ":sout-smem-time-sync" );
     else

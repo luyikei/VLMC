@@ -151,8 +151,8 @@ ClipWorkflow::stopRenderer()
 }
 
 void
-ClipWorkflow::setTime( qint64 time, qint64 ) //Ignore the frame parameter for generic clip workflow.
-{                                            //the VideoClipWorkflow reimplementation will handle it.
+ClipWorkflow::setTime( qint64 time )
+{
     m_mediaPlayer->setTime( time );
     resyncClipWorkflow();
     QWriteLocker    lock( m_stateLock );

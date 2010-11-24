@@ -39,7 +39,7 @@ class   ImageClipWorkflow : public ClipWorkflow
         /**
          *  \brief      Deactivate time seeking in an ImageClipWorkflow
          */
-        virtual void            setTime( qint64 , qint64 ){}
+        virtual void            setTime( qint64 ){}
     protected:
         virtual void            initVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
