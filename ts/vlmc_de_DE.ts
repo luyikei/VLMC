@@ -609,7 +609,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Proj&amp;ect Preferences</source>
-        <translation>Pro&amp;ject Preferences</translation>
+        <translation>Pro&amp;jekteinstellungen</translation>
     </message>
     <message>
         <source>Save &amp;As</source>
