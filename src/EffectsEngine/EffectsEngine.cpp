@@ -111,7 +111,7 @@ EffectsEngine::browseDirectory( const QString &path )
 {
     QDir    dir( path );
     const QFileInfoList& files = dir.entryInfoList( QDir::Files | QDir::NoDotAndDotDot |
-                                              QDir::Readable | QDir::Executable );
+                                              QDir::Readable ); //| QDir::Executable );
     foreach ( const QFileInfo& file, files )
     {
         if ( file.isDir() )
