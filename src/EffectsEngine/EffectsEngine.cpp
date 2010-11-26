@@ -147,10 +147,12 @@ EffectsEngine::loadEffects()
         pathList << QDir::currentPath() + "/effects/";
     }
 #endif
+    qDebug() << "Loading effects from:" << pathList;
     foreach ( const QString &path, pathList )
     {
         if ( QFile::exists( path ) == true )
         {
+            qDebug() << "\tScanning" << path << "for effects";
             browseDirectory( path );
         }
     }
