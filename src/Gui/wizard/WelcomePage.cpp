@@ -133,7 +133,7 @@ void WelcomePage::loadRecentsProjects()
 void WelcomePage::loadProject()
 {
     QString projectPath =
-            QFileDialog::getOpenFileName( NULL, "Enter the output file name",
+            QFileDialog::getOpenFileName( NULL, tr( "Select a project file" ),
                                           VLMC_GET_STRING( "general/DefaultProjectLocation" ),
                                           "VLMC project file(*.vlmc)" );
 
