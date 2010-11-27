@@ -32,24 +32,24 @@ public:
     GeneralPage( QWidget *parent = 0 );
 
 protected:
-    virtual void changeEvent( QEvent *e );
-    virtual int nextId() const;
-    virtual void initializePage();
-    virtual bool validatePage();
-    virtual void cleanupPage();
+    virtual void        changeEvent( QEvent *e );
+    virtual int         nextId() const;
+    virtual void        initializePage();
+    virtual bool        validatePage();
+    virtual void        cleanupPage();
 
 private:
-
+    void                setValidity( bool status );
 
 private slots:
-    void openWorkspaceDirectory();
-    void updateProjectLocation();
-    void setWorkspaceStatus( bool valid );
+    void                openWorkspaceDirectory();
+    void                updateProjectLocation();
 
 private:
-    Ui::GeneralPage ui;
-    QPalette pValid;
-    QPalette pInvalid;
+    Ui::GeneralPage     ui;
+    QPalette            pValid;
+    QPalette            pInvalid;
+    bool                m_valid;
 };
 
 #endif // GENERALPAGE_H

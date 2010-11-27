@@ -51,7 +51,8 @@ GeneralPage::GeneralPage( QWidget *parent ) :
     registerField( "projectName*", ui.lineEditName );
 }
 
-void GeneralPage::changeEvent( QEvent *e )
+void
+GeneralPage::changeEvent( QEvent *e )
 {
     QWizardPage::changeEvent( e );
     switch ( e->type() )
@@ -64,19 +65,21 @@ void GeneralPage::changeEvent( QEvent *e )
     }
 }
 
-int GeneralPage::nextId() const
+int
+GeneralPage::nextId() const
 {
     return ProjectWizard::Page_Video;
 }
 
-void GeneralPage::initializePage()
+void
+GeneralPage::initializePage()
 {
     //Since this is a new project, it will be unnamed
-    QString projectName = ProjectManager::unNamedProject;
+    QString     projectName = ProjectManager::unNamedProject;
     ui.lineEditName->setText( projectName );
 
     //fetching the global workspace path
-    QString workspacePath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
+    QString     workspacePath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
     ui.lineEditWorkspace->setText( workspacePath );
 
     updateProjectLocation();
@@ -84,15 +87,16 @@ void GeneralPage::initializePage()
 
 void GeneralPage::cleanupPage()
 {
-
 }
 
-bool GeneralPage::validatePage()
+bool
+GeneralPage::validatePage()
 {
-    SettingsManager* sManager = SettingsManager::getInstance();
+    SettingsManager     *sManager = SettingsManager::getInstance();
 
-    QString defaultProjectName = ProjectManager::unNamedProject;
-    if ( ui.lineEditName->text().isEmpty() || ui.lineEditName->text() == defaultProjectName )
+    const QString       &defaultProjectName = ProjectManager::unNamedProject;
+    if ( ui.lineEditName->text().isEmpty() ||
+         ui.lineEditName->text() == defaultProjectName )
     {
         QMessageBox::information( this, tr( "Form is incomplete" ),
                                   tr( "The project name must be filled." ) );
@@ -107,7 +111,7 @@ bool GeneralPage::validatePage()
         return false;
     }
 
-    QVariant projectName( ui.lineEditName->text() );
+    QVariant    projectName( ui.lineEditName->text() );
     sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
 
     //Create the project directory in the workspace dir.
@@ -120,18 +124,21 @@ bool GeneralPage::validatePage()
     return true;
 }
 
-void GeneralPage::openWorkspaceDirectory()
+void
+GeneralPage::openWorkspaceDirectory()
 {
-    QString workspace = QFileDialog::getExistingDirectory( this,
+    QString     workspace = QFileDialog::getExistingDirectory( this,
                                                            "Choose a workspace directory",
                                                            QDir::homePath() );
-    if ( workspace.isEmpty() ) return;
+    if ( workspace.isEmpty() )
+        return;
     ui.lineEditWorkspace->setText( workspace );
 }
 
-void GeneralPage::updateProjectLocation()
+void
+GeneralPage::updateProjectLocation()
 {
-    QString workspacePath = ui.lineEditWorkspace->text();
+    QString     workspacePath = ui.lineEditWorkspace->text();
     if ( workspacePath.isEmpty() )
     {
         ui.lineEditProjectLocation->setText( tr( "Missing workspace location" ) );
@@ -139,9 +146,9 @@ void GeneralPage::updateProjectLocation()
     }
     else
     {
-        QString pName = ui.lineEditName->text().replace( ' ', '_' );
-        QDir workspaceDir( workspacePath );
-        QDir projectDir( QString( "%1/%2" ).arg( workspacePath, pName ) );
+        QString     pName = ui.lineEditName->text().replace( ' ', '_' );
+        QDir        workspaceDir( workspacePath );
+        QDir        projectDir( QString( "%1/%2" ).arg( workspacePath, pName ) );
 
         ui.lineEditProjectLocation->setText( projectDir.absolutePath() );
 
@@ -153,18 +160,18 @@ void GeneralPage::updateProjectLocation()
         }
 
         if ( !workspaceDir.exists() )
-            ui.lineEditProjectLocation->setPalette( pInvalid );
-        else
-        {
-            if ( projectDir.exists() )
-                ui.lineEditProjectLocation->setPalette( pInvalid );
-            else
-                ui.lineEditProjectLocation->setPalette( pValid );
-        }
+            setValidity( false );
+        else //Invalidate the path if the project directory already exists
+            setValidity( !projectDir.exists() );
     }
 }
 
-void GeneralPage::setWorkspaceStatus( bool /*valid*/ )
+void
+GeneralPage::setValidity( bool status )
 {
-
+    if ( status == true )
+        ui.lineEditProjectLocation->setPalette( pValid );
+    else
+        ui.lineEditProjectLocation->setPalette( pInvalid );
+    m_valid = status;
 }
