@@ -92,6 +92,8 @@ void GeneralPage::cleanupPage()
 bool
 GeneralPage::validatePage()
 {
+    if ( m_valid == false )
+        return false;
     SettingsManager     *sManager = SettingsManager::getInstance();
 
     const QString       &defaultProjectName = ProjectManager::unNamedProject;
@@ -142,7 +144,8 @@ GeneralPage::updateProjectLocation()
     if ( workspacePath.isEmpty() )
     {
         ui.lineEditProjectLocation->setText( tr( "Missing workspace location" ) );
-        ui.lineEditProjectLocation->setPalette( pInvalid );
+        setValidity( false );
+        return ;
     }
     else
     {
@@ -154,9 +157,9 @@ GeneralPage::updateProjectLocation()
 
         if ( workspaceDir.isRelative() )
         {
-            ui.lineEditProjectLocation->setPalette( pInvalid );
             ui.lineEditProjectLocation->setText( tr( "Invalid workspace location" ) );
-            return;
+            setValidity( false );
+            return ;
         }
 
         if ( !workspaceDir.exists() )
