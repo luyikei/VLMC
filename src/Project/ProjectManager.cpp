@@ -66,6 +66,11 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ),
                              SettingValue::Flag( SettingValue::Clamped ) );
     sampleRate->setLimits( 11025, 48000 );
+    SettingValue    *audioChannel = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "audio/NbChannels", 2,
+                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
+                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
+                                                             SettingValue::Flag( SettingValue::Clamped ) );
+    audioChannel->setLimits( 2, 2 );
     VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
