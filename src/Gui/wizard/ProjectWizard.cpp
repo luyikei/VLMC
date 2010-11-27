@@ -93,8 +93,20 @@ void    ProjectWizard::showHelp()
 
 void    ProjectWizard::accept()
 {
+    //This intend to check if the user opened a project, or created one.
+    //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
+    {
+        SettingsManager *sManager = SettingsManager::getInstance();
         GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString() );
+        sManager->setValue( "general/Workspace", field( "workspace" ), SettingsManager::Project );
+
+        sManager->setValue( "video/VLMCOutputFPS", field( "fps" ), SettingsManager::Project );
+        sManager->setValue( "video/VideoProjectHeight", field( "height" ), SettingsManager::Project );
+        sManager->setValue( "video/VideoProjectWidth", field( "width" ), SettingsManager::Project );
+        sManager->setValue( "audio/AudioSampleRate", field( "samplerate" ), SettingsManager::Project );
+        sManager->setValue( "audio/NbChannels", field( "samplerate" ), SettingsManager::Project );
+    }
     QDialog::accept();
 }
 

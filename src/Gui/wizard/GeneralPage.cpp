@@ -49,6 +49,7 @@ GeneralPage::GeneralPage( QWidget *parent ) :
              this, SLOT( updateProjectLocation() ) );
 
     registerField( "projectName*", ui.lineEditName );
+    registerField( "workspace*", ui.lineEditProjectLocation );
 }
 
 void
@@ -94,8 +95,6 @@ GeneralPage::validatePage()
 {
     if ( m_valid == false )
         return false;
-    SettingsManager     *sManager = SettingsManager::getInstance();
-
     const QString       &defaultProjectName = ProjectManager::unNamedProject;
     if ( ui.lineEditName->text().isEmpty() ||
          ui.lineEditName->text() == defaultProjectName )
@@ -113,16 +112,12 @@ GeneralPage::validatePage()
         return false;
     }
 
-    QVariant    projectName( ui.lineEditName->text() );
-    sManager->setValue( "general/ProjectName", projectName, SettingsManager::Project );
-
     //Create the project directory in the workspace dir.
     QString     projectPath = ui.lineEditName->text().replace( ' ', '_' );
     QDir        workspaceDir( ui.lineEditWorkspace->text() );
 
     if ( workspaceDir.exists( projectPath ) == false )
         workspaceDir.mkdir( projectPath );
-    sManager->setValue( "general/Workspace", ui.lineEditProjectLocation->text(), SettingsManager::Project );
     return true;
 }
 

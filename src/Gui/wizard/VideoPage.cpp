@@ -37,6 +37,11 @@ VideoPage::VideoPage( QWidget* parent ) :
              this, SLOT( updateVideoPresets() ) );
     connect( ui.comboBoxAudioPresets, SIGNAL( currentIndexChanged(int) ),
              this, SLOT( updateAudioPresets() ) );
+    registerField( "fps", ui.doubleSpinBoxVideoFPS );
+    registerField( "width", ui.spinBoxVideoWidth );
+    registerField( "height", ui.spinBoxVideoHeight );
+    registerField( "samplerate", ui.comboBoxAudioSamplerate );
+    registerField( "channels", ui.spinBoxAudioChannels );
 }
 
 void
@@ -94,15 +99,6 @@ VideoPage::initializePage()
 bool
 VideoPage::validatePage()
 {
-    SettingsManager*    sManager = SettingsManager::getInstance();
-    QVariant            projectFps( ui.doubleSpinBoxVideoFPS->value() );
-    QVariant            projectHeight( ui.spinBoxVideoHeight->value() );
-    QVariant            projectWidth( ui.spinBoxVideoWidth->value() );
-
-    sManager->setValue( "video/VLMCOutputFPS", projectFps, SettingsManager::Project );
-    sManager->setValue( "video/VideoProjectHeight", projectHeight, SettingsManager::Project );
-    sManager->setValue( "video/VideoProjectWidth", projectWidth, SettingsManager::Project );
-
     return true;
 }
 
