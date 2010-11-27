@@ -47,6 +47,21 @@ getPair( SettingsManager::SettingList &list, const QString &key )
     return end;
 }
 
+static bool
+contains( const SettingsManager::SettingList &list, const QString &key )
+{
+    SettingsManager::SettingList::const_iterator        it = list.constBegin();
+    SettingsManager::SettingList::const_iterator        end = list.constEnd();
+
+    while ( it != end )
+    {
+        if ( *it == key )
+            return true;
+        ++it;
+    }
+    return false;
+}
+
 void
 SettingsManager::setValue( const QString &key,
                            const QVariant &value,
@@ -221,7 +236,12 @@ SettingsManager::load( const QDomElement &root )
         if ( key.isEmpty() == true || value.isEmpty() == true )
             qWarning() << "Invalid setting node.";
         else
-            setValue( key, value, SettingsManager::Project );
+        {
+            if ( contains( m_xmlSettings, key ) == true )
+                setValue( key, value, SettingsManager::Project );
+            else
+                qWarning() << "Invalid setting node in project file:" << key;
+        }
         s = s.nextSiblingElement();
     }
     return true;
