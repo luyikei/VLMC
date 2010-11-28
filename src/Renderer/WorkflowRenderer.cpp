@@ -96,11 +96,13 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     char        audioParameters[256];
     char        buffer[64];
 
+    const QString   aspectRatio = VLMC_PROJECT_GET_STRING("video/AspectRatio");
+
     m_esHandler->fps = fps;
     //Clean any previous render.
 
     sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%s:cookie=0:codec=%s:cat=2:caching=0",
-             width, height, "16/9", "30/1", "RV32" );
+             width, height, aspectRatio.toAscii().constData(), "30/1", "RV32" );
     sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
                 m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );
