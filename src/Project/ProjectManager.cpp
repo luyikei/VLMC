@@ -61,6 +61,9 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
                              SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );
     height->setLimits( 0, 2048 );
+    VLMC_CREATE_PROJECT_STRING( "video/AspectRatio", "16/9",
+                                QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
+                                QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ) );
     SettingValue    *sampleRate = VLMC_CREATE_PROJECT_VAR( SettingValue::Double, "audio/AudioSampleRate", 44100,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ),
