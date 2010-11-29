@@ -24,6 +24,7 @@
 #include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
+#include "SettingsManager.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
 #include "WaitCondition.hpp"
@@ -93,7 +94,7 @@ VideoClipWorkflow::initVlcOutput()
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":sout-transcode-height=%i", m_height );
     m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-fps=%f", clip()->getMedia()->fps() );
+    sprintf( buffer, ":sout-transcode-fps=%f", VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
     m_vlcMedia->addOption( buffer );
 
     initFilters();
