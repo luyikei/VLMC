@@ -1137,16 +1137,16 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             {
                 const AbstractGraphicsMediaItem *container = effectItem->container();
                 if ( container != NULL && container->startPos() + effectItem->begin() == effectItem->startPos() )
-                    return ;
+                    goto out;
                 else if ( container == NULL && effectItem->startPos() == effectItem->begin() )
-                    return ;
+                    goto out;
             }
         }
         else
         {
             if ( m_actionItem->m_oldTrack == m_actionItem->track()->trackWorkflow() &&
                  m_actionItem->startPos() == m_actionItem->track()->trackWorkflow()->getClipPosition( m_actionItem->uuid() ) )
-                return ;
+                goto out;
         }
 
         updateDuration();
@@ -1213,6 +1213,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionItem = NULL;
     }
 
+out:
     m_action = TracksView::None;
     //setDragMode( QGraphicsView::NoDrag );
     QGraphicsView::mouseReleaseEvent( event );
