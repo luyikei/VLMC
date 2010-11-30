@@ -37,7 +37,7 @@ VideoPage::VideoPage( QWidget* parent ) :
              this, SLOT( updateVideoPresets() ) );
     connect( ui.comboBoxAudioPresets, SIGNAL( currentIndexChanged(int) ),
              this, SLOT( updateAudioPresets() ) );
-    registerField( "fps", ui.doubleSpinBoxVideoFPS );
+    registerField( "fps", ui.doubleSpinBoxVideoFPS, "value", SIGNAL( valueChanged( double ) ) );
     registerField( "width", ui.spinBoxVideoWidth );
     registerField( "height", ui.spinBoxVideoHeight );
     registerField( "samplerate", ui.comboBoxAudioSamplerate );
