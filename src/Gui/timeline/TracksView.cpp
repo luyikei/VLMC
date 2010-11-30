@@ -1184,9 +1184,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;
-        m_actionItem = NULL;
         m_lastKnownTrack = NULL;
-        m_effectTarget = NULL;
     }
     else if ( m_action == TracksView::Resize )
     {
@@ -1209,11 +1207,11 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         m_actionItem->triggerResize( target, m_actionItem->helper(),
                                      newBegin, newEnd, m_actionItem->pos().x() );
         updateDuration();
-        m_effectTarget = NULL;
-        m_actionItem = NULL;
     }
 
 out:
+    m_effectTarget = NULL;
+    m_actionItem = NULL;
     m_action = TracksView::None;
     //setDragMode( QGraphicsView::NoDrag );
     QGraphicsView::mouseReleaseEvent( event );
