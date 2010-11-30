@@ -77,6 +77,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Go to the previous frame</string>
+       </property>
        <property name="statusTip">
         <string>Go to the previous frame</string>
        </property>
@@ -114,6 +117,9 @@
          <width>34</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Play / Pause</string>
        </property>
        <property name="statusTip">
         <string>Play / Pause</string>
@@ -153,6 +159,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Go to the next frame</string>
+       </property>
        <property name="statusTip">
         <string>Go to the next frame</string>
        </property>
@@ -190,6 +199,9 @@
          <width>34</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Set marker A</string>
        </property>
        <property name="statusTip">
         <string>Set marker A</string>
@@ -229,6 +241,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Set marker B</string>
+       </property>
        <property name="statusTip">
         <string>Set marker B</string>
        </property>
@@ -267,6 +282,9 @@
          <height>30</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Cut at markers position</string>
+       </property>
        <property name="statusTip">
         <string>Cut at markers position</string>
        </property>
@@ -298,6 +316,9 @@
          <width>34</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Stop the playback</string>
        </property>
        <property name="statusTip">
         <string>Stop the playback</string>
