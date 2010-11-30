@@ -73,7 +73,10 @@ TracksScene::askRemoveSelectedItems()
 {
     TracksView* tv = Timeline::getInstance()->tracksView();
 
-    if ( !tv ) return;
+    if ( !tv )
+        return;
+    if ( tv->currentAction() != TracksView::None )
+        return ;
 
     if ( VLMC_GET_BOOL( "general/ConfirmDeletion" ) == true )
     {

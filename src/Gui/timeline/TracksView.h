@@ -238,6 +238,11 @@ public slots:
      */
     void                    removeItem( AbstractGraphicsItem *item );
 
+    /**
+     *  \returns        The current mouse action.
+     */
+    Action                  currentAction() const;
+
 protected:
     virtual void            resizeEvent( QResizeEvent *event );
     virtual void            drawBackground( QPainter *painter, const QRectF &rect );

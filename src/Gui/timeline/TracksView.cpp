@@ -1426,3 +1426,9 @@ TracksView::item( const QUuid &uuid )
     }
     return NULL;
 }
+
+TracksView::Action
+TracksView::currentAction() const
+{
+    return m_action;
+}
