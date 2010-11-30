@@ -142,4 +142,12 @@ PreferenceWidget::retranslateUi()
         i.value()->setText( tr( i.key()->name() ) );
         i.value()->setToolTip( tr( i.key()->description() ) );
     }
+
+    SettingsList::iterator      it = m_settings.begin();
+    SettingsList::iterator      ite = m_settings.end();
+    while ( it != ite )
+    {
+        (*it)->setToolTip( tr( (*it)->setting()->description() ) );
+        ++it;
+    }
 }
