@@ -1167,7 +1167,6 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
                 effectItem->setContainer( m_effectTarget );
             }
-            UndoStack::getInstance()->beginMacro( "Move effect" );
         }
         else
             UndoStack::getInstance()->beginMacro( "Move clip" );
@@ -1180,7 +1179,8 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
         }
 
-        UndoStack::getInstance()->endMacro();
+        if ( effectItem == NULL )
+            UndoStack::getInstance()->endMacro();
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;
