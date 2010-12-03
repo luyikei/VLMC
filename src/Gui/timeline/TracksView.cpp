@@ -961,15 +961,15 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                     ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( mediaItem->helper() );
                     Q_ASSERT( clipHelper != NULL );
                     m_effectTarget = mediaItem;
-                    effectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
+//                    effectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
                     break ;
                 }
             }
-            if ( m_effectTarget == NULL ) //Avoid doing this all the time.
-            {
-                GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
-                effectItem->effectHelper()->setTarget( track->trackWorkflow() );
-            }
+//            if ( m_effectTarget == NULL ) //Avoid doing this all the time.
+//            {
+//                GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
+//                effectItem->effectHelper()->setTarget( track->trackWorkflow() );
+//            }
         }
     }
     else if ( event->modifiers() == Qt::NoModifier &&

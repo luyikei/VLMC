@@ -320,7 +320,7 @@ EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
             return ;
         }
     }
-    qWarning() << "Can't find effect" << helper->uuid();
+    qWarning() << this << "Can't find effect" << helper->uuid();
 }
 
 void
