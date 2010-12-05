@@ -48,9 +48,10 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     QSettings s;
     m_recentsProjects = s.value( "RecentsProjects" ).toStringList();
 
-    VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97,
+    SettingValue    *fps = VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ) );
+    fps->setLimits( 0.1, 120.0 );
     SettingValue    *width = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectWidth", 480,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
