@@ -113,6 +113,7 @@ PreferenceWidget::reset()
 {
     foreach ( ISettingsCategoryWidget* w, m_settings )
         w->setting()->restoreDefault();
+    discard();
     save();
 }
 
