@@ -97,10 +97,10 @@
       <item row="1" column="2">
        <widget class="QSpinBox" name="spinBoxVideoWidth">
         <property name="minimum">
-         <number>1</number>
+         <number>32</number>
         </property>
         <property name="maximum">
-         <number>1920</number>
+         <number>2048</number>
         </property>
         <property name="value">
          <number>720</number>
@@ -110,10 +110,10 @@
       <item row="2" column="2">
        <widget class="QSpinBox" name="spinBoxVideoHeight">
         <property name="minimum">
-         <number>1</number>
+         <number>32</number>
         </property>
         <property name="maximum">
-         <number>1080</number>
+         <number>2048</number>
         </property>
         <property name="value">
          <number>480</number>
