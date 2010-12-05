@@ -58,6 +58,7 @@ class   SettingValue : public QObject
             Password        = 1 << 1,
             Clamped         = 1 << 2, ///< When used, the m_min and m_max will be used
             EightMultiple   = 1 << 3, ///< Forces the value to be a multiple of 8
+            NotEmpty        = 1 << 4, ///< Forces the value not to be empty (likely to be user only with Strings)
         };
         Q_DECLARE_FLAGS( Flags, Flag );
 
