@@ -49,10 +49,11 @@ DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= NUL
     connect( m_slider, SIGNAL( valueChanged( int ) ), this, SLOT( sliderMoved( int ) ) );
 }
 
-void
+bool
 DoubleSliderWidget::save()
 {
     m_setting->set( m_slider->value() / 100.0 );
+    return true;
 }
 
 void

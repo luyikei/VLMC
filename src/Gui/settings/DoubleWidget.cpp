@@ -41,10 +41,11 @@ DoubleWidget::DoubleWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     }
 }
 
-void
+bool
 DoubleWidget::save()
 {
     m_setting->set( m_spinbox->value() );
+    return true;
 }
 
 void

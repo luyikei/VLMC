@@ -38,10 +38,11 @@ ColorWidget::ColorWidget( SettingValue *s, QWidget *parent ) :
     changed( m_color );
 }
 
-void
+bool
 ColorWidget::save()
 {
     m_setting->set( m_color );
+    return true;
 }
 
 void

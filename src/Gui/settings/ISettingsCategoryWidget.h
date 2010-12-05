@@ -38,7 +38,7 @@ class   ISettingsCategoryWidget : public QWidget
     public:
         virtual ~ISettingsCategoryWidget(){}
         virtual SettingValue    *setting() { return m_setting; }
-        virtual void            save() = 0;
+        virtual bool            save() = 0;
 
     protected:
         ISettingsCategoryWidget( QWidget *parent, SettingValue* s ) :

@@ -36,7 +36,7 @@ class   StringWidget : public ISettingsCategoryWidget
 
     public:
         StringWidget( SettingValue *s, QWidget *parent = NULL );
-        void                    save();
+        bool                    save();
 
     private slots:
         virtual void            changed( const QVariant& );

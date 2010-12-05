@@ -36,7 +36,7 @@ class DoubleSliderWidget : public ISettingsCategoryWidget
 
     public:
         DoubleSliderWidget( SettingValue *s, QWidget *parent = NULL );
-        void        save();
+        bool        save();
 
     private:
         QSlider         *m_slider;

@@ -54,10 +54,11 @@ PathWidget::changeEvent( QEvent *event )
         retranslate();
 }
 
-void
+bool
 PathWidget::save()
 {
     m_setting->set( m_lineEdit->text() );
+    return true;
 }
 
 void

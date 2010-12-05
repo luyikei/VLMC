@@ -31,8 +31,9 @@ KeyboardShortcut::KeyboardShortcut( SettingValue *s, QWidget *parent /*= NULL*/ 
     layout()->addWidget( m_input );
 }
 
-void
+bool
 KeyboardShortcut::save()
 {
     m_setting->set( m_input->shortcut() );
+    return true;
 }

@@ -35,7 +35,7 @@ class   KeyboardShortcut : public ISettingsCategoryWidget
 
     public:
         KeyboardShortcut( SettingValue *s, QWidget *parent = NULL );
-        void                    save();
+        bool                    save();
 
     private slots:
         ///The KeyboardShortcutInput does this itself.

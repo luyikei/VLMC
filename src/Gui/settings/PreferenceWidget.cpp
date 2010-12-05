@@ -97,11 +97,15 @@ PreferenceWidget::widgetFactory( SettingValue *s )
     }
 }
 
-void
+bool
 PreferenceWidget::save()
 {
     foreach ( ISettingsCategoryWidget* w, m_settings )
-        w->save();
+    {
+        if ( w->save() == false )
+            return false;
+    }
+    return true;
 }
 
 void

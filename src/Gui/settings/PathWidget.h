@@ -37,7 +37,7 @@ class   PathWidget : public ISettingsCategoryWidget
 
     public:
         PathWidget( SettingValue *s, QWidget *parent = NULL );
-        void                    save();
+        bool                    save();
 
     protected:
         void                    changeEvent( QEvent *event );

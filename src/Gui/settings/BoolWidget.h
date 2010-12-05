@@ -36,7 +36,7 @@ class   BoolWidget : public ISettingsCategoryWidget
 
     public:
         BoolWidget( SettingValue *s, QWidget *parent = NULL );
-        void                    save();
+        bool                    save();
 
     private slots:
         virtual void            changed( const QVariant& );

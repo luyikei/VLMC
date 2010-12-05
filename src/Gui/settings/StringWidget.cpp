@@ -35,10 +35,11 @@ StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     changed( s->get() );
 }
 
-void
+bool
 StringWidget::save()
 {
     m_setting->set( m_lineEdit->text() );
+    return true;
 }
 void
 StringWidget::changed( const QVariant &val )

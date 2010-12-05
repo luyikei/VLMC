@@ -121,7 +121,14 @@ Settings::buttonClicked( QAbstractButton *button )
     case QDialogButtonBox::Apply:
         {
             for ( int i = 0; i < m_stackedLayout->count(); ++i )
-                qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save();
+            {
+                if ( qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save() == false )
+                {
+                    QMessageBox::warning( NULL, tr( "Invalid value" ),
+                                          tr( "Can't save settings due to an invalid value" ) );
+                    return ;
+                }
+            }
             //If we're handling vlmc preferences, save the value in the QSettings
             if ( m_type == SettingsManager::Vlmc )
                 SettingsManager::getInstance()->save();

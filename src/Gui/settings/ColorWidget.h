@@ -36,7 +36,7 @@ class   ColorWidget : public ISettingsCategoryWidget
 
     public:
         ColorWidget( SettingValue *s, QWidget *parent = NULL );
-        void                    save();
+        bool                    save();
 
     private slots:
         virtual void            changed( const QVariant& );

@@ -44,10 +44,11 @@ IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     changed( s->get() );
 }
 
-void
+bool
 IntWidget::save()
 {
     m_setting->set( m_spinbox->value() );
+    return true;
 }
 
 void

@@ -78,11 +78,12 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     changed( s->get() );
 }
 
-void
+bool
 LanguageWidget::save()
 {
     QString     lang = m_list->itemData( m_list->currentIndex() ).toString();
     m_setting->set( lang );
+    return true;
 }
 
 void

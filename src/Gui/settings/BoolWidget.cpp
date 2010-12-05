@@ -33,10 +33,11 @@ BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
     changed( s->get() );
 }
 
-void
+bool
 BoolWidget::save()
 {
     m_setting->set( m_checkbox->isChecked() );
+    return true;
 }
 
 void
