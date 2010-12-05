@@ -75,9 +75,10 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
                                                              SettingValue::Flag( SettingValue::Clamped ) );
     audioChannel->setLimits( 2, 2 );
-    VLMC_CREATE_PROJECT_STRING( "general/ProjectName", unNamedProject,
+    VLMC_CREATE_PROJECT_VAR( SettingValue::String, "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ) );
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
+                                SettingValue::Flag( SettingValue::NotEmpty ) );
 
     VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/Workspace", "" );
 
