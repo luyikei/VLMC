@@ -49,9 +49,6 @@ public:
     void    retranslate();
 
 private:
-    virtual void        showEvent( QShowEvent * );
-
-private:
     QVBoxLayout*                    m_layout;
     QButtonGroup*                   m_buttons;
     static const int                M_ICON_HEIGHT;

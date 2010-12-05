@@ -77,13 +77,6 @@ void    Panel::addButton( const char* name,
     m_layout->insertWidget( m_layout->count() - 1, button );
 }
 
-void    Panel::showEvent( QShowEvent *event )
-{
-    // Reset the selection when the dialog is shown.
-    if ( !event->spontaneous() && !m_buttons->buttons().isEmpty() )
-        m_buttons->buttons().first()->setChecked( true );
-}
-
 void
 Panel::retranslate()
 {
