@@ -71,5 +71,6 @@ PathWidget::selectPathButtonPressed()
 {
     QString path = QFileDialog::getExistingDirectory( NULL, tr( "Select a path" ),
                                                       m_setting->get().toString() );
-    m_lineEdit->setText( path );
+    if ( path.length() > 0 )
+        m_lineEdit->setText( path );
 }
