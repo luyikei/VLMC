@@ -46,6 +46,7 @@ class   PreferenceWidget : public QScrollArea
 
         virtual bool    save();
         virtual void    reset();
+        void            discard();
         const char      *category() const;
     protected:
         void            changeEvent( QEvent *e );

@@ -133,6 +133,11 @@ Settings::buttonClicked( QAbstractButton *button )
             if ( m_type == SettingsManager::Vlmc )
                 SettingsManager::getInstance()->save();
         }
+    case QDialogButtonBox::Cancel:
+        {
+            for ( int i = 0; i < m_stackedLayout->count(); ++i )
+                qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->discard();
+        }
     default:
         break ;
     }

@@ -54,7 +54,7 @@ class   ISettingsCategoryWidget : public QWidget
     protected:
         SettingValue            *m_setting;
 
-    protected slots:
+    public slots:
         virtual void            changed( const QVariant& ) = 0;
 };
 
