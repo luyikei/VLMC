@@ -55,12 +55,12 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
                              SettingValue::Flags( SettingValue::Clamped | SettingValue::EightMultiple ) );
-    width->setLimits( 0, 2048 );
+    width->setLimits( 32, 2048 );
     SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
                              SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );
-    height->setLimits( 0, 2048 );
+    height->setLimits( 32, 2048 );
     VLMC_CREATE_PROJECT_STRING( "video/AspectRatio", "16/9",
                                 QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
                                 QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ) );
