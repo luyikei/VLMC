@@ -32,7 +32,6 @@
 #include <QToolButton>
 #include <QSizePolicy>
 #include <QSize>
-#include <QShowEvent>
 
 const int   Panel::M_ICON_HEIGHT = 64;
 
