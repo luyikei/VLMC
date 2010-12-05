@@ -38,6 +38,11 @@ StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
 bool
 StringWidget::save()
 {
+    if ( ( m_setting->flags() & SettingValue::NotEmpty ) != 0 )
+    {
+        if ( m_lineEdit->text().length() == 0 )
+            return false;
+    }
     m_setting->set( m_lineEdit->text() );
     return true;
 }
