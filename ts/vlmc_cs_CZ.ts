@@ -165,7 +165,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="115"/>
         <source>Adding clip to track %1</source>
-        <translation type="unfinished">Přidávání klipu k stopě %1</translation>
+        <translation>Přidávání klipu k stopě %1</translation>
     </message>
 </context>
 <context>
@@ -181,7 +181,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="178"/>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraňování klipu</translation>
     </message>
 </context>
 <context>
@@ -189,7 +189,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="211"/>
         <source>Resizing clip</source>
-        <translation type="unfinished">Měnění velikosti klipu</translation>
+        <translation>Měnění velikosti klipu</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="256"/>
         <source>Splitting clip</source>
-        <translation type="unfinished">Dělení klipu</translation>
+        <translation>Dělení klipu</translation>
     </message>
 </context>
 <context>
@@ -205,7 +205,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="285"/>
         <source>Adding effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidávání efektu %1</translation>
     </message>
 </context>
 <context>
@@ -213,7 +213,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="316"/>
         <source>Moving effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Presouvání efektu %1</translation>
     </message>
 </context>
 <context>
@@ -221,7 +221,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="390"/>
         <source>Deleting effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraňování efektu %1</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@ Verze vašeho běhového prostředí: %4
     <message>
         <location filename="../src/Commands/Commands.cpp" line="361"/>
         <source>Resizing effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Změna efektu %1</translation>
     </message>
 </context>
 <context>
@@ -1062,7 +1062,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/MainWindow.cpp" line="208"/>
         <source>Toggle the help page</source>
         <translatorcomment>I need to see place where is it used</translatorcomment>
-        <translation type="unfinished">Přepnout stránku nápovědy</translation>
+        <translation>Přepnout stránku nápovědy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="211"/>
@@ -1147,22 +1147,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="292"/>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished">Youtube vývojářský klíč pro VLMC</translation>
+        <translation>Youtube vývojářský klíč pro VLMC</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="296"/>
         <source>Valid YouTube username</source>
-        <translation type="unfinished">Platné uživatelské jméno z YouTube</translation>
+        <translation>Platné uživatelské jméno YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="299"/>
         <source>Youtube Password</source>
-        <translation type="unfinished">Heslo na Youtube</translation>
+        <translation>Heslo na Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="300"/>
         <source>Leave this field, password will be stored in unencryped form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nechte toto políčko prázdné a heslo bude uloženo v nešifrované formě.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="304"/>
@@ -1177,12 +1177,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="308"/>
         <source>Proxy Hostname</source>
-        <translation type="unfinished">Jméno stroje Proxy</translation>
+        <translation>Jméno stroje Proxy</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="309"/>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished">Nastavit název stroje Proxy.</translation>
+        <translation>Nastavit název stroje Proxy.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="313"/>
