@@ -148,7 +148,7 @@ EffectsEngine::loadEffects()
             return ;
         }
         *pos = 0;
-        pathList << QString( appDir );
+        pathList << QString( appDir ) + "/effects/";
     }
     else
     {
