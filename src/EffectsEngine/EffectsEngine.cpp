@@ -140,7 +140,16 @@ EffectsEngine::loadEffects()
 #elif defined ( Q_OS_WIN32 )
     TCHAR       appDir[128];
     if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
+    {
+        wchat_t     *pos = wcsrchr( appDir, '\\' );
+        if ( pos == NULL )
+        {
+            qWarning() << "Can't use ModuleFileName:" << appDir;
+            return ;
+        }
+        *pos = 0;
         pathList << QString( appDir );
+    }
     else
     {
         qWarning() << "Failed to get application directory. Using current path.";
