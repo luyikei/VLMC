@@ -30,7 +30,8 @@ Effect::Effect( const QString &fileName ) :
         m_type( Unknown ),
         m_major( -1 ),
         m_minor( -1 ),
-        m_nbParams( -1 )
+        m_nbParams( -1 ),
+        m_f0r_deinit( NULL )
 {
 }
 
@@ -38,7 +39,8 @@ Effect::~Effect()
 {
     if ( isLoaded() == true )
     {
-        m_f0r_deinit();
+        if ( m_f0r_deinit != NULL )
+            m_f0r_deinit();
         unload();
     }
     qDeleteAll( m_params );
