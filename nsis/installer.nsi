@@ -24,7 +24,7 @@ InstallDir "$PROGRAMFILES\VideoLAN\@PROJECT_NAME_SHORT@"
 RequestExecutionLevel admin
 
 ; Compression method
-SetCompressor lzma
+SetCompressor /SOLID lzma
 
 ;--------------------------------
 ; Interface
