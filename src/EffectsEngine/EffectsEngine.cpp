@@ -153,7 +153,7 @@ EffectsEngine::loadEffects()
     else
     {
         qWarning() << "Failed to get application directory. Using current path.";
-        pathList << QDir::currentPath() + "\\effects\\";
+        pathList << QDir::currentPath() + "/effects/";
     }
 #endif
     qDebug() << "Loading effects from:" << pathList;
