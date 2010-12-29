@@ -141,7 +141,7 @@ EffectsEngine::loadEffects()
     TCHAR       appDir[128];
     if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
     {
-        wchat_t     *pos = wcsrchr( appDir, '\\' );
+        TCHAR     *pos = strrchr( appDir, '\\' );
         if ( pos == NULL )
         {
             qWarning() << "Can't use ModuleFileName:" << appDir;
