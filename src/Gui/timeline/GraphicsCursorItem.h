@@ -37,6 +37,8 @@ class GraphicsCursorItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 
+    enum { Type = UserType + 5 };
+
 #if QT_VERSION >= 0x40600
     Q_INTERFACES( QGraphicsItem )
 #endif
@@ -46,6 +48,7 @@ public:
     int                 cursorPos() const { return ( int )pos().x(); }
     virtual QRectF      boundingRect() const;
     void                setHeight( int height );
+    virtual int         type() const { return Type; }
 
 protected:
     virtual void        paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = 0 );
