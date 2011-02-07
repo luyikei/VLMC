@@ -385,10 +385,11 @@ IF(UNIX)
 ENDIF(UNIX)
 
 IF( APPLE )
+    SET(CONTRIBS_DIR ${CMAKE_SOURCE_DIR}/contribs/)
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
         POST_BUILD
-        COMMAND cp -r ${CMAKE_SOURCE_DIR}/contribs/{include, lib, plugins} ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+        COMMAND cp -r ${CONTRIBS_DIR}/include ${CONTRIBS_DIR}/lib ${CONTRIBS_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
     )
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
