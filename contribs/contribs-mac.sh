@@ -1,6 +1,7 @@
 #!/bin/sh
 
-VLC_VERSION_DATE="20101110-0104"
+echo "For 64-bit builds please use an intel64 based contrib."
+VLC_VERSION_DATE="20110203-0102"
 VLC_VERSION_PREFIX="1.1-branch-intel-${VLC_VERSION_DATE}"
 VLC_FILE="${VLC_VERSION_PREFIX}.zip"
 VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
