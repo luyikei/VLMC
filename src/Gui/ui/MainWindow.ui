@@ -17,6 +17,9 @@
    <iconset resource="../../../resources.qrc">
     <normaloff>:/images/vlmc</normaloff>:/images/vlmc</iconset>
   </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -24,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">
