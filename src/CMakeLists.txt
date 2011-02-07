@@ -265,7 +265,6 @@ ELSE(NOT WITH_GUI)
         Gui/settings/Panel.h
         Gui/settings/PathWidget.h
         Gui/settings/PreferenceWidget.h
-        Gui/settings/PreferenceWidget.h
         Gui/settings/Settings.h
         Gui/settings/StringWidget.h
         Gui/timeline/AbstractGraphicsItem.h
