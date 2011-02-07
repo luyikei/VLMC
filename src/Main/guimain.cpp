@@ -83,7 +83,7 @@ VLMCmain( int argc, char **argv )
     }
 #endif
 
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_WS_WIN)
     // Creating the color palette
     QPalette p;
     p.setColor( QPalette::WindowText,       QColor( 255, 255, 255, 255 ) );
