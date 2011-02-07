@@ -147,7 +147,7 @@ ELSE (NOT WIN32)
     SET (VLMC_LIBS
             ${CONTRIBS_PATH}/lib/libQtNetwork.a ${CONTRIBS_PATH}/lib/libQtXml.a
             ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
-            ${CONTRIBS_PATH}/lib/libQtGui.a ${CONTRIBS_PATH}/lib/libqjpeg.a
+            ${CONTRIBS_PATH}/lib/libQtGui.a #${CONTRIBS_PATH}/lib/libqjpeg.a
             ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
             ${CONTRIBS_PATH}/lib/libQtCore.a
             ${CONTRIBS_PATH}/lib/libvlccore.dll.a
