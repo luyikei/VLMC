@@ -48,6 +48,7 @@ public:
     static const QString    backupSuffix;
 
     void            loadProject( const QString& fileName );
+    void            removeProject( const QString& fileName );
     QStringList     recentsProjects() const;
     virtual bool    closeProject();
     virtual void    saveProject( const QString &outputFileName );

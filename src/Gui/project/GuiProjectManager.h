@@ -64,6 +64,8 @@ public:
      *  This is handled here as there's no use for this in non-GUI mode.
      */
     void            loadProject( const QString& fileName );
+    
+    void            removeProject( const QString& fileName );
 
 protected:
     virtual void    failedToLoad( const QString &reason ) const;

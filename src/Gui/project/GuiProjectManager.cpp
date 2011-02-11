@@ -307,3 +307,12 @@ GUIProjectManager::loadProject()
         return ;
     loadProject( fileName );
 }
+
+void
+GUIProjectManager::removeProject( const QString &fileName )
+{
+    QFile   projectFile( fileName );
+    if ( !projectFile.exists() )
+        return;
+    ProjectManager::removeProject( fileName );
+}
