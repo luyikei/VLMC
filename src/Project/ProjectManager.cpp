@@ -32,6 +32,7 @@
 #include "Workspace.h"
 
 #include <QDir>
+#include <QMessageBox>
 #include <QSettings>
 #include <QtDebug>
 #include <QXmlStreamWriter>
@@ -165,7 +166,21 @@ ProjectManager::loadProject( const QString& fileName )
     Library::getInstance()->loadProject( root );
 }
 
-void    ProjectManager::__saveProject( const QString &fileName )
+void
+ProjectManager::removeProject( const QString& fileName )
+{
+    // Remove all occurence of fileName
+    m_recentsProjects.removeAll( fileName );
+
+    if( !QFile::remove( fileName ) )
+        QMessageBox::warning( NULL, tr( "Can't delete project file" ),
+                          tr( "Can't delete this project file: %1\nPlease delete it manually." ).arg( fileName ) );
+    QSettings s;
+    s.setValue( "RecentsProjects", m_recentsProjects );
+}
+
+void
+ProjectManager::__saveProject( const QString &fileName )
 {
     QByteArray          projectString;
 
@@ -189,7 +204,8 @@ void    ProjectManager::__saveProject( const QString &fileName )
     file.write( projectString );
 }
 
-void    ProjectManager::emergencyBackup()
+void
+ProjectManager::emergencyBackup()
 {
     QString     name;
 
@@ -203,7 +219,8 @@ void    ProjectManager::emergencyBackup()
     s.sync();
 }
 
-bool    ProjectManager::isBackupFile( const QString& projectFile )
+bool
+ProjectManager::isBackupFile( const QString& projectFile )
 {
     return projectFile.endsWith( ProjectManager::backupSuffix );
 }
@@ -215,7 +232,8 @@ ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
 }
 
 
-void    ProjectManager::appendToRecentProject( const QString& projectFile )
+void
+ProjectManager::appendToRecentProject( const QString& projectFile )
 {
     // Append the item to the recents list
     m_recentsProjects.removeAll( projectFile );
@@ -227,7 +245,8 @@ void    ProjectManager::appendToRecentProject( const QString& projectFile )
     s.setValue( "RecentsProjects", m_recentsProjects );
 }
 
-QString ProjectManager::projectName() const
+QString
+ProjectManager::projectName() const
 {
     if ( m_projectName.isEmpty() == true )
     {

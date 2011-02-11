@@ -46,6 +46,8 @@ WelcomePage::WelcomePage( QWidget* parent )
 
     connect( m_ui.openPushButton, SIGNAL( clicked() ),
              this, SLOT( loadProject() ) );
+    connect( m_ui.removeProjectButton, SIGNAL( clicked() ),
+             this, SLOT( removeProject() ) );
     connect( m_ui.projectsListWidget, SIGNAL( itemPressed(QListWidgetItem*) ),
              this, SLOT( selectOpenRadio() ) );
     connect( m_ui.projectsListWidget, SIGNAL( itemDoubleClicked(QListWidgetItem*) ),
@@ -62,7 +64,8 @@ WelcomePage::~WelcomePage()
     delete m_projectPath;
 }
 
-void WelcomePage::changeEvent( QEvent *e )
+void
+WelcomePage::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -74,7 +77,8 @@ void WelcomePage::changeEvent( QEvent *e )
     }
 }
 
-int WelcomePage::nextId() const
+int
+WelcomePage::nextId() const
 {
     if ( m_ui.createRadioButton->isChecked() )
         return ProjectWizard::Page_General;
@@ -82,7 +86,8 @@ int WelcomePage::nextId() const
         return ProjectWizard::Page_Open;
 }
 
-void WelcomePage::initializePage()
+void
+WelcomePage::initializePage()
 {
     QSettings s;
 
@@ -91,7 +96,8 @@ void WelcomePage::initializePage()
     loadRecentsProjects();
 }
 
-bool WelcomePage::validatePage()
+bool
+WelcomePage::validatePage()
 {
     if ( m_ui.openRadioButton->isChecked() )
     {
@@ -109,12 +115,14 @@ bool WelcomePage::validatePage()
     return true;
 }
 
-void WelcomePage::cleanupPage()
+void
+WelcomePage::cleanupPage()
 {
 
 }
 
-void WelcomePage::loadRecentsProjects()
+void
+WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
     ProjectManager* pm = GUIProjectManager::getInstance();
@@ -130,7 +138,8 @@ void WelcomePage::loadRecentsProjects()
     }
 }
 
-void WelcomePage::loadProject()
+void
+WelcomePage::loadProject()
 {
     QString projectPath =
             QFileDialog::getOpenFileName( NULL, tr( "Select a project file" ),
@@ -163,30 +172,51 @@ void WelcomePage::loadProject()
     selectOpenRadio();
 }
 
-void WelcomePage::selectOpenRadio()
+void
+WelcomePage::removeProject()
 {
-    m_ui.openRadioButton->setChecked( true );
+    QList<QListWidgetItem*> selected = m_ui.projectsListWidget->selectedItems();
+    if ( selected.isEmpty() )
+        return;
+
+    const QString fileName = selected.at( 0 )->data( FilePath ).toString();
+    if ( fileName.isEmpty() )
+        return;
+
+    GUIProjectManager::getInstance()->removeProject( fileName );
+    loadRecentsProjects(); // Reload recent projects
 }
 
-void WelcomePage::projectDoubleClicked( QListWidgetItem* item )
+void
+WelcomePage::selectOpenRadio()
+{
+    m_ui.openRadioButton->setChecked( true );
+    m_ui.removeProjectButton->setEnabled( true );
+}
+
+void
+WelcomePage::projectDoubleClicked( QListWidgetItem* item )
 {
     Q_UNUSED( item );
     if ( wizard() )
         wizard()->next();
 }
 
-QString WelcomePage::projectPath()
+QString
+WelcomePage::projectPath()
 {
     return *m_projectPath;
 }
 
-void WelcomePage::setProjectPath( const QString& path )
+void
+WelcomePage::setProjectPath( const QString& path )
 {
     m_projectPath->clear();
     m_projectPath->append( path );
 }
 
-void WelcomePage::hideWizardAtStartup( bool hidden )
+void
+WelcomePage::hideWizardAtStartup( bool hidden )
 {
     QSettings s;
     s.setValue( "ShowWizardStartup", !hidden );
