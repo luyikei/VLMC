@@ -311,8 +311,5 @@ GUIProjectManager::loadProject()
 void
 GUIProjectManager::removeProject( const QString &fileName )
 {
-    QFile   projectFile( fileName );
-    if ( !projectFile.exists() )
-        return;
     ProjectManager::removeProject( fileName );
 }
