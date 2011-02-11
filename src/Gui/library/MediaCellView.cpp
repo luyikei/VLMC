@@ -111,7 +111,8 @@ MediaCellView::snapshotUpdated( const Media *media )
     m_ui->delLabel->setEnabled( true );
 }
 
-void MediaCellView::changeEvent( QEvent *e )
+void
+MediaCellView::changeEvent( QEvent *e )
 {
     QWidget::changeEvent( e );
     switch ( e->type() )
@@ -126,7 +127,8 @@ void MediaCellView::changeEvent( QEvent *e )
     }
 }
 
-void            MediaCellView::setTitle( const QString& title )
+void
+MediaCellView::setTitle( const QString& title )
 {
     m_ui->title->setText( title );
 }
@@ -164,17 +166,20 @@ MediaCellView::setThumbnail( const QPixmap &pixmap )
     m_ui->thumbnail->setPixmap( pixmap.scaled( 64, 64, Qt::KeepAspectRatio ) );
 }
 
-const QPixmap*  MediaCellView::getThumbnail() const
+const
+QPixmap*  MediaCellView::getThumbnail() const
 {
     return m_ui->thumbnail->pixmap();
 }
 
-QString  MediaCellView::title() const
+QString
+MediaCellView::title() const
 {
     return m_ui->title->text();
 }
 
-void            MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
+void
+MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
 {
     if ( ( event->buttons() | Qt::LeftButton ) == Qt::LeftButton )
     {
@@ -185,7 +190,8 @@ void            MediaCellView::mouseDoubleClickEvent( QMouseEvent* event )
     }
 }
 
-void            MediaCellView::mousePressEvent( QMouseEvent* event )
+void
+MediaCellView::mousePressEvent( QMouseEvent* event )
 {
     QWidget::mousePressEvent( event );
 
@@ -196,7 +202,8 @@ void            MediaCellView::mousePressEvent( QMouseEvent* event )
     }
 }
 
-void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
+void
+MediaCellView::mouseMoveEvent( QMouseEvent* event )
 {
     if ( ( event->buttons() | Qt::LeftButton ) != Qt::LeftButton )
          return;
@@ -214,7 +221,8 @@ void    MediaCellView::mouseMoveEvent( QMouseEvent* event )
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 
-void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
+void
+MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
     if ( MainWorkflow::getInstance()->contains( m_clip->uuid() ) == true )
     {
@@ -237,12 +245,14 @@ void        MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
     emit cellDeleted( m_clip );
 }
 
-void        MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
+void
+MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
 {
     emit arrowClicked( m_clip->uuid() );
 }
 
-void        MediaCellView::setLength( qint64 length, bool mSecs )
+void
+MediaCellView::setLength( qint64 length, bool mSecs )
 {
     QTime   duration;
     if ( mSecs )
