@@ -15,13 +15,13 @@ mkdir -p src-dl/
 cd src-dl/
 
 if [ ! -f $VLC_FILE ]; then
-    wget $VLC_URL ;
+    curl -C - -O $VLC_URL ;
 else
     echo "VLC OK";
 fi
 
 if [ ! -f $FREI0R_FILE ]; then
-    wget $FREI0R_URL ;
+    curl -C - -O $FREI0R_URL ;
 else
     echo "FREI0R OK";
 fi
