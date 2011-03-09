@@ -5,8 +5,8 @@ VLC_VERSION_DATE="20110203-0102"
 VLC_VERSION_PREFIX="1.1-branch-intel-${VLC_VERSION_DATE}"
 VLC_FILE="${VLC_VERSION_PREFIX}.zip"
 VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
-FREI0R_FILE="frei0r-latest.tar.gz"
-FREI0R_URL="http://www.piksel.no/frei0r/snapshot/frei0r-latest.tar.gz"
+FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
+FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
 
 ROOT_FOLDER=`pwd`
 
