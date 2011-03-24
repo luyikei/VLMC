@@ -74,7 +74,7 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   File "@CMAKE_SOURCE_DIR@/TRANSLATORS"
   File "@CMAKE_SOURCE_DIR@/NEWS"
   File /r "plugins"
-  ;File /r /nonfatal "effects"
+  File /r "effects"
 
   ; Write the installation path into the registry
   WriteRegStr HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir" "$INSTDIR"
@@ -131,9 +131,9 @@ Section "Uninstall"
   Delete "$INSTDIR\TRANSLATORS"
   Delete "$INSTDIR\NEWS"
   Delete "$INSTDIR\plugins\*.*"
-;  Delete "$INSTDIR\effects\*.*"
+  Delete "$INSTDIR\effects\*.*"
   RMDir "$INSTDIR\plugins"
-;  RMDir "$INSTDIR\effects"
+  RMDir "$INSTDIR\effects"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\@PROJECT_NAME_LONG@\*.*"
