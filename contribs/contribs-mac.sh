@@ -1,8 +1,15 @@
 #!/bin/sh
 
-echo "For 64-bit builds please use an intel64 based contrib."
-VLC_VERSION_DATE="20110203-0102"
-VLC_VERSION_PREFIX="1.1-branch-intel-${VLC_VERSION_DATE}"
+VLC_ARCH=""
+VLC_BUILD_ID="0104"
+if [ `uname -m` != "i386" ]; then
+    VLC_ARCH="64";
+    VLC_BUILD_ID="0205";
+fi
+echo "Contribs configured for" `uname -m` "architecture"
+
+VLC_VERSION_DATE="20110304-${VLC_BUILD_ID}"
+VLC_VERSION_PREFIX="1.1-branch-intel${VLC_ARCH}-${VLC_VERSION_DATE}"
 VLC_FILE="${VLC_VERSION_PREFIX}.zip"
 VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
