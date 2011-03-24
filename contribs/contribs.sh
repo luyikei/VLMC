@@ -2,12 +2,14 @@
 
 QT4_FILE="qt4-4.7.1-win32-bin.tar.bz2"
 QT4_URL="http://download.videolan.org/pub/videolan/contrib/qt4-4.7.1-win32-bin.tar.bz2"
-VLC_VERSION_DATE="20110203-0202"
-VLC_VERSION_PREFIX="vlc-1.1.7"
+VLC_VERSION_DATE="20110324-0202"
+VLC_VERSION_PREFIX="vlc-1.1.8"
 VLC_FILE="${VLC_VERSION_PREFIX}-win32.7z"
 VLC_URL="http://nightlies.videolan.org/build/win32/branch-${VLC_VERSION_DATE}/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
+FREI0R_EFFECTS_FILE="effects.7z"
+FREI0R_EFFECTS_URL="http://people.videolan.org/~jb/vlmc/effects.7z"
 
 ROOT_FOLDER=`pwd`
 
@@ -29,8 +31,13 @@ if [ ! -f $FREI0R_FILE ]; then
 else
     echo "FREI0R OK";
 fi
-cd $ROOT_FOLDER
+if [ ! -f $FREI0R_EFFECTS_FILE ]; then
+    wget $FREI0R_EFFECTS_URL ;
+else
+    echo "FREI0R OK";
+fi
 
+cd $ROOT_FOLDER
 
 # bin and dlls
 mkdir bin && mkdir include && mkdir temp
@@ -57,6 +64,7 @@ cd $ROOT_FOLDER
 7z x src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/sdk"
 mv -fuv $VLC_VERSION_PREFIX/sdk/include/vlc $ROOT_FOLDER/include/vlc
 mv -fuv $VLC_VERSION_PREFIX/sdk/lib/ $ROOT_FOLDER/
+rm -frv $VLC_VERSION_PREFIX
 
 # Qt
 tar xvf src-dl/$QT4_FILE -C . --strip-components=1
@@ -64,3 +72,5 @@ cd include && ln -sf qt4/src && cd ..
 
 #frei0r
 tar xvf src-dl/$FREI0R_FILE --wildcards --no-anchored 'frei0r.h' --strip-components=1
+7z x src-dl/$FREI0R_EFFECTS_FILE "effects"
+mv -fuv effects/ bin/
