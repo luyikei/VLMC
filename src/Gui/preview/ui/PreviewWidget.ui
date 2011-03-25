@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="renderWidget" native="true">
+    <widget class="RenderWidget" name="renderWidget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -447,6 +447,12 @@
    <class>LCDTimecode</class>
    <extends>QLCDNumber</extends>
    <header>LCDTimecode.h</header>
+  </customwidget>
+  <customwidget>
+   <class>RenderWidget</class>
+   <extends>QWidget</extends>
+   <header>RenderWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

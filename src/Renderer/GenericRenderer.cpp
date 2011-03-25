@@ -22,6 +22,8 @@
 
 #include "GenericRenderer.h"
 #include "VLCMediaPlayer.h"
+#include "RenderWidget.h"
+#include <QtGlobal>
 
 GenericRenderer::GenericRenderer() :
         m_paused( false )
@@ -38,7 +40,7 @@ GenericRenderer::~GenericRenderer()
 void
 GenericRenderer::setRenderWidget(QWidget *renderWidget)
 {
-    m_mediaPlayer->setDrawable( renderWidget->winId() );
+    m_mediaPlayer->setDrawable( (void *) static_cast< RenderWidget* >(renderWidget)->id() );
     m_renderWidget = renderWidget;
 }
 #endif

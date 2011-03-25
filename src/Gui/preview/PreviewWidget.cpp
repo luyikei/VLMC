@@ -23,6 +23,7 @@
 
 #include "PreviewWidget.h"
 #include "PreviewRuler.h"
+#include "RenderWidget.h"
 #include "ui_PreviewWidget.h"
 #include "ClipRenderer.h"
 #include "Clip.h"
@@ -77,6 +78,11 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
     m_ui->rulerWidget->setRenderer( m_renderer );
 
     m_renderer->setRenderWidget( m_ui->renderWidget );
+
+#if defined ( Q_WS_MAC )
+    /* Releases the NSView in the RenderWidget*/
+    m_ui->renderWidget->release();
+#endif
 
     connect( m_renderer,     SIGNAL( stopped() ),               this,       SLOT( videoStopped() ) );
     connect( m_renderer,     SIGNAL( paused() ),                this,       SLOT( videoPaused() ) );
