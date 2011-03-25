@@ -181,6 +181,7 @@ ELSE(NOT WITH_GUI)
         Gui/preview/LCDTimecode.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
+        Gui/preview/RenderWidget.mm
         Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/ColorWidget.cpp
@@ -252,6 +253,7 @@ ELSE(NOT WITH_GUI)
         Gui/preview/LCDTimecode.h
         Gui/preview/PreviewRuler.h
         Gui/preview/PreviewWidget.h
+        Gui/preview/RenderWidget.h
         Gui/project/GuiProjectManager.h
         Gui/settings/BoolWidget.h
         Gui/settings/ColorWidget.h

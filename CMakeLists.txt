@@ -141,6 +141,11 @@ IF (NOT WIN32)
           ${LIBVLC_LIBRARY}
           ${LIBVLCCORE_LIBRARY})
 
+    IF (APPLE) # Fails to link to Cocoa framework automatically
+        SET (VLMC_LIBS ${VLMC_LIBS}
+                       ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/Cocoa.framework)
+    ENDIF(APPLE)
+
     INCLUDE(${QT_USE_FILE})
     ADD_DEFINITIONS(${QT_DEFINITIONS})
 ELSE (NOT WIN32)
