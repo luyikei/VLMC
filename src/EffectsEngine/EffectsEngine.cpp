@@ -138,9 +138,10 @@ EffectsEngine::loadEffects()
                     QString("/usr/local/lib/frei0r-1/") <<
                     QString("/usr/lib/frei0r-1/" );
     }
-#elif defined ( Q_OS_WIN32 )
+#else
     /* Search in the application folder */
     pathList << qApp->applicationDirPath() + "/effects/";
+# if defined ( Q_OS_WIN32 )
     TCHAR       appDir[128];
     if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
     {
@@ -158,6 +159,7 @@ EffectsEngine::loadEffects()
         qWarning() << "Failed to get application directory. Using current path.";
         pathList << QDir::currentPath() + "/effects/";
     }
+# endif
 #endif
     qDebug() << "Loading effects from:" << pathList;
     foreach ( const QString &path, pathList )
