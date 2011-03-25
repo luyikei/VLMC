@@ -26,6 +26,7 @@
 #include "EffectInstance.h"
 #include "Types.h"
 
+#include <QApplication>
 #include <QDesktopServices>
 #include <QDir>
 #include <QProcess>
@@ -125,6 +126,9 @@ void
 EffectsEngine::loadEffects()
 {
     QStringList     pathList;
+
+    /* Search in the application folder */
+    pathList << qApp->applicationDirPath() + "/effects/";
 
 #if defined( Q_OS_UNIX )
     const QProcessEnvironment &env = QProcessEnvironment::systemEnvironment();
