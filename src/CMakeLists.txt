@@ -389,7 +389,7 @@ IF( APPLE )
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
         POST_BUILD
-        COMMAND cp -r ${CONTRIBS_DIR}/include ${CONTRIBS_DIR}/lib ${CONTRIBS_DIR}/plugins ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
+        COMMAND cp -r ${CONTRIBS_DIR}/include ${CONTRIBS_DIR}/lib ${CONTRIBS_DIR}/plugins ${CONTRIBS_DIR}/effects ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
     )
     ADD_CUSTOM_COMMAND(
         TARGET vlmc
