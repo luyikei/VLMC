@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <QtGlobal>
 #include <QtDebug>
 #include <cassert>
 #include "VLCMediaPlayer.h"
@@ -219,15 +220,16 @@ MediaPlayer::isSeekable()
 }
 
 void
-MediaPlayer::setDrawable( void* hwnd )
+MediaPlayer::setDrawable( void* drawable )
 {
-    libvlc_media_player_set_hwnd( m_internalPtr, hwnd );
-}
-
-void
-MediaPlayer::setDrawable( uint32_t drawable )
-{
-    libvlc_media_player_set_xwindow( m_internalPtr, drawable );
+    qDebug() << "In MediaPlayer::setDrawable(hwnd), == " << drawable;
+#if defined ( Q_WS_MAC )
+    libvlc_media_player_set_nsobject( m_internalPtr, drawable );
+#elif defined ( Q_OS_UNIX )
+    libvlc_media_player_set_xwindow( m_internalPtr, static_cast< uint32_t >(drawable) );
+#elif defined ( Q_OS_WIN )
+    libvlc_media_player_set_hwnd( m_internalPtr, drawable );
+#endif
 }
 
 void

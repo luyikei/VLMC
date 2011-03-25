@@ -60,8 +60,7 @@ namespace   LibVLCpp
         void                                takeSnapshot( const char* outputFile, unsigned int width, unsigned int heigth );
         bool                                isPlaying();
         bool                                isSeekable();
-        void                                setDrawable( void* hwnd );
-        void                                setDrawable( quint32 drawable );
+        void                                setDrawable( void* drawable );
         void                                setMedia(Media* media);
         void                                getSize( quint32 *outWidth, quint32 *outHeight);
         float                               getFps();
