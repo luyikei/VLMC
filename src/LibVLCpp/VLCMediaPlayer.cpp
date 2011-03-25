@@ -225,7 +225,7 @@ MediaPlayer::setDrawable( void* drawable )
 #if defined ( Q_WS_MAC )
     libvlc_media_player_set_nsobject( m_internalPtr, drawable );
 #elif defined ( Q_OS_UNIX )
-    libvlc_media_player_set_xwindow( m_internalPtr, (uint32_t) reinterpret_cast< long >(drawable) );
+    libvlc_media_player_set_xwindow( m_internalPtr, reinterpret_cast<intptr_t>( drawable ) );
 #elif defined ( Q_OS_WIN )
     libvlc_media_player_set_hwnd( m_internalPtr, drawable );
 #endif
