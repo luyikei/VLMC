@@ -8,12 +8,14 @@ if [ `uname -m` != "i386" ]; then
 fi
 echo "Contribs configured for" `uname -m` "architecture"
 
-VLC_VERSION_DATE="20110304-${VLC_BUILD_ID}"
+VLC_VERSION_DATE="20110324-${VLC_BUILD_ID}"
 VLC_VERSION_PREFIX="1.1-branch-intel${VLC_ARCH}-${VLC_VERSION_DATE}"
 VLC_FILE="${VLC_VERSION_PREFIX}.zip"
 VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
+FREI0R_EFFECTS_FILE="effects${VLC_ARCH}.zip"
+FREI0R_EFFECTS_URL="http://dl.rohityadav.in/contribs/effects${VLC_ARCH}.zip"
 
 ROOT_FOLDER=`pwd`
 
@@ -29,6 +31,12 @@ fi
 
 if [ ! -f $FREI0R_FILE ]; then
     curl -C - -O $FREI0R_URL ;
+else
+    echo "FREI0R OK";
+fi
+
+if [ ! -f $FREI0R_EFFECTS_FILE ]; then
+    curl -C - -O $FREI0R_EFFECTS_URL ;
 else
     echo "FREI0R OK";
 fi
@@ -49,4 +57,5 @@ cd $ROOT_FOLDER
 # frei0r
 tar xvf src-dl/$FREI0R_FILE -C temp --strip-components=2
 cp temp/frei0r.h include
+unzip src-dl/$FREI0R_EFFECTS_FILE
 rm -rf temp
