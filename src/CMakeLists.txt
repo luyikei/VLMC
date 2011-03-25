@@ -181,7 +181,6 @@ ELSE(NOT WITH_GUI)
         Gui/preview/LCDTimecode.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
-        Gui/preview/RenderWidget.mm
         Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/ColorWidget.cpp
@@ -358,6 +357,7 @@ ELSE(NOT WITH_GUI)
         SET_SOURCE_FILES_PROPERTIES(../share/VLMC.icns PROPERTIES
             MACOSX_PACKAGE_LOCATION Resources)
         SET(MACOSX_BUNDLE_ICON_FILE VLMC.icns)
+        LIST( APPEND VLMC_SRCS Gui/preview/RenderWidget.mm )
     ENDIF( APPLE )
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )

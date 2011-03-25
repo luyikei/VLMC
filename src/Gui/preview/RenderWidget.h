@@ -56,7 +56,7 @@ private:
 #else
     RenderWidget( QWidget* parent = NULL )
         : QWidget (parent) {};
-    WId id() const { return winId; };
+    WId id() const { return winId(); };
 #endif
 };
 
