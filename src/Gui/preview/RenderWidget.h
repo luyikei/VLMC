@@ -55,8 +55,8 @@ private:
     QMacCocoaViewContainer*  m_container;
 #else
     RenderWidget( QWidget* parent = NULL )
-        : QWidget (parent) {};
-    WId id() const { return winId(); };
+        : QWidget (parent) {}
+    WId id() const { return winId(); }
 #endif
 };
 
