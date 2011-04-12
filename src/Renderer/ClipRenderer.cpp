@@ -96,7 +96,7 @@ ClipRenderer::startPreview()
     //If an old media is found, we delete it, and disconnect
     if ( m_vlcMedia != NULL )
         delete m_vlcMedia;
-    m_vlcMedia = new LibVLCpp::Media( m_selectedClip->getMedia()->fileInfo()->absoluteFilePath() );
+    m_vlcMedia = new LibVLCpp::Media( m_selectedClip->getMedia()->mrl() );
 
     m_mediaPlayer->setKeyInput( false );
     m_mediaPlayer->setMedia( m_vlcMedia );
