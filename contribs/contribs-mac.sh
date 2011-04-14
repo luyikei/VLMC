@@ -1,14 +1,14 @@
 #!/bin/sh
 
 VLC_ARCH=""
-VLC_BUILD_ID="0104"
+VLC_BUILD_ID="0103"
 if [ `uname -m` != "i386" ]; then
     VLC_ARCH="64";
-    VLC_BUILD_ID="0205";
+    VLC_BUILD_ID="0204";
 fi
 echo "Contribs configured for" `uname -m` "architecture"
 
-VLC_VERSION_DATE="20110324-${VLC_BUILD_ID}"
+VLC_VERSION_DATE="20110411-${VLC_BUILD_ID}"
 VLC_VERSION_PREFIX="1.1-branch-intel${VLC_ARCH}-${VLC_VERSION_DATE}"
 VLC_FILE="${VLC_VERSION_PREFIX}.zip"
 VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
