@@ -44,6 +44,7 @@ class MediaLibrary : public QWidget
         void        dragMoveEvent( QDragMoveEvent *event );
         void        dragLeaveEvent( QDragLeaveEvent *event );
         void        dropEvent( QDropEvent *event );
+        void        changeEvent( QEvent *e );
 
     private:
         /**

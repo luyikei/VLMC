@@ -56,6 +56,20 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
 }
 
 void
+MediaLibrary::changeEvent( QEvent *e )
+{
+    QWidget::changeEvent( e );
+    switch ( e->type() )
+    {
+        case QEvent::LanguageChange:
+            m_ui->retranslateUi( this );
+            break;
+        default:
+            break;
+    }
+}
+
+void
 MediaLibrary::filterUpdated( const QString &filter )
 {
     const MediaListView::MediaList              &medias = m_mediaListView->mediaList();
