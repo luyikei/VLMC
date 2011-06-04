@@ -23,6 +23,10 @@
 #ifndef CLIPRENDERER_H
 #define CLIPRENDERER_H
 
+#include "GenericRenderer.h"
+
+#include <QObject>
+
 class   Clip;
 class   Media;
 class   QUuid;
@@ -31,10 +35,6 @@ namespace LibVLCpp
 {
     class   Media;
 }
-
-#include "GenericRenderer.h"
-
-#include <QObject>
 
 class ClipRenderer : public GenericRenderer
 {

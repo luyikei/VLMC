@@ -163,13 +163,15 @@ ClipWorkflow::setTime( qint64 time )
     }
 }
 
-void            ClipWorkflow::setState( State state )
+void
+ClipWorkflow::setState( State state )
 {
     QWriteLocker    lock( m_stateLock );
     m_state = state;
 }
 
-QReadWriteLock* ClipWorkflow::getStateLock()
+QReadWriteLock*
+ClipWorkflow::getStateLock()
 {
     return m_stateLock;
 }
@@ -200,12 +202,14 @@ ClipWorkflow::waitForCompleteInit()
     return true;
 }
 
-LibVLCpp::MediaPlayer*       ClipWorkflow::getMediaPlayer()
+LibVLCpp::MediaPlayer*
+ClipWorkflow::getMediaPlayer()
 {
     return m_mediaPlayer;
 }
 
-void        ClipWorkflow::postGetOutput()
+void
+ClipWorkflow::postGetOutput()
 {
     //If we're running out of computed buffers, refill our stack.
     if ( getNbComputedBuffers() < getMaxComputedBuffers() / 3 )
@@ -220,7 +224,8 @@ void        ClipWorkflow::postGetOutput()
     }
 }
 
-void        ClipWorkflow::commonUnlock()
+void
+ClipWorkflow::commonUnlock()
 {
     //Don't test using availableBuffer, as it may evolve if a buffer is required while
     //no one is available : we would spawn a new buffer, thus modifying the number of available buffers
@@ -231,7 +236,8 @@ void        ClipWorkflow::commonUnlock()
     }
 }
 
-void    ClipWorkflow::computePtsDiff( qint64 pts )
+void
+ClipWorkflow::computePtsDiff( qint64 pts )
 {
     if ( m_previousPts == -1 )
         m_previousPts = pts;
@@ -247,19 +253,22 @@ void    ClipWorkflow::computePtsDiff( qint64 pts )
     m_currentPts = qMax( pts, m_previousPts );
 }
 
-void    ClipWorkflow::mediaPlayerPaused()
+void
+ClipWorkflow::mediaPlayerPaused()
 {
     setState( ClipWorkflow::Paused );
     m_beginPausePts = mdate();
 }
 
-void    ClipWorkflow::mediaPlayerUnpaused()
+void
+ClipWorkflow::mediaPlayerUnpaused()
 {
     setState( ClipWorkflow::Rendering );
     m_pauseDuration = mdate() - m_beginPausePts;
 }
 
-void    ClipWorkflow::resyncClipWorkflow()
+void
+ClipWorkflow::resyncClipWorkflow()
 {
     flushComputedBuffers();
     m_previousPts = -1;

@@ -129,7 +129,7 @@ EmphasizedTrackItem::EmphasizedTrackItem( GraphicsTrack *parent, qreal width, qr
 {
 }
 
-    QRectF
+QRectF
 EmphasizedTrackItem::boundingRect() const
 {
     return QRectF( 0, 0, m_width, m_height );
@@ -138,6 +138,6 @@ EmphasizedTrackItem::boundingRect() const
 void
 EmphasizedTrackItem::paint(QPainter *painter, const QStyleOptionGraphicsItem* , QWidget* )
 {
-    painter->setBrush( QBrush( Qt::darkBlue ));
+    painter->setBrush( QBrush( Qt::darkBlue ) );
     painter->drawRect( boundingRect() );
 }

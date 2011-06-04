@@ -71,12 +71,14 @@ VlmcDebug::~VlmcDebug()
     delete m_logFile;
 }
 
-void    VlmcDebug::setup()
+void
+VlmcDebug::setup()
 {
 //    qInstallMsgHandler( VlmcDebug::vlmcMessageHandler );
 }
 
-void    VlmcDebug::logFileChanged( const QVariant& logFileV )
+void
+VlmcDebug::logFileChanged( const QVariant& logFileV )
 {
     QString logFile = logFileV.toString();
     if ( logFile.isEmpty() == true )
@@ -94,7 +96,8 @@ void    VlmcDebug::logFileChanged( const QVariant& logFileV )
     m_logFile->open( QFile::Append | QFile::Truncate );
 }
 
-void    VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
+void
+VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
 {
     if ( VlmcDebug::getInstance()->m_logFile != NULL )
     {

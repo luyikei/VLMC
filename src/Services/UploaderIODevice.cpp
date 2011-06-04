@@ -49,7 +49,8 @@ UploaderIODevice::setFile( const QString& fileName )
 
 
 /* Implement vitual method */
-qint64 UploaderIODevice::readData( char *data, qint64 maxlen )
+qint64
+UploaderIODevice::readData( char *data, qint64 maxlen )
 {
     if ( !m_file->isOpen() )
         return -1;
@@ -90,29 +91,34 @@ qint64 UploaderIODevice::readData( char *data, qint64 maxlen )
     return atAll;
 }
 
-qint64 UploaderIODevice::writeData( const char *, qint64 )
+qint64
+UploaderIODevice::writeData( const char *, qint64 )
 {
     return -1;
 }
 
-qint64 UploaderIODevice::size() const
+qint64
+UploaderIODevice::size() const
 {
     return sizefull();
 }
 
-bool UploaderIODevice::openFile()
+bool
+UploaderIODevice::openFile()
 {
     if ( m_file->open( QIODevice::ReadOnly ) )
         return this->open( QIODevice::ReadOnly );
     return false;
 }
 
-qint64 UploaderIODevice::sizefull() const
+qint64
+UploaderIODevice::sizefull() const
 {
     return ( m_file->size() + m_head->size() + m_tail->size() );
 }
 
-qint64 UploaderIODevice::sizepart() const
+qint64
+UploaderIODevice::sizepart() const
 {
     return ( m_head->size() + m_file->size() );
 }

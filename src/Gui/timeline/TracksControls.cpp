@@ -53,7 +53,8 @@ TracksControls::TracksControls( QWidget* parent )
     setWidget( m_centralWidget );
 }
 
-void TracksControls::addVideoTrack( GraphicsTrack* track )
+void
+TracksControls::addVideoTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
     item->setMinimumWidth( 108 );
@@ -62,7 +63,8 @@ void TracksControls::addVideoTrack( GraphicsTrack* track )
     m_layout->insertWidget( 0, item );
 }
 
-void TracksControls::addAudioTrack( GraphicsTrack* track )
+void
+TracksControls::addAudioTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
     item->setMinimumWidth( 108 );
@@ -71,7 +73,8 @@ void TracksControls::addAudioTrack( GraphicsTrack* track )
     m_layout->insertWidget( -1, item );
 }
 
-void TracksControls::removeVideoTrack()
+void
+TracksControls::removeVideoTrack()
 {
     QLayoutItem* item = m_layout->takeAt( 0 );
     if ( item->widget() )
@@ -83,7 +86,8 @@ void TracksControls::removeVideoTrack()
     m_centralWidget->setGeometry( 0, 0, 1, 1 );
 }
 
-void TracksControls::removeAudioTrack()
+void
+TracksControls::removeAudioTrack()
 {
     QLayoutItem* item = m_layout->takeAt( m_layout->count() - 1 );
     if ( item->widget() )
@@ -95,7 +99,8 @@ void TracksControls::removeAudioTrack()
     m_centralWidget->setGeometry( 0, 0, 1, 1 );
 }
 
-void TracksControls::clear()
+void
+TracksControls::clear()
 {
     m_layout->removeWidget( m_separator );
     QLayoutItem* child;

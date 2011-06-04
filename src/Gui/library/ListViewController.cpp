@@ -54,22 +54,26 @@ ListViewController::~ListViewController()
 
 // ViewController method implementation
 
-const QString&      ListViewController::title() const
+const QString&
+ListViewController::title() const
 {
     return m_title;
 }
 
-QWidget*            ListViewController::view() const
+QWidget*
+ListViewController::view() const
 {
     return m_scrollArea;
 }
 
-void                ListViewController::addCell( QWidget* cell )
+void
+ListViewController::addCell( QWidget* cell )
 {
     m_layout->addWidget( cell );
 }
 
-void            ListViewController::removeCell( QWidget* cell )
+void
+ListViewController::removeCell( QWidget* cell )
 {
     m_layout->removeWidget( cell );
     delete cell;

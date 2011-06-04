@@ -166,8 +166,8 @@ MediaCellView::setThumbnail( const QPixmap &pixmap )
     m_ui->thumbnail->setPixmap( pixmap.scaled( 64, 64, Qt::KeepAspectRatio ) );
 }
 
-const
-QPixmap*  MediaCellView::getThumbnail() const
+const QPixmap*
+MediaCellView::getThumbnail() const
 {
     return m_ui->thumbnail->pixmap();
 }

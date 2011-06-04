@@ -100,7 +100,8 @@ ProjectManager::~ProjectManager()
 }
 
 
-QStringList ProjectManager::recentsProjects() const
+QStringList
+ProjectManager::recentsProjects() const
 {
     return m_recentsProjects;
 }

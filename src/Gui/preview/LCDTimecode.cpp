@@ -30,7 +30,8 @@ LCDTimecode::LCDTimecode( QWidget* parent )
     setTime( 0, 0, 0, 0 );
 }
 
-void LCDTimecode::setTime( int hours, int minutes, int seconds, int frames )
+void
+LCDTimecode::setTime( int hours, int minutes, int seconds, int frames )
 {
     QString s = QString("%1:%2:%3.%4")
                 .arg( QString::number( hours ), 2, '0' )

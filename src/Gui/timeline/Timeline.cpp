@@ -69,7 +69,6 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
     m_ui.controlsFrame->setLayout( tracksControlsLayout );
     tracksControlsLayout->addWidget( m_tracksControls );
 
-
     changeZoom( 10 );
     setDuration( 0 );
 
@@ -119,7 +118,8 @@ Timeline::~Timeline()
     MainWorkflow::destroyInstance();
 }
 
-void Timeline::changeEvent( QEvent *e )
+void
+Timeline::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -131,26 +131,30 @@ void Timeline::changeEvent( QEvent *e )
     }
 }
 
-void Timeline::clear()
+void
+Timeline::clear()
 {
     // The main workflow will ask the GUI to clear itself.
     m_mainWorkflow->clear();
 }
 
-void Timeline::changeZoom( int factor )
+void
+Timeline::changeZoom( int factor )
 {
     m_tracksRuler->setPixelPerMark( factor );
     m_scale = (double) FRAME_SIZE / m_tracksRuler->comboScale[factor];
     m_tracksView->setScale( m_scale );
 }
 
-void Timeline::setDuration( int duration )
+void
+Timeline::setDuration( int duration )
 {
     m_tracksView->setDuration( duration );
     m_tracksRuler->setDuration( duration );
 }
 
-void Timeline::setTool( ToolButtons button )
+void
+Timeline::setTool( ToolButtons button )
 {
     tracksView()->setTool( button );
 }

@@ -30,7 +30,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Media List</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

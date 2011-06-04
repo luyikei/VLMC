@@ -36,12 +36,14 @@
 
 #include <QtDebug>
 
-void Commands::trigger( QUndoCommand* command )
+void
+Commands::trigger( QUndoCommand* command )
 {
     UndoStack::getInstance()->push( command );
 }
 #else
-void Commands::trigger( Commands::Generic* command )
+void
+Commands::trigger( Commands::Generic* command )
 {
     command->redo();
 }

@@ -28,7 +28,8 @@
 
 #include <QStringList>
 
-QStringList     Tools::generateBacktrace( int levelsToSkip )
+QStringList
+Tools::generateBacktrace( int levelsToSkip )
 {
     void    *buff[backtraceSize];
     QStringList res;

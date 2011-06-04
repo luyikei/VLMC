@@ -52,7 +52,8 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *ac
                                                 SettingsManager::Vlmc );
 }
 
-void    KeyboardShortcutHelper::shortcutUpdated( const QVariant& value )
+void
+KeyboardShortcutHelper::shortcutUpdated( const QVariant& value )
 {
     if ( m_action == NULL )
         setKey( QKeySequence( value.toString() ) );

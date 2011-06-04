@@ -24,7 +24,8 @@
 
 int VLMCmain( int, char** );
 
-LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *)
+LONG WINAPI
+vlc_exception_filter(struct _EXCEPTION_POINTERS *)
 {
     if(IsDebuggerPresent())
     {
@@ -36,7 +37,8 @@ LONG WINAPI vlc_exception_filter(struct _EXCEPTION_POINTERS *)
     return 0;
 }
 
-int main( int argc, char **argv )
+int
+main( int argc, char **argv )
 {
     HINSTANCE h_Kernel32 = LoadLibraryW( L"kernel32.dll" );
     if( h_Kernel32 )

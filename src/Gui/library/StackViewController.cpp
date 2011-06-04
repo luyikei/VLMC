@@ -42,7 +42,8 @@ StackViewController::~StackViewController()
     delete m_controllerStack;
 }
 
-void    StackViewController::pushViewController( ViewController* viewController,
+void
+StackViewController::pushViewController( ViewController* viewController,
                                                  bool animated )
 {
     animated = false;

@@ -52,7 +52,8 @@ TracksRuler::TracksRuler( TracksView* tracksView, QWidget* parent )
              this, SLOT( update() ) );
 }
 
-void TracksRuler::setPixelPerMark( double rate )
+void
+TracksRuler::setPixelPerMark( double rate )
 {
     int scale = comboScale[ ( int )rate ];
     m_factor = 1.0 / ( double ) scale * FRAME_SIZE;
@@ -95,7 +96,8 @@ void TracksRuler::setPixelPerMark( double rate )
     update();
 }
 
-void TracksRuler::setDuration( int duration )
+void
+TracksRuler::setDuration( int duration )
 {
     int oldDuration = m_duration;
     m_duration = duration;
@@ -109,7 +111,8 @@ void TracksRuler::setDuration( int duration )
     update();
 }
 
-void TracksRuler::paintEvent( QPaintEvent* e )
+void
+TracksRuler::paintEvent( QPaintEvent* e )
 {
     QStylePainter painter( this );
     painter.setClipRect( e->rect() );
@@ -135,7 +138,6 @@ void TracksRuler::paintEvent( QPaintEvent* e )
         QString time = getTimeCode( (int)( f / m_factor + 0.5 ) );
         painter.drawText( ( int )f - m_offset + 2, LABEL_SIZE + 1, time );
     }
-
 
     // Draw the marks
     offsetMin = ( e->rect().left() + m_offset ) / m_littleMarkDistance;
@@ -167,7 +169,8 @@ void TracksRuler::paintEvent( QPaintEvent* e )
     painter.drawPolygon( cursor );
 }
 
-void TracksRuler::mousePressEvent( QMouseEvent* event )
+void
+TracksRuler::mousePressEvent( QMouseEvent* event )
 {
     if ( event->buttons() == Qt::LeftButton &&
          event->modifiers() == Qt::NoModifier )
@@ -176,7 +179,8 @@ void TracksRuler::mousePressEvent( QMouseEvent* event )
     }
 }
 
-void TracksRuler::mouseMoveEvent( QMouseEvent* event )
+void
+TracksRuler::mouseMoveEvent( QMouseEvent* event )
 {
     if ( event->buttons() == Qt::LeftButton &&
          event->modifiers() == Qt::NoModifier )
@@ -185,13 +189,15 @@ void TracksRuler::mouseMoveEvent( QMouseEvent* event )
     }
 }
 
-void        TracksRuler::moveRuler( int pos )
+void
+TracksRuler::moveRuler( int pos )
 {
     m_offset = pos;
     update();
 }
 
-QString     TracksRuler::getTimeCode( int frames ) const
+QString
+TracksRuler::getTimeCode( int frames ) const
 {
     int seconds = frames / m_fps;
     frames = frames % m_fps;

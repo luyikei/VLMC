@@ -45,18 +45,21 @@ GraphicsCursorItem::GraphicsCursorItem( const QPen& pen ) :
     m_boundingRect = QRectF( -2, 0, 3, 0 );
 }
 
-QRectF GraphicsCursorItem::boundingRect() const
+QRectF
+GraphicsCursorItem::boundingRect() const
 {
     return m_boundingRect;
 }
 
-void GraphicsCursorItem::paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* )
+void
+GraphicsCursorItem::paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* )
 {
     painter->setPen( m_pen );
     painter->drawLine( 0, 0, 0, m_boundingRect.height() );
 }
 
-QVariant GraphicsCursorItem::itemChange( GraphicsItemChange change, const QVariant& value )
+QVariant
+GraphicsCursorItem::itemChange( GraphicsItemChange change, const QVariant& value )
 {
     //Position is changing :
     if ( change == QGraphicsItem::ItemPositionChange )
@@ -80,7 +83,8 @@ QVariant GraphicsCursorItem::itemChange( GraphicsItemChange change, const QVaria
     return QGraphicsItem::itemChange( change, value );
 }
 
-void GraphicsCursorItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
+void
+GraphicsCursorItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     m_mouseDown = true;
 
@@ -88,7 +92,8 @@ void GraphicsCursorItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
     QGraphicsItem::mousePressEvent( event );
 }
 
-void GraphicsCursorItem::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
+void
+GraphicsCursorItem::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
 {
     m_mouseDown = false;
 
@@ -96,7 +101,8 @@ void GraphicsCursorItem::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     QGraphicsItem::mouseReleaseEvent( event );
 }
 
-void GraphicsCursorItem::frameChanged( qint64 newFrame, Vlmc::FrameChangedReason reason )
+void
+GraphicsCursorItem::frameChanged( qint64 newFrame, Vlmc::FrameChangedReason reason )
 {
     if ( reason != Vlmc::TimelineCursor )
     {
@@ -104,7 +110,8 @@ void GraphicsCursorItem::frameChanged( qint64 newFrame, Vlmc::FrameChangedReason
     }
 }
 
-void GraphicsCursorItem::setHeight( int height )
+void
+GraphicsCursorItem::setHeight( int height )
 {
     prepareGeometryChange();
     m_boundingRect.setHeight( height );

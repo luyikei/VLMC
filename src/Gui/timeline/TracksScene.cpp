@@ -42,7 +42,8 @@ TracksScene::TracksScene( QObject* parent ) : QGraphicsScene( parent )
 {
 }
 
-void TracksScene::keyPressEvent( QKeyEvent* keyEvent )
+void
+TracksScene::keyPressEvent( QKeyEvent* keyEvent )
 {
     TracksView* tv = Timeline::getInstance()->tracksView();
     if ( !tv ) return;
@@ -59,7 +60,8 @@ void TracksScene::keyPressEvent( QKeyEvent* keyEvent )
     QGraphicsScene::keyPressEvent( keyEvent );
 }
 
-void TracksScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+void
+TracksScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     QGraphicsScene::contextMenuEvent( event );
     if ( event->isAccepted() )

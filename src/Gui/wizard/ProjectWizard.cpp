@@ -75,7 +75,8 @@ ProjectWizard::~ProjectWizard()
 {
 }
 
-void    ProjectWizard::showHelp()
+void
+ProjectWizard::showHelp()
 {
     QString message;
 
@@ -91,7 +92,8 @@ void    ProjectWizard::showHelp()
     QMessageBox::information( this, tr( "Project wizard help" ), message );
 }
 
-void    ProjectWizard::accept()
+void
+ProjectWizard::accept()
 {
     //This intend to check if the user opened a project, or created one.
     //If he was creating a project, the current page will be the video/audio settings one.
@@ -110,7 +112,8 @@ void    ProjectWizard::accept()
     QDialog::accept();
 }
 
-void    ProjectWizard::reject()
+void
+ProjectWizard::reject()
 {
     QDialog::reject();
 }

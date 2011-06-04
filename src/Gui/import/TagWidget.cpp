@@ -37,7 +37,7 @@ TagWidget::TagWidget( QWidget *parent, int nbButton, QStringList tagList ) :
     m_currentClip( NULL )
 {
     m_ui->setupUi( this );
-    m_defaultTagList << "OutDoor" << "Hollidays" << "Seaside" << "Sunset" << "Familly";
+    m_defaultTagList << "Outdoor" << "Holiday" << "Seaside" << "Sunset" << "Family";
 
     for( int i = 0; i < m_defaultTagList.count(); i++ )
     {
@@ -55,7 +55,8 @@ TagWidget::~TagWidget()
     delete m_ui;
 }
 
-void    TagWidget::clipSelected( Clip* clip )
+void
+TagWidget::clipSelected( Clip* clip )
 {
     m_currentClip = clip;
     setTagTextEdit();
@@ -72,7 +73,8 @@ void    TagWidget::clipSelected( Clip* clip )
     connect( clip, SIGNAL( destroyed() ), this, SLOT( clipDestroyed() ) );
 }
 
-void    TagWidget::setMetaTags()
+void
+TagWidget::setMetaTags()
 {
     if ( m_currentClip != NULL )
     {
@@ -81,7 +83,8 @@ void    TagWidget::setMetaTags()
     }
 }
 
-void    TagWidget:: buttonTagClicked()
+void
+TagWidget:: buttonTagClicked()
 {
     if ( m_currentClip != NULL )
     {
@@ -99,7 +102,8 @@ void    TagWidget:: buttonTagClicked()
     }
 }
 
-void    TagWidget::setTagTextEdit()
+void
+TagWidget::setTagTextEdit()
 {
     QString tags;
     if ( m_currentClip != NULL )
@@ -116,7 +120,8 @@ void    TagWidget::setTagTextEdit()
     }
 }
 
-void    TagWidget::setButtonList( QStringList tagList )
+void
+TagWidget::setButtonList( QStringList tagList )
 {
     if ( m_currentClip != NULL )
     {
@@ -128,7 +133,8 @@ void    TagWidget::setButtonList( QStringList tagList )
     }
 }
 
-void TagWidget::changeEvent( QEvent *e )
+void
+TagWidget::changeEvent( QEvent *e )
 {
     QWidget::changeEvent( e );
     switch ( e->type() )

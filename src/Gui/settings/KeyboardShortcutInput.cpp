@@ -45,7 +45,8 @@ KeyboardShortcutInput::KeyboardShortcutInput( const QString& name,
     setMaximumWidth( 300 );
 }
 
-void    KeyboardShortcutInput::mousePressEvent( QMouseEvent* )
+void
+KeyboardShortcutInput::mousePressEvent( QMouseEvent* )
 {
     m_capturing = true;
     setDown( true );
@@ -55,7 +56,8 @@ void    KeyboardShortcutInput::mousePressEvent( QMouseEvent* )
     setText( "" );
 }
 
-void    KeyboardShortcutInput::mouseReleaseEvent( QMouseEvent* )
+void
+KeyboardShortcutInput::mouseReleaseEvent( QMouseEvent* )
 {
 }
 
@@ -66,7 +68,8 @@ KeyboardShortcutInput::shortcut() const
     return seq.toString();
 }
 
-void    KeyboardShortcutInput::release()
+void
+KeyboardShortcutInput::release()
 {
     QKeySequence    seq( m_shortcuts[0], m_shortcuts[1], m_shortcuts[2], m_shortcuts[3] );
 
@@ -75,13 +78,15 @@ void    KeyboardShortcutInput::release()
     setText( seq.toString() );
 }
 
-void    KeyboardShortcutInput::cancel()
+void
+KeyboardShortcutInput::cancel()
 {
     memcpy( m_shortcuts, m_initialValue, 4 * sizeof(int) );
     release();
 }
 
-void    KeyboardShortcutInput::keyPressEvent( QKeyEvent* e )
+void
+KeyboardShortcutInput::keyPressEvent( QKeyEvent* e )
 {
     if ( m_capturing == false )
     {
@@ -112,7 +117,8 @@ void    KeyboardShortcutInput::keyPressEvent( QKeyEvent* e )
     }
 }
 
-void    KeyboardShortcutInput::timeout()
+void
+KeyboardShortcutInput::timeout()
 {
     release();
 }

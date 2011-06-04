@@ -78,7 +78,8 @@ WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
     m_mediaPlayer->play();
 }
 
-void    WorkflowFileRenderer::stop()
+void
+WorkflowFileRenderer::stop()
 {
     WorkflowRenderer::killRenderer();
 }
@@ -91,7 +92,8 @@ WorkflowFileRenderer::__endReached()
     disconnect();
 }
 
-float   WorkflowFileRenderer::getFps() const
+float
+WorkflowFileRenderer::getFps() const
 {
     return m_outputFps;
 }

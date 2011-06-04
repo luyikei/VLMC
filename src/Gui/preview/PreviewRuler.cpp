@@ -38,7 +38,8 @@ PreviewRuler::PreviewRuler( QWidget* parent ) :
     m_markerStop = MARKER_DEFAULT;
 }
 
-void PreviewRuler::setRenderer( GenericRenderer* renderer )
+void
+PreviewRuler::setRenderer( GenericRenderer* renderer )
 {
     if ( m_renderer )
     {
@@ -54,7 +55,8 @@ void PreviewRuler::setRenderer( GenericRenderer* renderer )
              this, SLOT( clear() ) );
 }
 
-void PreviewRuler::paintEvent( QPaintEvent * event )
+void
+PreviewRuler::paintEvent( QPaintEvent * event )
 {
     Q_UNUSED( event );
     Q_ASSERT( m_renderer );
@@ -190,7 +192,8 @@ void PreviewRuler::paintEvent( QPaintEvent * event )
     painter.drawPolygon( cursor );
 }
 
-void PreviewRuler::mousePressEvent( QMouseEvent* event )
+void
+PreviewRuler::mousePressEvent( QMouseEvent* event )
 {
     m_isSliding = true;
     if ( m_renderer->length() > 0 )
@@ -199,7 +202,8 @@ void PreviewRuler::mousePressEvent( QMouseEvent* event )
     }
 }
 
-void PreviewRuler::mouseMoveEvent( QMouseEvent* event )
+void
+PreviewRuler::mouseMoveEvent( QMouseEvent* event )
 {
     if ( m_isSliding )
     {
@@ -212,12 +216,14 @@ void PreviewRuler::mouseMoveEvent( QMouseEvent* event )
     }
 }
 
-void PreviewRuler::mouseReleaseEvent( QMouseEvent* )
+void
+PreviewRuler::mouseReleaseEvent( QMouseEvent* )
 {
     m_isSliding = false;
 }
 
-void PreviewRuler::setFrame( qint64 frame, bool broadcastEvent /*= false*/ )
+void
+PreviewRuler::setFrame( qint64 frame, bool broadcastEvent /*= false*/ )
 {
     m_frame = frame;
     if ( m_isSliding && broadcastEvent == true )
@@ -227,7 +233,8 @@ void PreviewRuler::setFrame( qint64 frame, bool broadcastEvent /*= false*/ )
     update();
 }
 
-void PreviewRuler::updateTimecode( qint64 frames /*= -1*/ )
+void
+PreviewRuler::updateTimecode( qint64 frames /*= -1*/ )
 {
     if ( m_renderer->length() > 0 )
     {
@@ -252,7 +259,8 @@ void PreviewRuler::updateTimecode( qint64 frames /*= -1*/ )
     }
 }
 
-void PreviewRuler::setMarker( Marker m )
+void
+PreviewRuler::setMarker( Marker m )
 {
     if ( m == Start )
         m_markerStart = m_frame;
@@ -261,7 +269,8 @@ void PreviewRuler::setMarker( Marker m )
     update();
 }
 
-qint64 PreviewRuler::getMarker( Marker m ) const
+qint64
+PreviewRuler::getMarker( Marker m ) const
 {
     return ( m == Start ? m_markerStart : m_markerStop );
 }
@@ -275,7 +284,8 @@ PreviewRuler::hideMarker( Marker m )
         m_markerStop = -1;
 }
 
-void PreviewRuler::clear()
+void
+PreviewRuler::clear()
 {
     m_markerStart = MARKER_DEFAULT;
     m_markerStop = MARKER_DEFAULT;

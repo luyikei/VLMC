@@ -67,7 +67,8 @@ AbstractGraphicsMediaItem::~AbstractGraphicsMediaItem()
     ungroup();
 }
 
-void AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+void
+AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if ( !tracksView() )
         return;

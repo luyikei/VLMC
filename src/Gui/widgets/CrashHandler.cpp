@@ -60,7 +60,8 @@ CrashHandler::~CrashHandler()
     delete ui;
 }
 
-void    CrashHandler::changeEvent(QEvent *e)
+void
+CrashHandler::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch ( e->type() )
@@ -73,12 +74,14 @@ void    CrashHandler::changeEvent(QEvent *e)
     }
 }
 
-void    CrashHandler::close()
+void
+CrashHandler::close()
 {
     done(1);
 }
 
-void    CrashHandler::restart()
+void
+CrashHandler::restart()
 {
     done(2);
 }

@@ -37,7 +37,8 @@ OpenPage::OpenPage( QWidget *parent ) :
     setFinalPage( true );
 }
 
-void OpenPage::changeEvent( QEvent *e )
+void
+OpenPage::changeEvent( QEvent *e )
 {
     QWizardPage::changeEvent( e );
     switch ( e->type() ) {
@@ -49,7 +50,8 @@ void OpenPage::changeEvent( QEvent *e )
     }
 }
 
-bool OpenPage::validatePage()
+bool
+OpenPage::validatePage()
 {
     ProjectManager* pm = GUIProjectManager::getInstance();
 
@@ -59,7 +61,8 @@ bool OpenPage::validatePage()
     return true;
 }
 
-int OpenPage::nextId() const
+int
+OpenPage::nextId() const
 {
     // This an ending page
     return -1;

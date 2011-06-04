@@ -52,7 +52,8 @@ Panel::Panel( QWidget* parent ) : QWidget( parent )
                    QSizePolicy::Expanding );
 }
 
-void    Panel::addButton( const char* name,
+void
+Panel::addButton( const char* name,
                           const QIcon& icon,
                           int index )
 {

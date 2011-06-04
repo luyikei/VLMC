@@ -24,7 +24,8 @@
 
 #include <QStringList>
 
-QStringList     Tools::generateBacktrace( int )
+QStringList
+Tools::generateBacktrace( int )
 {
     QStringList res;
 

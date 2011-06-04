@@ -65,7 +65,8 @@ Workflow::TrackType GraphicsMovieItem::trackType() const
     return Workflow::VideoTrack;
 }
 
-void GraphicsMovieItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )
+void
+GraphicsMovieItem::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* )
 {
     painter->save();
     paintRect( painter, option );
@@ -76,7 +77,8 @@ void GraphicsMovieItem::paint( QPainter* painter, const QStyleOptionGraphicsItem
     painter->restore();
 }
 
-void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
+void
+GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem* option )
 {
     QRectF drawRect;
     bool drawRound;
@@ -148,7 +150,8 @@ void GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphics
         setZValue( zNotSelected() );
 }
 
-void GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )
+void
+GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem* option )
 {
     Q_UNUSED( option );
 
