@@ -299,7 +299,6 @@ ELSE(NOT WITH_GUI)
         Gui/export/ShareOnInternet.ui
         Gui/import/ui/ImportController.ui
         Gui/import/ui/TagWidget.ui
-        Gui/library/StackViewNavController.ui
         Gui/library/ui/MediaCellView.ui
         Gui/library/ui/MediaLibrary.ui
         Gui/library/ui/StackViewNavController.ui
