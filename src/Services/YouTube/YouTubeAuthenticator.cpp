@@ -65,7 +65,6 @@ void
 YouTubeAuthenticator::authInit()
 {
     m_isAuthenticated = false;
-    m_nick.clear();
     m_authString.clear();
     m_authError.clear();
 }
@@ -141,13 +140,6 @@ YouTubeAuthenticator::getAuthString()
     return m_authString;
 }
 
-
-const QString&
-YouTubeAuthenticator::getNick()
-{
-    return m_nick;
-}
-
 void
 YouTubeAuthenticator::setCredentials( const QString& username, const QString& password )
 {
@@ -161,7 +153,7 @@ YouTubeAuthenticator::setPOSTData()
 {
     m_postData.clear();
     m_postData += QString("accountType=HOSTED_OR_GOOGLE&Email=%1&Passwd=%2"
-                          "&service=youtube&source=VLMC").arg(m_username, m_password);
+                          "&service=youtube&source=VLMC").arg( m_username, m_password );
 }
 
 void
@@ -192,14 +184,9 @@ YouTubeAuthenticator::setAuthData( QByteArray& data )
             m_authString = tokenList.at(1);
             continue;
         }
-
-        if( tokenList.at(0) == "YouTubeUser" )
-        {
-            m_nick = tokenList.at(1);
-        }
     }
 
-    if( !m_authString.isEmpty() && !m_nick.isEmpty() && m_authError.isEmpty() )
+    if( !m_authString.isEmpty() && m_authError.isEmpty() )
         m_isAuthenticated = true;
 
     emit authOver();

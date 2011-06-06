@@ -85,7 +85,7 @@ YouTubeUploader::uploadInit()
         "    <media:description type='plain'>%2</media:description>\r\n"  // 2 description
         "    <media:category scheme='http://gdata.youtube.com/schemas/2007/categories.cat'>%3\r\n" // 3 category
         "    </media:category>\r\n"
-        "    <media:keywords>%4</media:keywords>\r\n%5"                   // 4 key words, 5 private video                                                        // 5 isPrivate
+        "    <media:keywords>%4</media:keywords>\r\n%5"                   // 4 key words, 5 private video
         "  </media:group>\r\n"
         "</entry>\r\n";
 
@@ -136,6 +136,7 @@ YouTubeUploader::uploadFinished()
     QNetworkReply *reply = static_cast<QNetworkReply *>( sender() );
     const QByteArray data = reply->readAll();
 
+    qDebug() << "In YouTubeUploader::uploadFinished: data received = " << data; 
     m_service->m_state = UploadFinish;
 
     /* Feed parser called to parse the XML data received */
@@ -205,7 +206,7 @@ YouTubeUploader::getMimeHead()
     data.append( "Content-Type: application/atom+xml; charset=UTF-8\r\n\r\n" );
     data.append( API_XML_REQUEST );
     data.append( "--" + m_boundary + "\r\n" );
-    data.append( "Content-Type: video/*\r\nContent-Transfer-Encoding: binary\r\n\r\n" );
+    data.append( "Content-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n" );
 
     return data;
 }

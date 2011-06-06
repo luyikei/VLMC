@@ -25,7 +25,7 @@
 
 #include <QObject>
 
-#define LOGIN_URL "https://www.google.com/youtube/accounts/ClientLogin"
+#define LOGIN_URL "https://www.google.com/accounts/ClientLogin"
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -46,7 +46,6 @@ class YouTubeAuthenticator : public QObject
         bool  isAuthenticated();
 
         const QString& getAuthString();
-        const QString& getNick();
 
         void  setServiceProvider( YouTubeService* service );
         void  setCredentials( const QString& username, const QString& password );
@@ -70,7 +69,6 @@ class YouTubeAuthenticator : public QObject
 
         /* Youtube tokens */
         QString                m_authString;
-        QString                m_nick;
         bool                   m_isAuthenticated;
         QString                m_authError;
 
