@@ -23,13 +23,14 @@
 #include "LanguageHelper.h"
 
 #include <QApplication>
+#include <QLibraryInfo>
+#include <QLocale>
 #include <QTranslator>
 #include <QVariant>
-#include <QLocale>
 
 #define TS_PREFIX "vlmc_"
 
-LanguageHelper::LanguageHelper() : m_translator( NULL )
+LanguageHelper::LanguageHelper() : m_translator( NULL ), m_qtTranslator( NULL )
 {
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( deleteLater() ) );
 }
@@ -38,6 +39,8 @@ LanguageHelper::~LanguageHelper()
 {
     if ( m_translator )
         delete m_translator;
+    if ( m_qtTranslator )
+        delete m_qtTranslator;
 }
 
 void
@@ -49,19 +52,32 @@ LanguageHelper::languageChanged( const QVariant &vLang )
 void
 LanguageHelper::languageChanged( const QString &lang  )
 {
-    if ( m_translator != NULL )
+    if ( m_translator != NULL ||  m_qtTranslator != NULL )
     {
         qApp->removeTranslator( m_translator );
+        qApp->removeTranslator( m_qtTranslator );
         delete m_translator;
+        delete m_qtTranslator;
         m_translator = NULL;
+        m_qtTranslator = NULL;
     }
 
     m_translator = new QTranslator();
+    m_qtTranslator = new QTranslator();
 
     if ( lang.isEmpty() || lang == "default" )
+    {
         m_translator->load( TS_PREFIX + QLocale::system().name(), ":/ts/" );
+        m_qtTranslator->load( "qt_" + QLocale::system().name(),
+                              QLibraryInfo::location( QLibraryInfo::TranslationsPath ) );
+    }
     else
+    {
         m_translator->load( TS_PREFIX + lang, ":/ts/" );
+        m_qtTranslator->load( "qt_" + lang,
+                              QLibraryInfo::location( QLibraryInfo::TranslationsPath ) );
+    }
 
-    qApp->installTranslator( m_translator );
+    qApp->installTranslator( m_translator );   // For translating VLMC UI strings
+    qApp->installTranslator( m_qtTranslator ); // For translating Qt's dialog buttons etc.
 }

@@ -41,6 +41,7 @@ private:
     LanguageHelper();
     ~LanguageHelper();
     QTranslator             *m_translator;
+    QTranslator             *m_qtTranslator;
 
     friend class    Singleton<LanguageHelper>;
 };
