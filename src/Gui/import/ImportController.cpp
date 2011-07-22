@@ -38,6 +38,7 @@
 #include "Transcoder.h"
 
 #include <QFileSystemModel>
+#include <QHeaderView>
 #include <QMessageBox>
 #include <QPalette>
 #include <QSettings>
