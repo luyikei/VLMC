@@ -126,10 +126,9 @@ void
 EffectsEngine::loadEffects()
 {
     QStringList     pathList;
-
-#if defined ( QS_OS_MAC )
     pathList << qApp->applicationDirPath() + "/effects/";
-#elif defined ( Q_OS_UNIX )
+
+#if defined ( Q_OS_UNIX )
     const QProcessEnvironment &env = QProcessEnvironment::systemEnvironment();
     if ( env.contains( "FREI0R_PATH" ) == true )
         pathList = env.value( "FREI0R_PATH" ).split( ':' );
@@ -141,7 +140,6 @@ EffectsEngine::loadEffects()
                     QString("/usr/lib/frei0r-1/" );
     }
 #elif defined ( Q_OS_WIN32 )
-    pathList << qApp->applicationDirPath() + "/effects/";
     TCHAR       appDir[128];
     if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
     {
@@ -172,7 +170,7 @@ EffectsEngine::loadEffects()
 }
 
 const QStringList&
-EffectsEngine::effects(Effect::Type type) const
+EffectsEngine::effects( Effect::Type type ) const
 {
     return m_names[type];
 }
