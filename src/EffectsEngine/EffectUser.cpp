@@ -47,11 +47,15 @@ EffectUser::~EffectUser()
 EffectHelper*
 EffectUser::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/ )
 {
-    //FIXME: Check it the effect type is supported
-    EffectInstance  *effectInstance = effect->createInstance();
-    EffectHelper *ret = new EffectHelper( effectInstance, start, end );
-    addEffect( ret );
-    return ret;
+    //Check that effect type is one of the supported ones
+    if ( effect->type() == Effect::Filter  || effect->type() == Effect::Mixer2 )
+    {
+        EffectInstance  *effectInstance = effect->createInstance();
+        EffectHelper *ret = new EffectHelper( effectInstance, start, end );
+        addEffect( ret );
+        return ret;
+    }
+    return NULL;
 }
 
 void
