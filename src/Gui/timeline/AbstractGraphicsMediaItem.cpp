@@ -75,8 +75,8 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
 
     QMenu menu( tracksView() );
 
-    QAction* removeAction = menu.addAction( "Remove" );
-    QAction* muteAction = menu.addAction( "Mute" );
+    QAction* removeAction = menu.addAction( tr( "Remove" ) );
+    QAction* muteAction = menu.addAction( tr( "Mute" ) );
     muteAction->setCheckable( true );
     muteAction->setChecked( m_muted );
 
@@ -84,11 +84,11 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
     QAction* unlinkAction = NULL;
 
     if ( groupItem() )
-        unlinkAction = menu.addAction( "Unlink" );
+        unlinkAction = menu.addAction( tr( "Unlink" ) );
     else
     {
         QList<QGraphicsItem*> items = scene()->selectedItems();
-        linkAction = menu.addAction( "Link" );
+        linkAction = menu.addAction( tr( "Link" ) );
 
         if ( items.count() != 2 )
             linkAction->setEnabled( false );
@@ -96,7 +96,7 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
 
     menu.addSeparator();
 
-    QAction* changeColorAction = menu.addAction( "Set color" );
+    QAction* changeColorAction = menu.addAction( tr( "Set color" ) );
 
     QAction* selectedAction = menu.exec( event->screenPos() );
 
