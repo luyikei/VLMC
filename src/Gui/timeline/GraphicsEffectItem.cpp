@@ -26,6 +26,7 @@
 #include "Commands.h"
 #include "EffectHelper.h"
 #include "EffectInstance.h"
+#include "EffectInstanceWidget.h"
 #include "GraphicsTrack.h"
 #include "Timeline.h"
 #include "TracksScene.h"
@@ -327,8 +328,10 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
 
     QMenu menu( tracksView() );
 
-    QAction* removeAction = menu.addAction( "Remove" );
-    QAction* changeColorAction = menu.addAction( "Set color" );
+    QAction* removeAction = menu.addAction( tr( "Remove" ) );
+    QAction* changeColorAction = menu.addAction( tr( "Set color" ) );
+    menu.addSeparator();
+    QAction* changeEffectProperties = menu.addAction( tr( "Effect Properties" ) );
 
     QAction* selectedAction = menu.exec( event->screenPos() );
     if ( !selectedAction )
@@ -340,6 +343,12 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
     {
         m_itemColor = QColorDialog::getColor( m_itemColor, tracksView() );
         update();
+    }
+    else if ( selectedAction == changeEffectProperties )
+    {
+        EffectInstanceWidget *effectProperties = new EffectInstanceWidget();
+        effectProperties->setEffectInstance( m_effectHelper->effectInstance() );
+        effectProperties->show();
     }
 }
 
