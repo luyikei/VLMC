@@ -727,10 +727,16 @@ MainWindow::zoomOut()
 void
 MainWindow::on_actionFullscreen_triggered( bool checked )
 {
-    if ( checked )
+    if ( checked && !isFullScreen() )
+    {
+        setUnifiedTitleAndToolBarOnMac( false );
         showFullScreen();
+    }
     else
+    {
+        setUnifiedTitleAndToolBarOnMac( true );
         showNormal();
+    }
 }
 
 void
