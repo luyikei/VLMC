@@ -1,7 +1,7 @@
 #! /bin/sh
 
-QT4_FILE="qt4-4.7.2-win32-bin.tar.bz2"
-QT4_URL="http://download.videolan.org/pub/videolan/contrib/qt4-4.7.2-win32-bin.tar.bz2"
+QT4_FILE="qt4-4.7.3-win32-bin.tar.bz2"
+QT4_URL="http://dl.rohityadav.in/contribs/qt4-4.7.3-win32-bin.tar.bz2"
 VLC_VERSION_DATE="20110719-0203"
 VLC_VERSION_PREFIX="vlc-1.1.11"
 VLC_FILE="${VLC_VERSION_PREFIX}-win32.7z"
