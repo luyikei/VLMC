@@ -76,7 +76,6 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   File "@CMAKE_SOURCE_DIR@/TRANSLATORS"
   File "@CMAKE_SOURCE_DIR@/NEWS"
   File /r "plugins"
-  File /r "effects"
 
   ; Write the installation path into the registry
   WriteRegStr HKLM "Software\@PROJECT_NAME_SHORT@" "Install_Dir" "$INSTDIR"
@@ -95,6 +94,13 @@ Section "@PROJECT_NAME_SHORT@ (required)"
   ; File association
   ${registerExtension} "$INSTDIR\vlmc.exe" ".vlmc" "VLMC Project"
 
+SectionEnd
+
+Section "Frei0r effects & Qt translations"
+  ; Set output path to the installation directory.
+  SetOutPath $INSTDIR
+  File /r "effects"
+  File /r "ts"
 SectionEnd
 
 Section "Start Menu Shortcuts"
@@ -140,8 +146,10 @@ Section "Uninstall"
   Delete "$INSTDIR\NEWS"
   Delete "$INSTDIR\plugins\*.*"
   Delete "$INSTDIR\effects\*.*"
+  Delete "$INSTDIR\ts\*.*"
   RMDir "$INSTDIR\plugins"
   RMDir "$INSTDIR\effects"
+  RMDir "$INSTDIR\ts"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\@PROJECT_NAME_LONG@\*.*"
