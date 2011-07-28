@@ -21,6 +21,11 @@ IF(WIN32)
              DESTINATION ${NSIS_OUTPUT_DIR}
              FILES_MATCHING PATTERN "*.dll")
 
+        # Copy Qt translations
+        FILE(COPY "${CMAKE_SOURCE_DIR}/contribs/ts/"
+             DESTINATION "${NSIS_OUTPUT_DIR}/ts/"
+             FILES_MATCHING PATTERN "*.qm")
+
         MESSAGE(STATUS "Configuring NSIS")
 
         # Copy and configure the nsis script file
