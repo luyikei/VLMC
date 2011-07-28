@@ -16,6 +16,8 @@ FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
 FREI0R_EFFECTS_FILE="effects${VLC_ARCH}.zip"
 FREI0R_EFFECTS_URL="http://dl.rohityadav.in/contribs/effects${VLC_ARCH}.zip"
+QT4_FILE="qt4-4.7.3-win32-bin.tar.bz2"
+QT4_URL="http://dl.rohityadav.in/contribs/qt4-4.7.3-win32-bin.tar.bz2"
 
 ROOT_FOLDER=`pwd`
 
@@ -41,6 +43,12 @@ else
     echo "FREI0R OK";
 fi
 
+if [ ! -f $QT4_FILE ]; then
+    curl -C - -O $QT4_URL ;
+else
+    echo "Qt4 OK";
+fi
+
 cd $ROOT_FOLDER
 mkdir temp
 
@@ -58,4 +66,7 @@ cd $ROOT_FOLDER
 tar xvf src-dl/$FREI0R_FILE -C temp --strip-components=2
 cp temp/frei0r.h include
 unzip src-dl/$FREI0R_EFFECTS_FILE
+
+# qt translations
+tar xvf src-dl/$QT4_FILE --wildcards qt4*/ts/*qm -C ts --strip-components=1
 rm -rf temp
