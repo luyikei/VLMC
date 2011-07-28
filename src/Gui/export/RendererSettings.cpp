@@ -30,6 +30,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QSslSocket>
 
 RendererSettings::RendererSettings( bool shareOnInternet )
 {
@@ -58,6 +59,10 @@ RendererSettings::RendererSettings( bool shareOnInternet )
              this, SLOT(selectOutputFileName() ) );
     connect( m_ui.videoPresetBox, SIGNAL( activated( int ) ),
              this, SLOT( updateVideoPreset( int ) ) );
+
+    if( !QSslSocket::supportsSsl() )
+	    QMessageBox::information(0, "SSL Error",
+		    "This build has no OpenSSL support, video upload may not work.");
 }
 
 void
