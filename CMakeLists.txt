@@ -123,7 +123,6 @@ IF (WITH_GUI)
         ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtXml)
         ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtNetwork)
         ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/)
-        ADD_DEFINITIONS( -DQT_NO_OPENSSL)
         FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
     ELSE(WIN32)
         FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
@@ -154,15 +153,14 @@ IF (NOT WIN32)
     INCLUDE(${QT_USE_FILE})
     ADD_DEFINITIONS(${QT_DEFINITIONS})
 ELSE (NOT WIN32)
-    SET (VLMC_LIBS
-            ${CONTRIBS_PATH}/lib/libQtNetwork.a ${CONTRIBS_PATH}/lib/libQtXml.a
-            ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
-            ${CONTRIBS_PATH}/lib/libQtGui.a #${CONTRIBS_PATH}/lib/libqjpeg.a
-            ${CONTRIBS_PATH}/lib/libqtaccessiblewidgets.a
+    SET (VLMC_LIBS -L${CONTRIBS_PATH}/lib
+            ${CONTRIBS_PATH}/lib/libQtNetwork.a
+            ${CONTRIBS_PATH}/lib/libQtXml.a
+            ${CONTRIBS_PATH}/lib/libQtGui.a
             ${CONTRIBS_PATH}/lib/libQtCore.a
             ${CONTRIBS_PATH}/lib/libvlccore.dll.a
             ${CONTRIBS_PATH}/lib/libvlc.dll.a
-            ws2_32 winmm imm32)
+            ws2_32 winmm imm32 libeay32 ssleay32 crypt32 gdi32)
 ENDIF(NOT WIN32)
 
 # layout of VLMC installation
