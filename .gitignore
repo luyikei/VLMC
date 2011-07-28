@@ -13,6 +13,7 @@ Makefile*
 /contribs/src-dl
 /contribs/temp
 /contribs/plugins
+/contribs/ts
 
 .DS_Store
 Thumbs.db
