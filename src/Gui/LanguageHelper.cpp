@@ -69,13 +69,21 @@ LanguageHelper::languageChanged( const QString &lang  )
     {
         m_translator->load( TS_PREFIX + QLocale::system().name(), ":/ts/" );
         m_qtTranslator->load( "qt_" + QLocale::system().name(),
+#if defined( Q_OS_WIN32 ) || defined( Q_WS_MAC )
+                              qApp->applicationDirPath() + "/ts/" );
+#else
                               QLibraryInfo::location( QLibraryInfo::TranslationsPath ) );
+#endif
     }
     else
     {
         m_translator->load( TS_PREFIX + lang, ":/ts/" );
         m_qtTranslator->load( "qt_" + lang,
+#if defined( Q_OS_WIN32 ) || defined( Q_WS_MAC )
+                              qApp->applicationDirPath() + "/ts/" );
+#else
                               QLibraryInfo::location( QLibraryInfo::TranslationsPath ) );
+#endif
     }
 
     qApp->installTranslator( m_translator );   // For translating VLMC UI strings
