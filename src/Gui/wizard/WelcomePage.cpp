@@ -144,7 +144,7 @@ WelcomePage::loadProject()
     QString projectPath =
             QFileDialog::getOpenFileName( NULL, tr( "Select a project file" ),
                                           VLMC_GET_STRING( "general/DefaultProjectLocation" ),
-                                          "VLMC project file(*.vlmc)" );
+                                          tr( "VLMC project file(*.vlmc)" ) );
 
     if ( projectPath.isEmpty() ) return;
 
