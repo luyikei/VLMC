@@ -1092,9 +1092,6 @@ p, li { white-space: pre-wrap; }
         <source>Set Proxy Password, if any.</source>
         <translation>Indien bekend, vul Proxy paswoord in.</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Standaardlocatie van project</translation>

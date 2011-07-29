@@ -1124,9 +1124,6 @@ p, li { white-space: pre-wrap; }
         <source>Set Proxy Password, if any.</source>
         <translation>Ustaw hasło użytkownika proxy, jeśli istnieje.</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Domyślna lokalizacja projektu</translation>

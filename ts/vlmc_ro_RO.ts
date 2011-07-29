@@ -1104,9 +1104,6 @@ p, li { white-space: pre-wrap; }
         <source>Set Proxy Password, if any.</source>
         <translation>Setează Proxy Parolă, dacă e necesar.</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Locatia implicita a proiectului</translation>

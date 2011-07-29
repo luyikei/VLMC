@@ -1359,9 +1359,6 @@ p, li { white-space: pre-wrap; }
         <source>The project name</source>
         <translation>Název projektu</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="282"/>
         <source>Project default location</source>

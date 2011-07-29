@@ -893,9 +893,6 @@ p, li { white-space: pre-wrap; }
         <source>The project name</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation type="unfinished"></translation>

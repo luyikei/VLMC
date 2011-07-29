@@ -1104,9 +1104,6 @@ p, li { white-space: pre-wrap; }
         <source>Set Proxy Password, if any.</source>
         <translation>Nastavte heslo pre proxy, ak je k dispozícii.</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Predvolené umiestnenie projektu</translation>

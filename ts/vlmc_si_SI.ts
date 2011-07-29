@@ -916,9 +916,6 @@ p, li { white-space: pre-wrap; }
         <source>The project name</source>
         <translation>Ime projekta</translation>
     </message>
-</context>
-<context>
-    <name>PreferencesWidget</name>
     <message>
         <source>Project default location</source>
         <translation>Predpostavljena mesto za zapis projekta</translation>
