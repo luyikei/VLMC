@@ -68,5 +68,7 @@ cp temp/frei0r.h include
 unzip src-dl/$FREI0R_EFFECTS_FILE
 
 # qt translations
-tar xvf src-dl/$QT4_FILE --wildcards qt4*/ts/*qm -C ts --strip-components=1
+tar xvf src-dl/$QT4_FILE -C temp --strip-components=1
+mkdir -p ts
+mv temp/ts/*.qm ts/
 rm -rf temp
