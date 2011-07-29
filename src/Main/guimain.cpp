@@ -58,8 +58,8 @@ VLMCmain( int argc, char **argv )
     XInitThreads();
 #endif
     QApplication app( argc, argv );
-    app.setApplicationName( "vlmc" );
-    app.setOrganizationName( "vlmc" );
+    app.setApplicationName( "VLMC" );
+    app.setOrganizationName( "VideoLAN" );
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
@@ -72,7 +72,7 @@ VLMCmain( int argc, char **argv )
     LanguageHelper::getInstance()->languageChanged(
             s.value( "general/VLMCLang", "default" ) );
 
-#ifdef Q_WS_WIN
+#if defined( Q_WS_WIN )
 
     QFile  css(":/styles/windows");
     if ( css.open( QIODevice::ReadOnly | QIODevice::Text ) )
@@ -81,9 +81,7 @@ VLMCmain( int argc, char **argv )
         if ( styleSheet != "" )
             app.setStyleSheet( styleSheet );
     }
-#endif
 
-#if defined(Q_WS_WIN)
     // Creating the color palette
     QPalette p;
     p.setColor( QPalette::WindowText,       QColor( 255, 255, 255, 255 ) );

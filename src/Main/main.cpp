@@ -41,8 +41,8 @@ int
 VLMCmain( int argc, char **argv )
 {
     QCoreApplication app( argc, argv );
-    app.setApplicationName( "vlmc" );
-    app.setOrganizationName( "vlmc" );
+    app.setApplicationName( "VLMC" );
+    app.setOrganizationName( "VideoLAN" );
     app.setOrganizationDomain( "vlmc.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
