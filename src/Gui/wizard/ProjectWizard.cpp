@@ -106,6 +106,7 @@ ProjectWizard::accept()
         sManager->setValue( "video/VLMCOutputFPS", field( "fps" ), SettingsManager::Project );
         sManager->setValue( "video/VideoProjectHeight", field( "height" ), SettingsManager::Project );
         sManager->setValue( "video/VideoProjectWidth", field( "width" ), SettingsManager::Project );
+        sManager->setValue( "video/AspectRatio", field( "aspectratio" ), SettingsManager::Project );
         sManager->setValue( "audio/AudioSampleRate", field( "samplerate" ), SettingsManager::Project );
         sManager->setValue( "audio/NbChannels", field( "samplerate" ), SettingsManager::Project );
     }
