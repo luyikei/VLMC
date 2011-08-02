@@ -134,24 +134,31 @@ VideoPage::updateVideoPresets()
     case PRESET_VideoCustom: break;
     case PRESET_480i:
         setVideoResolution( 720, 480 );
+        setVideoFPS( 30.0 );
         break;
     case PRESET_576i:
         setVideoResolution( 720, 576 );
+        setVideoFPS( 25.0 );
         break;
     case PRESET_480p:
         setVideoResolution( 720, 480 );
+        setVideoFPS( 29.97 );
         break;
     case PRESET_576p:
         setVideoResolution( 720, 576 );
+        setVideoFPS( 29.97 );
         break;
     case PRESET_720p:
         setVideoResolution( 1280, 720 );
+        setVideoFPS( 29.97 );
         break;
     case PRESET_1080i:
         setVideoResolution( 1920, 1080 );
+        setVideoFPS( 30.0 );
         break;
     case PRESET_1080p:
         setVideoResolution( 1920, 1080 );
+        setVideoFPS( 29.97 );
         break;
     }
 }
@@ -181,4 +188,10 @@ VideoPage::setVideoResolution( int width, int height )
 {
     ui.spinBoxVideoWidth->setValue( width );
     ui.spinBoxVideoHeight->setValue( height );
+}
+
+void
+VideoPage::setVideoFPS( double fps )
+{
+    ui.doubleSpinBoxVideoFPS->setValue( fps );
 }

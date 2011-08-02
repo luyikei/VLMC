@@ -75,6 +75,7 @@ class VideoPage : public QWizardPage
         void            setVideoFormEnabled( bool enabled );
         void            setAudioFormEnabled( bool enabled );
         void            setVideoResolution( int width, int height );
+        void            setVideoFPS( double fps );
         Ui::VideoPage   ui;
 };
 
