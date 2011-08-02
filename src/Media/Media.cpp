@@ -42,7 +42,7 @@ const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.
                                          "*.mts *.mxf *.nsv *.nuv *.ogg *.ogm *.ogv *.ogx *.ps "
                                          "*.rec *.rm *.rmvb *.tod *.ts *.vob *.vro *.webm *.wmv";
 
-const QString   Media::ImageExtensions = "*.gif *.png *.jpg *.jpeg";
+const QString   Media::ImageExtensions = "*.png *.jpg *.jpeg";
 
 const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *.ape "
                                          "*.dts *.flac *.it *.m4a *.m4p *.mid *.mka *.mlp "
