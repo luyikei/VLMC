@@ -255,6 +255,8 @@ class   WorkflowRenderer : public GenericRenderer
          */
         virtual float       outputFps() const;
 
+        const QString       aspectRatio() const;
+
         /**
          *  \brief          Configure the production chain.
          */
@@ -264,13 +266,14 @@ class   WorkflowRenderer : public GenericRenderer
          *  \return         true if some render parameters has changed.
          */
         bool                paramsHasChanged( quint32 width, quint32 height,
-                                                  double fps );
+                                                  double fps, QString aspect );
 
     protected:
         MainWorkflow*       m_mainWorkflow;
         LibVLCpp::Media*    m_media;
         bool                m_stopping;
         float               m_outputFps;
+        QString             m_aspectRatio;
         /**
          *  \brief          This isn't exactly the current PTS.
          *                  It's the number of frame rendered since the render has started.

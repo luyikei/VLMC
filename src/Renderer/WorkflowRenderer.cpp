@@ -46,6 +46,7 @@ WorkflowRenderer::WorkflowRenderer() :
             m_media( NULL ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
+            m_aspectRatio( "" ),
             m_silencedAudioBuffer( NULL ),
             m_esHandler( NULL ),
             m_oldLength( 0 ),
@@ -96,13 +97,11 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     char        audioParameters[256];
     char        buffer[64];
 
-    const QString   aspectRatio = VLMC_PROJECT_GET_STRING("video/AspectRatio");
-
     m_esHandler->fps = fps;
     //Clean any previous render.
 
     sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%f/1:cookie=0:codec=%s:cat=2:caching=0",
-             width, height, aspectRatio.toAscii().constData(), fps, "RV32" );
+             width, height, m_aspectRatio.toAscii().constData(), fps, "RV32" );
     sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
                 m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );
@@ -234,12 +233,14 @@ WorkflowRenderer::startPreview()
 {
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
         return ;
-    if ( paramsHasChanged( m_width, m_height, m_outputFps ) == true )
+    if ( paramsHasChanged( m_width, m_height, m_outputFps, m_aspectRatio ) == true )
     {
         m_width = width();
         m_height = height();
         m_outputFps = outputFps();
+        m_aspectRatio = aspectRatio();
         setupRenderer( m_width, m_height, m_outputFps );
+        qDebug() << "yo setup renderer";
     }
     initFilters();
 
@@ -410,15 +411,22 @@ WorkflowRenderer::outputFps() const
     return VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
 }
 
+const QString
+WorkflowRenderer::aspectRatio() const
+{
+    return VLMC_PROJECT_GET_STRING("video/AspectRatio");
+}
+
 bool
-WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps )
+WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps, QString aspect )
 {
     quint32             newWidth = this->width();
     quint32             newHeight = this->height();
     float               newOutputFps = outputFps();
+    const QString       newAspectRatio = aspectRatio();
 
     return ( newWidth != width || newHeight != height ||
-         newOutputFps != fps );
+         newOutputFps != fps || newAspectRatio != aspect );
 }
 
 void
