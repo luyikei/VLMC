@@ -240,7 +240,6 @@ WorkflowRenderer::startPreview()
         m_outputFps = outputFps();
         m_aspectRatio = aspectRatio();
         setupRenderer( m_width, m_height, m_outputFps );
-        qDebug() << "yo setup renderer";
     }
     initFilters();
 
