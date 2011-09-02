@@ -1652,7 +1652,7 @@ Das Video in Ihrem Standardbrowser öffnen?</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Width</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <source>Height</source>
@@ -1668,7 +1668,7 @@ Das Video in Ihrem Standardbrowser öffnen?</translation>
     </message>
     <message>
         <source>SDTV/PAL (576i)</source>
-        <translation>SDTV/NTSC (480i)</translation>
+        <translation>SDTV/PAL (576i)</translation>
     </message>
     <message>
         <source>EDTV (480p)</source>
@@ -1680,7 +1680,7 @@ Das Video in Ihrem Standardbrowser öffnen?</translation>
     </message>
     <message>
         <source>HDTV (720p)</source>
-        <translation>EDTV (576p)</translation>
+        <translation>HDTV (720p)</translation>
     </message>
     <message>
         <source>HDTV (1080i)</source>
