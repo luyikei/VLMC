@@ -143,13 +143,6 @@ MainWindow::MainWindow( QWidget *parent ) :
     restoreGeometry( s.value( "MainWindowGeometry" ).toByteArray() );
     // Restore the layout
     restoreState( s.value( "MainWindowState" ).toByteArray() );
-
-    if ( s.value( "ShowWizardStartup", true ).toBool() )
-    {
-        //If a project was opened from the command line: don't show the wizard.
-        if ( qApp->arguments().size() == 1 )
-            m_pWizard->show();
-    }
 }
 
 MainWindow::~MainWindow()
@@ -158,6 +151,15 @@ MainWindow::~MainWindow()
         delete m_fileRenderer;
     delete m_importController;
     LibVLCpp::Instance::destroyInstance();
+}
+
+void
+MainWindow::showWizard()
+{
+    QSettings s;
+
+    if ( s.value( "ShowWizardStartup", true ).toBool() )
+        m_pWizard->show();
 }
 
 void

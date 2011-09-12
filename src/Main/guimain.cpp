@@ -115,6 +115,7 @@ VLMCmain( int argc, char **argv )
     MainWindow w;
 
     /* Check for project file */
+    bool        project = false;
     for ( int i = 1; i < argc; i++ )
     {
         QString arg = argv[i];
@@ -122,10 +123,13 @@ VLMCmain( int argc, char **argv )
         if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
         {
             GUIProjectManager::getInstance()->loadProject( argv[i+1] );
+            project = true;
             break;
         }
     }
-
+    //Don't show the wizard if a project has been passed through command line.
+    if ( project == false )
+        w.showWizard();
     w.show();
     return app.exec();
 }

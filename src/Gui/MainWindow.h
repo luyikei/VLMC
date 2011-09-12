@@ -52,6 +52,7 @@ public:
     ~MainWindow();
 
     void registerWidgetInWindowMenu( QDockWidget* widget );
+    void        showWizard();
 
 public slots:
     void        zoomIn();
