@@ -111,7 +111,7 @@ IF(QT_LUPDATE_EXECUTABLE)
 
     ## Create a target that runs lupdate for all the sources and UI files
     ADD_CUSTOM_TARGET(lupdate
-        COMMAND ${QT_LUPDATE_EXECUTABLE} -noobsolete ${translate_SRCS} -ts ${vlmc_TS}
+        COMMAND ${QT_LUPDATE_EXECUTABLE} -noobsolete ${translate_SRCS} -ts ${vlmc_TS} ${CMAKE_SOURCE_DIR}/ts/template.ts
     )
 ENDIF(QT_LUPDATE_EXECUTABLE)
 
