@@ -37,21 +37,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation>VLMC (VideoLAN Movie Creator) ist ein plattformübergreifende, nicht-lineare Videoschnitt-Software auf Basis des VLC Media Players.</translation>
+        <translation>VLMC (VideoLAN Movie Creator) ist eine plattformübergreifende, nicht-lineare Videoschnitt-Software basierend auf dem VLC Media Player.</translation>
     </message>
     <message>
         <source>This version of VLMC was compiled on:
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation>Diese Version des VLMC wurde kompiliert durch:
-%1 durchlaufen %2 kompliert durch QT %3
-Ihre QT Runtiime Version: %4
+        <translation>Diese Version von VLMC wurde auf %1 durch %2 kompiliert.
+Kompliert für QT %3
+Ihre QT Runtime Version: %4
 </translation>
     </message>
     <message>
         <source>Thanks</source>
-        <translation>Danke</translation>
+        <translation>Danksagungen</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>In project workspace</source>
-        <translation>Im Projektarbeitsbereich</translation>
+        <translation>Im Projekt-Arbeitsverzeichnis</translation>
     </message>
 </context>
 <context>
@@ -129,7 +129,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>Enter tags (you can enter multiple tags, separated by a comma)</source>
-        <translation>Tags eingeben (Sie können mehrere Tags, getrennt durch ein Komma, eingeben)</translation>
+        <translation>Tags eingeben (Sie können mehrere Tags, durch Kommas getrennt, eingeben)</translation>
     </message>
 </context>
 <context>
@@ -164,7 +164,7 @@ Ihre QT Runtiime Version: %4
     <name>Commands::Clip::Split</name>
     <message>
         <source>Splitting clip</source>
-        <translation>Video teilen</translation>
+        <translation>Video zerteilen</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>Ein Fehler ist aufgetreten Es tut uns leid, dass die Datei nicht gespeichert werden konnte. Sie wird geöffnet, wenn sie VLMC das nächste mal starten.</translation>
+        <translation>Ein Fehler ist aufgetreten; wir entschuldigen uns für die Unannehmlichkeiten. Das Projekt wurde vor dem Absturtz gesichert. Es wird geöffnet, wenn sie VLMC das nächste mal starten.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -348,15 +348,15 @@ Ihre QT Runtiime Version: %4
     <name>GUIProjectManager</name>
     <message>
         <source>The project has been modified.</source>
-        <translation>Dieses Projekt wurde bearbeitet.</translation>
+        <translation>Das Projekt wurde verändert.</translation>
     </message>
     <message>
         <source>Do you want to save it?</source>
-        <translation>Soll gespeichert werden?</translation>
+        <translation>Soll es gespeichert werden?</translation>
     </message>
     <message>
         <source>You are about to relocate the project. Every video will be copied to your new workspace.</source>
-        <translation>Das Projekt wird verschoben. Jedes Video wird in den neuen Arbeitsbereich kopiert.</translation>
+        <translation>Das Projekt wird verschoben. Jedes Video wird in das neue Arbeitsverzeichnis kopiert.</translation>
     </message>
     <message>
         <source>Do you want to proceed?</source>
@@ -364,7 +364,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>Failed to load project file</source>
-        <translation>Projekt konnte nicht geladen werden</translation>
+        <translation>Die Projektdatei konnte nicht geladen werden</translation>
     </message>
     <message>
         <source>Backup file</source>
@@ -372,11 +372,11 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>A backup file exists for this project. Do you want to load it?</source>
-        <translation>Es ist eine Backup-Datei für dieses Projekt verfügbar. Soll diese geladen werden?</translation>
+        <translation>Es ist eine Sicherheitskopie für dieses Projekt verfügbar. Soll diese geladen werden?</translation>
     </message>
     <message>
         <source>An outdated backup file was found. Do you want to erase it?</source>
-        <translation>Eine veraltete Backup-Datei wurde gefunden. Soll diese gelöscht werden?</translation>
+        <translation>Eine veraltete Sicherheitskopie wurde gefunden. Soll diese gelöscht werden?</translation>
     </message>
 </context>
 <context>
@@ -387,7 +387,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>This guide will step you through the process of setting up a new project.</source>
-        <translation>Der Assistent hilft ihnen, ein neues Projekt zu erstellen.</translation>
+        <translation>Dieser Assistent hilft ihnen, ein neues Projekt zu erstellen.</translation>
     </message>
     <message>
         <source>Project name</source>
@@ -399,7 +399,7 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>Workspace directory</source>
-        <translation>Projektpfad</translation>
+        <translation>Arbeitsverzeichnis</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -415,27 +415,27 @@ Ihre QT Runtiime Version: %4
     </message>
     <message>
         <source>Set General options</source>
-        <translation>Optionen</translation>
+        <translation>Allgemeine Einstellungen</translation>
     </message>
     <message>
         <source>Form is incomplete</source>
-        <translation>Formular ist nicht vollständig</translation>
+        <translation>Das Formular ist nicht vollständig</translation>
     </message>
     <message>
         <source>The project name must be filled.</source>
-        <translation>Das Projektnamenfeld muss ausgefüllt werden.</translation>
+        <translation>Das Projektname muss angegeben werden.</translation>
     </message>
     <message>
         <source>The workspace location must be set.</source>
-        <translation>Der Projektpfad muss gesetzt werden.</translation>
+        <translation>Das Arbeitsverzeichnis muss angegeben werden.</translation>
     </message>
     <message>
         <source>Missing workspace location</source>
-        <translation>Fehlende Projektadresse</translation>
+        <translation>Fehlender Projektpfad</translation>
     </message>
     <message>
         <source>Invalid workspace location</source>
-        <translation>Ungültige Projektadresse</translation>
+        <translation>Ungültiger Projektpfad</translation>
     </message>
 </context>
 <context>
@@ -499,9 +499,9 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Bitte beachten sie&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator ist eine &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; Software und ist nicht geeignet für Endnutzung. Viele Funktionen &lt;span style=&quot; font-weight:600;&quot;&gt;fehlen noch&lt;/span&gt;, oder sind &lt;span style=&quot; font-weight:600;&quot;&gt;fehlerhaft&lt;/span&gt;.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator ist eine &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; Software und daher noch nicht für die Endnutzung geeignet. Viele Funktionen &lt;span style=&quot; font-weight:600;&quot;&gt;fehlen noch&lt;/span&gt;, oder sind &lt;span style=&quot; font-weight:600;&quot;&gt;fehlerhaft&lt;/span&gt;.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Unser Team setzt sich aus Freiwilligen zusammen, die hart Arbeiten, um ihnen beste Erfahrungen im Video Editing zu geben..&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Unser Team setzt sich aus Freiwilligen zusammen, die hart Arbeiten, um Ihnen beste Erfahrungen bei der Videobearbeitung zu ermöglichen.&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;mehr lesen&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -537,7 +537,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>E&amp;xportieren</translation>
+        <translation>&amp;Exportieren</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -585,7 +585,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;To a file</source>
-        <translation>I&amp;n eine Datei</translation>
+        <translation>&amp;In eine Datei</translation>
     </message>
     <message>
         <source>Render your project as a file</source>
@@ -609,15 +609,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Proj&amp;ect Preferences</source>
-        <translation>Pro&amp;jekteinstellungen</translation>
+        <translation>Proj&amp;ekteinstellungen</translation>
     </message>
     <message>
         <source>Save &amp;As</source>
-        <translation>Speichern a&amp;ls</translation>
+        <translation>Speichern &amp;als</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>S&amp;chliesse Projekt</translation>
+        <translation>&amp;Projekt schließen</translation>
     </message>
     <message>
         <source>Crash</source>
@@ -632,8 +632,8 @@ p, li { white-space: pre-wrap; }
         <translation>Wiederholen</translation>
     </message>
     <message>
-        <source>Share your project on youtube</source>
-        <translation>Projekt auf YouTube zeigen</translation>
+        <source>Share on Youtube</source>
+        <translation>Projekt auf YouTube veröffentlichen</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -645,11 +645,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Use the mouse tool to manipulate regions in the timeline</source>
-        <translation>Maustool verwenden um Regionen in der Zeitleiste zu manipulieren</translation>
+        <translation>Auswahlwerkzeug verwenden um Regionen in der Zeitleiste zu manipulieren</translation>
     </message>
     <message>
         <source>Cut mode</source>
-        <translation>Cutmodus</translation>
+        <translation>Schere</translation>
     </message>
     <message>
         <source>Use the scissors to cut regions in the timeline</source>
@@ -657,11 +657,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Zoom-</translation>
+        <translation>Herauszoomen</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>Zoom+</translation>
+        <translation>Hineinzoomen</translation>
     </message>
     <message>
         <source>General</source>
@@ -740,11 +740,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Can&apos;t copy to workspace</source>
-        <translation>Konnte nicht in den Arbeitsbereich kopieren</translation>
+        <translation>Konnte nicht in das Arbeitsverzeichnis kopieren</translation>
     </message>
     <message>
         <source>Can&apos;t copy this media to workspace: %1</source>
-        <translation>%1 konnte nicht in den Arbeitsbereich kopiert werden</translation>
+        <translation>%1 konnte nicht in das Arbeitsverzeichnis kopiert werden</translation>
     </message>
 </context>
 <context>
@@ -797,11 +797,11 @@ p, li { white-space: pre-wrap; }
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Es sind nun genügend Informationen vorhanden, um das Projekt zu laden.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Drücken sie &lt;span style=&quot; font-weight:600;&quot;&gt;Fertig&lt;/span&gt; um den Assistenten zu schliessen und mit dem Video-Editing starten!&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Drücken sie &lt;span style=&quot; font-weight:600;&quot;&gt;Fertig&lt;/span&gt; um den Assistenten zu schliessen und mit der Videobearbeitung zu starten!&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Project wizard</source>
-        <translation>Projekerstellungstassistent</translation>
+        <translation>Projektassistent</translation>
     </message>
     <message>
         <source>Ready to load this project</source>
@@ -831,7 +831,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation>Dies ist der Zeitintervall zwischen zwei Atuomatischen Speichervorgängen</translation>
+        <translation>Dies ist der Zeitintervall zwischen zwei automatischen Speichervorgängen</translation>
     </message>
     <message>
         <source>Media preview</source>
@@ -911,7 +911,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open the new project wizard</source>
-        <translation>Projekterstellungsassistenten öffnen</translation>
+        <translation>Projektassistenten öffnen</translation>
     </message>
     <message>
         <source>Open a project</source>
@@ -939,7 +939,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Close the project</source>
-        <translation>Projekt schliessen</translation>
+        <translation>Projekt schließen</translation>
     </message>
     <message>
         <source>Close the current project</source>
@@ -951,7 +951,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open the import window</source>
-        <translation>Importieren Fenster öffnen</translation>
+        <translation>Import-Fenster öffnen</translation>
     </message>
     <message>
         <source>Render the project</source>
@@ -959,11 +959,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Render the project to a file</source>
-        <translation>Das Projekt rendern</translation>
+        <translation>Das Projekt als Datei rendern</translation>
     </message>
     <message>
         <source>Selection mode</source>
-        <translation>Auswahlmodus</translation>
+        <translation>Auswahlwerkzeug</translation>
     </message>
     <message>
         <source>Select the selection tool in the timeline</source>
@@ -971,7 +971,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cut mode</source>
-        <translation>Cutmodus</translation>
+        <translation>Schere</translation>
     </message>
     <message>
         <source>Select the cut/razor tool in the timeline</source>
@@ -983,7 +983,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The VLMC&apos;s UI language</source>
-        <translation>Die Sprache des VLMC UI</translation>
+        <translation>Die Sprache der VLMC-Oberfläche</translation>
     </message>
     <message>
         <source>Confirm clip deletion</source>
@@ -995,7 +995,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Youtube Developer Key</source>
-        <translation>YouTupe Entwickler-Key</translation>
+        <translation>YouTube Entwickler-Key</translation>
     </message>
     <message>
         <source>Youtube Username</source>
@@ -1023,7 +1023,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Frame Per Second used when previewing and rendering the project</source>
-        <translation>Frames pro Sekunde für die Vorschau und Projekte</translation>
+        <translation>Frames pro Sekunde für Vorschau und Rendern des Projekts</translation>
     </message>
     <message>
         <source>Video width</source>
@@ -1059,7 +1059,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation>Der temporäre Ordner für VLMC, um die Videos zu bearbeiten.</translation>
+        <translation>Der temporäre Ordner, um die Videos zu bearbeiten.</translation>
     </message>
     <message>
         <source>VLMC&apos;s Youtube Developer Key</source>
@@ -1103,7 +1103,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Set Proxy Password, if any.</source>
-        <translation>Proxy Passwort eingeben, wenn verfügbar.</translation>
+        <translation>Proxy Passwort eingeben, wenn verwendet.</translation>
     </message>
     <message>
         <source>Project default location</source>
@@ -1178,11 +1178,11 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     <name>ProjectWizard</name>
     <message>
         <source>Project wizard</source>
-        <translation>Projekterstellungassistent</translation>
+        <translation>Projektassistent</translation>
     </message>
     <message>
         <source>Choose the appropriate action then click Next to continue.</source>
-        <translation>Wählen sie die gewünschte Aktion und klicken sie Weiter um fortzufahren.</translation>
+        <translation>Wählen sie die gewünschte Aktion und klicken sie dann auf Weiter um fortzufahren.</translation>
     </message>
     <message>
         <source>This help is likely not to be of any help.</source>
@@ -1190,7 +1190,7 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>Project wizard help</source>
-        <translation>Projekterstellungsassistentenhilfe</translation>
+        <translation>Projektassistent-Hilfe</translation>
     </message>
 </context>
 <context>
@@ -1256,7 +1256,7 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
     </message>
     <message>
         <source>Output file already exists, do you want to overwrite it?</source>
-        <translation>Diese Datei existiert bereits. Wollen sie diese überschreiben?</translation>
+        <translation>Die Datei existiert bereits. Wollen Sie diese überschreiben?</translation>
     </message>
     <message>
         <source>Export Settings</source>
@@ -1384,7 +1384,7 @@ Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</tran
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
         <translation>Dies wird alle Einstellungen auf die Standardwerte zurücksetzen.
-Sie sind sicher, dass Sie den Vorgang fortsetzen möchten?</translation>
+Sind Sie sicher, dass Sie den Vorgang fortsetzen möchten?</translation>
     </message>
 </context>
 <context>
@@ -1633,7 +1633,7 @@ Das Video in Ihrem Standardbrowser öffnen?</translation>
     <name>UndoStack</name>
     <message>
         <source>Nothing to undo</source>
-        <translation>Nichts wiederherzustellen</translation>
+        <translation>Nichts rückgängig zu machen</translation>
     </message>
 </context>
 <context>
@@ -1732,7 +1732,7 @@ Das Video in Ihrem Standardbrowser öffnen?</translation>
     </message>
     <message>
         <source>New project wizard</source>
-        <translation>Projekterstellungsassistent</translation>
+        <translation>Projektassistent</translation>
     </message>
     <message>
         <source>Configure Video settings</source>
@@ -1764,7 +1764,7 @@ p, li { white-space: pre-wrap; }
 &lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Willkommen im Projekterstellungsassistent.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Willkommen im Projektassistenten.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieser Assistent hilft ihnen, ein neues Projekt zu erstellen oder ein bereits vorhandenes zu öffnen.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bitte wählen sie die gewünschte Option und klicken sie Weiter.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1783,11 +1783,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Do not show at startup.</source>
-        <translation>Nicht mehr während des Starts anzeigen.</translation>
+        <translation>Nicht mehr beim Starten anzeigen.</translation>
     </message>
     <message>
         <source>Project wizard</source>
-        <translation>Projekterstellungsassistent</translation>
+        <translation>Projektassistent</translation>
     </message>
     <message>
         <source>Open or create a project</source>
@@ -1801,7 +1801,7 @@ p, li { white-space: pre-wrap; }
         <source>You first need to select a project from the list.
 Then click next to continue...</source>
         <translation>Sie müssen zuerst ein Projekt aus der Liste auswählen
-Dann wählen sie Weiter um fortzufahren...</translation>
+Klicken Sie dann auf Weiter um fortzufahren...</translation>
     </message>
 </context>
 <context>
@@ -1812,7 +1812,7 @@ Dann wählen sie Weiter um fortzufahren...</translation>
     </message>
     <message>
         <source>Render in progress...</source>
-        <translation>Rendering wird ausgeführt...</translation>
+        <translation>Render-Vorgang wird ausgeführt...</translation>
     </message>
     <message>
         <source>Frame</source>
@@ -1843,11 +1843,11 @@ Dann wählen sie Weiter um fortzufahren...</translation>
     </message>
     <message>
         <source>Workspace: </source>
-        <translation>Arbeitsbereich:</translation>
+        <translation>Arbeitsverzeichnis:</translation>
     </message>
     <message>
         <source> copied to </source>
-        <translation>kopiert nach </translation>
+        <translation> kopiert nach </translation>
     </message>
 </context>
 <context>
@@ -1858,7 +1858,7 @@ Dann wählen sie Weiter um fortzufahren...</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation>Der Anschluss ist vielleicht unsicher, wollen Sie fortsetzen? Ein oder mehrere SSL-Fehler sind aufgetreten:%1</translation>
+        <translation>Die Verbindung ist möglicherweise unsicher, wollen Sie trotzdem fortfahren? Ein oder mehrere SSL-Fehler sind aufgetreten: %1</translation>
     </message>
 </context>
 </TS>
