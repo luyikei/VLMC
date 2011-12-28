@@ -1,7 +1,7 @@
 #! /bin/sh
 
-QT4_FILE="qt4-4.7.3-win32-bin.tar.bz2"
-QT4_URL="http://dl.rohityadav.in/contribs/qt4-4.7.3-win32-bin.tar.bz2"
+QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
+QT4_URL="http://rohityadav.in/files/contribs/qt4-4.8-win32-bin.tar.bz2"
 VLC_VERSION_DATE="20110719-0203"
 VLC_VERSION_PREFIX="vlc-1.1.11"
 VLC_FILE="${VLC_VERSION_PREFIX}-win32.7z"
@@ -34,7 +34,7 @@ fi
 if [ ! -f $FREI0R_EFFECTS_FILE ]; then
     wget $FREI0R_EFFECTS_URL ;
 else
-    echo "FREI0R OK";
+    echo "FREI0R EFFECTS OK";
 fi
 
 cd $ROOT_FOLDER
@@ -68,9 +68,12 @@ rm -frv $VLC_VERSION_PREFIX
 
 # Qt
 tar xvf src-dl/$QT4_FILE -C . --strip-components=1
+lrelease -compress -silent -nounfinished ts/*.ts
 cd include && ln -sf qt4/src && cd ..
 
 #frei0r
 tar xvf src-dl/$FREI0R_FILE --wildcards --no-anchored 'frei0r.h' --strip-components=1
 7z x src-dl/$FREI0R_EFFECTS_FILE "effects"
 mv -fuv effects/ bin/
+#Clean up
+rm -rf temp

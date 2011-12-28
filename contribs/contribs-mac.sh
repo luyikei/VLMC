@@ -15,9 +15,9 @@ VLC_URL="http://nightlies.videolan.org/build/macosx-intel/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
 FREI0R_EFFECTS_FILE="effects${VLC_ARCH}.zip"
-FREI0R_EFFECTS_URL="http://dl.rohityadav.in/contribs/effects${VLC_ARCH}.zip"
-QT4_FILE="qt4-4.7.3-win32-bin.tar.bz2"
-QT4_URL="http://dl.rohityadav.in/contribs/qt4-4.7.3-win32-bin.tar.bz2"
+FREI0R_EFFECTS_URL="http://rohityadav.in/files/contribs/effects${VLC_ARCH}.zip"
+QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
+QT4_URL="http://rohityadav.in/files/contribs/qt4-4.8-win32-bin.tar.bz2"
 
 ROOT_FOLDER=`pwd`
 
@@ -70,5 +70,6 @@ unzip src-dl/$FREI0R_EFFECTS_FILE
 # qt translations
 tar xvf src-dl/$QT4_FILE -C temp --strip-components=1
 mkdir -p ts
+lrelease -compress -silent -nounfinished temp/ts/*.ts
 mv temp/ts/*.qm ts/
 rm -rf temp
