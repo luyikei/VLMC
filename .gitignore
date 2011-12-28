@@ -12,6 +12,7 @@ Makefile*
 /contribs/lib
 /contribs/src-dl
 /contribs/temp
+/contribs/tools
 /contribs/plugins
 /contribs/ts
 
