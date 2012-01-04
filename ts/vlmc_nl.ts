@@ -51,6 +51,29 @@ Uw Qt runtime versie: %4
     </message>
 </context>
 <context>
+    <name>AbstractGraphicsMediaItem</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ClipMetadataDisplayer</name>
     <message>
         <source>Form</source>
@@ -257,12 +280,12 @@ Uw Qt runtime versie: %4
 <context>
     <name>EffectSettingWidget</name>
     <message>
-        <source>Dialog</source>
-        <translation>Dialoogvenster</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Gebruik</translation>
+    </message>
+    <message>
+        <source>Effect Properties</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -377,6 +400,14 @@ Uw Qt runtime versie: %4
         <source>An outdated backup file was found. Do you want to erase it?</source>
         <translation type="unfinished">Een  verouderd backupbestand werd gevonden. Wilt u het wissen?</translation>
     </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished">Geef het uitvoerbestand in</translation>
+    </message>
+    <message>
+        <source>VLMC project file(*.vlmc)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -446,6 +477,21 @@ Uw Qt runtime versie: %4
     </message>
 </context>
 <context>
+    <name>GraphicsEffectItem</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicsMovieItem</name>
     <message>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
@@ -482,22 +528,20 @@ Uw Qt runtime versie: %4
         <translation>VideoLan Movie Creator</translation>
     </message>
     <message>
+        <source>I understand</source>
+        <translation>Ik begrijp</translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software and is not ready for prime-time. Many key features are &lt;span style=&quot; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;, or even &lt;span style=&quot; font-weight:600;&quot;&gt;buggy&lt;/span&gt;.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>I understand</source>
-        <translation>Ik begrijp</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -673,30 +717,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cut mode</source>
         <translation type="unfinished">Knip mode</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>Algemeen</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>Toetsenbord</translation>
-    </message>
-    <message>
-        <source>Youtube</source>
-        <translation>Youtube</translation>
-    </message>
-    <message>
-        <source>Network</source>
-        <translation>Netwerk</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>Geluid</translation>
     </message>
     <message>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
@@ -1061,10 +1081,6 @@ p, li { white-space: pre-wrap; }
         <translation>Paswoord Youtube</translation>
     </message>
     <message>
-        <source>Leave this field, password will be stored in unencryped form.</source>
-        <translation>Verlaat dit invulveld, het paswoord zal bewaard worden in onversleutelde vorm.</translation>
-    </message>
-    <message>
         <source>Enable Proxy for VLMC</source>
         <translation>Maakt proxy mogelijk voor VLMC</translation>
     </message>
@@ -1099,6 +1115,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Temporary folder</source>
         <translation>Tijdelijke folder</translation>
+    </message>
+    <message>
+        <source>Leave this field empty, password will be stored in unencrypted form.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The rendered video aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of audio channels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1159,6 +1195,23 @@ Controleer eerst uw VLC-installatie voordat u het probleem meldt.</translation>
     <message>
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Het projectfile inladen is mislukt: %1. De aktie wordt beëindigd.</translation>
+    </message>
+    <message>
+        <source>Untitled Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete this project file: %1
+Please delete it manually.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1334,36 +1387,12 @@ Controleer eerst uw VLC-installatie voordat u het probleem meldt.</translation>
 <context>
     <name>Settings</name>
     <message>
-        <source>general</source>
-        <translation>algemeen</translation>
-    </message>
-    <message>
-        <source>keyboard</source>
-        <translation>Toetsenbord</translation>
-    </message>
-    <message>
-        <source>video</source>
-        <translation>Video</translation>
-    </message>
-    <message>
-        <source>audio</source>
-        <translation>Geluid</translation>
-    </message>
-    <message>
         <source>Project preferences</source>
         <translation>Project voorkeuren</translation>
     </message>
     <message>
         <source>VLMC Settings</source>
         <translation>Instellingen VLMC</translation>
-    </message>
-    <message>
-        <source>youtube</source>
-        <translation>Youtube</translation>
-    </message>
-    <message>
-        <source>network</source>
-        <translation>Netwerk</translation>
     </message>
     <message>
         <source>Restore default?</source>
@@ -1374,6 +1403,38 @@ Controleer eerst uw VLC-installatie voordat u het probleem meldt.</translation>
 Are you sure you want to continue?</source>
         <translation>Dit zal alle instellingen herstellen tot de standaardwaardes.
 Bent u er zeker van om door te gaan?</translation>
+    </message>
+    <message>
+        <source>Invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t save settings due to an invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Algemeen</translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished">Toetsenbord</translation>
+    </message>
+    <message>
+        <source>YouTube</source>
+        <translation type="unfinished">Youtube</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation type="unfinished">Netwerk</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation type="unfinished">Video</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished">Geluid</translation>
     </message>
 </context>
 <context>
@@ -1479,14 +1540,6 @@ Bent u er zeker van om door te gaan?</translation>
         <translation>Maak deze video privé</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancel</translation>
     </message>
@@ -1515,20 +1568,29 @@ p, li { white-space: pre-wrap; }
         <translation>Video ge-upload</translation>
     </message>
     <message>
+        <source>%1 kB Uploaded</source>
+        <translation>%1 kB ge-upload</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Your video has been uploaded.
 URL (copied to your clipboard):
 %1
 
-Open video in your default web browser?</source>
-        <translation>Uw video is ge-upload.
-URL (gecopieerd naar uw kladblok):
-%1
-
-De video in uw standaard webbrowser openen?</translation>
+Open this in your default web browser?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 kB Uploaded</source>
-        <translation>%1 kB ge-upload</translation>
+        <source>Some error has occured while processing your video.
+Please check with your video service provider.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1542,8 +1604,8 @@ De video in uw standaard webbrowser openen?</translation>
         <translation>Vorige</translation>
     </message>
     <message>
-        <source>TextLabel</source>
-        <translation>TekstLabel</translation>
+        <source>Media List</source>
+        <translation type="unfinished">Medialijst</translation>
     </message>
 </context>
 <context>
@@ -1723,6 +1785,14 @@ De video in uw standaard webbrowser openen?</translation>
         <source>11025 Hz</source>
         <translation></translation>
     </message>
+    <message>
+        <source>16/9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WelcomePage</name>
@@ -1778,6 +1848,18 @@ Klik dan op volgende om verder te gaan...</translation>
         <source>Do not show at startup.</source>
         <translation>Toon niet bij het starten.</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC project file(*.vlmc)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WorkflowFileRendererDialog</name>
@@ -1832,8 +1914,8 @@ Klik dan op volgende om verder te gaan...</translation>
         <translation>Youtube controle op juistheid</translation>
     </message>
     <message>
-        <source>Connection may be insecure, do you want to continue?One or more SSL errors has occurred: %1</source>
-        <translation>Verbinding kan slecht zijn, wilt u doorgaan? Een of meer SSL-fouten is opgetreden: %1</translation>
+        <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
