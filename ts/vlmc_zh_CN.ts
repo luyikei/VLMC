@@ -69,27 +69,27 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="78"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="79"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>静音</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="87"/>
         <source>Unlink</source>
-        <translation type="unfinished"></translation>
+        <translation>取消关联</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="91"/>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>关联</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="99"/>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>设置颜色</translation>
     </message>
 </context>
 <context>
@@ -347,7 +347,7 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="14"/>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>特效属性</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="72"/>
@@ -477,13 +477,13 @@ Your Qt runtime version: %4
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="130"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="303"/>
         <source>Enter the output file name</source>
-        <translation type="unfinished">输入输出文件名</translation>
+        <translation>请输入输出文件名</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="131"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="305"/>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 项目文件(*.vlmc)</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
@@ -595,17 +595,17 @@ Your Qt runtime version: %4
     <message>
         <location filename="../src/Gui/timeline/GraphicsEffectItem.cpp" line="331"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/GraphicsEffectItem.cpp" line="332"/>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>设置颜色</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/GraphicsEffectItem.cpp" line="334"/>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>特效属性</translation>
     </message>
 </context>
 <context>
@@ -663,7 +663,15 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;请注意&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator 处于&lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;预先内测阶段&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;，尚不能胜任实际应用。很多关键功能&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;还缺失&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;甚至&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;存在错误&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;。我们团队的志愿者将努力给您最佳的视频编辑体验。&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;进一步阅读&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/ui/IntroDialog.ui" line="77"/>
@@ -1224,7 +1232,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="302"/>
         <source>Leave this field empty, password will be stored in unencrypted form.</source>
-        <translation type="unfinished"></translation>
+        <translation>本字段留空，则密码将以明文形式储存。</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="314"/>
@@ -1364,12 +1372,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="67"/>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>视频宽高比</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="68"/>
         <source>The rendered video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>渲染后视频的宽高比</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="70"/>
@@ -1384,12 +1392,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="75"/>
         <source>Audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>音频声道数</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="76"/>
         <source>Number of audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>音频声道数目</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="80"/>
@@ -1485,12 +1493,12 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="43"/>
         <source>Untitled Project</source>
-        <translation type="unfinished"></translation>
+        <translation>无标题项目</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="44"/>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存项目</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="143"/>
@@ -1500,13 +1508,14 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="184"/>
         <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
+        <translation>无法删除项目文件</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="185"/>
         <source>Can&apos;t delete this project file: %1
 Please delete it manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法删除该项目文件: %1
+请手动删除之。</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="310"/>
@@ -1739,12 +1748,12 @@ Are you sure you want to continue?</source>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="129"/>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>无效值</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="130"/>
         <source>Can&apos;t save settings due to an invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>由于存在无效值，无法保存设置</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="184"/>
@@ -1760,32 +1769,32 @@ Are you sure you want to continue?</source>
         <location filename="../src/Gui/MainWindow.cpp" line="523"/>
         <location filename="../src/Gui/MainWindow.cpp" line="556"/>
         <source>General</source>
-        <translation type="unfinished">全局</translation>
+        <translation>全局</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="525"/>
         <source>Keyboard</source>
-        <translation type="unfinished">键盘</translation>
+        <translation>键盘</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="527"/>
         <source>YouTube</source>
-        <translation type="unfinished">YouTube</translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="529"/>
         <source>Network</source>
-        <translation type="unfinished">网络</translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="558"/>
         <source>Video</source>
-        <translation type="unfinished">视频</translation>
+        <translation>视频</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="560"/>
         <source>Audio</source>
-        <translation type="unfinished">音频</translation>
+        <translation>音频</translation>
     </message>
 </context>
 <context>
@@ -1922,7 +1931,11 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;使用发布功能表明您同意 &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt; 的服务条款。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="304"/>
@@ -1961,13 +1974,18 @@ URL (copied to your clipboard):
 %1
 
 Open this in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>您的视频已经上传。
+URL (已复制到您的剪贴板):
+%1
+
+是否在您的默认网页浏览器中打开?</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="169"/>
         <source>Some error has occured while processing your video.
 Please check with your video service provider.</source>
-        <translation type="unfinished"></translation>
+        <translation>处理您的视频时出现了一些错误。
+请与您的服务提供商联系。</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.cpp" line="172"/>
@@ -1995,7 +2013,7 @@ Please check with your video service provider.</source>
     <message>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="33"/>
         <source>Media List</source>
-        <translation type="unfinished">媒体列表</translation>
+        <translation>媒体列表</translation>
     </message>
 </context>
 <context>
@@ -2175,12 +2193,12 @@ Please check with your video service provider.</source>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="149"/>
         <source>16/9</source>
-        <translation type="unfinished">16/9</translation>
+        <translation>16/9</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="156"/>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>视频宽高比</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="166"/>
@@ -2255,12 +2273,12 @@ Then click next to continue...</source>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="145"/>
         <source>Select a project file</source>
-        <translation type="unfinished"></translation>
+        <translation>选择项目文件</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="147"/>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>VLMC 项目文件(*.vlmc)</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="14"/>
@@ -2315,7 +2333,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
 </context>
 <context>
@@ -2384,7 +2402,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Services/YouTube/YouTubeService.cpp" line="252"/>
         <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>连接可能不安全，是否继续？发生 SSL 错误: %1</translation>
     </message>
 </context>
 </TS>
