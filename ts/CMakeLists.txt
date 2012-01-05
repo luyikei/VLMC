@@ -48,6 +48,7 @@ SET(ALL_LANGUAGES
         cs
         de
         es
+        eu
         fr
         gl
         hu
