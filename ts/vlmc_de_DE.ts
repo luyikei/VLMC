@@ -180,7 +180,7 @@ Ihre QT Runtime Version: %4
     <name>Commands::Clip::Resize</name>
     <message>
         <source>Resizing clip</source>
-        <translation>Videogrösse verändern</translation>
+        <translation>Videogröße verändern</translation>
     </message>
 </context>
 <context>
@@ -233,7 +233,7 @@ Ihre QT Runtime Version: %4
     </message>
     <message>
         <source>An error occurred. We&apos;re sorry for the inconvenient, though we saved your project. It will be reopened next time you open VLMC.</source>
-        <translation>Ein Fehler ist aufgetreten; wir entschuldigen uns für die Unannehmlichkeiten. Das Projekt wurde vor dem Absturtz gesichert. Es wird geöffnet, wenn sie VLMC das nächste mal starten.</translation>
+        <translation>Ein Fehler ist aufgetreten; wir entschuldigen uns für die Unannehmlichkeiten. Das Projekt wurde vor dem Absturz gesichert. Es wird beim nächsten Start von VLMC geöffnet.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -418,7 +418,7 @@ Ihre QT Runtime Version: %4
     </message>
     <message>
         <source>This guide will step you through the process of setting up a new project.</source>
-        <translation>Dieser Assistent hilft ihnen, ein neues Projekt zu erstellen.</translation>
+        <translation>Dieser Assistent hilft Ihnen, ein neues Projekt zu erstellen.</translation>
     </message>
     <message>
         <source>Project name</source>
@@ -514,7 +514,7 @@ Ihre QT Runtime Version: %4
     </message>
     <message>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
-        <translation>Einige Medien, die sie geladen haben, können nicht für Videobearbeitung verwendet werden. Wollen Sie, dass VLMC diese konvertiert, damit sie in ihrem Projekt verwendet werden können?</translation>
+        <translation>Einige Medien, die Sie geladen haben, können nicht für Videobearbeitung verwendet werden. Wollen Sie, dass VLMC diese konvertiert, damit sie in Ihrem Projekt verwendet werden können?</translation>
     </message>
     <message>
         <source>Failed to load %1</source>
@@ -667,7 +667,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>Schliessen (&amp;X)</translation>
+        <translation>Schließen (&amp;X)</translation>
     </message>
     <message>
         <source>Selection mode</source>
@@ -707,7 +707,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>VLMC didn&apos;t closed nicely. Do you want to recover your project?</source>
-        <translation>VLMC wurde nicht ordnungsgemäß beendet. Wollen sie ihr Projekt wiederherstellen?</translation>
+        <translation>VLMC wurde nicht ordnungsgemäß beendet. Wollen Sie Ihr Projekt wiederherstellen?</translation>
     </message>
     <message>
         <source>Can&apos;t restore project</source>
@@ -822,7 +822,7 @@ p, li { white-space: pre-wrap; }
     <name>PathWidget</name>
     <message>
         <source>Select a path</source>
-        <translation>Wählen sie einen Pfad aus</translation>
+        <translation>Einen Pfad auswählen</translation>
     </message>
 </context>
 <context>
@@ -885,11 +885,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Quit</source>
-        <translation>Schliessen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <source>Quit VLMC</source>
-        <translation>VLMC schliessen</translation>
+        <translation>VLMC schließen</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -1182,7 +1182,7 @@ p, li { white-space: pre-wrap; }
         <source>An error occurred while rendering.
 Please check your VLC installation before reporting the issue.</source>
         <translation>Ein Fehler ist während des Rendervorganges aufgetreten.
-Bitte überprüfen sie ihre VLMC Installation bevor sie den Fehler melden.</translation>
+Bitte überprüfen Sie Ihre VLMC Installation bevor Sie den Fehler melden.</translation>
     </message>
     <message>
         <source>Adjust Volume</source>
@@ -1225,7 +1225,7 @@ Please delete it manually.</source>
     </message>
     <message>
         <source>Choose the appropriate action then click Next to continue.</source>
-        <translation>Wählen sie die gewünschte Aktion und klicken sie dann auf Weiter um fortzufahren.</translation>
+        <translation>Wählen Sie die gewünschte Aktion und klicken Sie dann auf Weiter um fortzufahren.</translation>
     </message>
     <message>
         <source>This help is likely not to be of any help.</source>
@@ -1287,11 +1287,11 @@ Please delete it manually.</source>
     </message>
     <message>
         <source>Please enter valid rendering parameters</source>
-        <translation>Bitte geben sie gültige Renderparameter ein</translation>
+        <translation>Bitte gültige Renderparameter eingeben</translation>
     </message>
     <message>
         <source>Please provide a valid output file!</source>
-        <translation>Bitte geben sie eine gültige Datei an!</translation>
+        <translation>Bitte eine gültige Datei angeben!</translation>
     </message>
     <message>
         <source>File already exists!</source>
@@ -1602,7 +1602,7 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Zürück</translation>
+        <translation>Zurück</translation>
     </message>
     <message>
         <source>Media List</source>
@@ -1692,7 +1692,7 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>In this page you can fine tune some of the settings of your new project.</source>
-        <translation>Hier finden sie einige Einstellungen für ihr neues Projekt.</translation>
+        <translation>Hier finden Sie einige Einstellungen für Ihr neues Projekt.</translation>
     </message>
     <message>
         <source>Video</source>
