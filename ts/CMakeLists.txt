@@ -62,6 +62,7 @@ SET(ALL_LANGUAGES
         sk
         sv
         ta
+        te
         tr
         uk
         zh
