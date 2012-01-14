@@ -57,23 +57,23 @@ Verzia Vášho prostredia Qt: %4</translation>
     <name>AbstractGraphicsMediaItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stlmiť</translation>
     </message>
     <message>
         <source>Unlink</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť prepojenie</translation>
     </message>
     <message>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Prepojenie</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť farbu</translation>
     </message>
 </context>
 <context>
@@ -286,7 +286,7 @@ Verzia Vášho prostredia Qt: %4</translation>
     </message>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti efektov</translation>
     </message>
 </context>
 <context>
@@ -402,11 +402,11 @@ Verzia Vášho prostredia Qt: %4</translation>
     </message>
     <message>
         <source>Enter the output file name</source>
-        <translation type="unfinished">Zadajte názov výstupného súboru</translation>
+        <translation>Zadajte názov výstupného súboru</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor s projektom VLMC (*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -479,15 +479,15 @@ Verzia Vášho prostredia Qt: %4</translation>
     <name>GraphicsEffectItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť farbu</translation>
     </message>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti efektov</translation>
     </message>
 </context>
 <context>
@@ -540,7 +540,15 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;Prosím pamätajte na to, že&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;program VideoLAN Movie Creator je &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;softvérom vo vývojovej fázi pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; a nie je určený na výlučné používanie. Niektoré kľúčové vlastnosti &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;ešte neboli dokončené&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, alebo môžu obsahovať &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;nedostatky&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Náš tím sa skladá z dobrovoľníkov, ktorí tvrdo pracujú na tom, aby ste z úpravy videa v tomto programe mali dobrý dojem.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;čítať ďalej&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1120,23 +1128,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Leave this field empty, password will be stored in unencrypted form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ak ponecháte toto políčko prázdne, heslo sa uloží v nekódovanej podobe.</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Stranový pomer videa</translation>
     </message>
     <message>
         <source>The rendered video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Stranový pomer vykresleného videa</translation>
     </message>
     <message>
         <source>Audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvukové kanály</translation>
     </message>
     <message>
         <source>Number of audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet kanálov so zvukom</translation>
     </message>
 </context>
 <context>
@@ -1200,20 +1208,21 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     </message>
     <message>
         <source>Untitled Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt bez názvu</translation>
     </message>
     <message>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuložený projekt</translation>
     </message>
     <message>
         <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno vymazať súbor s projektom</translation>
     </message>
     <message>
         <source>Can&apos;t delete this project file: %1
 Please delete it manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno vymazať tento súbor s projektom: %1
+Vymažte ho manuálne, prosím.</translation>
     </message>
 </context>
 <context>
@@ -1406,35 +1415,35 @@ Naozaj chcete pokračovať?</translation>
     </message>
     <message>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná hodnota</translation>
     </message>
     <message>
         <source>Can&apos;t save settings due to an invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno uložiť nastavenia z dôvodu neplatnej hodnoty</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Všeobecné</translation>
+        <translation>Všeobecné</translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished">Klávesnica</translation>
+        <translation>Klávesnica</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished">YouTube</translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">Sieť</translation>
+        <translation>Sieť</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished">Video</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Zvuk</translation>
+        <translation>Zvuk</translation>
     </message>
 </context>
 <context>
@@ -1577,7 +1586,11 @@ Naozaj chcete pokračovať?</translation>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;Zverejnením súhlasíte s podmienkami služieb spoločnosti &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Your video has been uploaded.
@@ -1585,12 +1598,17 @@ URL (copied to your clipboard):
 %1
 
 Open this in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše video bolo odovzdané na server.
+URL adresa (skopírovaná do schránky):
+%1
+
+Chcete túto adresu otvoriť v predvolenom prehliadači?</translation>
     </message>
     <message>
         <source>Some error has occured while processing your video.
 Please check with your video service provider.</source>
-        <translation type="unfinished"></translation>
+        <translation>Počas spracovávania videa sa vyskytlo niekoľko chýb.
+Skontrolujte ich prosím v spolupráci s vašou službou pre videá.</translation>
     </message>
 </context>
 <context>
@@ -1605,7 +1623,7 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>Media List</source>
-        <translation type="unfinished">Zoznam médií</translation>
+        <translation>Zoznam médií</translation>
     </message>
 </context>
 <context>
@@ -1787,11 +1805,11 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>16/9</source>
-        <translation type="unfinished">16/9</translation>
+        <translation>16/9</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Stranový pomer videa</translation>
     </message>
 </context>
 <context>
@@ -1860,15 +1878,15 @@ Potom kliknite na tlačidlo Ďalej...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <source>Select a project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte súbor s projektom</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor s projektom VLMC (*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1943,7 @@ Potom kliknite na tlačidlo Ďalej...</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojenie nie je zabezpečené, chcete pokračovať? Nastala jedna alebo viac chýb protokolu SSL: %1</translation>
     </message>
 </context>
 </TS>
