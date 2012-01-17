@@ -14,11 +14,11 @@
     </message>
     <message>
         <source>Translators</source>
-        <translation>Traducatori</translation>
+        <translation>Traducători</translation>
     </message>
     <message>
         <source>License</source>
-        <translation>Licenta</translation>
+        <translation>Licenţă</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -37,7 +37,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation>VLMC (VideoLAN Movie Creator) este un  program de editare video non-liniar cross-platform, bazat pe Media VLC Player.</translation>
+        <translation>Unele din fişierele media încărcate nu pot fi folosite pentru editarea video. Vrei VLMC să le transforme astfel încât puteţi să le folosească în proiectul dumneavoastră?.</translation>
     </message>
     <message>
         <source>This version of VLMC was compiled on:
@@ -57,23 +57,23 @@ Versiune Qt: %4</translation>
     <name>AbstractGraphicsMediaItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimină</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Mut</translation>
     </message>
     <message>
         <source>Unlink</source>
-        <translation type="unfinished"></translation>
+        <translation>Deconectat</translation>
     </message>
     <message>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Legătură</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează culoarea</translation>
     </message>
 </context>
 <context>
@@ -286,7 +286,7 @@ Versiune Qt: %4</translation>
     </message>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Proprietăţile efectului</translation>
     </message>
 </context>
 <context>
@@ -402,11 +402,11 @@ Versiune Qt: %4</translation>
     </message>
     <message>
         <source>Enter the output file name</source>
-        <translation type="unfinished">Alegeţi calea fişierului rezultat</translation>
+        <translation>Alegeţi calea fişierului rezultat</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier proiect VLMC(*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -479,15 +479,15 @@ Versiune Qt: %4</translation>
     <name>GraphicsEffectItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimină</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează culoarea</translation>
     </message>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Proprietăţile efectului</translation>
     </message>
 </context>
 <context>
@@ -540,7 +540,15 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator este &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;încă în faza de construcţie.Multe opţiuni &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;lipsesc&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, sau chiar&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;au diverse probleme&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;.Echipa noastră este compusă din voluntari şi muncim mult la dezvoltarea acestui proiect.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;citeşte mai mult&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1120,23 +1128,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Leave this field empty, password will be stored in unencrypted form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lasă acest câmp gol,parola va fi păstrată necriptată în formular.</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportul de aspect</translation>
     </message>
     <message>
         <source>The rendered video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportul de aspect al fişierului randat</translation>
     </message>
     <message>
         <source>Audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Canale audio</translation>
     </message>
     <message>
         <source>Number of audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Numărul canalelor audio</translation>
     </message>
 </context>
 <context>
@@ -1200,20 +1208,21 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     </message>
     <message>
         <source>Untitled Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiect fără nume</translation>
     </message>
     <message>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiect nesalvat</translation>
     </message>
     <message>
         <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu pot şterge fişierul  proiect</translation>
     </message>
     <message>
         <source>Can&apos;t delete this project file: %1
 Please delete it manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu pot şterge fişierul proiect: %1
+Te rog să-l ştergi manual.</translation>
     </message>
 </context>
 <context>
@@ -1406,35 +1415,35 @@ Vrei să continui?</translation>
     </message>
     <message>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valuare invalidă</translation>
     </message>
     <message>
         <source>Can&apos;t save settings due to an invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu pot salva setările din cauza unei valoari invalide</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">General</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished">Tastatura</translation>
+        <translation>Tastatură</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished">YouTube</translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">Retea</translation>
+        <translation>Reţea</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished">Video</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
 </context>
 <context>
@@ -1577,7 +1586,11 @@ Vrei să continui?</translation>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;Publicând,tu eşti de acord cu termenii de licenţă  &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Your video has been uploaded.
@@ -1585,12 +1598,17 @@ URL (copied to your clipboard):
 %1
 
 Open this in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul video a fost încărcat.
+URL (copiază în clipboard):
+%1
+
+Deschizi în browser-ul implicit?</translation>
     </message>
     <message>
         <source>Some error has occured while processing your video.
 Please check with your video service provider.</source>
-        <translation type="unfinished"></translation>
+        <translation>Au apărut probleme în timpul procesării fişierului video.
+Verifică conexiunea la internet.</translation>
     </message>
 </context>
 <context>
@@ -1605,7 +1623,7 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>Media List</source>
-        <translation type="unfinished">Lista media</translation>
+        <translation>Listă media</translation>
     </message>
 </context>
 <context>
@@ -1787,11 +1805,11 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>16/9</source>
-        <translation type="unfinished">16/9</translation>
+        <translation>16/9</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportul de aspect</translation>
     </message>
 </context>
 <context>
@@ -1860,15 +1878,15 @@ Apoi faceţi clic pe Next pentru a continua ......</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimină</translation>
     </message>
     <message>
         <source>Select a project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Alege un fişier proiect</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier proiect VLMC(*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1943,7 @@ Apoi faceţi clic pe Next pentru a continua ......</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Conexiunea poate fi nesigură,vrei să continui?A apărut una sau mai multe erori SSL: %1</translation>
     </message>
 </context>
 </TS>
