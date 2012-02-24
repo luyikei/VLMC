@@ -27,46 +27,54 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VLMC (VideoLAN Movie Creator) egy platformfüggetlen, nemlineáris videószerkesztő szoftver, ami a VLC médialejátszóra épül.</translation>
     </message>
     <message>
         <source>This version of VLMC was compiled on:
 %1 running  %2 compiled against Qt %3
 Your Qt runtime version: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Some textual English examples would be helpful.</translatorcomment>
+        <translation type="unfinished">A VLMC ezen verzióját fordította:
+%1 a %2 rendszeren Qt %3 verzióhoz
+Ön a Qt %4 felületet használja</translation>
     </message>
     <message>
         <source>Thanks</source>
-        <translation type="unfinished"></translation>
+        <translation>Köszönet</translation>
     </message>
 </context>
 <context>
     <name>AbstractGraphicsMediaItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Némítás</translation>
     </message>
     <message>
         <source>Unlink</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hivatkozás megszüntetése</translation>
     </message>
     <message>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hivatkozás</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szín beállítása</translation>
     </message>
 </context>
 <context>
@@ -158,14 +166,14 @@ Your Qt runtime version: %4
     <name>Commands::Clip::Move</name>
     <message>
         <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished">Klip áthelyezése a sáv %1-ról/ről a Sáv %2-ra/re</translation>
+        <translation type="unfinished">Klip áthelyezése a Sáv %1-ról/ről a Sáv %2-ra/re</translation>
     </message>
 </context>
 <context>
     <name>Commands::Clip::Remove</name>
     <message>
         <source>Removing clip </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klip eltávolítása</translation>
     </message>
 </context>
 <context>
@@ -186,35 +194,35 @@ Your Qt runtime version: %4
     <name>Commands::Effect::Add</name>
     <message>
         <source>Adding effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás: Effektus %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Move</name>
     <message>
         <source>Moving effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Áthelyezés: Effektus %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Remove</name>
     <message>
         <source>Deleting effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés: Effektus %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Effect::Resize</name>
     <message>
         <source>Resizing effect %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Átméretezés: Effektus %1</translation>
     </message>
 </context>
 <context>
     <name>Commands::Generic</name>
     <message>
         <source>Invalid action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Érvénytelen művelet</translation>
     </message>
 </context>
 <context>
@@ -268,95 +276,95 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Effects List</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effetusok listája</translation>
     </message>
 </context>
 <context>
     <name>EffectSettingWidget</name>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effektus tulajdonságai</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkalmazás</translation>
     </message>
 </context>
 <context>
     <name>EffectStack</name>
     <message>
         <source>Effect stack</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effektusok sorrendje</translation>
     </message>
     <message>
         <source>Move the effect up in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effektus felfelé mozgatása a listában</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Move the effect down in the stack</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effektus lefelé mozgatása a listában</translation>
     </message>
 </context>
 <context>
     <name>EffectWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Űrlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Áttekintés</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerző</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzió</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Leírás</translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished">Szűrő</translation>
+        <translation>Szűrő</translation>
     </message>
     <message>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Forrás</translation>
     </message>
     <message>
         <source>Mixer 2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2-es mixer</translation>
     </message>
     <message>
         <source>Mixer 3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3-as mixer</translation>
     </message>
     <message>
         <source>Unknown type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ismeretlen típus</translation>
     </message>
 </context>
 <context>
     <name>EffectsListView</name>
     <message>
         <source>%1 informations</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 adatok</translation>
     </message>
 </context>
 <context>
@@ -395,11 +403,11 @@ Your Qt runtime version: %4
     </message>
     <message>
         <source>Enter the output file name</source>
-        <translation type="unfinished">Írja be a kimeneti fájl nevét</translation>
+        <translation>Írja be a kimeneti fájl nevét</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VLMC projektfájl (*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -472,15 +480,15 @@ Your Qt runtime version: %4
     <name>GraphicsEffectItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szín beállítása</translation>
     </message>
     <message>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effektus tulajdonságai</translation>
     </message>
 </context>
 <context>
@@ -533,7 +541,15 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;Kérem, tartsa tekintetben&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;A VideoLAN Movie Creator egy &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-Alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; szoftverkiadás, még nem tökéletes. Sok lényeges funkció &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;egyszerűen hiányzik&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, vagy &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;nem működik megfelelően&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. A fejlesztőcsapat önkéntesekből áll, akik keményen dolgoznak azon, hogy a legjobb videószerkesztési élményt érhesse el.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;további információ&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -715,7 +731,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Publish on &amp;Internet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Közzététel az &amp;interneten</translation>
     </message>
 </context>
 <context>
@@ -1065,71 +1081,71 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Temporary folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Átmeneti fájlok mappája</translation>
     </message>
     <message>
         <source>The temporary folder used by VLMC to process videos.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A VLMC a videó feldolgozásakor ebben a mappában hozza létre az átmeneti fájlokat.</translation>
     </message>
     <message>
         <source>VLMC&apos;s Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A VLMC YouTube fejlesztői kulcsa</translation>
     </message>
     <message>
         <source>Valid YouTube username</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Érvényes YouTube felhasználónév</translation>
     </message>
     <message>
         <source>Youtube Password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">YouTube jelszó</translation>
     </message>
     <message>
         <source>Leave this field empty, password will be stored in unencrypted form.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hagyja üresen ezt a mezőt, a jelszó titkosítás csak nélkül menthető.</translation>
     </message>
     <message>
         <source>Enable Proxy for VLMC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy engedélyezése a VLMC-ben</translation>
     </message>
     <message>
         <source>Enables Global Network Proxy for VLMC.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A globális proxybeállítások használata.</translation>
     </message>
     <message>
         <source>Proxy Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy állomásnév</translation>
     </message>
     <message>
         <source>Set Proxy Hostname.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy állomásnevének beállítása.</translation>
     </message>
     <message>
         <source>Set Proxy Port.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy port beállítása.</translation>
     </message>
     <message>
         <source>Set Proxy Username, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy felhasználónév, ha szükséges.</translation>
     </message>
     <message>
         <source>Set Proxy Password, if any.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy jelszó, ha szükséges.</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Videó képarány</translation>
     </message>
     <message>
         <source>The rendered video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A feldolgozott videó képaránya</translation>
     </message>
     <message>
         <source>Audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hangcsatornák</translation>
     </message>
     <message>
         <source>Number of audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hangcsatornák száma</translation>
     </message>
 </context>
 <context>
@@ -1178,7 +1194,7 @@ Ellenőrizze a VLC telepítését a hiba jelentése előtt.</translation>
     </message>
     <message>
         <source>Adjust Volume</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hangerő beállítása</translation>
     </message>
 </context>
 <context>
@@ -1193,20 +1209,21 @@ Ellenőrizze a VLC telepítését a hiba jelentése előtt.</translation>
     </message>
     <message>
         <source>Untitled Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Névtelen projekt</translation>
     </message>
     <message>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem mentett projekt</translation>
     </message>
     <message>
         <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A projektfájl nem törölhető</translation>
     </message>
     <message>
         <source>Can&apos;t delete this project file: %1
 Please delete it manually.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A következő projektfájl nem törölhető: %1
+Kérem, törölje manuálisan.</translation>
     </message>
 </context>
 <context>
@@ -1240,7 +1257,7 @@ Please delete it manually.</source>
     </message>
     <message>
         <source>The XMLStream is not a valid YouTube Feed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az XML-adatfolyam nem érvényes YouTube csatorna</translation>
     </message>
 </context>
 <context>
@@ -1295,75 +1312,75 @@ Please delete it manually.</source>
     </message>
     <message>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások exportálása</translation>
     </message>
     <message>
         <source>Output File</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimeneti fájl</translation>
     </message>
     <message>
         <source>Frame Rate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Képkockasebesség</translation>
     </message>
     <message>
         <source>Video Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Videóminőség</translation>
     </message>
     <message>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangminőség</translation>
     </message>
     <message>
         <source>Video Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Videókodek</translation>
     </message>
     <message>
         <source>Audio Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangkodek</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Egyéni</translation>
+        <translation>Egyéni</translation>
     </message>
     <message>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QVGA (320x240) - 30 képkocka/másodperc</translation>
     </message>
     <message>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VGA (640x480) - 30 képkocka/másodperc</translation>
     </message>
     <message>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SVGA (800x600) - 30 képkocka/másodperc</translation>
     </message>
     <message>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">XVGA (1024x768) - 30 képkocka/másodperc</translation>
     </message>
     <message>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">480p NTSC (720x480) - 29,97 képkocka/másodperc</translation>
     </message>
     <message>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">576p PAL (720x576) - 25 képkocka/másodperc</translation>
     </message>
     <message>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">720p (1280x720) - 29,97 képkocka/másodperc</translation>
     </message>
     <message>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1080p (1920x1080) - 29,97 képkocka/másodperc</translation>
     </message>
     <message>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Előre beállított érték</translation>
     </message>
     <message>
         <source>Export Settings: Publish on Internet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beállítások exportálása: Internetes közzététel</translation>
     </message>
 </context>
 <context>
@@ -1389,147 +1406,149 @@ Please delete it manually.</source>
     </message>
     <message>
         <source>Restore default?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alapértelmezések visszaállítása?</translation>
     </message>
     <message>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minden beállítást visszaállít az alapértelmezett értékre.
+Biztosan folytatni kívánja?</translation>
     </message>
     <message>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Érvénytelen érték</translation>
     </message>
     <message>
         <source>Can&apos;t save settings due to an invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Érvénytelen érték miatt nem menthetőek a beállítások</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Általános</translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished">Billentyűzet</translation>
+        <translation>Billentyűzet</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">Hálózat</translation>
+        <translation>Hálózat</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished">Videó</translation>
+        <translation>Videó</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished">Hang</translation>
+        <translation>Hang</translation>
     </message>
 </context>
 <context>
     <name>ShareOnInternet</name>
     <message>
         <source>Share Video On Internet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Videó megosztása az interneten</translation>
     </message>
     <message>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szolgáltatás</translation>
     </message>
     <message>
         <source>YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">Felhasználónév</translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Jelszó</translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Kategória</translation>
+        <translatorcomment>Kategóriák a youtube.com kezdőlapjáról (a magyar címszavakat közvetlenül onnan vettük át)</translatorcomment>
+        <translation>Kategória</translation>
     </message>
     <message>
         <source>Autos &amp; Vehicles</source>
-        <translation type="unfinished">Autók és más járművek</translation>
+        <translation>Autók és más járművek</translation>
     </message>
     <message>
         <source>Comedy</source>
-        <translation type="unfinished">Humor</translation>
+        <translation>Humor</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished">Oktatás</translation>
+        <translation>Oktatás</translation>
     </message>
     <message>
         <source>Entertainment</source>
-        <translation type="unfinished">Szórakozás</translation>
+        <translation>Szórakozás</translation>
     </message>
     <message>
         <source>Film &amp; Animation</source>
-        <translation type="unfinished">Film és animáció</translation>
+        <translation>Film és animáció</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Játék</translation>
     </message>
     <message>
         <source>Howto &amp; Style</source>
-        <translation type="unfinished">Útmutatók és stílus</translation>
+        <translation>Útmutatók és stílus</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished">Zene</translation>
+        <translation>Zene</translation>
     </message>
     <message>
         <source>News &amp; Politics</source>
-        <translation type="unfinished">Hírek és politika</translation>
+        <translation>Hírek és politika</translation>
     </message>
     <message>
         <source>Nonprofit &amp; Activism</source>
-        <translation type="unfinished"></translation>
+        <translation>Nonprofit szervezetek és aktivisták</translation>
     </message>
     <message>
         <source>People &amp; Blogs</source>
-        <translation type="unfinished">Emberek és blogok</translation>
+        <translation>Emberek és blogok</translation>
     </message>
     <message>
         <source>Animals &amp; Pets</source>
-        <translation type="unfinished"></translation>
+        <translation>Házi- és egyéb állatok</translation>
     </message>
     <message>
         <source>Tech &amp; Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Tudomány és technika</translation>
     </message>
     <message>
         <source>Sports</source>
-        <translation type="unfinished">Sport</translation>
+        <translation>Sport</translation>
     </message>
     <message>
         <source>Travel &amp; Events</source>
-        <translation type="unfinished">Utazás és események</translation>
+        <translation>Utazás és események</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished">Cím</translation>
+        <translation>Cím</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Leírás</translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kulcsszavak</translation>
     </message>
     <message>
         <source>Make this video private</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A videó ne legyen publikus</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1537,31 +1556,35 @@ Are you sure you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;A közzététellel beleegyezik a &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt; Felhasználási Feltételekbe.&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mégsem</translation>
     </message>
     <message>
         <source>&amp;Publish</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Közzététel</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A &quot;Felhasználónév&quot;, &quot;Jelszó&quot; és &quot;Cím&quot; mezők nem hagyhatóak üresen. Kérem, ellenőrizze ezeket a mezőket.</translation>
     </message>
     <message>
         <source>Authenticating...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bejelentkezés...</translation>
     </message>
     <message>
         <source>Authenticated!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bejelentkezve!</translation>
     </message>
     <message>
         <source>Your video has been uploaded.
@@ -1569,20 +1592,25 @@ URL (copied to your clipboard):
 %1
 
 Open this in your default web browser?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A videóját feltöltöttük.
+A videó URL-jét a vágólapra másoltuk:
+%1
+
+Megnyitja az alapértelmezett böngészőben?</translation>
     </message>
     <message>
         <source>Some error has occured while processing your video.
 Please check with your video service provider.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A videó feldolgozása során problémák léptek fel.
+Kérem forduljon a videószolgáltatójához.</translation>
     </message>
     <message>
         <source>Video Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Videó feltöltve</translation>
     </message>
     <message>
         <source>%1 kB Uploaded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 kB feltöltve</translation>
     </message>
 </context>
 <context>
@@ -1597,7 +1625,7 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>Media List</source>
-        <translation type="unfinished">Médialista</translation>
+        <translation>Médialista</translation>
     </message>
 </context>
 <context>
@@ -1638,11 +1666,11 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>Rename track</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szám átnevezése</translation>
     </message>
     <message>
         <source>Enter the track new name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Adja meg a szám új nevét</translation>
     </message>
 </context>
 <context>
@@ -1779,11 +1807,11 @@ Please check with your video service provider.</source>
     </message>
     <message>
         <source>16/9</source>
-        <translation type="unfinished">16/9</translation>
+        <translation>16/9</translation>
     </message>
     <message>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Videó képarány</translation>
     </message>
 </context>
 <context>
@@ -1852,15 +1880,15 @@ Kattintson a &apos;Tovább&apos;-ra a folytatáshoz...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>Select a project file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Válasszon egy projektfájlt</translation>
     </message>
     <message>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VLMC projektfájl (*.vlmc)</translation>
     </message>
 </context>
 <context>
@@ -1913,11 +1941,11 @@ Kattintson a &apos;Tovább&apos;-ra a folytatáshoz...</translation>
     <name>YouTubeService</name>
     <message>
         <source>YouTube Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">YouTube bejelentkezés</translation>
     </message>
     <message>
         <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A kapcsolat nem titkosított, folytatja? SSL hibák léptek fel: %1</translation>
     </message>
 </context>
 </TS>
