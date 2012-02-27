@@ -114,6 +114,12 @@ TracksScene::askRemoveSelectedItems()
         AbstractGraphicsItem* item = dynamic_cast<AbstractGraphicsItem*>( items.at(i) );
         if ( !item )
             return;
+
+        /*FIXME: When undo-ing linked items no longer remain linked*/
+        AbstractGraphicsItem* linked_item = item->groupItem();
+        if (linked_item != NULL)
+            items.append(linked_item);
+
         ClipHelper  *ch = qobject_cast<ClipHelper*>( item->helper() );
         if ( ch != NULL )
         {
