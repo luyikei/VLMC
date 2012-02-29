@@ -27,7 +27,7 @@
 #include "ui_ShareOnInternet.h"
 
 class AbstractSharingService;
-class AbstractVideoData;
+struct AbstractVideoData;
 
 class ShareOnInternet : public QDialog
 {
