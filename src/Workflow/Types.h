@@ -90,15 +90,16 @@ namespace   Workflow
             quint32     m_size;
             quint32     m_nbPixels;
     };
-    struct  AudioSample : public OutputBuffer
+    class  AudioSample : public OutputBuffer
     {
-        AudioSample() : OutputBuffer( AudioTrack ){}
-        unsigned char*  buff;
-        size_t          size;
-        quint32         nbSample;
-        quint32         nbChannels;
-        qint64          ptsDiff;
-        qint64          pts;
+        public:
+            AudioSample() : OutputBuffer( AudioTrack ){}
+            unsigned char*  buff;
+            size_t          size;
+            quint32         nbSample;
+            quint32         nbChannels;
+            qint64          ptsDiff;
+            qint64          pts;
     };
 }
 

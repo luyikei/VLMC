@@ -30,7 +30,7 @@
 
 namespace Workflow
 {
-    struct  AudioSample;
+    class  AudioSample;
 }
 
 class   AudioClipWorkflow : public ClipWorkflow
