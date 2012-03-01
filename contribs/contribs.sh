@@ -2,7 +2,8 @@
 
 QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
 QT4_URL="http://rohityadav.in/files/contribs/qt4-4.8-win32-bin.tar.bz2"
-VLC_FILE="vlc-1.1.11-win32.7z"
+VLC_VERSION_PREFIX="vlc-1.1.11"
+VLC_FILE="${VLC_VERSION_PREFIX}-win32.7z"
 VLC_URL="http://download.videolan.org/vlc/1.1.11/win32/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
