@@ -23,6 +23,7 @@
 
 #include <QtDebug>
 #include <QtGlobal>
+#include <QtCore/qmath.h>
 
 #include "Clip.h"
 #include "ClipRenderer.h"
@@ -179,8 +180,10 @@ ClipRenderer::previousFrame()
     {
         if ( m_paused == false )
             togglePlayPause( true );
-        qint64   interval =  static_cast<qint64>( (1.0f / m_mediaPlayer->getFps()) * 1000.0f );
+        /* FIXME: Implement a better way to render previous frame */
+        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_mediaPlayer->getFps()) );
         m_mediaPlayer->setTime( m_mediaPlayer->getTime() - interval );
+        m_mediaPlayer->nextFrame();
     }
 }
 
