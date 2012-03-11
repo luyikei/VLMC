@@ -36,6 +36,10 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
 //        "--ffmpeg-debug", "3",
         "--no-skip-frames",
         "--text-renderer", "dummy",
+        "--vout", "dummy",
+        "--no-video-title-show",            // Don't display the filename
+        "--no-stats",                       // Don't display stats
+        "--no-sub-autodetect-file",         // Don't detect subtitles
         //"--no-audio",
         //"--plugin-path", VLC_TREE "/modules",
         "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
