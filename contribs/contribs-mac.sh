@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 VLC_ARCH=""
 VLC_BUILD_ID="0109"
 if [ `uname -m` != "i386" ]; then
@@ -20,6 +22,11 @@ QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
 QT4_URL="http://rohityadav.in/files/contribs/qt4-4.8-win32-bin.tar.bz2"
 
 ROOT_FOLDER=`pwd`
+
+if [ -z `which lrelease` ]; then
+    echo "The process require lrelease built in Qt !!!";
+    exit 1;
+fi
 
 # Get the dependencies in this directory
 mkdir -p src-dl/
