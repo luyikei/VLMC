@@ -180,7 +180,7 @@ Your Qt runtime version: %4
     <name>Commands::Clip::Resize</name>
     <message>
         <source>Resizing clip</source>
-        <translation">Klip átméretezése</translation>
+        <translation>Klip átméretezése</translation>
     </message>
 </context>
 <context>
