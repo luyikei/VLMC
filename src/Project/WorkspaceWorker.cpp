@@ -46,6 +46,7 @@ WorkspaceWorker::run()
     bool            hardLinkOk = false;
 
 #ifdef Q_OS_UNIX
+    errno = 0;
     if ( link( m_media->fileInfo()->absoluteFilePath().toUtf8().constData(),
           m_dest.toUtf8().constData() ) < 0 )
     {
