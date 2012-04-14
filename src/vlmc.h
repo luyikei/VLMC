@@ -31,6 +31,7 @@
 #endif
 
 #ifdef Q_OS_UNIX
+#include <unistd.h>
 #define SleepMS( x ) usleep( (x) * 1000 )
 #else
 #define SleepMS( x ) Sleep( x )

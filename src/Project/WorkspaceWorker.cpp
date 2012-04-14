@@ -26,6 +26,8 @@
 #include "SettingsManager.h"
 
 #include <cerrno>
+#include <unistd.h>
+
 #include <QFile>
 #include <QFileInfo>
 
