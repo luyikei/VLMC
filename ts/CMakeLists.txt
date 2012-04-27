@@ -60,7 +60,7 @@ SET(ALL_LANGUAGES
         pt
         ro
         ru
-        si
+        sl
         sk
         sv
         ta
