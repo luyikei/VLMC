@@ -33,14 +33,15 @@
 #import <AppKit/NSView.h>
 
 @interface VLCNSView : NSView
-BOOL stretchesVideo;
 - ( void ) setStretchesVideo : ( BOOL ) value;
 - ( BOOL ) stretchesVideo;
 - ( void ) addVoutSubview:( NSView * ) aView;
 - ( void ) removeVoutSubview:( NSView * ) aView;
+@property BOOL stretchesVideo;
 @end
 
 @implementation VLCNSView
+@synthesize stretchesVideo = stretchesVideo;
 - ( id ) initWithFrame:( NSRect ) frameRect
 {
     if ((self = [super initWithFrame:frameRect]) == nil){ return nil; }
