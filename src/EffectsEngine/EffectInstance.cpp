@@ -61,7 +61,7 @@ EffectInstance::settingValueFactory( Effect::Parameter *info, quint32 index )
     if ( info->type == F0R_PARAM_DOUBLE )
         flags = SettingValue::Clamped;
     EffectSettingValue  *val = new EffectSettingValue( EffectSettingValue::frei0rToVlmc( info->type ),
-                                                        this, index, info->name, info->desc );
+                                                        this, index, info->name, info->desc, flags );
     if ( info->type == F0R_PARAM_DOUBLE )
         val->setLimits( 0.0, 1.0 );
     return val;
