@@ -44,9 +44,9 @@ StackViewController::~StackViewController()
 
 void
 StackViewController::pushViewController( ViewController* viewController,
-                                                 bool animated )
+                                                 bool /*animated*/ )
 {
-    animated = false;
+//    animated = false;
 
     connect( viewController, SIGNAL( destroyed() ),
              this, SLOT( viewDestroyed() ) );
@@ -99,9 +99,9 @@ StackViewController::viewDestroyed()
 }
 
 void
-StackViewController::popViewController( bool animated )
+StackViewController::popViewController( bool /*animated*/ )
 {
-    animated = false;
+//    animated = false;
 
     if ( !m_controllerStack->size() )
         return ;
