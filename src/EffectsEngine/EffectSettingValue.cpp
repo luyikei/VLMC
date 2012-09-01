@@ -79,14 +79,14 @@ EffectSettingValue::set( const QVariant &val )
     case Color:
         {
             QColor  color = val.value<QColor>();
-            float   rgb[3] = { color.redF(), color.greenF(), color.blueF() };
+            qreal   rgb[3] = { color.redF(), color.greenF(), color.blueF() };
             copyToFrei0rBuff( rgb, 3 * sizeof(float) );
             break ;
         }
     case Position:
         {
             QPointF     pos = val.value<QPointF>();
-            double      posD[2] = { pos.x(), pos.y() };
+            qreal       posD[2] = { pos.x(), pos.y() };
             copyToFrei0rBuff( posD, 2 * sizeof(double) );
             break ;
         }
