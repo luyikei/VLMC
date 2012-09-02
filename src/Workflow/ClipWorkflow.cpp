@@ -71,7 +71,10 @@ ClipWorkflow::initialize()
     m_previousPts = -1;
     m_pauseDuration = -1;
 
-    connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::DirectConnection );
+    //Use QueuedConnection to avoid getting called from intf-event callback, as
+    //we will trigger intf-event callback as well when setting time for this clip,
+    //thus resulting in a deadlock.
+    connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
     connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
     m_mediaPlayer->play();
