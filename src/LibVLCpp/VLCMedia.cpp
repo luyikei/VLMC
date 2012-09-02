@@ -48,6 +48,11 @@ Media::addOption( const char* opt )
     libvlc_media_add_option_flag( m_internalPtr, opt, libvlc_media_option_trusted );
 }
 
+void Media::addOption(const QString &opt)
+{
+    libvlc_media_add_option_flag( m_internalPtr, opt.toLocal8Bit(), libvlc_media_option_trusted );
+}
+
 void
 Media::setVideoLockCallback( void* callback )
 {

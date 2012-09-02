@@ -38,6 +38,7 @@ namespace LibVLCpp
         Media( const QString& filename );
         ~Media();
         void                addOption( const char* opt );
+        void                addOption( const QString& opt );
         void                setVideoLockCallback( void* );
         void                setVideoUnlockCallback( void* );
         void                setAudioLockCallback( void* );
