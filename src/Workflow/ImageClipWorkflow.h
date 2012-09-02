@@ -41,7 +41,8 @@ class   ImageClipWorkflow : public ClipWorkflow
          */
         virtual void            setTime( qint64 ){}
     protected:
-        virtual void            initVlcOutput();
+        virtual QString         createSoutChain() const;
+        virtual void            initializeVlcOutput();
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         virtual void            flushComputedBuffers();

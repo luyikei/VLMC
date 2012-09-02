@@ -31,6 +31,7 @@
 #include "Workflow/Types.h"
 
 #include <QReadWriteLock>
+#include <QStringBuilder>
 #include <QtDebug>
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
@@ -73,31 +74,35 @@ VideoClipWorkflow::preallocate()
 }
 
 void
-VideoClipWorkflow::initVlcOutput()
+VideoClipWorkflow::initializeVlcOutput()
 {
-    char        buffer[32];
-
     preallocate();
-    m_vlcMedia->addOption( ":no-audio" );
-    m_vlcMedia->addOption( ":no-sout-audio" );
-    m_vlcMedia->addOption( ":sout=#transcode{}:smem" );
-    m_vlcMedia->setVideoDataCtx( this );
-    m_vlcMedia->setVideoLockCallback( reinterpret_cast<void*>( getLockCallback() ) );
-    m_vlcMedia->setVideoUnlockCallback( reinterpret_cast<void*>( getUnlockCallback() ) );
-    m_vlcMedia->addOption( ":sout-transcode-vcodec=RV32" );
-    if ( m_fullSpeedRender == false )
-        m_vlcMedia->addOption( ":sout-smem-time-sync" );
-    else
-        m_vlcMedia->addOption( ":no-sout-smem-time-sync" );
-
-    sprintf( buffer, ":sout-transcode-width=%i", m_width );
-    m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-height=%i", m_height );
-    m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-fps=%f", VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
-    m_vlcMedia->addOption( buffer );
-
+    m_vlcMedia->addOption(":no-audio");
+    m_vlcMedia->addOption(":no-sout-audio");
     initFilters();
+}
+
+QString
+VideoClipWorkflow::createSoutChain() const
+{
+    QString chain = ":sout=#transcode{vcodec=RV32,fps=";
+
+    chain += QString::number( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) )
+            % ",width=" % QString::number( m_width ) % ",height="
+            % QString::number( m_height )
+            % "}:smem{";
+    if ( m_fullSpeedRender == false )
+        chain += "time-sync";
+    else
+        chain += "no-time-sync";
+    chain += ",video-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
+            % ",video-prerender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
+            % ",video-postrender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
+            % '}';
+
+    return chain;
 }
 
 void*

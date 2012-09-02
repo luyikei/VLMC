@@ -30,6 +30,7 @@
 #include "Workflow/Types.h"
 
 #include <QReadWriteLock>
+#include <QStringBuilder>
 #include <QtDebug>
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
@@ -49,36 +50,43 @@ ImageClipWorkflow::~ImageClipWorkflow()
     delete m_effectFrame;
 }
 
-void
-ImageClipWorkflow::initVlcOutput()
+QString
+ImageClipWorkflow::createSoutChain() const
+{
+    QString chain = ":sout=#transcode{vcodec=RV32,width=";
+
+    chain += QString::number( MainWorkflow::getInstance()->getWidth() )
+            % ",height="
+            % QString::number( MainWorkflow::getInstance()->getHeight() )
+            % ",fps="
+            % QString::number((float)Clip::DefaultFPS)
+            % "}:smem{";
+    if ( m_fullSpeedRender == false )
+        chain += "time-sync";
+    else
+        chain += "no-time-sync";
+    chain += ",video-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
+            % ",video-prerender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
+            % ",video-postrender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
+            % '}';
+    return chain;    
+}
+
+void ImageClipWorkflow::initializeVlcOutput()
 {
     char    buffer[32];
-
-    m_vlcMedia->addOption( ":no-audio" );
-    m_vlcMedia->addOption( ":no-sout-audio" );
-    m_vlcMedia->addOption( ":sout=#transcode{}:smem" );
-    m_vlcMedia->setVideoDataCtx( this );
-    m_vlcMedia->setVideoLockCallback( reinterpret_cast<void*>( getLockCallback() ) );
-    m_vlcMedia->setVideoUnlockCallback( reinterpret_cast<void*>( getUnlockCallback() ) );
-    m_vlcMedia->addOption( ":sout-transcode-vcodec=RV32" );
-    m_vlcMedia->addOption( ":sout-smem-time-sync" );
-
-    m_width = MainWorkflow::getInstance()->getWidth();
-    sprintf( buffer, ":sout-transcode-width=%i", m_width );
-    m_vlcMedia->addOption( buffer );
-    m_height = MainWorkflow::getInstance()->getHeight();
-    sprintf( buffer, ":sout-transcode-height=%i", m_height );
-    m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":sout-transcode-fps=%f", (float)Clip::DefaultFPS );
-    m_vlcMedia->addOption( buffer );
+    m_vlcMedia->addOption(":no-audio");
+    m_vlcMedia->addOption(":no-sout-audio");
     sprintf( buffer, ":fake-duration=%d", 1000 );
     m_vlcMedia->addOption( buffer );
     sprintf( buffer, ":fake-fps=%f", m_clipHelper->clip()->getMedia()->fps() );
     m_vlcMedia->addOption( buffer );
-    m_isRendering = true;
 
     m_effectFrame->resize( MainWorkflow::getInstance()->getWidth(),
                             MainWorkflow::getInstance()->getHeight() );
+    m_isRendering = true;
 }
 
 void*

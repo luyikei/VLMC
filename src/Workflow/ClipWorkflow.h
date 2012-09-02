@@ -111,7 +111,18 @@ class   ClipWorkflow : public EffectUser
          */
         virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame ) = 0;
         void                    postGetOutput();
-        virtual void            initVlcOutput() = 0;
+        /*
+         * Will return a toolchain with the smem configured out
+         */
+        virtual QString         createSoutChain() const = 0;
+        /**
+         * @brief Initialize base variables for the VLC media representing this clip.
+         *
+         * This may also perform some addditional initializations, and
+         * therefore should be called before createSoutChain()
+         * A valid m_vlcMedia instance is required to exist prior call to this method.
+         */
+        virtual void            initializeVlcOutput() = 0;
         void                    initialize();
 
         /**

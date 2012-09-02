@@ -27,6 +27,7 @@
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>
+#include <QStringBuilder>
 
 AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
@@ -112,25 +113,29 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
     return buff;
 }
 
-void
-AudioClipWorkflow::initVlcOutput()
+QString
+AudioClipWorkflow::createSoutChain() const
+{
+    QString chain = ":sout=#transcode{acodec=f32l,"
+                    "samplerate=48000,channels=2,no-hurry-up}:smem{";
+    if ( m_fullSpeedRender == false )
+        chain += "time-sync";
+    else
+        chain += "no-time-sync";
+    chain += ",audio-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
+            % ",audio-prerender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
+            % ",audio-postrender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
+            % '}';
+    return chain;
+}
+
+void AudioClipWorkflow::initializeVlcOutput()
 {
     preallocate();
-    m_vlcMedia->addOption( ":no-sout-video" );
-    m_vlcMedia->addOption( ":no-video" );
-    m_vlcMedia->addOption( ":sout=#transcode{}:smem" );
-    m_vlcMedia->setAudioDataCtx( this );
-    m_vlcMedia->setAudioLockCallback( reinterpret_cast<void*>( getLockCallback() ) );
-    m_vlcMedia->setAudioUnlockCallback( reinterpret_cast<void*>( getUnlockCallback() ) );
-    m_vlcMedia->addOption( ":sout-transcode-acodec=f32l" );
-    m_vlcMedia->addOption( ":sout-transcode-samplerate=48000" );
-    m_vlcMedia->addOption( ":sout-transcode-channels=2" );
-    m_vlcMedia->addOption( ":no-sout-transcode-hurry-up" );
-    m_vlcMedia->addOption( ":sout-transcode-audio-sync");
-    if ( m_fullSpeedRender == false )
-        m_vlcMedia->addOption( ":sout-smem-time-sync" );
-    else
-        m_vlcMedia->addOption( ":no-sout-smem-time-sync" );
+    m_vlcMedia->addOption(":no-sout-video");
+    m_vlcMedia->addOption(":no-video");
 }
 
 Workflow::AudioSample*

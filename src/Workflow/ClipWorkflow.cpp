@@ -62,12 +62,14 @@ ClipWorkflow::initialize()
     setState( ClipWorkflow::Initializing );
 
     m_vlcMedia = new LibVLCpp::Media( m_clipHelper->clip()->getMedia()->mrl() );
+    initializeVlcOutput();
+    m_vlcMedia->addOption( createSoutChain() );
+    m_mediaPlayer = MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->get();
+    m_mediaPlayer->setMedia( m_vlcMedia );
+
     m_currentPts = -1;
     m_previousPts = -1;
     m_pauseDuration = -1;
-    initVlcOutput();
-    m_mediaPlayer = MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->get();
-    m_mediaPlayer->setMedia( m_vlcMedia );
 
     connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );

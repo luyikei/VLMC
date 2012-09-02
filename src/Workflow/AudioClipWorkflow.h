@@ -51,7 +51,8 @@ class   AudioClipWorkflow : public ClipWorkflow
         virtual void                releasePrealocated();
 
     private:
-        void                        initVlcOutput();
+        virtual QString             createSoutChain() const;
+        virtual void                initializeVlcOutput();
         Workflow::AudioSample*      createBuffer( size_t size );
         void                        insertPastBlock( Workflow::AudioSample* as );
         static void                 lock( AudioClipWorkflow* clipWorkflow,

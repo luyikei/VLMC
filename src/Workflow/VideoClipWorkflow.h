@@ -44,12 +44,16 @@ class   VideoClipWorkflow : public ClipWorkflow
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30
 
     protected:
-        virtual void            initVlcOutput();
+        virtual void            initializeVlcOutput();
+        virtual QString         createSoutChain() const;
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         virtual void            flushComputedBuffers();
         /**
          *  \brief              Pre-allocate some image buffers.
+         *
+         *  This also computes m_width and m_height variables.
+         *  This HAS to be called before createSoutChain()
          */
         void                    preallocate();
         virtual void            releasePrealocated();
