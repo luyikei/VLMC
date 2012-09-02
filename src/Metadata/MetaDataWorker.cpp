@@ -68,8 +68,12 @@ MetaDataWorker::compute()
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
     connect( m_mediaPlayer, SIGNAL( playing() ),
              this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
-    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ) );
-    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
+    //We want to disconnect the media player ASAP once an error is encountered,
+    //therefor we use direct connection. The failure() slot will be disconnected
+    //as soon as the first error will be encountered.
+    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ), Qt::DirectConnection );
+    //When a codec is not found, no error is raised, but endReached will.
+    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ), Qt::DirectConnection );
     m_mediaPlayer->play();
 
     if ( m_media->fileType() == Media::Video || m_media->fileType() == Media::Audio )
@@ -263,6 +267,7 @@ MetaDataWorker::entrypointPlaying()
 void
 MetaDataWorker::failure()
 {
+    m_mediaPlayer->disconnect( this );
     emit failed( m_media );
     deleteLater();
 }
