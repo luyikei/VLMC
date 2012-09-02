@@ -83,6 +83,9 @@ GeneralPage::initializePage()
     QString     workspacePath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
     ui.lineEditWorkspace->setText( workspacePath );
 
+    //Reinit description field
+    ui.textEditDescription->clear();
+
     updateProjectLocation();
 }
 
