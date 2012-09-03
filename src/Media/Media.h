@@ -160,7 +160,7 @@ public:
     void                        computeMetadata();
 
 private:
-    void                        setFileType();
+    void                        computeFileType();
 
 protected:
     LibVLCpp::Media*            m_vlcMedia;

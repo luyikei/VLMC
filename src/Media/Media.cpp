@@ -89,7 +89,7 @@ Media::~Media()
 }
 
 void
-Media::setFileType()
+Media::computeFileType()
 {
     const QString filter = "*." + m_fileInfo->suffix().toLower();
     if ( Media::VideoExtensions.contains( filter ) )
@@ -294,7 +294,7 @@ Media::setFilePath( const QString &filePath )
         delete m_fileInfo;
     m_fileInfo = new QFileInfo( filePath );
     m_fileName = m_fileInfo->fileName();
-    setFileType();
+    computeFileType();
     if ( m_fileType != Media::Image )
         m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
     else
