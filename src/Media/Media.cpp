@@ -183,6 +183,11 @@ Media::fileType() const
     return m_fileType;
 }
 
+void Media::setFileType(Media::FileType type)
+{
+    m_fileType = type;
+}
+
 void
 Media::emitMetaDataComputed()
 {

@@ -137,6 +137,7 @@ public:
     int                         nbVideoTracks() const;
 
     FileType                    fileType() const;
+    void                        setFileType( FileType type );
 
     InputType                   inputType() const;
 

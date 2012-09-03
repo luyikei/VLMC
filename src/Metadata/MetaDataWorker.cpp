@@ -91,9 +91,6 @@ MetaDataWorker::compute()
 void
 MetaDataWorker::computeDynamicFileMetaData()
 {
-    //Disabling audio for this specific use of the media
-    if ( m_media->fileType() == Media::Video )
-        m_media->addVolatileParam( ":no-audio", ":audio" );
     connect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
              this, SLOT( entrypointLengthChanged( qint64 ) ), Qt::QueuedConnection );
 }
@@ -113,6 +110,19 @@ MetaDataWorker::metaDataAvailable()
     m_mediaIsPlaying = false;
     m_lengthHasChanged = false;
 
+    m_media->setNbAudioTrack( m_mediaPlayer->getNbAudioTrack() );
+    m_media->setNbVideoTrack( m_mediaPlayer->getNbVideoTrack() );
+    if ( m_media->hasAudioTrack() == false && m_media->hasVideoTrack() == false )
+    {
+        emit failed( m_media );
+        return ;
+    }
+    //Don't be fooled by the extension, and probe the file for it's actual type:
+    if ( m_media->fileType() == Media::Video )
+    {
+        if ( m_media->hasVideoTrack() == false )
+            m_media->setFileType( Media::Audio );
+    }
     if ( m_media->fileType() != Media::Audio )
     {
         //In order to wait for the VOUT to be ready:
@@ -149,8 +159,6 @@ MetaDataWorker::metaDataAvailable()
     else
         m_media->setLength( m_mediaPlayer->getLength() );
 
-    m_media->setNbAudioTrack( m_mediaPlayer->getNbAudioTrack() );
-    m_media->setNbVideoTrack( m_mediaPlayer->getNbVideoTrack() );
     m_media->setNbFrames( (m_media->lengthMS() / 1000) * m_media->fps() );
 
     m_media->emitMetaDataComputed();
