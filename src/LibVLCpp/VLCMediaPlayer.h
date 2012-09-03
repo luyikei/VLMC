@@ -71,6 +71,7 @@ namespace   LibVLCpp
         int                                 getNbAudioTrack();
         int                                 getNbVideoTrack();
         void                                setKeyInput( bool enabled );
+        void                                setAudioOutput(const char* module);
 
     private:
         static void                         callbacks( const libvlc_event_t* event, void* self );

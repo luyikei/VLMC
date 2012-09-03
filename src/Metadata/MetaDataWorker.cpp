@@ -65,6 +65,9 @@ MetaDataWorker::compute()
         computeImageMetaData();
 
     m_media->addConstantParam( ":vout=dummy" );
+    //In VLC 2.x we can't set the volume before the playback has started
+    //so just switch off the audio-output in any case.
+    m_mediaPlayer->setAudioOutput( "dummy" );
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
     connect( m_mediaPlayer, SIGNAL( playing() ),
              this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
@@ -89,9 +92,7 @@ void
 MetaDataWorker::computeDynamicFileMetaData()
 {
     //Disabling audio for this specific use of the media
-    if ( m_media->fileType() == Media::Audio )
-        m_media->addVolatileParam( ":volume 0", ":volume 512" );
-    else
+    if ( m_media->fileType() == Media::Video )
         m_media->addVolatileParam( ":no-audio", ":audio" );
     connect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
              this, SLOT( entrypointLengthChanged( qint64 ) ), Qt::QueuedConnection );
