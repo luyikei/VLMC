@@ -176,11 +176,13 @@ GUIProjectManager::closeProject()
 }
 
 void
-GUIProjectManager::newProject( const QString &projectName )
+GUIProjectManager::newProject( const QString &projectName, const QString &workspacePath )
 {
     if ( closeProject() == false )
         return ;
     m_projectName = projectName;
+    //Current project file has already been delete/nulled by ProjectManager::closeProject()
+    m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
     emit projectUpdated( this->projectName(), false );
 }
 

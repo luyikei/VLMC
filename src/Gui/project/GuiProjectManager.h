@@ -36,7 +36,7 @@ public:
     GUIProjectManager();
 
     bool            askForSaveIfModified();
-    void            newProject( const QString& projectName );
+    void            newProject( const QString& projectName, const QString &workspacePath );
     /**
      *  \brief      Save the project using the current project file.
      */

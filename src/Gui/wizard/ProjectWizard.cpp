@@ -100,7 +100,7 @@ ProjectWizard::accept()
     if ( currentId() == Page_Video )
     {
         SettingsManager *sManager = SettingsManager::getInstance();
-        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString() );
+        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "workspace" ).toString() );
         sManager->setValue( "general/Workspace", field( "workspace" ), SettingsManager::Project );
 
         sManager->setValue( "video/VLMCOutputFPS", field( "fps" ), SettingsManager::Project );
