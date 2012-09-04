@@ -175,14 +175,6 @@ ProjectManager::removeProject( const QString& fileName )
 
     QSettings s;
     s.setValue( "RecentsProjects", m_recentsProjects );
-
-    QFile   projectFile( fileName );
-    if ( !projectFile.exists() )
-        return;
-
-    if( !QFile::remove( fileName ) )
-        QMessageBox::warning( NULL, tr( "Can't delete project file" ),
-                          tr( "Can't delete this project file: %1\nPlease delete it manually." ).arg( fileName ) );
 }
 
 void
