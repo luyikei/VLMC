@@ -65,8 +65,6 @@ public:
      */
     void            loadProject( const QString& fileName );
     
-    void            removeProject( const QString& fileName );
-
 protected:
     virtual void    failedToLoad( const QString &reason ) const;
     virtual void    saveTimeline( QXmlStreamWriter &project );

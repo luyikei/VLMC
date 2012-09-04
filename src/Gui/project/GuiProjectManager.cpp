@@ -309,9 +309,3 @@ GUIProjectManager::loadProject()
         return ;
     loadProject( fileName );
 }
-
-void
-GUIProjectManager::removeProject( const QString &fileName )
-{
-    ProjectManager::removeProject( fileName );
-}
