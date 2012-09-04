@@ -81,6 +81,10 @@ Library::loadProject( const QDomElement& doc )
         return ;
     load( clips, this );
     mediaLoaded( NULL );
+    //Mark the state as clean, as we just loaded a project. Otherwise, a media
+    //loading triggers a setCleanState(false) which makes sense when modifying
+    //project, but not here.
+    setCleanState(true);
 }
 
 void
