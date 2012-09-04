@@ -51,8 +51,7 @@ MainWorkflow::MainWorkflow( int trackCount ) :
     m_currentFrame = new qint64[Workflow::NbTrackType];
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
     {
-        Workflow::TrackType trackType =
-                (i == 0 ? Workflow::VideoTrack : Workflow::AudioTrack );
+        Workflow::TrackType trackType = static_cast<Workflow::TrackType>(i);
         m_tracks[i] = new TrackHandler( trackCount, trackType );
         connect( m_tracks[i], SIGNAL( tracksEndReached() ),
                  this, SLOT( tracksEndReached() ) );
