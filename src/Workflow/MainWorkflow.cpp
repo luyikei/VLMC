@@ -42,7 +42,8 @@ MainWorkflow::MainWorkflow( int trackCount ) :
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
         m_width( 0 ),
-        m_height( 0 )
+        m_height( 0 ),
+        m_trackCount( trackCount )
 {
     m_currentFrameLock = new QReadWriteLock;
     m_renderStartedMutex = new QMutex;
@@ -398,6 +399,12 @@ const Workflow::Frame*
 MainWorkflow::blackOutput() const
 {
     return m_blackOutput;
+}
+
+quint32
+MainWorkflow::trackCount() const
+{
+    return m_trackCount;
 }
 
 void

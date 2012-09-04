@@ -253,6 +253,11 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
 
         const Workflow::Frame   *blackOutput() const;
 
+        /**
+         * \brief   Return the number of track for each track type.
+         */
+        quint32                 trackCount() const;
+
     private:
         MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();
@@ -304,6 +309,8 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                         m_width;
         /// Height used for the render
         quint32                         m_height;
+        /// Store the number of track for each track type.
+        const quint32                   m_trackCount;
 
         friend class                    Singleton<MainWorkflow>;
 
