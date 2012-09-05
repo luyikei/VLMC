@@ -302,7 +302,7 @@ void
 GUIProjectManager::loadProject()
 {
     QString fileName =
-            QFileDialog::getOpenFileName( NULL, tr( "Enter the output file name" ),
+            QFileDialog::getOpenFileName( NULL, tr( "Please choose a project file" ),
                                             VLMC_GET_STRING( "general/DefaultProjectLocation" ),
                                             tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.length() <= 0 ) //If the user canceled.
