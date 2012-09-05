@@ -101,7 +101,10 @@ ProjectWizard::accept()
     {
         SettingsManager *sManager = SettingsManager::getInstance();
         GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "workspace" ).toString() );
-        sManager->setValue( "general/Workspace", field( "workspace" ), SettingsManager::Project );
+        //Save the project workspace
+        sManager->setValue( "general/Workspace", field( "projectPath" ), SettingsManager::Project );
+        //And the default vlmc workspace
+        sManager->setValue( "general/DefaultProjectLocation", field( "workspace" ), SettingsManager::Vlmc );
 
         sManager->setValue( "video/VLMCOutputFPS", field( "fps" ), SettingsManager::Project );
         sManager->setValue( "video/VideoProjectHeight", field( "height" ), SettingsManager::Project );

@@ -49,7 +49,8 @@ GeneralPage::GeneralPage( QWidget *parent ) :
              this, SLOT( updateProjectLocation() ) );
 
     registerField( "projectName*", ui.lineEditName );
-    registerField( "workspace*", ui.lineEditProjectLocation );
+    registerField( "projectPath*", ui.lineEditProjectLocation );
+    registerField( "workspace*", ui.lineEditWorkspace );
 }
 
 void
