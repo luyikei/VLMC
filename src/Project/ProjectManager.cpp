@@ -48,6 +48,8 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 {
     QSettings s;
     m_recentsProjects = s.value( "RecentsProjects" ).toStringList();
+    //If the variable was empty, it will return a list with one empty string in it.
+    m_recentsProjects.removeAll( "" );
 
     SettingValue    *fps = VLMC_CREATE_PROJECT_DOUBLE( "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
