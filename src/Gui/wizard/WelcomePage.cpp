@@ -179,11 +179,11 @@ WelcomePage::removeProject()
     if ( selected.isEmpty() )
         return;
 
-    const QString fileName = selected.at( 0 )->data( FilePath ).toString();
-    if ( fileName.isEmpty() )
+    const QString project = selected.at( 0 )->data( FilePath ).toString();
+    if ( project.isEmpty() )
         return;
 
-    GUIProjectManager::getInstance()->removeProject( fileName );
+    GUIProjectManager::getInstance()->removeProject( project );
     loadRecentsProjects(); // Reload recent projects
 }
 

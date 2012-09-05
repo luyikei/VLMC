@@ -146,7 +146,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
         SettingsManager::getInstance()->setValue( "general/Workspace",
                                                   fInfo.absolutePath(), SettingsManager::Project);
 
-        appendToRecentProject( outputFileName );
+        appendToRecentProject( projectName() );
         if ( relocate == true )
             Workspace::getInstance()->copyAllToWorkspace();
         emit projectUpdated( projectName(), true );

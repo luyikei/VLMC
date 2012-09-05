@@ -118,7 +118,7 @@ ProjectManager::loadWorkflow()
     loadTimeline( root );
     if ( m_projectFile != NULL )
     {
-        appendToRecentProject( m_projectFile->fileName() );
+        appendToRecentProject( projectName() );
         savedState = true;
     }
     else
@@ -170,10 +170,10 @@ ProjectManager::loadProject( const QString& fileName )
 }
 
 void
-ProjectManager::removeProject( const QString& fileName )
+ProjectManager::removeProject( const QString& project )
 {
     // Remove all occurence of fileName
-    m_recentsProjects.removeAll( fileName );
+    m_recentsProjects.removeAll( project );
 
     QSettings s;
     s.setValue( "RecentsProjects", m_recentsProjects );
@@ -233,11 +233,11 @@ ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
 
 
 void
-ProjectManager::appendToRecentProject( const QString& projectFile )
+ProjectManager::appendToRecentProject( const QString& projectName )
 {
     // Append the item to the recents list
-    m_recentsProjects.removeAll( projectFile );
-    m_recentsProjects.prepend( projectFile );
+    m_recentsProjects.removeAll( projectName );
+    m_recentsProjects.prepend( projectName );
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
@@ -248,6 +248,7 @@ ProjectManager::appendToRecentProject( const QString& projectFile )
 QString
 ProjectManager::projectName() const
 {
+    //FIXME: Can this be true?
     if ( m_projectName.isEmpty() == true )
     {
         if ( m_projectFile != NULL )
