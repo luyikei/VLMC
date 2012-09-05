@@ -100,7 +100,7 @@ ProjectWizard::accept()
     if ( currentId() == Page_Video )
     {
         SettingsManager *sManager = SettingsManager::getInstance();
-        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "workspace" ).toString() );
+        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
         //Save the project workspace
         sManager->setValue( "general/Workspace", field( "projectPath" ), SettingsManager::Project );
         //And the default vlmc workspace
