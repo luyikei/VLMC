@@ -51,9 +51,11 @@ MetaDataManager::launchComputing( Media *media )
     connect( worker, SIGNAL( computed() ),
              this, SLOT( computingCompleted() ),
              Qt::DirectConnection );
+    //This connection has to be queued, as we would risk stopping the media player
+    //from within a VLC callback.
     connect( worker, SIGNAL( failed( Media* ) ),
              this, SLOT( computingFailed( Media* ) ),
-             Qt::DirectConnection );
+             Qt::QueuedConnection );
     worker->compute();
 }
 
