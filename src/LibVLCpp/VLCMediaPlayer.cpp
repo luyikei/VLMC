@@ -46,39 +46,46 @@ MediaPlayer::MediaPlayer( Media* media ) : m_media( media )
     registerEvents();
 }
 
+#define DETACH(event) libvlc_event_detach( p_em, event, callbacks, this );
+
 MediaPlayer::~MediaPlayer()
 {
-    libvlc_event_detach( p_em, libvlc_MediaPlayerSnapshotTaken, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerTimeChanged, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerPlaying, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerPaused, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerStopped, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerEndReached, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerPositionChanged, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerLengthChanged,   callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerEncounteredError,callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerPausableChanged, callbacks, this );
-    libvlc_event_detach( p_em, libvlc_MediaPlayerSeekableChanged, callbacks, this );
+    DETACH( libvlc_MediaPlayerSnapshotTaken );
+    DETACH( libvlc_MediaPlayerTimeChanged );
+    DETACH( libvlc_MediaPlayerPlaying );
+    DETACH( libvlc_MediaPlayerPaused );
+    DETACH( libvlc_MediaPlayerStopped );
+    DETACH( libvlc_MediaPlayerEndReached );
+    DETACH( libvlc_MediaPlayerPositionChanged );
+    DETACH( libvlc_MediaPlayerLengthChanged );
+    DETACH( libvlc_MediaPlayerEncounteredError );
+    DETACH( libvlc_MediaPlayerPausableChanged );
+    DETACH( libvlc_MediaPlayerSeekableChanged );
     stop();
     libvlc_media_player_release( m_internalPtr );
 }
+
+#undef DETACH
+#define ATTACH(event) libvlc_event_attach( p_em, event, callbacks, this );
 
 void
 MediaPlayer::registerEvents()
 {
     // Register the callback
-    libvlc_event_attach( p_em, libvlc_MediaPlayerSnapshotTaken,   callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerTimeChanged,     callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerPlaying,         callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerPaused,          callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerStopped,         callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerEndReached,      callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerPositionChanged, callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerLengthChanged,   callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerEncounteredError,callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerPausableChanged, callbacks, this );
-    libvlc_event_attach( p_em, libvlc_MediaPlayerSeekableChanged, callbacks, this );
+    ATTACH( libvlc_MediaPlayerSnapshotTaken );
+    ATTACH( libvlc_MediaPlayerTimeChanged );
+    ATTACH( libvlc_MediaPlayerPlaying );
+    ATTACH( libvlc_MediaPlayerPaused );
+    ATTACH( libvlc_MediaPlayerStopped );
+    ATTACH( libvlc_MediaPlayerEndReached );
+    ATTACH( libvlc_MediaPlayerPositionChanged );
+    ATTACH( libvlc_MediaPlayerLengthChanged );
+    ATTACH( libvlc_MediaPlayerEncounteredError );
+    ATTACH( libvlc_MediaPlayerPausableChanged );
+    ATTACH( libvlc_MediaPlayerSeekableChanged );
 }
+
+#undef ATTACH
 
 /**
  * Event dispatcher.
