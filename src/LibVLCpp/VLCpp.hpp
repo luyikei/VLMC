@@ -25,6 +25,7 @@
 
 #include <cassert>
 #include <stdlib.h>
+#include <vlc/libvlc.h>
 
 namespace LibVLCpp
 {
@@ -45,6 +46,10 @@ namespace LibVLCpp
 
             T*                  m_internalPtr;
     };
+    inline const char* eventName( libvlc_event_type_t event )
+    {
+        return libvlc_event_type_name( event );
+    }
 }
 
 #endif // VLCPP_H
