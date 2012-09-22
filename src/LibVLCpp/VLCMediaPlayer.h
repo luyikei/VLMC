@@ -103,6 +103,8 @@ namespace   LibVLCpp
         void                                configureWaitForEvent(const QList<int> &toWait,
                                                                     const QList<int> &cancel,
                                                                     CheckEventCallback callback = NULL );
+        void                                configureWaitForEvent(int, const QList<int> &cancel,
+                                                                    CheckEventCallback callback = NULL );
         /**
          * @brief This method will wait for one of the events specified by the
          * list given to configureWaitForEvent().

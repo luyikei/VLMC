@@ -357,6 +357,14 @@ MediaPlayer::configureWaitForEvent( const QList<int> &toWait, const QList<int> &
     m_eventsCallback = callback;
 }
 
+void
+MediaPlayer::configureWaitForEvent(int toWait, const QList<int> &cancel, MediaPlayer::CheckEventCallback callback)
+{
+    QList<int> toWaitList;
+    toWaitList.append( toWait );
+    configureWaitForEvent( toWaitList, cancel, callback );
+}
+
 MediaPlayer::EventWaitResult
 MediaPlayer::waitForEvent( unsigned long timeoutDuration )
 {
