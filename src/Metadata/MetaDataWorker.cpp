@@ -268,6 +268,10 @@ void
 MetaDataWorker::entrypointPlaying()
 {
     disconnect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( entrypointPlaying() ) );
+    //The endReached event is connected in order to catch decoder error.
+    //If we have reached a state when the media is playing, then we don't need to
+    //check for that kind of error anymore.
+    disconnect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
     m_mediaIsPlaying = true;
     if ( m_lengthHasChanged == true )
         metaDataAvailable();
