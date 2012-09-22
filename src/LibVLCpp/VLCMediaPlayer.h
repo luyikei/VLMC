@@ -23,8 +23,11 @@
 #ifndef VLCMEDIAPLAYER_H
 #define VLCMEDIAPLAYER_H
 
+#include <QList>
 #include <QMutex>
 #include <QObject>
+#include <QWaitCondition>
+
 #include "VLCpp.hpp"
 
 struct  libvlc_media_player_t;
@@ -38,6 +41,14 @@ namespace   LibVLCpp
     {
         Q_OBJECT
     public:
+        enum    EventWaitResult
+        {
+            Success, ///The event has been emited.
+            Canceled,///A cancelation event has been emited first.
+            Timeout  ///Timeout has been reached.
+        };
+        typedef bool (*CheckEventCallback)(const MediaPlayer*, const libvlc_event_t*);
+
         MediaPlayer();
         MediaPlayer( Media* media );
         ~MediaPlayer();
@@ -70,12 +81,69 @@ namespace   LibVLCpp
         void                                setKeyInput( bool enabled );
         void                                setAudioOutput(const char* module);
 
+        /**
+         * @brief configure the usage of waitForEvent.
+         *
+         * This method MUST be called before play(). It will lock a mutex
+         * that only will be unlocked in the waitForEvent() method. This mutex prevent
+         * any event processing.
+         * Using this method in any other scheme than:
+         * \li mediaPlayer->configureWaitForEvent(...);
+         * \li mediaPlayer->play();
+         * \li mediaPlayer->waitForEvents(...);
+         *
+         * is likely to result in a deadlock.
+         *
+         * @param toWait The list of events to wait for.
+         * @param cancel A list of events that would cancel the waiting process.
+         * @param callback A callback that will be called to check if this event is
+         *                  ok (for instance, accoding to the value of a changed variable)
+         *                  Callback will be called from an external thread.
+         */
+        void                                configureWaitForEvent(const QList<int> &toWait,
+                                                                    const QList<int> &cancel,
+                                                                    CheckEventCallback callback = NULL );
+        /**
+         * @brief This method will wait for one of the events specified by the
+         * list given to configureWaitForEvent().
+         *
+         * In case the waiting process should be canceled by
+         * some specific events, they shall be passed in the cancel vector.
+         * A timeout parameter can be passed. Default is to wait forever.
+         *
+         * This method MUST be called IMMEDIATLY AFTER play(), as a mutex is held,
+         * and would block any event processing until the actual waiting started.
+         *
+         * This method is concieved to wait on one unique given set of events.
+         * You can't wait for another set of events from another thread at the same time.
+         *
+         * Events (regardless of their presence in the wait or cancel list) will
+         * still be propagated to every potential receiver.
+         *
+         * @param timeout The maximum amount of time (in ms) to wait for events.
+         *
+         * @warning This method WILL BLOCK and therefore should NEVER been called
+         *          from either a VLC thread, or Qt's main thread.
+         *
+         * @returns A value as defined in the EventWaitResult enum.
+         */
+        MediaPlayer::EventWaitResult        waitForEvent( unsigned long timeout = ULONG_MAX );
+
     private:
         static void                         callbacks( const libvlc_event_t* event, void* self );
         void                                registerEvents();
+        void                                checkForWaitedEvents( const libvlc_event_t* event );
 
+    private:
         libvlc_event_manager_t*             p_em;
         Media*                              m_media;
+
+        QWaitCondition                      m_waitCond;
+        QMutex                              m_mutex;
+        int                                 m_eventReceived;
+        CheckEventCallback                  m_eventsCallback;
+        QList<int>                          m_eventsExpected;
+        QList<int>                          m_eventsCancel;
 
     signals:
         void                                snapshotTaken( const char* );

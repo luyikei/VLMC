@@ -93,9 +93,38 @@ MediaPlayer::registerEvents()
  * Event dispatcher.
  */
 void
+MediaPlayer::checkForWaitedEvents(const libvlc_event_t *event)
+{
+    QMutexLocker lock( &m_mutex );
+
+    // Use the user provided callback to check if this event suits him.
+    // This is intented to filter out some events, such as multiple length changed
+    // with a value of 0
+    if ( m_eventsCallback != NULL && m_eventsCallback( this, event ) == false )
+        return ;
+    if ( m_eventsExpected.contains( event->type ) == true )
+    {
+        m_eventReceived = event->type;
+        m_waitCond.wakeAll();
+    }
+    else if ( m_eventsCancel.contains( event->type ) == true )
+    {
+        m_eventReceived = event->type;
+        m_waitCond.wakeAll();
+    }
+    //Otherwise this is an event we don't care about.
+}
+
+void
 MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
 {
+    Q_ASSERT_X( event->type >= libvlc_MediaPlayerMediaChanged &&
+                event->type < libvlc_MediaListItemAdded, "event callback", "Only libvlc_MediaPlayer* events are supported" );
+
     MediaPlayer* self = reinterpret_cast<MediaPlayer*>( ptr );
+
+    self->checkForWaitedEvents( event );
+
     switch ( event->type )
     {
     case libvlc_MediaPlayerPlaying:
@@ -311,4 +340,36 @@ MediaPlayer::setKeyInput( bool enabled )
 void MediaPlayer::setAudioOutput(const char *module)
 {
     libvlc_audio_output_set( m_internalPtr, module );
+}
+
+void
+MediaPlayer::configureWaitForEvent( const QList<int> &toWait, const QList<int> &cancel,
+                                    CheckEventCallback callback )
+{
+    //This mutex will only be unlocked when entering the wait condition, and upon
+    //wait completion.
+    m_mutex.lock();
+    Q_ASSERT_X( m_eventsExpected.size() == 0 && m_eventsCancel.size() == 0,
+               "waitForEvent", "waitForEvent is not supposed to be used simultaneously" );
+    m_eventsExpected.append( toWait );
+    m_eventsCancel.append( cancel );
+    m_eventReceived = 0;
+    m_eventsCallback = callback;
+}
+
+MediaPlayer::EventWaitResult
+MediaPlayer::waitForEvent( unsigned long timeoutDuration )
+{
+    bool timeout = !m_waitCond.wait( &m_mutex, timeoutDuration );
+    //m_mutex is now locked.
+    bool found = ( timeout == false && m_eventsExpected.contains( m_eventReceived ) == true );
+    m_eventsCancel.clear();
+    m_eventsExpected.clear();
+    m_eventsCallback = NULL;
+    m_eventReceived = 0;
+    m_mutex.unlock();
+    //And give feedback:
+    if ( timeout == true )
+        return Timeout;
+    return ( found ? Success : Canceled );
 }
