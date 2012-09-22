@@ -27,9 +27,6 @@
 #include <QObject>
 #include "VLCpp.hpp"
 
-#define VOLUME_MAX         100
-#define AOUT_VOLUME_MAX    1024
-
 struct  libvlc_media_player_t;
 struct  libvlc_event_t;
 struct  libvlc_event_manager_t;
