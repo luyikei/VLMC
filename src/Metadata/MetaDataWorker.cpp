@@ -75,7 +75,7 @@ MetaDataWorker::compute()
     //therefor we use direct connection. The failure() slot will be disconnected
     //as soon as the first error will be encountered.
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ), Qt::DirectConnection );
-    //When a codec is not found, no error is raised, but endReached will.
+    //When a codec is not found, no error is raised, but endReached will be.
     connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ), Qt::DirectConnection );
     m_mediaPlayer->play();
 
@@ -196,7 +196,7 @@ MetaDataWorker::renderSnapshot()
 
     //The slot should be triggered in this methode
     m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
-    //Snapshot slot should has been called (but maybe not in next version...)
+    //Snapshot slot should have been called (but maybe not in next version...)
 }
 
 void
@@ -228,7 +228,7 @@ MetaDataWorker::finalize()
 {
     m_media->disconnect( this );
     m_mediaPlayer->disconnect( this );
-    emit    computed();
+    emit computed();
     delete this;
 }
 
