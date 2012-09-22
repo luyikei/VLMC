@@ -61,6 +61,7 @@ MediaPlayer::~MediaPlayer()
     DETACH( libvlc_MediaPlayerEncounteredError );
     DETACH( libvlc_MediaPlayerPausableChanged );
     DETACH( libvlc_MediaPlayerSeekableChanged );
+    DETACH( libvlc_MediaPlayerVout );
     stop();
     libvlc_media_player_release( m_internalPtr );
 }
@@ -83,6 +84,7 @@ MediaPlayer::registerEvents()
     ATTACH( libvlc_MediaPlayerEncounteredError );
     ATTACH( libvlc_MediaPlayerPausableChanged );
     ATTACH( libvlc_MediaPlayerSeekableChanged );
+    ATTACH( libvlc_MediaPlayerVout );
 }
 
 #undef ATTACH
