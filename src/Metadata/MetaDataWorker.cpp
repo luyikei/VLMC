@@ -74,7 +74,7 @@ MetaDataWorker::run()
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
 
     m_mediaPlayer->play();
-    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent();
+    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent( 3000 );
     if ( res != LibVLCpp::MediaPlayer::Success )
     {
         qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
@@ -160,7 +160,7 @@ MetaDataWorker::computeSnapshot()
     // almost often enough for us not to care if we missed one or not. However,
     // we don't want to catch one too early.
     m_mediaPlayer->configureWaitForEvent( libvlc_MediaPlayerTimeChanged, cancel, &checkEvent );
-    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent();
+    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent( 3000 );
 
     if ( res != LibVLCpp::MediaPlayer::Success )
     {
