@@ -60,9 +60,12 @@ ClipRenderer::~ClipRenderer()
 void
 ClipRenderer::setClip( Clip* clip )
 {
-    if ( m_selectedClip != NULL && clip != NULL &&
-         clip->uuid() != m_selectedClip->uuid() )
+    // if the clip is different (or NULL) we have to stop playback.
+    if ( m_selectedClip != NULL &&
+         ( ( clip != NULL && clip->uuid() != m_selectedClip->uuid() ) || clip == NULL ) )
+    {
         clipUnloaded( m_selectedClip->uuid() );
+    }
     if ( clip == NULL )
     {
         m_selectedClip = NULL;
