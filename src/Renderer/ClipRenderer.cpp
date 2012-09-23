@@ -46,7 +46,7 @@ ClipRenderer::ClipRenderer() :
     connect( m_mediaPlayer,     SIGNAL( paused() ),             this,   SIGNAL( paused() ) );
     connect( m_mediaPlayer,     SIGNAL( playing() ),            this,   SIGNAL( playing() ) );
     connect( m_mediaPlayer,     SIGNAL( volumeChanged() ),      this,   SIGNAL( volumeChanged() ) );
-    connect( m_mediaPlayer,     SIGNAL( timeChanged( qint64 ) ),        this,   SLOT( __timeChanged( qint64 ) ) );
+    connect( m_mediaPlayer,     SIGNAL( timeChanged( qint64 ) ),this,   SLOT( __timeChanged( qint64 ) ) );
     connect( m_mediaPlayer,     SIGNAL( endReached() ),         this,   SLOT( __endReached() ) );
 }
 
@@ -60,7 +60,6 @@ ClipRenderer::~ClipRenderer()
 void
 ClipRenderer::setClip( Clip* clip )
 {
-
     if ( m_selectedClip != NULL && clip != NULL &&
          clip->uuid() != m_selectedClip->uuid() )
         clipUnloaded( m_selectedClip->uuid() );

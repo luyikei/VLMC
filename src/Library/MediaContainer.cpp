@@ -160,6 +160,7 @@ MediaContainer::deleteClip( const QUuid &uuid )
         Clip* clip = it.value();
         m_clips.remove( uuid );
         emit clipRemoved( uuid );
+        // don't use delete as the clip may be used in the slot that'll handle clipRemoved signal.
         clip->deleteLater();
     }
 }

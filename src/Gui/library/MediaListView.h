@@ -73,6 +73,7 @@ private slots:
 
 signals:
     void        clipSelected( Clip* );
+    /// Used when the user clicks the deletion arrow.
     void        clipRemoved( const QUuid& );
 };
 #endif // MEDIALISTVIEW_H
