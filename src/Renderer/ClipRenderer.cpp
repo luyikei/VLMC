@@ -90,7 +90,7 @@ ClipRenderer::updateInfos( Clip* clip )
 void
 ClipRenderer::startPreview()
 {
-    if ( m_selectedClip == NULL )
+    if ( m_selectedClip == NULL || m_selectedClip->length() == 0 )
         return ;
     updateInfos( m_selectedClip );
 
