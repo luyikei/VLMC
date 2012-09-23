@@ -132,13 +132,16 @@ ImportController::changeEvent( QEvent *e )
 void
 ImportController::clipSelection( Clip* clip )
 {
-    const QUuid& uuid = clip->uuid();
-    if ( m_currentUuid == uuid )
-        return ;
-    m_ui->metadataContainer->setWatchedClip( clip );
-    m_clipRenderer->stop();
-    m_currentUuid = uuid;
-//    m_tag->clipSelected( clip );
+    if ( clip != NULL )
+    {
+        const QUuid& uuid = clip->uuid();
+        if ( m_currentUuid == uuid )
+            return ;
+        m_ui->metadataContainer->setWatchedClip( clip );
+        m_clipRenderer->stop();
+        m_currentUuid = uuid;
+    //    m_tag->clipSelected( clip );
+    }
     emit clipSelected( clip );
 }
 
