@@ -41,82 +41,58 @@
 MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media ) :
         m_mediaPlayer( mediaPlayer ),
         m_media( media ),
-        m_mediaIsPlaying( false),
-        m_lengthHasChanged( false ),
         m_audioBuffer( NULL )
 {
-    m_lengthChangedTimer = new QTimer;
-    m_lengthChangedTimer->setSingleShot( true );
 }
 
 MetaDataWorker::~MetaDataWorker()
 {
-    delete m_lengthChangedTimer;
     if ( m_audioBuffer )
         delete m_audioBuffer;
 }
 
-void
-MetaDataWorker::compute()
+static bool checkEvent(const LibVLCpp::MediaPlayer*, const libvlc_event_t* event)
 {
-    if ( m_media->fileType() == Media::Video || m_media->fileType() == Media::Audio )
-        computeDynamicFileMetaData();
-    else if ( m_media->fileType() == Media::Image )
-        computeImageMetaData();
+    return event->type == libvlc_MediaPlayerTimeChanged &&
+            event->u.media_player_time_changed.new_time > 0;
+}
+
+void
+MetaDataWorker::run()
+{
+    QList<int>  cancel;
+
+    cancel << libvlc_MediaPlayerEncounteredError << libvlc_MediaPlayerEndReached;
+
+    m_mediaPlayer->configureWaitForEvent( libvlc_MediaPlayerTimeChanged, cancel, &checkEvent );
 
     m_media->addConstantParam( ":vout=dummy" );
-    //In VLC 2.x we can't set the volume before the playback has started
-    //so just switch off the audio-output in any case.
+    // In VLC 2.x we can't set the volume before the playback has started
+    // so just switch off the audio-output in any case.
     m_mediaPlayer->setAudioOutput( "dummy" );
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
-    connect( m_mediaPlayer, SIGNAL( playing() ),
-             this, SLOT( entrypointPlaying() ), Qt::QueuedConnection );
-    //We want to disconnect the media player ASAP once an error is encountered,
-    //therefor we use direct connection. The failure() slot will be disconnected
-    //as soon as the first error will be encountered.
-    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( failure() ), Qt::DirectConnection );
-    //When a codec is not found, no error is raised, but endReached will be.
-    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ), Qt::DirectConnection );
+
     m_mediaPlayer->play();
-
-    if ( m_media->fileType() == Media::Video || m_media->fileType() == Media::Audio )
+    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent();
+    if ( res != LibVLCpp::MediaPlayer::Success )
     {
-        connect( m_lengthChangedTimer, SIGNAL( timeout() ),
-                 this, SLOT( lengthChangedTimeout() ), Qt::QueuedConnection );
-        m_lengthChangedTimer->start( 3000 );
+        qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
+                      << "while launching metadata processing";
+        failure();
     }
-    m_media->flushVolatileParameters();
-}
-
-void
-MetaDataWorker::computeDynamicFileMetaData()
-{
-    connect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
-             this, SLOT( entrypointLengthChanged( qint64 ) ), Qt::QueuedConnection );
-}
-
-void
-MetaDataWorker::computeImageMetaData()
-{
-    m_media->addVolatileParam( ":access=fake", ":access=''" );
-    m_media->addVolatileParam( ":fake-duration=10000", ":fake-duration=''" );
-    //There can't be a length for an image file, so we don't have to wait for it to be updated.
-    m_lengthHasChanged = true;
+    else
+        metaDataAvailable();
 }
 
 void
 MetaDataWorker::metaDataAvailable()
 {
-    m_mediaIsPlaying = false;
-    m_lengthHasChanged = false;
-
     m_media->setNbAudioTrack( m_mediaPlayer->getNbAudioTrack() );
     m_media->setNbVideoTrack( m_mediaPlayer->getNbVideoTrack() );
-    if ( m_media->hasAudioTrack() == false && m_media->hasVideoTrack() == false )
-    {
-        emit failed( m_media );
-        return ;
-    }
+
+    Q_ASSERT_X( m_media->hasAudioTrack() == true || m_media->hasVideoTrack() == true,
+                "metadata parsing", "Position can't be non 0 if no track is available" );
+
     //Don't be fooled by the extension, and probe the file for it's actual type:
     if ( m_media->fileType() == Media::Video )
     {
@@ -125,19 +101,10 @@ MetaDataWorker::metaDataAvailable()
     }
     if ( m_media->fileType() != Media::Audio )
     {
-        //In order to wait for the VOUT to be ready:
-        m_timer.restart();
-        while ( m_mediaPlayer->hasVout() == false &&
-                m_timer.elapsed() < 3000 )
-        {
-            SleepMS( 10 ); //Ugly isn't it :)
-        }
-        if ( m_mediaPlayer->hasVout() == false )
-        {
-            emit failed( m_media );
-            return ;
-        }
-
+        // In theory the vout is created before the position actually changes.
+        // If this happens to be true, we will have to re-add the old vout-waiting code
+        Q_ASSERT_X( m_mediaPlayer->hasVout() == true, "metadata parsing",
+                    "A Vout should have already been available. Please report the problem." );
         quint32     width, height;
         m_mediaPlayer->getSize( &width, &height );
         m_media->setWidth( width );
@@ -166,8 +133,7 @@ MetaDataWorker::metaDataAvailable()
     //Setting time for snapshot :
     if ( m_media->fileType() == Media::Video && m_media->hasSnapshot() == false )
     {
-        connect( m_mediaPlayer, SIGNAL( positionChanged( float ) ), this, SLOT( renderSnapshot() ) );
-        m_mediaPlayer->setTime( m_mediaPlayer->getLength() / 3 );
+        computeSnapshot();
         return ;
     }
     else if ( m_media->fileType() == Media::Image && m_media->hasSnapshot() == false )
@@ -182,107 +148,67 @@ MetaDataWorker::metaDataAvailable()
 
 #ifdef WITH_GUI
 void
-MetaDataWorker::renderSnapshot()
+MetaDataWorker::computeSnapshot()
 {
-    if ( m_media->fileType() == Media::Video ||
-         m_media->fileType() == Media::Audio )
-        disconnect( m_mediaPlayer, SIGNAL( positionChanged( float ) ), this, SLOT( renderSnapshot() ) );
+    QList<int>  cancel;
+    cancel << libvlc_MediaPlayerEncounteredError << libvlc_MediaPlayerEndReached;
+
+    m_mediaPlayer->setTime( m_mediaPlayer->getLength() / 3 );
+
+    // Here we don't care about losing a TimeChanged event, so we don't lock before
+    // the call to the method that would trigger the event. Anyway, TimeChanged event is triggered
+    // almost often enough for us not to care if we missed one or not. However,
+    // we don't want to catch one too early.
+    m_mediaPlayer->configureWaitForEvent( libvlc_MediaPlayerTimeChanged, cancel, &checkEvent );
+    LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent();
+
+    if ( res != LibVLCpp::MediaPlayer::Success )
+    {
+        qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
+                      << "while launching metadata processing";
+        failure();
+        return ;
+    }
+
     QTemporaryFile tmp;
-    tmp.setAutoRemove( false );
     tmp.open();
+    tmp.setAutoRemove( false );
 
+    // Although this function is synchrone, we have to be in the main thread to
+    // handle a QPixmap
     connect( m_mediaPlayer, SIGNAL( snapshotTaken( const char* ) ),
-             this, SLOT( setSnapshot( const char* ) ), Qt::QueuedConnection );
-
-    //The slot should be triggered in this methode
+             this, SLOT( renderSnapshot( const char* ) ) );
     m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
-    //Snapshot slot should have been called (but maybe not in next version...)
-}
-
-void
-MetaDataWorker::setSnapshot( const char* filename )
-{
-    QPixmap* pixmap = new QPixmap( filename );
-    if ( pixmap->isNull() )
-        delete pixmap;
-    else
-        m_media->setSnapshot( pixmap );
-    //TODO : we shouldn't have to do this... patch vlc to get a memory snapshot.
-    QFile   tmp( filename );
-    tmp.remove();
-
-    disconnect( m_mediaPlayer, SIGNAL( snapshotTaken(const char*) ),
-                this, SLOT( setSnapshot( const char* ) ) );
-
-    //CHECKME:
-    //This is synchrone, but it may become asynchrone in the future...
-//    connect( m_mediaPlayer, SIGNAL( stopped () ), this, SLOT( mediaPlayerStopped() ), Qt::QueuedConnection );
-
-    m_media->emitSnapshotComputed();
-    finalize();
 }
 #endif
 
 void
 MetaDataWorker::finalize()
 {
-    m_media->disconnect( this );
-    m_mediaPlayer->disconnect( this );
     emit computed();
-    delete this;
-}
-
-void
-MetaDataWorker::lengthChangedTimeout()
-{
-    /**
-     *  If we fail to compute a length, let's assume the file can't be used for video editing.
-     *  In that case, the ImportManager will ask the user if he wishes to convert it.
-     *  In any case, load the file for now.
-     */
-    //No race condition possible, since both lengthChanged methods are called from the Qt event loop.
-    m_lengthChangedTimer->disconnect();
-    if ( m_lengthHasChanged == true )
-        return ; //This should never happen as this slot is beeing disconnected if a real length is computed.
-    disconnect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
-                this, SLOT( entrypointLengthChanged( qint64 ) ) );
-    m_lengthHasChanged = true;
-    if ( m_mediaIsPlaying == true )
-        metaDataAvailable();
-}
-
-void
-MetaDataWorker::entrypointLengthChanged( qint64 newLength )
-{
-    if ( newLength <= 0 )
-        return ;
-    m_lengthChangedTimer->disconnect();
-    disconnect( m_mediaPlayer, SIGNAL( lengthChanged( qint64 ) ),
-                this, SLOT( entrypointLengthChanged( qint64 ) ) );
-    m_lengthHasChanged = true;
-    if ( m_mediaIsPlaying == true )
-        metaDataAvailable();
-}
-
-void
-MetaDataWorker::entrypointPlaying()
-{
-    disconnect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( entrypointPlaying() ) );
-    //The endReached event is connected in order to catch decoder error.
-    //If we have reached a state when the media is playing, then we don't need to
-    //check for that kind of error anymore.
-    disconnect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( failure() ) );
-    m_mediaIsPlaying = true;
-    if ( m_lengthHasChanged == true )
-        metaDataAvailable();
+    deleteLater();
 }
 
 void
 MetaDataWorker::failure()
 {
-    m_mediaPlayer->disconnect( this );
     emit failed( m_media );
     deleteLater();
+}
+
+void MetaDataWorker::renderSnapshot(const char* filename)
+{
+    QFile   tmp( filename );
+
+    QPixmap* pixmap = new QPixmap( filename );
+    if ( pixmap->isNull() )
+        delete pixmap;
+    else
+        m_media->setSnapshot( pixmap );
+
+    m_media->emitSnapshotComputed();
+    tmp.remove();
+    finalize();
 }
 
 //void

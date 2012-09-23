@@ -56,7 +56,7 @@ MetaDataManager::launchComputing( Media *media )
     connect( worker, SIGNAL( failed( Media* ) ),
              this, SLOT( computingFailed( Media* ) ),
              Qt::QueuedConnection );
-    worker->compute();
+    worker->start();
 }
 
 void

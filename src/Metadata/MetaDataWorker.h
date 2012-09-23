@@ -30,6 +30,7 @@
 #include <QList>
 #include <QTemporaryFile>
 #include <QTime>
+#include <QThread>
 
 class   QTimer;
 
@@ -38,7 +39,7 @@ namespace LibVLCpp
     class   MediaPlayer;
 }
 
-class MetaDataWorker : public QObject
+class MetaDataWorker : public QThread
 {
     Q_OBJECT
     Q_DISABLE_COPY( MetaDataWorker )
@@ -46,11 +47,9 @@ class MetaDataWorker : public QObject
     public:
         MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media );
         ~MetaDataWorker();
-        void                        compute();
+        void                        run();
 
     private:
-        void                        computeDynamicFileMetaData();
-        void                        computeImageMetaData();
 //        void                        prepareAudioSpectrumComputing();
 //        void                        addAudioValue( int value );
         void                        finalize();
@@ -62,35 +61,24 @@ class MetaDataWorker : public QObject
 //                                        unsigned int channels, unsigned int rate,
 //                                        unsigned int nb_samples, unsigned int bits_per_sample,
 //                                        unsigned int size, int pts );
+#ifdef WITH_GUI
+        void    computeSnapshot();
+#endif
 
     private:
         LibVLCpp::MediaPlayer*      m_mediaPlayer;
         Media*                      m_media;
 
-        bool                        m_mediaIsPlaying;
-        bool                        m_lengthHasChanged;
-
         unsigned char*              m_audioBuffer;
-        QTime                       m_timer;
-        QTimer                      *m_lengthChangedTimer;
 
     private slots:
-        void    entrypointPlaying();
-        void    entrypointLengthChanged( qint64 );
-        void    lengthChangedTimeout();
 //        void    generateAudioSpectrum();
         void    failure();
+        void    renderSnapshot(const char *filename);
 
     signals:
         void    computed();
         void    failed( Media* media );
-
-    //GUI Stuff:
-#ifdef WITH_GUI
-    private slots:
-        void    renderSnapshot();
-        void    setSnapshot( const char* );
-#endif
 };
 
 #endif // METADATAWORKER_H
