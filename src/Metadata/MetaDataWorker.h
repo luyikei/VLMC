@@ -74,7 +74,6 @@ class MetaDataWorker : public QThread
     private slots:
 //        void    generateAudioSpectrum();
         void    failure();
-        void    renderSnapshot(const char *filename);
 
     signals:
         void    computed();

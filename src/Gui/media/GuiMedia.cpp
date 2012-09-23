@@ -30,6 +30,22 @@ GUIMedia::GUIMedia() :
 {
 }
 
+void GUIMedia::snapshotReady(const char *fileName)
+{
+    QFile   tmp( fileName );
+
+    QPixmap* pixmap = new QPixmap( fileName );
+    if ( pixmap->isNull() )
+        delete pixmap;
+    else
+    {
+        setSnapshot( pixmap );
+        emit snapshotComputed( qobject_cast<const Media*>( this ) );
+    }
+    tmp.remove();
+
+}
+
 GUIMedia::~GUIMedia()
 {
     if ( m_snapshot )
@@ -58,10 +74,4 @@ bool
 GUIMedia::hasSnapshot() const
 {
     return ( m_snapshot != NULL );
-}
-
-void
-GUIMedia::emitSnapshotComputed()
-{
-    emit snapshotComputed( qobject_cast<const Media*>( this ) );
 }

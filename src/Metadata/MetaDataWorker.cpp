@@ -43,6 +43,7 @@ MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media
         m_media( media ),
         m_audioBuffer( NULL )
 {
+    connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
 }
 
 MetaDataWorker::~MetaDataWorker()
@@ -138,9 +139,9 @@ MetaDataWorker::metaDataAvailable()
     }
     else if ( m_media->fileType() == Media::Image && m_media->hasSnapshot() == false )
     {
-        QPixmap *pixmap = new QPixmap( m_media->fileInfo()->absoluteFilePath() );
-        m_media->setSnapshot( pixmap );
-        m_media->emitSnapshotComputed();
+//        QPixmap *pixmap = new QPixmap( m_media->fileInfo()->absoluteFilePath() );
+//        m_media->setSnapshot( pixmap );
+//        m_media->emitSnapshotComputed();
     }
 #endif
     finalize();
@@ -175,10 +176,12 @@ MetaDataWorker::computeSnapshot()
     tmp.setAutoRemove( false );
 
     // Although this function is synchrone, we have to be in the main thread to
-    // handle a QPixmap
+    // handle a QPixmap, hence the QueuedConnection
     connect( m_mediaPlayer, SIGNAL( snapshotTaken( const char* ) ),
-             this, SLOT( renderSnapshot( const char* ) ) );
+             m_media, SLOT( snapshotReady( const char* ) ),
+             Qt::QueuedConnection );
     m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
+    finalize();
 }
 #endif
 
@@ -186,7 +189,6 @@ void
 MetaDataWorker::finalize()
 {
     emit computed();
-    deleteLater();
 }
 
 void
@@ -194,21 +196,6 @@ MetaDataWorker::failure()
 {
     emit failed( m_media );
     deleteLater();
-}
-
-void MetaDataWorker::renderSnapshot(const char* filename)
-{
-    QFile   tmp( filename );
-
-    QPixmap* pixmap = new QPixmap( filename );
-    if ( pixmap->isNull() )
-        delete pixmap;
-    else
-        m_media->setSnapshot( pixmap );
-
-    m_media->emitSnapshotComputed();
-    tmp.remove();
-    finalize();
 }
 
 //void

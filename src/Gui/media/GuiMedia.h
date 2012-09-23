@@ -38,7 +38,6 @@ public:
     void                        setSnapshot( QPixmap* snapshot );
     const QPixmap               &snapshot() const;
     bool                        hasSnapshot() const;
-    void                        emitSnapshotComputed();
 
 protected:
     //A GUIMedia shouldn't be constructed by something else than a media
@@ -47,6 +46,9 @@ protected:
     static QPixmap*             defaultSnapshot;
     QPixmap*                    m_snapshot;
 
+
+public slots:
+    void                        snapshotReady( const char *fileName );
 
 signals:
     void                        snapshotComputed( const Media* );
