@@ -52,7 +52,6 @@ class MetaDataWorker : public QThread
     private:
 //        void                        prepareAudioSpectrumComputing();
 //        void                        addAudioValue( int value );
-        void                        finalize();
 
     private:
         void                        metaDataAvailable();
@@ -71,9 +70,8 @@ class MetaDataWorker : public QThread
 
         unsigned char*              m_audioBuffer;
 
-    private slots:
+//    private slots:
 //        void    generateAudioSpectrum();
-        void    failure();
 
     signals:
         void    computed();

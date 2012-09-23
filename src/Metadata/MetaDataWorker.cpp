@@ -79,7 +79,7 @@ MetaDataWorker::run()
     {
         qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
                       << "while launching metadata processing";
-        failure();
+        emit failed( m_media );
     }
     else
         metaDataAvailable();
@@ -143,7 +143,7 @@ MetaDataWorker::metaDataAvailable()
         return ;
     }
 #endif
-    finalize();
+    emit computed();
 }
 
 #ifdef WITH_GUI
@@ -166,12 +166,13 @@ MetaDataWorker::computeSnapshot()
     {
         qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
                       << "while launching metadata processing";
-        failure();
+        emit failed( m_media );
         return ;
     }
 
     QTemporaryFile tmp;
     tmp.open();
+    // the snapshot file will be removed when processed by the media.
     tmp.setAutoRemove( false );
 
     // Although this function is synchrone, we have to be in the main thread to
@@ -180,22 +181,9 @@ MetaDataWorker::computeSnapshot()
              m_media, SLOT( snapshotReady( const char* ) ),
              Qt::QueuedConnection );
     m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
-    finalize();
-}
-#endif
-
-void
-MetaDataWorker::finalize()
-{
     emit computed();
 }
-
-void
-MetaDataWorker::failure()
-{
-    emit failed( m_media );
-    deleteLater();
-}
+#endif
 
 //void
 //MetaDataWorker::prepareAudioSpectrumComputing()
