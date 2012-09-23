@@ -43,7 +43,6 @@ void GUIMedia::snapshotReady(const char *fileName)
         emit snapshotComputed( qobject_cast<const Media*>( this ) );
     }
     tmp.remove();
-
 }
 
 GUIMedia::~GUIMedia()

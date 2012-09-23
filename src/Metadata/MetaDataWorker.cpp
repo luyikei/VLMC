@@ -100,6 +100,11 @@ MetaDataWorker::metaDataAvailable()
         if ( m_media->hasVideoTrack() == false )
             m_media->setFileType( Media::Audio );
     }
+    else if ( m_media->fileType() == Media::Audio )
+    {
+        if ( m_media->hasVideoTrack() == true )
+            m_media->setFileType( Media::Video );
+    }
     if ( m_media->fileType() != Media::Audio )
     {
         // In theory the vout is created before the position actually changes.
@@ -132,16 +137,10 @@ MetaDataWorker::metaDataAvailable()
     m_media->emitMetaDataComputed();
 #ifdef WITH_GUI
     //Setting time for snapshot :
-    if ( m_media->fileType() == Media::Video && m_media->hasSnapshot() == false )
+    if ( m_media->fileType() != Media::Audio && m_media->hasSnapshot() == false )
     {
         computeSnapshot();
         return ;
-    }
-    else if ( m_media->fileType() == Media::Image && m_media->hasSnapshot() == false )
-    {
-//        QPixmap *pixmap = new QPixmap( m_media->fileInfo()->absoluteFilePath() );
-//        m_media->setSnapshot( pixmap );
-//        m_media->emitSnapshotComputed();
     }
 #endif
     finalize();

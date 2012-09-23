@@ -300,10 +300,7 @@ Media::setFilePath( const QString &filePath )
     m_fileInfo = new QFileInfo( filePath );
     m_fileName = m_fileInfo->fileName();
     computeFileType();
-    if ( m_fileType != Media::Image )
-        m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
-    else
-        m_mrl = "fake:///" + filePath; //It seems the url encoding part is handled internally by VLC.
+    m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
     if ( m_vlcMedia )
         delete m_vlcMedia;
     m_vlcMedia = new LibVLCpp::Media( m_mrl );
