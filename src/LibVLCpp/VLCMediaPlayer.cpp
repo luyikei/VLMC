@@ -97,13 +97,13 @@ MediaPlayer::checkForWaitedEvents(const libvlc_event_t *event)
 {
     QMutexLocker lock( &m_mutex );
 
-    // Use the user provided callback to check if this event suits him.
-    // This is intented to filter out some events, such as multiple length changed
-    // with a value of 0
-    if ( m_eventsCallback != NULL && m_eventsCallback( this, event ) == false )
-        return ;
     if ( m_eventsExpected.contains( event->type ) == true )
     {
+        // Use the user provided callback to check if this event suits him.
+        // This is intented to filter out some events, such as multiple length changed
+        // with a value of 0
+        if ( m_eventsCallback != NULL && m_eventsCallback( this, event ) == false )
+            return ;
         m_eventReceived = event->type;
         m_waitCond.wakeAll();
     }
