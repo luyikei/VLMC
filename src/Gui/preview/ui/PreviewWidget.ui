@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>328</width>
+    <width>0</width>
     <height>240</height>
    </size>
   </property>
@@ -415,12 +415,6 @@
      </item>
      <item>
       <widget class="LCDTimecode" name="lcdNumber">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
