@@ -67,7 +67,7 @@ MetaDataWorker::run()
 
     m_mediaPlayer->configureWaitForEvent( libvlc_MediaPlayerTimeChanged, cancel, &checkEvent );
 
-    m_media->addConstantParam( ":vout=dummy" );
+    m_media->vlcMedia()->addOption( ":vout=dummy" );
     // In VLC 2.x we can't set the volume before the playback has started
     // so just switch off the audio-output in any case.
     m_mediaPlayer->setAudioOutput( "dummy" );

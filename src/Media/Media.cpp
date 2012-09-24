@@ -102,27 +102,6 @@ Media::computeFileType()
         qDebug() << "What the hell is this extension? And how did you loaded it?!";
 }
 
-void
-Media::flushVolatileParameters()
-{
-    foreach ( const QString &defaultValue, m_volatileParameters )
-        m_vlcMedia->addOption( defaultValue.toUtf8().constData() );
-    m_volatileParameters.clear();
-}
-
-void
-Media::addVolatileParam( const QString& param, const QString& defaultValue )
-{
-    m_vlcMedia->addOption( param.toUtf8().constData() );
-    m_volatileParameters.append( defaultValue );
-}
-
-void
-Media::addConstantParam( const QString& param )
-{
-    m_vlcMedia->addOption( param.toUtf8().constData() );
-}
-
 const QFileInfo*
 Media::fileInfo() const
 {
