@@ -82,7 +82,11 @@ MetaDataWorker::run()
         emit failed( m_media );
     }
     else
+    {
+        // parse some extra meta data from the media itself :
+        m_media->vlcMedia()->parse();
         metaDataAvailable();
+    }
 }
 
 void

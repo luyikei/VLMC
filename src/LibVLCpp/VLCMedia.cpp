@@ -31,7 +31,8 @@
 using namespace LibVLCpp;
 
 Media::Media( const QString& filename ) :
-    m_fileName( filename )
+    m_fileName( filename ),
+    m_tracksInfo( NULL )
 {
     m_internalPtr = libvlc_media_new_location( *(LibVLCpp::Instance::getInstance()),
                                                filename.toLocal8Bit() );
@@ -39,6 +40,8 @@ Media::Media( const QString& filename ) :
 
 Media::~Media()
 {
+    // tracks info gets allocated by vlc, so we use free.
+    free( m_tracksInfo );
     libvlc_media_release( m_internalPtr );
 }
 
@@ -107,4 +110,34 @@ const QString&
 Media::getFileName() const
 {
     return m_fileName;
+}
+
+void
+Media::parse()
+{
+    libvlc_media_parse( *this );
+}
+
+void
+Media::fetchTrackInfo()
+{
+    m_nbTracks = libvlc_media_get_tracks_info( *this, &m_tracksInfo );
+}
+
+unsigned int
+Media::videoCodec() const
+{
+    for ( int i = 0; i < m_nbTracks; ++i )
+        if ( m_tracksInfo[i].i_type == libvlc_track_video )
+            return m_tracksInfo[i].i_codec;
+    return 0;
+}
+
+unsigned int
+Media::audioCodec() const
+{
+    for ( int i = 0; i < m_nbTracks; ++i )
+        if ( m_tracksInfo[i].i_type == libvlc_track_video )
+            return m_tracksInfo[i].i_codec;
+    return 0;
 }
