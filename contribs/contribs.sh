@@ -2,9 +2,9 @@
 
 QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
 QT4_URL="http://rohityadav.in/files/contribs/qt4-4.8-win32-bin.tar.bz2"
-VLC_VERSION_PREFIX="vlc-1.1.11"
+VLC_VERSION_PREFIX="vlc-2.0.4"
 VLC_FILE="${VLC_VERSION_PREFIX}-win32.7z"
-VLC_URL="http://download.videolan.org/vlc/1.1.11/win32/${VLC_FILE}"
+VLC_URL="http://download.videolan.org/vlc/2.0.4/win32/${VLC_FILE}"
 FREI0R_FILE="frei0r-plugins-1.2.1.tar.gz"
 FREI0R_URL="http://www.piksel.no/frei0r/releases/frei0r-plugins-1.2.1.tar.gz"
 FREI0R_EFFECTS_FILE="effects.7z"
@@ -50,19 +50,18 @@ cd temp
   done
   cd plugins
     for i in libqt4_plugin.dll libskins2_plugin.dll libstream_out_raop_plugin.dll libvout_sdl_plugin.dll libaout_sdl_plugin.dll; do
-        rm $i
+        rm -f $i
     done
   cd ..
 cd ..
-cp -r temp/plugins/ $ROOT_FOLDER/bin/
+cp -r $ROOT_FOLDER/temp/plugins/ $ROOT_FOLDER/bin/
 
-rm -rf temp
 cd $ROOT_FOLDER
 
 #VLC sdk
 7z x src-dl/$VLC_FILE "$VLC_VERSION_PREFIX/sdk"
-mv -fuv $VLC_VERSION_PREFIX/sdk/include/vlc $ROOT_FOLDER/include/vlc
-mv -fuv $VLC_VERSION_PREFIX/sdk/lib/ $ROOT_FOLDER/
+mv -fv $VLC_VERSION_PREFIX/sdk/include/vlc $ROOT_FOLDER/include/vlc
+mv -fv $VLC_VERSION_PREFIX/sdk/lib/ $ROOT_FOLDER/
 rm -frv $VLC_VERSION_PREFIX
 
 # Qt
@@ -71,8 +70,9 @@ lrelease -compress -silent -nounfinished ts/*.ts
 cd include && ln -sf qt4/src && cd ..
 
 #frei0r
-tar xvf src-dl/$FREI0R_FILE --wildcards --no-anchored 'frei0r.h' --strip-components=1
+tar xvf src-dl/$FREI0R_FILE -C $ROOT_FOLDER/temp/
+mv `find $ROOT_FOLDER/temp | grep frei0r.h$ | head -1` $ROOT_FOLDER/include
 7z x src-dl/$FREI0R_EFFECTS_FILE "effects"
-mv -fuv effects/ bin/
+mv -fv effects/ bin/
 #Clean up
 rm -rf temp
