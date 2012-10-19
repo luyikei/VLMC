@@ -3,7 +3,7 @@
 set -x
 echo "Contribs configured for intel-universal builds"
 
-LIBVLC_VERSION="2.0.3"
+LIBVLC_VERSION="2.0.4"
 LIBVLC_VERSION_PREFIX="libvlc-${LIBVLC_VERSION}-macosx"
 LIBVLC_FILE="${LIBVLC_VERSION_PREFIX}.zip"
 LIBVLC_URL="http://bhaisaab.org/contribs/${LIBVLC_FILE}"
