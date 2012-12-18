@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="de" sourcelanguage="en">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutVLMC</name>
@@ -406,6 +408,10 @@ Ihre QT Runtime Version: %4
     <message>
         <source>VLMC project file(*.vlmc)</source>
         <translation>VLMC Projektdatei(*.vlmc)</translation>
+    </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1212,16 +1218,6 @@ Bitte überprüfen Sie Ihre VLMC Installation bevor Sie den Fehler melden.</tran
     <message>
         <source>Unsaved Project</source>
         <translation>Nicht gespeichertes Projekt</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>Die Projektdatei kann nicht gelöscht werden</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Diese Projektdatei kann nicht gelöscht werden: %1
-Bitte löschen Sie es manuell.</translation>
     </message>
 </context>
 <context>

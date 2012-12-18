@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="cs_CZ" sourcelanguage="en">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutVLMC</name>
@@ -406,6 +408,10 @@ Verze vašeho běhového prostředí Qt: %4
     <message>
         <source>VLMC project file(*.vlmc)</source>
         <translation>Soubor VLMC projektu (*.vlmc)</translation>
+    </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1212,16 +1218,6 @@ Prosím zkontrolujte Vaši instalaci VLC než ji nahlásíte.</translation>
     <message>
         <source>Unsaved Project</source>
         <translation>Neuložený projekt</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>Nelze smazat soubor projektu</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Nelze smazat soubor projektu: %1
-Prosím odstraňte jej ručně.</translation>
     </message>
 </context>
 <context>

@@ -408,6 +408,10 @@ Uw Qt runtime versie: %4
         <source>VLMC project file(*.vlmc)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -1202,15 +1206,6 @@ Controleer eerst uw VLC-installatie voordat u het probleem meldt.</translation>
     </message>
     <message>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

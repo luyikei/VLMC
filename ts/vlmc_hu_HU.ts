@@ -409,6 +409,10 @@ Your Qt runtime version: %4
         <source>VLMC project file(*.vlmc)</source>
         <translation>VLMC projektfájl (*.vlmc)</translation>
     </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -1214,16 +1218,6 @@ Ellenőrizze a VLC telepítését a hiba jelentése előtt.</translation>
     <message>
         <source>Unsaved Project</source>
         <translation>Nem mentett projekt</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>A projektfájl nem törölhető</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Ez a projektfájl nem törölhető: %1
-Kérem, törölje manuálisan.</translation>
     </message>
 </context>
 <context>

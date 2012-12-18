@@ -9,23 +9,6 @@
         <translation>గురించి</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#b1ca00;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Version: %1</source>
-        <translation>రూపాంతరం: %1</translation>
-    </message>
-    <message>
-        <source>Runtime Qt version: %1 (compiled against %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>రచయితలు</translation>
     </message>
@@ -36,6 +19,54 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>License</source>
         <translation>లైసెన్స్</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:12pt; font-weight:600;&quot;&gt;VideoLAN Movie Creator %1 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; font-weight:600;&quot;&gt;%2&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;DejaVu Sans&apos;; text-decoration: underline; color:#4f4f4f;&quot;&gt;http://www.vlmc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This version of VLMC was compiled on:
+%1 running  %2 compiled against Qt %3
+Your Qt runtime version: %4
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AbstractGraphicsMediaItem</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unlink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -117,6 +148,76 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Commands::Clip::Add</name>
+    <message>
+        <source>Adding clip to track %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Move</name>
+    <message>
+        <source>Moving clip from track %1 to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Remove</name>
+    <message>
+        <source>Removing clip </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Resize</name>
+    <message>
+        <source>Resizing clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Clip::Split</name>
+    <message>
+        <source>Splitting clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Add</name>
+    <message>
+        <source>Adding effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Move</name>
+    <message>
+        <source>Moving effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Remove</name>
+    <message>
+        <source>Deleting effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Effect::Resize</name>
+    <message>
+        <source>Resizing effect %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Commands::Generic</name>
+    <message>
+        <source>Invalid action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CrashHandler</name>
     <message>
         <source>VLMC Crash handler</source>
@@ -165,6 +266,98 @@ p, li { white-space: pre-wrap; }
         <source>History</source>
         <translation>చరిత్ర</translation>
     </message>
+    <message>
+        <source>Effects List</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectSettingWidget</name>
+    <message>
+        <source>Effect Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectStack</name>
+    <message>
+        <source>Effect stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the effect up in the stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Move the effect down in the stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">పేరు</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">వివరణ</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished">వడబోత</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mixer 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mixer 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EffectsListView</name>
+    <message>
+        <source>%1 informations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GUIProjectManager</name>
@@ -200,6 +393,18 @@ p, li { white-space: pre-wrap; }
         <source>An outdated backup file was found. Do you want to erase it?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enter the output file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC project file(*.vlmc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -233,7 +438,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>New project wizard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">కొత్త పరియోజన విజార్డు</translation>
     </message>
     <message>
         <source>Set General options</source>
@@ -264,6 +469,21 @@ p, li { white-space: pre-wrap; }
     <name>GraphicsAudioItem</name>
     <message>
         <source>&lt;p style=&apos;white-space:pre&apos;&gt;&lt;b&gt;Name:&lt;/b&gt; %1&lt;br&gt;&lt;b&gt;Length:&lt;/b&gt; %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GraphicsEffectItem</name>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -301,24 +521,22 @@ p, li { white-space: pre-wrap; }
     <name>IntroDialog</name>
     <message>
         <source>VideoLAN Movie Creator</source>
+        <translation type="unfinished">వీడియోల్యాన్ చలనచిత్ర సృష్టికర్త</translation>
+    </message>
+    <message>
+        <source>I understand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;VideoLAN Movie Creator is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-alpha&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt; software and is not ready for prime-time. Many key features are &lt;span style=&quot; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;, or even &lt;span style=&quot; font-weight:600;&quot;&gt;buggy&lt;/span&gt;.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I understand</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:16pt; font-weight:600;&quot;&gt;Please note&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;VideoLAN Movie Creator is a &lt;/span&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-alpha&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;pre-alpha&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt; software and is not ready for prime-time. Many key features are &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;simply missing&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;, or even &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; font-weight:600;&quot;&gt;buggy&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;. Our team is composed of volunteers who are working hard to give you the best experience with video editing.&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:14pt;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.vlmc.org&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:14pt; text-decoration: underline; color:#0057ae;&quot;&gt;read more&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -444,10 +662,6 @@ p, li { white-space: pre-wrap; }
         <translation>మళ్ళీచేయి</translation>
     </message>
     <message>
-        <source>Share on &amp;Youtube</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Share your project on youtube</source>
         <translation type="unfinished"></translation>
     </message>
@@ -480,30 +694,6 @@ p, li { white-space: pre-wrap; }
         <translation>అతిరూపించు</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation>సాధారణం</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>కీబోర్డు</translation>
-    </message>
-    <message>
-        <source>Youtube</source>
-        <translation>యూట్యూబ్</translation>
-    </message>
-    <message>
-        <source>Network</source>
-        <translation>నెట్వర్క్</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>వీడియో</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation>ఆడియో</translation>
-    </message>
-    <message>
         <source>VLMC Renderer</source>
         <translation type="unfinished">VLMC రెండరర్</translation>
     </message>
@@ -525,6 +715,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>VLMC didn&apos;t manage to restore your project. We apology for the inconvenience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publish on &amp;Internet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -615,10 +809,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PathWidget</name>
     <message>
-        <source>Select path</source>
-        <translation>పథాన్ని ఎంచుకొను</translation>
-    </message>
-    <message>
         <source>Select a path</source>
         <translation>ఒక పథాన్ని ఎంచుకొను</translation>
     </message>
@@ -659,7 +849,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">రద్దుచేయి</translation>
     </message>
     <message>
         <source>Undo the last action</source>
@@ -667,7 +857,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">మళ్ళీచేయి</translation>
     </message>
     <message>
         <source>Redo the last action</source>
@@ -727,7 +917,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Open an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ఉన్నటువంటి పరియోజనను తెరువు</translation>
     </message>
     <message>
         <source>Save</source>
@@ -771,7 +961,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Selection mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ఎంపిక విధానం</translation>
     </message>
     <message>
         <source>Select the selection tool in the timeline</source>
@@ -806,31 +996,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The Youtube Developer Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Youtube Username</source>
         <translation>యూట్యూబ్ వాడుకరిపేరు</translation>
     </message>
     <message>
-        <source>VLMC won&apos;t store your passwords...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proxy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Proxy Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -838,15 +1008,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The HTTP Proxy Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Proxy Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The HTTP Proxy Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -897,12 +1059,80 @@ p, li { white-space: pre-wrap; }
         <source>Project default location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Temporary folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The temporary folder used by VLMC to process videos.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC&apos;s Youtube Developer Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid YouTube username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Youtube Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave this field empty, password will be stored in unencrypted form.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Proxy for VLMC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables Global Network Proxy for VLMC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Hostname.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Port.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Username, if any.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Proxy Password, if any.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The rendered video aspect ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of audio channels</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreviewWidget</name>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">మునుజూపు</translation>
     </message>
     <message>
         <source>Go to the previous frame</source>
@@ -941,6 +1171,10 @@ p, li { white-space: pre-wrap; }
 Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Adjust Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProjectManager</name>
@@ -950,6 +1184,14 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>Failed to load the project file: %1. Aborting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved Project</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -974,79 +1216,35 @@ Please check your VLC installation before reporting the issue.</source>
 </context>
 <context>
     <name>QObject</name>
-    <message id="false">
-        <source>Adding clip to track %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moving clip from track %1 to %2</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Moving clip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove clip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resizing clip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Splitting clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to get backtrace</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The XMLStream is not a valid YouTube Feed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RendererSettings</name>
-    <message>
-        <source>Render settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output file</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">వెడల్పు</translation>
     </message>
     <message>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>FPS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video codec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>H264</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio codec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1075,10 +1273,82 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>File already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ఫైలు ఇదివరకే ఉన్నది!</translation>
     </message>
     <message>
         <source>Output file already exists, do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio Codec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">అనురూపితం</translation>
+    </message>
+    <message>
+        <source>QVGA (320x240) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VGA (640x480) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SVGA (800x600) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XVGA (1024x768) - 30 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>480p NTSC (720x480) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>576p PAL (720x576) - 25 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>720p (1280x720) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1080p (1920x1080) - 29.97 fps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Settings: Publish on Internet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1104,34 +1374,59 @@ Please check your VLC installation before reporting the issue.</source>
         <translation>VLMC అమరికలు</translation>
     </message>
     <message>
-        <source>general</source>
-        <translation>సాధారణం</translation>
+        <source>General</source>
+        <translation type="unfinished">సాధారణం</translation>
     </message>
     <message>
-        <source>keyboard</source>
-        <translation>కీబోర్డు</translation>
+        <source>Keyboard</source>
+        <translation type="unfinished">కీబోర్డు</translation>
     </message>
     <message>
-        <source>youtube</source>
-        <translation>యూట్యూబ్</translation>
+        <source>YouTube</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>network</source>
-        <translation>నెట్వర్క్</translation>
+        <source>Network</source>
+        <translation type="unfinished">నెట్వర్క్</translation>
     </message>
     <message>
-        <source>video</source>
-        <translation>వీడియో</translation>
+        <source>Video</source>
+        <translation type="unfinished">వీడియో</translation>
     </message>
     <message>
-        <source>audio</source>
-        <translation>ఆడియో</translation>
+        <source>Audio</source>
+        <translation type="unfinished">ఆడియో</translation>
+    </message>
+    <message>
+        <source>Restore default?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will restore all settings default value.
+Are you sure you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t save settings due to an invalid value</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ShareOnYoutube</name>
+    <name>ShareOnInternet</name>
     <message>
-        <source>Share On Youtube</source>
+        <source>Share Video On Internet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>YouTube</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1140,6 +1435,10 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1163,7 +1462,7 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gaming</source>
+        <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1179,7 +1478,7 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nonprofits &amp; Activism</source>
+        <source>Nonprofit &amp; Activism</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1187,11 +1486,11 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pets &amp; Animals</source>
+        <source>Animals &amp; Pets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Science &amp; Technology</source>
+        <source>Tech &amp; Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1208,38 +1507,67 @@ Please check your VLC installation before reporting the issue.</source>
     </message>
     <message>
         <source>Description</source>
+        <translation type="unfinished">వివరణ</translation>
+    </message>
+    <message>
+        <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tags</source>
+        <source>Make this video private</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Video Size</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;By publishing, you agree with the Terms Of Services of &lt;/span&gt;&lt;a href=&quot;http://code.google.com/apis/youtube/terms.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;YouTube&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans&apos;; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Small (480 x 272)</source>
+        <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Medium (640 x 360)</source>
+        <source>&amp;Publish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Large (960 x 540)</source>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HD (1280 x 720)</source>
+        <source>&apos;Username&apos; or &apos;Password&apos; or &apos;Title&apos; cannot be empty. Please check these fields.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Make this video public (Default: private)</source>
+        <source>Authenticating...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Category</source>
+        <source>Authenticated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your video has been uploaded.
+URL (copied to your clipboard):
+%1
+
+Open this in your default web browser?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some error has occured while processing your video.
+Please check with your video service provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video Uploaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 kB Uploaded</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1254,8 +1582,8 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <source>Media List</source>
+        <translation type="unfinished">మాధ్యమ జాబితా</translation>
     </message>
 </context>
 <context>
@@ -1294,6 +1622,14 @@ Please check your VLC installation before reporting the issue.</source>
         <source>Audio #%1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the track new name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TracksScene</name>
@@ -1316,13 +1652,6 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <source>No</source>
         <translation>వద్దు</translation>
-    </message>
-</context>
-<context>
-    <name>TracksView</name>
-    <message>
-        <source>Action not supported.</source>
-        <translation>చర్యకు మద్ధతులేదు.</translation>
     </message>
 </context>
 <context>
@@ -1434,11 +1763,12 @@ Please check your VLC installation before reporting the issue.</source>
         <source>Configure Video settings</source>
         <translation>వీడియో అమరికలను స్వరూపించు</translation>
     </message>
-</context>
-<context>
-    <name>VlmcDebug</name>
     <message>
-        <source>Invalid value supplied for argument --logfile</source>
+        <source>16/9</source>
+        <translation type="unfinished">16/9</translation>
+    </message>
+    <message>
+        <source>Video aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1495,6 +1825,18 @@ p, li { white-space: pre-wrap; }
 Then click next to continue...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VLMC project file(*.vlmc)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WorkflowFileRendererDialog</name>
@@ -1540,6 +1882,17 @@ Then click next to continue...</source>
     <message>
         <source> copied to </source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>YouTubeService</name>
+    <message>
+        <source>YouTube Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection may be insecure, do you want to continue? One or more SSL errors has occurred: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

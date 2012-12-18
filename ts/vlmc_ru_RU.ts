@@ -469,36 +469,40 @@ Your Qt runtime version: %4
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="130"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="303"/>
         <source>Enter the output file name</source>
         <translation type="unfinished">Укажите имя выходного файла</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="131"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="305"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="308"/>
         <source>VLMC project file(*.vlmc)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="247"/>
         <source>Failed to load project file</source>
         <translation>Не удалось загрузить файл проекта</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="280"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="290"/>
         <source>Backup file</source>
         <translation>Сделать резервную копию файла</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="281"/>
         <source>A backup file exists for this project. Do you want to load it?</source>
         <translation>Существует резервная копия этого проекта, загрузить?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="291"/>
         <source>An outdated backup file was found. Do you want to erase it?</source>
         <translation>Обнаружена устаревшая резервная копия проекта, удалить?</translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="306"/>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -549,28 +553,28 @@ Your Qt runtime version: %4
         <translation>Установка общих настроек</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="102"/>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="109"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="106"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="113"/>
         <source>Form is incomplete</source>
         <translation>Поле не заполнено</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="103"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="107"/>
         <source>The project name must be filled.</source>
         <translation>Имя проекта должно быть заполнено.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="110"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="114"/>
         <source>The workspace location must be set.</source>
         <translation>Рабочий каталог должен быть установлен.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="141"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="145"/>
         <source>Missing workspace location</source>
         <translation>Рабочий каталог отсутствует</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="155"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="159"/>
         <source>Invalid workspace location</source>
         <translation>Недопустимое расположение рабочего каталога</translation>
     </message>
@@ -614,17 +618,17 @@ Your Qt runtime version: %4
 <context>
     <name>ImportController</name>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="249"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="252"/>
         <source>Invalid medias</source>
         <translation>Несовместимый исходник</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="250"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="253"/>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
         <translation>Некоторые из добавленных исходников не могут быть использованы для видеоредактирования. Сконвертировать для использования в проекте?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="323"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="326"/>
         <source>Failed to load %1</source>
         <translation>Не удалось загрузить %1</translation>
     </message>
@@ -1325,72 +1329,72 @@ p, li { white-space: pre-wrap; }
         <translation>Промежуток времени между двумя автоматическими сохранениями</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="53"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="55"/>
         <source>Output video FPS</source>
         <translation>Частота кадров видео на выходе</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="54"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="56"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
         <translation>Число кадров в секунду, используемое при предпросмотре и выводе данного проекта</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="57"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="59"/>
         <source>Video width</source>
         <translation>Ширина видео</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="58"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="60"/>
         <source>Width resolution of the output video</source>
         <translation>Разрешение видео на выходе по ширине</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="62"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Video height</source>
         <translation>Высота видео</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="63"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="65"/>
         <source>Height resolution of the output video</source>
         <translation>Разрешение видео на выходе по высоте</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="67"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="69"/>
         <source>Video aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="68"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="70"/>
         <source>The rendered video aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="70"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="72"/>
         <source>Audio samplerate</source>
         <translation>Частота дискретизации звука</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="71"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="73"/>
         <source>Output project audio samplerate</source>
         <translation>Выходная частота дискретизации звука</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="75"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="77"/>
         <source>Audio channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="76"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="78"/>
         <source>Number of audio channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="80"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="82"/>
         <source>Project name</source>
         <translation>Название проекта</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="81"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="83"/>
         <source>The project name</source>
         <translation>Название проекта</translation>
     </message>
@@ -1431,26 +1435,26 @@ p, li { white-space: pre-wrap; }
         <translation>Следующий кадр</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="207"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="254"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="257"/>
         <source>Set marker A</source>
         <translation>Установить метку A</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="245"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="248"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="295"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="298"/>
         <source>Set marker B</source>
         <translation>Установить метку B</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="286"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="289"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="336"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="339"/>
         <source>Cut at markers position</source>
         <translation>Вырезать по меткам</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="321"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="324"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="207"/>
         <source>Stop the playback</source>
         <translation>Остановить воспроизведение</translation>
     </message>
@@ -1486,23 +1490,12 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="143"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="145"/>
         <source>Can&apos;t open project file. (%1)</source>
         <translation>Не удалось открыть файл проекта. (%1)</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="184"/>
-        <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="185"/>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="310"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="305"/>
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Не удалось загрузить файл проекта: %1.</translation>
     </message>

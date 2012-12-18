@@ -465,35 +465,39 @@ Your Qt runtime version: %4
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="130"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="303"/>
         <source>Enter the output file name</source>
         <translation type="unfinished">Preencha o nome do arquivo de saida</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="131"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="305"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="308"/>
         <source>VLMC project file(*.vlmc)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="244"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="247"/>
         <source>Failed to load project file</source>
         <translation>Não foi possível carregar o arquivo de projeto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="277"/>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="287"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="280"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="290"/>
         <source>Backup file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="278"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="281"/>
         <source>A backup file exists for this project. Do you want to load it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="288"/>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="291"/>
         <source>An outdated backup file was found. Do you want to erase it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Gui/project/GuiProjectManager.cpp" line="306"/>
+        <source>Please choose a project file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -545,28 +549,28 @@ Your Qt runtime version: %4
         <translation>Configurar opções gerais</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="102"/>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="109"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="106"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="113"/>
         <source>Form is incomplete</source>
         <translation>O formulário está incompleto</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="103"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="107"/>
         <source>The project name must be filled.</source>
         <translation>O nome do projeto deve ser preenchido.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="110"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="114"/>
         <source>The workspace location must be set.</source>
         <translation>A pasta de trabalho deve ser definida.</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="141"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="145"/>
         <source>Missing workspace location</source>
         <translation>Pasta de trabalho ausente</translation>
     </message>
     <message>
-        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="155"/>
+        <location filename="../src/Gui/wizard/GeneralPage.cpp" line="159"/>
         <source>Invalid workspace location</source>
         <translation>Pasta de trabalho inválida</translation>
     </message>
@@ -610,17 +614,17 @@ Your Qt runtime version: %4
 <context>
     <name>ImportController</name>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="249"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="252"/>
         <source>Invalid medias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="250"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="253"/>
         <source>Some of the medias you loaded can&apos;t be used for video editing. Do you want VLMC to convert them so you can use them in your project?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Gui/import/ImportController.cpp" line="323"/>
+        <location filename="../src/Gui/import/ImportController.cpp" line="326"/>
         <source>Failed to load %1</source>
         <translation>Não foi possivel carregar %1</translation>
     </message>
@@ -1321,72 +1325,72 @@ p, li { white-space: pre-wrap; }
         <translation>Intervalo que o VLMC usará entre dois salvamentos automáticos</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="53"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="55"/>
         <source>Output video FPS</source>
         <translation>QPS da saída de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="54"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="56"/>
         <source>Frame Per Second used when previewing and rendering the project</source>
         <translation>Quadros por segundo usados para visualizar e exibir o projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="57"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="59"/>
         <source>Video width</source>
         <translation>Largura do vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="58"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="60"/>
         <source>Width resolution of the output video</source>
         <translation>Largura de resolução da saída de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="62"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="64"/>
         <source>Video height</source>
         <translation>Altura do video</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="63"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="65"/>
         <source>Height resolution of the output video</source>
         <translation>Altura de resolução da saída de video</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="67"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="69"/>
         <source>Video aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="68"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="70"/>
         <source>The rendered video aspect ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="70"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="72"/>
         <source>Audio samplerate</source>
         <translation>Taxa de amostragem do áudio</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="71"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="73"/>
         <source>Output project audio samplerate</source>
         <translation>Taxa de amostragem da saída de áudio do projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="75"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="77"/>
         <source>Audio channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="76"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="78"/>
         <source>Number of audio channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="80"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="82"/>
         <source>Project name</source>
         <translation>Nome do projeto</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="81"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="83"/>
         <source>The project name</source>
         <translation>O nome do projeto</translation>
     </message>
@@ -1427,26 +1431,26 @@ p, li { white-space: pre-wrap; }
         <translation>Avançar um quadro</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="207"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="254"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="257"/>
         <source>Set marker A</source>
         <translation>Definir marcador A</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="245"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="248"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="295"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="298"/>
         <source>Set marker B</source>
         <translation>Definir marcador B</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="286"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="289"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="336"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="339"/>
         <source>Cut at markers position</source>
         <translation>Recortar entre os marcadores</translation>
     </message>
     <message>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="321"/>
-        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="324"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="204"/>
+        <location filename="../src/Gui/preview/ui/PreviewWidget.ui" line="207"/>
         <source>Stop the playback</source>
         <translation>Parar a reprodução</translation>
     </message>
@@ -1481,23 +1485,12 @@ Please check your VLC installation before reporting the issue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="143"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="145"/>
         <source>Can&apos;t open project file. (%1)</source>
         <translation>Não foi possível abrir o projeto (%1)</translation>
     </message>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="184"/>
-        <source>Can&apos;t delete project file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="185"/>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="310"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="305"/>
         <source>Failed to load the project file: %1. Aborting.</source>
         <translation>Não foi possível carregar o projeto: %1. Abortando.</translation>
     </message>

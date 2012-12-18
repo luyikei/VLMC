@@ -408,6 +408,10 @@ Verzia Vášho prostredia Qt: %4</translation>
         <source>VLMC project file(*.vlmc)</source>
         <translation>Súbor s projektom VLMC (*.vlmc)</translation>
     </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -1213,16 +1217,6 @@ Pred odoslaním záznamu o chybe prosím skontrolujte inštaláciu programu VLC.
     <message>
         <source>Unsaved Project</source>
         <translation>Neuložený projekt</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>Nemožno vymazať súbor s projektom</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Nemožno vymazať tento súbor s projektom: %1
-Vymažte ho manuálne, prosím.</translation>
     </message>
 </context>
 <context>

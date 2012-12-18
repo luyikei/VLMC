@@ -408,6 +408,10 @@ Versiune Qt: %4</translation>
         <source>VLMC project file(*.vlmc)</source>
         <translation>Fişier proiect VLMC(*.vlmc)</translation>
     </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -1213,16 +1217,6 @@ Vă rugăm să verificaţi instalarea VLC înainte de a raporta problema.</trans
     <message>
         <source>Unsaved Project</source>
         <translation>Proiect nesalvat</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>Nu pot şterge fişierul  proiect</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Nu pot şterge fişierul proiect: %1
-Te rog să-l ştergi manual.</translation>
     </message>
 </context>
 <context>

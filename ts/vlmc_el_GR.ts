@@ -410,6 +410,10 @@ Your Qt runtime version: %4
         <source>VLMC project file(*.vlmc)</source>
         <translation>VLMC αρχείο εργασίας(*.vlmc)</translation>
     </message>
+    <message>
+        <source>Please choose a project file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeneralPage</name>
@@ -1217,15 +1221,6 @@ Please check your VLC installation before reporting the issue.</source>
     <message>
         <source>Unsaved Project</source>
         <translation>Εργασία μη αποθηκευμένη</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete project file</source>
-        <translation>Αδύνατη η διαγραφή της εργασίας</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete this project file: %1
-Please delete it manually.</source>
-        <translation>Αδύνατη η διαγραφή της εργασίας: %1 Παρακαλώ διαγράψτε την εσείς.</translation>
     </message>
 </context>
 <context>
