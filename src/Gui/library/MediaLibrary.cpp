@@ -32,6 +32,7 @@
 
 #include <QDebug>
 #include <QUrl>
+#include <QMimeData>
 
 MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
     m_ui( new Ui::MediaLibrary() )

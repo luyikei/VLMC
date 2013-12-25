@@ -101,7 +101,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     //Clean any previous render.
 
     sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%f/1:cookie=0:codec=%s:cat=2:caching=0",
-             width, height, m_aspectRatio.toAscii().constData(), fps, "RV32" );
+             width, height, m_aspectRatio.toLatin1().constData(), fps, "RV32" );
     sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
                 m_rate, m_nbChannels );
     strcpy( inputSlave, ":input-slave=imem://" );

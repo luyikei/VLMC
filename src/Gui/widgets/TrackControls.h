@@ -23,7 +23,7 @@
 #ifndef TRACKCONTROLS_H
 #define TRACKCONTROLS_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class GraphicsTrack;
 

@@ -27,7 +27,7 @@
 #include "Types.h"
 
 #include <QApplication>
-#include <QDesktopServices>
+#include <QStandardPaths>
 #include <QDir>
 #include <QProcess>
 #include <QSettings>
@@ -41,8 +41,8 @@
 
 EffectsEngine::EffectsEngine()
 {
-    m_cache = new QSettings( QDesktopServices::storageLocation(
-                    QDesktopServices::CacheLocation ) + "/effects",
+    m_cache = new QSettings( QStandardPaths::writableLocation(
+                    QStandardPaths::CacheLocation ) + "/effects",
                              QSettings::IniFormat, this );
     //Create the names entry. A bit ugly but faster (I guess...) afterward.
     m_names.push_back( QStringList() );

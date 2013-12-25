@@ -178,7 +178,7 @@ Timeline::save( QXmlStreamWriter &project ) const
         {
             project.writeStartElement( "linkedTo" );
                 project.writeStartElement( "item" );
-                    project.writeAttribute( "uuid", item->groupItem()->uuid() );
+                    project.writeAttribute( "uuid", item->groupItem()->uuid().toString() );
                 project.writeEndElement();
             project.writeEndElement();
         }

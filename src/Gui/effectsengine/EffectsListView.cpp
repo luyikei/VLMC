@@ -29,6 +29,8 @@
 #include <QMouseEvent>
 #include <QStandardItem>
 #include <QVBoxLayout>
+#include <QMimeData>
+#include <QDrag>
 
 #include <QtDebug>
 

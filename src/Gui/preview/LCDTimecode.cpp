@@ -26,7 +26,7 @@
 LCDTimecode::LCDTimecode( QWidget* parent )
     : QLCDNumber( parent )
 {
-    setNumDigits( 11 );
+    setDigitCount( 11 );
     setTime( 0, 0, 0, 0 );
 }
 

@@ -35,6 +35,8 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QTime>
+#include <QMimeData>
+#include <QDrag>
 
 MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         QWidget( parent ),
@@ -213,7 +215,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
         return;
 
     QMimeData* mimeData = new QMimeData;
-    mimeData->setData( "vlmc/uuid", m_clip->fullId().toAscii() );
+    mimeData->setData( "vlmc/uuid", m_clip->fullId().toLatin1() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
     const Media*  parent = m_clip->getMedia();

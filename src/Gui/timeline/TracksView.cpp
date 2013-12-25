@@ -48,6 +48,7 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
+#include <QMimeData>
 
 #include <QtDebug>
 

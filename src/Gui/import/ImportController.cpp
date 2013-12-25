@@ -79,7 +79,7 @@ ImportController::ImportController(QWidget *parent) :
     m_ui->treeView->setCurrentIndex( m_filesModel->index( m_currentlyWatchedDir ) );
     m_ui->treeView->setExpanded( m_ui->treeView->currentIndex() , true );
     m_ui->treeView->header()->setStretchLastSection( false );
-    m_ui->treeView->header()->setResizeMode( QHeaderView::ResizeToContents );
+    m_ui->treeView->header()->setSectionResizeMode( QHeaderView::ResizeToContents );
     m_ui->treeView->setColumnHidden( 1, true );
     m_ui->treeView->setColumnHidden( 2, true );
     m_ui->treeView->setColumnHidden( 3, true );

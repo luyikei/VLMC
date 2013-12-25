@@ -114,8 +114,7 @@ Library::mediaLoaded( const Media* media )
         disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
                  this, SLOT( mediaLoaded( const Media* ) ) );
     }
-    m_nbMediaToLoad.fetchAndAddAcquire( -1 );
-    if ( m_nbMediaToLoad == 0 )
+    if (m_nbMediaToLoad.fetchAndAddAcquire( -1 ) == 1)
         emit projectLoaded();
 }
 

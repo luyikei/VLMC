@@ -67,7 +67,7 @@ void
 YouTubeUploader::uploadInit()
 {
     /* Random 10 digit boundary string, as per protocol */
-    m_boundary = QString( QString::number( qrand(), 10 ).toAscii() );
+    m_boundary = QString( QString::number( qrand(), 10 ).toLatin1() );
 
     QString privateToken = "";
 

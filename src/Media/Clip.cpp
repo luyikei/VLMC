@@ -238,7 +238,7 @@ Clip::save( QXmlStreamWriter &project )
     }
     else
     {
-        project.writeAttribute( "parent", m_parent->uuid() );
+        project.writeAttribute( "parent", m_parent->uuid().toString() );
         project.writeAttribute( "begin", QString::number( m_begin ) );
         project.writeAttribute( "end", QString::number( m_end ) );
     }
@@ -262,7 +262,7 @@ Clip::fullId() const
     while ( c->isRootClip() == false )
     {
         c = c->getParent();
-        id = c->uuid() + '/' + id;
+        id = c->uuid().toString() + '/' + id;
     }
     return id;
 }
