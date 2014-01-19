@@ -270,7 +270,9 @@ ELSE(NOT WITH_GUI)
         Gui/settings/StringWidget.h
         Gui/timeline/AbstractGraphicsItem.h
         Gui/timeline/AbstractGraphicsMediaItem.h
+		Gui/timeline/GraphicsAudioItem.h
         Gui/timeline/GraphicsEffectItem.h
+		Gui/timeline/GraphicsMovieItem.h
         Gui/timeline/GraphicsCursorItem.h
         Gui/timeline/GraphicsTrack.h
         Gui/timeline/Timeline.h

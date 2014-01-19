@@ -33,6 +33,7 @@
  */
 class GraphicsAudioItem : public AbstractGraphicsMediaItem
 {
+    Q_OBJECT
 public:
     /**
      * \brief See http://doc.trolltech.com/4.5/qgraphicsitem.html#type
