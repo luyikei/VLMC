@@ -244,12 +244,10 @@ ClipWorkflow::commonUnlock()
 void
 ClipWorkflow::computePtsDiff( qint64 pts )
 {
-    if ( m_previousPts == -1 )
-        m_previousPts = pts;
-    if ( m_currentPts == -1 )
-        m_currentPts = pts;
     if ( m_pauseDuration != -1 )
     {
+        //No need to check for m_currentPtr before, as we can't start in paused mode.
+        //so m_currentPts will not be -1
         m_previousPts = m_currentPts + m_pauseDuration;
         m_pauseDuration = -1;
     }
