@@ -14,7 +14,7 @@ FREI0R_EFFECTS_FILE="frei0r-effects-macosx.zip"
 FREI0R_EFFECTS_URL="http://bhaisaab.org/contribs/frei0r-effects-macosx.zip"
 
 QT4_FILE="qt4-4.8-win32-bin.tar.bz2"
-QT4_URL="http://bhaisaab.org/contribs/${QT4_FILE}"
+QT4_URL="http://bhaisaab.org/files/contribs/${QT4_FILE}"
 
 ROOT_FOLDER=`pwd`
 
