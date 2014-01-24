@@ -180,24 +180,18 @@ ClipWorkflow::getStateLock()
 bool
 ClipWorkflow::waitForCompleteInit()
 {
-    m_stateLock->lockForRead();
+    QReadLocker lock( m_stateLock );
+
     if ( m_state != ClipWorkflow::Rendering && m_state != ClipWorkflow::Error )
     {
         if ( m_state == ClipWorkflow::Error )
-        {
-            m_stateLock->unlock();
             return false;
-        }
 
         m_initWaitCond->wait( m_stateLock );
 
         if ( m_state == ClipWorkflow::Error )
-        {
-            m_stateLock->unlock();
             return false;
-        }
     }
-    m_stateLock->unlock();
     return true;
 }
 
