@@ -35,7 +35,7 @@
 
 class   Clip;
 class   Media;
-class   QUuid;
+struct  QUuid;
 namespace LibVLCpp
 {
     class   MediaPlayer;

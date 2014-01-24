@@ -161,7 +161,7 @@ GUIProjectManager::saveProject( bool saveAs /* = false */ )
     //save the project with a new name
     if ( createNewProjectFile( saveAs ) == false )
         return ;
-    ProjectManager::saveProject( outputFileName() );
+    ProjectManager::saveAs( outputFileName() );
 }
 
 bool

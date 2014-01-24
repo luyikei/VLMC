@@ -51,7 +51,7 @@ public:
     void            removeProject( const QString& fileName );
     QStringList     recentsProjects() const;
     virtual bool    closeProject();
-    virtual void    saveProject( const QString &outputFileName );
+    virtual void    saveAs( const QString &outputFileName );
     bool            loadEmergencyBackup();
     void            emergencyBackup();
 

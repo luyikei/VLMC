@@ -31,7 +31,7 @@ class   TracksScene;
 class   TracksView;
 class   EffectUser;
 
-class   QUuid;
+struct  QUuid;
 
 namespace Workflow
 {

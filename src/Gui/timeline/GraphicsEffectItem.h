@@ -29,7 +29,7 @@
 class   EffectUser;
 class   AbstractGraphicsMediaItem;
 
-class   QUuid;
+struct  QUuid;
 
 class GraphicsEffectItem : public AbstractGraphicsItem
 {

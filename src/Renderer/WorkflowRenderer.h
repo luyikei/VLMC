@@ -33,7 +33,7 @@ class   Clip;
 class   QWidget;
 class   QWaitCondition;
 class   QMutex;
-class   QUuid;
+struct  QUuid;
 
 namespace LibVLCpp
 {

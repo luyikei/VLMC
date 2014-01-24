@@ -277,7 +277,7 @@ ProjectManager::closeProject()
 }
 
 void
-ProjectManager::saveProject( const QString &outputFileName )
+ProjectManager::saveAs( const QString &outputFileName )
 {
     __saveProject( outputFileName );
     emit projectSaved();
