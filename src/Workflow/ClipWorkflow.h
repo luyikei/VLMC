@@ -251,7 +251,7 @@ class   ClipWorkflow : public EffectUser
          *  Basically, this will be used when a clip is moved, and therefore has to be
          *  updated.
          */
-        QAtomicInt              m_resyncRequired;
+        bool                    m_resyncRequired;
 
     protected:
         LibVLCpp::MediaPlayer*  m_mediaPlayer;

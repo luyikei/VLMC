@@ -300,15 +300,15 @@ ClipWorkflow::unmute()
 void
 ClipWorkflow::requireResync()
 {
-    m_resyncRequired = 1;
+    m_resyncRequired = true;
 }
 
 bool
 ClipWorkflow::isResyncRequired()
 {
-    if ( m_resyncRequired == 1 )
+    if ( m_resyncRequired == true )
     {
-        m_resyncRequired = 0;
+        m_resyncRequired = false;
         return true;
     }
     return false;
