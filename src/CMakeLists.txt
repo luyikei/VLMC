@@ -29,6 +29,7 @@ SET(VLMC_SRCS
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp
     Renderer/WorkflowRenderer.cpp
+    Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp
     Services/YouTube/YouTubeAuthenticator.cpp
     Services/YouTube/YouTubeFeedParser.cpp
@@ -41,7 +42,7 @@ SET(VLMC_SRCS
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.cpp
-    Workflow/AudioClipWorkflow.cpp 
+    Workflow/AudioClipWorkflow.cpp
     Workflow/ClipWorkflow.cpp
     Workflow/ClipHelper.cpp
     Workflow/Helper.cpp
@@ -59,45 +60,6 @@ ELSE (WIN32)
     LIST( APPEND VLMC_SRCS Main/vlmc.cpp )
 ENDIF(WIN32)
 
-SET (VLMC_MOC_HDRS
-    EffectsEngine/EffectHelper.h
-    EffectsEngine/EffectUser.h
-    EffectsEngine/EffectsEngine.h
-    EffectsEngine/EffectSettingValue.h
-    Library/Library.h
-    Library/MediaContainer.h
-    LibVLCpp/VLCInstance.h
-    LibVLCpp/VLCMediaPlayer.h
-    Media/Clip.h
-    Media/Media.h
-    Metadata/MetaDataManager.h
-    Metadata/MetaDataWorker.h
-    Project/ProjectManager.h
-    Project/Workspace.h
-    Project/WorkspaceWorker.h
-    Renderer/ClipRenderer.h
-    Renderer/GenericRenderer.h
-    Renderer/WorkflowFileRenderer.h
-    Renderer/WorkflowRenderer.h
-    Services/AbstractSharingService.h
-    Services/UploaderIODevice.h
-    Services/YouTube/YouTubeAuthenticator.h
-    Services/YouTube/YouTubeService.h
-    Services/YouTube/YouTubeUploader.h
-    Settings/SettingsManager.h
-    Settings/SettingValue.h
-    Tools/VlmcDebug.h
-    Workflow/AudioClipWorkflow.h 
-    Workflow/ClipWorkflow.h
-    Workflow/ClipHelper.h
-    Workflow/Helper.h
-    Workflow/ImageClipWorkflow.h
-    Workflow/MainWorkflow.h
-    Workflow/TrackHandler.h
-    Workflow/TrackWorkflow.h
-    Workflow/VideoClipWorkflow.h
-  )
-
 SET(VLMC_RCC
     ../resources.qrc
     ../ts/resources-ts.qrc
@@ -114,7 +76,7 @@ INCLUDE_DIRECTORIES(
   .
   Commands
   EffectsEngine
-  Settings 
+  Settings
   Gui
   Gui/effectsengine
   Gui/import
@@ -141,9 +103,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 IF (NOT WITH_GUI)
     LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
-    LIST (APPEND VLMC_MOC_HDRS Renderer/ConsoleRenderer.h)
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
-    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_MOC_HDRS})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     TARGET_LINK_LIBRARIES(vlmc ${VLMC_LIBS})
 
@@ -175,6 +135,7 @@ ELSE(NOT WITH_GUI)
         Gui/library/MediaListView.cpp
         Gui/library/StackViewController.cpp
         Gui/library/StackViewNavController.cpp
+        Gui/library/ViewController.h
         Gui/media/ClipMetadataDisplayer.cpp
         Gui/media/GuiMedia.cpp
         Gui/preview/LCDTimecode.cpp
@@ -186,6 +147,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/DoubleWidget.cpp
         Gui/settings/DoubleSliderWidget.cpp
         Gui/settings/IntWidget.cpp
+        Gui/settings/ISettingsCategoryWidget.h
         Gui/settings/KeyboardShortcut.cpp
         Gui/settings/KeyboardShortcutInput.cpp
         Gui/settings/LanguageWidget.cpp
@@ -220,78 +182,6 @@ ELSE(NOT WITH_GUI)
         Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 
-    LIST( APPEND VLMC_MOC_HDRS
-        Commands/Commands.h
-        Commands/KeyboardShortcutHelper.h
-        Gui/About.h
-        Gui/ClipProperty.h
-        Gui/DockWidgetManager.h
-        Gui/IntroDialog.h
-        Gui/LanguageHelper.h
-        Gui/MainWindow.h
-        Gui/UndoStack.h
-        Gui/WorkflowFileRendererDialog.h
-        Gui/effectsengine/EffectInstanceWidget.h
-        Gui/effectsengine/EffectsListView.h
-        Gui/effectsengine/EffectStack.h
-        Gui/effectsengine/EffectWidget.h
-        Gui/export/RendererSettings.h
-        Gui/export/ShareOnInternet.h
-        Gui/import/ImportController.h
-        Gui/import/TagWidget.h
-        Gui/library/ListViewController.h
-        Gui/library/MediaCellView.h
-        Gui/library/MediaLibrary.h
-        Gui/library/MediaListView.h
-        Gui/library/StackViewController.h
-        Gui/library/StackViewNavController.h
-        Gui/library/ViewController.h
-        Gui/media/ClipMetadataDisplayer.h
-        Gui/media/GuiMedia.h
-        Gui/preview/LCDTimecode.h
-        Gui/preview/PreviewRuler.h
-        Gui/preview/PreviewWidget.h
-        Gui/preview/RenderWidget.h
-        Gui/project/GuiProjectManager.h
-        Gui/settings/BoolWidget.h
-        Gui/settings/ColorWidget.h
-        Gui/settings/DoubleWidget.h
-        Gui/settings/DoubleSliderWidget.h
-        Gui/settings/ISettingsCategoryWidget.h
-        Gui/settings/IntWidget.h
-        Gui/settings/KeyboardShortcut.h
-        Gui/settings/KeyboardShortcutInput.h
-        Gui/settings/LanguageWidget.h
-        Gui/settings/Panel.h
-        Gui/settings/PathWidget.h
-        Gui/settings/PreferenceWidget.h
-        Gui/settings/Settings.h
-        Gui/settings/StringWidget.h
-        Gui/timeline/AbstractGraphicsItem.h
-        Gui/timeline/AbstractGraphicsMediaItem.h
-		Gui/timeline/GraphicsAudioItem.h
-        Gui/timeline/GraphicsEffectItem.h
-		Gui/timeline/GraphicsMovieItem.h
-        Gui/timeline/GraphicsCursorItem.h
-        Gui/timeline/GraphicsTrack.h
-        Gui/timeline/Timeline.h
-        Gui/timeline/TracksControls.h
-        Gui/timeline/TracksRuler.h
-        Gui/timeline/TracksScene.h
-        Gui/timeline/TracksView.h
-        Gui/widgets/ExtendedLabel.h
-        Gui/widgets/FramelessButton.h
-        Gui/widgets/NotificationZone.h
-        Gui/widgets/SearchLineEdit.h
-        Gui/widgets/TrackControls.h
-        Gui/wizard/GeneralPage.h
-        Gui/wizard/OpenPage.h
-        Gui/wizard/ProjectWizard.h
-        Gui/wizard/VideoPage.h
-        Gui/wizard/WelcomePage.h
-        Media/Transcoder.h #Won't be needed without the import, so let's put it in GUI list
-        )
-     
     SET(VLMC_UIS
         Gui/effectsengine/ui/EffectInstanceWidget.ui
         Gui/effectsengine/ui/EffectStack.ui
@@ -326,17 +216,12 @@ ELSE(NOT WITH_GUI)
         ELSE ( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
             LIST( APPEND VLMC_SRCS Tools/Win32BacktraceGenerator.cpp )
         ENDIF( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-        LIST( APPEND VLMC_MOC_HDRS Gui/widgets/CrashHandler.h )
+        LIST( APPEND Gui/widgets/CrashHandler.h )
         LIST( APPEND VLMC_UIS Gui/widgets/ui/CrashHandler.ui )
     ENDIF(WITH_CRASHHANDLER_GUI)
 
     QT4_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})
     QT4_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
-    QT4_WRAP_CPP(VLMC_MOC_SRCS ${VLMC_MOC_HDRS})
-    
-    #Handle non-MOC headers:
-    LIST( APPEND VLMC_HDRS ${VLMC_MOC_HDRS}
-        )
 
     IF( MINGW )
         # resource compilation for MinGW
@@ -358,6 +243,10 @@ ELSE(NOT WITH_GUI)
             MACOSX_PACKAGE_LOCATION Resources)
         SET(MACOSX_BUNDLE_ICON_FILE VLMC.icns)
         LIST( APPEND VLMC_SRCS Gui/preview/RenderWidget.mm )
+    ELSE( APPLE )
+        ## Since there's no implementation on non-apple platforms, we need to process
+        ## the header to generate MOC
+        LIST( APPEND VLMC_SRCS Gui/preview/RenderWidget.h )
     ENDIF( APPLE )
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
@@ -367,7 +256,7 @@ ENDIF( NOT WITH_GUI )
 
 ADD_DEPENDENCIES( vlmc translations )
 
-INSTALL(TARGETS vlmc 
+INSTALL(TARGETS vlmc
         BUNDLE  DESTINATION ${VLMC_BIN_DIR}
         RUNTIME DESTINATION ${VLMC_BIN_DIR})
 
