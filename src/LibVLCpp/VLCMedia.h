@@ -53,7 +53,7 @@ namespace LibVLCpp
 
     private:
         QString                     m_fileName;
-        libvlc_media_track_info_t   *m_tracksInfo;
+        libvlc_media_track_t        **m_tracks;
         // this has not to be equal to nb video tracks + nb audio tracks.
         // it is only meant to use when iterating over m_tracksInfo
         int                         m_nbTracks;
