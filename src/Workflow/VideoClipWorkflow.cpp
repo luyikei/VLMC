@@ -27,11 +27,13 @@
 #include "SettingsManager.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
-#include "WaitCondition.hpp"
 #include "Workflow/Types.h"
 
+#include <QMutexLocker>
 #include <QReadWriteLock>
 #include <QStringBuilder>
+#include <QWaitCondition>
+
 #include <QtDebug>
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :

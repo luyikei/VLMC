@@ -41,7 +41,6 @@ SET(VLMC_SRCS
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.cpp
-    Tools/WaitCondition.hpp
     Workflow/AudioClipWorkflow.cpp 
     Workflow/ClipWorkflow.cpp
     Workflow/ClipHelper.cpp
