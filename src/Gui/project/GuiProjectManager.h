@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <beauze.h@gmail.com>
+ * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,7 +64,7 @@ public:
      *  This is handled here as there's no use for this in non-GUI mode.
      */
     void            loadProject( const QString& fileName );
-    
+
 protected:
     virtual void    failedToLoad( const QString &reason ) const;
     virtual void    saveTimeline( QXmlStreamWriter &project );

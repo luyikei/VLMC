@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
- * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
+ * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *          Christophe Courtaut <christophe.courtaut@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
