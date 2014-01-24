@@ -46,7 +46,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
         m_trackCount( trackCount )
 {
     m_currentFrameLock = new QReadWriteLock;
-    m_renderStartedMutex = new QMutex;
 
     m_tracks = new TrackHandler*[Workflow::NbTrackType];
     m_currentFrame = new qint64[Workflow::NbTrackType];
@@ -64,7 +63,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
 
 MainWorkflow::~MainWorkflow()
 {
-    delete m_renderStartedMutex;
     delete m_currentFrameLock;
     delete m_currentFrame;
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
@@ -110,8 +108,6 @@ MainWorkflow::startRender( quint32 width, quint32 height, double fps )
 const Workflow::OutputBuffer*
 MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
 {
-    QMutexLocker        lock( m_renderStartedMutex );
-
     if ( m_renderStarted == true )
     {
         qint64              currentFrame;

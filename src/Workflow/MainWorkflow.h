@@ -300,7 +300,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         qint64                          m_lengthFrame;
         /// This boolean describe is a render has been started
         bool                            m_renderStarted;
-        QMutex*                         m_renderStartedMutex;
 
         /// Contains the trackhandler, indexed by Workflow::TrackType
         TrackHandler**                  m_tracks;
