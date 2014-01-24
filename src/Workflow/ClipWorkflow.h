@@ -244,7 +244,7 @@ class   ClipWorkflow : public EffectUser
         virtual void            releasePrealocated() = 0;
 
     private:
-        WaitCondition           *m_initWaitCond;
+        QWaitCondition          *m_initWaitCond;
         /**
          *  \brief              Used by the trackworkflow to query a clipworkflow resync.
          *

@@ -26,7 +26,6 @@
 #include "ClipWorkflow.h"
 #include "Media.h"
 #include "MemoryPool.hpp"
-#include "WaitCondition.hpp"
 #include "Workflow/Types.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
@@ -42,7 +41,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
 {
     connect( this, SIGNAL( error() ), ch, SIGNAL( error() ) );
     m_stateLock = new QReadWriteLock;
-    m_initWaitCond = new WaitCondition;
+    m_initWaitCond = new QWaitCondition;
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
 }
@@ -87,10 +86,10 @@ ClipWorkflow::loadingComplete()
     disconnect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ) );
     connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
-    QMutexLocker    lock( m_initWaitCond->getMutex() );
+    QWriteLocker lock( m_stateLock );
     m_isRendering = true;
-    setState( Rendering );
-    m_initWaitCond->wake();
+    m_state = Rendering;
+    m_initWaitCond->wakeAll();
 }
 
 void
@@ -137,10 +136,7 @@ ClipWorkflow::stopRenderer()
         //Set a specific state to avoid operation (getOutput beeing called actually, as it
         //would freeze the render waiting for a frame) while the stopping process occurs.
         m_state = Stopping;
-        {
-            QMutexLocker    lock( m_initWaitCond->getMutex() );
-            m_initWaitCond->wake();
-        }
+        m_initWaitCond->wakeAll();
         {
             QMutexLocker    lock( m_renderLock );
             m_renderWaitCond->wakeAll();
@@ -192,11 +188,9 @@ ClipWorkflow::waitForCompleteInit()
             m_stateLock->unlock();
             return false;
         }
-        m_stateLock->unlock();
-        QMutexLocker    lock( m_initWaitCond->getMutex() );
-        m_initWaitCond->waitLocked();
 
-        m_stateLock->lockForRead();
+        m_initWaitCond->wait( m_stateLock );
+
         if ( m_state == ClipWorkflow::Error )
         {
             m_stateLock->unlock();
