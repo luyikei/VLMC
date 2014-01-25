@@ -177,8 +177,6 @@ class   ClipWorkflow : public EffectUser
         virtual void*           getLockCallback() const = 0;
         virtual void*           getUnlockCallback() const = 0;
 
-        LibVLCpp::MediaPlayer*  getMediaPlayer();
-
         /**
          *  \sa MainWorkflow::setFullSpeedRender();
          */

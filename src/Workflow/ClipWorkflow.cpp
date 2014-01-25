@@ -180,12 +180,6 @@ ClipWorkflow::waitForCompleteInit()
     return true;
 }
 
-LibVLCpp::MediaPlayer*
-ClipWorkflow::getMediaPlayer()
-{
-    return m_mediaPlayer;
-}
-
 void
 ClipWorkflow::postGetOutput()
 {
