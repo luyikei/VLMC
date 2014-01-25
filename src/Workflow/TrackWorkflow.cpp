@@ -176,21 +176,18 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     ClipWorkflow::GetMode       mode = ( paused == false || renderOneFrame == true ?
                                          ClipWorkflow::Pop : ClipWorkflow::Get );
 
-    cw->getStateLock()->lockForRead();
-    if ( cw->getState() == ClipWorkflow::Rendering ||
-         cw->getState() == ClipWorkflow::Paused ||
-         cw->getState() == ClipWorkflow::PauseRequired ||
-         cw->getState() == ClipWorkflow::UnpauseRequired )
+    ClipWorkflow::State state = cw->getState();
+    if ( state == ClipWorkflow::Rendering ||
+         state == ClipWorkflow::Paused ||
+         state == ClipWorkflow::PauseRequired ||
+         state == ClipWorkflow::UnpauseRequired )
     {
-        cw->getStateLock()->unlock();
-
         if ( cw->isResyncRequired() == true || needRepositioning == true )
             adjustClipTime( currentFrame, start, cw );
         return cw->getOutput( mode, currentFrame - start );
     }
-    else if ( cw->getState() == ClipWorkflow::Stopped )
+    else if ( state == ClipWorkflow::Stopped )
     {
-        cw->getStateLock()->unlock();
         cw->initialize();
         //If the init failed, don't even try to call getOutput.
         if ( cw->waitForCompleteInit() == false )
@@ -203,17 +200,15 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
         }
         return cw->getOutput( mode, currentFrame - start );
     }
-    else if ( cw->getState() == ClipWorkflow::EndReached ||
-              cw->getState() == ClipWorkflow::Muted ||
-              cw->getState() == ClipWorkflow::Error )
+    else if ( state == ClipWorkflow::EndReached ||
+              state == ClipWorkflow::Muted ||
+              state == ClipWorkflow::Error )
     {
-        cw->getStateLock()->unlock();
         //The stopClipWorkflow() method will take care of that.
     }
     else
     {
-        qCritical() << "Unexpected state:" << cw->getState();
-        cw->getStateLock()->unlock();
+        qCritical() << "Unexpected state:" << state;
     }
     return NULL;
 }
@@ -221,31 +216,18 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
 void
 TrackWorkflow::preloadClip( ClipWorkflow* cw )
 {
-    cw->getStateLock()->lockForRead();
-
     if ( cw->getState() == ClipWorkflow::Stopped )
-    {
-        cw->getStateLock()->unlock();
         cw->initialize();
-        return ;
-    }
-    cw->getStateLock()->unlock();
 }
 
 void
 TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 {
 //    qDebug() << "Stopping clip workflow";
-    cw->getStateLock()->lockForRead();
-
     if ( cw->getState() == ClipWorkflow::Stopped ||
          cw->getState() == ClipWorkflow::Muted ||
          cw->getState() == ClipWorkflow::Error )
-    {
-        cw->getStateLock()->unlock();
         return ;
-    }
-    cw->getStateLock()->unlock();
     cw->stop();
 }
 
@@ -259,7 +241,6 @@ TrackWorkflow::hasNoMoreFrameToRender( qint64 currentFrame ) const
     ClipWorkflow* cw = it.value();
     //Check if the Clip is in error state. If so, don't bother checking anything else.
     {
-        QReadLocker     lock( cw->getStateLock() );
         if ( cw->getState() == ClipWorkflow::Error )
             return true;
     }
@@ -632,16 +613,13 @@ TrackWorkflow::stopFrameComputing()
     {
         ClipWorkflow*   cw = it.value();
 
-        cw->getStateLock()->lockForRead();
-
-        if ( cw->getState() == ClipWorkflow::Stopped ||
-             cw->getState() == ClipWorkflow::Muted ||
-             cw->getState() == ClipWorkflow::Error )
+        ClipWorkflow::State state = cw->getState();
+        if ( state == ClipWorkflow::Stopped ||
+             state == ClipWorkflow::Muted ||
+             state == ClipWorkflow::Error )
         {
-            cw->getStateLock()->unlock();
             return ;
         }
-        cw->getStateLock()->unlock();
         cw->stopRenderer();
         ++it;
     }

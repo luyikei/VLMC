@@ -58,7 +58,8 @@ ClipWorkflow::~ClipWorkflow()
 void
 ClipWorkflow::initialize()
 {
-    setState( ClipWorkflow::Initializing );
+    QWriteLocker lock( m_stateLock );
+    m_state = ClipWorkflow::Initializing;
 
     m_vlcMedia = new LibVLCpp::Media( m_clipHelper->clip()->getMedia()->mrl() );
     initializeVlcOutput();
@@ -112,7 +113,7 @@ ClipWorkflow::getState() const
 void
 ClipWorkflow::clipEndReached()
 {
-    setState( EndReached );
+    m_state = EndReached;
 }
 
 void
@@ -164,19 +165,6 @@ ClipWorkflow::setTime( qint64 time )
     }
 }
 
-void
-ClipWorkflow::setState( State state )
-{
-    QWriteLocker    lock( m_stateLock );
-    m_state = state;
-}
-
-QReadWriteLock*
-ClipWorkflow::getStateLock()
-{
-    return m_stateLock;
-}
-
 bool
 ClipWorkflow::waitForCompleteInit()
 {
@@ -211,8 +199,10 @@ ClipWorkflow::postGetOutput()
         if ( m_state == ClipWorkflow::Paused )
         {
             m_state = ClipWorkflow::UnpauseRequired;
-//            This will act like an "unpause";
+            //This will act like an "unpause";
             m_mediaPlayer->pause();
+            // Since we use DirectConnection for mediaPlayerUnpaused(), the media player should be
+            // "Rendering" at this point.
         }
     }
 }
@@ -224,8 +214,11 @@ ClipWorkflow::commonUnlock()
     //no one is available : we would spawn a new buffer, thus modifying the number of available buffers
     if ( getNbComputedBuffers() >= getMaxComputedBuffers() )
     {
-        setState( ClipWorkflow::PauseRequired );
+        QWriteLocker lock( m_stateLock );
+        m_state = ClipWorkflow::PauseRequired;
         m_mediaPlayer->pause();
+        // Since we use DirectConnection for mediaPlayerPaused(), the media player should be
+        // "Paused" at this point.
     }
 }
 
@@ -247,14 +240,14 @@ ClipWorkflow::computePtsDiff( qint64 pts )
 void
 ClipWorkflow::mediaPlayerPaused()
 {
-    setState( ClipWorkflow::Paused );
+    m_state = ClipWorkflow::Paused;
     m_beginPausePts = mdate();
 }
 
 void
 ClipWorkflow::mediaPlayerUnpaused()
 {
-    setState( ClipWorkflow::Rendering );
+    m_state = ClipWorkflow::Rendering;
     m_pauseDuration = mdate() - m_beginPausePts;
 }
 
@@ -276,13 +269,13 @@ void
 ClipWorkflow::mute()
 {
     stop();
-    setState( Muted );
+    m_state = Muted;
 }
 
 void
 ClipWorkflow::unmute()
 {
-    setState( Stopped );
+    m_state = Stopped;
 }
 
 void
@@ -306,17 +299,17 @@ void
 ClipWorkflow::errorEncountered()
 {
     stopRenderer();
-    setState( Error );
+    m_state = Error;
     emit error();
 }
 
 bool
 ClipWorkflow::shouldRender() const
 {
-    QReadLocker lock( m_stateLock );
-    return ( m_state != ClipWorkflow::Error &&
-             m_state != ClipWorkflow::Stopped &&
-             m_state != ClipWorkflow::Stopping );
+    ClipWorkflow::State state = getState();
+    return ( state != ClipWorkflow::Error &&
+             state != ClipWorkflow::Stopped &&
+             state != ClipWorkflow::Stopping );
 }
 
 void

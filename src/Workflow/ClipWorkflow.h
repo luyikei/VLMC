@@ -74,7 +74,7 @@ class   ClipWorkflow : public EffectUser
             /// \brief  Used when end is reached, IE no more frame has to be rendered, but the trackworkflow
             ///         may eventually ask for some.
             EndReached,         //4
-            // Here starts internal states :
+            // Here start internal states :
             /// \brief  This state will be used when an unpause
             ///         has been required
             UnpauseRequired,    //5
@@ -135,9 +135,6 @@ class   ClipWorkflow : public EffectUser
 
         /**
          *  Returns the current workflow state.
-         *  Be carrefull, as this function is NOT thread safe, and return the
-         *  state without locking the state.
-         *  It's your job to do it, by calling the getStateLock() method.
          */
         State                   getState() const;
 
@@ -175,13 +172,6 @@ class   ClipWorkflow : public EffectUser
          */
         void                    queryStateChange( State newState );
 
-        /**
-         *  This returns the QReadWriteLock that protects the ClipWorkflow's state.
-         *  It should be use to lock the value when checking states from outside this
-         *  class.
-         */
-        QReadWriteLock*         getStateLock();
-
         bool                    waitForCompleteInit();
 
         virtual void*           getLockCallback() const = 0;
@@ -218,7 +208,6 @@ class   ClipWorkflow : public EffectUser
         virtual Type            effectType() const;
 
     private:
-        void                    setState( State state );
         void                    adjustBegin();
 
     protected:
@@ -244,6 +233,11 @@ class   ClipWorkflow : public EffectUser
         virtual void            releasePrealocated() = 0;
 
     private:
+        /**
+         * @brief m_initWaitCond Used to synchronize initialization.
+         *
+         * The associated lock is m_stateLock
+         */
         QWaitCondition          *m_initWaitCond;
         /**
          *  \brief              Used by the trackworkflow to query a clipworkflow resync.
