@@ -172,9 +172,6 @@ ClipWorkflow::waitForCompleteInit()
 
     if ( m_state != ClipWorkflow::Rendering && m_state != ClipWorkflow::Error )
     {
-        if ( m_state == ClipWorkflow::Error )
-            return false;
-
         m_initWaitCond->wait( m_stateLock );
 
         if ( m_state == ClipWorkflow::Error )
