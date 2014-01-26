@@ -121,7 +121,6 @@ ClipWorkflow::stop()
 {
     stopRenderer();
     m_isRendering = false;
-    flushComputedBuffers();
     releasePrealocated();
 }
 
