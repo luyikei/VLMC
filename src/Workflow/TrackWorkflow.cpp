@@ -224,9 +224,10 @@ void
 TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 {
 //    qDebug() << "Stopping clip workflow";
-    if ( cw->getState() == ClipWorkflow::Stopped ||
-         cw->getState() == ClipWorkflow::Muted ||
-         cw->getState() == ClipWorkflow::Error )
+    ClipWorkflow::State state = cw->getState();
+    if ( state == ClipWorkflow::Stopped ||
+         state == ClipWorkflow::Muted ||
+         state == ClipWorkflow::Error )
         return ;
     cw->stop();
 }
@@ -240,10 +241,8 @@ TrackWorkflow::hasNoMoreFrameToRender( qint64 currentFrame ) const
     QMap<qint64, ClipWorkflow*>::const_iterator   it = m_clips.end() - 1;
     ClipWorkflow* cw = it.value();
     //Check if the Clip is in error state. If so, don't bother checking anything else.
-    {
-        if ( cw->getState() == ClipWorkflow::Error )
-            return true;
-    }
+    if ( cw->getState() == ClipWorkflow::Error )
+        return true;
     //If it ends before the current frame, we reached end.
     return ( cw->getClipHelper()->length() + it.key() < currentFrame );
 }

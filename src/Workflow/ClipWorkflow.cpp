@@ -185,8 +185,6 @@ ClipWorkflow::postGetOutput()
             m_state = ClipWorkflow::UnpauseRequired;
             //This will act like an "unpause";
             m_mediaPlayer->pause();
-            // Since we use DirectConnection for mediaPlayerUnpaused(), the media player should be
-            // "Rendering" at this point.
         }
     }
 }
@@ -201,8 +199,6 @@ ClipWorkflow::commonUnlock()
         QWriteLocker lock( m_stateLock );
         m_state = ClipWorkflow::PauseRequired;
         m_mediaPlayer->pause();
-        // Since we use DirectConnection for mediaPlayerPaused(), the media player should be
-        // "Paused" at this point.
     }
 }
 
@@ -290,7 +286,7 @@ ClipWorkflow::errorEncountered()
 bool
 ClipWorkflow::shouldRender() const
 {
-    ClipWorkflow::State state = getState();
+    ClipWorkflow::State state = m_state;
     return ( state != ClipWorkflow::Error &&
              state != ClipWorkflow::Stopped);
 }
