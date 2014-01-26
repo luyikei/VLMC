@@ -82,10 +82,8 @@ class   ClipWorkflow : public EffectUser
             /// \brief  This state will be used when the media player is paused,
             ///         because of a sufficient number of computed buffers
             Paused,             //6
-            /// \brief  This state means a clip is mutted and must not be restarted
-            Muted,              //7
             /// \brief  An error was encountered, this ClipWorkflow must not be used anymore.
-            Error,              //8
+            Error,              //7
         };
 
         /**
@@ -182,6 +180,7 @@ class   ClipWorkflow : public EffectUser
 
         void                    mute();
         void                    unmute();
+        bool                    isMuted() const;
 
         void                    requireResync();
         /**
@@ -264,6 +263,7 @@ class   ClipWorkflow : public EffectUser
         qint64                  m_beginPausePts;
         qint64                  m_pauseDuration;
         bool                    m_fullSpeedRender;
+        bool                    m_muted;
 
     private slots:
         void                    loadingComplete();

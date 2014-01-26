@@ -249,13 +249,19 @@ void
 ClipWorkflow::mute()
 {
     stop();
-    m_state = Muted;
+    m_muted = true;
 }
 
 void
 ClipWorkflow::unmute()
 {
-    m_state = Stopped;
+    m_muted = false;
+}
+
+bool
+ClipWorkflow::isMuted() const
+{
+    return m_muted;
 }
 
 void

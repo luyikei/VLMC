@@ -173,6 +173,9 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
                                         qint64 start , bool needRepositioning,
                                         bool renderOneFrame, bool paused )
 {
+    if ( cw->isMuted() == true )
+        return NULL;
+
     ClipWorkflow::GetMode       mode = ( paused == false || renderOneFrame == true ?
                                          ClipWorkflow::Pop : ClipWorkflow::Get );
 
@@ -201,7 +204,6 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
         return cw->getOutput( mode, currentFrame - start );
     }
     else if ( state == ClipWorkflow::EndReached ||
-              state == ClipWorkflow::Muted ||
               state == ClipWorkflow::Error )
     {
         //The stopClipWorkflow() method will take care of that.
@@ -226,7 +228,6 @@ TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 //    qDebug() << "Stopping clip workflow";
     ClipWorkflow::State state = cw->getState();
     if ( state == ClipWorkflow::Stopped ||
-         state == ClipWorkflow::Muted ||
          state == ClipWorkflow::Error )
         return ;
     cw->stop();
@@ -614,7 +615,6 @@ TrackWorkflow::stopFrameComputing()
 
         ClipWorkflow::State state = cw->getState();
         if ( state == ClipWorkflow::Stopped ||
-             state == ClipWorkflow::Muted ||
              state == ClipWorkflow::Error )
         {
             return ;
