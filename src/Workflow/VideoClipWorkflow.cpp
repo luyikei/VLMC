@@ -132,10 +132,11 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
     if ( shouldRender() == false )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
+    {
         m_renderWaitCond->wait( m_renderLock );
-    //Recheck again, as the WaitCondition may have been awaken when stopping.
-    if ( getNbComputedBuffers() == 0 )
-        return NULL;
+        if ( m_state == Stopped )
+            return NULL;
+    }
     Workflow::Frame         *buff = NULL;
     if ( mode == ClipWorkflow::Pop )
     {
