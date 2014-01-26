@@ -130,13 +130,8 @@ ClipWorkflow::stopRenderer()
     QWriteLocker    lockState( m_stateLock );
 
     //Let's make sure the ClipWorkflow isn't beeing stopped from another thread.
-    if ( m_mediaPlayer &&
-         m_state != Stopping && m_state != Stopped )
+    if ( m_mediaPlayer && m_state != Stopped )
     {
-        //Set a specific state to avoid operation (getOutput beeing called actually, as it
-        //would freeze the render waiting for a frame) while the stopping process occurs.
-        m_state = Stopping;
-
         m_mediaPlayer->stop();
         m_mediaPlayer->disconnect();
         MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
@@ -297,8 +292,7 @@ ClipWorkflow::shouldRender() const
 {
     ClipWorkflow::State state = getState();
     return ( state != ClipWorkflow::Error &&
-             state != ClipWorkflow::Stopped &&
-             state != ClipWorkflow::Stopping );
+             state != ClipWorkflow::Stopped);
 }
 
 void

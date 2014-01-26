@@ -69,25 +69,23 @@ class   ClipWorkflow : public EffectUser
             Initializing,       //1
             /// \brief  Used when the clipworkflow is launched and active
             Rendering,          //2
-            /// \brief  Used when stopping
-            Stopping,           //3
             /// \brief  Used when end is reached, IE no more frame has to be rendered, but the trackworkflow
             ///         may eventually ask for some.
-            EndReached,         //4
+            EndReached,         //3
             // Here start internal states :
             /// \brief  This state will be used when an unpause
             ///         has been required
-            UnpauseRequired,    //5
+            UnpauseRequired,    //4
             /// \brief  This state will be used when a pause
             ///         has been required
-            PauseRequired,      //6
+            PauseRequired,      //5
             /// \brief  This state will be used when the media player is paused,
             ///         because of a sufficient number of computed buffers
-            Paused,             //7
+            Paused,             //6
             /// \brief  This state means a clip is mutted and must not be restarted
-            Muted,              //8
+            Muted,              //7
             /// \brief  An error was encountered, this ClipWorkflow must not be used anymore.
-            Error,              //9
+            Error,              //8
         };
 
         /**
