@@ -49,8 +49,10 @@ class   GenericRenderer : public EffectUser
     Q_OBJECT
     Q_DISABLE_COPY( GenericRenderer );
 
-public:
+protected:
     explicit GenericRenderer();
+
+public:
     virtual ~GenericRenderer();
 
 #ifdef WITH_GUI
