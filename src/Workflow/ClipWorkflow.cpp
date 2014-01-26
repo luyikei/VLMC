@@ -136,8 +136,7 @@ ClipWorkflow::stopRenderer()
         //Set a specific state to avoid operation (getOutput beeing called actually, as it
         //would freeze the render waiting for a frame) while the stopping process occurs.
         m_state = Stopping;
-        m_initWaitCond->wakeAll();
-        m_renderWaitCond->wakeAll();
+
         m_mediaPlayer->stop();
         m_mediaPlayer->disconnect();
         MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
@@ -145,6 +144,9 @@ ClipWorkflow::stopRenderer()
         delete m_vlcMedia;
         m_state = Stopped;
         flushComputedBuffers();
+
+        m_initWaitCond->wakeAll();
+        m_renderWaitCond->wakeAll();
     }
 }
 
@@ -170,7 +172,7 @@ ClipWorkflow::waitForCompleteInit()
     {
         m_initWaitCond->wait( m_stateLock );
 
-        if ( m_state == ClipWorkflow::Error )
+        if ( m_state != ClipWorkflow::Rendering )
             return false;
     }
     return true;
