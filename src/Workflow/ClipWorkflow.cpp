@@ -137,10 +137,7 @@ ClipWorkflow::stopRenderer()
         //would freeze the render waiting for a frame) while the stopping process occurs.
         m_state = Stopping;
         m_initWaitCond->wakeAll();
-        {
-            QMutexLocker    lock( m_renderLock );
-            m_renderWaitCond->wakeAll();
-        }
+        m_renderWaitCond->wakeAll();
         m_mediaPlayer->stop();
         m_mediaPlayer->disconnect();
         MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
