@@ -342,6 +342,11 @@ void MediaPlayer::setAudioOutput(const char *module)
     libvlc_audio_output_set( m_internalPtr, module );
 }
 
+void MediaPlayer::disableTitle()
+{
+    libvlc_media_player_set_video_title_display( *this, libvlc_position_disable, 0 );
+}
+
 void
 MediaPlayer::configureWaitForEvent( const QList<int> &toWait, const QList<int> &cancel,
                                     CheckEventCallback callback )

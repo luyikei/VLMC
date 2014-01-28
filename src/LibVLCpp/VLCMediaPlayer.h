@@ -26,6 +26,7 @@
 #include <QList>
 #include <QMutex>
 #include <QObject>
+#include <QString>
 #include <QWaitCondition>
 
 #include "VLCpp.hpp"
@@ -80,6 +81,7 @@ namespace   LibVLCpp
         int                                 getNbVideoTrack();
         void                                setKeyInput( bool enabled );
         void                                setAudioOutput(const char* module);
+        void                                disableTitle();
 
         /**
          * @brief configure the usage of waitForEvent.
