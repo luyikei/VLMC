@@ -148,7 +148,7 @@ AudioClipWorkflow::createBuffer( size_t size )
 }
 
 void
-AudioClipWorkflow::lock( AudioClipWorkflow *cw, quint8 **pcm_buffer , quint32 size )
+AudioClipWorkflow::lock( AudioClipWorkflow *cw, quint8 **pcm_buffer , size_t size )
 {
     cw->m_renderLock->lock();
 
@@ -172,7 +172,7 @@ void
 AudioClipWorkflow::unlock( AudioClipWorkflow *cw, quint8 *pcm_buffer,
                                       quint32 channels, quint32 rate,
                                       quint32 nb_samples, quint32 bits_per_sample,
-                                      quint32 size, qint64 pts )
+                                      size_t size, qint64 pts )
 {
     Q_UNUSED( pcm_buffer );
     Q_UNUSED( rate );

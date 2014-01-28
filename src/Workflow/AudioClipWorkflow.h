@@ -55,13 +55,13 @@ class   AudioClipWorkflow : public ClipWorkflow
         virtual void                initializeVlcOutput();
         Workflow::AudioSample*      createBuffer( size_t size );
         void                        insertPastBlock( Workflow::AudioSample* as );
-        static void                 lock( AudioClipWorkflow* clipWorkflow,
-                                          quint8** pcm_buffer , quint32 size );
-        static void                 unlock( AudioClipWorkflow* clipWorkflow,
+        static void                 lock(AudioClipWorkflow* clipWorkflow,
+                                          quint8** pcm_buffer , size_t size );
+        static void                 unlock(AudioClipWorkflow* clipWorkflow,
                                             quint8* pcm_buffer, quint32 channels,
                                             quint32 rate, quint32 nb_samples,
                                             quint32 bits_per_sample,
-                                            quint32 size, qint64 pts );
+                                            size_t size, qint64 pts );
 
     private:
         QQueue<Workflow::AudioSample*>      m_computedBuffers;

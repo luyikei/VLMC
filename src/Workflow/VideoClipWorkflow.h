@@ -61,10 +61,10 @@ class   VideoClipWorkflow : public ClipWorkflow
     private:
         QQueue<Workflow::Frame*>    m_computedBuffers;
         QQueue<Workflow::Frame*>    m_availableBuffers;
-        static void                 lock( VideoClipWorkflow* clipWorkflow, void** pp_ret,
-                                            int size );
-        static void                 unlock( VideoClipWorkflow* clipWorkflow, void* buffer,
-                                            int width, int height, int bpp, int size,
+        static void                 lock(VideoClipWorkflow* clipWorkflow, void** pp_ret,
+                                            size_t size );
+        static void                 unlock(VideoClipWorkflow* clipWorkflow, void* buffer,
+                                            int width, int height, int bpp, size_t size,
                                             qint64 pts );
         Workflow::Frame             *m_lastReturnedBuffer;
 };

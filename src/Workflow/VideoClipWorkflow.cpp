@@ -156,7 +156,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
 }
 
 void
-VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
+VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, size_t size )
 {
     //Mind the fact that frame size in bytes might not be width * height * bpp
     Workflow::Frame*    frame = NULL;
@@ -181,7 +181,7 @@ VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
 
 void
 VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
-                           int height, int bpp, int size, qint64 pts )
+                           int height, int bpp, size_t size, qint64 pts )
 {
     Q_UNUSED( buffer );
     Q_UNUSED( width );
