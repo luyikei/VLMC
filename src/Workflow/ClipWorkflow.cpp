@@ -66,6 +66,7 @@ ClipWorkflow::initialize()
     m_vlcMedia->addOption( createSoutChain() );
     m_mediaPlayer = MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->get();
     m_mediaPlayer->setMedia( m_vlcMedia );
+    m_mediaPlayer->disableTitle();
 
     m_currentPts = -1;
     m_previousPts = -1;

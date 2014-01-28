@@ -37,7 +37,6 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         "--no-skip-frames",
         "--text-renderer", "dummy",
         "--vout", "dummy",
-        "--no-video-title-show",            // Don't display the filename
         "--no-sub-autodetect-file",         // Don't detect subtitles
         //"--no-audio",
         //"--plugin-path", VLC_TREE "/modules",

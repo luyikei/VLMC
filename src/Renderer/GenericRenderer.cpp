@@ -29,6 +29,7 @@ GenericRenderer::GenericRenderer() :
         m_paused( false )
 {
     m_mediaPlayer = new LibVLCpp::MediaPlayer();
+    m_mediaPlayer->disableTitle();
 }
 
 GenericRenderer::~GenericRenderer()
