@@ -27,6 +27,7 @@
 
 namespace   Workflow
 {
+    // This is constrained by frei0r
     const quint32   Depth = 4;
 
     /**
@@ -51,30 +52,37 @@ namespace   Workflow
         public:
             explicit Frame();
             Frame( quint32 width, quint32 height );
+            Frame( quint32 width, quint32 height, size_t forcedSize );
             ~Frame();
             quint32         width() const;
             quint32         height() const;
             quint32         *buffer();
             const quint32   *buffer() const;
             void            setBuffer( quint32 *buff );
-            Frame           *clone() const;
             /**
              *  \brief      Resize the buffer.
              *
-             *  \warning    This will not resize what's in the frame !
+             *  \warning    This will not resize what's in the frame but drop it instead!
              */
             void            resize( quint32 width, quint32 height );
+            /**
+              * \brief      Resize the buffer
+              *
+              * This will allocate a new buffer and drop the old one.
+              * \param      size    The size, in bytes.
+              */
+            void            resize( size_t size );
             /**
              *  \returns    The frame size in octets
              *
              *  This is equal to width * height * Depth
              */
+            size_t          size() const;
             /**
              *  \returns    The frame size in pixels
              *
              *  This is equal to width * height
              */
-            quint32         size() const;
             quint32         nbPixels() const;
             /**
              *  \warning    Terrible hack !
@@ -83,11 +91,19 @@ namespace   Workflow
              */
             //FIXME
             qint64      ptsDiff;
+
+        public:
+            /**
+             * @brief Size  Computes the size, in bytes, a frame with given dimension would use.
+             */
+            static size_t Size( quint32 width, quint32 height );
+
         private:
             quint32     m_width;
             quint32     m_height;
+            // frei0r uses 32bits only pixels, and expects its buffers as uint32
             quint32     *m_buffer;
-            quint32     m_size;
+            size_t      m_size;
             quint32     m_nbPixels;
     };
     class  AudioSample : public OutputBuffer

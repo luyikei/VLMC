@@ -48,6 +48,18 @@ Frame::Frame( quint32 width, quint32 height ) :
     m_buffer = new quint32[m_nbPixels];
 }
 
+Frame::Frame(quint32 width, quint32 height, size_t forcedSize) :
+    OutputBuffer( VideoTrack ),
+    ptsDiff( 0 ),
+    m_width( width ),
+    m_height( height )
+{
+    m_nbPixels = width * height;
+    m_size = forcedSize;
+    Q_ASSERT(forcedSize % 4 == 0);
+    m_buffer = new quint32[forcedSize / 4];
+}
+
 Frame::~Frame()
 {
     delete[] m_buffer;
@@ -59,8 +71,7 @@ Frame::buffer()
     return m_buffer;
 }
 
-const quint32*
-Frame::buffer() const
+const quint32 *Frame::buffer() const
 {
     return m_buffer;
 }
@@ -77,8 +88,7 @@ Frame::height() const
     return m_height;
 }
 
-quint32
-Frame::size() const
+size_t Frame::size() const
 {
     return m_size;
 }
@@ -89,12 +99,9 @@ Frame::nbPixels() const
     return m_nbPixels;
 }
 
-Frame*
-Frame::clone() const
+size_t Frame::Size(quint32 width, quint32 height)
 {
-    Frame   *f = new Frame( m_width, m_height );
-    memcpy( f->buffer(), m_buffer, m_size );
-    return f;
+    return width * height * Depth;
 }
 
 void
@@ -116,4 +123,12 @@ Frame::resize( quint32 width, quint32 height )
         m_size = m_nbPixels * Depth;
         m_buffer = new quint32[m_nbPixels];
     }
+}
+
+void Frame::resize(size_t size)
+{
+    if ( size == m_size )
+        return ;
+    delete[] m_buffer;
+    m_buffer = new quint32[size];
 }

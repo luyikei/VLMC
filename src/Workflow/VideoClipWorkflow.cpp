@@ -158,14 +158,23 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
 void
 VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, int size )
 {
-    Q_UNUSED( size );
+    //Mind the fact that frame size in bytes might not be width * height * bpp
     Workflow::Frame*    frame = NULL;
 
     cw->m_renderLock->lock();
     if ( cw->m_availableBuffers.isEmpty() == true )
-        frame = new Workflow::Frame( cw->m_width, cw->m_height );
+    {
+        if ( Workflow::Frame::Size( cw->m_width, cw->m_height ) == size )
+            frame = new Workflow::Frame( cw->m_width, cw->m_height );
+        else
+            frame = new Workflow::Frame( cw->m_width, cw->m_height, size );
+    }
     else
+    {
         frame = cw->m_availableBuffers.dequeue();
+        if ( frame->size() != size )
+            frame->resize( size );
+    }
     cw->m_computedBuffers.enqueue( frame );
     *pp_ret = frame->buffer();
 }
