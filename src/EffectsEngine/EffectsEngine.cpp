@@ -27,7 +27,13 @@
 #include "Types.h"
 
 #include <QApplication>
-#include <QStandardPaths>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+# include <QStandardPaths>
+#else
+# include <QDesktopServices>
+#endif
+
 #include <QDir>
 #include <QProcess>
 #include <QSettings>
@@ -41,8 +47,14 @@
 
 EffectsEngine::EffectsEngine()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
     m_cache = new QSettings( QStandardPaths::writableLocation(
                     QStandardPaths::CacheLocation ) + "/effects",
+#else
+    m_cache = new QSettings( QDesktopServices::storageLocation(
+                    QDesktopServices::CacheLocation ) + "/effects",
+#endif
+
                              QSettings::IniFormat, this );
     //Create the names entry. A bit ugly but faster (I guess...) afterward.
     m_names.push_back( QStringList() );
