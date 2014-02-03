@@ -13,6 +13,8 @@ SET(PROJECT_CONTACT      "vlmc-devel@videolan.org")
 SET(PROJECT_VENDOR       "VLMC Team")
 SET(ORG_WEBSITE          "videolan.org")
 
+option(FORCE_QT4 "Forces VLMC to build using Qt4" OFF)
+
 # Configuring build type
 IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING
@@ -103,70 +105,67 @@ ELSE(NOT APPLE)
     #SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}")
 ENDIF(NOT APPLE)
 
-FIND_PACKAGE(LIBVLC)
-  IF (NOT LIBVLC_FOUND)
-    MESSAGE (SEND_ERROR "LibVLC dependency was not found (please get libvlc)!")
-  ENDIF (NOT LIBVLC_FOUND)
-
+FIND_PACKAGE(LIBVLC REQUIRED)
+list(APPEND VLMC_LIBS ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
 
-FIND_PACKAGE(frei0r)
-IF (NOT FREI0R_FOUND)
-  MESSAGE (SEND_ERROR "frei0r not found! It is required for effects engine to work.")
-ENDIF (NOT FREI0R_FOUND)
+FIND_PACKAGE(frei0r REQUIRED)
 
 INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
+
 # search for Qt4
-IF (WITH_GUI)
-    IF(WIN32)
-        #FindQt4.cmake is so brain-dead when Xcompiling
-        SET(QT_LIBRARY_DIR ${CONTRIBS_PATH}/lib)
-        SET(QT_INCLUDE_DIR ${CONTRIBS_PATH}/include/qt4)
-        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtCore)
-        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtGui)
-        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtXml)
-        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/QtNetwork)
-        ADD_DEFINITIONS( -I${CONTRIBS_PATH}/include/qt4/)
-        FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
-    ELSE(WIN32)
-        FIND_PACKAGE(Qt4 4.5.1 COMPONENTS QtCore QtXml QtGui QtNetwork REQUIRED )
-    ENDIF(WIN32)
-ELSE(WITH_GUI)
-    FIND_PACKAGE (Qt4 4.5.1 COMPONENTS QtCore QtNetwork QtXml REQUIRED)
-ENDIF(WITH_GUI)
+if (NOT FORCE_QT4)
+    message(STATUS "using qt5")
+    find_package(Qt5Core )
+    if (Qt5Core_DIR)
+        # go on with other packages
+        if(WITH_GUI)
+            find_package(Qt5 COMPONENTS Widgets Gui XML Network)
+        else()
+            find_packages(Qt5 COMPONENTS XML Network)
+        endif()
+        message(STATUS "Found Qt5! Be aware that Qt5-support is still experimental and not officially supported!")
 
-IF (NOT WIN32)
-    #FindQt4.cmake is so brain-dead when Xcompiling
-    SET (VLMC_LIBS ${QT_QTCORE_LIBRARY}
-          ${QT_QTGUI_LIBRARY}
-          ${QT_QTNETWORK_LIBRARY}
-          ${QT_QTSVG_LIBRARY}
-          ${QT_QTXML_LIBRARY}
-          ${LIBVLC_LIBRARY}
-          ${LIBVLCCORE_LIBRARY})
+        macro(qt_wrap_ui)
+            qt5_wrap_ui(${ARGN})
+        endmacro()
 
-    IF (APPLE) # Fails to link to Cocoa framework automatically
-        SET (VLMC_LIBS ${VLMC_LIBS}
-                       ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/Cocoa.framework)
-    ELSE (APPLE)
-        IF (WITH_GUI)
-            SET (VLMC_LIBS ${VLMC_LIBS} -lX11)
-        ENDIF (WITH_GUI)
-    ENDIF(APPLE)
+        macro(qt_add_resources)
+            qt5_add_resources(${ARGN})
+        endmacro()
 
-    INCLUDE(${QT_USE_FILE})
-    ADD_DEFINITIONS(${QT_DEFINITIONS})
-ELSE (NOT WIN32)
-    SET (VLMC_LIBS -L${CONTRIBS_PATH}/lib
-            ${CONTRIBS_PATH}/lib/libQtNetwork.a
-            ${CONTRIBS_PATH}/lib/libQtXml.a
-            ${CONTRIBS_PATH}/lib/libQtGui.a
-            ${CONTRIBS_PATH}/lib/libQtCore.a
-            ${CONTRIBS_PATH}/lib/libvlccore.dll.a
-            ${CONTRIBS_PATH}/lib/libvlc.dll.a
-            ws2_32 winmm imm32 libeay32 ssleay32 crypt32 gdi32)
-ENDIF(NOT WIN32)
+        find_package(Qt5LinguistTools REQUIRED)
+        macro(qt_add_translation)
+            qt5_add_translation(${ARGN})
+        endmacro()
+    endif()
+else()
+    message(STATUS "Could not find Qt5, searching for Qt4 instead...")
+
+    set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork")
+    if( WITH_GUI )
+        list(APPEND NEEDED_QT4_COMPONENTS "QtGui")
+    endif()
+
+    macro_optional_find_package(Qt4 4.7.0 COMPONENTS ${NEEDED_QT4_COMPONENTS} )
+    macro_log_feature(QT4_FOUND "Qt" "A cross-platform application and UI framework" "http://qt.nokia.com" TRUE "" "If you see this, although libqt4-devel is installed, check whether the \n     qtwebkit-devel package and whatever contains QtUiTools is installed too")
+
+    macro(qt5_use_modules)
+    endmacro()
+
+    macro(qt_wrap_ui)
+        qt4_wrap_ui(${ARGN})
+    endmacro()
+
+    macro(qt_add_resources)
+        qt4_add_resources(${ARGN})
+    endmacro()
+
+    macro(qt_add_translation)
+        qt4_add_translation(${ARGN})
+    endmacro()
+endif()
 
 # layout of VLMC installation
 # (default values are platform-specific)
@@ -209,7 +208,7 @@ IF (UNIX)
     SET (VLMC_MANUAL_DIR  ${CMAKE_INSTALL_PREFIX}/${VLMC_MANUAL_SUBDIR})
 ENDIF (UNIX)
 
-SUBDIRS(ts)
+#SUBDIRS(ts)
 SUBDIRS(src)
 SUBDIRS(nsis)
 SUBDIRS(effects)
@@ -271,8 +270,6 @@ ELSE(WIN32 AND NOT UNIX)
     #SET(CPACK_STRIP_FILES "VLMC")
     #SET(CPACK_SOURCE_STRIP_FILES "")
 ENDIF(WIN32 AND NOT UNIX)
-
-SET(PACKAGE_REQUIRES "libvlc-dev ( >= 1.1.4 ), frei0r-plugins, libqt4-gui ( >= 4.6 ), libqt4-network ( >= 4.6 ), libqt4-svg ( >= 4.6 ), libqt4-xml ( >= 4.6 )")
 
 # RPM packages
 INCLUDE ( ${CMAKE_MODULE_PATH}/RpmBuild.cmake )
