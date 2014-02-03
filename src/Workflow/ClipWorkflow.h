@@ -32,7 +32,6 @@
 #include <QObject>
 #include <QUuid>
 #include <QXmlStreamWriter>
-#include <QAtomicInt>
 
 class   Clip;
 class   Effect;
