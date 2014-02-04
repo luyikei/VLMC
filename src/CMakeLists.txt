@@ -105,7 +105,7 @@ IF (NOT WITH_GUI)
     LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
     QT_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
-    qt5_use_modules(vlmc Core Xml Network)
+    qt_use_modules(vlmc Core Xml Network)
     TARGET_LINK_LIBRARIES(vlmc ${VLMC_LIBS})
 
 #Add GUI stuff if required
@@ -252,7 +252,7 @@ ELSE(NOT WITH_GUI)
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
-    qt5_use_modules(vlmc Core Gui Widgets Xml Network)
+    qt_use_modules(vlmc Core Gui Widgets Xml Network)
 
 ENDIF( NOT WITH_GUI )
 

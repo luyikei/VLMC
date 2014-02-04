@@ -127,6 +127,10 @@ if (NOT FORCE_QT4)
         endif()
         message(STATUS "Found Qt5! Be aware that Qt5-support is still experimental and not officially supported!")
 
+		macro(qt_use_modules)
+			qt5_use_modules(${ARGN})
+		endmacro()
+
         macro(qt_wrap_ui)
             qt5_wrap_ui(${ARGN})
         endmacro()
@@ -151,7 +155,7 @@ else()
     macro_optional_find_package(Qt4 4.7.0 COMPONENTS ${NEEDED_QT4_COMPONENTS} )
     macro_log_feature(QT4_FOUND "Qt" "A cross-platform application and UI framework" "http://qt.nokia.com" TRUE "" "If you see this, although libqt4-devel is installed, check whether the \n     qtwebkit-devel package and whatever contains QtUiTools is installed too")
 
-    macro(qt5_use_modules)
+    macro(qt_use_modules)
     endmacro()
 
     macro(qt_wrap_ui)
