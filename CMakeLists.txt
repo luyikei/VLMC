@@ -121,9 +121,9 @@ if (NOT FORCE_QT4)
     if (Qt5Core_DIR)
         # go on with other packages
         if(WITH_GUI)
-            find_package(Qt5 COMPONENTS Widgets Gui XML Network)
+            find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
         else()
-            find_packages(Qt5 COMPONENTS XML Network)
+            find_packages(Qt5 COMPONENTS Xml Network)
         endif()
         message(STATUS "Found Qt5! Be aware that Qt5-support is still experimental and not officially supported!")
 
