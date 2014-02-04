@@ -252,7 +252,13 @@ ELSE(NOT WITH_GUI)
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
-    qt_use_modules(vlmc Core Gui Widgets Xml Network)
+	if (NOT Qt4_FOUND)
+	    qt_use_modules(vlmc Core Gui Widgets Xml Network)
+	else()
+		# We need to know the target for this one, which is not the case when doing most of the QT4/5 specific stuff.
+		# We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness
+		TARGET_LINK_LIBRARIES(vlmc ${QT_LIBRARIES})
+	endif()
 
 ENDIF( NOT WITH_GUI )
 

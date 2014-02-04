@@ -113,7 +113,6 @@ FIND_PACKAGE(frei0r REQUIRED)
 
 INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
-
 # search for Qt4
 if (NOT FORCE_QT4)
     message(STATUS "using qt5")
@@ -147,15 +146,15 @@ if (NOT FORCE_QT4)
 else()
     message(STATUS "Could not find Qt5, searching for Qt4 instead...")
 
-    set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork")
+	set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork") 
     if( WITH_GUI )
         list(APPEND NEEDED_QT4_COMPONENTS "QtGui")
     endif()
 
-    macro_optional_find_package(Qt4 4.7.0 COMPONENTS ${NEEDED_QT4_COMPONENTS} )
-    macro_log_feature(QT4_FOUND "Qt" "A cross-platform application and UI framework" "http://qt.nokia.com" TRUE "" "If you see this, although libqt4-devel is installed, check whether the \n     qtwebkit-devel package and whatever contains QtUiTools is installed too")
+	find_package(Qt4 REQUIRED COMPONENTS ${NEEDED_QT4_COMPONENTS})
 
     macro(qt_use_modules)
+
     endmacro()
 
     macro(qt_wrap_ui)
@@ -169,6 +168,14 @@ else()
     macro(qt_add_translation)
         qt4_add_translation(${ARGN})
     endmacro()
+
+	include(${QT_USE_FILE})
+	add_definitions(${QT_DEFINITIONS})
+
+	# On linux & using Qt4 we need to manually add -lX11
+	if (UNIX AND NOT APPLE)
+		list(APPEND VLMC_LIBS -lX11)
+	endif()
 endif()
 
 # layout of VLMC installation
