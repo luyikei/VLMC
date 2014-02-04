@@ -144,7 +144,9 @@ if (NOT FORCE_QT4)
     endif()
 endif()
 if(NOT Qt5Core_FOUND)
-    message(STATUS "Could not find Qt5, searching for Qt4 instead...")
+	if (NOT FORCE_QT4)
+		message(STATUS "Could not find Qt5, searching for Qt4 instead...")
+	endif()
 
 	set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork") 
     if( WITH_GUI )
@@ -152,7 +154,7 @@ if(NOT Qt5Core_FOUND)
     endif()
 
 	find_package(Qt4 REQUIRED COMPONENTS ${NEEDED_QT4_COMPONENTS})
-
+	message(STATUS "Found Qt4 & ${NEEDED_QT4_COMPONENTS} modules")
     macro(qt_use_modules)
 
     endmacro()
