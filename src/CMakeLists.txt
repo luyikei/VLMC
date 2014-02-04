@@ -277,18 +277,16 @@ IF(UNIX)
     ENDIF(WITH_PROFILING)
 ENDIF(UNIX)
 
-IF( APPLE )
-    SET(CONTRIBS_DIR ${CMAKE_SOURCE_DIR}/contribs/)
-    ADD_CUSTOM_COMMAND(
-        TARGET vlmc
+if( APPLE )
+    set(APPLICATION_BUNDLE ${CMAKE_BINARY_DIR}/bin/vlmc.app)
+    set(APPLICATION_LIB_DIR ${LIBVLC_LIB_DIR})
+
+    # re-enable this when we start addressing redistribution
+    # message(STATUS "Looking for bundle ${APPLICATION_BUNDLE} with library path ${APPLICATION_LIB_DIR}")
+    # install(CODE "include(BundleUtilities)
+    add_custom_command(TARGET vlmc
         POST_BUILD
-        COMMAND cp -r ${CONTRIBS_DIR}/include ${CONTRIBS_DIR}/lib ${CONTRIBS_DIR}/plugins ${CONTRIBS_DIR}/effects ${CONTRIBS_DIR}/ts ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app/Contents/MacOS
-    )
-    ADD_CUSTOM_COMMAND(
-        TARGET vlmc
-        POST_BUILD
-        COMMAND macdeployqt ${CMAKE_CURRENT_BINARY_DIR}/../bin/vlmc.app -no-plugins #-dmg
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Deploying the Qt Framework onto the bundle"
-    )
-ENDIF( APPLE )
+        COMMAND ${CMAKE_SOURCE_DIR}/cmake/FixBundle.sh ${APPLICATION_BUNDLE}/Contents/MacOS ${LIBVLC_LIB_DIR}
+        COMMENT "Fixing application bundle for local run")
+    # fixup_bundle(\"${APPLICATION_BUNDLE}\" \"\" \"${APPLICATION_LIB_DIR}\")" COMPONENT Runtime)
+endif()
