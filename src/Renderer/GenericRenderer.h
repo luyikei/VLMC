@@ -35,7 +35,6 @@
 
 class   Clip;
 class   Media;
-struct  QUuid;
 namespace LibVLCpp
 {
     class   MediaPlayer;
@@ -47,7 +46,7 @@ namespace LibVLCpp
 class   GenericRenderer : public EffectUser
 {
     Q_OBJECT
-    Q_DISABLE_COPY( GenericRenderer );
+    Q_DISABLE_COPY( GenericRenderer )
 
 protected:
     explicit GenericRenderer();

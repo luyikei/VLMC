@@ -29,7 +29,6 @@
 
 class   Clip;
 class   Media;
-struct  QUuid;
 
 namespace LibVLCpp
 {

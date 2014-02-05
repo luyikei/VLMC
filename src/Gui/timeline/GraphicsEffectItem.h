@@ -29,8 +29,6 @@
 class   EffectUser;
 class   AbstractGraphicsMediaItem;
 
-struct  QUuid;
-
 class GraphicsEffectItem : public AbstractGraphicsItem
 {
     Q_OBJECT

@@ -24,14 +24,13 @@
 #define ABSTRACTGRAPHICSITEM_H
 
 #include <QGraphicsItem>
+#include <QUuid>
 
 class   GraphicsTrack;
 class   TrackWorkflow;
 class   TracksScene;
 class   TracksView;
 class   EffectUser;
-
-struct  QUuid;
 
 namespace Workflow
 {
