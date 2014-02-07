@@ -26,32 +26,31 @@
 #include "SettingsManager.h"
 #include "VlmcDebug.h"
 
+#include <QVector>
+
 using namespace LibVLCpp;
 
 Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
 {
-    char const *argv[] =
-    {
-        "", //Keep this array entry empty. It will be replaced later if required.
-//        "--ffmpeg-debug", "3",
-        "--no-skip-frames",
-        "--text-renderer", "dummy",
-        "--vout", "dummy",
-        "--no-sub-autodetect-file",         // Don't detect subtitles
-        //"--no-audio",
-        //"--plugin-path", VLC_TREE "/modules",
-        "--no-disable-screensaver", //No need to disable the screensaver, and save a thread.
-//        "--no-overlay",
-    };
-    int argc = sizeof( argv ) / sizeof( *argv );
+    QVector<const char*> argv;
+    argv << "--no-skip-frames"
+        // << "--ffmpeg-debug", "3",
+        << "--text-renderer" << "dummy"
+        << "--vout" << "dummy"
+        << "--no-sub-autodetect-file"           // Don't detect subtitles
+        // << "--no-audio"
+        // << "--plugin-path" << VLC_TREE "/modules",
+        // << "--no-overlay",
+        << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
+
 
     int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
     if ( debugLevel == VlmcDebug::Debug )
-        argv[0] = "-vv";
+        argv << "-vv";
     else if ( debugLevel == VlmcDebug::Verbose )
-        argv[0] = "-v";
+        argv << "-v";
 
-    m_internalPtr = libvlc_new( argc, argv );
+    m_internalPtr = libvlc_new( argv.count(), &argv.front() );
     Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",
                 "Can't launch VLMC without a valid LibVLC instance. Please check your VLC installation" );
 }
