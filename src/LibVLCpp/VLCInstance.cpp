@@ -26,6 +26,7 @@
 #include "SettingsManager.h"
 #include "VlmcDebug.h"
 
+#include <QProcessEnvironment>
 #include <QVector>
 
 using namespace LibVLCpp;
@@ -39,10 +40,8 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         << "--vout" << "dummy"
         << "--no-sub-autodetect-file"           // Don't detect subtitles
         // << "--no-audio"
-        // << "--plugin-path" << VLC_TREE "/modules",
         // << "--no-overlay",
         << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
-
 
     int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
     if ( debugLevel == VlmcDebug::Debug )
