@@ -26,7 +26,6 @@
 #include "SettingsManager.h"
 #include "VlmcDebug.h"
 
-#include <QProcessEnvironment>
 #include <QVector>
 
 using namespace LibVLCpp;
