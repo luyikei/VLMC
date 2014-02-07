@@ -58,12 +58,12 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     SettingValue    *width = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectWidth", 480,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
-                             SettingValue::Flags( SettingValue::Clamped | SettingValue::EightMultiple ) );
+                             SettingValue::Clamped | SettingValue::EightMultiple );
     width->setLimits( 32, 2048 );
     SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
-                             SettingValue::Flag( SettingValue::Clamped | SettingValue::EightMultiple ) );
+                             SettingValue::Clamped | SettingValue::EightMultiple );
     height->setLimits( 32, 2048 );
     VLMC_CREATE_PROJECT_STRING( "video/AspectRatio", "16/9",
                                 QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
@@ -71,17 +71,17 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     SettingValue    *sampleRate = VLMC_CREATE_PROJECT_VAR( SettingValue::Double, "audio/AudioSampleRate", 44100,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ),
-                             SettingValue::Flag( SettingValue::Clamped ) );
+                             SettingValue::Clamped );
     sampleRate->setLimits( 11025, 48000 );
     SettingValue    *audioChannel = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "audio/NbChannels", 2,
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
-                                                             SettingValue::Flag( SettingValue::Clamped ) );
+                                                             SettingValue::Clamped );
     audioChannel->setLimits( 2, 2 );
     VLMC_CREATE_PROJECT_VAR( SettingValue::String, "general/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
-                                SettingValue::Flag( SettingValue::NotEmpty ) );
+                                SettingValue::NotEmpty );
 
     VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/Workspace", "" );
 

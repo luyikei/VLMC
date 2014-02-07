@@ -71,7 +71,7 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
 SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
                                            desc, SettingsManager::Vlmc, flags );
 
-/// Vlmc preferences maccros
+/// Vlmc preferences macros
 #define VLMC_CREATE_PREFERENCE_INT( key, defaultValue, name, desc )  \
         VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PREFERENCE_STRING( key, defaultValue, name, desc )  \
@@ -87,7 +87,7 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
 #define VLMC_CREATE_PREFERENCE_PATH( key, defaultValue, name, desc )  \
         VLMC_CREATE_PREFERENCE( SettingValue::Path, key, defaultValue, name, desc, SettingValue::Nothing )
 
-//Convenience maccros :
+/// Convenience macros :
 #define VLMC_CREATE_PRIVATE_PREFERENCE_STRING( key, defaultValue )  \
         VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 #define VLMC_CREATE_PRIVATE_PREFERENCE_INT( key, defaultValue )  \
@@ -131,7 +131,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
                                                const QVariant &defaultValue,
                                                const char *name, const char *desc,
                                                Type varType = Vlmc,
-                                               QFlags<SettingValue::Flag> flags = SettingValue::Nothing );
+                                               SettingValue::Flags flags = SettingValue::Nothing );
         bool                        watchValue( const QString &key,
                                                 QObject* receiver,
                                                 const char *method,
