@@ -120,7 +120,11 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
 {
     Q_ASSERT_X( event->type >= libvlc_MediaPlayerMediaChanged &&
                 event->type < libvlc_MediaListItemAdded, "event callback", "Only libvlc_MediaPlayer* events are supported" );
-
+    if (event->type != libvlc_MediaPlayerPositionChanged &&
+            event->type != libvlc_MediaPlayerTimeChanged)
+    {
+        qDebug() << ptr << libvlc_event_type_name(event->type);
+    }
     MediaPlayer* self = reinterpret_cast<MediaPlayer*>( ptr );
 
     self->checkForWaitedEvents( event );
@@ -128,19 +132,15 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
     switch ( event->type )
     {
     case libvlc_MediaPlayerPlaying:
-        //qDebug() << "Media player playing";
         self->emit playing();
         break;
     case libvlc_MediaPlayerPaused:
-        //qDebug() << "Media player paused";
         self->emit paused();
         break;
     case libvlc_MediaPlayerStopped:
-        //qDebug() << "Media player stopped";
         self->emit stopped();
         break;
     case libvlc_MediaPlayerEndReached:
-        //qDebug() << "Media player end reached";
         self->emit endReached();
         break;
     case libvlc_MediaPlayerTimeChanged:
@@ -157,8 +157,6 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
         self->emit snapshotTaken( event->u.media_player_snapshot_taken.psz_filename );
         break;
     case libvlc_MediaPlayerEncounteredError:
-        qDebug() << '[' << (void*)self << "] libvlc_MediaPlayerEncounteredError received."
-                << "This is not looking good...";
         self->emit errorEncountered();
         break;
     case libvlc_MediaPlayerSeekableChanged:
