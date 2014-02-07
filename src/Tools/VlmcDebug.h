@@ -38,11 +38,14 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
     Q_OBJECT
 
     public:
-        enum    VerboseLevel
+        // Keep the same order as Qt's message levels, since that's what we're
+        // going to use for comparing log levels in the message handler
+        enum    LogLevel
         {
-            Quiet,
-            Verbose,
-            Debug
+            Debug = QtDebugMsg,
+            Verbose = QtWarningMsg,
+            // This means both qCritical() & qFatal() will be displayed in quiet mode
+            Quiet = QtCriticalMsg,
         };
 
         static void     vlmcMessageHandler( QtMsgType type, const char* msg );
@@ -52,6 +55,7 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
         virtual ~VlmcDebug();
 
         QFile*          m_logFile;
+        LogLevel        m_currentLogLevel;
 
     private slots:
         void            logFileChanged( const QVariant& logFile );

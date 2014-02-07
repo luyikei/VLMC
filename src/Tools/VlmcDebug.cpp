@@ -32,11 +32,12 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
     VLMC_CREATE_PRIVATE_PREFERENCE_INT( "private/LogLevel", 0 );
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
-        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Debug, SettingsManager::Vlmc );
+        m_currentLogLevel = VlmcDebug::Debug;
     else if ( args.contains( "-v" ) == true )
-        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Verbose, SettingsManager::Vlmc );
+        m_currentLogLevel = VlmcDebug::Verbose;
     else
-        SettingsManager::getInstance()->setValue( "private/LogLevel", VlmcDebug::Quiet, SettingsManager::Vlmc );
+        m_currentLogLevel = VlmcDebug::Quiet;
+    SettingsManager::getInstance()->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
 
 //    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
 //    if ( pos > 0 )
@@ -74,7 +75,7 @@ VlmcDebug::~VlmcDebug()
 void
 VlmcDebug::setup()
 {
-//    qInstallMsgHandler( VlmcDebug::vlmcMessageHandler );
+    qInstallMsgHandler( VlmcDebug::vlmcMessageHandler );
 }
 
 void
@@ -99,14 +100,16 @@ VlmcDebug::logFileChanged( const QVariant& logFileV )
 void
 VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
 {
-    if ( VlmcDebug::getInstance()->m_logFile != NULL )
+    //FIXME: This is ok as long as we guarantee no log messages will happen after we
+    // uninstall the hook
+    VlmcDebug* self = VlmcDebug::getInstance();
+    if ( self->m_logFile != NULL )
     {
-        VlmcDebug::getInstance()->m_logFile->write( msg );
-        VlmcDebug::getInstance()->m_logFile->write( "\n" );
+        self->m_logFile->write( msg );
+        self->m_logFile->write( "\n" );
     }
-//    if ( type != QtFatalMsg
-//         && type < SettingsManager::getInstance()->value( "private/LogLevel", QtDebugMsg, SettingsManager::Vlmc ).toInt() )
-//        return ;
+    if ( (int)type < (int)self->m_currentLogLevel )
+        return ;
     switch ( type )
     {
     case QtDebugMsg:
