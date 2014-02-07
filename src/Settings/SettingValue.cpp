@@ -93,6 +93,7 @@ SettingValue::flags() const
 void
 SettingValue::setLimits( const QVariant& min, const QVariant& max )
 {
+    Q_ASSERT_X( ( ( m_flags & Clamped ) != 0 ), "SettingVaklue", "Setting limits to a non-clamped value" );
     if ( min.isValid() == true )
         m_min = min;
     if ( max.isValid() == true )
