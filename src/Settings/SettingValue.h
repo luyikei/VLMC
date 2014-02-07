@@ -119,4 +119,6 @@ class   SettingValue : public QObject
         void        changed( const QVariant& );
 };
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(SettingValue::Flags)
+
 #endif // SETTINGVALUE_H
