@@ -29,7 +29,13 @@
 VlmcDebug::VlmcDebug() : m_logFile( NULL )
 {
     //setup log level :
-    VLMC_CREATE_PRIVATE_PREFERENCE_INT( "private/LogLevel", 0 );
+    {
+        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcDebug::Quiet,
+                                                        "", "", SettingValue::Private | SettingValue::Clamped );
+        logLevel->setLimits((int)Debug, (int)Verbose);
+        // Purposedly destroying the setting value, as we need to use the manager for other operations.
+        //FIXME: Actually I'm not sure for setting the value since this is a private variable.
+    }
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
         m_currentLogLevel = VlmcDebug::Debug;
@@ -37,7 +43,10 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
         m_currentLogLevel = VlmcDebug::Verbose;
     else
         m_currentLogLevel = VlmcDebug::Quiet;
-    SettingsManager::getInstance()->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
+    SettingsManager* settingsManager = SettingsManager::getInstance();
+    settingsManager->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
+    settingsManager->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )),
+                                 SettingsManager::Vlmc, Qt::DirectConnection );
 
 //    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
 //    if ( pos > 0 )
@@ -97,11 +106,22 @@ VlmcDebug::logFileChanged( const QVariant& logFileV )
     m_logFile->open( QFile::Append | QFile::Truncate );
 }
 
+
+void
+VlmcDebug::logLevelChanged( const QVariant &logLevel )
+{
+
+    Q_ASSERT_X(logLevel.toInt() >= (int)VlmcDebug::Debug &&
+               logLevel.toInt() <= (int)VlmcDebug::Quiet,
+               "Setting log level", "Invalid value for log level");
+    m_currentLogLevel = (VlmcDebug::LogLevel)logLevel.toInt();
+}
+
 void
 VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
 {
-    //FIXME: This is ok as long as we guarantee no log messages will happen after we
-    // uninstall the hook
+    //FIXME: This is ok as long as we guarantee no log message will arrive after
+    // we uninstall the hook
     VlmcDebug* self = VlmcDebug::getInstance();
     if ( self->m_logFile != NULL )
     {
