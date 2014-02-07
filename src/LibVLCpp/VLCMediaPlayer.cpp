@@ -300,7 +300,7 @@ MediaPlayer::nextFrame()
 bool
 MediaPlayer::hasVout()
 {
-    return libvlc_media_player_has_vout( m_internalPtr );
+    return libvlc_media_player_has_vout( m_internalPtr ) > 0;
 }
 
 const QString&
