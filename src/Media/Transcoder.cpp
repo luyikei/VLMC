@@ -51,7 +51,7 @@ Transcoder::transcodeToPs()
     m_destinationFile = outputDir + '/' + m_media->fileInfo()->baseName() + ".ps";
     QString         option = ":sout=file://" + m_destinationFile;
     media->addOption( option.toUtf8().constData() );
-    LibVLCpp::MediaPlayer   *mp = new LibVLCpp::MediaPlayer( media );
+    LibVLCpp::MediaPlayer   *mp = new LibVLCpp::MediaPlayer( "Transcoder", media );
     connect( mp, SIGNAL( positionChanged( float ) ), this, SIGNAL( progress( float ) ) );
     connect( mp, SIGNAL( endReached() ), this, SLOT( transcodeFinished() ) );
     emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );

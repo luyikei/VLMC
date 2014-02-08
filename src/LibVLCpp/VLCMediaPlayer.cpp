@@ -29,7 +29,8 @@
 
 using namespace LibVLCpp;
 
-MediaPlayer::MediaPlayer() : m_media( NULL )
+MediaPlayer::MediaPlayer()
+    : m_media( NULL )
 {
     m_internalPtr = libvlc_media_player_new( LibVLCpp::Instance::getInstance()->getInternalPtr() );
     // Initialize the event manager
@@ -37,7 +38,19 @@ MediaPlayer::MediaPlayer() : m_media( NULL )
     registerEvents();
 }
 
-MediaPlayer::MediaPlayer( Media* media ) : m_media( media )
+MediaPlayer::MediaPlayer( const QString& name )
+    : m_name( name )
+    , m_media( NULL )
+{
+    m_internalPtr = libvlc_media_player_new( LibVLCpp::Instance::getInstance()->getInternalPtr() );
+    // Initialize the event manager
+    p_em = libvlc_media_player_event_manager( m_internalPtr );
+    registerEvents();
+}
+
+MediaPlayer::MediaPlayer( const QString& name, Media* media )
+    : m_name( name )
+    , m_media( media )
 {
     m_internalPtr = libvlc_media_player_new_from_media( media->getInternalPtr() );
 
@@ -120,12 +133,14 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
 {
     Q_ASSERT_X( event->type >= libvlc_MediaPlayerMediaChanged &&
                 event->type < libvlc_MediaListItemAdded, "event callback", "Only libvlc_MediaPlayer* events are supported" );
+
+    MediaPlayer* self = reinterpret_cast<MediaPlayer*>( ptr );
+
     if (event->type != libvlc_MediaPlayerPositionChanged &&
             event->type != libvlc_MediaPlayerTimeChanged)
     {
-        qDebug() << ptr << libvlc_event_type_name(event->type);
+        qDebug() << self->m_name << "Event received:" << libvlc_event_type_name(event->type);
     }
-    MediaPlayer* self = reinterpret_cast<MediaPlayer*>( ptr );
 
     self->checkForWaitedEvents( event );
 
@@ -383,4 +398,9 @@ MediaPlayer::waitForEvent( unsigned long timeoutDuration )
     if ( timeout == true )
         return Timeout;
     return ( found ? Success : Canceled );
+}
+
+void MediaPlayer::setName(const QString &name)
+{
+    m_name = name;
 }

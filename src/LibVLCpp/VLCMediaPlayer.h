@@ -51,7 +51,8 @@ namespace   LibVLCpp
         typedef bool (*CheckEventCallback)(const MediaPlayer*, const libvlc_event_t*);
 
         MediaPlayer();
-        MediaPlayer( Media* media );
+        MediaPlayer(const QString &name);
+        MediaPlayer(const QString &name, Media* media );
         ~MediaPlayer();
         void                                play();
         void                                pause();
@@ -133,12 +134,15 @@ namespace   LibVLCpp
          */
         MediaPlayer::EventWaitResult        waitForEvent( unsigned long timeout = ULONG_MAX );
 
+        void                                setName( const QString& name );
+
     private:
         static void                         callbacks( const libvlc_event_t* event, void* self );
         void                                registerEvents();
         void                                checkForWaitedEvents( const libvlc_event_t* event );
 
     private:
+        QString                             m_name;
         libvlc_event_manager_t*             p_em;
         Media*                              m_media;
 

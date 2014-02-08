@@ -31,6 +31,7 @@
 #include "VLCMediaPlayer.h"
 
 #include <QReadWriteLock>
+#include <QStringBuilder>
 #include <QWaitCondition>
 #include <QtDebug>
 
@@ -65,6 +66,7 @@ ClipWorkflow::initialize()
     initializeVlcOutput();
     m_vlcMedia->addOption( createSoutChain() );
     m_mediaPlayer = MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->get();
+    m_mediaPlayer->setName( "ClipWorkflow " % m_clipHelper->uuid().toString() );
     m_mediaPlayer->setMedia( m_vlcMedia );
     m_mediaPlayer->disableTitle();
 
