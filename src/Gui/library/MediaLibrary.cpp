@@ -29,8 +29,8 @@
 #include "MediaListView.h"
 #include "StackViewController.h"
 #include "ViewController.h"
+#include "VlmcDebug.h"
 
-#include <QDebug>
 #include <QUrl>
 #include <QMimeData>
 
@@ -184,7 +184,7 @@ MediaLibrary::dropEvent( QDropEvent *event )
             event->accept();
         }
         else
-            qCritical() << "Clip already present in library or an error occurred while loading media:" << fileName;
+            vlmcCritical() << "Clip already present in library or an error occurred while loading media:" << fileName;
     }
     event->accept();
 }

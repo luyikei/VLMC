@@ -30,9 +30,8 @@
 #include "Media.h"
 #include "MetaDataManager.h"
 #include "SettingsManager.h"
+#include "VlmcDebug.h"
 #include "Workspace.h"
-
-#include <QtDebug>
 
 MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
 {
@@ -112,7 +111,7 @@ MediaContainer::addClip( Clip* clip )
              ( clip->getMedia()->fileInfo() == c->getMedia()->fileInfo() &&
                     ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
         {
-            qWarning() << "Clip already loaded.";
+            vlmcWarning() << "Clip already loaded.";
             return false;
         }
     }
@@ -218,7 +217,7 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
             }
             else
             {
-                qWarning() << "Can't find parent media:" << media;
+                vlmcWarning() << "Can't find parent media:" << media;
                 clip = clip.nextSiblingElement();
                 continue ;
             }

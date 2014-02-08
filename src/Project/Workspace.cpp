@@ -27,8 +27,7 @@
 #include "Media.h"
 #include "Project/WorkspaceWorker.h"
 #include "SettingsManager.h"
-
-#include <QtDebug>
+#include "VlmcDebug.h"
 
 #ifdef WITH_GUI
 # include "NotificationZone.h"
@@ -67,7 +66,7 @@ Workspace::copyToWorkspace( Media *media )
     }
     else
     {
-        qDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
+        vlmcDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
         m_copyInProgress = true;
         if ( media->isInWorkspace() == false )
         {

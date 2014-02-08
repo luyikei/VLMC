@@ -34,13 +34,12 @@
 #include "Types.h"
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
+#include "VlmcDebug.h"
 
 #include <QDomDocument>
 #include <QDomElement>
 #include <QMutex>
 #include <QReadWriteLock>
-
-#include <QtDebug>
 
 TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_length( 0 ),
@@ -210,7 +209,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     }
     else
     {
-        qCritical() << "Unexpected state:" << state;
+        vlmcCritical() << "Unexpected state:" << state;
     }
     return NULL;
 }
@@ -225,7 +224,7 @@ TrackWorkflow::preloadClip( ClipWorkflow* cw )
 void
 TrackWorkflow::stopClipWorkflow( ClipWorkflow* cw )
 {
-//    qDebug() << "Stopping clip workflow";
+//    vlmcDebug() << "Stopping clip workflow";
     ClipWorkflow::State state = cw->getState();
     if ( state == ClipWorkflow::Stopped ||
          state == ClipWorkflow::Error )
@@ -538,7 +537,7 @@ TrackWorkflow::muteClip( const QUuid &uuid )
         }
         ++it;
     }
-    qWarning() << "Failed to mute clip" << uuid << "it probably doesn't exist "
+    vlmcWarning() << "Failed to mute clip" << uuid << "it probably doesn't exist "
             "in this track";
 }
 
@@ -559,7 +558,7 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
         }
         ++it;
     }
-    qWarning() << "Failed to unmute clip" << uuid << "it probably doesn't exist "
+    vlmcWarning() << "Failed to unmute clip" << uuid << "it probably doesn't exist "
             "in this track";
 }
 

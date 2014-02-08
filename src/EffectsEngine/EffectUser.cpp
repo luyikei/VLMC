@@ -25,10 +25,10 @@
 #include "EffectHelper.h"
 #include "EffectInstance.h"
 #include "Types.h"
+#include "VlmcDebug.h"
 
 #include <QDomElement>
 #include <QReadWriteLock>
-#include <QtDebug>
 
 EffectUser::EffectUser() :
         m_isRendering( false ),
@@ -192,10 +192,10 @@ EffectUser::loadEffects( const QDomElement &parent )
                 EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),
                                                     effect.attribute( "end" ).toLongLong() );
                 if ( helper == NULL )
-                    qCritical() << "Can't load effect" << effect.attribute( "name" );
+                    vlmcCritical() << "Can't load effect" << effect.attribute( "name" );
             }
             else
-                qCritical() << "Can't load effect" << effect.attribute( "name" );
+                vlmcCritical() << "Can't load effect" << effect.attribute( "name" );
         }
         effect = effect.nextSiblingElement();
     }
@@ -229,7 +229,7 @@ EffectUser::effects( Effect::Type type ) const
     if ( type == Effect::Filter )
         return m_filters;
     if ( type != Effect::Mixer2 )
-        qCritical() << "Only Filters and Mixer2 are handled. This is going to be nasty !";
+        vlmcCritical() << "Only Filters and Mixer2 are handled. This is going to be nasty !";
     return m_mixers;
 }
 
@@ -259,7 +259,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         }
     }
     else
-        qCritical() << "Unhandled effect type";
+        vlmcCritical() << "Unhandled effect type";
 }
 
 void
@@ -281,7 +281,7 @@ EffectUser::removeEffect(EffectHelper *helper)
         }
         ++it;
     }
-    qWarning() << "Can't find EffectHelper" << helper->uuid() << "for removal.";
+    vlmcWarning() << "Can't find EffectHelper" << helper->uuid() << "for removal.";
 }
 
 void
@@ -305,7 +305,7 @@ EffectUser::count( Effect::Type type ) const
         return m_filters.count();
     if ( type == Effect::Mixer2 )
         return m_mixers.count();
-    qCritical() << "Unhandled effect type";
+    vlmcCritical() << "Unhandled effect type";
     return 0;
 }
 
@@ -324,7 +324,7 @@ EffectUser::moveEffect( EffectHelper *helper, qint64 newPos )
             return ;
         }
     }
-    qWarning() << this << "Can't find effect" << helper->uuid();
+    vlmcWarning() << this << "Can't find effect" << helper->uuid();
 }
 
 void

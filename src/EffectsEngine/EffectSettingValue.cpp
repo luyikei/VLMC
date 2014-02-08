@@ -23,10 +23,10 @@
 #include "Effect.h"
 #include "EffectSettingValue.h"
 #include "EffectInstance.h"
+#include "VlmcDebug.h"
 
 #include <QColor>
 #include <QPoint>
-#include <QtDebug>
 
 EffectSettingValue::EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
                                         const char *name, const char *desc, Flags flags ) :
@@ -91,7 +91,7 @@ EffectSettingValue::set( const QVariant &val )
             break ;
         }
     default:
-        qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
+        vlmcCritical() << "Setting type" << m_type << "is not handled by the effects engine";
         break;
     }
     apply();
@@ -151,7 +151,7 @@ EffectSettingValue::get()
             break ;
         }
     default:
-        qCritical() << "Setting type" << m_type << "is not handled by the effects engine";
+        vlmcCritical() << "Setting type" << m_type << "is not handled by the effects engine";
         m_val = QVariant();
     }
     return m_val;
@@ -179,7 +179,7 @@ EffectSettingValue::frei0rToVlmc( int type )
     case F0R_PARAM_STRING:
         return String;
     default:
-        qCritical() << "Invalid effect setting type ! Undefined behaviour";
+        vlmcCritical() << "Invalid effect setting type ! Undefined behaviour";
     }
     //Keeping compiler happy.
     return Double;

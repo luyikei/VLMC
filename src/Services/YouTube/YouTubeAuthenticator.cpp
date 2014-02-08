@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "VlmcDebug.h"
 #include "YouTubeAuthenticator.h"
 #include "YouTubeService.h"
 
@@ -31,11 +32,10 @@
 #include <QStringList>
 #include <QUrl>
 
-#include <QDebug>
 
 using namespace YouTube;
 
-YouTubeAuthenticator::YouTubeAuthenticator( YouTubeService* service, 
+YouTubeAuthenticator::YouTubeAuthenticator( YouTubeService* service,
                                             const QString& username,
                                             const QString& password )
 {
@@ -104,7 +104,7 @@ YouTubeAuthenticator::authFinished()
 void
 YouTubeAuthenticator::error( QString& e )
 {
-    qDebug() << "[YouTube AUTH ERROR]: " << e;
+    vlmcDebug() << "[YouTube AUTH ERROR]: " << e;
     emit authError( e );
 }
 

@@ -20,8 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "YouTubeAuthenticator.h"
 #include "YouTubeService.h"
+
+#include "VlmcDebug.h"
+#include "YouTubeAuthenticator.h"
 #include "YouTubeUploader.h"
 
 #include <QAuthenticator>
@@ -30,8 +32,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QSslError>
-
-#include <QDebug>
 
 using namespace YouTube;
 
@@ -147,7 +147,7 @@ YouTubeService::setVideoParameters( const QString& fileName, const VideoData& da
 void
 YouTubeService::authError( QString e )
 {
-    qDebug() << "[YT SERVICE]: AUTH ERROR " << e;
+    vlmcDebug() << "[YT SERVICE]: AUTH ERROR " << e;
 
     if( e == "BadAuthentication" )
         m_error = BadAuthentication;
@@ -212,7 +212,7 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
             m_error = UnknownError;
     }
 
-    qDebug() << "[NETWORK ERROR]: " << e << ": " << errString;
+    vlmcDebug() << "[NETWORK ERROR]: " << e << ": " << errString;
     emit error( errString );
 
     /* Ignore Content and Abort errors */

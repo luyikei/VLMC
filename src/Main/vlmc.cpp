@@ -24,7 +24,6 @@
 
 #include "Types.h"
 
-#include <QtDebug>
 #include <QMetaType>
 #include <QTextStream>
 #include <QVariant>
@@ -147,7 +146,7 @@ main( int argc, char **argv )
                 }
                 else
                 {
-                    qCritical() << "Unhandled crash.";
+                    vlmcCritical() << "Unhandled crash.";
                     break ;
                 }
             }

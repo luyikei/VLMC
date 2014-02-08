@@ -34,8 +34,6 @@
 #include <QStringBuilder>
 #include <QWaitCondition>
 
-#include <QtDebug>
-
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_lastReturnedBuffer( NULL )

@@ -26,6 +26,8 @@
 #include "EffectInstance.h"
 #include "Types.h"
 
+#include "VlmcDebug.h"
+
 #include <QApplication>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
@@ -38,8 +40,6 @@
 #include <QProcess>
 #include <QSettings>
 #include <QXmlStreamWriter>
-
-#include <QtDebug>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -89,7 +89,7 @@ EffectsEngine::loadEffect( const QString &fileName )
         name = m_cache->value( fileName + "/name" ).toString();
         int     typeInt = m_cache->value( fileName + "/type" ).toInt();
         if ( typeInt < Effect::Unknown || typeInt > Effect::Mixer3 )
-            qWarning() << "Invalid plugin type.";
+            vlmcWarning() << "Invalid plugin type.";
         else
         {
             type = static_cast<Effect::Type>( typeInt );
@@ -158,7 +158,7 @@ EffectsEngine::loadEffects()
         TCHAR     *pos = strrchr( appDir, '\\' );
         if ( pos == NULL )
         {
-            qWarning() << "Can't use ModuleFileName:" << appDir;
+            vlmcWarning() << "Can't use ModuleFileName:" << appDir;
             return ;
         }
         *pos = 0;
@@ -166,16 +166,16 @@ EffectsEngine::loadEffects()
     }
     else
     {
-        qWarning() << "Failed to get application directory. Using current path.";
+        vlmcWarning() << "Failed to get application directory. Using current path.";
         pathList << QDir::currentPath() + "/effects/";
     }
 #endif
-    qDebug() << "Loading effects from:" << pathList;
+    vlmcDebug() << "Loading effects from:" << pathList;
     foreach ( const QString &path, pathList )
     {
         if ( QFile::exists( path ) == true )
         {
-            qDebug() << "\tScanning" << path << "for effects";
+            vlmcDebug() << "\tScanning" << path << "for effects";
             browseDirectory( path );
         }
     }

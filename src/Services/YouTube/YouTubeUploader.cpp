@@ -20,10 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "UploaderIODevice.h"
+#include "VlmcDebug.h"
 #include "YouTubeService.h"
 #include "YouTubeUploader.h"
 #include "YouTubeFeedParser.h"
-#include "UploaderIODevice.h"
 
 #include <QByteArray>
 #include <QNetworkRequest>
@@ -31,11 +32,9 @@
 #include <QStringList>
 #include <QUrl>
 
-#include <QDebug>
-
 using namespace YouTube;
 
-YouTubeUploader::YouTubeUploader( YouTubeService* service, 
+YouTubeUploader::YouTubeUploader( YouTubeService* service,
                                   const QString& fileName )
 {
     /* Stores pointer to main service object and video file path */
@@ -125,7 +124,7 @@ YouTubeUploader::upload()
 
         return true;
     }
-    qDebug() << "[YT UPLOADER]: File opening failed.";
+    vlmcDebug() << "[YT UPLOADER]: File opening failed.";
     return false;
 }
 
@@ -136,7 +135,7 @@ YouTubeUploader::uploadFinished()
     QNetworkReply *reply = static_cast<QNetworkReply *>( sender() );
     const QByteArray data = reply->readAll();
 
-    qDebug() << "In YouTubeUploader::uploadFinished: data received = " << data; 
+    vlmcDebug() << "In YouTubeUploader::uploadFinished: data received = " << data;
     m_service->m_state = UploadFinish;
 
     /* Feed parser called to parse the XML data received */

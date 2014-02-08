@@ -30,12 +30,12 @@
 #include <QUrl>
 #include <QNetworkProxy>
 #include <QSettings>
-#include <QDebug>
 
 #include "MainWindow.h"
 #include "config.h"
 #include "Library.h"
 #include "About.h"
+#include "VlmcDebug.h"
 #include "VlmcLogger.h"
 
 #include "EffectsEngine/EffectsEngine.h"
@@ -755,7 +755,7 @@ MainWindow::toolButtonClicked( QAction *action )
     else if ( action == m_ui.actionCut_mode )
         emit toolChanged( TOOL_CUT );
     else
-        qCritical() << "Unknown tool. This should not happen !";
+        vlmcCritical() << "Unknown tool. This should not happen !";
 }
 
 void

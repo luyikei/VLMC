@@ -32,7 +32,6 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QSettings>
-#include <QDebug>
 
 QString* WelcomePage::m_projectPath = NULL;
 

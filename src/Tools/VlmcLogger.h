@@ -24,8 +24,6 @@
 #define VLMCDEBUG_H
 
 #include <QObject>
-#include <QDebug>
-
 #include <cstdio>
 
 #include "Singleton.hpp"

@@ -31,7 +31,6 @@
 
 #include <QReadWriteLock>
 #include <QStringBuilder>
-#include <QtDebug>
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
@@ -71,7 +70,7 @@ ImageClipWorkflow::createSoutChain() const
             % ",video-postrender-callback="
             % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
             % '}';
-    return chain;    
+    return chain;
 }
 
 void ImageClipWorkflow::initializeVlcOutput()

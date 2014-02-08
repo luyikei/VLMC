@@ -32,8 +32,6 @@
 #include "GeneralPage.h"
 #include "VideoPage.h"
 
-#include <QtDebug>
-
 ProjectWizard::ProjectWizard( QWidget* parent )
     : QWizard( parent )
 {

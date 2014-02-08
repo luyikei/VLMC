@@ -34,8 +34,6 @@
 #ifdef WITH_GUI
 # include "UndoStack.h"
 
-#include <QtDebug>
-
 void
 Commands::trigger( QUndoCommand* command )
 {

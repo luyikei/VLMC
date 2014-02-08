@@ -38,8 +38,6 @@
 #include <QMenu>
 #include <QPainter>
 
-#include <QtDebug>
-
 GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effect( effect ),
         m_effectHelper( NULL ),

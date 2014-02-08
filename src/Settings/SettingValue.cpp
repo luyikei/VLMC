@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include "SettingValue.h"
-#include <QtDebug>
 
 SettingValue::SettingValue( SettingValue::Type type, const QVariant& defaultValue,
                             const char* name, const char* desc, SettingValue::Flags flags ) :

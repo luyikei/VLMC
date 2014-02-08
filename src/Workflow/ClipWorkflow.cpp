@@ -33,7 +33,6 @@
 #include <QReadWriteLock>
 #include <QStringBuilder>
 #include <QWaitCondition>
-#include <QtDebug>
 
 ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
                 m_mediaPlayer(NULL),

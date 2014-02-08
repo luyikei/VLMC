@@ -37,9 +37,10 @@
 //Ugly part {
 #include "Timeline.h"
 #include "TracksRuler.h"
-//} this should be fixed, it brokes the design
+//} this should be fixed, it breaks the design
 #include "TrackWorkflow.h"
 #include "UndoStack.h"
+#include "VlmcDebug.h"
 #include "WorkflowRenderer.h"
 
 #include <QGraphicsLinearLayout>
@@ -49,8 +50,6 @@
 #include <QScrollBar>
 #include <QWheelEvent>
 #include <QMimeData>
-
-#include <QtDebug>
 
 TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
                         WorkflowRenderer *renderer, QWidget *parent )
@@ -367,7 +366,7 @@ TracksView::effectDragEnterEvent( QDragEnterEvent *event )
         m_dragEffectItem->m_tracksView = this;
     }
     else
-        qWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
+        vlmcWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
 }
 
 void

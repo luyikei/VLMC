@@ -28,13 +28,12 @@
 #include "TracksScene.h"
 #include "TracksControls.h"
 #include "TracksRuler.h"
+#include "VlmcDebug.h"
 #include "WorkflowRenderer.h"
 
 #include <QHBoxLayout>
 #include <QDomElement>
 #include <QScrollBar>
-
-#include <QtDebug>
 
 Timeline*   Timeline::m_instance = NULL;
 
@@ -193,7 +192,7 @@ Timeline::load( const QDomElement &root )
     QDomElement     project = root.firstChildElement( "timeline" );
     if ( project.isNull() == true )
     {
-        qCritical() << "No timeline node in the project file";
+        vlmcCritical() << "No timeline node in the project file";
         return ;
     }
 
@@ -225,7 +224,7 @@ Timeline::load( const QDomElement &root )
             }
         }
         else
-            qWarning() << "No such timeline item:" << uuid;
+            vlmcWarning() << "No such timeline item:" << uuid;
         elem = elem.nextSiblingElement();
     }
 }

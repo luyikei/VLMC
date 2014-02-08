@@ -37,8 +37,6 @@
 #include <QScrollArea>
 #include <QStackedLayout>
 
-#include <QtDebug>
-
 Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
     QDialog( parent ),
     m_type( type )

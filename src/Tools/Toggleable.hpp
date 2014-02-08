@@ -23,8 +23,6 @@
 #ifndef TOGGLEABLE_HPP
 #define TOGGLEABLE_HPP
 
-#include <QtDebug>
-
 /**
  *  This class represents a generic toggleable value container.
  */

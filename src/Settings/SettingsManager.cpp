@@ -21,15 +21,14 @@
  *****************************************************************************/
 
 #include "SettingsManager.h"
-
 #include "SettingValue.h"
+#include "VlmcDebug.h"
 
 #include <QSettings>
 #include <QWriteLocker>
 #include <QReadLocker>
 #include <QStringList>
 
-#include <QtDebug>
 #include <QDomElement>
 
 static SettingsManager::SettingList::iterator
@@ -88,7 +87,7 @@ SettingsManager::setValue( const QString &key,
             return ;
         }
     }
-    qWarning() << "Setting" << key << "does not exist.";
+    vlmcWarning() << "Setting" << key << "does not exist.";
     Q_ASSERT_X( false, __FILE__, "set value without a created variable" );
 }
 
@@ -110,7 +109,7 @@ SettingsManager::value( const QString &key,
         if ( it != m_classicSettings.end() )
             return (*it).value;
     }
-    qWarning() << "Setting" << key << "does not exist.";
+    vlmcWarning() << "Setting" << key << "does not exist.";
     Q_ASSERT_X( false, __FILE__, "get value without a created variable" );
     return NULL;
 }
@@ -223,7 +222,7 @@ SettingsManager::load( const QDomElement &root )
     QDomElement     element = root.firstChildElement( "project" );
     if ( element.isNull() == true )
     {
-        qWarning() << "Invalid settings node";
+        vlmcWarning() << "Invalid settings node";
         return false ;
     }
     QWriteLocker    wLock( &m_rwLock );
@@ -234,13 +233,13 @@ SettingsManager::load( const QDomElement &root )
         QString     value = s.attribute( "value" );
 
         if ( key.isEmpty() == true || value.isEmpty() == true )
-            qWarning() << "Invalid setting node.";
+            vlmcWarning() << "Invalid setting node.";
         else
         {
             if ( contains( m_xmlSettings, key ) == true )
                 setValue( key, value, SettingsManager::Project );
             else
-                qWarning() << "Invalid setting node in project file:" << key;
+                vlmcWarning() << "Invalid setting node in project file:" << key;
         }
         s = s.nextSiblingElement();
     }

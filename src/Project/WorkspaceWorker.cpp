@@ -24,14 +24,13 @@
 
 #include "Media.h"
 #include "SettingsManager.h"
+#include "VlmcDebug.h"
 
 #include <cerrno>
 #include <unistd.h>
 
 #include <QFile>
 #include <QFileInfo>
-
-#include <QtDebug>
 
 WorkspaceWorker::WorkspaceWorker( Media *media, const QString &dest ) :
     m_media( media ),
@@ -50,12 +49,12 @@ WorkspaceWorker::run()
     if ( link( m_media->fileInfo()->absoluteFilePath().toUtf8().constData(),
           m_dest.toUtf8().constData() ) < 0 )
     {
-        qDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
+        vlmcDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
                 " hard copy mode.";
     }
     else
     {
-        qDebug() << "Media hard linked to:" << m_dest;
+        vlmcDebug() << "Media hard linked to:" << m_dest;
         hardLinkOk = true;
     }
 #endif
@@ -65,7 +64,7 @@ WorkspaceWorker::run()
         QFile           file( m_media->fileInfo()->absoluteFilePath() );
 
         file.copy( m_media->fileInfo()->absoluteFilePath(), m_dest );
-        qDebug() << "Media copied to:" << m_dest;
+        vlmcDebug() << "Media copied to:" << m_dest;
     }
     emit copied( m_media, m_dest );
 }

@@ -23,7 +23,6 @@
 #include <QKeyEvent>
 #include <QKeySequence>
 #include <QTimer>
-#include <QtDebug>
 
 #include "SettingsManager.h"
 #include "KeyboardShortcutInput.h"

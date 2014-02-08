@@ -32,8 +32,6 @@
 #include <QMimeData>
 #include <QDrag>
 
-#include <QtDebug>
-
 EffectsListView::EffectsListView( QWidget *parent ) :
     QListView(parent)
 {

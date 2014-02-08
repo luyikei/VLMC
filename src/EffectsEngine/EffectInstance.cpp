@@ -25,8 +25,6 @@
 
 #include "Effect.h"
 
-#include <QtDebug>
-
 EffectInstance::EffectInstance( Effect *effect ) :
         m_effect( effect ),
         m_width( 0 ),

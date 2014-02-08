@@ -23,13 +23,12 @@
 #include "AbstractSharingService.h"
 #include "SettingsManager.h"
 #include "ShareOnInternet.h"
+#include "VlmcDebug.h"
 #include "YouTube/YouTubeService.h"
 
 #include <QDesktopServices>
 #include <QClipboard>
 #include <QMessageBox>
-
-#include <QDebug>
 
 ShareOnInternet::ShareOnInternet( QWidget* parent )
     : QDialog( parent, Qt::Sheet | Qt::Dialog )
@@ -94,11 +93,11 @@ ShareOnInternet::publish()
         switch( m_serviceProvider )
         {
             case VIMEO:  /* TODO: Implement services for Vimeo */
-                qDebug() << "[SHARE ON INTERNET]: VIMEO"; break;
+                vlmcDebug() << "[SHARE ON INTERNET]: VIMEO"; break;
             case YOUTUBE:
             default:
                 m_service = new YouTubeService( m_devKey, getUsername(), getPassword() );
-                qDebug() << "[SHARE ON INTERNET]: YOUTUBE"; break;
+                vlmcDebug() << "[SHARE ON INTERNET]: YOUTUBE"; break;
         }
     }
     else
@@ -114,7 +113,7 @@ ShareOnInternet::publish()
 void
 ShareOnInternet::authFinished()
 {
-    qDebug() << "[SHARE ON INTERNET]: AUTH FINISHED";
+    vlmcDebug() << "[SHARE ON INTERNET]: AUTH FINISHED";
 
     /*On Finish, extract out the auth token and upload a test video */
     disconnect( m_service, SIGNAL(authOver()), this, SLOT(authFinished()) );
@@ -136,7 +135,7 @@ ShareOnInternet::authFinished()
                     this, SLOT(uploadProgress(qint64,qint64)) );
         disconnect( m_service, SIGNAL(error(QString)), this, SLOT(serviceError(QString)) );
 
-        qDebug() << "[SHARE ON INTERNET]: AUTH Failed";
+        vlmcDebug() << "[SHARE ON INTERNET]: AUTH Failed";
 
         return;
     }
@@ -145,13 +144,13 @@ ShareOnInternet::authFinished()
     m_ui.progressBar->setVisible( true );
     m_ui.mainPanel->setEnabled( false );
 
-    qDebug() << "[SHARE ON INTERNET]: UPLOAD STARTED";
+    vlmcDebug() << "[SHARE ON INTERNET]: UPLOAD STARTED";
 }
 
 void
 ShareOnInternet::uploadFinished( QString result )
 {
-    qDebug() << "[SHARE ON INTERNET]: UPLOAD FINISHED";
+    vlmcDebug() << "[SHARE ON INTERNET]: UPLOAD FINISHED";
 
     /* Add code here to abort stuff */
     m_ui.progressBar->setEnabled( false );

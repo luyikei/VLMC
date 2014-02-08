@@ -24,12 +24,12 @@
 #include "LanguageWidget.h"
 #include "SettingsManager.h"
 #include "SettingValue.h"
+#include "VlmcDebug.h"
 
 #include <QApplication>
 #include <QComboBox>
 #include <QDir>
 #include <QTranslator>
-#include <QtDebug>
 
 #define TS_PREFIX "vlmc_"
 
@@ -47,7 +47,7 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
 
         if ( localePos < 0 || extPos < 0 || localePos > extPos )
         {
-            qWarning() << "Invalid translation file:" << tsFileName;
+            vlmcWarning() << "Invalid translation file:" << tsFileName;
             continue ;
         }
 
@@ -58,7 +58,7 @@ LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         // Check if the country code is valid ISO 639
         if ( locale.language() == QLocale::C )
         {
-            qWarning() << "Invalid locale for file:" << tsFileName;
+            vlmcWarning() << "Invalid locale for file:" << tsFileName;
             continue;
         }
 

@@ -24,7 +24,6 @@
 #include <QString>
 #include <QStringList>
 
-#include <QDebug>
 
 YouTubeFeedParser::YouTubeFeedParser( const QString& xml )
     : QXmlStreamReader( xml )

@@ -34,8 +34,6 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-#include <QtDebug>
-
 EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
     QWidget( parent ),
     m_ui( new Ui::EffectSettingWidget )

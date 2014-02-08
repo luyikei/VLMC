@@ -29,7 +29,6 @@
 
 #include <QPainter>
 #include <QLinearGradient>
-#include <QDebug>
 #include <QTime>
 #include <QFontMetrics>
 #include <QGraphicsSceneMouseEvent>

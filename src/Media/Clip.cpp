@@ -24,8 +24,6 @@
   * This file contains the Clip class implementation.
   */
 
-#include <QtDebug>
-
 #include "Clip.h"
 #include "Library.h"
 #include "Media.h"

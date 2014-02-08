@@ -29,7 +29,6 @@
 #include "Clip.h"
 
 #include <QMessageBox>
-#include <QDebug>
 
 PreviewWidget::PreviewWidget( QWidget *parent ) :
     QWidget( parent ),

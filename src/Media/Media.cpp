@@ -31,9 +31,9 @@
 #include "Clip.h"
 #include "MetaDataManager.h"
 #include "VLCMedia.h"
+#include "VlmcDebug.h"
 #include "Workspace.h"
 
-#include <QtDebug>
 #include <QUrl>
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "
@@ -99,7 +99,7 @@ Media::computeFileType()
     else if ( Media::ImageExtensions.contains( filter ) )
         m_fileType = Media::Image;
     else
-        qDebug() << "What the hell is this extension? And how did you loaded it?!";
+        vlmcDebug() << "What the hell is this extension? And how did you loaded it?!";
 }
 
 const QFileInfo*

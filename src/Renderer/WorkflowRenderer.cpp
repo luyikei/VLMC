@@ -32,11 +32,11 @@
 #include "SettingsManager.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
+#include "VlmcDebug.h"
 #include "Workflow/Types.h"
 #include "timeline/Timeline.h"
 
 #include <QDomElement>
-#include <QtDebug>
 #include <QThread>
 #include <QWaitCondition>
 #include <inttypes.h>
@@ -134,7 +134,7 @@ WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pt
     if ( cookie == NULL || ( cookie[0] != WorkflowRenderer::VideoCookie &&
                              cookie[0] != WorkflowRenderer::AudioCookie ) )
     {
-        qCritical() << "Invalid imem input cookie";
+        vlmcCritical() << "Invalid imem input cookie";
         return ret;
     }
     if ( cookie[0] == WorkflowRenderer::VideoCookie )
@@ -150,7 +150,7 @@ WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pt
             handler->self->m_mainWorkflow->nextFrame( Workflow::AudioTrack );
     }
     else
-        qCritical() << "Invalid imem cookie";
+        vlmcCritical() << "Invalid imem cookie";
     return ret;
 }
 
@@ -199,7 +199,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
         renderAudioSample = NULL;
     if ( renderAudioSample != NULL )
     {
-//        qDebug() << "pts diff:" << renderAudioSample->ptsDiff;
+//        vlmcDebug() << "pts diff:" << renderAudioSample->ptsDiff;
         nbSample = renderAudioSample->nbSample;
         *buffer = renderAudioSample->buff;
         *bufferSize = renderAudioSample->size;

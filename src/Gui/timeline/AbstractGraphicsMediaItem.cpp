@@ -36,7 +36,6 @@
 #include <QGraphicsSceneContextMenuEvent>
 
 #include <QCoreApplication>
-#include <QtDebug>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         m_muted( false )

@@ -41,6 +41,7 @@ SET(VLMC_SRCS
     Tools/QSingleton.hpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
+	Tools/VlmcDebug.h
 	Tools/VlmcLogger.cpp
     Workflow/AudioClipWorkflow.cpp
     Workflow/ClipWorkflow.cpp

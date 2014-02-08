@@ -35,7 +35,6 @@
 #include "StringWidget.h"
 
 #include <QFormLayout>
-#include <QtDebug>
 #include <QWidget>
 #include <QLabel>
 #include <QHash>

@@ -20,12 +20,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtGlobal>
-#include <QtDebug>
-#include <cassert>
 #include "VLCMediaPlayer.h"
 #include "VLCInstance.h"
 #include "VLCMedia.h"
+#include "VlmcDebug.h"
+
+#include <QtGlobal>
 
 using namespace LibVLCpp;
 
@@ -139,7 +139,7 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
     if (event->type != libvlc_MediaPlayerPositionChanged &&
             event->type != libvlc_MediaPlayerTimeChanged)
     {
-        qDebug() << self->m_name << "Event received:" << libvlc_event_type_name(event->type);
+        vlmcDebug() << self->m_name << "Event received:" << libvlc_event_type_name(event->type);
     }
 
     self->checkForWaitedEvents( event );
@@ -162,7 +162,7 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
         self->emit timeChanged( event->u.media_player_time_changed.new_time );
         break;
     case libvlc_MediaPlayerPositionChanged:
-        //qDebug() << self << "position changed : " << event->u.media_player_position_changed.new_position;
+        //vlmcDebug() << self << "position changed : " << event->u.media_player_position_changed.new_position;
         self->emit positionChanged( event->u.media_player_position_changed.new_position );
         break;
     case libvlc_MediaPlayerLengthChanged:
@@ -186,7 +186,7 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
     case libvlc_MediaPlayerForward:
     case libvlc_MediaPlayerBackward:
     default:
-//        qDebug() << "Unknown mediaPlayerEvent: " << event->type;
+//        vlmcDebug() << "Unknown mediaPlayerEvent: " << event->type;
         break;
     }
 }
@@ -194,7 +194,7 @@ MediaPlayer::callbacks( const libvlc_event_t* event, void* ptr )
 void
 MediaPlayer::play()
 {
-    //qDebug() << "Asking for play media player";
+    //vlmcDebug() << "Asking for play media player";
     libvlc_media_player_play( m_internalPtr );
 }
 
@@ -207,7 +207,7 @@ MediaPlayer::pause()
 void
 MediaPlayer::stop()
 {
-    //qDebug() << "Asking for stop media player";
+    //vlmcDebug() << "Asking for stop media player";
     libvlc_media_player_stop( m_internalPtr );
 }
 

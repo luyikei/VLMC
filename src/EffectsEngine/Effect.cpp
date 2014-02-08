@@ -23,7 +23,7 @@
 #include "Effect.h"
 #include "EffectInstance.h"
 
-#include <QtDebug>
+#include "VlmcDebug.h"
 
 Effect::Effect( const QString &fileName ) :
         QLibrary( fileName ),
@@ -53,7 +53,7 @@ dest = reinterpret_cast<typeof( dest )>( resolve( symbolName ) )
 #define LOAD_FREI0R_SYMBOL_CHECKED( dest, symbolName )  \
 if ( ( LOAD_FREI0R_SYMBOL( dest, symbolName ) ) == NULL ) \
 {                                                                       \
-    qCritical() << "Failed to load symbol:" << symbolName;              \
+    vlmcCritical() << "Failed to load symbol:" << symbolName;              \
     return false;                                                       \
 }
 
@@ -87,12 +87,12 @@ Effect::load()
     m_author = infos.author;
     if ( m_type == Filter && m_f0r_update == NULL )
     {
-        qCritical() << "Failed to load symbol f0r_update. Dropping module" << fileName();
+        vlmcCritical() << "Failed to load symbol f0r_update. Dropping module" << fileName();
         return false;
     }
     if ( ( m_type == Mixer2 || m_type == Mixer3 ) && m_f0r_update2 == NULL )
     {
-        qCritical() << "Failed to load symbol f0r_update2. Dropping module" << fileName();
+        vlmcCritical() << "Failed to load symbol f0r_update2. Dropping module" << fileName();
         return false;
     }
     for ( qint32 i = 0; i < m_nbParams; ++i )

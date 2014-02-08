@@ -32,9 +32,9 @@
 #include "Media.h"
 #include "MetaDataManager.h"
 #include "SettingsManager.h"
+#include "VlmcDebug.h"
 #include "Workspace.h"
 
-#include <QtDebug>
 #include <QDomElement>
 #include <QHash>
 #include <QUuid>
@@ -70,7 +70,7 @@ Library::loadProject( const QDomElement& doc )
             }
             Media*  m = addMedia( mrl );
             if ( m == NULL )
-                qWarning() << "Failed to load media" << mrl << "when loading project.";
+                vlmcWarning() << "Failed to load media" << mrl << "when loading project.";
             else
                 m_nbMediaToLoad.fetchAndAddAcquire( 1 );
         }

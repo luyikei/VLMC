@@ -29,8 +29,6 @@
 
 #include <QGraphicsSceneEvent>
 
-#include <QtDebug>
-
 AbstractGraphicsItem::AbstractGraphicsItem() :
         m_tracksView( NULL ),
         m_oldTrack( NULL ),

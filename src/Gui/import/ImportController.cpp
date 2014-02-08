@@ -36,6 +36,7 @@
 #include "PreviewWidget.h"
 #include "TagWidget.h"
 #include "Transcoder.h"
+#include "VlmcDebug.h"
 
 #include <QFileSystemModel>
 #include <QHeaderView>
@@ -44,8 +45,6 @@
 #include <QSettings>
 #include <QTime>
 #include <QTimer>
-
-#include <QtDebug>
 
 ImportController::ImportController(QWidget *parent) :
     QDialog(parent),
@@ -152,7 +151,7 @@ ImportController::clipSelection( Clip* clip )
 void
 ImportController::importMedia( const QString &filePath )
 {
-    qDebug() << "Importing" << filePath;
+    vlmcDebug() << "Importing" << filePath;
     if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true ||
          m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
@@ -162,7 +161,7 @@ ImportController::importMedia( const QString &filePath )
     media->computeMetadata();
     if ( media == NULL )
     {
-        qCritical() << "An error occurred while loading media:" << filePath;
+        vlmcCritical() << "An error occurred while loading media:" << filePath;
         return ;
     }
     Clip*   clip = new Clip( media );

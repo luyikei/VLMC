@@ -21,8 +21,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
-
 #include "vlmc.h"
 #include "Clip.h"
 #include "ClipHelper.h"
@@ -32,6 +30,7 @@
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
 #include "SettingsManager.h"
+#include "VlmcDebug.h"
 #include "Workflow/Types.h"
 
 #include <QDomElement>
@@ -250,14 +249,14 @@ MainWorkflow::loadProject( const QDomElement &root )
         unsigned int trackId = elem.attribute( "id" ).toUInt( &ok );
         if ( ok == false )
         {
-            qWarning() << "Invalid track number in project file";
+            vlmcWarning() << "Invalid track number in project file";
             return ;
         }
         Workflow::TrackType     type;
         int utype = elem.attribute( "type" ).toInt( &ok );
         if ( ok == false || (utype < 0 && utype >= Workflow::NbTrackType ) )
         {
-            qWarning() << "Invalid track type";
+            vlmcWarning() << "Invalid track type";
             return ;
         }
         type = static_cast<Workflow::TrackType>( utype );
@@ -285,7 +284,7 @@ MainWorkflow::loadProject( const QDomElement &root )
 
                 if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
                 {
-                    qWarning() << "Invalid clip node";
+                    vlmcWarning() << "Invalid clip node";
                     return ;
                 }
 

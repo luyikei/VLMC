@@ -22,6 +22,7 @@
 
 #include "SettingsManager.h"
 #include "VlmcLogger.h"
+#include "VlmcDebug.h"
 
 #include <QCoreApplication>
 #include <QDesktopServices>
@@ -56,7 +57,7 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
         QString arg = args[pos];
         QString logFile = arg.mid( 10 );
         if ( logFile.length() <= 0 )
-            qWarning() << tr("Invalid value supplied for argument --logfile" );
+            vlmcWarning() << tr("Invalid value supplied for argument --logfile" );
         else
         {
             m_logFile = fopen(logFile.toLocal8Bit().data(), "w");

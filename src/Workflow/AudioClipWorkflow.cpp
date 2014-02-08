@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
-
 #include "AudioClipWorkflow.h"
+
 #include "VLCMedia.h"
+#include "VlmcDebug.h"
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>
@@ -96,7 +96,7 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
     if ( shouldRender() == false )
         return NULL;
     if ( mode == ClipWorkflow::Get )
-        qCritical() << "A sound buffer should never be asked with 'Get' mode";
+        vlmcCritical() << "A sound buffer should never be asked with 'Get' mode";
     Workflow::AudioSample   *buff = m_computedBuffers.dequeue();
     if ( m_previousPts == -1 )
     {

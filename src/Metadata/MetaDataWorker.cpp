@@ -20,14 +20,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QtDebug>
-
 #include "vlmc.h"
 #include "MetaDataWorker.h"
 #include "Library.h"
 #include "SettingsManager.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
+#include "VlmcDebug.h"
 #include "Clip.h"
 
 #ifdef WITH_GUI
@@ -77,7 +76,7 @@ MetaDataWorker::run()
     LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent( 3000 );
     if ( res != LibVLCpp::MediaPlayer::Success )
     {
-        qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
+        vlmcWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
                       << "while launching metadata processing";
         emit failed( m_media );
     }
@@ -122,7 +121,7 @@ MetaDataWorker::metaDataAvailable()
         m_media->setFps( m_mediaPlayer->getFps() );
         if ( m_media->fps() == .0f )
         {
-            qWarning() << "Invalid FPS for media:" << m_media->fileInfo()->absoluteFilePath();
+            vlmcWarning() << "Invalid FPS for media:" << m_media->fileInfo()->absoluteFilePath();
             m_media->setFps( Clip::DefaultFPS );
         }
     }
@@ -168,7 +167,7 @@ MetaDataWorker::computeSnapshot()
 
     if ( res != LibVLCpp::MediaPlayer::Success )
     {
-        qWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
+        vlmcWarning() << "Got" << (res == LibVLCpp::MediaPlayer::Timeout ? "timeout" : "failure")
                       << "while launching metadata processing";
         emit failed( m_media );
         return ;

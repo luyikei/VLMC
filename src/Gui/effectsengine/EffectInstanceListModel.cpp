@@ -29,8 +29,6 @@
 #include <QApplication>
 #include <QFontMetrics>
 
-#include <QtDebug>
-
 EffectInstanceListModel::EffectInstanceListModel( EffectUser *user ) :
         m_user( user )
 {

@@ -28,13 +28,13 @@
 #include "ProjectManager.h"
 #include "SettingsManager.h"
 #include "Timeline.h"
+#include "VlmcDebug.h"
 #include "WorkflowRenderer.h"
 #include "Workspace.h"
 
 #include <QDir>
 #include <QMessageBox>
 #include <QSettings>
-#include <QtDebug>
 #include <QXmlStreamWriter>
 
 #include <errno.h>
@@ -303,7 +303,7 @@ void
 ProjectManager::failedToLoad( const QString &reason ) const
 {
     //When running in server mode, we can't do anything without a project file.
-    qCritical() << tr( "Failed to load the project file: %1. Aborting." ).arg( reason );
+    vlmcCritical() << tr( "Failed to load the project file: %1. Aborting." ).arg( reason );
     abort();
 }
 
