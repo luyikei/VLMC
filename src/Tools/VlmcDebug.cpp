@@ -20,11 +20,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QCoreApplication>
-#include <QStringList>
-
 #include "SettingsManager.h"
 #include "VlmcDebug.h"
+
+#include <QCoreApplication>
+#include <QDesktopServices>
+#include <QStringList>
+#include <QThread>
 
 VlmcDebug::VlmcDebug() : m_logFile( NULL )
 {
@@ -48,16 +50,18 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
     settingsManager->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )),
                                  SettingsManager::Vlmc, Qt::DirectConnection );
 
-//    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
-//    if ( pos > 0 )
-//    {
-//        QString arg = args[pos];
-//        QString logFile = arg.mid( 10 );
-//        if ( logFile.length() <= 0 )
-//            qWarning() << tr("Invalid value supplied for argument --logfile" );
-//        else
-//            SettingsManager::getInstance()->setValue( "private/LogFile", logFile, SettingsManager::Vlmc );
-//    }
+    int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
+    if ( pos > 0 )
+    {
+        QString arg = args[pos];
+        QString logFile = arg.mid( 10 );
+        if ( logFile.length() <= 0 )
+            qWarning() << tr("Invalid value supplied for argument --logfile" );
+        else
+        {
+            m_logFile = fopen(logFile.toLocal8Bit().data(), "w");
+        }
+    }
 
 
 //    QVariant setVal = SettingsManager::getInstance()->value( "private/LogFile", "log.vlmc", SettingsManager::Vlmc );
@@ -78,7 +82,8 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
 
 VlmcDebug::~VlmcDebug()
 {
-    delete m_logFile;
+    if ( m_logFile )
+        fclose( m_logFile );
 }
 
 void
@@ -97,16 +102,30 @@ VlmcDebug::logLevelChanged( const QVariant &logLevel )
     m_currentLogLevel = (VlmcDebug::LogLevel)logLevel.toInt();
 }
 
+/*********************************************************************
+* Don't use anything which might use qDebug/qWarning/... below here. *
+*********************************************************************/
+
+void
+VlmcDebug::writeToFile(const char *msg)
+{
+    flockfile( m_logFile );
+    fputs( msg, m_logFile );
+    fputc( '\n', m_logFile );
+    funlockfile( m_logFile );
+}
+
 void
 VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
 {
     //FIXME: This is ok as long as we guarantee no log message will arrive after
     // we uninstall the hook
+
     VlmcDebug* self = VlmcDebug::getInstance();
     if ( self->m_logFile != NULL )
     {
-        self->m_logFile->write( msg );
-        self->m_logFile->write( "\n" );
+        //FIXME: Messages are not guaranteed to arrive in order
+        self->writeToFile(msg);
     }
     if ( (int)type < (int)self->m_currentLogLevel )
         return ;

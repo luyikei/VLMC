@@ -25,7 +25,8 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QFile>
+
+#include <cstdio>
 
 #include "Singleton.hpp"
 
@@ -45,7 +46,7 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
             Debug = QtDebugMsg,
             Verbose = QtWarningMsg,
             // This means both qCritical() & qFatal() will be displayed in quiet mode
-            Quiet = QtCriticalMsg,
+            Quiet = QtCriticalMsg
         };
 
         static void     vlmcMessageHandler( QtMsgType type, const char* msg );
@@ -53,8 +54,9 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
     private:
         VlmcDebug();
         virtual ~VlmcDebug();
+        void            writeToFile(const char* msg);
 
-        QFile*          m_logFile;
+        FILE*           m_logFile;
         LogLevel        m_currentLogLevel;
 
     private slots:
