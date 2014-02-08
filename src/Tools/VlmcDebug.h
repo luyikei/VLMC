@@ -29,17 +29,17 @@
 
 inline QDebug vlmcDebug()
 {
-    return (qDebug().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " D: ").space();
+    return (qDebug().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " D:").space();
 }
 
 inline QDebug vlmcWarning()
 {
-    return (vlmcWarning().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " W: ").space();
+    return (vlmcWarning().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " W:").space();
 }
 
 inline QDebug vlmcCritical()
 {
-    return (qCritical().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " C: ").space();
+    return (qCritical().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " C:").space();
 }
 
 inline void vlmcFatal(const char* msg, ...)
