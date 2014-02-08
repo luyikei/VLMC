@@ -58,7 +58,6 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
         LogLevel        m_currentLogLevel;
 
     private slots:
-        void            logFileChanged( const QVariant& logFile );
         void            logLevelChanged( const QVariant& logLevel );
 
         friend class    Singleton<VlmcDebug>;

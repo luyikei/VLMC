@@ -88,26 +88,6 @@ VlmcDebug::setup()
 }
 
 void
-VlmcDebug::logFileChanged( const QVariant& logFileV )
-{
-    QString logFile = logFileV.toString();
-    if ( logFile.isEmpty() == true )
-    {
-        m_logFile->close();
-        return ;
-    }
-    if ( logFile == m_logFile->fileName() )
-    {
-        fprintf( stderr, "Trying to use the same log file. Nothing will be done" );
-        return ;
-    }
-    m_logFile->close();
-    m_logFile->setFileName( logFile );
-    m_logFile->open( QFile::Append | QFile::Truncate );
-}
-
-
-void
 VlmcDebug::logLevelChanged( const QVariant &logLevel )
 {
 
