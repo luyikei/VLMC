@@ -1,5 +1,5 @@
 /*****************************************************************************
- * VlmcDebug.h: Debug tools for VLMC
+ * VlmcLogger.h: Debug tools for VLMC
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -34,7 +34,7 @@
  *  \warning    Do not use qDebug() qWarning() etc... from here, unless you know exactly what you're doing
  *              Chances are very high that you end up with a stack overflow !!
  */
-class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
+class   VlmcLogger : public QObject, public Singleton<VlmcLogger>
 {
     Q_OBJECT
 
@@ -52,8 +52,8 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
         static void     vlmcMessageHandler( QtMsgType type, const char* msg );
         void            setup();
     private:
-        VlmcDebug();
-        virtual ~VlmcDebug();
+        VlmcLogger();
+        virtual ~VlmcLogger();
         void            writeToFile(const char* msg);
 
         FILE*           m_logFile;
@@ -62,7 +62,7 @@ class   VlmcDebug : public QObject, public Singleton<VlmcDebug>
     private slots:
         void            logLevelChanged( const QVariant& logLevel );
 
-        friend class    Singleton<VlmcDebug>;
+        friend class    Singleton<VlmcLogger>;
 };
 
 #endif // VLMCDEBUG_H

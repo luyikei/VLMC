@@ -36,7 +36,7 @@
 #include "config.h"
 #include "Library.h"
 #include "About.h"
-#include "VlmcDebug.h"
+#include "VlmcLogger.h"
 
 #include "EffectsEngine/EffectsEngine.h"
 #include "MainWorkflow.h"
@@ -73,7 +73,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     m_ui.setupUi( this );
 
     //We only install message handler here cause it uses configuration.
-    VlmcDebug::getInstance()->setup();
+    VlmcLogger::getInstance()->setup();
 
     //VLC Instance:
     LibVLCpp::Instance::getInstance();

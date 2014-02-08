@@ -24,7 +24,7 @@
 #include "vlc/vlc.h"
 
 #include "SettingsManager.h"
-#include "VlmcDebug.h"
+#include "VlmcLogger.h"
 
 #include <QVector>
 
@@ -43,9 +43,9 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
 
     int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
-    if ( debugLevel == VlmcDebug::Debug )
+    if ( debugLevel == VlmcLogger::Debug )
         argv << "-vv";
-    else if ( debugLevel == VlmcDebug::Verbose )
+    else if ( debugLevel == VlmcLogger::Verbose )
         argv << "-v";
 
     m_internalPtr = libvlc_new( argv.count(), &argv.front() );

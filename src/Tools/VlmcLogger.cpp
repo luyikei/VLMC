@@ -1,5 +1,5 @@
 /*****************************************************************************
- * VlmcDebug.cpp: Debug tools for VLMC
+ * VlmcLogger.cpp: Debug tools for VLMC
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -21,18 +21,18 @@
  *****************************************************************************/
 
 #include "SettingsManager.h"
-#include "VlmcDebug.h"
+#include "VlmcLogger.h"
 
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QStringList>
 #include <QThread>
 
-VlmcDebug::VlmcDebug() : m_logFile( NULL )
+VlmcLogger::VlmcLogger() : m_logFile( NULL )
 {
     //setup log level :
     {
-        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcDebug::Quiet,
+        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
                                                         "", "", SettingValue::Private | SettingValue::Clamped );
         logLevel->setLimits((int)Debug, (int)Verbose);
         // Purposedly destroying the setting value, as we need to use the manager for other operations.
@@ -40,11 +40,11 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
     }
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
-        m_currentLogLevel = VlmcDebug::Debug;
+        m_currentLogLevel = VlmcLogger::Debug;
     else if ( args.contains( "-v" ) == true )
-        m_currentLogLevel = VlmcDebug::Verbose;
+        m_currentLogLevel = VlmcLogger::Verbose;
     else
-        m_currentLogLevel = VlmcDebug::Quiet;
+        m_currentLogLevel = VlmcLogger::Quiet;
     SettingsManager* settingsManager = SettingsManager::getInstance();
     settingsManager->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
     settingsManager->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )),
@@ -80,26 +80,26 @@ VlmcDebug::VlmcDebug() : m_logFile( NULL )
 //    }
 }
 
-VlmcDebug::~VlmcDebug()
+VlmcLogger::~VlmcLogger()
 {
     if ( m_logFile )
         fclose( m_logFile );
 }
 
 void
-VlmcDebug::setup()
+VlmcLogger::setup()
 {
-    qInstallMsgHandler( VlmcDebug::vlmcMessageHandler );
+    qInstallMsgHandler( VlmcLogger::vlmcMessageHandler );
 }
 
 void
-VlmcDebug::logLevelChanged( const QVariant &logLevel )
+VlmcLogger::logLevelChanged( const QVariant &logLevel )
 {
 
-    Q_ASSERT_X(logLevel.toInt() >= (int)VlmcDebug::Debug &&
-               logLevel.toInt() <= (int)VlmcDebug::Quiet,
+    Q_ASSERT_X(logLevel.toInt() >= (int)VlmcLogger::Debug &&
+               logLevel.toInt() <= (int)VlmcLogger::Quiet,
                "Setting log level", "Invalid value for log level");
-    m_currentLogLevel = (VlmcDebug::LogLevel)logLevel.toInt();
+    m_currentLogLevel = (VlmcLogger::LogLevel)logLevel.toInt();
 }
 
 /*********************************************************************
@@ -107,7 +107,7 @@ VlmcDebug::logLevelChanged( const QVariant &logLevel )
 *********************************************************************/
 
 void
-VlmcDebug::writeToFile(const char *msg)
+VlmcLogger::writeToFile(const char *msg)
 {
     flockfile( m_logFile );
     fputs( msg, m_logFile );
@@ -116,12 +116,12 @@ VlmcDebug::writeToFile(const char *msg)
 }
 
 void
-VlmcDebug::vlmcMessageHandler( QtMsgType type, const char* msg )
+VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
 {
     //FIXME: This is ok as long as we guarantee no log message will arrive after
     // we uninstall the hook
 
-    VlmcDebug* self = VlmcDebug::getInstance();
+    VlmcLogger* self = VlmcLogger::getInstance();
     if ( self->m_logFile != NULL )
     {
         //FIXME: Messages are not guaranteed to arrive in order
