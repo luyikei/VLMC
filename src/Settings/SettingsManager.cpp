@@ -31,36 +31,6 @@
 
 #include <QDomElement>
 
-static SettingsManager::SettingList::iterator
-getPair( SettingsManager::SettingList &list, const QString &key )
-{
-    SettingsManager::SettingList::iterator        it = list.begin();
-    SettingsManager::SettingList::iterator        end = list.end();
-
-    while ( it != end )
-    {
-        if ( *it == key )
-            return it;
-        ++it;
-    }
-    return end;
-}
-
-static bool
-contains( const SettingsManager::SettingList &list, const QString &key )
-{
-    SettingsManager::SettingList::const_iterator        it = list.constBegin();
-    SettingsManager::SettingList::const_iterator        end = list.constEnd();
-
-    while ( it != end )
-    {
-        if ( *it == key )
-            return true;
-        ++it;
-    }
-    return false;
-}
-
 void
 SettingsManager::setValue( const QString &key,
                            const QVariant &value,
@@ -68,22 +38,24 @@ SettingsManager::setValue( const QString &key,
 {
     if ( type == Project )
     {
-        SettingList::iterator   it = getPair( m_xmlSettings, key );
+        SettingMap::iterator   it = m_xmlSettings.find( key );
         if ( it != m_xmlSettings.end() )
         {
-            (*it).value->set( value );
+            (*it)->set( value );
             return ;
         }
     }
     else// ( type == Vlmc && m_classicSettings.contains( key) == true )
     {
-        SettingList::iterator   it = getPair( m_classicSettings, key );
+        SettingMap::iterator   it = m_classicSettings.find( key );
         if ( it != m_classicSettings.end() )
         {
-            SettingValue* v = (*it).value;
+            SettingValue* v = (*it);
 
             // We don't want private values in our QSettings, that would be
             // saved in the preference files, and they're called private for a reason
+            // FIXME: For now we have only one private variable which is for runtime stuff
+            // (logging level) We might want to split this in Private & Runtime at some point.
             v->set( value );
             if ( v->flags().testFlag( SettingValue::Private ) )
                 return;
@@ -106,15 +78,15 @@ SettingsManager::value( const QString &key,
 
     if ( type == Project )
     {
-        SettingList::iterator   it = getPair( m_xmlSettings, key );
+        SettingMap::iterator   it = m_xmlSettings.find( key );
         if ( it != m_xmlSettings.end() )
-            return (*it).value;
+            return (*it);
     }
     else
     {
-        SettingList::iterator   it = getPair( m_classicSettings, key );
+        SettingMap::iterator   it = m_classicSettings.find( key );
         if ( it != m_classicSettings.end() )
-            return (*it).value;
+            return (*it);
     }
     vlmcWarning() << "Setting" << key << "does not exist.";
     Q_ASSERT_X( false, __FILE__, "get value without a created variable" );
@@ -130,23 +102,23 @@ SettingsManager::group( const QString &groupName, SettingsManager::Type type )
     QString grp = groupName + '/';
     if ( type == Project )
     {
-         SettingList::const_iterator it = m_xmlSettings.begin();
-         SettingList::const_iterator ed = m_xmlSettings.end();
+         SettingMap::const_iterator it = m_xmlSettings.begin();
+         SettingMap::const_iterator ed = m_xmlSettings.end();
 
          for ( ; it != ed; ++it )
          {
-             if ( (*it).key.startsWith( grp ) )
+             if ( (*it)->key().startsWith( grp ) )
                  ret.push_back( *it );
          }
     }
     else if ( type == Vlmc )
     {
-         SettingList::const_iterator it = m_classicSettings.begin();
-         SettingList::const_iterator ed = m_classicSettings.end();
+         SettingMap::const_iterator it = m_classicSettings.begin();
+         SettingMap::const_iterator ed = m_classicSettings.end();
 
          for ( ; it != ed; ++it )
          {
-             if ( (*it).key.startsWith( grp ) )
+             if ( (*it)->key().startsWith( grp ) )
                  ret.push_back( *it );
          }
     }
@@ -164,20 +136,20 @@ SettingsManager::watchValue( const QString &key,
 
     if ( type == Project )
     {
-        SettingList::iterator   it = getPair( m_xmlSettings, key );
+        SettingMap::iterator   it = m_xmlSettings.find( key );
         if ( it != m_xmlSettings.end() )
         {
-            connect( (*it).value, SIGNAL( changed( const QVariant& ) ),
+            connect( (*it), SIGNAL( changed( const QVariant& ) ),
                      receiver, method );
             return true;
         }
     }
     else if ( type == Vlmc )
     {
-        SettingList::iterator   it = getPair( m_classicSettings, key );
+        SettingMap::iterator   it = m_classicSettings.find( key );
         if ( it != m_classicSettings.end() )
         {
-            connect( (*it).value, SIGNAL( changed( const QVariant& ) ),
+            connect( (*it), SIGNAL( changed( const QVariant& ) ),
                     receiver, method, cType );
             return true;
         }
@@ -191,14 +163,14 @@ SettingsManager::save() const
 {
     QReadLocker     rl( &m_rwLock );
     QSettings       sett;
-    SettingList::const_iterator it = m_classicSettings.begin();
-    SettingList::const_iterator ed = m_classicSettings.end();
+    SettingMap::const_iterator it = m_classicSettings.begin();
+    SettingMap::const_iterator ed = m_classicSettings.end();
 
     for ( ; it != ed; ++it )
     {
-        if ( ( (*it).value->flags() & SettingValue::Private ) != 0 )
+        if ( ( (*it)->flags() & SettingValue::Private ) != 0 )
             continue ;
-        sett.setValue( (*it).key, (*it).value->get() );
+        sett.setValue( (*it)->key(), (*it)->get() );
     }
     sett.sync();
 }
@@ -206,17 +178,17 @@ SettingsManager::save() const
 void
 SettingsManager::save( QXmlStreamWriter& project ) const
 {
-    SettingList::const_iterator     it = m_xmlSettings.begin();
-    SettingList::const_iterator     end = m_xmlSettings.end();
+    SettingMap::const_iterator     it = m_xmlSettings.begin();
+    SettingMap::const_iterator     end = m_xmlSettings.end();
 
     project.writeStartElement( "project" );
     for ( ; it != end; ++it )
     {
-        if ( ( (*it).value->flags() & SettingValue::Private ) != 0 )
+        if ( ( (*it)->flags() & SettingValue::Private ) != 0 )
             continue ;
         project.writeStartElement( "property" );
-        project.writeAttribute( "key", (*it).key );
-        project.writeAttribute( "value", (*it).value->get().toString() );
+        project.writeAttribute( "key", (*it)->key() );
+        project.writeAttribute( "value", (*it)->get().toString() );
         project.writeEndElement();
     }
     project.writeEndElement();
@@ -243,7 +215,7 @@ SettingsManager::load( const QDomElement &root )
             vlmcWarning() << "Invalid setting node.";
         else
         {
-            if ( contains( m_xmlSettings, key ) == true )
+            if ( m_xmlSettings.contains( key ) == true )
                 setValue( key, value, SettingsManager::Project );
             else
                 vlmcWarning() << "Invalid setting node in project file:" << key;
@@ -262,29 +234,17 @@ SettingsManager::createVar( SettingValue::Type type, const QString &key,
     QWriteLocker    wlock( &m_rwLock );
 
     SettingValue    *val = NULL;
-    if ( varType == Vlmc && getPair( m_classicSettings, key ) == m_classicSettings.end() )
+    if ( varType == Vlmc && m_classicSettings.contains( key ) == false )
     {
-        val = new SettingValue( type, defaultValue, name, desc, flags );
-        m_classicSettings.push_back( Pair( key, val ) );
+        val = new SettingValue( key, type, defaultValue, name, desc, flags );
+        m_classicSettings.insert( key, val );
     }
-    else if ( varType == Project && getPair( m_xmlSettings, key ) == m_xmlSettings.end() )
+    else if ( varType == Project && m_xmlSettings.contains( key ) == false )
     {
-        val = new SettingValue( type, defaultValue, name, desc, flags );
-        m_xmlSettings.push_back( Pair( key, val ) );
+        val = new SettingValue( key, type, defaultValue, name, desc, flags );
+        m_xmlSettings.insert( key, val );
     }
     else
         Q_ASSERT_X( false, __FILE__, "creating an already created variable" );
     return val;
-}
-
-SettingsManager::Pair::Pair( const QString &_key, SettingValue *_value ) :
-        key( _key ),
-        value( _value )
-{
-}
-
-bool
-SettingsManager::Pair::operator ==( const QString &_key ) const
-{
-    return key == _key;
 }

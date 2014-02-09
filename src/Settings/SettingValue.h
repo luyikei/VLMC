@@ -58,17 +58,22 @@ class   SettingValue : public QObject
             Password        = 1 << 1,
             Clamped         = 1 << 2, ///< When used, the m_min and m_max will be used
             EightMultiple   = 1 << 3, ///< Forces the value to be a multiple of 8
-            NotEmpty        = 1 << 4, ///< Forces the value not to be empty (likely to be user only with Strings)
+            NotEmpty        = 1 << 4, ///< Forces the value not to be empty (likely to be used only with Strings)
         };
         Q_DECLARE_FLAGS( Flags, Flag );
 
         /**
          *  \brief      Constructs a setting value with its default value and description
          *
+         *  \param      key             The parameter key - ie. the value used
+         *                              to fetch this setting in SettingsManager
+         *  \param      name            The name of this setting. Not his key.
+         *                              This is used when generating the settings GUI
+         *                              and will be translated.
          *  \param      defaultValue    The setting default value.
          *  \param      desc            The setting description
          */
-        SettingValue( Type type, const QVariant& defaultValue, const char* name,
+        SettingValue( const QString& key, Type type, const QVariant& defaultValue, const char* name,
                       const char* desc, Flags flags = Nothing );
 
         /**
@@ -91,6 +96,18 @@ class   SettingValue : public QObject
          */
         void            restoreDefault();
 
+        /**
+         * @brief key   Returns the key for this setting
+         *
+         * @warning     This is NOT the name to be used when generating settings GUI
+         */
+        const QString&  key() const;
+
+        /**
+         * @brief name  The name of this setting.
+         *
+         * @warning     This is NOT the key to be used when fetching the setting.
+         */
         const char      *name() const;
         Type            type() const;
         Flags           flags() const;
@@ -105,6 +122,7 @@ class   SettingValue : public QObject
          */
         QVariant        m_val;
         QVariant        m_defaultVal;
+        const QString   m_key;
         const char*     m_name;
         const char*     m_desc;
         Type            m_type;

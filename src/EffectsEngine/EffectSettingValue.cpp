@@ -28,9 +28,9 @@
 #include <QColor>
 #include <QPoint>
 
-EffectSettingValue::EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
+EffectSettingValue::EffectSettingValue( const QString& key, Type type, EffectInstance* instance, quint32 index,
                                         const char *name, const char *desc, Flags flags ) :
-    SettingValue( type, QVariant(), name, desc, flags ),
+    SettingValue( key, type, QVariant(), name, desc, flags ),
     m_paramBuff( NULL ),
     m_buffSize( 0 ),
     m_effectInstance( instance ),

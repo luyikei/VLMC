@@ -109,15 +109,7 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
             Vlmc
         };
 
-        struct  Pair
-        {
-            Pair( const QString& key, SettingValue *value );
-            bool            operator==( const QString& key ) const;
-            QString         key;
-            SettingValue    *value;
-        };
-        //We store this as a list to preserve order.
-        typedef QList<Pair>         SettingList;
+        typedef QList<SettingValue*>                SettingList;
 
         void                        setValue( const QString &key,
                                                 const QVariant &value,
@@ -142,12 +134,13 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         bool                        load( const QDomElement &element );
 
     private:
+        typedef QMap<QString, SettingValue*>        SettingMap;
         friend class Singleton<SettingsManager>;
         SettingsManager(){}
         ~SettingsManager(){}
 
-        SettingList                 m_classicSettings;
-        SettingList                 m_xmlSettings;
+        SettingMap                 m_classicSettings;
+        SettingMap                 m_xmlSettings;
 
         mutable QReadWriteLock      m_rwLock;
 };

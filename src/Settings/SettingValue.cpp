@@ -22,10 +22,11 @@
 
 #include "SettingValue.h"
 
-SettingValue::SettingValue( SettingValue::Type type, const QVariant& defaultValue,
+SettingValue::SettingValue( const QString& key, SettingValue::Type type, const QVariant& defaultValue,
                             const char* name, const char* desc, SettingValue::Flags flags ) :
         m_val( defaultValue ),
         m_defaultVal( defaultValue ),
+        m_key( key ),
         m_name( name ),
         m_desc( desc ),
         m_type( type ),
@@ -69,6 +70,12 @@ void
 SettingValue::restoreDefault()
 {
     set( m_defaultVal );
+}
+
+const QString&
+SettingValue::key() const
+{
+    return m_key;
 }
 
 const char*

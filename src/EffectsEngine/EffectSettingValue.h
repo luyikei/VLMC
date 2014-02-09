@@ -33,7 +33,7 @@ class EffectSettingValue : public SettingValue
     Q_OBJECT
 
     public:
-        EffectSettingValue( Type type, EffectInstance* instance, quint32 index,
+        EffectSettingValue(const QString &key, Type type, EffectInstance* instance, quint32 index,
                             const char* name, const char* desc, Flags flags = Nothing );
         virtual ~EffectSettingValue();
 
