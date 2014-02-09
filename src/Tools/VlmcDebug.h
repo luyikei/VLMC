@@ -34,7 +34,7 @@ inline QDebug vlmcDebug()
 
 inline QDebug vlmcWarning()
 {
-    return (vlmcWarning().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " W:").space();
+    return (qWarning().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " W:").space();
 }
 
 inline QDebug vlmcCritical()
