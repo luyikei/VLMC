@@ -80,10 +80,17 @@ SettingsManager::setValue( const QString &key,
         SettingList::iterator   it = getPair( m_classicSettings, key );
         if ( it != m_classicSettings.end() )
         {
+            SettingValue* v = (*it).value;
+
+            // We don't want private values in our QSettings, that would be
+            // saved in the preference files, and they're called private for a reason
+            v->set( value );
+            if ( v->flags().testFlag( SettingValue::Private ) )
+                return;
+
             QSettings    sett;
             sett.setValue( key, value );
             sett.sync();
-            (*it).value->set( value );
             return ;
         }
     }
