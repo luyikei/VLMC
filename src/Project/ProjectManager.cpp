@@ -92,10 +92,6 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 
 ProjectManager::~ProjectManager()
 {
-    // Write uncommited change to the disk
-    QSettings s;
-    s.sync();
-
     if ( m_projectFile != NULL )
         delete m_projectFile;
 }

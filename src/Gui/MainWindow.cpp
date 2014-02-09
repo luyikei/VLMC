@@ -776,6 +776,7 @@ MainWindow::saveSettings()
         // Save the current layout
         sm->setValue( "private/MainWindowState", saveState(), SettingsManager::Vlmc );
         sm->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
+        sm->save();
         return true;
     }
     return false;
