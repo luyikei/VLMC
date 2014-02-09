@@ -58,9 +58,9 @@ VLMCmain( int argc, char **argv )
     XInitThreads();
 #endif
     QApplication app( argc, argv );
-    app.setApplicationName( "VLMC" );
-    app.setOrganizationName( "VideoLAN" );
-    app.setOrganizationDomain( "vlmc.org" );
+    app.setApplicationName( "vlmc" );
+    app.setOrganizationName( "videolan" );
+    app.setOrganizationDomain( "videolan.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
     qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
