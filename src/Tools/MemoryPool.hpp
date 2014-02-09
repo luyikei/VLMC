@@ -26,9 +26,9 @@
 
 #include <QMutex>
 #include <QQueue>
-#include <QtDebug>
 
 #include "Singleton.hpp"
+#include "VlmcDebug.h"
 
 template <typename T, size_t NB_ELEM = 5>
 class       MemoryPool : public Singleton< MemoryPool<T, NB_ELEM> >
@@ -39,7 +39,7 @@ public:
         QMutexLocker    lock( m_mutex );
         if ( m_pool.size() == 0 )
         {
-            qCritical() << "Pool is empty !!";
+            vlmcCritical() << "Pool is empty !!";
             return new T;
         }
         quint8*    ptr = m_pool.dequeue();
