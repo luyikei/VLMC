@@ -51,6 +51,7 @@ SettingsManager::setValue( const QString &key,
                 return true;
 
             QSettings    sett;
+            sett.setFallbacksEnabled( false );
             sett.setValue( key, value );
             sett.sync();
             return true;
@@ -109,6 +110,7 @@ SettingsManager::save() const
     m_classicSettings.lockForRead();
 
     QSettings       sett;
+    sett.setFallbacksEnabled( false );
     SettingsContainer::SettingMap::const_iterator it = m_classicSettings.settings().begin();
     SettingsContainer::SettingMap::const_iterator ed = m_classicSettings.settings().end();
 

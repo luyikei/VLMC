@@ -56,6 +56,7 @@ EffectsEngine::EffectsEngine()
 #endif
 
                              QSettings::IniFormat, this );
+    m_cache->setFallbacksEnabled( false );
     //Create the names entry. A bit ugly but faster (I guess...) afterward.
     m_names.push_back( QStringList() );
     m_names.push_back( QStringList() );

@@ -339,6 +339,7 @@ MainWindow::loadVlmcPreferences()
 {
     //FIXME: Manually load vlmc version to force settings clear?
     QSettings       s;
+    s.setFallbacksEnabled( false );
     foreach ( QString key, s.allKeys() )
     {
         QVariant value = s.value( key );

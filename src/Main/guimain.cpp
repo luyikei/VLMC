@@ -69,6 +69,7 @@ VLMCmain( int argc, char **argv )
     qRegisterMetaType<QUuid>( "QUuid" );
 
     QSettings s;
+    s.setFallbacksEnabled( false );
     LanguageHelper::getInstance()->languageChanged(
             s.value( "vlmc/VLMCLang", "default" ) );
 
