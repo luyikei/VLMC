@@ -31,98 +31,62 @@
 
 #include <QDomElement>
 
-void
+bool
 SettingsManager::setValue( const QString &key,
                            const QVariant &value,
                            SettingsManager::Type type )
 {
     if ( type == Project )
     {
-        SettingMap::iterator   it = m_xmlSettings.find( key );
-        if ( it != m_xmlSettings.end() )
-        {
-            (*it)->set( value );
-            return ;
-        }
+        if ( m_xmlSettings.setValue( key, value ) )
+            return true;
     }
     else// ( type == Vlmc && m_classicSettings.contains( key) == true )
     {
-        SettingMap::iterator   it = m_classicSettings.find( key );
-        if ( it != m_classicSettings.end() )
+        SettingValue* v = m_classicSettings.value( key );
+        if ( v != NULL )
         {
-            SettingValue* v = (*it);
-
             // We don't want private values in our QSettings, that would be
             // saved in the preference files, and they're called private for a reason
             // FIXME: For now we have only one private variable which is for runtime stuff
             // (logging level) We might want to split this in Private & Runtime at some point.
             v->set( value );
             if ( v->flags().testFlag( SettingValue::Private ) )
-                return;
+                return true;
 
             QSettings    sett;
             sett.setValue( key, value );
             sett.sync();
-            return ;
+            return true;
         }
     }
     vlmcWarning() << "Setting" << key << "does not exist.";
     Q_ASSERT_X( false, __FILE__, "set value without a created variable" );
+    return false;
 }
 
 SettingValue*
 SettingsManager::value( const QString &key,
                         SettingsManager::Type type )
 {
-    QReadLocker rl( &m_rwLock );
-
+    SettingValue* result = NULL;
     if ( type == Project )
-    {
-        SettingMap::iterator   it = m_xmlSettings.find( key );
-        if ( it != m_xmlSettings.end() )
-            return (*it);
-    }
+        result = m_xmlSettings.value( key );
     else
-    {
-        SettingMap::iterator   it = m_classicSettings.find( key );
-        if ( it != m_classicSettings.end() )
-            return (*it);
-    }
-    vlmcWarning() << "Setting" << key << "does not exist.";
-    Q_ASSERT_X( false, __FILE__, "get value without a created variable" );
-    return NULL;
+        result = m_classicSettings.value( key );
+    Q_ASSERT_X( result != NULL, __FILE__, "get value without a created variable" );
+    return result;
 }
 
 SettingsManager::SettingList
 SettingsManager::group( const QString &groupName, SettingsManager::Type type )
 {
-    SettingsManager::SettingList        ret;
-    QReadLocker                         rl( &m_rwLock );
-
-    QString grp = groupName + '/';
     if ( type == Project )
-    {
-         SettingMap::const_iterator it = m_xmlSettings.begin();
-         SettingMap::const_iterator ed = m_xmlSettings.end();
-
-         for ( ; it != ed; ++it )
-         {
-             if ( (*it)->key().startsWith( grp ) )
-                 ret.push_back( *it );
-         }
-    }
+        return m_xmlSettings.group( groupName );
     else if ( type == Vlmc )
-    {
-         SettingMap::const_iterator it = m_classicSettings.begin();
-         SettingMap::const_iterator ed = m_classicSettings.end();
-
-         for ( ; it != ed; ++it )
-         {
-             if ( (*it)->key().startsWith( grp ) )
-                 ret.push_back( *it );
-         }
-    }
-    return ret;
+        return m_classicSettings.group( groupName );
+    Q_ASSERT_X( false, __FILE__, "Unknown setting type" );
+    return SettingList();
 }
 
 bool
@@ -132,27 +96,12 @@ SettingsManager::watchValue( const QString &key,
                              SettingsManager::Type type,
                              Qt::ConnectionType cType )
 {
-    QReadLocker rl( &m_rwLock );
-
-    if ( type == Project )
+    SettingValue* s = value( key, type );
+    if ( s != NULL )
     {
-        SettingMap::iterator   it = m_xmlSettings.find( key );
-        if ( it != m_xmlSettings.end() )
-        {
-            connect( (*it), SIGNAL( changed( const QVariant& ) ),
-                     receiver, method );
-            return true;
-        }
-    }
-    else if ( type == Vlmc )
-    {
-        SettingMap::iterator   it = m_classicSettings.find( key );
-        if ( it != m_classicSettings.end() )
-        {
-            connect( (*it), SIGNAL( changed( const QVariant& ) ),
-                    receiver, method, cType );
-            return true;
-        }
+        connect( s, SIGNAL( changed( const QVariant& ) ),
+                 receiver, method , cType );
+        return true;
     }
     Q_ASSERT_X( false, __FILE__, "watching value without a created variable" );
     return false;
@@ -161,10 +110,11 @@ SettingsManager::watchValue( const QString &key,
 void
 SettingsManager::save() const
 {
-    QReadLocker     rl( &m_rwLock );
+    m_classicSettings.lockForRead();
+
     QSettings       sett;
-    SettingMap::const_iterator it = m_classicSettings.begin();
-    SettingMap::const_iterator ed = m_classicSettings.end();
+    SettingsContainer::SettingMap::const_iterator it = m_classicSettings.settings().begin();
+    SettingsContainer::SettingMap::const_iterator ed = m_classicSettings.settings().end();
 
     for ( ; it != ed; ++it )
     {
@@ -178,8 +128,10 @@ SettingsManager::save() const
 void
 SettingsManager::save( QXmlStreamWriter& project ) const
 {
-    SettingMap::const_iterator     it = m_xmlSettings.begin();
-    SettingMap::const_iterator     end = m_xmlSettings.end();
+    m_xmlSettings.lockForRead();
+
+    SettingsContainer::SettingMap::const_iterator     it = m_xmlSettings.settings().begin();
+    SettingsContainer::SettingMap::const_iterator     end = m_xmlSettings.settings().end();
 
     project.writeStartElement( "project" );
     for ( ; it != end; ++it )
@@ -204,7 +156,6 @@ SettingsManager::load( const QDomElement &root )
         vlmcWarning() << "Invalid settings node";
         return false ;
     }
-    QWriteLocker    wLock( &m_rwLock );
     QDomElement s = element.firstChildElement();
     while ( s.isNull() == false )
     {
@@ -214,12 +165,8 @@ SettingsManager::load( const QDomElement &root )
         if ( key.isEmpty() == true || value.isEmpty() == true )
             vlmcWarning() << "Invalid setting node.";
         else
-        {
-            if ( m_xmlSettings.contains( key ) == true )
-                setValue( key, value, SettingsManager::Project );
-            else
-                vlmcWarning() << "Invalid setting node in project file:" << key;
-        }
+            if ( setValue( key, value, SettingsManager::Project ) == false )
+                vlmcWarning() << "Loaded invalid project setting:" << key;
         s = s.nextSiblingElement();
     }
     return true;
@@ -231,20 +178,82 @@ SettingsManager::createVar( SettingValue::Type type, const QString &key,
                             const char *desc, SettingsManager::Type varType /*= Vlmc*/,
                             SettingValue::Flags flags /*= SettingValue::Nothing*/ )
 {
-    QWriteLocker    wlock( &m_rwLock );
-
     SettingValue    *val = NULL;
-    if ( varType == Vlmc && m_classicSettings.contains( key ) == false )
-    {
-        val = new SettingValue( key, type, defaultValue, name, desc, flags );
-        m_classicSettings.insert( key, val );
-    }
-    else if ( varType == Project && m_xmlSettings.contains( key ) == false )
-    {
-        val = new SettingValue( key, type, defaultValue, name, desc, flags );
-        m_xmlSettings.insert( key, val );
-    }
-    else
-        Q_ASSERT_X( false, __FILE__, "creating an already created variable" );
+    if ( varType == Vlmc )
+        val = m_classicSettings.createVar( type, key, defaultValue, name, desc, flags );
+    else if ( varType == Project )
+        val = m_xmlSettings.createVar( type, key, defaultValue, name, desc, flags );
+    Q_ASSERT_X( val != NULL, __FILE__, "creating an already created variable" );
     return val;
+}
+
+
+bool
+SettingsManager::SettingsContainer::setValue(const QString &key, const QVariant &value)
+{
+    SettingMap::iterator   it = m_settings.find( key );
+    if ( it != m_settings.end() )
+    {
+        (*it)->set( value );
+        return true;
+    }
+    return false;
+}
+
+SettingValue*
+SettingsManager::SettingsContainer::value(const QString &key)
+{
+    QReadLocker lock( &m_rwLock );
+
+    SettingMap::iterator it = m_settings.find( key );
+    if ( it != m_settings.end() )
+        return *it;
+    return NULL;
+}
+
+SettingValue*
+SettingsManager::SettingsContainer::createVar(SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags)
+{
+    QWriteLocker lock( &m_rwLock );
+
+    if ( m_settings.contains( key ) )
+        return NULL;
+    SettingValue* val = new SettingValue( key, type, defaultValue, name, desc, flags );
+    m_settings.insert( key, val );
+    return val;
+}
+
+const SettingsManager::SettingsContainer::SettingMap&
+SettingsManager::SettingsContainer::settings() const
+{
+    return m_settings;
+}
+
+SettingsManager::SettingList
+SettingsManager::SettingsContainer::group(const QString &groupName) const
+{
+    QReadLocker lock( &m_rwLock );
+    SettingMap::const_iterator          it = m_settings.begin();
+    SettingMap::const_iterator          ed = m_settings.end();
+    SettingsManager::SettingList        ret;
+
+    QString grp = groupName + '/';
+    for ( ; it != ed; ++it )
+    {
+        if ( (*it)->key().startsWith( grp ) )
+            ret.push_back( *it );
+    }
+    return ret;
+}
+
+void
+SettingsManager::SettingsContainer::lockForRead() const
+{
+    m_rwLock.lockForRead();
+}
+
+void
+SettingsManager::SettingsContainer::unlock() const
+{
+    m_rwLock.unlock();
 }

@@ -27,7 +27,7 @@
 #include "Singleton.hpp"
 
 #include <QString>
-#include <QHash>
+#include <QMap>
 #include <QObject>
 #include <QReadWriteLock>
 #include <QVariant>
@@ -101,17 +101,36 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
 class   SettingsManager : public QObject, public Singleton<SettingsManager>
 {
     Q_OBJECT
-    Q_DISABLE_COPY( SettingsManager )
+    Q_DISABLE_COPY( SettingsManager );
+
+    public:
+        typedef QList<SettingValue*>                SettingList;
+
+    private:
+        class   SettingsContainer
+        {
+        public:
+            typedef QMap<QString, SettingValue*>        SettingMap;
+
+            bool setValue(const QString &key, const QVariant &value );
+            SettingValue*               value( const QString &key );
+            SettingValue*               createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags );
+            const SettingMap&           settings() const;
+            SettingList                 group( const QString &groupName ) const;
+            void                        lockForRead() const;
+            void                        unlock() const;
+        private:
+            SettingMap                  m_settings;
+            mutable QReadWriteLock      m_rwLock;
+        };
+
     public:
         enum Type
         {
             Project,
             Vlmc
         };
-
-        typedef QList<SettingValue*>                SettingList;
-
-        void                        setValue( const QString &key,
+        bool setValue( const QString &key,
                                                 const QVariant &value,
                                                 SettingsManager::Type type = Vlmc);
         SettingValue                *value( const QString &key,
@@ -134,15 +153,14 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         bool                        load( const QDomElement &element );
 
     private:
-        typedef QMap<QString, SettingValue*>        SettingMap;
+
         friend class Singleton<SettingsManager>;
         SettingsManager(){}
         ~SettingsManager(){}
 
-        SettingMap                 m_classicSettings;
-        SettingMap                 m_xmlSettings;
+        SettingsContainer            m_classicSettings;
+        SettingsContainer            m_xmlSettings;
 
-        mutable QReadWriteLock      m_rwLock;
 };
 
 #endif
