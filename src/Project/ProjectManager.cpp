@@ -34,7 +34,6 @@
 
 #include <QDir>
 #include <QMessageBox>
-#include <QSettings>
 
 #include <errno.h>
 #include <signal.h>
@@ -233,8 +232,7 @@ ProjectManager::appendToRecentProject( const QString& projectName )
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    QSettings s;
-    s.setValue( "RecentsProjects", m_recentsProjects );
+    SettingsManager::getInstance()->setValue( "private/RecentsProjects", m_recentsProjects, SettingsManager::Vlmc );
 }
 
 QString

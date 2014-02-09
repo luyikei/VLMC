@@ -31,7 +31,6 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QFileInfo>
-#include <QSettings>
 
 QString* WelcomePage::m_projectPath = NULL;
 
@@ -88,9 +87,7 @@ WelcomePage::nextId() const
 void
 WelcomePage::initializePage()
 {
-    QSettings s;
-
-    m_ui.hideStartupCheckBox->setChecked( !s.value( "ShowWizardStartup", true ).toBool() );
+    m_ui.hideStartupCheckBox->setChecked( !VLMC_GET_BOOL( "private/ShowWizardStartup" ) );
     m_ui.createRadioButton->setChecked( true );
     loadRecentsProjects();
 }
