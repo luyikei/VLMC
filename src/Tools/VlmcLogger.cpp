@@ -34,7 +34,7 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
     //setup log level :
     {
         SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
-                                                        "", "", SettingValue::Private | SettingValue::Clamped );
+                                                        "", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
         logLevel->setLimits((int)Debug, (int)Verbose);
         // Purposedly destroying the setting value, as we need to use the manager for other operations.
         //FIXME: Actually I'm not sure for setting the value since this is a private variable.

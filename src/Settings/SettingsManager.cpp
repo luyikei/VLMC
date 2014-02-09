@@ -46,12 +46,8 @@ SettingsManager::setValue( const QString &key,
         SettingValue* v = m_classicSettings.value( key );
         if ( v != NULL )
         {
-            // We don't want private values in our QSettings, that would be
-            // saved in the preference files, and they're called private for a reason
-            // FIXME: For now we have only one private variable which is for runtime stuff
-            // (logging level) We might want to split this in Private & Runtime at some point.
             v->set( value );
-            if ( v->flags().testFlag( SettingValue::Private ) )
+            if ( v->flags().testFlag( SettingValue::Runtime ) )
                 return true;
 
             QSettings    sett;
