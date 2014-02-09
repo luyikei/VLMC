@@ -71,7 +71,7 @@ private:
     void        createProjectPreferences();
     void        clearTemporaryFiles();
     void        initVlmcPreferences();
-    void        loadVlmcPreferences( const QString& subPart );
+    void        loadVlmcPreferences();
     void        loadGlobalProxySettings();
     void        initToolbar();
     bool        saveSettings();

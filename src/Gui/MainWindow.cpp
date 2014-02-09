@@ -330,32 +330,20 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 
     //Load saved preferences :
-    loadVlmcPreferences( "private" );
-    if ( VLMC_GET_STRING( "private/VlmcVersion" ) == PROJECT_VERSION_MAJOR )
-    {
-        loadVlmcPreferences( "keyboard" );
-        loadVlmcPreferences( "general" );
-        loadVlmcPreferences( "youtube" );
-        loadVlmcPreferences( "network" );
-    }
-    else
-    {
-        QSettings s;
-        s.clear();
-    }
+    loadVlmcPreferences();
     SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
 }
 
 void
-MainWindow::loadVlmcPreferences( const QString &subPart )
+MainWindow::loadVlmcPreferences()
 {
+    //FIXME: Manually load vlmc version to force settings clear?
     QSettings       s;
-    s.beginGroup( subPart );
     foreach ( QString key, s.allKeys() )
     {
         QVariant value = s.value( key );
         vlmcDebug() << "Loading" << key << "=>" << value;
-        SettingsManager::getInstance()->setValue( subPart + "/" + key, value, SettingsManager::Vlmc );
+        SettingsManager::getInstance()->setValue( key, value, SettingsManager::Vlmc );
     }
 }
 
