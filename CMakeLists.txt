@@ -100,7 +100,6 @@ ELSE(NOT APPLE)
     #FIXME: Mac OS port does n't start if crash handler is enabled.
     SET(WITH_CRASHHANDLER_GUI FALSE CACHE BOOL "Disable crash handler gui...")
     SET(WITH_CRASHHANDLER False CACHE BOOL "Disable the crash handler")
-    SET(CMAKE_BUILD_TYPE "Release")
     #SET(CMAKE_OSX_ARCHITECTURES i386)
     #SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}")
 ENDIF(NOT APPLE)
