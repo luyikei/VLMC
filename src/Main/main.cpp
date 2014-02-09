@@ -23,10 +23,10 @@
 #include "config.h"
 #include "ConsoleRenderer.h"
 #include "ProjectManager.h"
+#include "VlmcDebug.h"
 #include "WorkflowFileRenderer.h"
 
 #include <QCoreApplication>
-#include <QtDebug>
 #include <QMetaType>
 #include <QVariant>
 
@@ -52,7 +52,7 @@ VLMCmain( int argc, char **argv )
 
     if ( app.arguments().count() < 3 )
     {
-        qCritical() << "Usage: ./vlmc project.vlmc output_file";
+        vlmcCritical() << "Usage: ./vlmc project.vlmc output_file";
         return 1;
     }
     ProjectManager  *pm = ProjectManager::getInstance();

@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "Types.h"
+#include "VlmcDebug.h"
 
 #include <QMetaType>
 #include <QTextStream>
@@ -122,7 +123,7 @@ main( int argc, char **argv )
         {
             pid_t pid = fork();
             if( pid < 0 )
-                qFatal("Can't fork to launch VLMC. Exiting.");
+                vlmcFatal("Can't fork to launch VLMC. Exiting.");
             if( pid == 0 )
             {
                 signal( SIGSEGV, signalHandler );
