@@ -35,7 +35,6 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QSettings>
-#include <QXmlStreamWriter>
 
 #include <errno.h>
 #include <signal.h>
@@ -46,8 +45,7 @@ const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 {
-    QSettings s;
-    m_recentsProjects = s.value( "RecentsProjects" ).toStringList();
+    m_recentsProjects = VLMC_GET_STRINGLIST( "private/RecentsProjects" );
     //If the variable was empty, it will return a list with one empty string in it.
     m_recentsProjects.removeAll( "" );
 
@@ -176,8 +174,7 @@ ProjectManager::removeProject( const QString& project )
     // Remove all occurence of fileName
     m_recentsProjects.removeAll( project );
 
-    QSettings s;
-    s.setValue( "RecentsProjects", m_recentsProjects );
+    SettingsManager::getInstance()->setValue( "private/RecentsProjects", m_recentsProjects, SettingsManager::Vlmc );
 }
 
 void
@@ -215,9 +212,7 @@ ProjectManager::emergencyBackup()
     else
        name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
     __saveProject( name );
-    QSettings   s;
-    s.setValue( "EmergencyBackup", name );
-    s.sync();
+    SettingsManager::getInstance()->setValue( "private/EmergencyBackup", name, SettingsManager::Vlmc );
 }
 
 bool
@@ -288,8 +283,7 @@ ProjectManager::saveAs( const QString &outputFileName )
 bool
 ProjectManager::loadEmergencyBackup()
 {
-    QSettings   s;
-    QString lastProject = s.value( "EmergencyBackup" ).toString();
+    QString lastProject = VLMC_GET_STRING( "private/EmergencyBackup" );
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );

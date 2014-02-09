@@ -34,6 +34,7 @@
 #include "MediaListView.h"
 #include "MetaDataManager.h"
 #include "PreviewWidget.h"
+#include "SettingsManager.h"
 #include "TagWidget.h"
 #include "Transcoder.h"
 #include "VlmcDebug.h"
@@ -288,19 +289,17 @@ ImportController::collapseAllButCurrentPath()
 void
 ImportController::saveCurrentPath()
 {
-    QSettings s;
-    s.setValue( "ImportPreviouslySelectPath", m_currentlyWatchedDir );
-    s.sync();
+    SettingsManager::getInstance()->setValue( "private/ImportPreviouslySelectPath",
+                                              m_currentlyWatchedDir, SettingsManager::Vlmc );
 }
 
 void
 ImportController::restoreCurrentPath()
 {
-    QSettings s;
-    QVariant path = s.value( "ImportPreviouslySelectPath", QDir::homePath() );
-    if ( QFile::exists( path.toString() ) == false )
+    QString path = VLMC_GET_STRING( "private/ImportPreviouslySelectPath" );
+    if ( QFile::exists( path ) == false )
         path = QDir::homePath();
-    QFileInfo info = path.toString();
+    QFileInfo info = path;
     m_currentlyWatchedDir = info.absoluteFilePath();
 }
 

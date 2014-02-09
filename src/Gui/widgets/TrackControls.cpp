@@ -35,6 +35,7 @@ TrackControls::TrackControls( GraphicsTrack* track, QWidget *parent ) :
     m_ui( new Ui::TrackControls ),
     m_track( track )
 {
+    //FIXME: This type of things should be in the project settings
     QSettings   s( QSettings::UserScope, qApp->organizationName(), "timeline" );
     if ( track->mediaType() == Workflow::VideoTrack &&
          s.contains( "video" + QString::number( track->trackNumber() ) ) )

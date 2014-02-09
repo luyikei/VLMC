@@ -38,11 +38,13 @@ class QDomElement;
 
 
 //Var helpers :
-#define VLMC_GET_STRING( key )  SettingsManager::getInstance()->value( key )->get().toString()
-#define VLMC_GET_INT( key )     SettingsManager::getInstance()->value( key )->get().toInt()
-#define VLMC_GET_UINT( key )    SettingsManager::getInstance()->value( key )->get().toUInt()
-#define VLMC_GET_DOUBLE( key )  SettingsManager::getInstance()->value( key )->get().toDouble()
-#define VLMC_GET_BOOL( key )    SettingsManager::getInstance()->value( key )->get().toBool()
+#define VLMC_GET_STRING( key )      SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toString()
+#define VLMC_GET_INT( key )         SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toInt()
+#define VLMC_GET_UINT( key )        SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toUInt()
+#define VLMC_GET_DOUBLE( key )      SettingsManager::getInstance()->value( key, SettingsManager::Vlmc)->get().toDouble()
+#define VLMC_GET_BOOL( key )        SettingsManager::getInstance()->value( key, SettingsManager::Vlmc)->get().toBool()
+#define VLMC_GET_STRINGLIST( key )  SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toStringList()
+#define VLMC_GET_BYTEARRAY( key )   SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toByteArray()
 
 #define VLMC_PROJECT_GET_STRING( key )  SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toString()
 #define VLMC_PROJECT_GET_INT( key )     SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toInt()
@@ -92,10 +94,15 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
         VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 #define VLMC_CREATE_PRIVATE_PREFERENCE_INT( key, defaultValue )  \
         VLMC_CREATE_PREFERENCE( SettingValue::Int, key, defaultValue, "", "", SettingValue::Private )
-#define VLMC_CREATE_PRIVATE_PROJECT_STRING( key, defaultValue )  \
-        VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
+#define VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( key, defaultValue )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::Bool, key, defaultValue, "", "", SettingValue::Private )
+#define VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( key, defaultValue )  \
+        VLMC_CREATE_PREFERENCE( SettingValue::ByteArray, key, defaultValue, "", "", SettingValue::Private )
+
 #define VLMC_CREATE_PREFERENCE_PASSWORD( key, defaultValue, name, desc )  \
         VLMC_CREATE_PREFERENCE( SettingValue::String, key, defaultValue, name, desc, SettingValue::Password )
+#define VLMC_CREATE_PRIVATE_PROJECT_STRING( key, defaultValue )  \
+        VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
 class   SettingsManager : public QObject, public Singleton<SettingsManager>

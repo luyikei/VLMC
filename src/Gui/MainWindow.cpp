@@ -78,11 +78,11 @@ MainWindow::MainWindow( QWidget *parent ) :
     //VLC Instance:
     LibVLCpp::Instance::getInstance();
 
-    //Creating the project manager first (so it can create all the project variables)
-    GUIProjectManager::getInstance();
-
     //Preferences
     initVlmcPreferences();
+
+    //Creating the project manager so it can create all the project variables
+    GUIProjectManager::getInstance();
 
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
@@ -128,6 +128,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
+    //FIXME: Lazy init this
     // Wizard
     m_pWizard = new ProjectWizard( this );
     m_pWizard->setModal( true );
@@ -137,12 +138,10 @@ MainWindow::MainWindow( QWidget *parent ) :
     if ( restoreSession() == true )
         return ;
 #endif
-    QSettings s;
-
     // Restore the geometry
-    restoreGeometry( s.value( "MainWindowGeometry" ).toByteArray() );
+    restoreGeometry( VLMC_GET_BYTEARRAY( "private/MainWindowGeometry" ) );
     // Restore the layout
-    restoreState( s.value( "MainWindowState" ).toByteArray() );
+    restoreState( VLMC_GET_BYTEARRAY( "private/MainWindowState" ) );
 }
 
 MainWindow::~MainWindow()
@@ -156,9 +155,7 @@ MainWindow::~MainWindow()
 void
 MainWindow::showWizard()
 {
-    QSettings s;
-
-    if ( s.value( "ShowWizardStartup", true ).toBool() )
+    if ( VLMC_GET_BOOL( "private/ShowWizardStartup" ) )
         m_pWizard->show();
 }
 
@@ -322,18 +319,31 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Proxy Password" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Set Proxy Password, if any." ) );
 
+    // Setup private variables
+    VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/CleanQuit", true );
+    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/EmergencyBackup", "" );
+    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
+    VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
+    VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
+    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/RecentsProjects", "" );
+    VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/ShowWizardStartup", true );
+    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
+
     //Load saved preferences :
-    QSettings       s;
-    if ( s.value( "VlmcVersion" ).toString() != PROJECT_VERSION_MAJOR )
-        s.clear();
-    else
+    loadVlmcPreferences( "private" );
+    if ( VLMC_GET_STRING( "private/VlmcVersion" ) == PROJECT_VERSION_MAJOR )
     {
         loadVlmcPreferences( "keyboard" );
         loadVlmcPreferences( "general" );
         loadVlmcPreferences( "youtube" );
         loadVlmcPreferences( "network" );
     }
-    s.setValue( "VlmcVersion", PROJECT_VERSION_MAJOR );
+    else
+    {
+        QSettings s;
+        s.clear();
+    }
+    SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
 }
 
 void
@@ -343,8 +353,9 @@ MainWindow::loadVlmcPreferences( const QString &subPart )
     s.beginGroup( subPart );
     foreach ( QString key, s.allKeys() )
     {
-        SettingsManager::getInstance()->setValue( subPart + "/" + key, s.value( key ),
-                                                  SettingsManager::Vlmc );
+        QVariant value = s.value( key );
+        vlmcDebug() << "Loading" << key << "=>" << value;
+        SettingsManager::getInstance()->setValue( subPart + "/" + key, value, SettingsManager::Vlmc );
     }
 }
 
@@ -771,13 +782,12 @@ MainWindow::saveSettings()
     clearTemporaryFiles();
     if ( pm->askForSaveIfModified() )
     {
-        QSettings s;
+        SettingsManager* sm = SettingsManager::getInstance();
         // Save the current geometry
-        s.setValue( "MainWindowGeometry", saveGeometry() );
+        sm->setValue( "private/MainWindowGeometry", saveGeometry(), SettingsManager::Vlmc );
         // Save the current layout
-        s.setValue( "MainWindowState", saveState() );
-        s.setValue( "CleanQuit", true );
-        s.sync();
+        sm->setValue( "private/MainWindowState", saveState(), SettingsManager::Vlmc );
+        sm->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
         return true;
     }
     return false;
@@ -834,30 +844,22 @@ MainWindow::on_actionCrash_triggered()
 bool
 MainWindow::restoreSession()
 {
-    QSettings   s;
-    bool        fileCreated = false;
-    bool        ret = false;
+    bool    cleanQuit = VLMC_GET_BOOL( "private/CleanQuit" );
+    bool    ret = false;
 
-    fileCreated = s.contains( "VlmcVersion" );
-    if ( fileCreated == true )
+    if ( cleanQuit == false )
     {
-        bool        cleanQuit = s.value( "CleanQuit", true ).toBool();
-
-        if ( cleanQuit == false )
+        QMessageBox::StandardButton res = QMessageBox::question( this, tr( "Crash recovery" ), tr( "VLMC didn't closed nicely. Do you want to recover your project?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
+        if ( res == QMessageBox::Yes )
         {
-            QMessageBox::StandardButton res = QMessageBox::question( this, tr( "Crash recovery" ), tr( "VLMC didn't closed nicely. Do you want to recover your project?" ),
-                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
-            if ( res == QMessageBox::Yes )
-            {
-                if ( GUIProjectManager::getInstance()->loadEmergencyBackup() == true )
-                    ret = true;
-                else
-                    QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
-            }
+            if ( GUIProjectManager::getInstance()->loadEmergencyBackup() == true )
+                ret = true;
+            else
+                QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
         }
     }
-    s.setValue( "CleanQuit", false );
-    s.sync();
+    SettingsManager::getInstance()->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
     return ret;
 }
 
