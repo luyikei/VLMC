@@ -3,7 +3,7 @@ Building VLMC on Mac OSX
 
 Dependencies:
 - Build tools: g++, make, cmake etc.
-- Qt framework >= 4.6.0
+- Qt framework >= 5.0 (brew install qt5)
 
 Get the sources:
   git clone git://git.videolan.org/vlmc.git
