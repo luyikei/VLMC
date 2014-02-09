@@ -80,7 +80,7 @@ TracksScene::askRemoveSelectedItems()
     if ( tv->currentAction() != TracksView::None )
         return ;
 
-    if ( VLMC_GET_BOOL( "general/ConfirmDeletion" ) == true )
+    if ( VLMC_GET_BOOL( "vlmc/ConfirmDeletion" ) == true )
     {
         QString message;
         if ( selectedItems().size() == 1 )
@@ -101,7 +101,7 @@ TracksScene::askRemoveSelectedItems()
             return ;
         if ( clicked == always )
         {
-            SettingsManager::getInstance()->setValue( "general/ConfirmDeletion",
+            SettingsManager::getInstance()->setValue( "vlmc/ConfirmDeletion",
                                                        false, SettingsManager::Vlmc );
         }
     }

@@ -81,7 +81,7 @@ GeneralPage::initializePage()
     ui.lineEditName->setText( projectName );
 
     //fetching the global workspace path
-    QString     workspacePath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
+    QString     workspacePath = VLMC_GET_STRING( "vlmc/DefaultProjectLocation" );
     ui.lineEditWorkspace->setText( workspacePath );
 
     //Reinit description field

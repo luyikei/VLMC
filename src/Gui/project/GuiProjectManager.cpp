@@ -43,25 +43,25 @@ GUIProjectManager::GUIProjectManager()
     //Automatic save part :
     m_timer = new QTimer( this );
     connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-    VLMC_CREATE_PREFERENCE_BOOL( "general/AutomaticBackup", false,
+    VLMC_CREATE_PREFERENCE_BOOL( "vlmc/AutomaticBackup", false,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
                                              "VLMC will automatically save your project "
                                              "at a specified interval" ) );
-    SettingsManager::getInstance()->watchValue( "general/AutomaticBackup", this,
+    SettingsManager::getInstance()->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
-    VLMC_CREATE_PREFERENCE_INT( "general/AutomaticBackupInterval", 5,
+    VLMC_CREATE_PREFERENCE_INT( "vlmc/AutomaticBackupInterval", 5,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
                                             "between two automatic save" ) );
-    SettingsManager::getInstance()->watchValue( "general/AutomaticBackupInterval", this,
+    SettingsManager::getInstance()->watchValue( "vlmc/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
-    automaticSaveEnabledChanged( VLMC_GET_BOOL( "general/AutomaticBackup" ) );
-    SettingsManager::getInstance()->watchValue( "general/ProjectName", this,
+    automaticSaveEnabledChanged( VLMC_GET_BOOL( "vlmc/AutomaticBackup" ) );
+    SettingsManager::getInstance()->watchValue( "vlmc/ProjectName", this,
                                                 SLOT(projectNameChanged(QVariant) ),
                                                 SettingsManager::Project );
 }
@@ -121,9 +121,9 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
     {
         bool        relocate = false;
 
-        QString defaultPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+        QString defaultPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
         if ( defaultPath.length() == 0 )
-            defaultPath = VLMC_GET_STRING( "general/DefaultProjectLocation" );
+            defaultPath = VLMC_GET_STRING( "vlmc/DefaultProjectLocation" );
         QString outputFileName =
             QFileDialog::getSaveFileName( NULL, tr( "Enter the output file name" ),
                                           defaultPath, tr( "VLMC project file(*.vlmc)" ) );
@@ -141,7 +141,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
             outputFileName += ".vlmc";
         m_projectFile = new QFile( outputFileName );
         QFileInfo       fInfo( outputFileName );
-        SettingsManager::getInstance()->setValue( "general/Workspace",
+        SettingsManager::getInstance()->setValue( "vlmc/Workspace",
                                                   fInfo.absolutePath(), SettingsManager::Project);
 
         appendToRecentProject( projectName() );
@@ -201,7 +201,7 @@ GUIProjectManager::automaticSaveEnabledChanged( const QVariant& val )
 
     if ( enabled == true )
     {
-        int interval = VLMC_GET_INT( "general/AutomaticBackupInterval" );
+        int interval = VLMC_GET_INT( "vlmc/AutomaticBackupInterval" );
         m_timer->start( interval * 1000 * 60 );
     }
     else
@@ -211,7 +211,7 @@ GUIProjectManager::automaticSaveEnabledChanged( const QVariant& val )
 void
 GUIProjectManager::automaticSaveIntervalChanged( const QVariant& val )
 {
-    bool enabled = VLMC_GET_BOOL( "general/AutomaticBackup" );
+    bool enabled = VLMC_GET_BOOL( "vlmc/AutomaticBackup" );
 
     if ( enabled == false )
         return ;
@@ -302,7 +302,7 @@ GUIProjectManager::loadProject()
 {
     QString fileName =
             QFileDialog::getOpenFileName( NULL, tr( "Please choose a project file" ),
-                                            VLMC_GET_STRING( "general/DefaultProjectLocation" ),
+                                            VLMC_GET_STRING( "vlmc/DefaultProjectLocation" ),
                                             tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.length() <= 0 ) //If the user canceled.
         return ;

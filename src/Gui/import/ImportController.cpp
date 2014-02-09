@@ -43,7 +43,6 @@
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QPalette>
-#include <QSettings>
 #include <QTime>
 #include <QTimer>
 

@@ -77,12 +77,12 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
                                                              SettingValue::Clamped );
     audioChannel->setLimits( 2, 2 );
-    VLMC_CREATE_PROJECT_VAR( SettingValue::String, "general/ProjectName", unNamedProject,
+    VLMC_CREATE_PROJECT_VAR( SettingValue::String, "vlmc/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                 SettingValue::NotEmpty );
 
-    VLMC_CREATE_PRIVATE_PROJECT_STRING( "general/Workspace", "" );
+    VLMC_CREATE_PRIVATE_PROJECT_STRING( "vlmc/Workspace", "" );
 
     //We have to wait for the library to be loaded before loading the workflow
     connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
@@ -163,7 +163,7 @@ ProjectManager::loadProject( const QString& fileName )
 
     //Load settings first, as it contains some informations about the workspace.
     SettingsManager::getInstance()->load( root );
-    SettingsManager::getInstance()->setValue( "general/Workspace", fInfo.absolutePath(), SettingsManager::Project );
+    SettingsManager::getInstance()->setValue( "vlmc/Workspace", fInfo.absolutePath(), SettingsManager::Project );
     Timeline::getInstance()->renderer()->loadProject( root );
     Library::getInstance()->loadProject( root );
 }

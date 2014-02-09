@@ -42,8 +42,8 @@ RendererSettings::RendererSettings( bool shareOnInternet )
         m_ui.outputFileName->setVisible( false );
         m_ui.outputFileNameButton->setVisible( false );
         m_ui.outputFileName->setText(
-            VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
-            VLMC_PROJECT_GET_STRING( "general/ProjectName" ) + "-vlmc.mp4" );
+            VLMC_GET_STRING( "vlmc/TempFolderLocation" ) + "/" +
+            VLMC_PROJECT_GET_STRING( "vlmc/ProjectName" ) + "-vlmc.mp4" );
         setWindowTitle( tr("Export Settings: Publish on Internet") );
     }
 

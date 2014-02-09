@@ -65,7 +65,7 @@ Library::loadProject( const QDomElement& doc )
             if ( mrl.startsWith( Workspace::workspacePrefix ) == true )
             {
                 //Transforming the workspace://[path] into [project-path]/[path]
-                QString     projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+                QString     projectPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
                 mrl = projectPath + mrl.mid( Workspace::workspacePrefix.length() );
             }
             Media*  m = addMedia( mrl );

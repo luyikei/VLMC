@@ -53,7 +53,7 @@ Workspace::~Workspace()
 bool
 Workspace::copyToWorkspace( Media *media )
 {
-    if ( VLMC_PROJECT_GET_STRING("general/Workspace").length() == 0 )
+    if ( VLMC_PROJECT_GET_STRING("vlmc/Workspace").length() == 0 )
     {
         setError( "There is no current workspace. Please create a project first.");
         return false;
@@ -79,7 +79,7 @@ Workspace::copyToWorkspace( Media *media )
 void
 Workspace::startCopyWorker( Media *media )
 {
-    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
     const QString   dest = projectPath + '/' + media->fileInfo()->fileName();
 
     if ( QFile::exists( dest ) == true )
@@ -144,7 +144,7 @@ Workspace::copyTerminated( Media *media, QString dest )
 bool
 Workspace::isInProjectDir( const QFileInfo &fInfo )
 {
-    const QString       projectDir = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+    const QString       projectDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
 
     return ( projectDir.length() > 0 && fInfo.absolutePath().startsWith( projectDir ) );
 }
@@ -166,7 +166,7 @@ Workspace::isInProjectDir(const Media *media)
 QString
 Workspace::pathInProjectDir( const Media *media )
 {
-    const QString      projectDir = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+    const QString      projectDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
 
     return ( media->fileInfo()->absoluteFilePath().mid( projectDir.length() ) );
 }

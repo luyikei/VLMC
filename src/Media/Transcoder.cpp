@@ -43,7 +43,7 @@ Transcoder::Transcoder( Media* media ) :
 void
 Transcoder::transcodeToPs()
 {
-    QString             outputDir = VLMC_PROJECT_GET_STRING( "general/Workspace" );
+    QString             outputDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
     LibVLCpp::Media     *media = new LibVLCpp::Media( m_media->fileInfo()->absoluteFilePath() );
 
     if ( outputDir.length() == 0 )

@@ -70,7 +70,7 @@ VLMCmain( int argc, char **argv )
 
     QSettings s;
     LanguageHelper::getInstance()->languageChanged(
-            s.value( "general/VLMCLang", "default" ) );
+            s.value( "vlmc/VLMCLang", "default" ) );
 
 #if defined( Q_WS_WIN )
 

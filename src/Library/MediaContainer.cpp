@@ -207,7 +207,7 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
 
             //Handle workspace stuff.
             if ( media.startsWith( Workspace::workspacePrefix ) == true )
-                media = media.replace( Workspace::workspacePrefix, VLMC_PROJECT_GET_STRING( "general/Workspace" ) );
+                media = media.replace( Workspace::workspacePrefix, VLMC_PROJECT_GET_STRING( "vlmc/Workspace" ) );
             if ( m_medias.contains( media ) == true )
             {
                 Media*  m = m_medias[media];

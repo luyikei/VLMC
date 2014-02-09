@@ -263,25 +263,25 @@ MainWindow::initVlmcPreferences()
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ), actionCut_mode );
 
     //Setup VLMC Lang. Preferences...
-    VLMC_CREATE_PREFERENCE_LANGUAGE( "general/VLMCLang", "default",
+    VLMC_CREATE_PREFERENCE_LANGUAGE( "vlmc/VLMCLang", "default",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Language" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
 
-    SettingsManager::getInstance()->watchValue( "general/VLMCLang",
+    SettingsManager::getInstance()->watchValue( "vlmc/VLMCLang",
                                                 LanguageHelper::getInstance(),
                                                 SLOT( languageChanged( const QVariant& ) ),
                                                 SettingsManager::Vlmc );
 
     //Setup VLMC General Preferences...
-    VLMC_CREATE_PREFERENCE_BOOL( "general/ConfirmDeletion", true,
+    VLMC_CREATE_PREFERENCE_BOOL( "vlmc/ConfirmDeletion", true,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Ask for confirmation before deleting a clip from the timeline" ) );
 
-    VLMC_CREATE_PREFERENCE_PATH( "general/DefaultProjectLocation", QDir::homePath(),
+    VLMC_CREATE_PREFERENCE_PATH( "vlmc/DefaultProjectLocation", QDir::homePath(),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Project default location" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The default location where to store projects folders" ) );
 
-    VLMC_CREATE_PREFERENCE_PATH( "general/TempFolderLocation", QDir::tempPath() + "/VLMC/",
+    VLMC_CREATE_PREFERENCE_PATH( "vlmc/TempFolderLocation", QDir::tempPath() + "/VLMC/",
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Temporary folder" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The temporary folder used by VLMC to process videos." ) );
 
@@ -519,7 +519,7 @@ void
 MainWindow::createGlobalPreferences()
 {
     m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
-    m_globalPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Vlmc,
+    m_globalPreferences->addCategory( "vlmc", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Vlmc,
                                      QIcon( ":/images/vlmc" ) );
     m_globalPreferences->addCategory( "keyboard", QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), SettingsManager::Vlmc,
                                      QIcon( ":/images/keyboard" ) );
@@ -564,18 +564,18 @@ void
 MainWindow::checkFolders()
 {
     QDir dirUtil;
-    if ( !dirUtil.exists( VLMC_GET_STRING( "general/DefaultProjectLocation" ) ) )
-        dirUtil.mkdir( VLMC_GET_STRING( "general/DefaultProjectLocation" ) );
+    if ( !dirUtil.exists( VLMC_GET_STRING( "vlmc/DefaultProjectLocation" ) ) )
+        dirUtil.mkdir( VLMC_GET_STRING( "vlmc/DefaultProjectLocation" ) );
 
-    if ( !dirUtil.exists( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
-        dirUtil.mkdir( VLMC_GET_STRING( "general/TempFolderLocation" ) );
+    if ( !dirUtil.exists( VLMC_GET_STRING( "vlmc/TempFolderLocation" ) ) )
+        dirUtil.mkdir( VLMC_GET_STRING( "vlmc/TempFolderLocation" ) );
 }
 
 void
 MainWindow::clearTemporaryFiles()
 {
     QDir dirUtil;
-    if( dirUtil.cd( VLMC_GET_STRING( "general/TempFolderLocation" ) ) )
+    if( dirUtil.cd( VLMC_GET_STRING( "vlmc/TempFolderLocation" ) ) )
         foreach ( const QString &file, dirUtil.entryList( QDir::Files ) )
             dirUtil.remove( file );
 }
@@ -681,8 +681,8 @@ MainWindow::on_actionShare_On_Internet_triggered()
             return;
 
         checkFolders();
-        QString fileName = VLMC_GET_STRING( "general/TempFolderLocation" ) + "/" +
-                           VLMC_PROJECT_GET_STRING( "general/ProjectName" ) +
+        QString fileName = VLMC_GET_STRING( "vlmc/TempFolderLocation" ) + "/" +
+                           VLMC_PROJECT_GET_STRING( "vlmc/ProjectName" ) +
                            "-vlmc.mp4";
 
         loadGlobalProxySettings();
