@@ -38,11 +38,12 @@ SET(VLMC_SRCS
     Settings/SettingsManager.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
+    Tools/MemoryPool.hpp
     Tools/QSingleton.hpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
-	Tools/VlmcDebug.h
-	Tools/VlmcLogger.cpp
+    Tools/VlmcDebug.h
+    Tools/VlmcLogger.cpp
     Workflow/AudioClipWorkflow.cpp
     Workflow/ClipWorkflow.cpp
     Workflow/ClipHelper.cpp
