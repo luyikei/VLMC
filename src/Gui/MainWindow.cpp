@@ -84,6 +84,10 @@ MainWindow::MainWindow( QWidget *parent ) :
     //Creating the project manager so it can create all the project variables
     GUIProjectManager::getInstance();
 
+    //All preferences have been created: restore them:
+    loadVlmcPreferences();
+    SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
+
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
     createGlobalPreferences();
@@ -328,10 +332,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/RecentsProjects", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/ShowWizardStartup", true );
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
-
-    //Load saved preferences :
-    loadVlmcPreferences();
-    SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
 }
 
 void
