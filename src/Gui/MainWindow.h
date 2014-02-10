@@ -72,6 +72,7 @@ private:
     void        clearTemporaryFiles();
     void        initVlmcPreferences();
     void        loadVlmcPreferences();
+    void        loadVlmcPreferencesCategory( const QString& category );
     void        loadGlobalProxySettings();
     void        initToolbar();
     bool        saveSettings();
