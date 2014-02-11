@@ -277,7 +277,7 @@ MediaPlayer::isSeekable()
 void
 MediaPlayer::setDrawable( void* drawable )
 {
-#if defined ( Q_WS_MAC )
+#if defined ( Q_OS_MAC )
     libvlc_media_player_set_nsobject( m_internalPtr, drawable );
 #elif defined ( Q_OS_UNIX )
     libvlc_media_player_set_xwindow( m_internalPtr, reinterpret_cast<intptr_t>( drawable ) );

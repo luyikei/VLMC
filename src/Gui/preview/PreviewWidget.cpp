@@ -78,7 +78,7 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
 
     m_renderer->setRenderWidget( m_ui->renderWidget );
 
-#if defined ( Q_WS_MAC )
+#if defined ( Q_OS_MAC )
     /* Releases the NSView in the RenderWidget*/
     m_ui->renderWidget->release();
 #endif

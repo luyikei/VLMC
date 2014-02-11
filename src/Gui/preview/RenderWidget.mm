@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include <QtGlobal>
-#if defined( Q_WS_MAC ) && defined( QT_MAC_USE_COCOA )
+#if defined( Q_OS_MAC )
 
 #include "RenderWidget.h"
 #include <QPalette>

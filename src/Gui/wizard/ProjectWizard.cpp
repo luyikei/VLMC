@@ -37,7 +37,7 @@ ProjectWizard::ProjectWizard( QWidget* parent )
 {
     // Create Wizard
 
-#ifndef Q_WS_MAC
+#ifndef Q_OS_MAC
     setWizardStyle( QWizard::ModernStyle );
 #endif
 

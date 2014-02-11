@@ -26,7 +26,7 @@
 #include <QtGlobal>
 #include <QWidget>
 
-#if defined( Q_WS_MAC ) && defined( QT_MAC_USE_COCOA )
+#if defined( Q_OS_MAC )
 #include <QMacCocoaViewContainer>
 
 #ifdef __OBJC__
@@ -45,7 +45,7 @@ class RenderWidget : public QWidget
     Q_OBJECT
 
 public:
-#if defined( Q_WS_MAC ) && defined( QT_MAC_USE_COCOA )
+#if defined( Q_OS_MAC )
     RenderWidget( QWidget* parent = NULL );
     NativeNSViewRef id() const;
     void release();
