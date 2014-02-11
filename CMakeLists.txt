@@ -110,6 +110,11 @@ INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
 
 FIND_PACKAGE(frei0r REQUIRED)
 
+if(APPLE)
+    find_library(FOUNDATION_FRAMEWORK Foundation)
+    find_library(APPKIT_FRAMEWORK AppKit)
+endif()
+
 INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
 # Manually set Qt5 path for OSX installed using brew
