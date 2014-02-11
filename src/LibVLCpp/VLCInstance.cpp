@@ -36,7 +36,6 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
     argv << "--no-skip-frames"
         // << "--ffmpeg-debug", "3",
         << "--text-renderer" << "dummy"
-        << "--vout" << "dummy"
         << "--no-sub-autodetect-file"           // Don't detect subtitles
         // << "--no-audio"
         // << "--no-overlay",
