@@ -31,6 +31,8 @@
 
 #include "VLCpp.hpp"
 
+#include "vlc/vlc.h"
+
 struct  libvlc_media_player_t;
 struct  libvlc_event_t;
 struct  libvlc_event_manager_t;
@@ -83,6 +85,10 @@ namespace   LibVLCpp
         void                                setKeyInput( bool enabled );
         void                                setAudioOutput(const char* module);
         void                                disableTitle();
+        void                                setupVmemCallbacks( libvlc_video_lock_cb lock, libvlc_video_unlock_cb unlock,
+                                                        libvlc_video_display_cb display, void* data );
+        void                                setupVmem( const char* chroma, unsigned int width,
+                                                       unsigned int height, unsigned int pitch );
 
         /**
          * @brief configure the usage of waitForEvent.

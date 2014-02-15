@@ -360,6 +360,16 @@ void MediaPlayer::disableTitle()
     libvlc_media_player_set_video_title_display( *this, libvlc_position_disable, 0 );
 }
 
+void MediaPlayer::setupVmemCallbacks(libvlc_video_lock_cb lock, libvlc_video_unlock_cb unlock, libvlc_video_display_cb display, void *data)
+{
+    libvlc_video_set_callbacks( *this, lock, unlock, display, data );
+}
+
+void MediaPlayer::setupVmem(const char *chroma, unsigned int width, unsigned int height, unsigned int pitch)
+{
+    libvlc_video_set_format( *this, chroma, width, height, pitch );
+}
+
 void
 MediaPlayer::configureWaitForEvent( const QList<int> &toWait, const QList<int> &cancel,
                                     CheckEventCallback callback )
