@@ -46,16 +46,6 @@ PreviewWidget::PreviewWidget( QWidget *parent ) :
             w->setAttribute( Qt::WA_LayoutUsesWidgetRect );
     }
 
-    m_ui->rulerWidget->setFocusPolicy( Qt::NoFocus );
-
-    // Prepare and set the black background
-    m_ui->renderWidget->setAutoFillBackground( true );
-    m_videoPalette = m_ui->renderWidget->palette();
-    m_videoPalette.setColor( QPalette::Window, QColor( Qt::black ) );
-    m_ui->renderWidget->setPalette( m_videoPalette );
-
-    setAcceptDrops( false );
-
     connect( m_ui->rulerWidget, SIGNAL( timeChanged(int,int,int,int) ),
              m_ui->lcdNumber,   SLOT( setTime(int,int,int,int) ) );
 
