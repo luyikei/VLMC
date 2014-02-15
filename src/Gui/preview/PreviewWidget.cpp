@@ -122,16 +122,6 @@ PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReason reaso
 }
 
 void
-PreviewWidget::on_pushButtonStop_clicked()
-{
-    if ( m_previewStopped == false )
-    {
-        m_previewStopped = true;
-        m_renderer->stop();
-    }
-}
-
-void
 PreviewWidget::on_pushButtonPlay_clicked()
 {
     if ( m_previewStopped == true )
@@ -205,8 +195,17 @@ PreviewWidget::getGenericRenderer() const
 void
 PreviewWidget::stop()
 {
-    //Ugly but avoid code dupplication.
-    on_pushButtonStop_clicked();
+    if ( m_previewStopped == false )
+    {
+        m_previewStopped = true;
+        m_renderer->stop();
+    }
+}
+
+void
+PreviewWidget::on_pushButtonStop_clicked()
+{
+    stop();
 }
 
 void
