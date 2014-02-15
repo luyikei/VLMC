@@ -64,7 +64,6 @@ MetaDataManager::computingCompleted()
     QMutexLocker lock( m_computingMutex );
 
     Q_ASSERT_X(m_mediaPlayer, __FUNCTION__, "No media player instance. Event handling is probably broken");
-    m_mediaPlayer->stop();
     delete m_mediaPlayer;
     m_mediaPlayer = NULL;
     m_computeInProgress = false;
