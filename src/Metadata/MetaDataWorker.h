@@ -55,6 +55,9 @@ class MetaDataWorker : public QThread
 
     private:
         void                        metaDataAvailable();
+        static void                 vmemSetFormat( void* data, char* chroma, unsigned int* width,
+                                                   unsigned int* height, unsigned int* pitches, unsigned int* lines );
+        static void*                vmemLock( void* data, void **planes );
 //        static void                 lock( MetaDataWorker* metaDataWorker, quint8** pcm_buffer , unsigned int size );
 //        static void                 unlock( MetaDataWorker* metaDataWorker, quint8* pcm_buffer,
 //                                        unsigned int channels, unsigned int rate,
@@ -67,7 +70,7 @@ class MetaDataWorker : public QThread
     private:
         LibVLCpp::MediaPlayer*      m_mediaPlayer;
         Media*                      m_media;
-
+        QImage*                     m_snapshot;
         unsigned char*              m_audioBuffer;
 
 //    private slots:
@@ -75,6 +78,12 @@ class MetaDataWorker : public QThread
 
     signals:
         void    computed();
+        /**
+         * @brief snapshotReady Signals that a media now has a snapshot available
+         * @warning             This gives the ownership of the snapshot to the recipient.
+         *                      Memory will *NOT* be released by the MetaDataWorker
+         */
+        void    snapshotReady( const QImage* snapshot );
         void    failed( Media* media );
 };
 

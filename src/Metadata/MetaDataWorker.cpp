@@ -40,6 +40,7 @@
 MetaDataWorker::MetaDataWorker( LibVLCpp::MediaPlayer* mediaPlayer, Media* media ) :
         m_mediaPlayer( mediaPlayer ),
         m_media( media ),
+        m_snapshot( NULL ),
         m_audioBuffer( NULL )
 {
     connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
@@ -66,11 +67,16 @@ MetaDataWorker::run()
 
     m_mediaPlayer->configureWaitForEvent( libvlc_MediaPlayerTimeChanged, cancel, &checkEvent );
 
-    m_media->vlcMedia()->addOption( ":vout=dummy" );
+    m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
+
+    m_mediaPlayer->setupVmemCallbacks( vmemLock, NULL, NULL, this );
+    m_mediaPlayer->setupVmem( "RV32", m_snapshot->width(), m_snapshot->height(),
+                              m_snapshot->bytesPerLine() );
     // In VLC 2.x we can't set the volume before the playback has started
     // so just switch off the audio-output in any case.
     m_mediaPlayer->setAudioOutput( "dummy" );
     m_mediaPlayer->setMedia( m_media->vlcMedia() );
+
 
     m_mediaPlayer->play();
     LibVLCpp::MediaPlayer::EventWaitResult res = m_mediaPlayer->waitForEvent( 3000 );
@@ -149,6 +155,14 @@ MetaDataWorker::metaDataAvailable()
     emit computed();
 }
 
+void*
+MetaDataWorker::vmemLock(void *data, void **planes)
+{
+    MetaDataWorker* self = reinterpret_cast<MetaDataWorker*>( data );
+    *planes = self->m_snapshot->bits();
+    return self->m_snapshot;
+}
+
 #ifdef WITH_GUI
 void
 MetaDataWorker::computeSnapshot()
@@ -172,18 +186,11 @@ MetaDataWorker::computeSnapshot()
         emit failed( m_media );
         return ;
     }
-
-    QTemporaryFile tmp;
-    tmp.open();
-    // the snapshot file will be removed when processed by the media.
-    tmp.setAutoRemove( false );
-
-    // Although this function is synchrone, we have to be in the main thread to
-    // handle a QPixmap, hence the QueuedConnection
-    connect( m_mediaPlayer, SIGNAL( snapshotTaken( const char* ) ),
-             m_media, SLOT( snapshotReady( const char* ) ),
-             Qt::QueuedConnection );
-    m_mediaPlayer->takeSnapshot( tmp.fileName().toUtf8().constData(), 0, 0 );
+    m_mediaPlayer->stop();
+    // Since the snapshot is a QPixmap, we have to trigger this in the GUI thread
+    connect( this, SIGNAL( snapshotReady(const QImage*) ),
+             m_media, SLOT( snapshotReady(const QImage*) ), Qt::QueuedConnection );
+    emit snapshotReady( m_snapshot );
     emit computed();
 }
 #endif

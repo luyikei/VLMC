@@ -25,45 +25,27 @@
 
 QPixmap*        GUIMedia::defaultSnapshot = NULL;
 
-GUIMedia::GUIMedia() :
-    m_snapshot( NULL )
+GUIMedia::GUIMedia()
 {
 }
 
-void GUIMedia::snapshotReady(const char *fileName)
+void GUIMedia::snapshotReady(const QImage* snapshot)
 {
-    QFile   tmp( fileName );
-
-    QPixmap* pixmap = new QPixmap( fileName );
-    if ( pixmap->isNull() )
-        delete pixmap;
-    else
-    {
-        setSnapshot( pixmap );
+    m_snapshot = QPixmap::fromImage( *snapshot );
+    if ( m_snapshot.isNull() == false )
         emit snapshotComputed( qobject_cast<const Media*>( this ) );
-    }
-    tmp.remove();
+    delete snapshot;
 }
 
 GUIMedia::~GUIMedia()
 {
-    if ( m_snapshot )
-        delete m_snapshot;
-}
-
-void
-GUIMedia::setSnapshot( QPixmap* snapshot )
-{
-    if ( m_snapshot != NULL )
-        delete m_snapshot;
-    m_snapshot = snapshot;
 }
 
 const QPixmap&
 GUIMedia::snapshot() const
 {
-    if ( m_snapshot != NULL )
-        return *m_snapshot;
+    if ( hasSnapshot() )
+        return m_snapshot;
     if ( GUIMedia::defaultSnapshot == NULL )
         GUIMedia::defaultSnapshot = new QPixmap( ":/images/vlmc" );
     return *GUIMedia::defaultSnapshot;
@@ -72,5 +54,5 @@ GUIMedia::snapshot() const
 bool
 GUIMedia::hasSnapshot() const
 {
-    return ( m_snapshot != NULL );
+    return !m_snapshot.isNull();
 }

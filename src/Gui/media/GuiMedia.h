@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QPixmap>
 
+class   QImage;
 class   QPixmap;
 class   Media;
 
@@ -35,7 +36,6 @@ class GUIMedia : public QObject
 
 public:
     ~GUIMedia();
-    void                        setSnapshot( QPixmap* snapshot );
     const QPixmap               &snapshot() const;
     bool                        hasSnapshot() const;
 
@@ -44,11 +44,11 @@ protected:
     GUIMedia();
 
     static QPixmap*             defaultSnapshot;
-    QPixmap*                    m_snapshot;
+    QPixmap                     m_snapshot;
 
 
 public slots:
-    void                        snapshotReady( const char *fileName );
+    void                        snapshotReady(const QImage *snapshot );
 
 signals:
     void                        snapshotComputed( const Media* );
