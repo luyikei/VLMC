@@ -29,6 +29,7 @@
 #include "Clip.h"
 
 #include <QMessageBox>
+#include <QLayout>
 
 PreviewWidget::PreviewWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -36,6 +37,14 @@ PreviewWidget::PreviewWidget( QWidget *parent ) :
     m_previewStopped( true )
 {
     m_ui->setupUi( this );
+
+    // Prevent buttons overlap on MacOS
+    for (int i = 0; i < m_ui->toolsWidget->layout()->count(); ++i)
+    {
+        QWidget* w = m_ui->toolsWidget->layout()->itemAt( i )->widget();
+        if ( w != NULL )
+            w->setAttribute( Qt::WA_LayoutUsesWidgetRect );
+    }
 
     m_ui->rulerWidget->setFocusPolicy( Qt::NoFocus );
 
