@@ -627,7 +627,7 @@ TrackWorkflow::stopFrameComputing()
         {
             return ;
         }
-        cw->stopRenderer();
+        cw->stop();
         ++it;
     }
 }

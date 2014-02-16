@@ -149,8 +149,8 @@ class   ClipWorkflow : public EffectUser
         }
 
         /**
-            \brief  Stop this workflow.
-        */
+         *  \brief  Stop this workflow.
+         */
         void                    stop();
         /**
          *  \brief  Set the rendering position
@@ -190,13 +190,6 @@ class   ClipWorkflow : public EffectUser
          *  set back to false
          */
         bool                    isResyncRequired();
-
-        /**
-         *  \brief              Stop the renderer part of the ClipWorkflow
-         *
-         *  IE. just stop the VLC thread, and do not flush anything.
-         */
-        void                    stopRenderer();
 
         void                    save( QXmlStreamWriter& project ) const;
         virtual qint64          length() const;

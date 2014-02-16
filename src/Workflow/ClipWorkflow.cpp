@@ -120,14 +120,6 @@ ClipWorkflow::clipEndReached()
 void
 ClipWorkflow::stop()
 {
-    stopRenderer();
-    m_isRendering = false;
-    releasePrealocated();
-}
-
-void
-ClipWorkflow::stopRenderer()
-{
     QWriteLocker    lockState( m_stateLock );
 
     //Let's make sure the ClipWorkflow isn't beeing stopped from another thread.
@@ -141,6 +133,7 @@ ClipWorkflow::stopRenderer()
         if ( m_state != Error )
             m_state = Stopped;
         flushComputedBuffers();
+        m_isRendering = false;
 
         m_initWaitCond->wakeAll();
         m_renderWaitCond->wakeAll();
