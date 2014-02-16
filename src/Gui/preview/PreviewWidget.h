@@ -47,7 +47,6 @@ public:
 private:
     Ui::PreviewWidget*      m_ui;
     GenericRenderer*        m_renderer;
-    bool                    m_endReached;
     bool                    m_previewStopped;
 
 protected:
