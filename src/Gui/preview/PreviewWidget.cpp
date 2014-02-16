@@ -114,7 +114,7 @@ PreviewWidget::changeEvent( QEvent *e )
 void
 PreviewWidget::frameChanged( qint64 currentFrame, Vlmc::FrameChangedReason reason )
 {
-    if ( m_previewStopped == false && reason != Vlmc::PreviewCursor )
+    if ( reason != Vlmc::PreviewCursor )
     {
         m_ui->rulerWidget->setFrame( currentFrame, false );
     }
