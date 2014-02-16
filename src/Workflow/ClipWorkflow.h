@@ -159,15 +159,6 @@ class   ClipWorkflow : public EffectUser
          */
         virtual void            setTime( qint64 time );
 
-        /**
-         *  This method must be used to change the state of the ClipWorkflow
-         *  from outside its render loop, otherwise, it may lead to deadlocks.
-         *  No additional operations will be executed (for example, if setting
-         *  the new state to stop, the media player won't be stopped.)
-         *  This is mainly to change the behaviour of the render loop.
-         */
-        void                    queryStateChange( State newState );
-
         bool                    waitForCompleteInit();
 
         virtual void*           getLockCallback() const = 0;
