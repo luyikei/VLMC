@@ -27,6 +27,7 @@
 #include "SettingsManager.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
+#include "VlmcDebug.h"
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>
@@ -131,7 +132,12 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
     {
-        m_renderWaitCond->wait( m_renderLock );
+        if ( m_renderWaitCond->wait( m_renderLock, 50 ) == false )
+        {
+            vlmcWarning() << "Clip workflow" << m_clipHelper->uuid() << "Timed out while waiting for a frame";
+            errorEncountered();
+            return NULL;
+        }
         if ( shouldRender() == false )
             return NULL;
     }

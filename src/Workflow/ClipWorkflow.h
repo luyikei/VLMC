@@ -271,6 +271,8 @@ class   ClipWorkflow : public EffectUser
         void                    mediaPlayerPaused();
         void                    mediaPlayerUnpaused();
         void                    resyncClipWorkflow();
+
+    protected slots:
         void                    errorEncountered();
 
     signals:
