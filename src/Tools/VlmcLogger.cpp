@@ -39,6 +39,11 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
         // Purposedly destroying the setting value, as we need to use the manager for other operations.
         //FIXME: Actually I'm not sure for setting the value since this is a private variable.
     }
+    {
+        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/VlcLogLevel", (int)VlmcLogger::Quiet,
+                                                        "", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
+        logLevel->setLimits((int)Debug, (int)Verbose);
+    }
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
         m_currentLogLevel = VlmcLogger::Debug;
@@ -61,6 +66,27 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
         else
         {
             m_logFile = fopen(logFile.toLocal8Bit().data(), "w");
+        }
+    }
+
+    pos = args.indexOf( QRegExp( "--vlcverbose=.*" ) );
+    if ( pos > 0 )
+    {
+        QString arg = args[pos];
+        QString vlcLogLevelStr = arg.mid( 13 );
+
+        if ( vlcLogLevelStr.length() <= 0 )
+            vlmcWarning() << tr("Invalid value supplied for argument --vlcverbose" );
+        else
+        {
+            bool ok = false;
+            int vlcLogLevel = vlcLogLevelStr.toInt( &ok );
+            if (vlcLogLevel >= 2)
+                settingsManager->setValue( "private/VlcLogLevel", VlmcLogger::Debug, SettingsManager::Vlmc );
+            else if (vlcLogLevel == 1)
+                settingsManager->setValue( "private/VlcLogLevel", VlmcLogger::Verbose, SettingsManager::Vlmc );
+            else
+                vlmcWarning() << tr("Invalid value supplied for argument --vlcverbose" );
         }
     }
 

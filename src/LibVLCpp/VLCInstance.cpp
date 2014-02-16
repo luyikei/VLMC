@@ -41,7 +41,7 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         // << "--no-overlay",
         << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
 
-    int     debugLevel = VLMC_GET_INT( "private/LogLevel" );
+    int     debugLevel = VLMC_GET_INT( "private/VlcLogLevel" );
     if ( debugLevel == VlmcLogger::Debug )
         argv << "-vv";
     else if ( debugLevel == VlmcLogger::Verbose )
