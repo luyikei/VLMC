@@ -102,6 +102,9 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
              this, SLOT( __effectMoved( EffectHelper*, qint64) ) );
     connect( cw, SIGNAL( effectRemoved( QUuid ) ),
              this, SLOT( __effectRemoved( QUuid ) ) );
+    // For errors, we don't want this to be called directly from a VLC thread, so we queue it.
+    connect( cw, SIGNAL( error( ClipWorkflow* ) ),
+             this, SLOT( clipWorkflowFailure( ClipWorkflow* ) ), Qt::QueuedConnection );
     connect( cw->getClipHelper(), SIGNAL( destroyed( QUuid ) ),
              this, SLOT( clipDestroyed( QUuid ) ) );
     emit clipAdded( this, cw->getClipHelper(), start );
@@ -205,7 +208,8 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     else if ( state == ClipWorkflow::EndReached ||
               state == ClipWorkflow::Error )
     {
-        //The stopClipWorkflow() method will take care of that.
+        //The stopClipWorkflow() method will take care of EndReached state.
+        // When a ClipWorkflow is in error state, we don't want to do anything
     }
     else
     {
@@ -404,6 +408,11 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
         }
         ++it;
     }
+}
+
+void TrackWorkflow::clipWorkflowFailure(ClipWorkflow *cw)
+{
+    cw->stop();
 }
 
 Clip*

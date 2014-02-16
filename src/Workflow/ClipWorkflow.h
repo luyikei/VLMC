@@ -274,7 +274,7 @@ class   ClipWorkflow : public EffectUser
         void                    errorEncountered();
 
     signals:
-        void                    error();
+        void                    error( ClipWorkflow* );
 };
 
 #endif // CLIPWORKFLOW_H

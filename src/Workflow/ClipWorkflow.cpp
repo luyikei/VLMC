@@ -39,7 +39,6 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
                 m_clipHelper( ch ),
                 m_state( ClipWorkflow::Stopped )
 {
-    connect( this, SIGNAL( error() ), ch, SIGNAL( error() ) );
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new QWaitCondition;
     m_renderLock = new QMutex;
@@ -139,7 +138,8 @@ ClipWorkflow::stopRenderer()
         MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
         m_mediaPlayer = NULL;
         delete m_vlcMedia;
-        m_state = Stopped;
+        if ( m_state != Error )
+            m_state = Stopped;
         flushComputedBuffers();
 
         m_initWaitCond->wakeAll();
@@ -286,9 +286,8 @@ ClipWorkflow::isResyncRequired()
 void
 ClipWorkflow::errorEncountered()
 {
-    stopRenderer();
     m_state = Error;
-    emit error();
+    emit error( this );
 }
 
 bool

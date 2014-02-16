@@ -137,6 +137,7 @@ class   TrackWorkflow : public EffectUser
         void                __effectRemoved( const QUuid& );
         void                __effectMoved( EffectHelper*, qint64 );
         void                clipDestroyed( const QUuid &uuid );
+        void                clipWorkflowFailure( ClipWorkflow* cw );
 
     signals:
         void                lengthChanged( qint64 newLength );

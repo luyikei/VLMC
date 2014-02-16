@@ -59,9 +59,6 @@ class   ClipHelper : public Workflow::Helper
 
     private slots:
         void        clipDestroyed();
-
-    signals:
-        void        error();
 };
 
 #endif // CLIPHELPER_H
