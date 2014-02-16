@@ -87,7 +87,6 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
     connect( m_renderer,     SIGNAL( playing() ),               this,       SLOT( videoPlaying() ) );
     connect( m_renderer,     SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              this, SLOT( frameChanged(qint64, Vlmc::FrameChangedReason ) ) );
-    connect( m_renderer,     SIGNAL( endReached() ),            this,       SLOT( endReached() ) );
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
     connect( m_renderer,     SIGNAL( error() ),                 this,       SLOT( error() ) );
@@ -162,17 +161,6 @@ PreviewWidget::updateVolume( int volume )
 }
 
 void
-PreviewWidget::endReached()
-{
-    m_previewStopped = true;
-
-    m_ui->pushButtonPlay->setIcon( QIcon( ":/images/play" ) );
-
-    // Set the black background
-    m_ui->renderWidget->setPalette( m_videoPalette );
-}
-
-void
 PreviewWidget::on_pushButtonNextFrame_clicked()
 {
     if ( m_previewStopped == false )
@@ -199,6 +187,7 @@ PreviewWidget::stop()
     {
         m_previewStopped = true;
         m_renderer->stop();
+        m_ui->pushButtonPlay->setIcon( QIcon( ":/images/play" ) );
     }
 }
 

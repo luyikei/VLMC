@@ -74,7 +74,7 @@ WorkflowRenderer::initializeRenderer()
     connect( m_mediaPlayer, SIGNAL( paused() ),     this,   SIGNAL( paused() ), Qt::DirectConnection );
     connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
     //FIXME:: check if this doesn't require Qt::QueuedConnection
-    connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( endReached() ) );
+    connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( stopped() ) );
 }
 
 WorkflowRenderer::~WorkflowRenderer()
@@ -452,8 +452,8 @@ WorkflowRenderer::loadProject( const QDomElement &project )
 void
 WorkflowRenderer::__endReached()
 {
+    //FIXME: Is this necessary?!
     stop();
-    emit endReached();
 }
 
 void

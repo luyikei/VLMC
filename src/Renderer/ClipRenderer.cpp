@@ -283,5 +283,4 @@ ClipRenderer::__endReached()
     m_isRendering = false;
     if ( m_mediaChanged == true )
         m_clipLoaded = false;
-    emit endReached();
 }

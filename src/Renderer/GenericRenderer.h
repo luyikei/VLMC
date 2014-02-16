@@ -226,14 +226,6 @@ signals:
     void                            frameChanged( qint64 newFrame,
                                                 Vlmc::FrameChangedReason reason );
     /**
-     *  \brief  Emmited when render end is reached.
-     *
-     *  This should be emmited just before stopped
-     *  \sa     stopped();
-     */
-    void                            endReached();
-
-    /**
      *  \brief  Emited when something went wrong with the render.
      *
      *  The cause may vary depending on the underlying renderer, though this will

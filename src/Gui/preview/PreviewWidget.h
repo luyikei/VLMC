@@ -49,7 +49,6 @@ private:
     GenericRenderer*        m_renderer;
     bool                    m_endReached;
     bool                    m_previewStopped;
-    QPalette                m_videoPalette;
 
 protected:
     virtual void    changeEvent( QEvent *e );
@@ -68,7 +67,6 @@ private slots:
     void            videoStopped();
     void            volumeChanged();
     void            updateVolume( int );
-    void            endReached();
     void            markerStartClicked();
     void            markerStopClicked();
     void            createNewClipFromMarkers();
