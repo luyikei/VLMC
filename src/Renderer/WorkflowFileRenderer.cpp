@@ -85,7 +85,7 @@ WorkflowFileRenderer::stop()
 }
 
 void
-WorkflowFileRenderer::__endReached()
+WorkflowFileRenderer::endReached()
 {
     stop();
     emit renderComplete();

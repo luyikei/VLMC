@@ -65,7 +65,7 @@ private slots:
     void                        stop();
     void                        __frameChanged( qint64 frame,
                                                 Vlmc::FrameChangedReason reason );
-    void                        __endReached();
+    void                        endReached();
 
 signals:
     void                        imageUpdated( const uchar* image );
