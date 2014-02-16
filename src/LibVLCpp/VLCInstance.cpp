@@ -25,8 +25,11 @@
 
 #include "SettingsManager.h"
 #include "VlmcLogger.h"
+#include "VlmcDebug.h"
 
 #include <QVector>
+
+#include <cstdio>
 
 using namespace LibVLCpp;
 
@@ -48,6 +51,7 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         argv << "-v";
 
     m_internalPtr = libvlc_new( argv.count(), &argv.front() );
+    libvlc_log_set( *this, vlcLogHook, this );
     Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",
                 "Can't launch VLMC without a valid LibVLC instance. Please check your VLC installation" );
 }
@@ -55,4 +59,26 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
 Instance::~Instance()
 {
     libvlc_release( m_internalPtr );
+}
+
+void Instance::vlcLogHook(void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args)
+{
+    Q_UNUSED( data )
+    Q_UNUSED( ctx )
+
+    char* msg;
+    if (vasprintf( &msg, fmt, args ) < 0 )
+        return;
+    if ( level <= LIBVLC_NOTICE )
+        vlmcDebug() << "[VLC]" << msg;
+    else if ( level == LIBVLC_WARNING )
+        vlmcWarning() << "[VLC]" << msg;
+    else if ( level == LIBVLC_ERROR )
+        vlmcCritical() << "[VLC]" << msg;
+    else
+    {
+        vlmcCritical() << "Unexpected logging level for VLC log" << level;
+        vlmcCritical() << "[VLC]" << msg;
+    }
+    free( msg );
 }

@@ -43,8 +43,9 @@ namespace LibVLCpp
     private:
         Instance( QObject* parent = NULL );
         Instance( int argc, const char** argv );
-
         ~Instance();
+
+        static void     vlcLogHook( void* data, int level, const libvlc_log_t* ctx, const char* fmt, va_list args );
 
     private:
         friend class    Singleton<Instance>;
