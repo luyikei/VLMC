@@ -452,7 +452,6 @@ WorkflowRenderer::loadProject( const QDomElement &project )
 void
 WorkflowRenderer::__endReached()
 {
-    //FIXME: Is this necessary?!
     stop();
 }
 

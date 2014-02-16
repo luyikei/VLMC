@@ -186,10 +186,6 @@ protected:
 
 public slots:
     /**
-     *  \brief      This SLOT has to be called when the render ends.
-     */
-    virtual void                    __endReached() = 0;
-    /**
      *  \brief      This SLOT will be called when the time cursor has changed.
      *
      *  This mainly means that the current rendered frame should change.

@@ -317,7 +317,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \brief          Called when the workflow end is reached.
          *  \sa             stop();
          */
-        void                __endReached();
+        virtual void        __endReached();
 
     private slots:
         /**

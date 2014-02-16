@@ -90,7 +90,6 @@ public slots:
      *  \sa         frameChanged();
      */
     void                    __timeChanged( qint64 time );
-    void                    __endReached();
     void                    __videoStopped();
 };
 

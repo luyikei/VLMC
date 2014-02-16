@@ -46,7 +46,6 @@ ClipRenderer::ClipRenderer() :
     connect( m_mediaPlayer,     SIGNAL( playing() ),            this,   SIGNAL( playing() ) );
     connect( m_mediaPlayer,     SIGNAL( volumeChanged() ),      this,   SIGNAL( volumeChanged() ) );
     connect( m_mediaPlayer,     SIGNAL( timeChanged( qint64 ) ),this,   SLOT( __timeChanged( qint64 ) ) );
-    connect( m_mediaPlayer,     SIGNAL( endReached() ),         this,   SLOT( __endReached() ) );
 }
 
 ClipRenderer::~ClipRenderer()
@@ -256,6 +255,9 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
 void
 ClipRenderer::__videoStopped()
 {
+    m_isRendering = false;
+    if ( m_mediaChanged == true )
+        m_clipLoaded = false;
     emit frameChanged( 0, Vlmc::Renderer );
     emit stopped();
 }
@@ -268,19 +270,8 @@ ClipRenderer::__timeChanged( qint64 time )
         fps = m_selectedClip->getMedia()->fps();
     qint64 f = qRound64( (qreal)time / 1000.0 * fps );
     if ( f >= m_end )
-    {
-        __endReached();
         return ;
-    }
     f = f - m_begin;
     emit frameChanged( f, Vlmc::Renderer );
 }
 
-void
-ClipRenderer::__endReached()
-{
-    m_mediaPlayer->stop();
-    m_isRendering = false;
-    if ( m_mediaChanged == true )
-        m_clipLoaded = false;
-}
