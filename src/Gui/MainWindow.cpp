@@ -39,6 +39,7 @@
 #include "VlmcLogger.h"
 
 #include "EffectsEngine/EffectsEngine.h"
+#include "IBackend.h"
 #include "MainWorkflow.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnInternet.h"
@@ -64,9 +65,6 @@
 #include "SettingsManager.h"
 #include "LanguageHelper.h"
 
-/* VLCpp */
-#include "VLCInstance.h"
-
 MainWindow::MainWindow( QWidget *parent ) :
     QMainWindow( parent ), m_fileRenderer( NULL )
 {
@@ -74,9 +72,6 @@ MainWindow::MainWindow( QWidget *parent ) :
 
     //We only install message handler here cause it uses configuration.
     VlmcLogger::getInstance()->setup();
-
-    //VLC Instance:
-    LibVLCpp::Instance::getInstance();
 
     //Preferences
     initVlmcPreferences();
@@ -150,10 +145,10 @@ MainWindow::MainWindow( QWidget *parent ) :
 
 MainWindow::~MainWindow()
 {
+    delete m_backend;
     if ( m_fileRenderer )
         delete m_fileRenderer;
     delete m_importController;
-    LibVLCpp::Instance::destroyInstance();
 }
 
 void
@@ -442,7 +437,8 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_renderer = new WorkflowRenderer();
+    m_backend = Backend::getBackend();
+    m_renderer = new WorkflowRenderer( m_backend );
     m_renderer->initializeRenderer();
     m_timeline = new Timeline( m_renderer, this );
     m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
@@ -518,6 +514,7 @@ MainWindow::setupProjectPreview()
 
     m_projectPreview = new PreviewWidget( dockedWidget );
     m_projectPreview->setRenderer( m_renderer );
+    m_projectPreview->setClipEdition( false );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
     DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_projectPreview, Qt::TopDockWidgetArea );
@@ -638,7 +635,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer();
+    m_fileRenderer = new WorkflowFileRenderer( m_backend );
 
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );

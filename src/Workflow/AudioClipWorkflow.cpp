@@ -1,5 +1,5 @@
 /*****************************************************************************
- * AudioClipWorkflow.cpp : Clip workflow. Will extract a single frame from a VLCMedia
+ * AudioClipWorkflow.cpp : Clip workflow. Will extract audio samples using ISourceRenderer
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -22,8 +22,8 @@
 
 #include "AudioClipWorkflow.h"
 
-#include "VLCMedia.h"
 #include "VlmcDebug.h"
+#include "ISourceRenderer.h"
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>
@@ -69,18 +69,6 @@ AudioClipWorkflow::releasePrealocated()
     }
 }
 
-void*
-AudioClipWorkflow::getLockCallback() const
-{
-    return reinterpret_cast<void*>( &AudioClipWorkflow::lock );
-}
-
-void*
-AudioClipWorkflow::getUnlockCallback() const
-{
-    return reinterpret_cast<void*>( &AudioClipWorkflow::unlock );
-}
-
 Workflow::OutputBuffer*
 AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
 {
@@ -113,29 +101,12 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
     return buff;
 }
 
-QString
-AudioClipWorkflow::createSoutChain() const
+void AudioClipWorkflow::initializeInternals()
 {
-    QString chain = ":sout=#transcode{acodec=f32l,"
-                    "samplerate=48000,channels=2,no-hurry-up}:smem{";
-    if ( m_fullSpeedRender == false )
-        chain += "time-sync";
-    else
-        chain += "no-time-sync";
-    chain += ",audio-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
-            % ",audio-prerender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
-            % ",audio-postrender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
-            % '}';
-    return chain;
-}
-
-void AudioClipWorkflow::initializeVlcOutput()
-{
-    preallocate();
-    m_vlcMedia->addOption(":no-sout-video");
-    m_vlcMedia->addOption(":no-video");
+    m_renderer->setOutputAudioCodec( "f32l" );
+    m_renderer->setOutputAudioNumberChannels( 2 );
+    m_renderer->setOutputAudioSampleRate( 48000 );
+    m_renderer->enableAudioOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
 }
 
 Workflow::AudioSample*
@@ -148,8 +119,9 @@ AudioClipWorkflow::createBuffer( size_t size )
 }
 
 void
-AudioClipWorkflow::lock( AudioClipWorkflow *cw, quint8 **pcm_buffer , size_t size )
+AudioClipWorkflow::lock( void *data, quint8 **pcm_buffer , size_t size )
 {
+    AudioClipWorkflow* cw = reinterpret_cast<AudioClipWorkflow*>( data );
     cw->m_renderLock->lock();
 
     Workflow::AudioSample     *as = NULL;
@@ -169,16 +141,16 @@ AudioClipWorkflow::lock( AudioClipWorkflow *cw, quint8 **pcm_buffer , size_t siz
 }
 
 void
-AudioClipWorkflow::unlock( AudioClipWorkflow *cw, quint8 *pcm_buffer,
-                                      quint32 channels, quint32 rate,
-                                      quint32 nb_samples, quint32 bits_per_sample,
-                                      size_t size, qint64 pts )
+AudioClipWorkflow::unlock( void* data, uint8_t *pcm_buffer, unsigned int channels,
+                            unsigned int rate, unsigned int nb_samples, unsigned int bits_per_sample,
+                            size_t size, int64_t pts )
 {
     Q_UNUSED( pcm_buffer );
     Q_UNUSED( rate );
     Q_UNUSED( bits_per_sample );
     Q_UNUSED( size );
 
+    AudioClipWorkflow* cw = reinterpret_cast<AudioClipWorkflow*>( data );
     pts -= cw->m_ptsOffset;
     Workflow::AudioSample* as = cw->m_computedBuffers.last();
     if ( as->buff != NULL )

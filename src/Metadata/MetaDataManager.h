@@ -25,8 +25,9 @@
 
 #include "Singleton.hpp"
 
-#include <QObject>
+#include <QThread>
 #include <QQueue>
+
 class   QMutex;
 class   Media;
 namespace LibVLCpp
@@ -34,7 +35,7 @@ namespace LibVLCpp
     class   MediaPlayer;
 }
 
-class MetaDataManager : public QObject, public Singleton<MetaDataManager>
+class MetaDataManager : public QThread, public Singleton<MetaDataManager>
 {
     Q_OBJECT
     Q_DISABLE_COPY( MetaDataManager );
@@ -45,7 +46,8 @@ class MetaDataManager : public QObject, public Singleton<MetaDataManager>
         MetaDataManager();
         ~MetaDataManager();
 
-        void                    launchComputing( Media *media );
+    protected:
+        virtual void            run();
 
     private:
         QMutex                  *m_computingMutex;
@@ -53,11 +55,6 @@ class MetaDataManager : public QObject, public Singleton<MetaDataManager>
         bool                    m_computeInProgress;
         LibVLCpp::MediaPlayer   *m_mediaPlayer;
         friend class            Singleton<MetaDataManager>;
-
-    private slots:
-        void                    computingCompleted();
-        void                    computingFailed( Media* media );
-        void                    mediaDestroyed( QObject* sender );
 
     signals:
         void                    failedToCompute( Media* );

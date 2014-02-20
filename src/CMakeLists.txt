@@ -6,6 +6,19 @@
 
 SET(VLMC_SRCS
     Commands/Commands.cpp
+	Backend/IBackend.h
+	Backend/ISourceRenderer.h
+	Backend/ISource.h
+	Backend/VLC/EventWaiter.cpp
+	Backend/VLC/VLCBackend.cpp
+	Backend/VLC/VLCSourceRenderer.cpp
+	Backend/VLC/VLCVmemRenderer.cpp
+	Backend/VLC/VLCSource.cpp
+	Backend/VLC/VLCMemorySource.cpp
+	Backend/VLC/LibVLCpp/VLCInstance.cpp
+	Backend/VLC/LibVLCpp/VLCMedia.cpp
+	Backend/VLC/LibVLCpp/VLCMediaPlayer.cpp
+	Backend/VLC/LibVLCpp/VLCpp.hpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectUser.cpp
@@ -14,14 +27,9 @@ SET(VLMC_SRCS
     EffectsEngine/EffectSettingValue.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
-    LibVLCpp/VLCInstance.cpp
-    LibVLCpp/VLCMedia.cpp
-    LibVLCpp/VLCMediaPlayer.cpp
-    LibVLCpp/VLCpp.hpp
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
-    Metadata/MetaDataWorker.cpp
     Project/ProjectManager.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
@@ -40,6 +48,7 @@ SET(VLMC_SRCS
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
     Tools/QSingleton.hpp
+	Tools/RendererEventWatcher.cpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h
@@ -76,6 +85,8 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
+  Backend
+  Backend/VLC/LibVLCpp
   Commands
   EffectsEngine
   Settings

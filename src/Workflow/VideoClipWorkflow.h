@@ -37,15 +37,12 @@ class   VideoClipWorkflow : public ClipWorkflow
     public:
         VideoClipWorkflow( ClipHelper* ch );
         ~VideoClipWorkflow();
-        void                    *getLockCallback() const;
-        void                    *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
 
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30
 
     protected:
-        virtual void            initializeVlcOutput();
-        virtual QString         createSoutChain() const;
+        virtual void            initializeInternals();
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         virtual void            flushComputedBuffers();
@@ -55,17 +52,15 @@ class   VideoClipWorkflow : public ClipWorkflow
          *  This also computes m_width and m_height variables.
          *  This HAS to be called before createSoutChain()
          */
-        void                    preallocate();
+        virtual void            preallocate();
         virtual void            releasePrealocated();
 
     private:
         QQueue<Workflow::Frame*>    m_computedBuffers;
         QQueue<Workflow::Frame*>    m_availableBuffers;
-        static void                 lock(VideoClipWorkflow* clipWorkflow, void** pp_ret,
-                                            size_t size );
-        static void                 unlock(VideoClipWorkflow* clipWorkflow, void* buffer,
-                                            int width, int height, int bpp, size_t size,
-                                            qint64 pts );
+        static void                 lock( void* data, uint8_t** pp_ret, size_t size );
+        static void                 unlock(void *data, uint8_t* buffer, int width,
+                                           int height, int bpp, size_t size, int64_t pts );
         Workflow::Frame             *m_lastReturnedBuffer;
 };
 

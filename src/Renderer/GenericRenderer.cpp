@@ -25,23 +25,29 @@
 #include "RenderWidget.h"
 #include <QtGlobal>
 
-GenericRenderer::GenericRenderer() :
-        m_paused( false )
+GenericRenderer::GenericRenderer()
+    : m_sourceRenderer( NULL )
+    , m_paused( false )
 {
-    m_mediaPlayer = new LibVLCpp::MediaPlayer( "Renderer" );
-    m_mediaPlayer->disableTitle();
+    m_eventWatcher = new RendererEventWatcher;
 }
 
 GenericRenderer::~GenericRenderer()
 {
-    delete m_mediaPlayer;
+    delete m_sourceRenderer;
+    delete m_eventWatcher;
 }
 
 #ifdef WITH_GUI
 void
 GenericRenderer::setRenderWidget(QWidget *renderWidget)
 {
-    m_mediaPlayer->setDrawable( (void *) static_cast< RenderWidget* >(renderWidget)->id() );
     m_renderWidget = renderWidget;
+}
+
+RendererEventWatcher*
+GenericRenderer::eventWatcher()
+{
+    return m_eventWatcher;
 }
 #endif

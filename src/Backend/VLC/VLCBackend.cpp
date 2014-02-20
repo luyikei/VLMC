@@ -1,7 +1,7 @@
 /*****************************************************************************
- * VLCInstance.cpp: Binding for libvlc instances
+ * VLCBackend.cpp: Provides VLC functionnalities through IBackend interface
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
@@ -20,20 +20,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "VLCInstance.h"
-#include "vlc/vlc.h"
-
-#include "SettingsManager.h"
-#include "VlmcLogger.h"
-#include "VlmcDebug.h"
-
 #include <QVector>
 
-#include <cstdio>
+#include "VLCBackend.h"
+#include "VLCSource.h"
+#include "VLCMemorySource.h"
+#include "SettingsManager.h"
+#include "VlmcDebug.h"
+#include "VlmcLogger.h"
 
-using namespace LibVLCpp;
+using namespace Backend;
+using namespace Backend::VLC;
 
-Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
+IBackend *Backend::getBackend()
+{
+    return VLCBackend::getInstance();
+}
+
+VLCBackend::VLCBackend()
 {
     QVector<const char*> argv;
     argv << "--no-skip-frames"
@@ -49,19 +53,30 @@ Instance::Instance( QObject* parent /*= NULL*/ ) : QObject( parent )
         argv << "-vv";
     else if ( debugLevel == VlmcLogger::Verbose )
         argv << "-v";
-
-    m_internalPtr = libvlc_new( argv.count(), &argv.front() );
-    libvlc_log_set( *this, vlcLogHook, this );
-    Q_ASSERT_X( m_internalPtr != NULL, "LibVLCpp::Instance::Instance()",
-                "Can't launch VLMC without a valid LibVLC instance. Please check your VLC installation" );
+    m_vlcInstance = new LibVLCpp::Instance( argv.count(), &argv.front() );
+    m_vlcInstance->setLogHook( this, &logHook );
 }
 
-Instance::~Instance()
+ISource*
+VLCBackend::createSource(const char *path)
 {
-    libvlc_release( m_internalPtr );
+    return new VLCSource( this, path );
 }
 
-void Instance::vlcLogHook(void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args)
+IMemorySource*
+VLCBackend::createMemorySource()
+{
+    return new VLCMemorySource( this );
+}
+
+LibVLCpp::Instance*
+VLCBackend::vlcInstance()
+{
+    return m_vlcInstance;
+}
+
+void
+VLCBackend::logHook(void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args)
 {
     Q_UNUSED( data )
     Q_UNUSED( ctx )

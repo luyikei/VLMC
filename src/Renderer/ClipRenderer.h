@@ -30,11 +30,6 @@
 class   Clip;
 class   Media;
 
-namespace LibVLCpp
-{
-    class   Media;
-}
-
 class ClipRenderer : public GenericRenderer
 {
     Q_OBJECT
@@ -46,7 +41,7 @@ public:
 
     virtual void            togglePlayPause( bool forcePause );
     virtual void            stop();
-    virtual int             setVolume( int volume );
+    virtual void            setVolume( int volume );
     virtual int             getVolume() const;
     virtual void            nextFrame();
     virtual void            previousFrame();
@@ -61,7 +56,6 @@ private:
 
 private:
     bool                    m_clipLoaded;
-    LibVLCpp::Media*        m_vlcMedia;
     Clip*                   m_selectedClip;
     qint64                  m_begin;
     qint64                  m_end;

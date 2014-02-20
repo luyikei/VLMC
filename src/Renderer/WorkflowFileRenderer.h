@@ -24,6 +24,7 @@
 #define WORKFLOWFILERENDERER_H
 
 #include "config.h"
+#include "ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 #include "WorkflowRenderer.h"
 #ifdef WITH_GUI
@@ -37,35 +38,31 @@ class   WorkflowFileRenderer : public WorkflowRenderer
     Q_OBJECT
 
 public:
-#ifdef WITH_GUI
-    WorkflowFileRenderer();
+    WorkflowFileRenderer( Backend::IBackend* backend );
     virtual ~WorkflowFileRenderer();
-#endif
 
     void                        run(const QString& outputFileName, quint32 width,
                                     quint32 height, double fps, quint32 vbitrate,
                                     quint32 abitrate);
-    static int                  lock( void* datas, const char* cookie, qint64 *dts, qint64 *pts,
-                                      quint32 *flags, size_t *bufferSize, const void **buffer );
+    static int                  lock(void* datas, const char* cookie, int64_t *dts, int64_t *pts,
+                                      unsigned int *flags, size_t *bufferSize, const void **buffer );
     virtual float               getFps() const;
 
 private:
     quint8                      *m_renderVideoFrame;
 #ifdef WITH_GUI
-    QImage*                     m_image;
     QTime                       m_time;
 #endif
 
 protected:
-    virtual void*               getLockCallback();
-    virtual void*               getUnlockCallback();
-    virtual quint32             width() const;
-    virtual quint32             height() const;
+    virtual Backend::ISourceRenderer::MemoryInputLockCallback getLockCallback();
+    virtual Backend::ISourceRenderer::MemoryInputUnlockCallback getUnlockCallback();
+
 private slots:
+    //FIXME: Why a slot here versus a method in parent class?!
     void                        stop();
     void                        __frameChanged( qint64 frame,
                                                 Vlmc::FrameChangedReason reason );
-    void                        endReached();
 
 signals:
     void                        imageUpdated( const uchar* image );

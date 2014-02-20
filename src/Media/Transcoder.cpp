@@ -22,40 +22,50 @@
 
 #include "Transcoder.h"
 
-#include "LibVLCpp/VLCMedia.h"
-#include "LibVLCpp/VLCMediaPlayer.h"
+#include "ISource.h"
+#include "ISourceRenderer.h"
 #include "Media.h"
 #include "MetaDataManager.h"
 #include "NotificationZone.h"
 #include "SettingsManager.h"
+#include "RendererEventWatcher.h"
 
 #include <QFileInfo>
 
-Transcoder::Transcoder( Media* media ) :
-        m_media( media )
+Transcoder::Transcoder( Media* media )
+    : m_media( media )
+    , m_renderer( NULL )
 {
     connect( this, SIGNAL( notify( QString ) ),
              NotificationZone::getInstance(), SLOT( notify( QString ) ) );
     connect( this, SIGNAL( progress( float ) ),
              NotificationZone::getInstance(), SLOT( progressUpdated( float ) ) );
+    m_eventWatcher = new RendererEventWatcher;
+}
+
+Transcoder::~Transcoder()
+{
+    delete m_renderer;
+    delete m_eventWatcher;
 }
 
 void
 Transcoder::transcodeToPs()
 {
     QString             outputDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-    LibVLCpp::Media     *media = new LibVLCpp::Media( m_media->fileInfo()->absoluteFilePath() );
+    Backend::ISource*   source = m_media->source();
+    delete m_renderer;
+    m_renderer = source->createRenderer( m_eventWatcher );
 
     if ( outputDir.length() == 0 )
         outputDir = m_media->fileInfo()->absolutePath();
     m_destinationFile = outputDir + '/' + m_media->fileInfo()->baseName() + ".ps";
-    QString         option = ":sout=file://" + m_destinationFile;
-    media->addOption( option.toUtf8().constData() );
-    LibVLCpp::MediaPlayer   *mp = new LibVLCpp::MediaPlayer( "Transcoder", media );
-    connect( mp, SIGNAL( positionChanged( float ) ), this, SIGNAL( progress( float ) ) );
-    connect( mp, SIGNAL( endReached() ), this, SLOT( transcodeFinished() ) );
+    m_renderer->setOutputFile( qPrintable( m_destinationFile ) );
+    m_renderer->setName( qPrintable( QString( "Transcoder " ) + m_media->fileInfo()->baseName() ) );
+    connect( m_eventWatcher, SIGNAL( positionChanged( float ) ), this, SIGNAL( progress( float ) ) );
+    connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( transcodeFinished() ) );
     emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );
-    mp->play();
+    m_renderer->start();
 }
 
 void

@@ -22,7 +22,7 @@
 
 /** \file
   * This file contains the Media class declaration/definition.
-  * It contains a VLCMedia and the meta-datas.
+  * It contains a ISource and some extra helpers.
   * It's used by the Library
   */
 
@@ -41,9 +41,9 @@
 #include "media/GuiMedia.h"
 #endif
 
-namespace LibVLCpp
+namespace Backend
 {
-    class   Media;
+    class   ISource;
 }
 class Clip;
 
@@ -79,14 +79,13 @@ public:
     static const QString        ImageExtensions;
     static const QString        streamPrefix;
 
-    Media( const QString& filePath );
+    Media( const QString& path );
     virtual ~Media();
-
-    LibVLCpp::Media             *vlcMedia() { return m_vlcMedia; }
 
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
+    Backend::ISource*           source();
     /**
      *  \brief                  Set this media's path.
      *
@@ -154,7 +153,7 @@ private:
     void                        computeFileType();
 
 protected:
-    LibVLCpp::Media*            m_vlcMedia;
+    Backend::ISource*           m_source;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
     qint64                      m_lengthMS;

@@ -31,11 +31,14 @@
 
 namespace LibVLCpp
 {
+    class Instance;
+
     class   Media : public Internal< libvlc_media_t >
     {
     public:
 
-        Media( const QString& filename );
+        Media( Instance* instance, const QString& filename );
+        Media(Media &media );
         ~Media();
         void                addOption( const char* opt );
         void                addOption( const QString& opt );

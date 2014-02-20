@@ -30,9 +30,10 @@
 
 #include "Clip.h"
 #include "MetaDataManager.h"
-#include "VLCMedia.h"
 #include "VlmcDebug.h"
 #include "Workspace.h"
+#include "ISource.h"
+#include "IBackend.h"
 
 #include <QUrl>
 
@@ -51,8 +52,7 @@ const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *
                                          "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
-Media::Media( const QString& filePath )
-    : m_vlcMedia( NULL ),
+Media::Media(const QString &path ) :
     m_fileInfo( NULL ),
     m_lengthMS( 0 ),
     m_nbFrames( 0 ),
@@ -65,25 +65,14 @@ Media::Media( const QString& filePath )
     m_metadataComputed( false ),
     m_inWorkspace( false )
 {
-    if ( filePath.startsWith( Media::streamPrefix ) == false )
-    {
-        setFilePath( filePath );
-    }
-    else
-    {
-        m_inputType = Media::Stream;
-        m_mrl = filePath.right( filePath.length() - streamPrefix.length() );
-        //FIXME:
-        m_fileType = Media::Video;
-        m_fileName = m_mrl;
-        m_vlcMedia = new LibVLCpp::Media( m_mrl );
-    }
+    Backend::IBackend* backend = Backend::getBackend();
+    m_source = backend->createSource( qPrintable( path ) );
 }
 
 Media::~Media()
 {
-    if ( m_vlcMedia )
-        delete m_vlcMedia;
+    if ( m_source )
+        delete m_source;
     if ( m_fileInfo )
         delete m_fileInfo;
 }
@@ -204,6 +193,12 @@ Media::fileName() const
     return m_fileName;
 }
 
+Backend::ISource*
+Media::source()
+{
+    return m_source;
+}
+
 bool
 Media::hasAudioTrack() const
 {
@@ -280,9 +275,9 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     computeFileType();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
-    if ( m_vlcMedia )
-        delete m_vlcMedia;
-    m_vlcMedia = new LibVLCpp::Media( m_mrl );
+//    if ( m_vlcMedia )
+//        delete m_vlcMedia;
+//    m_vlcMedia = new LibVLCpp::Media( m_mrl );
     //Don't call this before setting all the internals, as it relies on Media::fileInfo.
     if ( Workspace::isInProjectDir( this ) == true )
     {

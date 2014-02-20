@@ -40,28 +40,25 @@ class   AudioClipWorkflow : public ClipWorkflow
     public:
         AudioClipWorkflow( ClipHelper* ch );
         ~AudioClipWorkflow();
-        void                        *getLockCallback() const;
-        void                        *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
     protected:
         virtual quint32             getNbComputedBuffers() const;
         virtual quint32             getMaxComputedBuffers() const;
         virtual void                flushComputedBuffers();
-        void                        preallocate();
+        virtual void                preallocate();
         virtual void                releasePrealocated();
 
     private:
-        virtual QString             createSoutChain() const;
-        virtual void                initializeVlcOutput();
+        virtual void                initializeInternals();
         Workflow::AudioSample*      createBuffer( size_t size );
         void                        insertPastBlock( Workflow::AudioSample* as );
-        static void                 lock(AudioClipWorkflow* clipWorkflow,
+        static void                 lock(void *data,
                                           quint8** pcm_buffer , size_t size );
-        static void                 unlock(AudioClipWorkflow* clipWorkflow,
-                                            quint8* pcm_buffer, quint32 channels,
-                                            quint32 rate, quint32 nb_samples,
-                                            quint32 bits_per_sample,
-                                            size_t size, qint64 pts );
+        static void                 unlock(void *data,
+                                            uint8_t * pcm_buffer, unsigned int channels,
+                                            unsigned int rate, unsigned int nb_samples,
+                                            unsigned int bits_per_sample,
+                                            size_t size, int64_t pts );
 
     private:
         QQueue<Workflow::AudioSample*>      m_computedBuffers;

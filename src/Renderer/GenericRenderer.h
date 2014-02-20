@@ -32,13 +32,10 @@
 
 #include "EffectUser.h"
 #include "Types.h"
+#include "RendererEventWatcher.h"
 
 class   Clip;
 class   Media;
-namespace LibVLCpp
-{
-    class   MediaPlayer;
-}
 
 /**
  *  \class  Common base for every renderer.
@@ -66,10 +63,9 @@ public:
     /**
      *  \brief  Set the output volume.
      *  \param  volume the volume (int)
-     *  \return 0 if the volume was set, -1 if it was out of range
      *  \sa     getVolume()
      */
-    virtual int         setVolume( int volume ) = 0;
+    virtual void        setVolume( int volume ) = 0;
 
     /**
      *  \brief          Play or pause the media.
@@ -159,16 +155,18 @@ public:
     {
         return m_isRendering;
     }
+
     EffectUser::Type                effectType() const
     {
         return EffectUser::GlobalEffectUser;
     }
 
+    RendererEventWatcher*           eventWatcher();
+
 protected:
-    /**
-     *  \brief  The media player that will be used for rendering
-     */
-    LibVLCpp::MediaPlayer*          m_mediaPlayer;
+    Backend::ISourceRenderer*       m_sourceRenderer;
+    RendererEventWatcher*           m_eventWatcher;
+
     /**
      *  \brief  This flag allows us to know if the render is paused
      *          or not, without using libvlc, especially for the render preview.
@@ -178,10 +176,6 @@ protected:
      */
     bool                            m_paused;
 
-    /**
-     *  \brief      The QWidget on which we will render.
-     *  \sa         setRenderWidget( QWidget* );
-     */
     QWidget*                        m_renderWidget;
 
 public slots:
@@ -195,40 +189,8 @@ public slots:
 
 
 signals:
-    /**
-     *  \brief  This signal means the render just finished, and has been stoped.
-     *  \sa     endReached()
-     */
-    void                            stopped();
-    /**
-     *  \brief  Emmited when the render has been paused.
-     *  \sa     playing()
-     */
-    void                            paused();
-    /**
-     *  \brief  Emmited when the renderer has started to render, and has been unpaused.
-     *  \sa     paused()
-     */
-    void                            playing();
-    /**
-     *  \brief  Emmited when volume change occurs.
-     */
-    void                            volumeChanged();
-    /**
-     *  \brief  Emmited when rendered frame has been changed.
-     *  \param  newFrame    The new current frame
-     *  \param  reason      The reason for changing frame
-     */
     void                            frameChanged( qint64 newFrame,
                                                 Vlmc::FrameChangedReason reason );
-    /**
-     *  \brief  Emited when something went wrong with the render.
-     *
-     *  The cause may vary depending on the underlying renderer, though this will
-     *  almost always be caused by a missing codec.
-     */
-    void                error();
-
 };
 
 #endif // GENERICRENDERER_H

@@ -28,19 +28,15 @@
 
 #include <QTime>
 
-#ifdef WITH_GUI
-WorkflowFileRenderer::WorkflowFileRenderer() :
-        WorkflowRenderer(),
-        m_renderVideoFrame( NULL ),
-        m_image( NULL )
+WorkflowFileRenderer::WorkflowFileRenderer( Backend::IBackend* backend )
+    : WorkflowRenderer( backend )
+    ,   m_renderVideoFrame( NULL )
 {
 }
 
 WorkflowFileRenderer::~WorkflowFileRenderer()
 {
-    delete m_image;
 }
-#endif
 
 void
 WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
@@ -50,20 +46,14 @@ WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
     m_mainWorkflow->setCurrentFrame( 0, Vlmc::Renderer );
 
     setupRenderer( width, height, fps );
-
-    //Media as already been created and mainly initialized by the WorkflowRenderer
-    QString     transcodeStr = ":sout=#transcode{vcodec=h264,vb=" + QString::number( vbitrate ) +
-                               ",acodec=a52,ab=" + QString::number( abitrate ) +
-                               ",no-hurry-up}"
-                               ":standard{access=file,mux=ps,dst=\""
-                          + outputFileName + "\"}";
-    m_media->addOption( transcodeStr.toUtf8().constData() );
-
-    m_mediaPlayer->setMedia( m_media );
+    m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
+    m_sourceRenderer->setOutputAudioBitrate( abitrate );
+    m_sourceRenderer->setOutputVideoBitrate( vbitrate );
 
     connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( stop() ) );
-    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason) ),
+    connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
              this, SLOT( __frameChanged( qint64,Vlmc::FrameChangedReason ) ) );
+    connect( this, SIGNAL( endReached() ), this, SIGNAL( renderComplete() ) );
 
     m_isRendering = true;
     m_stopping = false;
@@ -75,21 +65,13 @@ WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
     m_mainWorkflow->startRender( width, height, fps );
     //Waiting for renderers to preload some frames:
     SleepS( 1 );
-    m_mediaPlayer->play();
+    m_sourceRenderer->start();
 }
 
 void
 WorkflowFileRenderer::stop()
 {
     WorkflowRenderer::killRenderer();
-}
-
-void
-WorkflowFileRenderer::endReached()
-{
-    stop();
-    emit renderComplete();
-    disconnect();
 }
 
 float
@@ -99,8 +81,8 @@ WorkflowFileRenderer::getFps() const
 }
 
 int
-WorkflowFileRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pts,
-                            quint32 *flags, size_t *bufferSize, const void **buffer )
+WorkflowFileRenderer::lock( void *datas, const char* cookie, int64_t *dts, int64_t *pts,
+                            unsigned int *flags, size_t *bufferSize, const void **buffer )
 {
     int         ret = WorkflowRenderer::lock( datas, cookie, dts, pts, flags, bufferSize, buffer );
     EsHandler*  handler = reinterpret_cast<EsHandler*>( datas );
@@ -126,26 +108,14 @@ WorkflowFileRenderer::__frameChanged( qint64 frame, Vlmc::FrameChangedReason )
     emit frameChanged( frame );
 }
 
-void*
+Backend::ISourceRenderer::MemoryInputLockCallback
 WorkflowFileRenderer::getLockCallback()
 {
-    return (void*)&WorkflowFileRenderer::lock;
+    return &WorkflowFileRenderer::lock;
 }
 
-void*
+Backend::ISourceRenderer::MemoryInputUnlockCallback
 WorkflowFileRenderer::getUnlockCallback()
 {
-    return (void*)&WorkflowRenderer::unlock;
-}
-
-quint32
-WorkflowFileRenderer::width() const
-{
-    return VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
-}
-
-quint32
-WorkflowFileRenderer::height() const
-{
-    return VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
+    return &WorkflowRenderer::unlock;
 }

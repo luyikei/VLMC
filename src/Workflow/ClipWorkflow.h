@@ -35,7 +35,7 @@
 
 class   Clip;
 class   Effect;
-class   WaitCondition;
+class   RendererEventWatcher;
 
 class   QMutex;
 class   QReadWriteLock;
@@ -46,10 +46,9 @@ namespace Workflow
     class   Frame;
 }
 
-namespace LibVLCpp
+namespace Backend
 {
-    class   MediaPlayer;
-    class   Media;
+    class   ISourceRenderer;
 }
 
 class   ClipWorkflow : public EffectUser
@@ -63,8 +62,8 @@ class   ClipWorkflow : public EffectUser
             /// \brief  Used when the clipworkflow hasn't been started yet
             Stopped,            //0
             /**
-             *  \brief  Used when initializing is in progress (until the mediaplayer
-             *          enters the playing state.
+             *  \brief  Used when initializing is in progress (until the ISourceRenderer
+             *          enters the playing state).
              */
             Initializing,       //1
             /// \brief  Used when the clipworkflow is launched and active
@@ -79,11 +78,11 @@ class   ClipWorkflow : public EffectUser
             /// \brief  This state will be used when a pause
             ///         has been required
             PauseRequired,      //5
-            /// \brief  This state will be used when the media player is paused,
+            /// \brief  This state will be used when the ISourceRenderer is paused,
             ///         because of a sufficient number of computed buffers
             Paused,             //6
             /// \brief  An error was encountered, this ClipWorkflow must not be used anymore.
-            Error,              //7
+            Error               //7
         };
 
         /**
@@ -107,18 +106,14 @@ class   ClipWorkflow : public EffectUser
          */
         virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame ) = 0;
         void                    postGetOutput();
-        /*
-         * Will return a toolchain with the smem configured out
-         */
-        virtual QString         createSoutChain() const = 0;
         /**
-         * @brief Initialize base variables for the VLC media representing this clip.
+         * @brief Initialize base variables for the SourceRenderer.
          *
          * This may also perform some addditional initializations, and
          * therefore should be called before createSoutChain()
-         * A valid m_vlcMedia instance is required to exist prior call to this method.
          */
-        virtual void            initializeVlcOutput() = 0;
+        virtual void            initializeInternals() = 0;
+        virtual void            preallocate() = 0;
         void                    initialize();
 
         /**
@@ -160,9 +155,6 @@ class   ClipWorkflow : public EffectUser
         virtual void            setTime( qint64 time );
 
         bool                    waitForCompleteInit();
-
-        virtual void*           getLockCallback() const = 0;
-        virtual void*           getUnlockCallback() const = 0;
 
         /**
          *  \sa MainWorkflow::setFullSpeedRender();
@@ -227,17 +219,14 @@ class   ClipWorkflow : public EffectUser
         bool                    m_resyncRequired;
 
     protected:
-        LibVLCpp::MediaPlayer*  m_mediaPlayer;
-        ClipHelper*             m_clipHelper;
-        QMutex*                 m_renderLock;
-        QReadWriteLock*         m_stateLock;
-        State                   m_state;
-        qint64                  m_previousPts;
-        qint64                  m_currentPts;
-        /**
-         *  \brief  The VLC media used to render
-         */
-        LibVLCpp::Media*        m_vlcMedia;
+        Backend::ISourceRenderer*   m_renderer;
+        RendererEventWatcher*       m_eventWatcher;
+        ClipHelper*                 m_clipHelper;
+        QMutex*                     m_renderLock;
+        QReadWriteLock*             m_stateLock;
+        State                       m_state;
+        qint64                      m_previousPts;
+        qint64                      m_currentPts;
         /**
          *  \brief  This is used for basic synchronisation when
          *          the clipworkflow hasn't generate a frame yet,

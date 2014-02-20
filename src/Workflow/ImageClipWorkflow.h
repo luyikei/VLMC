@@ -33,26 +33,24 @@ class   ImageClipWorkflow : public ClipWorkflow
         ImageClipWorkflow( ClipHelper* ch );
         ~ImageClipWorkflow();
 
-        void                    *getLockCallback() const;
-        void                    *getUnlockCallback() const;
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
         /**
          *  \brief      Deactivate time seeking in an ImageClipWorkflow
          */
         virtual void            setTime( qint64 ){}
     protected:
-        virtual QString         createSoutChain() const;
-        virtual void            initializeVlcOutput();
+        virtual void            initializeInternals();
+        virtual void            preallocate();
         virtual quint32         getNbComputedBuffers() const;
         virtual quint32         getMaxComputedBuffers() const;
         virtual void            flushComputedBuffers();
         virtual void            releasePrealocated(){}
     private:
-        static void             lock( ImageClipWorkflow* clipWorkflow, void** pp_ret,
-                                      int size );
-        static void             unlock( ImageClipWorkflow* clipWorkflow, void* buffer,
-                                        int width, int height, int bpp, int size,
-                                        qint64 pts );
+        static void             lock(void *data, uint8_t **pp_ret,
+                                      size_t size );
+        static void             unlock(void *data, uint8_t *buffer,
+                                        int width, int height, int bpp, size_t size,
+                                        int64_t pts );
     private:
         Workflow::Frame             *m_buffer;
         EffectsEngine::EffectList   m_filters;

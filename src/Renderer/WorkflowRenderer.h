@@ -24,20 +24,22 @@
 #define WORKFLOWRENDERER_H
 
 #include "GenericRenderer.h"
+#include "ISourceRenderer.h"
 #include "MainWorkflow.h"
 
 #include <QObject>
+
+namespace Backend
+{
+    class IBackend;
+    class IMemorySource;
+}
 
 class   Clip;
 
 class   QWidget;
 class   QWaitCondition;
 class   QMutex;
-
-namespace LibVLCpp
-{
-    class   Media;
-}
 
 class   WorkflowRenderer : public GenericRenderer
 {
@@ -56,7 +58,7 @@ class   WorkflowRenderer : public GenericRenderer
             double              fps; ///< The fps to use for this rendering session.
         };
 
-        WorkflowRenderer();
+        WorkflowRenderer( Backend::IBackend *backend );
         ~WorkflowRenderer();
 
         /**
@@ -96,7 +98,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \return 0 if the volume was set, -1 if it was out of range
          *  \sa     getVolume()
          */
-        virtual int         setVolume( int volume );
+        virtual void        setVolume( int volume );
 
         /**
          *  \brief   Return the volume
@@ -172,7 +174,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \return         A pointer to the lock function.
          *  \sa             getUnlockCallback()
          */
-        virtual void*       getLockCallback();
+        virtual Backend::ISourceRenderer::MemoryInputLockCallback getLockCallback();
         /**
          *  \brief          Will return a pointer to the function/static method to use
          *                  as the imem unlock callback.
@@ -182,7 +184,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \return         A pointer to the unlock function.
          *  \sa             getLockCallback()
          */
-        virtual void*       getUnlockCallback();
+        virtual Backend::ISourceRenderer::MemoryInputUnlockCallback getUnlockCallback();
         /**
          *  \brief              Lock callback for imem module
          *
@@ -195,8 +197,8 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  bufferSize  The size of the buffer that will be provided
          *  \param  buffer      The buffer itself.
          */
-        static int          lock( void *data, const char* cookie, qint64 *dts, qint64 *pts,
-                                quint32 *flags, size_t *bufferSize, const void **buffer );
+        static int          lock(void *data, const char* cookie, int64_t *dts, int64_t *pts,
+                                unsigned int *flags, size_t *bufferSize, const void **buffer );
         /**
          *  \brief  "Subcallback", for video frame injection
          *
@@ -204,7 +206,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  bufferSize  The size of the buffer that will be provided
          *  \param  buffer      The buffer itself.
          */
-        int                 lockVideo( EsHandler *handler, qint64 *pts,
+        int                 lockVideo(void *handler, int64_t *pts,
                                        size_t *bufferSize, const void **buffer );
         /**
          *  \brief  "Subcallback", for audio sample injection
@@ -213,7 +215,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \param  bufferSize  The size of the buffer that will be provided
          *  \param  buffer      The buffer itself.
          */
-        int                 lockAudio( EsHandler *handler, qint64 *pts,
+        int                 lockAudio( EsHandler *handler, int64_t *pts,
                                        size_t *bufferSize, const void **buffer );
         /**
          *  \brief  unlock callback for the imem module
@@ -269,7 +271,7 @@ class   WorkflowRenderer : public GenericRenderer
 
     protected:
         MainWorkflow*       m_mainWorkflow;
-        LibVLCpp::Media*    m_media;
+        Backend::IMemorySource* m_source;
         bool                m_stopping;
         float               m_outputFps;
         QString             m_aspectRatio;
@@ -313,11 +315,6 @@ class   WorkflowRenderer : public GenericRenderer
          *  \brief          The current frame just changed because of the preview widget
          */
         void                previewWidgetCursorChanged( qint64 newFrame );
-        /**
-         *  \brief          Called when the workflow end is reached.
-         *  \sa             stop();
-         */
-        virtual void        endReached();
 
     private slots:
         /**
@@ -327,14 +324,6 @@ class   WorkflowRenderer : public GenericRenderer
          *  If the length comes to a 0 value again, the permanent playback will be stoped.
          */
         void                mainWorkflowLenghtChanged( qint64 newLength );
-
-        /**
-         *  \brief          Used to catch an error in the rendering part
-         *
-         *  Most likely, this will be called if the required codec aren't found.
-         *  This will stop the render and emit the error() signal.
-         */
-        void                errorEncountered();
 };
 
 #endif // WORKFLOWRENDERER_H

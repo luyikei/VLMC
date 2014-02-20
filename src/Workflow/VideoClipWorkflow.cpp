@@ -24,6 +24,7 @@
 #include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
+#include "ISourceRenderer.h"
 #include "SettingsManager.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
@@ -75,47 +76,14 @@ VideoClipWorkflow::preallocate()
 }
 
 void
-VideoClipWorkflow::initializeVlcOutput()
+VideoClipWorkflow::initializeInternals()
 {
-    preallocate();
-    m_vlcMedia->addOption(":no-audio");
-    m_vlcMedia->addOption(":no-sout-audio");
     initFilters();
-}
-
-QString
-VideoClipWorkflow::createSoutChain() const
-{
-    QString chain = ":sout=#transcode{vcodec=RV32,fps=";
-
-    chain += QString::number( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) )
-            % ",width=" % QString::number( m_width ) % ",height="
-            % QString::number( m_height )
-            % "}:smem{";
-    if ( m_fullSpeedRender == false )
-        chain += "time-sync";
-    else
-        chain += "no-time-sync";
-    chain += ",video-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
-            % ",video-prerender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
-            % ",video-postrender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
-            % '}';
-
-    return chain;
-}
-
-void*
-VideoClipWorkflow::getLockCallback() const
-{
-    return reinterpret_cast<void*>(&VideoClipWorkflow::lock);
-}
-
-void*
-VideoClipWorkflow::getUnlockCallback() const
-{
-    return reinterpret_cast<void*>( &VideoClipWorkflow::unlock );
+    m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
+    m_renderer->setOutputWidth( m_width );
+    m_renderer->setOutputHeight( m_height );
+    m_renderer->setOutputFps( (float)VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+    m_renderer->setOutputVideoCodec( "RV32" );
 }
 
 Workflow::OutputBuffer*
@@ -160,8 +128,10 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
 }
 
 void
-VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, size_t size )
+VideoClipWorkflow::lock( void *data, uint8_t** p_buffer, size_t size )
 {
+    VideoClipWorkflow* cw = reinterpret_cast<VideoClipWorkflow*>( data );
+
     //Mind the fact that frame size in bytes might not be width * height * bpp
     Workflow::Frame*    frame = NULL;
 
@@ -180,18 +150,20 @@ VideoClipWorkflow::lock( VideoClipWorkflow *cw, void **pp_ret, size_t size )
             frame->resize( size );
     }
     cw->m_computedBuffers.enqueue( frame );
-    *pp_ret = frame->buffer();
+    *p_buffer = (uint8_t*)frame->buffer();
 }
 
 void
-VideoClipWorkflow::unlock( VideoClipWorkflow *cw, void *buffer, int width,
-                           int height, int bpp, size_t size, qint64 pts )
+VideoClipWorkflow::unlock( void *data, uint8_t *buffer, int width,
+                           int height, int bpp, size_t size, int64_t pts )
 {
     Q_UNUSED( buffer );
     Q_UNUSED( width );
     Q_UNUSED( height );
     Q_UNUSED( bpp );
     Q_UNUSED( size );
+
+    VideoClipWorkflow* cw = reinterpret_cast<VideoClipWorkflow*>( data );
 
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();

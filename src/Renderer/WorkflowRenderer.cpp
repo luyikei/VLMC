@@ -28,7 +28,10 @@
 #include "Clip.h"
 #include "EffectInstance.h"
 #include "GenericRenderer.h"
+#include "IBackend.h"
+#include "ISource.h"
 #include "MainWorkflow.h"
+#include "RenderWidget.h"
 #include "SettingsManager.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
@@ -41,9 +44,8 @@
 #include <QWaitCondition>
 #include <inttypes.h>
 
-WorkflowRenderer::WorkflowRenderer() :
+WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend ) :
             m_mainWorkflow( MainWorkflow::getInstance() ),
-            m_media( NULL ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
             m_aspectRatio( "" ),
@@ -52,6 +54,7 @@ WorkflowRenderer::WorkflowRenderer() :
             m_oldLength( 0 ),
             m_effectFrame( NULL )
 {
+    m_source = backend->createMemorySource();
 }
 
 void
@@ -63,70 +66,44 @@ WorkflowRenderer::initializeRenderer()
     m_nbChannels = 2;
     m_rate = 48000;
 
-     //Workflow part
-    connect( m_mainWorkflow, SIGNAL( mainWorkflowEndReached() ), this, SLOT( endReached() ), Qt::QueuedConnection );
     connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
              this, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ) );
     connect( m_mainWorkflow, SIGNAL( lengthChanged( qint64 ) ),
              this, SLOT(mainWorkflowLenghtChanged(qint64) ) );
-    //Media player part: to update PreviewWidget
-    connect( m_mediaPlayer, SIGNAL( playing() ),    this,   SIGNAL( playing() ), Qt::DirectConnection );
-    connect( m_mediaPlayer, SIGNAL( paused() ),     this,   SIGNAL( paused() ), Qt::DirectConnection );
-    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
-    //FIXME:: check if this doesn't require Qt::QueuedConnection
-    connect( m_mediaPlayer, SIGNAL( stopped() ),    this,   SIGNAL( stopped() ) );
 }
 
 WorkflowRenderer::~WorkflowRenderer()
 {
     killRenderer();
 
-    if ( m_esHandler )
-        delete m_esHandler;
-    if ( m_media )
-        delete m_media;
-    if ( m_silencedAudioBuffer )
-        delete m_silencedAudioBuffer;
+    delete m_esHandler;
+    delete m_silencedAudioBuffer;
+    delete m_source;
 }
 
 void
 WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
 {
-    char        videoString[512];
-    char        inputSlave[256];
-    char        audioParameters[256];
-    char        buffer[64];
+    m_source->setWidth( width );
+    m_source->setHeight( height );
+    m_source->setFps( fps );
+    m_source->setAspectRatio( qPrintable( aspectRatio() ) );
+    m_source->setNumberChannels( m_nbChannels );
+    m_source->setSampleRate( m_rate );
 
-    m_esHandler->fps = fps;
-    //Clean any previous render.
 
-    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%f/1:cookie=0:codec=%s:cat=2:caching=0",
-             width, height, m_aspectRatio.toLatin1().constData(), fps, "RV32" );
-    sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
-                m_rate, m_nbChannels );
-    strcpy( inputSlave, ":input-slave=imem://" );
-    strcat( inputSlave, audioParameters );
-
-    if ( m_media != NULL )
-        delete m_media;
-    m_media = new LibVLCpp::Media( "imem://" + QString( videoString ) );
-    m_media->addOption( inputSlave );
-
-    sprintf( buffer, "imem-get=%"PRId64, (intptr_t)getLockCallback() );
-    m_media->addOption( buffer );
-    sprintf( buffer, ":imem-release=%"PRId64, (intptr_t)getUnlockCallback() );
-    m_media->addOption( buffer );
-    sprintf( buffer, ":imem-data=%"PRId64, (intptr_t)m_esHandler );
-    m_media->addOption( buffer );
-    m_media->addOption( ":text-renderer dummy" );
+    delete m_sourceRenderer;
+    m_sourceRenderer = m_source->createRenderer( m_eventWatcher );
+    m_sourceRenderer->enableMemoryInput( m_esHandler, getLockCallback(), getUnlockCallback() );
+    m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 }
 
 int
-WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pts,
-                        quint32 *flags, size_t *bufferSize, const void **buffer )
+WorkflowRenderer::lock( void *data, const char* cookie, int64_t *dts, int64_t *pts,
+                        unsigned int *flags, size_t *bufferSize, const void **buffer )
 {
     int             ret = 1;
-    EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
+    EsHandler*      handler = reinterpret_cast<EsHandler*>( data );
     bool            paused = handler->self->m_paused;
 
     *dts = -1;
@@ -155,10 +132,11 @@ WorkflowRenderer::lock( void *datas, const char* cookie, qint64 *dts, qint64 *pt
 }
 
 int
-WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void **buffer )
+WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const void **buffer )
 {
-    qint64                          ptsDiff = 0;
-    const Workflow::Frame           *ret;
+    EsHandler*              handler = reinterpret_cast<EsHandler*>( data );
+    qint64                  ptsDiff = 0;
+    const Workflow::Frame   *ret;
 
     if ( m_stopping == true )
         return 1;
@@ -184,7 +162,7 @@ WorkflowRenderer::lockVideo( EsHandler *handler, qint64 *pts, size_t *bufferSize
 }
 
 int
-WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize, const void ** buffer )
+WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSize, const void ** buffer )
 {
     qint64                              ptsDiff;
     quint32                             nbSample;
@@ -221,9 +199,9 @@ WorkflowRenderer::lockAudio( EsHandler *handler, qint64 *pts, size_t *bufferSize
 }
 
 void
-WorkflowRenderer::unlock( void *datas, const char*, size_t, void* )
+WorkflowRenderer::unlock( void *data, const char*, size_t, void* )
 {
-    EsHandler*      handler = reinterpret_cast<EsHandler*>( datas );
+    EsHandler*      handler = reinterpret_cast<EsHandler*>( data );
     delete[] handler->self->m_effectFrame;
     handler->self->m_effectFrame = NULL;
 }
@@ -239,13 +217,10 @@ WorkflowRenderer::startPreview()
         m_height = height();
         m_outputFps = outputFps();
         m_aspectRatio = aspectRatio();
-        setupRenderer( m_width, m_height, m_outputFps );
     }
     initFilters();
 
-    //Deactivating vlc's keyboard inputs.
-    m_mediaPlayer->setKeyInput( false );
-    m_mediaPlayer->setMedia( m_media );
+    setupRenderer( m_width, m_height, m_outputFps );
 
     m_mainWorkflow->setFullSpeedRender( false );
     m_mainWorkflow->startRender( m_width, m_height, m_outputFps );
@@ -254,7 +229,7 @@ WorkflowRenderer::startPreview()
     m_stopping = false;
     m_pts = 0;
     m_audioPts = 0;
-    m_mediaPlayer->play();
+    m_sourceRenderer->start();
 }
 
 void
@@ -289,14 +264,12 @@ WorkflowRenderer::internalPlayPause( bool forcePause )
         if ( m_paused == true && forcePause == false )
         {
             m_paused = false;
-            emit playing();
         }
         else
         {
             if ( m_paused == false )
             {
                 m_paused = true;
-                emit paused();
             }
         }
     }
@@ -319,7 +292,7 @@ WorkflowRenderer::killRenderer()
     m_paused = false;
     m_stopping = true;
     m_mainWorkflow->stopFrameComputing();
-    m_mediaPlayer->stop();
+    m_sourceRenderer->stop();
     m_mainWorkflow->stop();
     delete[] m_silencedAudioBuffer;
     m_silencedAudioBuffer = NULL;
@@ -328,14 +301,13 @@ WorkflowRenderer::killRenderer()
 int
 WorkflowRenderer::getVolume() const
 {
-    return m_mediaPlayer->getVolume();
+    return m_sourceRenderer->volume();
 }
 
-int
-WorkflowRenderer::setVolume( int volume )
+void WorkflowRenderer::setVolume( int volume )
 {
     //Returns 0 if the volume was set, -1 if it was out of range
-    return m_mediaPlayer->setVolume( volume );
+    m_sourceRenderer->setVolume( volume );
 }
 
 qint64
@@ -380,16 +352,14 @@ WorkflowRenderer::rulerCursorChanged( qint64 newFrame )
     m_mainWorkflow->setCurrentFrame( newFrame, Vlmc::RulerCursor );
 }
 
-void*
-WorkflowRenderer::getLockCallback()
+Backend::ISourceRenderer::MemoryInputLockCallback WorkflowRenderer::getLockCallback()
 {
-    return (void*)&WorkflowRenderer::lock;
+    return &WorkflowRenderer::lock;
 }
 
-void*
-WorkflowRenderer::getUnlockCallback()
+Backend::ISourceRenderer::MemoryInputUnlockCallback WorkflowRenderer::getUnlockCallback()
 {
-    return (void*)&WorkflowRenderer::unlock;
+    return WorkflowRenderer::unlock;
 }
 
 quint32
@@ -450,12 +420,6 @@ WorkflowRenderer::loadProject( const QDomElement &project )
 /////////////////////////////////////////////////////////////////////
 
 void
-WorkflowRenderer::endReached()
-{
-    stop();
-}
-
-void
 WorkflowRenderer::mainWorkflowLenghtChanged( qint64 /*newLength*/ )
 {
 //    if ( newLength > 0 )
@@ -473,11 +437,4 @@ WorkflowRenderer::mainWorkflowLenghtChanged( qint64 /*newLength*/ )
 //        stop();
 //    }
 //    m_oldLength = newLength;
-}
-
-void
-WorkflowRenderer::errorEncountered()
-{
-    stop();
-    emit error();
 }

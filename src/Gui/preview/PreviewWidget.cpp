@@ -21,20 +21,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Clip.h"
+#include "ClipRenderer.h"
+#include "ISourceRenderer.h"
 #include "PreviewWidget.h"
 #include "PreviewRuler.h"
 #include "RenderWidget.h"
+#include "RendererEventWatcher.h"
 #include "ui_PreviewWidget.h"
-#include "ClipRenderer.h"
-#include "Clip.h"
 
 #include <QMessageBox>
 #include <QLayout>
 
-PreviewWidget::PreviewWidget( QWidget *parent ) :
-    QWidget( parent ),
-    m_ui( new Ui::PreviewWidget ),
-    m_previewStopped( true )
+PreviewWidget::PreviewWidget( QWidget *parent )
+    : QWidget( parent )
+    , m_ui( new Ui::PreviewWidget )
+    , m_renderer( NULL )
+    , m_previewStopped( true )
 {
     m_ui->setupUi( this );
 
@@ -61,17 +64,11 @@ PreviewWidget::~PreviewWidget()
 }
 
 void
-PreviewWidget::setRenderer( GenericRenderer *renderer )
+PreviewWidget::setRenderer(GenericRenderer *renderer)
 {
+    delete m_renderer;
     m_renderer = renderer;
 
-    // Hide markers and createClip buttons if we are not using a ClipRenderer
-    if ( qobject_cast<ClipRenderer*>( renderer ) == NULL )
-    {
-        m_ui->pushButtonMarkerStart->hide();
-        m_ui->pushButtonMarkerStop->hide();
-        m_ui->pushButtonCreateClip->hide();
-    }
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
 
@@ -82,20 +79,27 @@ PreviewWidget::setRenderer( GenericRenderer *renderer )
     m_ui->renderWidget->release();
 #endif
 
-    connect( m_renderer,     SIGNAL( stopped() ),               this,       SLOT( videoStopped() ) );
-    connect( m_renderer,     SIGNAL( paused() ),                this,       SLOT( videoPaused() ) );
-    connect( m_renderer,     SIGNAL( playing() ),               this,       SLOT( videoPlaying() ) );
-    connect( m_renderer,     SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             this, SLOT( frameChanged(qint64, Vlmc::FrameChangedReason ) ) );
+    connect( renderer->eventWatcher(), SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
+    connect( renderer->eventWatcher(), SIGNAL( paused() ), this, SLOT( videoPaused() ) );
+    connect( renderer->eventWatcher(), SIGNAL( playing() ), this, SLOT( videoPlaying() ) );
+    connect( renderer->eventWatcher(), SIGNAL( errorEncountered() ), this, SLOT( error() ) );
+    connect( renderer->eventWatcher(), SIGNAL( volumeChanged() ), this, SLOT( volumeChanged() ) );
+
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );
-    connect( m_renderer,     SIGNAL( error() ),                 this,       SLOT( error() ) );
-    connect( m_renderer,     SIGNAL( volumeChanged() ),         this,       SLOT( volumeChanged() ) );
 
     connect( m_ui->volumeSlider, SIGNAL( valueChanged ( int ) ),
              this, SLOT( updateVolume( int ) ) );
     connect( m_ui->volumeSlider, SIGNAL( sliderMoved( int ) ),
              this, SLOT( updateVolume( int ) ) );
+}
+
+void
+PreviewWidget::setClipEdition( bool enable )
+{
+    m_ui->pushButtonMarkerStart->setVisible( enable );
+    m_ui->pushButtonMarkerStop->setVisible( enable );
+    m_ui->pushButtonCreateClip->setVisible( enable );
 }
 
 void

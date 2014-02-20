@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ClipWorkflow.cpp : Clip workflow. Will extract a single frame from a VLCMedia
+ * ClipWorkflow.cpp : Clip workflow. Will extract frames from a media
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,34 +20,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "vlmc.h"
-#include "Clip.h"
-#include "ClipHelper.h"
-#include "ClipWorkflow.h"
-#include "Media.h"
-#include "MemoryPool.hpp"
-#include "Workflow/Types.h"
-#include "VLCMedia.h"
-#include "VLCMediaPlayer.h"
-
+#include <QMutex>
 #include <QReadWriteLock>
 #include <QStringBuilder>
 #include <QWaitCondition>
 
-ClipWorkflow::ClipWorkflow( ClipHelper* ch ) :
-                m_mediaPlayer(NULL),
-                m_clipHelper( ch ),
-                m_state( ClipWorkflow::Stopped )
+#include "vlmc.h"
+#include "Clip.h"
+#include "ClipHelper.h"
+#include "ClipWorkflow.h"
+#include "ISource.h"
+#include "ISourceRenderer.h"
+#include "Media.h"
+#include "RendererEventWatcher.h"
+#include "Workflow/Types.h"
+
+ClipWorkflow::ClipWorkflow( ClipHelper* ch )
+    : m_renderer( NULL )
+    , m_eventWatcher( NULL )
+    , m_clipHelper( ch )
+    , m_state( ClipWorkflow::Stopped )
 {
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new QWaitCondition;
     m_renderLock = new QMutex;
     m_renderWaitCond = new QWaitCondition;
+    m_eventWatcher = new RendererEventWatcher;
 }
 
 ClipWorkflow::~ClipWorkflow()
 {
-    //Don't call stop() method from here, the Vtable is probably already gone.
+    delete m_eventWatcher;
     delete m_renderWaitCond;
     delete m_renderLock;
     delete m_initWaitCond;
@@ -60,13 +63,12 @@ ClipWorkflow::initialize()
     QWriteLocker lock( m_stateLock );
     m_state = ClipWorkflow::Initializing;
 
-    m_vlcMedia = new LibVLCpp::Media( m_clipHelper->clip()->getMedia()->mrl() );
-    initializeVlcOutput();
-    m_vlcMedia->addOption( createSoutChain() );
-    m_mediaPlayer = MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->get();
-    m_mediaPlayer->setName( "ClipWorkflow " % m_clipHelper->uuid().toString() );
-    m_mediaPlayer->setMedia( m_vlcMedia );
-    m_mediaPlayer->disableTitle();
+    delete m_renderer;
+    m_renderer = m_clipHelper->clip()->getMedia()->source()->createRenderer( m_eventWatcher );
+    m_renderer->setName( qPrintable( QString("ClipWorkflow " % m_clipHelper->uuid().toString() ) ) );
+
+    preallocate();
+    initializeInternals();
 
     m_currentPts = -1;
     m_previousPts = -1;
@@ -75,19 +77,19 @@ ClipWorkflow::initialize()
     //Use QueuedConnection to avoid getting called from intf-event callback, as
     //we will trigger intf-event callback as well when setting time for this clip,
     //thus resulting in a deadlock.
-    connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
-    connect( m_mediaPlayer, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
-    connect( m_mediaPlayer, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
-    m_mediaPlayer->play();
+    connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
+    connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
+    connect( m_eventWatcher, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
+    m_renderer->start();
 }
 
 void
 ClipWorkflow::loadingComplete()
 {
     adjustBegin();
-    disconnect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( loadingComplete() ) );
-    connect( m_mediaPlayer, SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
-    connect( m_mediaPlayer, SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
+    disconnect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( loadingComplete() ) );
+    connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
+    connect( m_eventWatcher, SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
     QWriteLocker lock( m_stateLock );
     m_isRendering = true;
     m_state = Rendering;
@@ -100,7 +102,7 @@ ClipWorkflow::adjustBegin()
     if ( m_clipHelper->clip()->getMedia()->fileType() == Media::Video ||
          m_clipHelper->clip()->getMedia()->fileType() == Media::Audio )
     {
-        m_mediaPlayer->setTime( m_clipHelper->begin() /
+        m_renderer->setTime( m_clipHelper->begin() /
                                 m_clipHelper->clip()->getMedia()->fps() * 1000 );
     }
 }
@@ -123,13 +125,10 @@ ClipWorkflow::stop()
     QWriteLocker    lockState( m_stateLock );
 
     //Let's make sure the ClipWorkflow isn't beeing stopped from another thread.
-    if ( m_mediaPlayer && m_state != Stopped )
+    if ( m_renderer && m_state != Stopped )
     {
-        m_mediaPlayer->stop();
-        m_mediaPlayer->disconnect();
-        MemoryPool<LibVLCpp::MediaPlayer>::getInstance()->release( m_mediaPlayer );
-        m_mediaPlayer = NULL;
-        delete m_vlcMedia;
+        m_renderer->stop();
+        m_eventWatcher->disconnect();
         if ( m_state != Error )
             m_state = Stopped;
         flushComputedBuffers();
@@ -143,12 +142,12 @@ ClipWorkflow::stop()
 void
 ClipWorkflow::setTime( qint64 time )
 {
-    m_mediaPlayer->setTime( time );
+    m_renderer->setTime( time );
     resyncClipWorkflow();
     QWriteLocker    lock( m_stateLock );
     if ( m_state == ClipWorkflow::Paused )
     {
-        m_mediaPlayer->pause();
+        m_renderer->playPause();
         m_state = ClipWorkflow::UnpauseRequired;
     }
 }
@@ -179,7 +178,7 @@ ClipWorkflow::postGetOutput()
         {
             m_state = ClipWorkflow::UnpauseRequired;
             //This will act like an "unpause";
-            m_mediaPlayer->pause();
+            m_renderer->playPause();
         }
     }
 }
@@ -193,7 +192,7 @@ ClipWorkflow::commonUnlock()
     {
         QWriteLocker lock( m_stateLock );
         m_state = ClipWorkflow::PauseRequired;
-        m_mediaPlayer->pause();
+        m_renderer->playPause();
     }
 }
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MetaDataWorker.cpp: MetaDataManager
+ * MetaDataManager.cpp: Manages a thread to parse metadata
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,87 +20,51 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <QMutexLocker>
+
+#include "ISource.h"
+#include "Media.h"
 #include "MetaDataManager.h"
-#include "MetaDataWorker.h"
-#include "VLCMediaPlayer.h"
 
-#include <QQueue>
-
-MetaDataManager::MetaDataManager() :
-        m_computeInProgress( false ),
-        m_mediaPlayer( NULL )
+MetaDataManager::MetaDataManager()
+    : m_computeInProgress( false )
 {
-    m_computingMutex = new QMutex;
 }
 
 MetaDataManager::~MetaDataManager()
 {
-    delete m_computingMutex;
-    if ( m_mediaPlayer )
-        delete m_mediaPlayer;
-}
-
-void
-MetaDataManager::launchComputing( Media *media )
-{
-    emit startingComputing( media );
-    m_computeInProgress = true;
-    m_mediaPlayer = new LibVLCpp::MediaPlayer( "MetaDataManager" );
-    MetaDataWorker* worker = new MetaDataWorker( m_mediaPlayer, media );
-    connect( worker, SIGNAL( computed() ),
-             this, SLOT( computingCompleted() ),
-             Qt::DirectConnection );
-    //This connection has to be queued, as we would risk stopping the media player
-    //from within a VLC callback.
-    connect( worker, SIGNAL( failed( Media* ) ),
-             this, SLOT( computingFailed( Media* ) ),
-             Qt::QueuedConnection );
-    worker->start();
-}
-
-void
-MetaDataManager::computingCompleted()
-{
-    QMutexLocker lock( m_computingMutex );
-
-    Q_ASSERT_X(m_mediaPlayer, __FUNCTION__, "No media player instance. Event handling is probably broken");
-    delete m_mediaPlayer;
-    m_mediaPlayer = NULL;
-    m_computeInProgress = false;
-    if ( m_mediaToCompute.size() != 0 )
-        launchComputing( m_mediaToCompute.dequeue() );
-}
-
-void
-MetaDataManager::computingFailed( Media* media )
-{
-    emit failedToCompute( media );
-    computingCompleted();
 }
 
 void
 MetaDataManager::computeMediaMetadata( Media *media )
 {
     QMutexLocker lock( m_computingMutex );
-
-    connect( media, SIGNAL( destroyed( QObject* ) ),
-             this, SLOT( mediaDestroyed( QObject*) ), Qt::DirectConnection );
-    if ( m_computeInProgress == true )
-    {
-        m_mediaToCompute.enqueue( media );
-    }
-    else
-    {
-        launchComputing( media );
-    }
+    m_mediaToCompute.enqueue( media );
+    if ( m_computeInProgress == false )
+        start();
 }
 
 void
-MetaDataManager::mediaDestroyed( QObject *sender )
+MetaDataManager::run()
 {
-    QMutexLocker    lock( m_computingMutex );
-
-    Media*  media = reinterpret_cast<Media*>( sender );
-    if ( m_mediaToCompute.contains( media ) )
-        m_mediaToCompute.removeAll( media );
+    m_computeInProgress = true;
+    while ( true )
+    {
+        Media*  target;
+        {
+            QMutexLocker    lock( m_computingMutex );
+            if ( m_mediaToCompute.isEmpty() == true )
+            {
+                m_computeInProgress = false;
+                return;
+            }
+            target = m_mediaToCompute.dequeue();
+        }
+        Backend::ISource* targetSource = target->source();
+        if ( targetSource->preparse() == false )
+            emit failedToCompute( target );
+        //FIXME: this looks really ugly. And doesn't handle snapshot for now
+        else
+            target->emitMetaDataComputed();
+    }
 }

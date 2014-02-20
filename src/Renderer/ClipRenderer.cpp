@@ -26,32 +26,27 @@
 
 #include "Clip.h"
 #include "ClipRenderer.h"
+#include "ISource.h"
+#include "ISourceRenderer.h"
 #include "Library.h"
 #include "Media.h"
 #include "MainWorkflow.h"
+#include "RenderWidget.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
 
 ClipRenderer::ClipRenderer() :
     GenericRenderer(),
     m_clipLoaded( false ),
-    m_vlcMedia( NULL ),
     m_selectedClip( NULL ),
     m_begin( 0 ),
     m_end( -1 ),
     m_mediaChanged( false )
 {
-    connect( m_mediaPlayer,     SIGNAL( stopped() ),            this,   SLOT( __videoStopped() ) );
-    connect( m_mediaPlayer,     SIGNAL( paused() ),             this,   SIGNAL( paused() ) );
-    connect( m_mediaPlayer,     SIGNAL( playing() ),            this,   SIGNAL( playing() ) );
-    connect( m_mediaPlayer,     SIGNAL( volumeChanged() ),      this,   SIGNAL( volumeChanged() ) );
-    connect( m_mediaPlayer,     SIGNAL( timeChanged( qint64 ) ),this,   SLOT( __timeChanged( qint64 ) ) );
 }
 
 ClipRenderer::~ClipRenderer()
 {
-    if ( m_vlcMedia )
-        delete m_vlcMedia;
     stop();
 }
 
@@ -94,16 +89,18 @@ ClipRenderer::startPreview()
         return ;
     updateInfos( m_selectedClip );
 
-    //If an old media is found, we delete it, and disconnect
-    if ( m_vlcMedia != NULL )
-        delete m_vlcMedia;
-    m_vlcMedia = new LibVLCpp::Media( m_selectedClip->getMedia()->mrl() );
+    delete m_sourceRenderer;
+    m_sourceRenderer = m_selectedClip->getMedia()->source()->createRenderer( m_eventWatcher );
+    m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 
-    m_mediaPlayer->setKeyInput( false );
-    m_mediaPlayer->setMedia( m_vlcMedia );
+    connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( __videoStopped() ) );
+    connect( m_eventWatcher, SIGNAL( paused() ),  this, SIGNAL( paused() ) );
+    connect( m_eventWatcher, SIGNAL( playing() ), this, SIGNAL( playing() ) );
+    connect( m_eventWatcher, SIGNAL( volumeChanged() ), this, SIGNAL( volumeChanged() ) );
+    connect( m_eventWatcher, SIGNAL( timeChanged( qint64 ) ), this, SLOT( __timeChanged( qint64 ) ) );
 
-    m_mediaPlayer->play();
-    m_mediaPlayer->setPosition( (double)m_begin / (double)m_selectedClip->getMedia()->nbFrames() );
+    m_sourceRenderer->start();
+    m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->getMedia()->nbFrames() );
     m_clipLoaded = true;
     m_isRendering = true;
     m_paused = false;
@@ -116,7 +113,7 @@ ClipRenderer::stop()
     if ( m_clipLoaded == true && m_isRendering == true )
     {
         m_isRendering = false;
-        m_mediaPlayer->stop();
+        m_sourceRenderer->stop();
         m_paused = false;
         if ( m_mediaChanged == true )
             m_clipLoaded = false;
@@ -134,19 +131,19 @@ ClipRenderer::togglePlayPause( bool forcePause )
     }
     if ( m_paused == false && m_isRendering == true )
     {
-        m_mediaPlayer->pause();
+        m_sourceRenderer->playPause();
         m_paused = true;
     }
     else if ( forcePause == false )
     {
         if ( m_isRendering == false )
         {
-            m_mediaPlayer->play();
-            m_mediaPlayer->setPosition( m_begin / ( m_end - m_begin ) );
+            m_sourceRenderer->playPause();
+            m_sourceRenderer->setPosition( m_begin / ( m_end - m_begin ) );
             m_isRendering = true;
         }
         else
-            m_mediaPlayer->play();
+            m_sourceRenderer->playPause();
         m_paused = false;
     }
 }
@@ -154,14 +151,13 @@ ClipRenderer::togglePlayPause( bool forcePause )
 int
 ClipRenderer::getVolume() const
 {
-    return m_mediaPlayer->getVolume();
+    return m_sourceRenderer->volume();
 }
 
-int
-ClipRenderer::setVolume( int volume )
+void ClipRenderer::setVolume( int volume )
 {
     //Returns 0 if the volume was set, -1 if it was out of range
-    return m_mediaPlayer->setVolume( volume );
+    return m_sourceRenderer->setVolume( volume );
 }
 
 void
@@ -169,7 +165,7 @@ ClipRenderer::nextFrame()
 {
     if ( m_isRendering == true )
     {
-        m_mediaPlayer->nextFrame();
+        m_sourceRenderer->nextFrame();
     }
 }
 
@@ -181,9 +177,9 @@ ClipRenderer::previousFrame()
         if ( m_paused == false )
             togglePlayPause( true );
         /* FIXME: Implement a better way to render previous frame */
-        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_mediaPlayer->getFps()) );
-        m_mediaPlayer->setTime( m_mediaPlayer->getTime() - interval );
-        m_mediaPlayer->nextFrame();
+        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->getMedia()->fps() ) );
+        m_sourceRenderer->setTime( m_sourceRenderer->time() - interval );
+        m_sourceRenderer->nextFrame();
     }
 }
 
@@ -206,7 +202,7 @@ ClipRenderer::clipUnloaded( const QUuid& uuid )
 {
     if ( m_selectedClip != NULL && m_selectedClip->uuid() == uuid )
     {
-        m_mediaPlayer->stop();
+        m_sourceRenderer->stop();
         m_clipLoaded = false;
         m_selectedClip = NULL;
         m_isRendering = false;
@@ -219,7 +215,7 @@ ClipRenderer::getCurrentFrame() const
 {
     if ( m_clipLoaded == false || m_isRendering == false || m_selectedClip == NULL )
         return 0;
-    return qRound64( (qreal)m_mediaPlayer->getTime() / 1000 *
+    return qRound64( (qreal)m_sourceRenderer->time() / 1000 *
                      (qreal)m_selectedClip->getMedia()->fps() );
 }
 
@@ -244,7 +240,7 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
     {
         newFrame += m_begin;
         qint64 nbSeconds = qRound64( (qreal)newFrame / m_selectedClip->getMedia()->fps() );
-        m_mediaPlayer->setTime( nbSeconds * 1000 );
+        m_sourceRenderer->setTime( nbSeconds * 1000 );
     }
 }
 
@@ -259,15 +255,12 @@ ClipRenderer::__videoStopped()
     if ( m_mediaChanged == true )
         m_clipLoaded = false;
     emit frameChanged( 0, Vlmc::Renderer );
-    emit stopped();
 }
 
 void
 ClipRenderer::__timeChanged( qint64 time )
 {
-    float   fps = (qreal)m_mediaPlayer->getFps();
-    if ( fps < 0.1f )
-        fps = m_selectedClip->getMedia()->fps();
+    float fps = m_selectedClip->getMedia()->fps();
     qint64 f = qRound64( (qreal)time / 1000.0 * fps );
     if ( f >= m_end )
         return ;

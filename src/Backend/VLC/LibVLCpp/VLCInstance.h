@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Transcoder.h: Handle file transcoding.
+ * VLCInstance.h: Binding for libvlc instance
  *****************************************************************************
  * Copyright (C) 2008-2010 VideoLAN
  *
@@ -20,42 +20,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRANSCODER_H
-#define TRANSCODER_H
+#ifndef VLCINSTANCE_H
+#define VLCINSTANCE_H
 
-#include <QObject>
+#include "VLCpp.hpp"
+#include "Singleton.hpp"
 
-#include "Media.h"
+struct libvlc_instance_t;
 
-namespace Backend
+namespace LibVLCpp
 {
-    class ISourceRenderer;
+    /**
+     *  \warning    This class should be released after every other LibVLCpp classes.
+     */
+    class   Instance : public Internal< libvlc_instance_t >
+    {
+    public:
+        Instance( int argc, const char** argv );
+        ~Instance();
+        void setLogHook( void *data, libvlc_log_cb hook );
+    };
 }
 
-class RendererEventWatcher;
-
-class Transcoder : public QObject
-{
-    Q_OBJECT
-    public:
-        explicit    Transcoder( Media *media );
-        ~Transcoder();
-        void        transcodeToPs();
-
-    private:
-        Media*                      m_media;
-        QString                     m_destinationFile;
-        Backend::ISourceRenderer*   m_renderer;
-        RendererEventWatcher*       m_eventWatcher;
-
-    private slots:
-        void        transcodeFinished();
-
-    signals:
-        void        progress( float pos );
-        void        done();
-        //used for notification:
-        void        notify( QString );
-};
-
-#endif // TRANSCODER_H
+#endif // VLCINSTANCE_H

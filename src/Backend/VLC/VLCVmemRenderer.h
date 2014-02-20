@@ -1,7 +1,7 @@
 /*****************************************************************************
- * VLCInstance.h: Binding for libvlc instance
+ * VmemRenderer.h: Private VLC backend implementation of a renderer using vmem
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
@@ -20,36 +20,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLCINSTANCE_H
-#define VLCINSTANCE_H
+#ifndef VLCVMEMRENDERER_H
+#define VLCVMEMRENDERER_H
 
-#include "VLCpp.hpp"
-#include "Singleton.hpp"
+#include "VLCSourceRenderer.h"
 
-#include <QObject>
+class QImage;
 
-struct libvlc_instance_t;
-
-namespace LibVLCpp
+namespace Backend
 {
+namespace VLC
+{
+
+class VLCSource;
+
+class VmemRenderer : public VLCSourceRenderer
+{
+public:
+    VmemRenderer(VLCBackend *backend, VLCSource* source, ISourceRendererEventCb* callback );
+    LibVLCpp::MediaPlayer*  mediaPlayer();
     /**
-     *  \warning    This class should be released after every other LibVLCpp classes.
+     * @brief waitSnapshot  Wait for a snapshot to be computed and returns it.
+     *  The renderer doesn't own the snapshot, and it will have to be released by
+     *  the caller.
+     * @return
      */
-    class   Instance :  public QObject,
-                        public Internal< libvlc_instance_t >,
-                        public Singleton<Instance>
-    {
-        Q_OBJECT
-    private:
-        Instance( QObject* parent = NULL );
-        Instance( int argc, const char** argv );
-        ~Instance();
+    QImage *waitSnapshot();
 
-        static void     vlcLogHook( void* data, int level, const libvlc_log_t* ctx, const char* fmt, va_list args );
+private:
+    static void*    vmemLock( void* data, void **planes );
+    static void     vmemUnlock( void *data, void *picture, void *const *planes );
 
-    private:
-        friend class    Singleton<Instance>;
-    };
+private:
+    QImage*         m_snapshot;
+    bool            m_snapshotRequired;
+    QMutex          m_mutex;
+    QWaitCondition  m_waitCond;
+};
+
+}
 }
 
-#endif // VLCINSTANCE_H
+#endif // VMEMRENDERER_H

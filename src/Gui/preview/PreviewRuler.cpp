@@ -46,11 +46,7 @@ PreviewRuler::setRenderer( GenericRenderer* renderer )
     }
     m_renderer = renderer;
 
-    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             this, SLOT( update() ) );
-    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             this, SLOT( updateTimecode( qint64 ) ) );
-    connect( m_renderer, SIGNAL( stopped() ),
+    connect( m_renderer->eventWatcher(), SIGNAL( stopped() ),
              this, SLOT( clear() ) );
 }
 

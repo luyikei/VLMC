@@ -20,17 +20,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <QMutex>
+#include <QReadWriteLock>
+
 #include "ImageClipWorkflow.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "ISourceRenderer.h"
 #include "MainWorkflow.h"
 #include "Media.h"
-#include "VLCMediaPlayer.h"
-#include "VLCMedia.h"
+#include "SettingsManager.h"
 #include "Workflow/Types.h"
-
-#include <QReadWriteLock>
-#include <QStringBuilder>
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
@@ -49,55 +49,23 @@ ImageClipWorkflow::~ImageClipWorkflow()
     delete m_effectFrame;
 }
 
-QString
-ImageClipWorkflow::createSoutChain() const
+void ImageClipWorkflow::initializeInternals()
 {
-    QString chain = ":sout=#transcode{vcodec=RV32,width=";
-
-    chain += QString::number( MainWorkflow::getInstance()->getWidth() )
-            % ",height="
-            % QString::number( MainWorkflow::getInstance()->getHeight() )
-            % ",fps="
-            % QString::number((float)Clip::DefaultFPS)
-            % "}:smem{";
-    if ( m_fullSpeedRender == false )
-        chain += "time-sync";
-    else
-        chain += "no-time-sync";
-    chain += ",video-data=" % QString::number( reinterpret_cast<intptr_t>( this ) )
-            % ",video-prerender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getLockCallback() ) )
-            % ",video-postrender-callback="
-            % QString::number( reinterpret_cast<intptr_t>( getUnlockCallback() ) )
-            % '}';
-    return chain;
-}
-
-void ImageClipWorkflow::initializeVlcOutput()
-{
-    char    buffer[32];
-    m_vlcMedia->addOption(":no-audio");
-    m_vlcMedia->addOption(":no-sout-audio");
-    sprintf( buffer, ":fake-duration=%d", 1000 );
-    m_vlcMedia->addOption( buffer );
-    sprintf( buffer, ":fake-fps=%f", m_clipHelper->clip()->getMedia()->fps() );
-    m_vlcMedia->addOption( buffer );
+    m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
+    m_renderer->setOutputWidth( m_width );
+    m_renderer->setOutputHeight( m_height );
+    m_renderer->setOutputFps( (float)VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+    m_renderer->setOutputVideoCodec( "RV32" );
 
     m_effectFrame->resize( MainWorkflow::getInstance()->getWidth(),
                             MainWorkflow::getInstance()->getHeight() );
     m_isRendering = true;
 }
 
-void*
-ImageClipWorkflow::getLockCallback() const
+void
+ImageClipWorkflow::preallocate()
 {
-    return reinterpret_cast<void*>( &ImageClipWorkflow::lock );
-}
 
-void*
-ImageClipWorkflow::getUnlockCallback() const
-{
-    return reinterpret_cast<void*>( &ImageClipWorkflow::unlock );
 }
 
 Workflow::OutputBuffer*
@@ -116,20 +84,22 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode, qint64 currentFrame )
 }
 
 void
-ImageClipWorkflow::lock(ImageClipWorkflow *cw, void **pp_ret, int )
+ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
 {
+    ImageClipWorkflow* cw = reinterpret_cast<ImageClipWorkflow*>( data );
     cw->m_renderLock->lock();
     if ( cw->m_buffer == NULL )
     {
         cw->m_buffer = new Workflow::Frame( MainWorkflow::getInstance()->getWidth(),
                                             MainWorkflow::getInstance()->getHeight() );
     }
-    *pp_ret = cw->m_buffer->buffer();
+    *pp_ret = (uint8_t*)cw->m_buffer->buffer();
 }
 
 void
-ImageClipWorkflow::unlock(ImageClipWorkflow *cw, void*, int, int, int, int, qint64 )
+ImageClipWorkflow::unlock( void* data, uint8_t*, int, int, int, size_t, int64_t )
 {
+    ImageClipWorkflow* cw = reinterpret_cast<ImageClipWorkflow*>( data );
     cw->m_renderLock->unlock();
     cw->emit computedFinished();
 }
@@ -153,7 +123,7 @@ ImageClipWorkflow::getMaxComputedBuffers() const
 void
 ImageClipWorkflow::stopComputation()
 {
-    m_mediaPlayer->stop();
+    m_renderer->stop();
 }
 
 void

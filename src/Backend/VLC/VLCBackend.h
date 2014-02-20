@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Transcoder.h: Handle file transcoding.
+ * VLCBackend.h: Provides VLC functionnalities through IBackend interface
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
@@ -20,42 +20,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRANSCODER_H
-#define TRANSCODER_H
+#ifndef VLCBACKEND_H
+#define VLCBACKEND_H
 
-#include <QObject>
+#include <cstdarg>
 
-#include "Media.h"
+#include "IBackend.h"
+#include "Singleton.hpp"
+#include "VLCInstance.h"
 
 namespace Backend
 {
-    class ISourceRenderer;
-}
-
-class RendererEventWatcher;
-
-class Transcoder : public QObject
+namespace VLC
 {
-    Q_OBJECT
+
+class VLCBackend : public IBackend, public Singleton<VLCBackend>
+{
     public:
-        explicit    Transcoder( Media *media );
-        ~Transcoder();
-        void        transcodeToPs();
+        VLCBackend();
+        virtual ISource*        createSource( const char* path );
+        virtual IMemorySource*  createMemorySource();
+
+        // Accessible from VLCBackend only:
+        LibVLCpp::Instance* vlcInstance();
+    private:
+        static void         logHook( void* data, int level,
+                                     const libvlc_log_t* ctx, const char* fmt,
+                                     va_list args );
 
     private:
-        Media*                      m_media;
-        QString                     m_destinationFile;
-        Backend::ISourceRenderer*   m_renderer;
-        RendererEventWatcher*       m_eventWatcher;
+        friend class Singleton<VLCBackend>;
+        LibVLCpp::Instance* m_vlcInstance;
 
-    private slots:
-        void        transcodeFinished();
-
-    signals:
-        void        progress( float pos );
-        void        done();
-        //used for notification:
-        void        notify( QString );
 };
 
-#endif // TRANSCODER_H
+} //VLC
+
+IBackend* getBackend();
+
+
+} //Backend
+
+#endif // VLCBACKEND_H

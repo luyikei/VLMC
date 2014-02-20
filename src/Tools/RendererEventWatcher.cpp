@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Transcoder.h: Handle file transcoding.
+ * RendererEventWatcher.cpp: Watches events from a ISourceRenderer and convert them to SIGNAL
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
@@ -20,42 +20,63 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRANSCODER_H
-#define TRANSCODER_H
+#include "RendererEventWatcher.h"
 
-#include <QObject>
-
-#include "Media.h"
-
-namespace Backend
+RendererEventWatcher::RendererEventWatcher(QObject *parent) :
+    QObject(parent)
 {
-    class ISourceRenderer;
 }
 
-class RendererEventWatcher;
-
-class Transcoder : public QObject
+void
+RendererEventWatcher::onTimeChanged(int64_t time )
 {
-    Q_OBJECT
-    public:
-        explicit    Transcoder( Media *media );
-        ~Transcoder();
-        void        transcodeToPs();
+    emit timeChanged( time );
+}
 
-    private:
-        Media*                      m_media;
-        QString                     m_destinationFile;
-        Backend::ISourceRenderer*   m_renderer;
-        RendererEventWatcher*       m_eventWatcher;
+void
+RendererEventWatcher::onPlaying()
+{
+    emit playing();
+}
 
-    private slots:
-        void        transcodeFinished();
+void
+RendererEventWatcher::onPaused()
+{
+    emit paused();
+}
 
-    signals:
-        void        progress( float pos );
-        void        done();
-        //used for notification:
-        void        notify( QString );
-};
+void
+RendererEventWatcher::onStopped()
+{
+    emit stopped();
+}
 
-#endif // TRANSCODER_H
+void
+RendererEventWatcher::onEndReached()
+{
+    emit endReached();
+}
+
+void
+RendererEventWatcher::onVolumeChanged()
+{
+    emit volumeChanged();
+}
+
+void
+RendererEventWatcher::onPositionChanged( float pos )
+{
+    emit positionChanged( pos );
+}
+
+void
+RendererEventWatcher::onLengthChanged(int64_t length )
+{
+    emit lengthChanged( length );
+}
+
+void
+RendererEventWatcher::onErrorEncountered()
+{
+    emit errorEncountered();
+}

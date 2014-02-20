@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Transcoder.h: Handle file transcoding.
+ * IBackend.h: Provides an entry point to a backend functionnalities
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
@@ -20,42 +20,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TRANSCODER_H
-#define TRANSCODER_H
+#ifndef IBACKEND_H
+#define IBACKEND_H
 
-#include <QObject>
-
-#include "Media.h"
+class QString;
 
 namespace Backend
 {
-    class ISourceRenderer;
-}
 
-class RendererEventWatcher;
+class ISourceRenderer;
+class ISource;
+class IMemorySource;
 
-class Transcoder : public QObject
+class IBackend
 {
-    Q_OBJECT
     public:
-        explicit    Transcoder( Media *media );
-        ~Transcoder();
-        void        transcodeToPs();
-
-    private:
-        Media*                      m_media;
-        QString                     m_destinationFile;
-        Backend::ISourceRenderer*   m_renderer;
-        RendererEventWatcher*       m_eventWatcher;
-
-    private slots:
-        void        transcodeFinished();
-
-    signals:
-        void        progress( float pos );
-        void        done();
-        //used for notification:
-        void        notify( QString );
+        virtual ~IBackend() {}
+        virtual ISource* createSource( const char* path ) = 0;
+        virtual IMemorySource* createMemorySource() = 0;
 };
 
-#endif // TRANSCODER_H
+extern IBackend* getBackend();
+
+}
+
+#endif // IBACKEND_H

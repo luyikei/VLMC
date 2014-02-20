@@ -42,6 +42,11 @@ class   Timeline;
 class   WorkflowFileRenderer;
 class   WorkflowRenderer;
 
+namespace Backend
+{
+    class IBackend;
+}
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -120,6 +125,7 @@ private:
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
+    Backend::IBackend*      m_backend;
     PreviewWidget*          m_clipPreview;
     PreviewWidget*          m_projectPreview;
     WorkflowFileRenderer*   m_fileRenderer;

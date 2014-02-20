@@ -28,6 +28,7 @@
 #include "Workflow/MainWorkflow.h"
 
 class GenericRenderer;
+class RendererEventWatcher;
 
 namespace Ui {
     class PreviewWidget;
@@ -43,6 +44,10 @@ public:
     virtual ~PreviewWidget();
     const GenericRenderer*  getGenericRenderer() const;
     void                    setRenderer( GenericRenderer *renderer );
+    /**
+     * @brief setClipEdition Allows to enable/disable markers & create clip buttons
+     */
+    void                    setClipEdition( bool enable );
 
 private:
     Ui::PreviewWidget*      m_ui;
