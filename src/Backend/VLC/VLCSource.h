@@ -45,6 +45,7 @@ public:
     virtual bool                preparse();
     virtual quint32             width() const;
     virtual quint32             height() const;
+    virtual int64_t             length() const;
     virtual float               fps() const;
     virtual bool                hasVideo() const;
     virtual bool                hasAudio() const;
@@ -63,7 +64,7 @@ private:
     float                       m_fps;
     unsigned int                m_nbVideoTracks;
     unsigned int                m_nbAudioTracks;
-    qint64                      m_length; //in milliseconds.
+    int64_t                     m_length; //in milliseconds.
     QImage*                     m_snapshot;
 };
 

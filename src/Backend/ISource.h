@@ -23,6 +23,8 @@
 #ifndef ISOURCE_HPP
 #define ISOURCE_HPP
 
+#include <stdint.h>
+
 namespace Backend
 {
     class ISourceRendererEventCb;
@@ -38,12 +40,13 @@ namespace Backend
              *                  This method will block until computing is finished.
              * @return
              */
-            virtual bool preparse() = 0;
-            virtual unsigned int width() const = 0;
-            virtual unsigned int height() const = 0;
-            virtual float fps() const = 0;
-            virtual bool hasVideo() const = 0;
-            virtual bool hasAudio() const = 0;
+            virtual bool            preparse() = 0;
+            virtual unsigned int    width() const = 0;
+            virtual unsigned int    height() const = 0;
+            virtual int64_t         length() const = 0;
+            virtual float           fps() const = 0;
+            virtual bool            hasVideo() const = 0;
+            virtual bool            hasAudio() const = 0;
     };
 
     class IMemorySource

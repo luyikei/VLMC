@@ -124,6 +124,12 @@ VLCSource::height() const
     return m_height;
 }
 
+int64_t
+VLCSource::length() const
+{
+    return m_length;
+}
+
 float
 VLCSource::fps() const
 {
