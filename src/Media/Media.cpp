@@ -65,6 +65,7 @@ Media::Media(const QString &path ) :
     m_metadataComputed( false ),
     m_inWorkspace( false )
 {
+    setFilePath( path );
     Backend::IBackend* backend = Backend::getBackend();
     m_source = backend->createSource( qPrintable( path ) );
 }
