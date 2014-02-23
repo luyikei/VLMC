@@ -51,7 +51,7 @@ public:
      *  \brief  Set the length displayed in the cell
      *  \param  length  The media length, in ms.
      */
-    void                setLength( qint64 length, bool mSecs = true );
+    void                setLength( qint64 length );
     QString             title() const;
     const QUuid         &uuid() const;
     const Clip*         clip() const;

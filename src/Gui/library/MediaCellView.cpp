@@ -255,13 +255,10 @@ MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
 }
 
 void
-MediaCellView::setLength( qint64 length, bool mSecs )
+MediaCellView::setLength( qint64 length )
 {
     QTime   duration;
-    if ( mSecs )
-        duration = duration.addMSecs( length );
-    else
-        duration = duration.addSecs( length );
+    duration = duration.addMSecs( length );
     m_ui->length->setText( duration.toString( "hh:mm:ss" ) );
 }
 
