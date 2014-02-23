@@ -41,6 +41,7 @@ namespace Backend
              * @return
              */
             virtual bool            preparse() = 0;
+            virtual bool            isParsed() const = 0;
             virtual unsigned int    width() const = 0;
             virtual unsigned int    height() const = 0;
             virtual int64_t         length() const = 0;

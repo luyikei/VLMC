@@ -31,6 +31,7 @@ using namespace Backend::VLC;
 
 VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     : m_backend( backend )
+    , m_isParsed( false )
 {
     m_media = new LibVLCpp::Media( backend->vlcInstance(), path );
 }
@@ -55,6 +56,9 @@ VLCSource::createRenderer( ISourceRendererEventCb *callback )
 bool
 VLCSource::preparse()
 {
+    // This assume we won't try to parse the same media twice ast the same time
+    m_isParsed = true;
+
     VmemRenderer*           renderer = new VmemRenderer( m_backend, this, NULL );
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
@@ -82,6 +86,12 @@ VLCSource::preparse()
     }
     delete renderer;
     return true;
+}
+
+bool
+VLCSource::isParsed() const
+{
+    return m_isParsed;
 }
 
 static bool

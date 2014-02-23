@@ -43,6 +43,7 @@ public:
     virtual ~VLCSource();
     virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
     virtual bool                preparse();
+    virtual bool                isParsed() const;
     virtual quint32             width() const;
     virtual quint32             height() const;
     virtual int64_t             length() const;
@@ -68,6 +69,7 @@ private:
     unsigned int                m_nbAudioTracks;
     int64_t                     m_length; //in milliseconds.
     QImage*                     m_snapshot;
+    bool                        m_isParsed;
 };
 
 
