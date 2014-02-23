@@ -48,7 +48,9 @@ public:
     virtual int64_t             length() const;
     virtual float               fps() const;
     virtual bool                hasVideo() const;
+    virtual unsigned int        nbVideoTracks() const;
     virtual bool                hasAudio() const;
+    virtual unsigned int        nbAudioTracks() const;
 
     // Below this point are backend internal methods:
     LibVLCpp::Media*            media();

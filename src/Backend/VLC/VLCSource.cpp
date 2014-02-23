@@ -142,7 +142,19 @@ VLCSource::hasVideo() const
     return m_nbVideoTracks > 0;
 }
 
+unsigned int
+VLCSource::nbVideoTracks() const
+{
+    return m_nbVideoTracks;
+}
+
 bool VLCSource::hasAudio() const
 {
     return m_nbAudioTracks > 0;
+}
+
+unsigned int
+VLCSource::nbAudioTracks() const
+{
+    return m_nbAudioTracks;
 }

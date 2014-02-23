@@ -46,7 +46,9 @@ namespace Backend
             virtual int64_t         length() const = 0;
             virtual float           fps() const = 0;
             virtual bool            hasVideo() const = 0;
+            virtual unsigned int    nbVideoTracks() const = 0;
             virtual bool            hasAudio() const = 0;
+            virtual unsigned int    nbAudioTracks() const = 0;
     };
 
     class IMemorySource
