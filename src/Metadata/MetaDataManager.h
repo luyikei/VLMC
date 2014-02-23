@@ -27,8 +27,8 @@
 
 #include <QThread>
 #include <QQueue>
+#include <QMutex>
 
-class   QMutex;
 class   Media;
 namespace LibVLCpp
 {
@@ -50,7 +50,7 @@ class MetaDataManager : public QThread, public Singleton<MetaDataManager>
         virtual void            run();
 
     private:
-        QMutex                  *m_computingMutex;
+        QMutex                  m_computingMutex;
         QQueue<Media*>          m_mediaToCompute;
         bool                    m_computeInProgress;
         LibVLCpp::MediaPlayer   *m_mediaPlayer;

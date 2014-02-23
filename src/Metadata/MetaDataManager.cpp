@@ -38,7 +38,7 @@ MetaDataManager::~MetaDataManager()
 void
 MetaDataManager::computeMediaMetadata( Media *media )
 {
-    QMutexLocker lock( m_computingMutex );
+    QMutexLocker lock( &m_computingMutex );
     m_mediaToCompute.enqueue( media );
     if ( m_computeInProgress == false )
         start();
@@ -52,7 +52,7 @@ MetaDataManager::run()
     {
         Media*  target;
         {
-            QMutexLocker    lock( m_computingMutex );
+            QMutexLocker    lock( &m_computingMutex );
             if ( m_mediaToCompute.isEmpty() == true )
             {
                 m_computeInProgress = false;
