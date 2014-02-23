@@ -24,6 +24,7 @@
 #include "GraphicsAudioItem.h"
 
 #include "ClipHelper.h"
+#include "ISource.h"
 #include "Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
@@ -37,7 +38,7 @@
 GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    QTime length = QTime().addMSecs( clip->getMedia()->lengthMS() );
+    QTime length = QTime().addMSecs( clip->getMedia()->source()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( clip->getMedia()->fileName() )
@@ -50,7 +51,7 @@ GraphicsAudioItem::GraphicsAudioItem( ClipHelper* ch ) :
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
 
-    QTime length = QTime().addMSecs( ch->clip()->getMedia()->lengthMS() );
+    QTime length = QTime().addMSecs( ch->clip()->getMedia()->source()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( ch->clip()->getMedia()->fileName() )

@@ -25,6 +25,7 @@
   */
 
 #include "Clip.h"
+#include "ISource.h"
 #include "Library.h"
 #include "Media.h"
 #include "Workspace.h"
@@ -107,7 +108,7 @@ Clip::computeLength()
 {
     if ( m_media->inputType() == Media::File )
     {
-        float   fps = m_media->fps();
+        float   fps = m_media->source()->fps();
         if ( fps < 0.1f )
             fps = Clip::DefaultFPS;
         m_length = m_end - m_begin;

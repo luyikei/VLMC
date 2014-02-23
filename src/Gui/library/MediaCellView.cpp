@@ -26,6 +26,7 @@
 
 #include "Clip.h"
 #include "ClipProperty.h"
+#include "ISource.h"
 #include "Library.h"
 #include "Media.h"
 #include "MetaDataManager.h"
@@ -98,7 +99,7 @@ MediaCellView::metadataComputingStarted( const Media *media )
 void
 MediaCellView::metadataUpdated( const Media *media )
 {
-    setLength( media->lengthMS() );
+    setLength( media->source()->length() );
     m_ui->thumbnail->setEnabled( true );
     //If the media is a Video or an Image, we must wait for the snapshot to be computer
     //before allowing deletion.

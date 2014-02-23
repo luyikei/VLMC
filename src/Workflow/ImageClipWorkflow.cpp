@@ -26,6 +26,7 @@
 #include "ImageClipWorkflow.h"
 #include "Clip.h"
 #include "ClipHelper.h"
+#include "ISource.h"
 #include "ISourceRenderer.h"
 #include "MainWorkflow.h"
 #include "Media.h"
@@ -74,7 +75,7 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode, qint64 currentFrame )
     QMutexLocker    lock( m_renderLock );
 
     quint32 *buff = applyFilters( m_buffer, currentFrame,
-                                    currentFrame * 1000.0 / clip()->getMedia()->fps() );
+                                    currentFrame * 1000.0 / clip()->getMedia()->source()->fps() );
     if ( buff != NULL )
     {
         m_effectFrame->setBuffer( buff );

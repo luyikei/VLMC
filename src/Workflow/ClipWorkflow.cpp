@@ -103,7 +103,7 @@ ClipWorkflow::adjustBegin()
          m_clipHelper->clip()->getMedia()->fileType() == Media::Audio )
     {
         m_renderer->setTime( m_clipHelper->begin() /
-                                m_clipHelper->clip()->getMedia()->fps() * 1000 );
+                                m_clipHelper->clip()->getMedia()->source()->fps() * 1000 );
     }
 }
 

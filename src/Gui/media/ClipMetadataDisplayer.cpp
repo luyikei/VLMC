@@ -23,6 +23,7 @@
 #include "ClipMetadataDisplayer.h"
 
 #include "Clip.h"
+#include "ISource.h"
 #include "Media.h"
 
 #include <QTime>
@@ -41,19 +42,20 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
+    const Backend::ISource* source = media->source();
     updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
     m_ui->nameValueLabel->setText( media->fileInfo()->fileName() );
     //Resolution
-    m_ui->resolutionValueLabel->setText( QString::number( media->width() )
-                                       + " x " + QString::number( media->height() ) );
+    m_ui->resolutionValueLabel->setText( QString::number( source->width() )
+                                       + " x " + QString::number( source->height() ) );
     //FPS
-    m_ui->fpsValueLabel->setText( QString::number( media->fps() ) );
+    m_ui->fpsValueLabel->setText( QString::number( source->fps() ) );
     //nb tracks :
-    m_ui->nbVideoTracksValueLabel->setText( QString::number( media->nbVideoTracks() ) );
-    m_ui->nbAudioTracksValueLabel->setText( QString::number( media->nbAudioTracks() ) );
+    m_ui->nbVideoTracksValueLabel->setText( QString::number( source->nbVideoTracks() ) );
+    m_ui->nbAudioTracksValueLabel->setText( QString::number( source->nbAudioTracks() ) );
     //Path:
     m_ui->pathValueLabel->setText( media->fileInfo()->absoluteFilePath() );
     //Workspace:
@@ -118,8 +120,9 @@ ClipMetadataDisplayer::workspaceStateChanged( bool state )
 void
 ClipMetadataDisplayer::updateInterface()
 {
-    m_ui->fpsLabel->setVisible( m_watchedMedia->hasVideoTrack() );
-    m_ui->fpsValueLabel->setVisible( m_watchedMedia->hasVideoTrack() );
-    m_ui->resolutionLabel->setVisible( m_watchedMedia->hasVideoTrack() );
-    m_ui->resolutionValueLabel->setVisible( m_watchedMedia->hasVideoTrack() );
+    bool visible = m_watchedMedia->source()->hasVideo();
+    m_ui->fpsLabel->setVisible( visible );
+    m_ui->fpsValueLabel->setVisible( visible );
+    m_ui->resolutionLabel->setVisible( visible );
+    m_ui->resolutionValueLabel->setVisible( visible );
 }

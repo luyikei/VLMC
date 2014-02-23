@@ -54,14 +54,8 @@ const QString   Media::streamPrefix = "stream://";
 
 Media::Media(const QString &path ) :
     m_fileInfo( NULL ),
-    m_lengthMS( 0 ),
     m_nbFrames( 0 ),
-    m_width( 0 ),
-    m_height( 0 ),
-    m_fps( .0f ),
     m_baseClip( NULL ),
-    m_nbAudioTracks( 0 ),
-    m_nbVideoTracks( 0 ),
     m_metadataComputed( false ),
     m_inWorkspace( false )
 {
@@ -96,54 +90,6 @@ const QFileInfo*
 Media::fileInfo() const
 {
     return m_fileInfo;
-}
-
-void
-Media::setLength( qint64 length )
-{
-    m_lengthMS = length;
-}
-
-qint64
-Media::lengthMS() const
-{
-    return m_lengthMS;
-}
-
-int
-Media::width() const
-{
-    return m_width;
-}
-
-void
-Media::setWidth( int width )
-{
-    m_width = width;
-}
-
-int
-Media::height() const
-{
-    return m_height;
-}
-
-void
-Media::setHeight( int height )
-{
-    m_height = height;
-}
-
-float
-Media::fps() const
-{
-    return m_fps;
-}
-
-void
-Media::setFps( float fps )
-{
-    m_fps = fps;
 }
 
 Media::FileType
@@ -200,40 +146,10 @@ Media::source()
     return m_source;
 }
 
-bool
-Media::hasAudioTrack() const
+const Backend::ISource*
+Media::source() const
 {
-    return ( m_nbAudioTracks > 0 );
-}
-
-bool
-Media::hasVideoTrack() const
-{
-    return ( m_nbVideoTracks > 0 );
-}
-
-void
-Media::setNbAudioTrack( int nbTrack )
-{
-    m_nbAudioTracks = nbTrack;
-}
-
-void
-Media::setNbVideoTrack( int nbTracks )
-{
-    m_nbVideoTracks = nbTracks;
-}
-
-int
-Media::nbAudioTracks() const
-{
-    return m_nbAudioTracks;
-}
-
-int
-Media::nbVideoTracks() const
-{
-    return m_nbVideoTracks;
+    return m_source;
 }
 
 bool

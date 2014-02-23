@@ -28,6 +28,7 @@
 #include "Clip.h"
 #include "ClipMetadataDisplayer.h"
 #include "ClipRenderer.h"
+#include "ISource.h"
 #include "Library.h"
 #include "Media.h"
 #include "MediaCellView.h"
@@ -238,7 +239,7 @@ ImportController::accept()
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
-        if ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->inputType() == Media::File )
+        if ( clip->getMedia()->source()->length() == 0 && clip->getMedia()->inputType() == Media::File )
             invalidMedias = true;
         Library::getInstance()->addClip( clip );
     }
@@ -260,7 +261,7 @@ ImportController::handleInvalidMedias()
     {
         foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         {
-            if ( clip->getMedia()->lengthMS() == 0 && clip->getMedia()->inputType() == Media::File )
+            if ( clip->getMedia()->source()->length() == 0 && clip->getMedia()->inputType() == Media::File )
             {
                 Transcoder  *transcoder = new Transcoder( clip->getMedia() );
                 connect( transcoder, SIGNAL( done() ), transcoder, SLOT( deleteLater() ) );

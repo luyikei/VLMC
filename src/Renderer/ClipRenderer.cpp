@@ -177,7 +177,7 @@ ClipRenderer::previousFrame()
         if ( m_paused == false )
             togglePlayPause( true );
         /* FIXME: Implement a better way to render previous frame */
-        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->getMedia()->fps() ) );
+        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->getMedia()->source()->fps() ) );
         m_sourceRenderer->setTime( m_sourceRenderer->time() - interval );
         m_sourceRenderer->nextFrame();
     }
@@ -193,7 +193,7 @@ qint64
 ClipRenderer::getLengthMs() const
 {
     if ( m_selectedClip )
-        return ( qRound64( (qreal)( m_end - m_begin ) / m_selectedClip->getMedia()->fps() * 1000.0 ) );
+        return ( qRound64( (qreal)( m_end - m_begin ) / m_selectedClip->getMedia()->source()->fps() * 1000.0 ) );
     return 0;
 }
 
@@ -216,14 +216,14 @@ ClipRenderer::getCurrentFrame() const
     if ( m_clipLoaded == false || m_isRendering == false || m_selectedClip == NULL )
         return 0;
     return qRound64( (qreal)m_sourceRenderer->time() / 1000 *
-                     (qreal)m_selectedClip->getMedia()->fps() );
+                     (qreal)m_selectedClip->getMedia()->source()->fps() );
 }
 
 float
 ClipRenderer::getFps() const
 {
     if ( m_selectedClip != NULL )
-        return m_selectedClip->getMedia()->fps();
+        return m_selectedClip->getMedia()->source()->fps();
     return 0.0f;
 }
 
@@ -239,7 +239,7 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
     if ( m_isRendering == true )
     {
         newFrame += m_begin;
-        qint64 nbSeconds = qRound64( (qreal)newFrame / m_selectedClip->getMedia()->fps() );
+        qint64 nbSeconds = qRound64( (qreal)newFrame / m_selectedClip->getMedia()->source()->fps() );
         m_sourceRenderer->setTime( nbSeconds * 1000 );
     }
 }
@@ -260,7 +260,7 @@ ClipRenderer::__videoStopped()
 void
 ClipRenderer::__timeChanged( qint64 time )
 {
-    float fps = m_selectedClip->getMedia()->fps();
+    float fps = m_selectedClip->getMedia()->source()->fps();
     qint64 f = qRound64( (qreal)time / 1000.0 * fps );
     if ( f >= m_end )
         return ;

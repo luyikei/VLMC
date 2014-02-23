@@ -29,6 +29,7 @@
 #include "EffectInstance.h"
 #include "EffectHelper.h"
 #include "ImageClipWorkflow.h"
+#include "ISource.h"
 #include "MainWorkflow.h"
 #include "Media.h"
 #include "Types.h"
@@ -507,8 +508,9 @@ TrackWorkflow::clear()
 void
 TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw )
 {
-    qint64  nbMs = ( currentFrame - start ) / cw->clip()->getMedia()->fps() * 1000;
-    qint64  beginInMs = cw->getClipHelper()->begin() / cw->clip()->getMedia()->fps() * 1000;
+    float fps = cw->clip()->getMedia()->source()->fps();
+    qint64  nbMs = ( currentFrame - start ) / fps * 1000;
+    qint64  beginInMs = cw->getClipHelper()->begin() / fps * 1000;
     qint64  startFrame = beginInMs + nbMs;
     cw->setTime( startFrame );
 }

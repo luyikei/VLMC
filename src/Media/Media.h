@@ -85,7 +85,8 @@ public:
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
-    Backend::ISource*           source();
+    Backend::ISource *source();
+    const Backend::ISource *source() const;
     /**
      *  \brief                  Set this media's path.
      *
@@ -93,37 +94,9 @@ public:
      */
     void                        setFilePath( const QString& path );
 
-    /**
-        \return                 Returns the length of this media (ie the
-                                video duration) in milliseconds.
-    */
-    qint64                      lengthMS() const;
-    /**
-        \brief                  This methods is most of an entry point for the
-                                MetadataManager than enything else.
-                                If you use it to set a inconsistant media length
-                                you'll just have to blame yourself !
-    */
-    void                        setLength( qint64 length );
     void                        setNbFrames( qint64 nbFrames );
 
-    int                         width() const;
-    void                        setWidth( int width );
-
-    int                         height() const;
-    void                        setHeight( int height );
-
-    float                       fps() const;
-    void                        setFps( float fps );
-
     qint64                      nbFrames() const;
-
-    bool                        hasAudioTrack() const;
-    bool                        hasVideoTrack() const;
-    void                        setNbAudioTrack( int nbTrack );
-    void                        setNbVideoTrack( int nbTrack );
-    int                         nbAudioTracks() const;
-    int                         nbVideoTracks() const;
 
     FileType                    fileType() const;
     void                        setFileType( FileType type );
@@ -156,17 +129,11 @@ protected:
     Backend::ISource*           m_source;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
-    qint64                      m_lengthMS;
     qint64                      m_nbFrames;
-    unsigned int                m_width;
-    unsigned int                m_height;
-    float                       m_fps;
     FileType                    m_fileType;
     InputType                   m_inputType;
     QString                     m_fileName;
     Clip*                       m_baseClip;
-    int                         m_nbAudioTracks;
-    int                         m_nbVideoTracks;
     bool                        m_metadataComputed;
     bool                        m_inWorkspace;
     QString                     m_workspacePath;

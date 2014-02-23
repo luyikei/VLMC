@@ -32,6 +32,7 @@
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Helper.h"
+#include "ISource.h"
 #include "Library.h"
 #include "Media.h"
 //Ugly part {
@@ -374,14 +375,17 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
 {
     const QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
     Clip *clip = Library::getInstance()->clip( fullId );
-    if ( !clip ) return;
-    if ( clip->getMedia()->hasAudioTrack() == false &&
-         clip->getMedia()->hasVideoTrack() == false )
+    if ( clip == NULL )
+        return;
+    bool hasVideo = clip->getMedia()->source()->hasVideo();
+    bool hasAudio = clip->getMedia()->source()->hasAudio();
+    if ( hasAudio == false && hasVideo == false )
         return ;
 
-    if ( clip->getMedia()->hasAudioTrack() == true )
+    if ( hasAudio == true )
     {
-        if ( m_dragAudioItem ) delete m_dragAudioItem;
+        if ( m_dragAudioItem )
+            delete m_dragAudioItem;
         m_dragAudioItem = new GraphicsAudioItem( clip );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( m_dragAudioItem->itemHeight() );
@@ -389,9 +393,10 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
         connect( m_dragAudioItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
-    if ( clip->getMedia()->hasVideoTrack() == true )
+    if ( hasVideo == true )
     {
-        if ( m_dragVideoItem ) delete m_dragVideoItem;
+        if ( m_dragVideoItem )
+            delete m_dragVideoItem;
         m_dragVideoItem = new GraphicsMovieItem( clip );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( m_dragVideoItem->itemHeight() );
@@ -400,10 +405,9 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
                  this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
     }
     // Group the items together
-    if ( clip->getMedia()->hasAudioTrack() == true &&
-         clip->getMedia()->hasVideoTrack() == true  )
+    if ( hasVideo == true && hasAudio == true )
         m_dragVideoItem->group( m_dragAudioItem );
-    if ( clip->getMedia()->hasVideoTrack() == false )
+    if ( hasVideo == false )
         moveItem( m_dragAudioItem, event->pos() );
     else
         moveItem( m_dragVideoItem, event->pos() );

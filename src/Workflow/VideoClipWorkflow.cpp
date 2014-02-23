@@ -24,6 +24,7 @@
 #include "EffectInstance.h"
 #include "MainWorkflow.h"
 #include "Media.h"
+#include "ISource.h"
 #include "ISourceRenderer.h"
 #include "SettingsManager.h"
 #include "VideoClipWorkflow.h"
@@ -119,7 +120,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
         buff = m_computedBuffers.head();
 
     quint32     *newFrame = applyFilters( buff, currentFrame,
-                                 currentFrame * 1000.0 / clip()->getMedia()->fps() );
+                                 currentFrame * 1000.0 / clip()->getMedia()->source()->fps() );
     if ( newFrame != NULL )
         buff->setBuffer( newFrame );
 
