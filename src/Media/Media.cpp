@@ -55,24 +55,20 @@ const QString   Media::streamPrefix = "stream://";
 QPixmap*        Media::defaultSnapshot = NULL;
 
 Media::Media(const QString &path )
-    : m_fileInfo( NULL )
+    : m_source( NULL )
+    , m_fileInfo( NULL )
     , m_nbFrames( 0 )
     , m_baseClip( NULL )
     , m_inWorkspace( false )
     , m_snapshotImage( NULL )
 {
     setFilePath( path );
-    Backend::IBackend* backend = Backend::getBackend();
-    m_source = backend->createSource( qPrintable( path ) );
-    MetaDataManager::getInstance()->computeMediaMetadata( this );
 }
 
 Media::~Media()
 {
-    if ( m_source )
-        delete m_source;
-    if ( m_fileInfo )
-        delete m_fileInfo;
+    delete m_source;
+    delete m_fileInfo;
 }
 
 void
@@ -187,9 +183,12 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     computeFileType();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
-//    if ( m_vlcMedia )
-//        delete m_vlcMedia;
-//    m_vlcMedia = new LibVLCpp::Media( m_mrl );
+
+    Backend::IBackend* backend = Backend::getBackend();
+    delete m_source;
+    m_source = backend->createSource( qPrintable( path ) );
+    MetaDataManager::getInstance()->computeMediaMetadata( this );
+
     //Don't call this before setting all the internals, as it relies on Media::fileInfo.
     if ( Workspace::isInProjectDir( this ) == true )
     {
