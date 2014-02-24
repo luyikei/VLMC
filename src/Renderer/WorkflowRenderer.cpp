@@ -278,11 +278,13 @@ WorkflowRenderer::internalPlayPause( bool forcePause )
 void
 WorkflowRenderer::stop()
 {
+
     m_isRendering = false;
     m_paused = false;
     m_stopping = true;
     m_mainWorkflow->stopFrameComputing();
-    m_sourceRenderer->stop();
+    if ( m_sourceRenderer != NULL )
+        m_sourceRenderer->stop();
     m_mainWorkflow->stop();
     delete[] m_silencedAudioBuffer;
     m_silencedAudioBuffer = NULL;
