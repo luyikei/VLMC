@@ -34,8 +34,7 @@ WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* re
         m_renderer( renderer )
 {
     m_ui.setupUi( this );
-    connect( m_ui.cancelButton, SIGNAL( clicked() ), m_renderer, SLOT( stop() ) );
-    connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( close() ) );
+    connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( cancel() ) );
     connect( m_renderer, SIGNAL( renderComplete() ), this, SLOT( accept() ) );
     connect( m_renderer, SIGNAL( frameChanged( qint64 ) ), this, SLOT( frameChanged( qint64 ) ) );
     connect( m_renderer, SIGNAL( imageUpdated( const uchar* ) ),
@@ -76,4 +75,11 @@ WorkflowFileRendererDialog::frameChanged( qint64 frame )
                                         QString::number( totalFrames ) ) );
         setProgressBarValue( frame * 100 / totalFrames );
     }
+}
+
+void
+WorkflowFileRendererDialog::cancel()
+{
+    m_renderer->stop();
+    close();
 }

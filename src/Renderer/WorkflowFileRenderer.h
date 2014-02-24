@@ -59,8 +59,6 @@ protected:
     virtual Backend::ISourceRenderer::MemoryInputUnlockCallback getUnlockCallback();
 
 private slots:
-    //FIXME: Why a slot here versus a method in parent class?!
-    void                        stop();
     void                        __frameChanged( qint64 frame,
                                                 Vlmc::FrameChangedReason reason );
 

@@ -74,7 +74,7 @@ WorkflowRenderer::initializeRenderer()
 
 WorkflowRenderer::~WorkflowRenderer()
 {
-    killRenderer();
+    stop();
 
     delete m_esHandler;
     delete m_silencedAudioBuffer;
@@ -277,16 +277,6 @@ WorkflowRenderer::internalPlayPause( bool forcePause )
 
 void
 WorkflowRenderer::stop()
-{
-    //Since we want permanent render (to have a permanent render update, we shouldn't
-    //stop, but pause
-//    togglePlayPause( true );
-//    m_mainWorkflow->setCurrentFrame( 0, MainWorkflow::Renderer );
-    killRenderer();
-}
-
-void
-WorkflowRenderer::killRenderer()
 {
     m_isRendering = false;
     m_paused = false;

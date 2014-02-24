@@ -68,12 +68,6 @@ WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
     m_sourceRenderer->start();
 }
 
-void
-WorkflowFileRenderer::stop()
-{
-    WorkflowRenderer::killRenderer();
-}
-
 float
 WorkflowFileRenderer::getFps() const
 {

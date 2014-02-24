@@ -48,6 +48,7 @@ public slots:
 
 private slots:
     void    frameChanged( qint64 );
+    void    cancel();
 
     friend class    WorkflowFileRenderer;
 };

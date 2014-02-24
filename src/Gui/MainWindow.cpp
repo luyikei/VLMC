@@ -682,7 +682,7 @@ MainWindow::on_actionRender_triggered()
 {
     if ( checkVideoLength() )
     {
-        m_renderer->killRenderer();
+        m_renderer->stop();
         //Setup dialog box for querying render parameters.
         renderVideoSettings( false );
     }
@@ -693,7 +693,7 @@ MainWindow::on_actionShare_On_Internet_triggered()
 {
     if ( checkVideoLength() )
     {
-        m_renderer->killRenderer();
+        m_renderer->stop();
 
         if( !renderVideoSettings( true ) )
             return;

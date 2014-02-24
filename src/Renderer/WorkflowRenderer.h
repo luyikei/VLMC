@@ -137,15 +137,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         virtual float       getFps() const;
 
-        /**
-         *  \brief          Completely kill the renderer.
-         *
-         *  This will stop both mainworkflow and renderer thread.
-         *  This should only be used when destroying the renderer.
-         *  \sa             stop();
-         */
-        void                killRenderer();
-
         void                saveProject( QXmlStreamWriter &project ) const;
         void                loadProject( const QDomElement& project );
     private:
