@@ -64,7 +64,7 @@ VLCSource::preparse()
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
         EventWaiter ew( mediaPlayer );
-        ew.add( libvlc_MediaPlayerTimeChanged );
+        ew.add( libvlc_MediaPlayerLengthChanged );
         renderer->start();
         if ( ew.wait( 3000 ) != EventWaiter::Success )
         {
