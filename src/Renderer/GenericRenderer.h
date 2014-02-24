@@ -73,15 +73,13 @@ public:
      *  This method is renderer dependant. It has to be implemented in the
      *  underlying renderer implementation.
      *  When this method is called :
-     *      - if the render has not started and forcePause is false, the render is started
-     *      - if the render has not started and forcePause is true, nothing happens.
+     *      - if the render has not started the render is started
      *      - if the render has started and is not paused, the render will pause
-     *      - if the render has started, and is paused, the render will unpause if
-     *          forcePause is false.
+     *      - if the render has started and is paused, the render will unpause
      *  \param  forcePause  Will force the pause if true.
      *  \sa     stop()
      */
-    virtual void        togglePlayPause( bool forcePause = false ) = 0;
+    virtual void        togglePlayPause() = 0;
 
     /**
      *  \brief Render the next frame

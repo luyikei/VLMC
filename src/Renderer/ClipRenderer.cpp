@@ -121,7 +121,7 @@ ClipRenderer::stop()
 }
 
 void
-ClipRenderer::togglePlayPause( bool forcePause )
+ClipRenderer::togglePlayPause()
 {
     if ( m_clipLoaded == false )
     {
@@ -129,22 +129,10 @@ ClipRenderer::togglePlayPause( bool forcePause )
         startPreview();
         return ;
     }
-    if ( m_paused == false && m_isRendering == true )
+    if ( m_isRendering == true )
     {
         m_sourceRenderer->playPause();
-        m_paused = true;
-    }
-    else if ( forcePause == false )
-    {
-        if ( m_isRendering == false )
-        {
-            m_sourceRenderer->start();
-            m_sourceRenderer->setPosition( m_begin / ( m_end - m_begin ) );
-            m_isRendering = true;
-        }
-        else
-            m_sourceRenderer->playPause();
-        m_paused = false;
+        m_paused = !m_paused;
     }
 }
 
@@ -175,7 +163,10 @@ ClipRenderer::previousFrame()
     if ( m_isRendering == true )
     {
         if ( m_paused == false )
-            togglePlayPause( true );
+        {
+            togglePlayPause();
+            Q_ASSERT( m_paused == true );
+        }
         /* FIXME: Implement a better way to render previous frame */
         qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->getMedia()->source()->fps() ) );
         m_sourceRenderer->setTime( m_sourceRenderer->time() - interval );

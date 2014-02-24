@@ -39,7 +39,7 @@ public:
     explicit ClipRenderer();
     virtual ~ClipRenderer();
 
-    virtual void            togglePlayPause( bool forcePause );
+    virtual void            togglePlayPause();
     virtual void            stop();
     virtual void            setVolume( int volume );
     virtual int             getVolume() const;

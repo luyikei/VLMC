@@ -81,7 +81,7 @@ class   WorkflowRenderer : public GenericRenderer
          *  \warning    Do NOT call this method from a constructor as it calls some
          *              virtual methods.
          */
-        virtual void        togglePlayPause( bool forcePause );
+        virtual void        togglePlayPause();
         /**
          *  \brief Stop the mainworkflow, but not the renderer.
          *
@@ -140,11 +140,6 @@ class   WorkflowRenderer : public GenericRenderer
         void                saveProject( QXmlStreamWriter &project ) const;
         void                loadProject( const QDomElement& project );
     private:
-        /**
-         *  \brief          This is a subpart of the togglePlayPause( bool ) method
-         *  \sa             togglePlayPause( bool );
-         */
-        void                internalPlayPause( bool forcePause );
         /**
          *  \brief          This is a subpart of the togglePlayPause( bool ) method
          *

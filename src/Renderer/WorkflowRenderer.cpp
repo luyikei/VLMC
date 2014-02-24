@@ -247,32 +247,12 @@ WorkflowRenderer::previousFrame()
 }
 
 void
-WorkflowRenderer::togglePlayPause( bool forcePause )
+WorkflowRenderer::togglePlayPause()
 {
-    if ( m_isRendering == false && forcePause == false )
+    if ( m_isRendering == false )
         startPreview();
     else
-        internalPlayPause( forcePause );
-}
-
-void
-WorkflowRenderer::internalPlayPause( bool forcePause )
-{
-    //If force pause is true, we just ensure that this render is paused... no need to start it.
-    if ( m_isRendering == true )
-    {
-        if ( m_paused == true && forcePause == false )
-        {
-            m_paused = false;
-        }
-        else
-        {
-            if ( m_paused == false )
-            {
-                m_paused = true;
-            }
-        }
-    }
+        m_paused = !m_paused;
 }
 
 void
