@@ -31,6 +31,7 @@ using namespace Backend::VLC;
 
 VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     : m_backend( backend )
+    , m_snapshot( NULL )
     , m_isParsed( false )
 {
     m_media = new LibVLCpp::Media( backend->vlcInstance(), "file://" + path );
