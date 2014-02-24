@@ -90,6 +90,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
     m_source->setAspectRatio( qPrintable( aspectRatio() ) );
     m_source->setNumberChannels( m_nbChannels );
     m_source->setSampleRate( m_rate );
+    m_esHandler->fps = fps;
 
 
     delete m_sourceRenderer;
@@ -158,6 +159,7 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
     else
         *buffer = ret->buffer();
     *bufferSize = ret->size();
+    vlmcDebug() << __func__ << "Rendered frame. pts:" << m_pts;
     return 0;
 }
 
@@ -195,6 +197,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
         ptsDiff = m_pts - m_audioPts;
     }
     m_audioPts = *pts = m_audioPts + ptsDiff;
+    vlmcDebug() << __func__ << "Rendered audio sample. pts:" << m_audioPts;
     return 0;
 }
 
