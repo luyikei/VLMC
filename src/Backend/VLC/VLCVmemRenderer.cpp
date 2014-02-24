@@ -61,10 +61,7 @@ VmemRenderer::waitSnapshot()
     m_snapshotRequired = true;
     if ( m_waitCond.wait( &m_mutex, 3000 ) == false )
         return NULL;
-    // Do not use regular copy ctor, as it is a shallow copy. m_snapshot might
-    // become invalid as soon as we release the mutex, since vmem could be
-    // rendering on it before the renderer is stopped
-    return new QImage( m_snapshot->bits(), (int)m_snapshot->width(), (int)m_snapshot->height(), m_snapshot->format() );
+    return new QImage( *m_snapshot );
 }
 
 void*
