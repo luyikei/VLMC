@@ -186,8 +186,7 @@ Media::onMetaDataComputed()
     if ( m_source->hasVideo() && m_source->snapshot() != NULL )
     {
         Q_ASSERT( m_snapshotImage == NULL );
-        m_snapshotImage = new QImage( m_source->snapshot(), m_source->width(),
-                                      m_source->height(), QImage::Format_RGB32 );
+        m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
         emit snapshotAvailable();
     }
 }
