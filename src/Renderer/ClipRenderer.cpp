@@ -202,7 +202,7 @@ ClipRenderer::clipUnloaded( const QUuid& uuid )
 {
     if ( m_selectedClip != NULL && m_selectedClip->uuid() == uuid )
     {
-        m_sourceRenderer->stop();
+        stop();
         m_clipLoaded = false;
         m_selectedClip = NULL;
         m_isRendering = false;
