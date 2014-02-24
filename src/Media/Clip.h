@@ -187,7 +187,7 @@ class   Clip : public QObject
         Clip*               m_parent;
 
     private slots:
-        void                mediaMetadataUpdated( const Media* media );
+        void                mediaMetadataUpdated();
 
     signals:
         /**

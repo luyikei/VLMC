@@ -53,7 +53,7 @@ class ClipMetadataDisplayer : public QWidget
         const Media                     *m_watchedMedia;
 
     private slots:
-        void                            metadataUpdated( const Media *media );
+        void                            metadataUpdated();
         void                            workspaceStateChanged( bool state );
         void                            clipDestroyed( Clip* clip );
 

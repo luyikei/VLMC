@@ -37,17 +37,17 @@ ClipMetadataDisplayer::ClipMetadataDisplayer( QWidget *parent /*= NULL*/ ) :
 }
 
 void
-ClipMetadataDisplayer::metadataUpdated( const Media *media )
+ClipMetadataDisplayer::metadataUpdated()
 {
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
-    const Backend::ISource* source = media->source();
+    const Backend::ISource* source = m_watchedMedia->source();
     updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
-    m_ui->nameValueLabel->setText( media->fileInfo()->fileName() );
+    m_ui->nameValueLabel->setText( m_watchedMedia->fileInfo()->fileName() );
     //Resolution
     m_ui->resolutionValueLabel->setText( QString::number( source->width() )
                                        + " x " + QString::number( source->height() ) );
@@ -57,9 +57,9 @@ ClipMetadataDisplayer::metadataUpdated( const Media *media )
     m_ui->nbVideoTracksValueLabel->setText( QString::number( source->nbVideoTracks() ) );
     m_ui->nbAudioTracksValueLabel->setText( QString::number( source->nbAudioTracks() ) );
     //Path:
-    m_ui->pathValueLabel->setText( media->fileInfo()->absoluteFilePath() );
+    m_ui->pathValueLabel->setText( m_watchedMedia->fileInfo()->absoluteFilePath() );
     //Workspace:
-    workspaceStateChanged( media->isInWorkspace() );
+    workspaceStateChanged( m_watchedMedia->isInWorkspace() );
 }
 
 void
@@ -98,11 +98,11 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
     m_watchedMedia = clip->getMedia();
     connect( m_watchedClip, SIGNAL( unloaded( Clip* ) ), this, SLOT( clipDestroyed( Clip* ) ) );
     if ( m_watchedMedia->isMetadataComputed() == true )
-        metadataUpdated( m_watchedMedia );
+        metadataUpdated();
     else
     {
-        connect( m_watchedMedia, SIGNAL( metaDataComputed(const Media*) ),
-                 this, SLOT( metadataUpdated( const Media*) ) );
+        connect( m_watchedMedia, SIGNAL( metaDataComputed() ),
+                 this, SLOT( metadataUpdated() ) );
     }
     connect( m_watchedMedia, SIGNAL( workspaceStateChanged( bool ) ),
              this, SLOT( workspaceStateChanged( bool ) ) );

@@ -75,7 +75,7 @@ public slots:
 private slots:
     void                snapshotUpdated();
     void                metadataComputingStarted( const Media *media );
-    void                metadataUpdated( const Media *media );
+    void                metadataUpdated();
     void                nbClipUpdated();
 
 signals:

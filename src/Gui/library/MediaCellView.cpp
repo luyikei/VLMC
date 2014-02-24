@@ -69,10 +69,10 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         connect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),
                  this, SLOT( metadataComputingStarted( const Media* ) ), Qt::DirectConnection );
     }
-    connect( clip->getMedia(), SIGNAL( metaDataComputed(const Media*) ),
-             this, SLOT( metadataUpdated( const Media*) ) );
+    connect( clip->getMedia(), SIGNAL( metaDataComputed() ),
+             this, SLOT( metadataUpdated() ) );
     // Snapshot generation will generate a QPixmap, which has to be done on GUI thread
-    connect( clip->getMedia(), SIGNAL( snapshotComputed() ),
+    connect( clip->getMedia(), SIGNAL( snapshotAvailable() ),
              this, SLOT( snapshotUpdated() ), Qt::QueuedConnection );
 
     setThumbnail( clip->getMedia()->snapshot() );
@@ -98,13 +98,13 @@ MediaCellView::metadataComputingStarted( const Media *media )
 }
 
 void
-MediaCellView::metadataUpdated( const Media *media )
+MediaCellView::metadataUpdated()
 {
-    setLength( media->source()->length() );
+    setLength( m_clip->getMedia()->source()->length() );
     m_ui->thumbnail->setEnabled( true );
     //If the media is a Video or an Image, we must wait for the snapshot to be computer
     //before allowing deletion.
-    if ( media->fileType() == Media::Audio )
+    if ( m_clip->getMedia()->fileType() == Media::Audio )
         m_ui->delLabel->setEnabled( true );
 }
 
