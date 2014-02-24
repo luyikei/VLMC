@@ -38,6 +38,7 @@ class VmemRenderer : public VLCSourceRenderer
 {
 public:
     VmemRenderer(VLCBackend *backend, VLCSource* source, ISourceRendererEventCb* callback );
+    virtual ~VmemRenderer();
     LibVLCpp::MediaPlayer*  mediaPlayer();
     /**
      * @brief waitSnapshot  Wait for a snapshot to be computed and returns it.

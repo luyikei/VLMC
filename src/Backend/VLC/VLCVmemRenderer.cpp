@@ -31,10 +31,20 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
     : VLCSourceRenderer( backend, source, callback )
     , m_snapshotRequired( false )
 {
+    setName( "VmemRenderer" );
     m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
     m_mediaPlayer->setupVmem( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );
     m_mediaPlayer->setupVmemCallbacks( &VmemRenderer::vmemLock, NULL, NULL, this );
     m_mediaPlayer->setAudioOutput( "dummy" );
+}
+
+VmemRenderer::~VmemRenderer()
+{
+    /*
+     * We need to stop the media player from here, otherwise m_mutex would be
+     * destroyed in a potentially locked state, while the vmem tries to lock/unlock.
+     */
+    stop();
 }
 
 LibVLCpp::MediaPlayer*
@@ -73,6 +83,7 @@ VmemRenderer::vmemUnlock(void *data, void *picture, void * const *planes)
     VmemRenderer* self = reinterpret_cast<VmemRenderer*>( data );
     if ( self->m_snapshotRequired == true )
     {
+        self->m_snapshotRequired = false;
         self->m_waitCond.wakeAll();
     }
     self->m_mutex.unlock();
