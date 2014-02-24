@@ -192,9 +192,10 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
             adjustClipTime( currentFrame, start, cw );
         return cw->getOutput( mode, currentFrame - start );
     }
-    else if ( state == ClipWorkflow::Stopped )
+    else if ( state == ClipWorkflow::Stopped || state == ClipWorkflow::Initializing )
     {
-        cw->initialize();
+        if ( state == ClipWorkflow::Stopped )
+            cw->initialize();
         //If the init failed, don't even try to call getOutput.
         if ( cw->waitForCompleteInit() == false )
             return NULL;
@@ -214,7 +215,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     }
     else
     {
-        vlmcCritical() << "Unexpected state:" << state;
+        vlmcFatal( "Unexpected state: %d ", state );
     }
     return NULL;
 }
