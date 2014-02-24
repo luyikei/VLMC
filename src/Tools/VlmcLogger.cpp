@@ -170,13 +170,13 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
     switch ( type )
     {
     case QtDebugMsg:
-        fprintf(stderr, "%s\n", msg);
+        fprintf(stdout, "%s\n", msg);
         break;
     case QtWarningMsg:
-        fprintf(stderr, "%s\n", msg);
+        fprintf(stdout, "%s\n", msg);
         break;
     case QtCriticalMsg:
-        fprintf(stderr, "%s\n", msg);
+        fprintf(stdout, "%s\n", msg);
         break;
     case QtFatalMsg:
         fprintf(stderr, "%s\n", msg);
