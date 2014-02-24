@@ -66,7 +66,7 @@ ClipRenderer::setClip( Clip* clip )
         return ;
     }
     m_selectedClip = clip;
-    if ( clip->length() == 0 )
+    if ( clip->nbFrames() == 0 )
         return ;
     updateInfos( clip );
 }
@@ -85,7 +85,7 @@ ClipRenderer::updateInfos( Clip* clip )
 void
 ClipRenderer::startPreview()
 {
-    if ( m_selectedClip == NULL || m_selectedClip->length() == 0 )
+    if ( m_selectedClip == NULL || m_selectedClip->nbFrames() == 0 )
         return ;
     updateInfos( m_selectedClip );
 

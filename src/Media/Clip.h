@@ -83,7 +83,7 @@ class   Clip : public QObject
         /**
             \return         Returns the clip length in frame.
         */
-        qint64              length() const;
+        qint64              nbFrames() const;
 
         /**
             \return         Returns the clip length in seconds.
@@ -161,7 +161,7 @@ class   Clip : public QObject
         /**
          *  \brief  The length in frames
          */
-        qint64              m_length;
+        qint64              m_nbFrames;
         /**
          *  \brief  The length in seconds (Be carreful, VLC uses MILLIseconds)
          */

@@ -92,9 +92,9 @@ Clip::getMedia() const
 }
 
 qint64
-Clip::length() const
+Clip::nbFrames() const
 {
-    return m_length;
+    return m_nbFrames;
 }
 
 qint64
@@ -109,8 +109,8 @@ Clip::computeLength()
     float   fps = m_media->source()->fps();
     if ( fps < 0.1f )
         fps = Clip::DefaultFPS;
-    m_length = m_end - m_begin;
-    m_lengthSeconds = qRound64( (float)m_length / fps );
+    m_nbFrames = m_end - m_begin;
+    m_lengthSeconds = qRound64( (float)m_nbFrames / fps );
 }
 
 const QStringList&
