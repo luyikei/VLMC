@@ -25,6 +25,10 @@
 
 #include "VLCMediaPlayer.h"
 
+#include <QList>
+#include <QMutex>
+#include <QWaitCondition>
+
 namespace Backend
 {
 namespace VLC

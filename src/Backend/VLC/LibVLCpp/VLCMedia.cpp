@@ -30,13 +30,13 @@
 
 using namespace LibVLCpp;
 
-Media::Media( LibVLCpp::Instance* instance, const QString& filename )
+Media::Media(LibVLCpp::Instance* instance, const char *filename )
     : m_tracks( NULL )
     , m_nbTracks( 0 )
     , m_mrl( NULL )
 
 {
-    m_internalPtr = libvlc_media_new_location( *instance, filename.toLocal8Bit() );
+    m_internalPtr = libvlc_media_new_location( *instance, filename);
 }
 
 Media::Media( LibVLCpp::Media &media )
@@ -59,12 +59,6 @@ void
 Media::addOption( const char* opt )
 {
     libvlc_media_add_option_flag( m_internalPtr, opt, libvlc_media_option_trusted );
-}
-
-void
-Media::addOption(const QString &opt)
-{
-    libvlc_media_add_option_flag( m_internalPtr, opt.toLocal8Bit(), libvlc_media_option_trusted );
 }
 
 void

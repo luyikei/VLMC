@@ -23,7 +23,6 @@
 #include "VLCMediaPlayer.h"
 #include "VLCInstance.h"
 #include "VLCMedia.h"
-#include "VlmcDebug.h"
 
 #include <QtGlobal>
 
@@ -117,15 +116,14 @@ MediaPlayer::setVolume( int volume )
     return libvlc_audio_set_volume( m_internalPtr, volume );
 }
 
-qint64
+int64_t
 MediaPlayer::getTime()
 {
-    qint64 t = libvlc_media_player_get_time( m_internalPtr );
-    return t;
+    return libvlc_media_player_get_time( m_internalPtr );
 }
 
 void
-MediaPlayer::setTime( qint64 time )
+MediaPlayer::setTime( int64_t time )
 {
     libvlc_media_player_set_time( m_internalPtr, time );
 }
@@ -142,7 +140,7 @@ MediaPlayer::setPosition( float pos )
     libvlc_media_player_set_position( m_internalPtr, pos );
 }
 
-qint64
+int64_t
 MediaPlayer::getLength()
 {
     return libvlc_media_player_get_length( m_internalPtr );
@@ -185,7 +183,7 @@ MediaPlayer::setMedia( Media* media )
 }
 
 void
-MediaPlayer::getSize( quint32 *outWidth, quint32 *outHeight )
+MediaPlayer::getSize( unsigned int *outWidth, unsigned int *outHeight )
 {
     libvlc_video_get_size( m_internalPtr, 0, outWidth, outHeight );
 }
@@ -208,14 +206,6 @@ MediaPlayer::hasVout()
     return libvlc_media_player_has_vout( m_internalPtr ) > 0;
 }
 
-QString
-MediaPlayer::getLoadedMRL()
-{
-    Media::internalPtr     media = libvlc_media_player_get_media( m_internalPtr );
-    char* str = libvlc_media_get_mrl( media );
-    return QString( str );
-}
-
 int
 MediaPlayer::getNbAudioTrack()
 {
@@ -236,22 +226,26 @@ MediaPlayer::setKeyInput( bool enabled )
     libvlc_video_set_key_input( m_internalPtr, enabled );
 }
 
-void MediaPlayer::setAudioOutput(const char *module)
+void
+MediaPlayer::setAudioOutput(const char *module)
 {
     libvlc_audio_output_set( m_internalPtr, module );
 }
 
-void MediaPlayer::disableTitle()
+void
+MediaPlayer::disableTitle()
 {
     libvlc_media_player_set_video_title_display( *this, libvlc_position_disable, 0 );
 }
 
-void MediaPlayer::setupVmemCallbacks(libvlc_video_lock_cb lock, libvlc_video_unlock_cb unlock, libvlc_video_display_cb display, void *data)
+void
+MediaPlayer::setupVmemCallbacks(libvlc_video_lock_cb lock, libvlc_video_unlock_cb unlock, libvlc_video_display_cb display, void *data)
 {
     libvlc_video_set_callbacks( *this, lock, unlock, display, data );
 }
 
-void MediaPlayer::setupVmem(const char *chroma, unsigned int width, unsigned int height, unsigned int pitch)
+void
+MediaPlayer::setupVmem(const char *chroma, unsigned int width, unsigned int height, unsigned int pitch)
 {
     libvlc_video_set_format( *this, chroma, width, height, pitch );
 }

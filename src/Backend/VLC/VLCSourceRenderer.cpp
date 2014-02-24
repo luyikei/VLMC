@@ -56,14 +56,14 @@ VLCSourceRenderer::VLCSourceRenderer( VLCBackend* backendInstance, const VLCMemo
     char        inputSlave[256];
     char        audioParameters[256];
 
-    sprintf( videoString, "width=%i:height=%i:dar=%s:fps=%f/1:cookie=0:codec=%s:cat=2:caching=0",
+    sprintf( videoString, "imem://width=%i:height=%i:dar=%s:fps=%f/1:cookie=0:codec=%s:cat=2:caching=0",
              source->width(), source->height(), qPrintable( source->aspectRatio() ), source->fps(), "RV32" );
     sprintf( audioParameters, "cookie=1:cat=1:codec=f32l:samplerate=%u:channels=%u:caching=0",
                 source->sampleRate(), source->numberChannels() );
     strcpy( inputSlave, ":input-slave=imem://" );
     strcat( inputSlave, audioParameters );
 
-    m_media = new LibVLCpp::Media( backendInstance->vlcInstance(), "imem://" + QString( videoString ) );
+    m_media = new LibVLCpp::Media( backendInstance->vlcInstance(), videoString );
     setOption( inputSlave );
     initMediaPlayer();
 }
@@ -154,7 +154,7 @@ void
 VLCSourceRenderer::setOption( const QString &option )
 {
     Q_ASSERT( m_media != NULL );
-    m_media->addOption( option );
+    m_media->addOption( qPrintable( option ) );
 }
 
 void

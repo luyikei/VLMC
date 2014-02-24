@@ -23,12 +23,6 @@
 #ifndef VLCMEDIAPLAYER_H
 #define VLCMEDIAPLAYER_H
 
-#include <QList>
-#include <QMutex>
-#include <QObject>
-#include <QString>
-#include <QWaitCondition>
-
 #include "VLCpp.hpp"
 
 #include "vlc/vlc.h"
@@ -55,25 +49,23 @@ namespace   LibVLCpp
         void                                stop();
         int                                 getVolume();
         int                                 setVolume( int volume );
-        qint64                              getTime();
-        void                                setTime( qint64 time );
+        int64_t                             getTime();
+        void                                setTime(int64_t time );
         float                               getPosition();
         void                                setPosition( float pos );
         /**
          \return        The length, in milliseconds.
         */
-        qint64                              getLength();
+        int64_t getLength();
         void                                takeSnapshot( const char* outputFile, unsigned int width, unsigned int heigth );
         bool                                isPlaying();
         bool                                isSeekable();
         void                                setDrawable( void* drawable );
         void                                setMedia(Media* media);
-        void                                getSize( quint32 *outWidth, quint32 *outHeight);
+        void                                getSize( unsigned int *outWidth, unsigned int *outHeight);
         float                               getFps();
         void                                nextFrame();
         bool                                hasVout();
-        const QString&                      getLoadedFileName() const;
-        QString                             getLoadedMRL();
         int                                 getNbAudioTrack();
         int                                 getNbVideoTrack();
         void                                setKeyInput( bool enabled );
@@ -84,14 +76,6 @@ namespace   LibVLCpp
         void                                setupVmem( const char* chroma, unsigned int width,
                                                        unsigned int height, unsigned int pitch );
 
-
-        void                                configureWaitForEvent(const QList<int> &toWait,
-                                                                    const QList<int> &cancel,
-                                                                    CheckEventCallback callback = NULL );
-        void                                configureWaitForEvent(int, const QList<int> &cancel,
-                                                                    CheckEventCallback callback = NULL );
-
-        void                                setName(const char *name );
 
         void                                registerEvents( libvlc_callback_t callback, void* data );
         void                                unregisterEvents( libvlc_callback_t callback, void* data );

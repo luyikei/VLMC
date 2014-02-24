@@ -24,7 +24,6 @@
 #define VLCINSTANCE_H
 
 #include "VLCpp.hpp"
-#include "Singleton.hpp"
 
 struct libvlc_instance_t;
 

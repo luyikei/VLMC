@@ -41,7 +41,9 @@ VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     , m_isParsed( false )
     , m_nbFrames( 0 )
 {
-    m_media = new LibVLCpp::Media( backend->vlcInstance(), "file://" + path );
+    char buffer[256];
+    sprintf( buffer, "file://%s", qPrintable( path ) );
+    m_media = new LibVLCpp::Media( backend->vlcInstance(), buffer );
 }
 
 VLCSource::~VLCSource()

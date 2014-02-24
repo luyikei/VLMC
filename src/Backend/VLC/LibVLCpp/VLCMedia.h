@@ -25,8 +25,6 @@
 
 #include "vlc/vlc.h"
 
-#include <QString>
-
 #include "VLCpp.hpp"
 
 namespace LibVLCpp
@@ -37,11 +35,10 @@ namespace LibVLCpp
     {
     public:
 
-        Media( Instance* instance, const QString& filename );
+        Media( Instance* instance, const char* filename );
         Media(Media &media );
         ~Media();
         void                addOption( const char* opt );
-        void                addOption( const QString& opt );
         void                setVideoLockCallback( void* );
         void                setVideoUnlockCallback( void* );
         void                setAudioLockCallback( void* );

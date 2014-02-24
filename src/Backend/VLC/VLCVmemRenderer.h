@@ -23,6 +23,9 @@
 #ifndef VLCVMEMRENDERER_H
 #define VLCVMEMRENDERER_H
 
+#include <QMutex>
+#include <QWaitCondition>
+
 #include "VLCSourceRenderer.h"
 
 class QImage;
