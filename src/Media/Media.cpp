@@ -58,7 +58,6 @@ Media::Media(const QString &path )
     : m_fileInfo( NULL )
     , m_nbFrames( 0 )
     , m_baseClip( NULL )
-    , m_metadataComputed( false )
     , m_inWorkspace( false )
     , m_snapshotImage( NULL )
 {
@@ -147,12 +146,6 @@ const Backend::ISource*
 Media::source() const
 {
     return m_source;
-}
-
-bool
-Media::isMetadataComputed() const
-{
-    return m_metadataComputed;
 }
 
 void

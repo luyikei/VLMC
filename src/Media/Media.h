@@ -104,8 +104,6 @@ public:
     const Clip*                 baseClip() const { return m_baseClip; }
     void                        setBaseClip( Clip* clip );
 
-    bool                        isMetadataComputed() const;
-
     void                        save( QXmlStreamWriter& project );
 
     bool                        isInWorkspace() const;
@@ -127,7 +125,6 @@ protected:
     InputType                   m_inputType;
     QString                     m_fileName;
     Clip*                       m_baseClip;
-    bool                        m_metadataComputed;
     bool                        m_inWorkspace;
     QString                     m_workspacePath;
 

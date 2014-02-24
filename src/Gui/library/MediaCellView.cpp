@@ -63,7 +63,7 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         m_ui->clipCountLabel->hide();
         m_ui->arrow->hide();
     }
-    if ( clip->getMedia()->isMetadataComputed() == false )
+    if ( clip->getMedia()->source()->isParsed() == false )
     {
         m_ui->thumbnail->setEnabled( false );
         connect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),

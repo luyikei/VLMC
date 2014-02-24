@@ -97,7 +97,7 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
     m_watchedClip = clip;
     m_watchedMedia = clip->getMedia();
     connect( m_watchedClip, SIGNAL( unloaded( Clip* ) ), this, SLOT( clipDestroyed( Clip* ) ) );
-    if ( m_watchedMedia->isMetadataComputed() == true )
+    if ( m_watchedMedia->source()->isParsed() == true )
         metadataUpdated();
     else
     {
