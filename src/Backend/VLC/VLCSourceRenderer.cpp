@@ -36,7 +36,7 @@ using namespace Backend::VLC;
 
 VLCSourceRenderer::VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *source , ISourceRendererEventCb *callback )
     : m_backend( backendInstance )
-    , m_mode( Playback )
+    , m_modes( Playback )
     , m_callback( callback )
     , m_outputWidth( 0 )
     , m_outputHeight( 0 )
@@ -93,21 +93,19 @@ VLCSourceRenderer::setName(const char *name)
 void
 VLCSourceRenderer::setupStreamOutput()
 {
-    if ( m_outputFileName != NULL )
+    // In case of pure imem (ie project preview, which doesn't involve transcode)
+    // or simple clip playback, we're not interested in setting up a stream-output chain
+    if ( m_modes == Playback || m_modes == Imem )
         return ;
 
-    //FIXME:
-    /*
-     *if (video only)
-     *  setOption(":no-audio");
-     *  setOption(":no-sout-audio");
-     * if (audio only)
-     * setOption(":no-video");
-     * setOption(":no-sout-video");
-     */
+    Q_ASSERT( ( m_modes.testFlag( VideoSmem ) == false && m_modes.testFlag( AudioSmem ) == false ) ||
+              m_smemChain.isEmpty() == false );
+
     QString     transcodeStr = ":sout=#transcode{";
-    if ( m_mode == VideoSmem || m_mode == Transcode )
+    if ( m_modes.testFlag( VideoSmem ) || m_modes.testFlag( FileOutput ) )
     {
+        Q_ASSERT( m_modes.testFlag( AudioSmem ) == false );
+
         if ( m_outputVideoFourCC.isNull() == false )
             transcodeStr += ",vcodec=" + m_outputVideoFourCC;
         if ( m_outputVideoBitrate > 0 )
@@ -119,8 +117,10 @@ VLCSourceRenderer::setupStreamOutput()
         if ( m_outputHeight > 0 )
             transcodeStr += ",height=" + QString::number( m_outputHeight );
     }
-    if ( m_mode == AudioSmem || m_mode == Transcode )
+    if ( m_modes.testFlag( AudioSmem ) || m_modes.testFlag( FileOutput ) )
     {
+        Q_ASSERT( m_modes.testFlag( VideoSmem ) == false );
+
         if ( m_outputAudioFourCC.isNull() == false )
             transcodeStr += ",acodec=" + m_outputAudioFourCC;
         if ( m_outputAudioBitrate > 0 )
@@ -133,11 +133,6 @@ VLCSourceRenderer::setupStreamOutput()
     transcodeStr += '}';
     QString     fileOutput = setupFileOutput();
 
-    // We can't output to smem & to a file at the same time. However we need to
-    // have one configured.
-    Q_ASSERT( fileOutput.isNull() != m_smemChain.isNull() );
-    Q_ASSERT( fileOutput.isNull() == false || m_smemChain.isNull() == false );
-
     transcodeStr += fileOutput + m_smemChain;
 
     setOption( transcodeStr );
@@ -146,8 +141,9 @@ VLCSourceRenderer::setupStreamOutput()
 QString
 VLCSourceRenderer::setupFileOutput()
 {
-    if ( m_outputFileName.isNull() == true )
+    if ( m_modes.testFlag( FileOutput ) == false )
         return QString();
+    Q_ASSERT( m_outputFileName.isNull() == false );
     QString soutConfig = ":standard{access=file,mux=ps,dst=\"";
     soutConfig += m_outputFileName;
     soutConfig += "\"}";
@@ -166,7 +162,10 @@ VLCSourceRenderer::start()
 {
     // If we're re-starting this renderer, we already have assigned a media to it
     if ( m_media != NULL )
+    {
+        setupStreamOutput();
         m_mediaPlayer->setMedia( m_media );
+    }
     m_mediaPlayer->play();
 
     // has been acquired by libvlc & any modification on the media from now
@@ -237,6 +236,7 @@ void VLCSourceRenderer::setVolume(int volume)
 void
 VLCSourceRenderer::setOutputFile(const char *path)
 {
+    m_modes |= FileOutput;
     m_outputFileName = path;
 }
 
@@ -297,7 +297,7 @@ VLCSourceRenderer::setOutputAudioBitrate(unsigned int aBitrate)
 void
 VLCSourceRenderer::enableVideoOutputToMemory( void *data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync )
 {
-    m_mode = VideoSmem;
+    m_modes |= VideoSmem;
     m_smemChain = ":smem{";
     if ( timeSync == true )
         m_smemChain += "time-sync";
@@ -309,12 +309,14 @@ VLCSourceRenderer::enableVideoOutputToMemory( void *data, VideoOutputLockCallbac
             % ",video-postrender-callback="
             % QString::number( reinterpret_cast<intptr_t>( unlock ) )
             % '}';
+    setOption( ":no-audio" );
+    setOption( ":no-sout-audio" );
 }
 
 void
 VLCSourceRenderer::enableAudioOutputToMemory(void *data, AudioOutputLockCallback lock, AudioOutputUnlockCallback unlock, bool timeSync)
 {
-    m_mode = AudioSmem;
+    m_modes |= AudioSmem;
     m_smemChain = ":smem{";
     if ( timeSync == true )
         m_smemChain += "time-sync";
@@ -326,12 +328,15 @@ VLCSourceRenderer::enableAudioOutputToMemory(void *data, AudioOutputLockCallback
             % ",audio-postrender-callback="
             % QString::number( reinterpret_cast<intptr_t>( unlock ) )
             % '}';
+    setOption( ":no-video" );
+    setOption( ":no-sout-video" );
 }
 
 void
 VLCSourceRenderer::enableMemoryInput( void *data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback )
 {
     Q_ASSERT( m_media != NULL );
+    m_modes |= Imem;
 
     char        buffer[64];
 

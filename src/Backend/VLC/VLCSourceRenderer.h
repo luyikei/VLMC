@@ -23,6 +23,7 @@
 #ifndef VLCRENDERER_H
 #define VLCRENDERER_H
 
+#include <QFlags>
 #include <QString>
 
 #include "Backend/ISourceRenderer.h"
@@ -43,12 +44,13 @@ class VLCSourceRenderer : public ISourceRenderer
 public:
     enum Mode
     {
-        Playback,
-        Imem,
-        VideoSmem,
-        AudioSmem,
-        Transcode
+        Playback = 0,
+        Imem = 1,
+        VideoSmem = 1 << 1,
+        AudioSmem = 1 << 2,
+        FileOutput = 1 << 3
     };
+    Q_DECLARE_FLAGS( Modes, Mode )
 
     VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *source, ISourceRendererEventCb* callback );
     VLCSourceRenderer( VLCBackend* backendInstance, const VLCMemorySource *source, ISourceRendererEventCb* callback );
@@ -102,7 +104,7 @@ private:
 protected:
     VLCBackend*                 m_backend;
     QString                     m_name;
-    Mode                        m_mode;
+    Modes                       m_modes;
     // This is a copy, to avoid sharing all options across multiple renderers
     LibVLCpp::Media*            m_media;
     LibVLCpp::MediaPlayer*      m_mediaPlayer;
@@ -123,6 +125,8 @@ protected:
     unsigned int                m_outputSampleRate;
     QString                     m_outputAudioFourCC;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( VLCSourceRenderer::Modes );
 
 } //VLC
 } //Backend
