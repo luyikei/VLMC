@@ -100,7 +100,7 @@ ClipRenderer::startPreview()
     connect( m_eventWatcher, SIGNAL( timeChanged( qint64 ) ), this, SLOT( __timeChanged( qint64 ) ) );
 
     m_sourceRenderer->start();
-    m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->getMedia()->nbFrames() );
+    m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->getMedia()->source()->nbFrames() );
     m_clipLoaded = true;
     m_isRendering = true;
     m_paused = false;

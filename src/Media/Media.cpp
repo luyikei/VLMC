@@ -57,7 +57,6 @@ QPixmap*        Media::defaultSnapshot = NULL;
 Media::Media(const QString &path )
     : m_source( NULL )
     , m_fileInfo( NULL )
-    , m_nbFrames( 0 )
     , m_baseClip( NULL )
     , m_inWorkspace( false )
     , m_snapshotImage( NULL )
@@ -86,18 +85,6 @@ Media::fileType() const
 void Media::setFileType(Media::FileType type)
 {
     m_fileType = type;
-}
-
-void
-Media::setNbFrames( qint64 nbFrames )
-{
-    m_nbFrames = nbFrames;
-}
-
-qint64
-Media::nbFrames() const
-{
-    return m_nbFrames;
 }
 
 const QString&

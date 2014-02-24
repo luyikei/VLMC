@@ -53,6 +53,7 @@ public:
     virtual bool                hasAudio() const;
     virtual unsigned int        nbAudioTracks() const;
     const uint8_t*              snapshot() const;
+    virtual int64_t             nbFrames() const;
 
     // Below this point are backend internal methods:
     LibVLCpp::Media*            media();
@@ -71,6 +72,7 @@ private:
     int64_t                     m_length; //in milliseconds.
     QImage*                     m_snapshot;
     bool                        m_isParsed;
+    int64_t                     m_nbFrames;
 };
 
 

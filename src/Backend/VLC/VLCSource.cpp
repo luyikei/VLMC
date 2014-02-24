@@ -82,7 +82,12 @@ VLCSource::preparse()
         mediaPlayer->getSize( &m_width, &m_height );
         m_fps = mediaPlayer->getFps();
         if ( m_fps < 0.1f )
+        {
             vlmcWarning() << "Invalid FPS for source" << m_media->mrl();
+            delete renderer;
+            return false;
+        }
+        m_nbFrames = (int64_t)( (float)( m_length / 1000 ) * m_fps );
         return computeSnapshot( renderer );
     }
     delete renderer;
@@ -176,5 +181,11 @@ VLCSource::snapshot() const
     if ( hasVideo() == false || m_snapshot == NULL )
         return NULL;
     return m_snapshot->bits();
+}
+
+int64_t
+VLCSource::nbFrames() const
+{
+    return m_nbFrames;
 }
 

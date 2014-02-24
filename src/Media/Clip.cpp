@@ -39,7 +39,7 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
         m_parent( media->baseClip() )
 {
     if ( end == -1 )
-        m_end = media->nbFrames();
+        m_end = media->source()->nbFrames();
     if ( uuid.isEmpty() == true )
         m_uuid = QUuid::createUuid();
     else
@@ -279,7 +279,7 @@ Clip::mediaMetadataUpdated()
     if ( m_end == 0 )
     {
         m_begin = 0;
-        m_end = m_media->nbFrames();
+        m_end = m_media->source()->nbFrames();
         computeLength();
     }
 }

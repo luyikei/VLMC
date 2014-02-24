@@ -110,7 +110,6 @@ protected:
     Backend::ISource*           m_source;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
-    qint64                      m_nbFrames;
     FileType                    m_fileType;
     QString                     m_fileName;
     Clip*                       m_baseClip;

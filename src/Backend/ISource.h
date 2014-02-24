@@ -51,6 +51,7 @@ namespace Backend
             virtual bool            hasAudio() const = 0;
             virtual unsigned int    nbAudioTracks() const = 0;
             virtual const uint8_t*  snapshot() const = 0;
+            virtual int64_t         nbFrames() const = 0;
     };
 
     class IMemorySource
