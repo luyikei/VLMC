@@ -158,12 +158,10 @@ ImportController::importMedia( const QString &filePath )
         return ;
 
     Media*  media = m_temporaryMedias->addMedia( filePath );
-    connect( media, SIGNAL( metaDataComputed() ), this, SLOT( mediaLoaded() ) );
     if ( media == NULL )
-    {
-        vlmcCritical() << "An error occurred while loading media:" << filePath;
         return ;
-    }
+
+    connect( media, SIGNAL( metaDataComputed() ), this, SLOT( mediaLoaded() ) );
     Clip*   clip = new Clip( media );
     media->setBaseClip( clip );
     m_temporaryMedias->addClip( clip );
