@@ -1,7 +1,7 @@
 /*****************************************************************************
  * EffectInstanceListModel.cpp: Handle the model part of displaying an effect instance list.
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

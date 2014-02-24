@@ -1,7 +1,7 @@
 /*****************************************************************************
  * GenericRenderer.h: Describe a common behavior for every renderers
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

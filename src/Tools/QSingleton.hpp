@@ -2,7 +2,7 @@
  * QSingleton.hpp : Generic singleton pattern implementation with Qt parent's
  *                  parameter that can be passed to the ctor
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

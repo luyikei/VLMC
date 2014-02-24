@@ -1,7 +1,7 @@
 /*****************************************************************************
  * Workspace.h: Workspace management
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCpp.hpp: Generic class to handle an internal vlc type almost transparently.
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

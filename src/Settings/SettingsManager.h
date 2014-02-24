@@ -1,7 +1,7 @@
 /*****************************************************************************
  * SettingsManager.h: Backend settings manager
  *****************************************************************************
- * Copyright (C) 2008-2009 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

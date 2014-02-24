@@ -2,7 +2,7 @@
  * PreferenceWidget.h: Abstract class that will be used to save load / preferences
  * values.
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Clement CHAVANCE <kinder@vlmc.org>
  *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>

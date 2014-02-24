@@ -1,7 +1,7 @@
 /*****************************************************************************
  * MetaDataManager.cpp: Manages a thread to parse metadata
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Christophe Courtaut <christophe.courtaut@gmail.com>
  *

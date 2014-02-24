@@ -1,7 +1,7 @@
 /*****************************************************************************
  * ImportController.h
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Geoffroy Lacarriere <geoffroylaca@gmail.com>
  *          Thomas Boquet <thomas.boquet@gmail.com>

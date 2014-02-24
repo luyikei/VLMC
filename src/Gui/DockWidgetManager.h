@@ -1,7 +1,7 @@
 /*****************************************************************************
  * DockWidgetManager.h: Object managing the application docked widget
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Clement CHAVANCE <chavance.c@gmail.com>
  *

@@ -2,7 +2,7 @@
  * MainWorkflow.cpp : Will query all of the track workflows to render the final
  *                    image
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

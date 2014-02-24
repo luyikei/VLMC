@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VideoPage.cpp: Wizard page for configuring video settings
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Ludovic Fauvet <etix@l0cal.com>
  *

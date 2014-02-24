@@ -1,7 +1,7 @@
 /*****************************************************************************
  * EffectStack.h: Represent an effect stack, and allow parameters editing.
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

@@ -1,7 +1,7 @@
 /*****************************************************************************
  * UndoStack.cpp: UndoStack For Undo/Redo Purposes
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Christophe Courtaut <christophe.courtaut@gmail.com>
  *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>

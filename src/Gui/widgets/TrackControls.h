@@ -1,7 +1,7 @@
 /*****************************************************************************
  * TrackControls.h: Widget used to configure a track
  *****************************************************************************
- * Copyright (C) 2008-2010 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Ludovic Fauvet <etix@l0cal.com>
  *

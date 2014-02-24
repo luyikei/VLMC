@@ -1,7 +1,7 @@
 /*****************************************************************************
  * AudioSpectrumDrawer.h: Audio Spectrum Drawing Widget
  *****************************************************************************
- * Copyright (C) 2008-2011 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Geoffroy Lacarriere <geoffroylaca@gmail.com>
  *

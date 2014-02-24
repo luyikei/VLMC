@@ -1,7 +1,7 @@
 /*****************************************************************************
  * StackViewNavController.cpp
  *****************************************************************************
- * Copyright (C) 2008-2011 VideoLAN
+ * Copyright (C) 2008-2014 VideoLAN
  *
  * Authors: Thomas Boquet <thomas.boquet@gmail.com>
  *

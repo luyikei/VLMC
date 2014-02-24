@@ -8,7 +8,7 @@
 SET(PROJECT_NAME_SHORT   "VLMC")
 SET(PROJECT_NAME_LONG    "VideoLAN Movie Creator")
 SET(PROJECT_DESCRIPTION  "VLMC (VideoLAN Movie Creator) is a cross-platform, non-linear video editing software based on the VLC Media Player.")
-SET(PROJECT_COPYRIGHT    "Copyright (C) 2008-2010 VideoLAN")
+SET(PROJECT_COPYRIGHT    "Copyright (C) 2008-2014 VideoLAN")
 SET(PROJECT_CONTACT      "vlmc-devel@videolan.org")
 SET(PROJECT_VENDOR       "VLMC Team")
 SET(ORG_WEBSITE          "videolan.org")
