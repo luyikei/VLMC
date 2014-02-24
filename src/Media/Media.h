@@ -106,9 +106,6 @@ public:
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 
-private:
-    void                        computeFileType();
-
 protected:
     Backend::ISource*           m_source;
     QString                     m_mrl;

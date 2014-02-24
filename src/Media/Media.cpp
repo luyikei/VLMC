@@ -71,20 +71,6 @@ Media::~Media()
     delete m_fileInfo;
 }
 
-void
-Media::computeFileType()
-{
-    const QString filter = "*." + m_fileInfo->suffix().toLower();
-    if ( Media::VideoExtensions.contains( filter ) )
-        m_fileType = Media::Video;
-    else if ( Media::AudioExtensions.contains( filter ) )
-        m_fileType = Media::Audio;
-    else if ( Media::ImageExtensions.contains( filter ) )
-        m_fileType = Media::Image;
-    else
-        vlmcDebug() << "What the hell is this extension? And how did you loaded it?!";
-}
-
 const QFileInfo*
 Media::fileInfo() const
 {
@@ -166,11 +152,27 @@ void
 Media::onMetaDataComputed()
 {
     emit metaDataComputed();
-    if ( m_source->hasVideo() && m_source->snapshot() != NULL )
+    if ( m_source->hasVideo() == true )
     {
-        Q_ASSERT( m_snapshotImage == NULL );
-        m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
-        emit snapshotAvailable();
+        const QString filter = "*." + m_fileInfo->suffix().toLower();
+        if ( Media::ImageExtensions.contains( filter ) )
+            m_fileType = Image;
+        else
+            m_fileType = Video;
+        if ( m_source->snapshot() != NULL )
+        {
+            Q_ASSERT( m_snapshotImage == NULL );
+            m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
+            emit snapshotAvailable();
+        }
+    }
+    else if ( m_source->hasAudio() )
+        m_fileType = Audio;
+    else
+    {
+        // We expect this case to be handled by the metadata manager. It should
+        // trigger an error for this kind of file since we can't use them.
+        vlmcFatal("Got metadata for a file which has no video nor audio.");
     }
 }
 
@@ -181,12 +183,11 @@ Media::setFilePath( const QString &filePath )
         delete m_fileInfo;
     m_fileInfo = new QFileInfo( filePath );
     m_fileName = m_fileInfo->fileName();
-    computeFileType();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
 
     Backend::IBackend* backend = Backend::getBackend();
     delete m_source;
-    m_source = backend->createSource( qPrintable( path ) );
+    m_source = backend->createSource( qPrintable( filePath ) );
     MetaDataManager::getInstance()->computeMediaMetadata( this );
 
     //Don't call this before setting all the internals, as it relies on Media::fileInfo.
