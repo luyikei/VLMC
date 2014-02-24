@@ -77,7 +77,7 @@ VLCSource::preparse()
     m_nbAudioTracks = mediaPlayer->getNbAudioTrack();
     //FIXME: handle images with something like m_length = 10000;
     m_length = mediaPlayer->getLength();
-    if ( hasVideo() > 0 )
+    if ( hasVideo() == true )
     {
         mediaPlayer->getSize( &m_width, &m_height );
         m_fps = mediaPlayer->getFps();

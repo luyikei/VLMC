@@ -81,7 +81,6 @@ VLCSourceRenderer::~VLCSourceRenderer()
 {
     m_mediaPlayer->unregisterEvents( &eventsCallback, this );
     delete m_media;
-    m_media = NULL;
     stop();
 }
 

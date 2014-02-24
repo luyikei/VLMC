@@ -38,7 +38,8 @@ EventWaiter::~EventWaiter()
     m_mediaPlayer->unregisterEvents( &EventWaiter::eventsCallback, this );
 }
 
-void EventWaiter::add(libvlc_event_type_t event)
+void
+EventWaiter::add(libvlc_event_type_t event)
 {
     m_events.push_back( event );
 }
