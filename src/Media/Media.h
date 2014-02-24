@@ -66,11 +66,6 @@ public:
         Video,
         Image
     };
-    enum    InputType
-    {
-        File,
-        Stream
-    };
     static const QString        VideoExtensions;
     static const QString        AudioExtensions;
     static const QString        ImageExtensions;
@@ -98,8 +93,6 @@ public:
     FileType                    fileType() const;
     void                        setFileType( FileType type );
 
-    InputType                   inputType() const;
-
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
     void                        setBaseClip( Clip* clip );
@@ -122,7 +115,6 @@ protected:
     QFileInfo*                  m_fileInfo;
     qint64                      m_nbFrames;
     FileType                    m_fileType;
-    InputType                   m_inputType;
     QString                     m_fileName;
     Clip*                       m_baseClip;
     bool                        m_inWorkspace;

@@ -106,12 +106,6 @@ void Media::setFileType(Media::FileType type)
     m_fileType = type;
 }
 
-Media::InputType
-Media::inputType() const
-{
-    return m_inputType;
-}
-
 void
 Media::setNbFrames( qint64 nbFrames )
 {
@@ -187,7 +181,6 @@ Media::onMetaDataComputed()
 void
 Media::setFilePath( const QString &filePath )
 {
-    m_inputType = Media::File;
     if ( m_fileInfo )
         delete m_fileInfo;
     m_fileInfo = new QFileInfo( filePath );
