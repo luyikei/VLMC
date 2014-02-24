@@ -34,7 +34,7 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
     setName( "VmemRenderer" );
     m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
     m_mediaPlayer->setupVmem( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );
-    m_mediaPlayer->setupVmemCallbacks( &VmemRenderer::vmemLock, NULL, NULL, this );
+    m_mediaPlayer->setupVmemCallbacks( &VmemRenderer::vmemLock, &VmemRenderer::vmemUnlock, NULL, this );
     m_mediaPlayer->setAudioOutput( "dummy" );
 }
 
