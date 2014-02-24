@@ -258,7 +258,7 @@ MediaCellView::arrowButtonClicked( QWidget*, QMouseEvent* )
 void
 MediaCellView::setLength( qint64 length )
 {
-    QTime   duration;
+    QTime   duration( 0, 0 );
     duration = duration.addMSecs( length );
     m_ui->length->setText( duration.toString( "hh:mm:ss" ) );
 }
