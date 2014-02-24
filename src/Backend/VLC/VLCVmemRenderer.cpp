@@ -45,6 +45,7 @@ VmemRenderer::~VmemRenderer()
      * destroyed in a potentially locked state, while the vmem tries to lock/unlock.
      */
     stop();
+    delete m_snapshot;
 }
 
 LibVLCpp::MediaPlayer*
