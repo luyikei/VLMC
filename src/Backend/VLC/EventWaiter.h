@@ -43,10 +43,13 @@ public:
      * \li <whatever action that will lead to an asynchronous event>
      * \li we->wait(...);
      *
-     * @warning If the event comes synchronously, this will deadlock. But if
-     *          it happens synchronously, why would you need this at all?
+     * @param startLocked   Specify if the EventWaiter should immediatly lock the mutex
+     * If this is false, mutex will be locked when wait() is called. This should
+     * be set to false when the function leading to the event might process synchronously
+     * and if the event will be triggered again (for instance, time & position events)
+     *
      */
-    EventWaiter( LibVLCpp::MediaPlayer* mediaPlayer );
+    EventWaiter(LibVLCpp::MediaPlayer* mediaPlayer , bool startLocked);
     ~EventWaiter();
 
     enum    Result
@@ -71,6 +74,7 @@ private:
     QMutex                      m_mutex;
     ValidationCallback          m_validationCallback;
     bool                        m_found;
+    bool                        m_startLocked;
 };
 
 } //VLC

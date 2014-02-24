@@ -70,7 +70,7 @@ VLCSource::preparse()
     VmemRenderer*           renderer = new VmemRenderer( m_backend, this, NULL );
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
-        EventWaiter ew( mediaPlayer );
+        EventWaiter ew( mediaPlayer, true );
         ew.add( libvlc_MediaPlayerLengthChanged );
         renderer->start();
         if ( ew.wait( 3000 ) != EventWaiter::Success )
@@ -120,7 +120,7 @@ VLCSource::computeSnapshot( VmemRenderer* renderer )
     Q_ASSERT( m_snapshot == NULL );
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
-        EventWaiter ew( mediaPlayer );
+        EventWaiter ew( mediaPlayer, false );
         ew.add( libvlc_MediaPlayerPositionChanged );
         ew.setValidationCallback( &checkTimeChanged );
         renderer->setTime( m_length / 3 );

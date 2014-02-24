@@ -24,13 +24,15 @@
 
 using namespace Backend::VLC;
 
-EventWaiter::EventWaiter( LibVLCpp::MediaPlayer* mediaPlayer )
+EventWaiter::EventWaiter( LibVLCpp::MediaPlayer* mediaPlayer, bool startLocked )
     : m_mediaPlayer( mediaPlayer )
     , m_validationCallback( NULL )
     , m_found( true )
+    , m_startLocked( startLocked )
 {
+    if ( startLocked == true )
+        m_mutex.lock();
     m_mediaPlayer->registerEvents( &EventWaiter::eventsCallback, this );
-    m_mutex.lock();
 }
 
 EventWaiter::~EventWaiter()
@@ -47,6 +49,8 @@ EventWaiter::add(libvlc_event_type_t event)
 EventWaiter::Result
 EventWaiter::wait(unsigned long timeoutMs)
 {
+    if ( m_startLocked == false )
+        m_mutex.lock();
     if ( m_waitCond.wait( &m_mutex, timeoutMs ) == false )
     {
         m_mutex.unlock();
