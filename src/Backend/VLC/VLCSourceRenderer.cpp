@@ -164,11 +164,11 @@ VLCSourceRenderer::setOption( const QString &option )
 void
 VLCSourceRenderer::start()
 {
-    Q_ASSERT( m_media != NULL );
-    m_mediaPlayer->setMedia( m_media );
+    // If we're re-starting this renderer, we already have assigned a media to it
+    if ( m_media != NULL )
+        m_mediaPlayer->setMedia( m_media );
     m_mediaPlayer->play();
 
-    // Media should not be used after this point, all required information
     // has been acquired by libvlc & any modification on the media from now
     // on would be pointless anyway
     delete m_media;

@@ -138,7 +138,7 @@ ClipRenderer::togglePlayPause( bool forcePause )
     {
         if ( m_isRendering == false )
         {
-            m_sourceRenderer->playPause();
+            m_sourceRenderer->start();
             m_sourceRenderer->setPosition( m_begin / ( m_end - m_begin ) );
             m_isRendering = true;
         }
