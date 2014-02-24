@@ -81,11 +81,17 @@ Media*
 MediaContainer::addMedia( const QFileInfo& fileInfo )
 {
     if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
+    {
+        vlmcCritical() << "Can't add" << fileInfo.absoluteFilePath() << ": File not found";
         return NULL;
+    }
     foreach( Clip* it, m_clips.values() )
     {
-        if ( it->getMedia()->fileInfo()->filePath() == fileInfo.filePath() )
+        if ( (*it->getMedia()->fileInfo()) == fileInfo )
+        {
+            vlmcWarning() << "Ignoring aleady imported media" << fileInfo.absolutePath();
             return NULL;
+        }
     }
     Media* media = new Media( fileInfo.filePath() );
     return media;
