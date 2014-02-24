@@ -132,7 +132,7 @@ VLCSource::computeSnapshot( VmemRenderer* renderer )
     }
     m_snapshot = renderer->waitSnapshot();
     delete renderer;
-    return true;
+    return m_snapshot != NULL;
 }
 
 unsigned int
