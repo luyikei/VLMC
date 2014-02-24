@@ -71,8 +71,9 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     }
     connect( clip->getMedia(), SIGNAL( metaDataComputed(const Media*) ),
              this, SLOT( metadataUpdated( const Media*) ) );
-    connect( clip->getMedia(), SIGNAL( snapshotComputed(const Media*) ),
-             this, SLOT( snapshotUpdated(const Media*) ) );
+    // Snapshot generation will generate a QPixmap, which has to be done on GUI thread
+    connect( clip->getMedia(), SIGNAL( snapshotComputed() ),
+             this, SLOT( snapshotUpdated() ), Qt::QueuedConnection );
 
     setThumbnail( clip->getMedia()->snapshot() );
     setTitle( clip->getMedia()->fileName() );
@@ -108,9 +109,9 @@ MediaCellView::metadataUpdated( const Media *media )
 }
 
 void
-MediaCellView::snapshotUpdated( const Media *media )
+MediaCellView::snapshotUpdated()
 {
-    setThumbnail( media->snapshot() );
+    setThumbnail( m_clip->getMedia()->snapshot() );
     m_ui->delLabel->setEnabled( true );
 }
 
@@ -219,7 +220,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
     mimeData->setData( "vlmc/uuid", m_clip->fullId().toLatin1() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
-    const Media*  parent = m_clip->getMedia();
+    Media*  parent = m_clip->getMedia();
     drag->setPixmap( parent->snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }

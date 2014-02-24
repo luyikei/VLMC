@@ -135,7 +135,6 @@ Library::addMedia( const QFileInfo &fileInfo )
         connect( media, SIGNAL( metaDataComputed( const Media* ) ),
                  this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
         m_medias[fileInfo.absoluteFilePath()] = media;
-        media->computeMetadata();
     }
     return media;
 }

@@ -168,3 +168,12 @@ VLCSource::nbAudioTracks() const
 {
     return m_nbAudioTracks;
 }
+
+const uint8_t*
+VLCSource::snapshot() const
+{
+    if ( hasVideo() == false || m_snapshot == NULL )
+        return NULL;
+    return m_snapshot->bits();
+}
+

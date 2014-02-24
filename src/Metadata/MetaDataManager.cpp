@@ -63,8 +63,7 @@ MetaDataManager::run()
         Backend::ISource* targetSource = target->source();
         if ( targetSource->preparse() == false )
             emit failedToCompute( target );
-        //FIXME: this looks really ugly. And doesn't handle snapshot for now
         else
-            target->emitMetaDataComputed();
+            target->onMetaDataComputed();
     }
 }

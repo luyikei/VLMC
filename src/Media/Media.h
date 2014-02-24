@@ -38,7 +38,8 @@
 #include <QXmlStreamWriter>
 
 #ifdef WITH_GUI
-#include "media/GuiMedia.h"
+#include <QPixmap>
+#include <QImage>
 #endif
 
 namespace Backend
@@ -50,11 +51,7 @@ class Clip;
 /**
   * Represents a basic container for media informations.
   */
-#ifdef WITH_GUI
-class       Media : public GUIMedia
-#else
 class       Media : public QObject
-#endif
 {
     Q_OBJECT
 
@@ -103,8 +100,6 @@ public:
 
     InputType                   inputType() const;
 
-    void                        emitMetaDataComputed();
-
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
     void                        setBaseClip( Clip* clip );
@@ -115,12 +110,10 @@ public:
 
     bool                        isInWorkspace() const;
 
-    /**
-     *  \brief      Just an helper to compute metadata.
-     *
-     *  Actual computing is performed by MetadataManager
-     */
-    void                        computeMetadata();
+    void                        onMetaDataComputed();
+
+    // This has to be called from the GUI thread.
+    QPixmap&                    snapshot();
 
 private:
     void                        computeFileType();
@@ -138,9 +131,14 @@ protected:
     bool                        m_inWorkspace;
     QString                     m_workspacePath;
 
+    static QPixmap*             defaultSnapshot;
+    QPixmap                     m_snapshot;
+    QImage*                     m_snapshotImage;
+
 signals:
-    void                        metaDataComputed( const Media* );
+    void                        metaDataComputed();
     void                        workspaceStateChanged( bool );
+    void                        snapshotAvailable();
 };
 
 #endif // MEDIA_H__

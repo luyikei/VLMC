@@ -52,16 +52,20 @@ const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *
                                          "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
-Media::Media(const QString &path ) :
-    m_fileInfo( NULL ),
-    m_nbFrames( 0 ),
-    m_baseClip( NULL ),
-    m_metadataComputed( false ),
-    m_inWorkspace( false )
+QPixmap*        Media::defaultSnapshot = NULL;
+
+Media::Media(const QString &path )
+    : m_fileInfo( NULL )
+    , m_nbFrames( 0 )
+    , m_baseClip( NULL )
+    , m_metadataComputed( false )
+    , m_inWorkspace( false )
+    , m_snapshotImage( NULL )
 {
     setFilePath( path );
     Backend::IBackend* backend = Backend::getBackend();
     m_source = backend->createSource( qPrintable( path ) );
+    MetaDataManager::getInstance()->computeMediaMetadata( this );
 }
 
 Media::~Media()
@@ -101,13 +105,6 @@ Media::fileType() const
 void Media::setFileType(Media::FileType type)
 {
     m_fileType = type;
-}
-
-void
-Media::emitMetaDataComputed()
-{
-    m_metadataComputed = true;
-    emit metaDataComputed( this );
 }
 
 Media::InputType
@@ -183,6 +180,19 @@ Media::isInWorkspace() const
 }
 
 void
+Media::onMetaDataComputed()
+{
+    emit metaDataComputed();
+    if ( m_source->hasVideo() && m_source->snapshot() != NULL )
+    {
+        Q_ASSERT( m_snapshotImage == NULL );
+        m_snapshotImage = new QImage( m_source->snapshot(), m_source->width(),
+                                      m_source->height(), QImage::Format_RGB32 );
+        emit snapshotAvailable();
+    }
+}
+
+void
 Media::setFilePath( const QString &filePath )
 {
     m_inputType = Media::File;
@@ -209,8 +219,21 @@ Media::setFilePath( const QString &filePath )
     emit workspaceStateChanged( m_inWorkspace );
 }
 
-void
-Media::computeMetadata()
+QPixmap&
+Media::snapshot()
 {
-    MetaDataManager::getInstance()->computeMediaMetadata( this );
+    if ( m_snapshot.isNull() == false )
+        return m_snapshot;
+
+    if ( m_snapshotImage != NULL )
+    {
+        m_snapshot = QPixmap::fromImage( *m_snapshotImage );
+        delete m_snapshotImage;
+
+        if ( m_snapshot.isNull() == false )
+            return m_snapshot;
+    }
+    if ( Media::defaultSnapshot == NULL )
+        Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
+    return *Media::defaultSnapshot;
 }

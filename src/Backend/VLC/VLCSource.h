@@ -52,6 +52,7 @@ public:
     virtual unsigned int        nbVideoTracks() const;
     virtual bool                hasAudio() const;
     virtual unsigned int        nbAudioTracks() const;
+    const uint8_t*              snapshot() const;
 
     // Below this point are backend internal methods:
     LibVLCpp::Media*            media();

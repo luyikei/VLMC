@@ -159,7 +159,6 @@ ImportController::importMedia( const QString &filePath )
 
     Media*  media = m_temporaryMedias->addMedia( filePath );
     connect( media, SIGNAL( metaDataComputed( const Media* ) ), this, SLOT( mediaLoaded() ) );
-    media->computeMetadata();
     if ( media == NULL )
     {
         vlmcCritical() << "An error occurred while loading media:" << filePath;

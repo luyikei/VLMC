@@ -151,7 +151,6 @@ ELSE(NOT WITH_GUI)
         Gui/library/StackViewNavController.cpp
         Gui/library/ViewController.h
         Gui/media/ClipMetadataDisplayer.cpp
-        Gui/media/GuiMedia.cpp
         Gui/preview/LCDTimecode.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp

@@ -73,7 +73,7 @@ public slots:
     void                arrowButtonClicked( QWidget *sender, QMouseEvent *event );
 
 private slots:
-    void                snapshotUpdated( const Media *media );
+    void                snapshotUpdated();
     void                metadataComputingStarted( const Media *media );
     void                metadataUpdated( const Media *media );
     void                nbClipUpdated();
