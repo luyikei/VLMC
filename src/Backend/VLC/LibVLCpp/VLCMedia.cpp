@@ -31,9 +31,9 @@
 using namespace LibVLCpp;
 
 Media::Media( LibVLCpp::Instance* instance, const QString& filename )
-    : m_fileName( filename )
-    , m_tracks( NULL )
+    : m_tracks( NULL )
     , m_nbTracks( 0 )
+    , m_mrl( NULL )
 
 {
     m_internalPtr = libvlc_media_new_location( *instance, filename.toLocal8Bit() );
@@ -42,6 +42,7 @@ Media::Media( LibVLCpp::Instance* instance, const QString& filename )
 Media::Media( LibVLCpp::Media &media )
     : m_tracks( NULL )
     , m_nbTracks( 0 )
+    , m_mrl( NULL )
 {
     m_internalPtr = libvlc_media_duplicate( media );
 }
@@ -51,6 +52,7 @@ Media::~Media()
     if ( m_tracks != NULL )
         libvlc_media_tracks_release( m_tracks, m_nbTracks );
     libvlc_media_release( m_internalPtr );
+    free( m_mrl );
 }
 
 void
@@ -115,10 +117,12 @@ Media::setAudioDataCtx( void* dataCtx )
     addOption( param );
 }
 
-const QString&
-Media::getFileName() const
+const char*
+Media::mrl()
 {
-    return m_fileName;
+    if ( m_mrl == NULL )
+        m_mrl = libvlc_media_get_mrl( m_internalPtr );
+    return m_mrl;
 }
 
 void

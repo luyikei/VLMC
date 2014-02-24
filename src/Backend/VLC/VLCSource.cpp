@@ -82,7 +82,7 @@ VLCSource::preparse()
         mediaPlayer->getSize( &m_width, &m_height );
         m_fps = mediaPlayer->getFps();
         if ( m_fps < 0.1f )
-            vlmcWarning() << "Invalid FPS for source" << m_media->getFileName();
+            vlmcWarning() << "Invalid FPS for source" << m_media->mrl();
         return computeSnapshot( renderer );
     }
     delete renderer;
