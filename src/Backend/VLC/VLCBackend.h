@@ -40,6 +40,7 @@ class VLCBackend : public IBackend, public Singleton<VLCBackend>
         VLCBackend();
         virtual ISource*        createSource( const char* path );
         virtual IMemorySource*  createMemorySource();
+        virtual void            setLogHandler( void* data, LogHandler logHandler );
 
         // Accessible from VLCBackend only:
         LibVLCpp::Instance* vlcInstance();
@@ -50,8 +51,10 @@ class VLCBackend : public IBackend, public Singleton<VLCBackend>
 
     private:
         friend class Singleton<VLCBackend>;
-        LibVLCpp::Instance* m_vlcInstance;
 
+        LibVLCpp::Instance*         m_vlcInstance;
+        LogHandler                  m_logHandler;
+        void*                       m_logHandlerData;
 };
 
 } //VLC

@@ -35,9 +35,19 @@ class IMemorySource;
 class IBackend
 {
     public:
+        enum LogLevel
+        {
+            Debug,
+            Warning,
+            Error,
+            None
+        };
+        typedef void        (*LogHandler)( void* data, LogLevel logLevel, const char* msg);
+
         virtual ~IBackend() {}
-        virtual ISource* createSource( const char* path ) = 0;
-        virtual IMemorySource* createMemorySource() = 0;
+        virtual ISource*        createSource( const char* path ) = 0;
+        virtual IMemorySource*  createMemorySource() = 0;
+        virtual void            setLogHandler( void* data, LogHandler logHandler) = 0;
 };
 
 extern IBackend* getBackend();

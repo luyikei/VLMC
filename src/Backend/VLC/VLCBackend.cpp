@@ -38,6 +38,8 @@ IBackend *Backend::getBackend()
 }
 
 VLCBackend::VLCBackend()
+    : m_logHandler( NULL )
+    , m_logHandlerData( NULL )
 {
     QVector<const char*> argv;
     argv << "--no-skip-frames"
@@ -48,13 +50,8 @@ VLCBackend::VLCBackend()
         // << "--no-overlay",
         << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
 
-    int     debugLevel = VLMC_GET_INT( "private/VlcLogLevel" );
-    if ( debugLevel == VlmcLogger::Debug )
-        argv << "-vv";
-    else if ( debugLevel == VlmcLogger::Verbose )
-        argv << "-v";
     m_vlcInstance = new LibVLCpp::Instance( argv.count(), &argv.front() );
-    m_vlcInstance->setLogHook( this, &logHook );
+    assert( m_vlcInstance != NULL );
 }
 
 ISource*
@@ -69,6 +66,15 @@ VLCBackend::createMemorySource()
     return new VLCMemorySource( this );
 }
 
+void
+VLCBackend::setLogHandler(void *data, IBackend::LogHandler logHandler)
+{
+    m_vlcInstance->unsetLogHook();
+    m_logHandlerData = data;
+    m_logHandler = logHandler;
+    m_vlcInstance->setLogHook( this, &logHook );
+}
+
 LibVLCpp::Instance*
 VLCBackend::vlcInstance()
 {
@@ -76,24 +82,28 @@ VLCBackend::vlcInstance()
 }
 
 void
-VLCBackend::logHook(void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args)
+VLCBackend::logHook( void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args )
 {
-    Q_UNUSED( data )
     Q_UNUSED( ctx )
+
+    VLCBackend* self = reinterpret_cast<VLCBackend*>( data );
+
+    if ( !self->m_logHandler )
+        return ;
 
     char* msg;
     if (vasprintf( &msg, fmt, args ) < 0 )
         return;
     if ( level <= LIBVLC_NOTICE )
-        vlmcDebug() << "[VLC]" << msg;
+        self->m_logHandler( self->m_logHandlerData, Debug, msg );
     else if ( level == LIBVLC_WARNING )
-        vlmcWarning() << "[VLC]" << msg;
+        self->m_logHandler( self->m_logHandlerData, Warning, msg );
     else if ( level == LIBVLC_ERROR )
-        vlmcCritical() << "[VLC]" << msg;
+        self->m_logHandler( self->m_logHandlerData, Error, msg );
     else
     {
         vlmcCritical() << "Unexpected logging level for VLC log" << level;
-        vlmcCritical() << "[VLC]" << msg;
+        vlmcCritical() << "VLCBackend:" << msg;
     }
     free( msg );
 }
