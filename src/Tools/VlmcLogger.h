@@ -26,7 +26,7 @@
 #include <QObject>
 #include <cstdio>
 
-#include "Ibackend.h"
+#include "IBackend.h"
 #include "Singleton.hpp"
 
 /**
