@@ -43,6 +43,11 @@ void
 Instance::setLogHook( void* data, libvlc_log_cb hook )
 {
     libvlc_log_set( m_internalPtr, hook, data );
+}
 
+void
+Instance::unsetLogHook()
+{
+    libvlc_log_unset( *this );
 }
 

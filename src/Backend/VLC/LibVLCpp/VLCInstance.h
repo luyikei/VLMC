@@ -38,6 +38,7 @@ namespace LibVLCpp
         Instance( int argc, const char** argv );
         ~Instance();
         void setLogHook( void *data, libvlc_log_cb hook );
+        void unsetLogHook();
     };
 }
 
