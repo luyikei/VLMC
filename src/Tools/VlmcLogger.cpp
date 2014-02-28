@@ -29,7 +29,9 @@
 #include <QStringList>
 #include <QThread>
 
-VlmcLogger::VlmcLogger() : m_logFile( NULL )
+VlmcLogger::VlmcLogger()
+    : m_logFile( NULL )
+    , m_backendLogLevel( Backend::IBackend::None )
 {
     //setup log level :
     {
@@ -38,11 +40,6 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
         logLevel->setLimits((int)Debug, (int)Verbose);
         // Purposedly destroying the setting value, as we need to use the manager for other operations.
         //FIXME: Actually I'm not sure for setting the value since this is a private variable.
-    }
-    {
-        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/VlcLogLevel", (int)VlmcLogger::Quiet,
-                                                        "", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
-        logLevel->setLimits((int)Debug, (int)Verbose);
     }
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
@@ -80,31 +77,22 @@ VlmcLogger::VlmcLogger() : m_logFile( NULL )
         else
         {
             bool ok = false;
-            int vlcLogLevel = vlcLogLevelStr.toInt( &ok );
-            if (vlcLogLevel >= 2)
-                settingsManager->setValue( "private/VlcLogLevel", VlmcLogger::Debug, SettingsManager::Vlmc );
-            else if (vlcLogLevel == 1)
-                settingsManager->setValue( "private/VlcLogLevel", VlmcLogger::Verbose, SettingsManager::Vlmc );
+            unsigned int vlcLogLevel = vlcLogLevelStr.toUInt( &ok );
+            if ( ok == true )
+            {
+                if ( vlcLogLevel >= 3 )
+                    m_backendLogLevel = Backend::IBackend::Debug;
+                else if ( vlcLogLevel == 2 )
+                    m_backendLogLevel = Backend::IBackend::Warning;
+                else if ( vlcLogLevel == 1 )
+                    m_backendLogLevel = Backend::IBackend::Error;
+            }
             else
                 vlmcWarning() << tr("Invalid value supplied for argument --vlcverbose" );
         }
     }
-
-
-//    QVariant setVal = SettingsManager::getInstance()->value( "private/LogFile", "log.vlmc", SettingsManager::Vlmc );
-//    SettingsManager::getInstance()->watchValue( "private/LogFile", this,
-//                                              SLOT( logFileChanged( const QVariant& ) ),
-//                                              SettingsManager::Vlmc );
-//    QObject::connect( qApp,
-//                      SIGNAL( aboutToQuit() ),
-//                      this,
-//                      SLOT( deleteLater() ) );
-//    QString logFile = setVal.toString();
-//    if ( logFile.isEmpty() == false )
-//    {
-//        m_logFile = new QFile( logFile );
-//        m_logFile->open( QFile::WriteOnly | QFile::Truncate );
-//    }
+    Backend::IBackend* backend = Backend::getBackend();
+    backend->setLogHandler( this, &VlmcLogger::backendLogHandler );
 }
 
 VlmcLogger::~VlmcLogger()
@@ -165,9 +153,15 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
         //FIXME: Messages are not guaranteed to arrive in order
         self->writeToFile(msg);
     }
-    if ( (int)type < (int)self->m_currentLogLevel )
+    self->outputToConsole( (int)type, msg );
+}
+
+void
+VlmcLogger::outputToConsole( int level, const char *msg )
+{
+    if ( level < (int)m_currentLogLevel )
         return ;
-    switch ( type )
+    switch ( (QtMsgType)level )
     {
     case QtDebugMsg:
         fprintf(stdout, "%s\n", msg);
@@ -182,4 +176,34 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
         fprintf(stderr, "%s\n", msg);
         abort();
     }
+}
+
+void
+VlmcLogger::backendLogHandler(void *data, Backend::IBackend::LogLevel logLevel, const char* msg )
+{
+    VlmcLogger* self = reinterpret_cast<VlmcLogger*>( data );
+    char* newMsg = NULL;
+    asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
+              QThread::currentThreadId(), msg );
+    self->writeToFile( newMsg );
+    if ( logLevel < self->m_backendLogLevel )
+    {
+        free( newMsg );
+        return ;
+    }
+    switch ( logLevel )
+    {
+        case Backend::IBackend::Debug:
+            self->outputToConsole( Debug, newMsg );
+            break;
+        case Backend::IBackend::Warning:
+            self->outputToConsole( Verbose, newMsg );
+            break;
+        case Backend::IBackend::Error:
+            self->outputToConsole( Quiet, newMsg );
+            break;
+        default:
+            Q_ASSERT(false);
+    }
+    free( newMsg );
 }

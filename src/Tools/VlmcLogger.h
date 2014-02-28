@@ -26,6 +26,7 @@
 #include <QObject>
 #include <cstdio>
 
+#include "Ibackend.h"
 #include "Singleton.hpp"
 
 /**
@@ -52,14 +53,18 @@ class   VlmcLogger : public QObject, public Singleton<VlmcLogger>
 #else
         static void     vlmcMessageHandler( QtMsgType type, const char* msg );
 #endif
+        static void     backendLogHandler( void* data, Backend::IBackend::LogLevel logLevel, const char* msg );
+
         void            setup();
     private:
         VlmcLogger();
         virtual ~VlmcLogger();
         void            writeToFile(const char* msg);
+        void            outputToConsole( int level, const char* msg );
 
-        FILE*           m_logFile;
-        LogLevel        m_currentLogLevel;
+        FILE*                           m_logFile;
+        LogLevel                        m_currentLogLevel;
+        Backend::IBackend::LogLevel     m_backendLogLevel;
 
     private slots:
         void            logLevelChanged( const QVariant& logLevel );
