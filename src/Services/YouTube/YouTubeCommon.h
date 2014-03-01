@@ -23,7 +23,7 @@
 #ifndef YOUTUBECOMMON_H
 #define YOUTUBECOMMON_H
 
-#include "AbstractSharingService.h"
+#include "Services/AbstractSharingService.h"
 #include <QString>
 
 namespace YouTube

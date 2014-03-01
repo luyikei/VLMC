@@ -96,8 +96,6 @@ INCLUDE_DIRECTORIES(
   Gui/timeline
   Gui/widgets
   Gui/wizard
-  Services
-  Services/YouTube
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)

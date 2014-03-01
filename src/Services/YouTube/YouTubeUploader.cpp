@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "UploaderIODevice.h"
+#include "Services/UploaderIODevice.h"
 #include "Tools/VlmcDebug.h"
 #include "YouTubeService.h"
 #include "YouTubeUploader.h"

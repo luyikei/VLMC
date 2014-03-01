@@ -20,11 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "AbstractSharingService.h"
 #include "Settings/SettingsManager.h"
 #include "ShareOnInternet.h"
 #include "Tools/VlmcDebug.h"
-#include "YouTube/YouTubeService.h"
+#include "Services/AbstractSharingService.h"
+#include "Services/YouTube/YouTubeService.h"
 
 #include <QDesktopServices>
 #include <QClipboard>
