@@ -85,11 +85,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
-  Backend
   Backend/VLC/LibVLCpp
-  Commands
-  EffectsEngine
-  Settings
   Gui
   Gui/effectsengine
   Gui/import
@@ -100,16 +96,8 @@ INCLUDE_DIRECTORIES(
   Gui/timeline
   Gui/widgets
   Gui/wizard
-  Library
-  LibVLCpp
-  Media
-  Metadata
-  Project
-  Renderer
   Services
   Services/YouTube
-  Tools
-  Workflow
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
