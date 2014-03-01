@@ -22,7 +22,7 @@
 
 #include "YouTubeService.h"
 
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 #include "YouTubeAuthenticator.h"
 #include "YouTubeUploader.h"
 

@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 #include "YouTubeAuthenticator.h"
 #include "YouTubeService.h"
 

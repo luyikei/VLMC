@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "UploaderIODevice.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 #include "YouTubeService.h"
 #include "YouTubeUploader.h"
 #include "YouTubeFeedParser.h"
