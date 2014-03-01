@@ -23,7 +23,7 @@
 
 #include <signal.h>
 
-#include "BacktraceGenerator.h"
+#include "Tools/BacktraceGenerator.h"
 #include "CrashHandler.h"
 #include "ui_CrashHandler.h"
 

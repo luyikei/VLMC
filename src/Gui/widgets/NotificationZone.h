@@ -23,7 +23,7 @@
 #ifndef NOTIFICATIONZONE_H
 #define NOTIFICATIONZONE_H
 
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 
 class   QTimer;
 

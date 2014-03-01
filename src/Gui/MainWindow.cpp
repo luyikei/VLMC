@@ -33,19 +33,19 @@
 
 #include "MainWindow.h"
 #include "config.h"
-#include "Library.h"
+#include "Library/Library.h"
 #include "About.h"
-#include "VlmcDebug.h"
-#include "VlmcLogger.h"
+#include "Tools/VlmcDebug.h"
+#include "Tools/VlmcLogger.h"
 
 #include "EffectsEngine/EffectsEngine.h"
-#include "IBackend.h"
-#include "MainWorkflow.h"
+#include "Backend/IBackend.h"
+#include "Workflow/MainWorkflow.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnInternet.h"
-#include "WorkflowFileRenderer.h"
-#include "WorkflowRenderer.h"
-#include "ClipRenderer.h"
+#include "Renderer/WorkflowFileRenderer.h"
+#include "Renderer/WorkflowRenderer.h"
+#include "Renderer/ClipRenderer.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"
@@ -62,7 +62,7 @@
 #include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "Settings.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "LanguageHelper.h"
 
 MainWindow::MainWindow( QWidget *parent ) :

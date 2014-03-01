@@ -22,11 +22,11 @@
 
 #include "GuiProjectManager.h"
 
-#include "Library.h"
-#include "MainWorkflow.h"
-#include "SettingsManager.h"
+#include "Library/Library.h"
+#include "Workflow/MainWorkflow.h"
+#include "Settings/SettingsManager.h"
 #include "Timeline.h"
-#include "Workspace.h"
+#include "Project/Workspace.h"
 
 #include <QDateTime>
 #include <QFileDialog>

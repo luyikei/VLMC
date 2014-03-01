@@ -24,7 +24,7 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
-#include "QSingleton.hpp"
+#include "Tools/QSingleton.hpp"
 #include "ui_About.h"
 
 #include <QDialog>

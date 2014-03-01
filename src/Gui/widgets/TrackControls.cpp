@@ -23,7 +23,7 @@
 #include "GraphicsTrack.h"
 #include "EffectStack.h"
 #include "TrackControls.h"
-#include "TrackWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 
 #include "ui_TrackControls.h"
 

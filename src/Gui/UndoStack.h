@@ -25,8 +25,8 @@
 
 #include <QUndoView>
 
-#include "KeyboardShortcutHelper.h"
-#include "QSingleton.hpp"
+#include "Commands/KeyboardShortcutHelper.h"
+#include "Tools/QSingleton.hpp"
 
 class QUndoStack;
 class QUndoCommand;

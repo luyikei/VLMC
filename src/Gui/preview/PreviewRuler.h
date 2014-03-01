@@ -25,7 +25,7 @@
 
 #include <QWidget>
 #include <QPaintEvent>
-#include "GenericRenderer.h"
+#include "Renderer/GenericRenderer.h"
 
 #define MARK_XSMALL 3
 #define MARK_SMALL 5

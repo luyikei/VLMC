@@ -23,7 +23,7 @@
 #ifndef DOCKWIDGETMANAGER_H
 #define DOCKWIDGETMANAGER_H
 
-#include "QSingleton.hpp"
+#include "Tools/QSingleton.hpp"
 
 #include <QObject>
 #include <QWidget>

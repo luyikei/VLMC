@@ -20,9 +20,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Media.h"
+#include "Media/Media.h"
 #include "RendererSettings.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "ui_RendererSettings.h"
 
 #include <QCompleter>

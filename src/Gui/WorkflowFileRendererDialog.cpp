@@ -24,8 +24,8 @@
 #include "WorkflowFileRendererDialog.h"
 
 #include "vlmc.h"
-#include "MainWorkflow.h"
-#include "WorkflowFileRenderer.h"
+#include "Workflow/MainWorkflow.h"
+#include "Renderer/WorkflowFileRenderer.h"
 
 WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* renderer,
                                                         quint32 width, quint32 height ) :

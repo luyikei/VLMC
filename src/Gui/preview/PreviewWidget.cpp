@@ -21,13 +21,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Clip.h"
-#include "ClipRenderer.h"
-#include "ISourceRenderer.h"
+#include "Media/Clip.h"
+#include "Renderer/ClipRenderer.h"
+#include "Backend/ISourceRenderer.h"
 #include "PreviewWidget.h"
 #include "PreviewRuler.h"
 #include "RenderWidget.h"
-#include "RendererEventWatcher.h"
+#include "Tools/RendererEventWatcher.h"
 #include "ui_PreviewWidget.h"
 
 #include <QMessageBox>

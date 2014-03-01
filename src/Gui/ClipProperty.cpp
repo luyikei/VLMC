@@ -23,9 +23,9 @@
 #include "ClipProperty.h"
 #include "ui_ClipProperty.h"
 
-#include "Clip.h"
+#include "Media/Clip.h"
+#include "Media/Media.h"
 #include "ClipMetadataDisplayer.h"
-#include "Media.h"
 
 #include <QInputDialog>
 #include <QPushButton>

@@ -23,9 +23,9 @@
 
 #include "UndoStack.h"
 
-#include "Commands.h"
+#include "Commands/Commands.h"
 #include "project/GuiProjectManager.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 
 #include <QEvent>
 #include <QUndoStack>

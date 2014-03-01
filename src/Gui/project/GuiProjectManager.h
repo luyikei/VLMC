@@ -24,7 +24,7 @@
 #define GUIPROJECTMANAGER_H
 
 #include <QXmlStreamWriter>
-#include "ProjectManager.h"
+#include "Project/ProjectManager.h"
 
 class   QTimer;
 

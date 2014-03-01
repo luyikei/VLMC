@@ -21,9 +21,9 @@
  *****************************************************************************/
 
 #include "AbstractSharingService.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "ShareOnInternet.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 #include "YouTube/YouTubeService.h"
 
 #include <QDesktopServices>

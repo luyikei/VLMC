@@ -23,7 +23,7 @@
 #ifndef LANGUAGEHELPER_H
 #define LANGUAGEHELPER_H
 
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 
 #include <QObject>
 
