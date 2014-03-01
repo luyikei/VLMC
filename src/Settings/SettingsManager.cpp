@@ -22,7 +22,7 @@
 
 #include "SettingsManager.h"
 #include "SettingValue.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QSettings>
 #include <QWriteLocker>

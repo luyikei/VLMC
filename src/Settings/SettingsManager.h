@@ -24,7 +24,7 @@
 #define SETTINGSMANAGER_H
 
 #include "SettingValue.h"
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 
 #include <QString>
 #include <QMap>
