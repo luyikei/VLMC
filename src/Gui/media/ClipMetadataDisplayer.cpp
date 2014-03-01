@@ -22,9 +22,9 @@
 
 #include "ClipMetadataDisplayer.h"
 
-#include "Clip.h"
-#include "ISource.h"
-#include "Media.h"
+#include "Media/Clip.h"
+#include "Backend/ISource.h"
+#include "Media/Media.h"
 
 #include <QTime>
 

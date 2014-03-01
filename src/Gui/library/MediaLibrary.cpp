@@ -22,14 +22,14 @@
 
 #include "MediaLibrary.h"
 
-#include "Clip.h"
-#include "Library.h"
-#include "Media.h"
+#include "Media/Clip.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
 #include "MediaCellView.h"
 #include "MediaListView.h"
 #include "StackViewController.h"
 #include "ViewController.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QUrl>
 #include <QMimeData>

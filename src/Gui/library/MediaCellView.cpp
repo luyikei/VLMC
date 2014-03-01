@@ -24,14 +24,14 @@
 #include "MediaCellView.h"
 #include "ui_MediaCellView.h"
 
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipProperty.h"
-#include "ISource.h"
-#include "Library.h"
-#include "Media.h"
-#include "MetaDataManager.h"
-#include "MainWorkflow.h"
-#include "Workspace.h"
+#include "Backend/ISource.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
+#include "Metadata/MetaDataManager.h"
+#include "Workflow/MainWorkflow.h"
+#include "Project/Workspace.h"
 
 #include <QMenu>
 #include <QMessageBox>

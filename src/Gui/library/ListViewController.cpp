@@ -26,7 +26,7 @@
 
 #include "ListViewController.h"
 #include "MediaCellView.h"
-#include "Library.h"
+#include "Library/Library.h"
 #include "StackViewController.h"
 
 ListViewController::ListViewController( StackViewController* nav ) : m_nav( nav )

@@ -22,9 +22,9 @@
 
 #include "MediaListView.h"
 
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "MediaCellView.h"
-#include "MediaContainer.h"
+#include "Library/MediaContainer.h"
 #include "StackViewController.h"
 
 #include <QApplication>
