@@ -183,8 +183,10 @@ VlmcLogger::backendLogHandler(void *data, Backend::IBackend::LogLevel logLevel, 
 {
     VlmcLogger* self = reinterpret_cast<VlmcLogger*>( data );
     char* newMsg = NULL;
-    asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
-              QThread::currentThreadId(), msg );
+    if ( asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
+              QThread::currentThreadId(), msg ) < 0 )
+        return ;
+
     if ( self->m_logFile != NULL )
         self->writeToFile( newMsg );
     if ( logLevel < self->m_backendLogLevel )
