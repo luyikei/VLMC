@@ -27,9 +27,6 @@
 #include "Backend/ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 #include "WorkflowRenderer.h"
-#ifdef WITH_GUI
-#include "WorkflowFileRendererDialog.h"
-#endif
 
 #include <QTime>
 

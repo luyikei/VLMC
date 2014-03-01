@@ -23,6 +23,14 @@
 //Allow PRId64 to be defined:
 #define __STDC_FORMAT_MACROS
 
+#include <QDomElement>
+#include <QThread>
+#include <QWaitCondition>
+#include <inttypes.h>
+
+#include "VLCMedia.h"
+#include "VLCMediaPlayer.h"
+
 #include "WorkflowRenderer.h"
 
 #include "Media/Clip.h"
@@ -33,16 +41,8 @@
 #include "Workflow/MainWorkflow.h"
 #include "Gui/preview/RenderWidget.h"
 #include "Settings/SettingsManager.h"
-#include "VLCMedia.h"
-#include "VLCMediaPlayer.h"
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
-#include "timeline/Timeline.h"
-
-#include <QDomElement>
-#include <QThread>
-#include <QWaitCondition>
-#include <inttypes.h>
 
 WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend ) :
             m_mainWorkflow( MainWorkflow::getInstance() ),

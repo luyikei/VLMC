@@ -46,6 +46,7 @@
 #include "Renderer/WorkflowFileRenderer.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
+#include "WorkflowFileRendererDialog.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"

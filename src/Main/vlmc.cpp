@@ -38,7 +38,7 @@ int VLMCmain( int , char** );
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
 #ifdef WITH_GUI
-    #include "project/GuiProjectManager.h"
+    #include "Gui/project/GuiProjectManager.h"
     #ifdef WITH_CRASHHANDLER_GUI
         #include "CrashHandler.h"
     #endif
