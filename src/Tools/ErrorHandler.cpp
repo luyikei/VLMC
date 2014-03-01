@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "ErrorHandler.h"
+#include "Tools/ErrorHandler.h"
 
 QString
 ErrorHandler::lastError()

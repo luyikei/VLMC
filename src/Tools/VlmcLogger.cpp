@@ -20,14 +20,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "SettingsManager.h"
-#include "VlmcLogger.h"
-#include "VlmcDebug.h"
-
 #include <QCoreApplication>
 #include <QDesktopServices>
 #include <QStringList>
 #include <QThread>
+
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcLogger.h"
+#include "Tools/VlmcDebug.h"
+
 
 VlmcLogger::VlmcLogger()
     : m_logFile( NULL )

@@ -26,8 +26,8 @@
 #include <QObject>
 #include <cstdio>
 
-#include "IBackend.h"
-#include "Singleton.hpp"
+#include "Backend/IBackend.h"
+#include "Tools/Singleton.hpp"
 
 /**
  *  \warning    Do not use qDebug() qWarning() etc... from here, unless you know exactly what you're doing

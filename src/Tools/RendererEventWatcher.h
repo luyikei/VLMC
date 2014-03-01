@@ -24,7 +24,7 @@
 #define RENDEREREVENTWATCHER_H
 
 #include <QObject>
-#include "ISourceRenderer.h"
+#include "Backend/ISourceRenderer.h"
 
 class RendererEventWatcher : public QObject, public Backend::ISourceRendererEventCb
 {
