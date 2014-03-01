@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include <QCoreApplication>
-#include <QDesktopServices>
 #include <QStringList>
 #include <QThread>
 
