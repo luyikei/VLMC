@@ -130,5 +130,5 @@ void Frame::resize(size_t size)
     if ( size == m_size )
         return ;
     delete[] m_buffer;
-    m_buffer = new quint32[size];
+    m_buffer = new quint32[size / sizeof(quint32)];
 }
