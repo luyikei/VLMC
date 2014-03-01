@@ -94,7 +94,6 @@ INCLUDE_DIRECTORIES(
   Gui/settings
   Gui/timeline
   Gui/widgets
-  Gui/wizard
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)

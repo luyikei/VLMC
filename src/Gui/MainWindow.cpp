@@ -61,7 +61,7 @@
 
 /* Settings / Preferences */
 #include "project/GuiProjectManager.h"
-#include "ProjectWizard.h"
+#include "wizard/ProjectWizard.h"
 #include "Settings.h"
 #include "Settings/SettingsManager.h"
 #include "LanguageHelper.h"
