@@ -163,7 +163,7 @@
   <customwidget>
    <class>ExtendedLabel</class>
    <extends>QLabel</extends>
-   <header>ExtendedLabel.h</header>
+   <header>Gui/widgets/ExtendedLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

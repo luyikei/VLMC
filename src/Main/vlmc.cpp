@@ -40,7 +40,7 @@ int VLMCmain( int , char** );
 #ifdef WITH_GUI
     #include "Gui/project/GuiProjectManager.h"
     #ifdef WITH_CRASHHANDLER_GUI
-        #include "CrashHandler.h"
+        #include "Gui/widgets/CrashHandler.h"
     #endif
 #else
     #include "ProjectManager.h"

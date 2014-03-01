@@ -92,7 +92,6 @@ INCLUDE_DIRECTORIES(
   Gui/media
   Gui/preview
   Gui/timeline
-  Gui/widgets
 )
 
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)

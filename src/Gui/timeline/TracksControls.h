@@ -25,7 +25,7 @@
 
 #include <QScrollArea>
 #include <QVBoxLayout>
-#include "TrackControls.h"
+#include "Gui/widgets/TrackControls.h"
 
 class GraphicsTrack;
 

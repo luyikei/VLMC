@@ -66,7 +66,7 @@
   <customwidget>
    <class>SearchLineEdit</class>
    <extends>QLineEdit</extends>
-   <header>SearchLineEdit.h</header>
+   <header>Gui/widgets/SearchLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
