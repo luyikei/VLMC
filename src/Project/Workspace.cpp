@@ -22,17 +22,18 @@
 
 #include "Workspace.h"
 
-#include "Clip.h"
-#include "Library.h"
-#include "Media.h"
+#include "Media/Clip.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcDebug.h"
+
 #include "Project/WorkspaceWorker.h"
-#include "SettingsManager.h"
-#include "VlmcDebug.h"
 
 #include <QMutex>
 
 #ifdef WITH_GUI
-# include "NotificationZone.h"
+# include "Gui/widgets/NotificationZone.h"
 # include <QMessageBox>
 #endif
 

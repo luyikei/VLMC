@@ -24,11 +24,12 @@
 #define PROJECTMANAGER_H
 
 #include "config.h"
+
 #include <QObject>
 #include <QStringList>
 #include <QDomElement>
 
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 
 class   QFile;
 class   QDomDocument;

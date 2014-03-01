@@ -25,7 +25,7 @@
 
 #include <QThread>
 
-class   Media;
+class Media;
 
 class WorkspaceWorker : public QThread
 {

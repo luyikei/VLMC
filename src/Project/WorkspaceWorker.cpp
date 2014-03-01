@@ -20,11 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "WorkspaceWorker.h"
+#include "Project/WorkspaceWorker.h"
 
-#include "Media.h"
-#include "SettingsManager.h"
-#include "VlmcDebug.h"
+#include "Media/Media.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcDebug.h"
 
 #include <cerrno>
 #include <unistd.h>

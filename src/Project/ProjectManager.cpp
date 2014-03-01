@@ -22,15 +22,14 @@
 
 #include "config.h"
 
-#include "Library.h"
-#include "MainWorkflow.h"
-#include "project/GuiProjectManager.h"
-#include "ProjectManager.h"
-#include "SettingsManager.h"
-#include "Timeline.h"
-#include "VlmcDebug.h"
-#include "WorkflowRenderer.h"
-#include "Workspace.h"
+#include "Library/Library.h"
+#include "Workflow/MainWorkflow.h"
+#include "Gui/project/GuiProjectManager.h"
+#include "Settings/SettingsManager.h"
+#include "Gui/timeline/Timeline.h"
+#include "Tools/VlmcDebug.h"
+#include "Renderer/WorkflowRenderer.h"
+#include "Project/Workspace.h"
 
 #include <QDir>
 #include <QDomDocument>

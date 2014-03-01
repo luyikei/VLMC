@@ -23,9 +23,8 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include "Singleton.hpp"
-
-#include "ErrorHandler.h"
+#include "Tools/Singleton.hpp"
+#include "Tools/ErrorHandler.h"
 
 #include <QObject>
 #include <QQueue>
