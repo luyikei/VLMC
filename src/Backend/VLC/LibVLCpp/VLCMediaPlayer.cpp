@@ -105,8 +105,7 @@ MediaPlayer::stop()
 int
 MediaPlayer::getVolume()
 {
-    int volume = libvlc_audio_get_volume( m_internalPtr );
-    return volume;
+    return libvlc_audio_get_volume( m_internalPtr );
 }
 
 int
@@ -209,15 +208,13 @@ MediaPlayer::hasVout()
 int
 MediaPlayer::getNbAudioTrack()
 {
-    int res = libvlc_audio_get_track_count( m_internalPtr );
-    return res;
+    return libvlc_audio_get_track_count( m_internalPtr );
 }
 
 int
 MediaPlayer::getNbVideoTrack()
 {
-    int res = libvlc_video_get_track_count( m_internalPtr );
-    return res;
+    return libvlc_video_get_track_count( m_internalPtr );
 }
 
 void
