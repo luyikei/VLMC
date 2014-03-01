@@ -29,11 +29,11 @@
 #include "Media.h"
 
 #include "Clip.h"
-#include "MetaDataManager.h"
-#include "VlmcDebug.h"
-#include "Workspace.h"
-#include "ISource.h"
-#include "IBackend.h"
+#include "Metadata/MetaDataManager.h"
+#include "Tools/VlmcDebug.h"
+#include "Project/Workspace.h"
+#include "Backend/ISource.h"
+#include "Backend/IBackend.h"
 
 #include <QUrl>
 

@@ -25,10 +25,10 @@
   */
 
 #include "Clip.h"
-#include "ISource.h"
-#include "Library.h"
-#include "Media.h"
-#include "Workspace.h"
+#include "Backend/ISource.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
+#include "Project/Workspace.h"
 
 const int   Clip::DefaultFPS = 30;
 

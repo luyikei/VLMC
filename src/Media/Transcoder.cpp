@@ -22,13 +22,13 @@
 
 #include "Transcoder.h"
 
-#include "ISource.h"
-#include "ISourceRenderer.h"
-#include "Media.h"
-#include "MetaDataManager.h"
+#include "Backend/ISource.h"
+#include "Backend/ISourceRenderer.h"
+#include "Media/Media.h"
+#include "Metadata/MetaDataManager.h"
 #include "NotificationZone.h"
-#include "SettingsManager.h"
-#include "RendererEventWatcher.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/RendererEventWatcher.h"
 
 #include <QFileInfo>
 
