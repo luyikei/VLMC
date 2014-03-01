@@ -27,7 +27,6 @@ class   EffectInstance;
 class   EffectUser;
 
 #include <QObject>
-#include <QUuid>
 #include <QMetaType>
 
 #include "Workflow/Helper.h"

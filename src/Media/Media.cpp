@@ -26,6 +26,8 @@
   * It's used by the Library
   */
 
+#include <QUrl>
+
 #include "Media.h"
 
 #include "Clip.h"
@@ -35,7 +37,6 @@
 #include "Backend/ISource.h"
 #include "Backend/IBackend.h"
 
-#include <QUrl>
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "
                                          "*.iso *.m1v *.m2v *.m2t *.m2ts *.m4v *.mkv *.mov "

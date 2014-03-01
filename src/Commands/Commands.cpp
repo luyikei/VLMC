@@ -29,7 +29,6 @@
 #include "Workflow/ClipHelper.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectInstance.h"
-#include "Workflow/MainWorkflow.h"
 #include "Workflow/TrackWorkflow.h"
 
 #ifdef WITH_GUI

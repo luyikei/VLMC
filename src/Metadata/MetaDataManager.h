@@ -23,11 +23,11 @@
 #ifndef METADATAMANAGER_H
 #define METADATAMANAGER_H
 
-#include "Tools/Singleton.hpp"
-
 #include <QThread>
 #include <QQueue>
 #include <QMutex>
+
+#include "Tools/Singleton.hpp"
 
 class   Media;
 namespace LibVLCpp

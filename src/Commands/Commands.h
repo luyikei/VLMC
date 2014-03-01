@@ -30,10 +30,8 @@
 # include <QUndoCommand>
 #endif
 #include <QObject>
-#include <QVector>
 
 #include "Workflow/MainWorkflow.h"
-#include "Workflow/Types.h"
 
 class   Clip;
 class   ClipHelper;

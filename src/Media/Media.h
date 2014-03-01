@@ -30,9 +30,7 @@
 #define MEDIA_H__
 
 #include "config.h"
-#include <QList>
 #include <QString>
-#include <QUuid>
 #include <QObject>
 #include <QFileInfo>
 #include <QXmlStreamWriter>

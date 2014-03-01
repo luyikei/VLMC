@@ -20,17 +20,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <QFileInfo>
+
 #include "Transcoder.h"
 
 #include "Backend/ISource.h"
 #include "Backend/ISourceRenderer.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
-#include "NotificationZone.h"
+#include "Gui/widgets/NotificationZone.h"
 #include "Settings/SettingsManager.h"
 #include "Tools/RendererEventWatcher.h"
-
-#include <QFileInfo>
 
 Transcoder::Transcoder( Media* media )
     : m_media( media )

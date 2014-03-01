@@ -34,7 +34,6 @@
 #include "MediaContainer.h"
 
 #include <QObject>
-#include <QAtomicInt>
 #include <QXmlStreamWriter>
 
 class   QDomElement;
