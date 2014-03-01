@@ -630,7 +630,7 @@ TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time 
     if ( qgraphicsitem_cast<GraphicsEffectItem*>( item ) != NULL )
         return ItemPosition( track, time );
     // Create a fake item for computing collisions
-    QGraphicsRectItem *chkItem = new QGraphicsRectItem( item->boundingRect() );
+    QGraphicsRectItem *chkItem = new QGraphicsRectItem( item->boundingRect().adjusted( 0, 1, 0, -1 ) );
     chkItem->setParentItem( getTrack( item->trackType(), track ) );
     chkItem->setPos( time, 0 );
 
