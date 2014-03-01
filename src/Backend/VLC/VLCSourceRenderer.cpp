@@ -29,7 +29,7 @@
 #include "VLCSourceRenderer.h"
 #include "VLCSource.h"
 #include "VLCMemorySource.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 
 using namespace Backend;
 using namespace Backend::VLC;

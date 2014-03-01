@@ -25,8 +25,8 @@
 
 #include <cstdarg>
 
-#include "IBackend.h"
-#include "Singleton.hpp"
+#include "Backend/IBackend.h"
+#include "Tools/Singleton.hpp"
 #include "VLCInstance.h"
 
 namespace Backend

@@ -23,7 +23,7 @@
 #ifndef VLCMEMORYSOURCE_H
 #define VLCMEMORYSOURCE_H
 
-#include "ISource.h"
+#include "Backend/ISource.h"
 
 #include <QString>
 
