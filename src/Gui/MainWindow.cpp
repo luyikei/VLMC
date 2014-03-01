@@ -51,7 +51,7 @@
 /* Widgets */
 #include "DockWidgetManager.h"
 #include "EffectsListView.h"
-#include "ImportController.h"
+#include "import/ImportController.h"
 #include "MediaLibrary.h"
 #include "NotificationZone.h"
 #include "PreviewWidget.h"

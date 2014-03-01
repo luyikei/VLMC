@@ -88,7 +88,6 @@ INCLUDE_DIRECTORIES(
   Backend/VLC/LibVLCpp
   Gui
   Gui/effectsengine
-  Gui/import
   Gui/library
   Gui/media
   Gui/preview
