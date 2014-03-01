@@ -37,13 +37,16 @@
 #include <errno.h>
 #include <signal.h>
 
+#define SETTINGS_RECENTS "private/RecentsProjects"
+#define SETTINGS_BACKUP "private/EmergencyBackup"
+
 const QString   ProjectManager::unNamedProject = ProjectManager::tr( "Untitled Project" );
 const QString   ProjectManager::unSavedProject = ProjectManager::tr( "Unsaved Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
 {
-    m_recentsProjects = VLMC_GET_STRINGLIST( "private/RecentsProjects" );
+    m_recentsProjects = VLMC_GET_STRINGLIST( SETTINGS_RECENTS );
     //If the variable was empty, it will return a list with one empty string in it.
     m_recentsProjects.removeAll( "" );
 
@@ -168,7 +171,7 @@ ProjectManager::removeProject( const QString& project )
     // Remove all occurence of fileName
     m_recentsProjects.removeAll( project );
 
-    SettingsManager::getInstance()->setValue( "private/RecentsProjects", m_recentsProjects, SettingsManager::Vlmc );
+    SettingsManager::getInstance()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
 }
 
 void
@@ -206,7 +209,7 @@ ProjectManager::emergencyBackup()
     else
        name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
     __saveProject( name );
-    SettingsManager::getInstance()->setValue( "private/EmergencyBackup", name, SettingsManager::Vlmc );
+    SettingsManager::getInstance()->setValue( SETTINGS_BACKUP, name, SettingsManager::Vlmc );
 }
 
 bool
@@ -231,7 +234,7 @@ ProjectManager::appendToRecentProject( const QString& projectName )
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    SettingsManager::getInstance()->setValue( "private/RecentsProjects", m_recentsProjects, SettingsManager::Vlmc );
+    SettingsManager::getInstance()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
 }
 
 QString
@@ -276,7 +279,7 @@ ProjectManager::saveAs( const QString &outputFileName )
 bool
 ProjectManager::loadEmergencyBackup()
 {
-    QString lastProject = VLMC_GET_STRING( "private/EmergencyBackup" );
+    QString lastProject = VLMC_GET_STRING( SETTINGS_BACKUP );
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );
@@ -299,3 +302,6 @@ ProjectManager::outputFileName() const
 {
     return m_projectFile->fileName();
 }
+
+#undef SETTINGS_RECENTS
+#undef SETTINGS_BACKUP
