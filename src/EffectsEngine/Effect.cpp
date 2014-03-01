@@ -23,7 +23,7 @@
 #include "EffectsEngine/Effect.h"
 #include "EffectsEngine/EffectInstance.h"
 
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 
 Effect::Effect( const QString &fileName ) :
         QLibrary( fileName ),
