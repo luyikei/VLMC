@@ -22,9 +22,9 @@
 
 #include "EffectInstanceWidget.h"
 
-#include "BoolWidget.h"
-#include "ColorWidget.h"
-#include "DoubleSliderWidget.h"
+#include "Gui/settings/BoolWidget.h"
+#include "Gui/settings/ColorWidget.h"
+#include "Gui/settings/DoubleSliderWidget.h"
 #include "EffectsEngine/Effect.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectSettingValue.h"

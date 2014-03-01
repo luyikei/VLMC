@@ -91,7 +91,6 @@ INCLUDE_DIRECTORIES(
   Gui/library
   Gui/media
   Gui/preview
-  Gui/settings
   Gui/timeline
   Gui/widgets
 )
