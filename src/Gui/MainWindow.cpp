@@ -462,7 +462,7 @@ MainWindow::setupUndoRedoWidget()
                                       Qt::AllDockWidgetAreas,
                                       QDockWidget::AllDockWidgetFeatures );
     QWidget         *undoRedoWidget = UndoStack::getInstance( dockedWidget );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::LeftDockWidgetArea );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::TopDockWidgetArea );
 }
 
 void
@@ -475,7 +475,7 @@ MainWindow::setupEffectsList()
     m_effectsList = new EffectsListView( dockedWidget );
     m_effectsList->setType( Effect::Filter );
     EffectsEngine::getInstance()->loadEffects();
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_effectsList, Qt::LeftDockWidgetArea );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_effectsList, Qt::TopDockWidgetArea );
 }
 
 void
