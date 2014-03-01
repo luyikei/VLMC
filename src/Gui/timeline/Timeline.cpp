@@ -22,14 +22,14 @@
 
 #include "Timeline.h"
 
-#include "Clip.h"
-#include "ClipHelper.h"
+#include "Media/Clip.h"
+#include "Workflow/ClipHelper.h"
 #include "TracksView.h"
 #include "TracksScene.h"
 #include "TracksControls.h"
 #include "TracksRuler.h"
-#include "VlmcDebug.h"
-#include "WorkflowRenderer.h"
+#include "Tools/VlmcDebug.h"
+#include "Renderer/WorkflowRenderer.h"
 
 #include <QHBoxLayout>
 #include <QDomElement>

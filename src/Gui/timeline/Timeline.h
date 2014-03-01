@@ -23,10 +23,10 @@
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
-#include "ClipHelper.h"
+#include "Workflow/ClipHelper.h"
 #include "vlmc.h"
 #include "ui_Timeline.h"
-#include "Types.h"
+#include "Workflow/Types.h"
 
 #include <QDomElement>
 #include <QXmlStreamWriter>

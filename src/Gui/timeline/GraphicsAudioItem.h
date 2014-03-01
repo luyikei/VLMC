@@ -25,7 +25,7 @@
 
 #include <QFontMetrics>
 #include "AbstractGraphicsMediaItem.h"
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "TracksView.h"
 
 /**

@@ -22,7 +22,7 @@
 
 #include "AbstractGraphicsItem.h"
 
-#include "Helper.h"
+#include "Workflow/Helper.h"
 #include "GraphicsTrack.h"
 #include "TracksView.h"
 #include "TracksScene.h"

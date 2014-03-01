@@ -23,13 +23,13 @@
 #include "AbstractGraphicsMediaItem.h"
 #include "TracksView.h"
 #include "TracksScene.h"
-#include "TrackWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 #include "GraphicsTrack.h"
 
-#include "Clip.h"
-#include "ClipHelper.h"
-#include "Commands.h"
-#include "Media.h"
+#include "Media/Clip.h"
+#include "Workflow/ClipHelper.h"
+#include "Commands/Commands.h"
+#include "Media/Media.h"
 
 #include <QMenu>
 #include <QColorDialog>

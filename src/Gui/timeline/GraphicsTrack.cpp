@@ -23,7 +23,7 @@
 #include <QList>
 #include "TracksView.h"
 #include "GraphicsTrack.h"
-#include "MainWorkflow.h"
+#include "Workflow/MainWorkflow.h"
 
 GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                               QGraphicsItem *parent ) :

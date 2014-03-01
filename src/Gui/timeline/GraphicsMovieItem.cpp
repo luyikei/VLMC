@@ -20,11 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Clip.h"
-#include "ClipHelper.h"
+#include "Media/Clip.h"
+#include "Workflow/ClipHelper.h"
 #include "GraphicsMovieItem.h"
-#include "ISource.h"
-#include "Media.h"
+#include "Backend/ISource.h"
+#include "Media/Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
 

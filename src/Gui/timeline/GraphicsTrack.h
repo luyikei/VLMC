@@ -25,7 +25,7 @@
 
 #include <QGraphicsWidget>
 #include <QList>
-#include "Types.h"
+#include "Workflow/Types.h"
 
 class   AbstractGraphicsItem;
 class   AbstractGraphicsMediaItem;

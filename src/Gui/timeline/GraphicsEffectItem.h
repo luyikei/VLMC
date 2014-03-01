@@ -24,7 +24,7 @@
 #define GRAPHICSEFFECTITEM_H
 
 #include "AbstractGraphicsItem.h"
-#include "EffectsEngine.h"
+#include "EffectsEngine/EffectsEngine.h"
 
 class   EffectUser;
 class   AbstractGraphicsMediaItem;

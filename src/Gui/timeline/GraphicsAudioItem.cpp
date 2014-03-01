@@ -23,9 +23,9 @@
 
 #include "GraphicsAudioItem.h"
 
-#include "ClipHelper.h"
-#include "ISource.h"
-#include "Media.h"
+#include "Workflow/ClipHelper.h"
+#include "Backend/ISource.h"
+#include "Media/Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
 

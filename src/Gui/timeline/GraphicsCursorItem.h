@@ -23,7 +23,7 @@
 #ifndef GRAPHICSCURSORITEM_H
 #define GRAPHICSCURSORITEM_H
 
-#include "Types.h"
+#include "Workflow/Types.h"
 #include <QObject>
 #include <QGraphicsItem>
 #include <QPen>

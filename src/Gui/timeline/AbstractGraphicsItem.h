@@ -37,7 +37,7 @@ namespace Workflow
     class   Helper;
 }
 
-#include "Types.h"
+#include "Workflow/Types.h"
 
 class AbstractGraphicsItem : public QObject, public QGraphicsItem
 {

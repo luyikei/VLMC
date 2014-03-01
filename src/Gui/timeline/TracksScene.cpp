@@ -22,15 +22,15 @@
 
 #include "TracksScene.h"
 
-#include "Commands.h"
-#include "ClipHelper.h"
-#include "EffectHelper.h"
+#include "Commands/Commands.h"
+#include "Workflow/ClipHelper.h"
+#include "EffectsEngine/EffectHelper.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsTrack.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "Timeline.h"
-#include "TrackWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 #include "UndoStack.h"
 
 #include <QMessageBox>

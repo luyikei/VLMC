@@ -22,27 +22,27 @@
 
 #include "TracksView.h"
 
-#include "ClipHelper.h"
-#include "ClipWorkflow.h"
-#include "Commands.h"
-#include "EffectHelper.h"
+#include "Workflow/ClipHelper.h"
+#include "Workflow/ClipWorkflow.h"
+#include "Commands/Commands.h"
+#include "EffectsEngine/EffectHelper.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsEffectItem.h"
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
-#include "Helper.h"
-#include "ISource.h"
-#include "Library.h"
-#include "Media.h"
+#include "Workflow/Helper.h"
+#include "Backend/ISource.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
 //Ugly part {
 #include "Timeline.h"
 #include "TracksRuler.h"
 //} this should be fixed, it breaks the design
-#include "TrackWorkflow.h"
-#include "UndoStack.h"
-#include "VlmcDebug.h"
-#include "WorkflowRenderer.h"
+#include "Workflow/TrackWorkflow.h"
+#include "Gui/UndoStack.h"
+#include "Tools/VlmcDebug.h"
+#include "Renderer/WorkflowRenderer.h"
 
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>

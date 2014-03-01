@@ -23,15 +23,15 @@
 #include "GraphicsEffectItem.h"
 
 #include "AbstractGraphicsMediaItem.h"
-#include "Commands.h"
-#include "EffectHelper.h"
-#include "EffectInstance.h"
+#include "Commands/Commands.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
 #include "EffectInstanceWidget.h"
 #include "GraphicsTrack.h"
 #include "Timeline.h"
 #include "TracksScene.h"
 #include "TracksView.h"
-#include "TrackWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 
 #include <QColorDialog>
 #include <QGraphicsSceneContextMenuEvent>

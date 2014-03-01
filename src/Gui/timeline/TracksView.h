@@ -26,7 +26,7 @@
 #include "vlmc.h"
 #include "AbstractGraphicsMediaItem.h"
 #include "GraphicsCursorItem.h"
-#include "Types.h"
+#include "Workflow/Types.h"
 
 #include <QWidget>
 #include <QGraphicsView>
