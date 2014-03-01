@@ -25,7 +25,7 @@
 
 #include <QLibrary>
 
-#include "frei0r.h"
+#include <frei0r.h>
 
 class   EffectInstance;
 

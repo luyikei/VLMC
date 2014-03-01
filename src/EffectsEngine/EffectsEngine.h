@@ -23,8 +23,6 @@
 #ifndef EFFECTSENGINE_H
 #define EFFECTSENGINE_H
 
-#include "Singleton.hpp"
-#include "Effect.h"
 
 namespace Workflow
 {
@@ -43,6 +41,9 @@ class   QXmlStreamWriter;
 #include <QHash>
 #include <QUuid>
 #include <QMetaType>
+
+#include "Tools/Singleton.hpp"
+#include "EffectsEngine/Effect.h"
 
 class   QSettings;
 

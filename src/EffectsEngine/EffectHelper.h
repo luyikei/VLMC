@@ -26,11 +26,12 @@
 class   EffectInstance;
 class   EffectUser;
 
-#include "Helper.h"
-
 #include <QObject>
 #include <QUuid>
 #include <QMetaType>
+
+#include "Workflow/Helper.h"
+
 
 class   EffectHelper : public Workflow::Helper
 {

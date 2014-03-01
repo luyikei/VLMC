@@ -20,9 +20,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EffectHelper.h"
-#include "EffectUser.h"
-#include "MainWorkflow.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectUser.h"
+#include "Workflow/MainWorkflow.h"
 
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
                             const QString &uuid ) :

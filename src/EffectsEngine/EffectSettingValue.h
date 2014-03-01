@@ -23,8 +23,9 @@
 #ifndef EFFECTSETTINGVALUE_H
 #define EFFECTSETTINGVALUE_H
 
-#include "SettingValue.h"
-#include "frei0r.h"
+#include <frei0r.h>
+
+#include "Settings/SettingValue.h"
 
 class   EffectInstance;
 

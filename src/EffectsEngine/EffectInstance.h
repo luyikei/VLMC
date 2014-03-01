@@ -25,10 +25,12 @@
 
 class   EffectSettingValue;
 
-#include "Effect.h"
-
 #include <QHash>
-#include "frei0r.h"
+
+#include <frei0r.h>
+
+#include "EffectsEngine/Effect.h"
+
 
 class EffectInstance
 {

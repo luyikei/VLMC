@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EffectInstance.h"
-#include "EffectSettingValue.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "EffectsEngine/EffectSettingValue.h"
 
-#include "Effect.h"
+#include "EffectsEngine/Effect.h"
 
 EffectInstance::EffectInstance( Effect *effect ) :
         m_effect( effect ),

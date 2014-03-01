@@ -20,13 +20,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Effect.h"
-#include "EffectSettingValue.h"
-#include "EffectInstance.h"
-#include "VlmcDebug.h"
-
 #include <QColor>
 #include <QPoint>
+
+#include "EffectsEngine/Effect.h"
+#include "EffectsEngine/EffectSettingValue.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "Tools/VlmcDebug.h"
 
 EffectSettingValue::EffectSettingValue( const QString& key, Type type, EffectInstance* instance, quint32 index,
                                         const char *name, const char *desc, Flags flags ) :

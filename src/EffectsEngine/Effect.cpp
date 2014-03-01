@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Effect.h"
-#include "EffectInstance.h"
+#include "EffectsEngine/Effect.h"
+#include "EffectsEngine/EffectInstance.h"
 
 #include "VlmcDebug.h"
 

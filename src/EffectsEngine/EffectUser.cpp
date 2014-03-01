@@ -20,15 +20,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EffectUser.h"
-
-#include "EffectHelper.h"
-#include "EffectInstance.h"
-#include "Types.h"
-#include "VlmcDebug.h"
-
 #include <QDomElement>
 #include <QReadWriteLock>
+
+#include "EffectsEngine/EffectUser.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
+
+#include "Workflow/Types.h"
+#include "Tools/VlmcDebug.h"
 
 EffectUser::EffectUser() :
         m_isRendering( false ),

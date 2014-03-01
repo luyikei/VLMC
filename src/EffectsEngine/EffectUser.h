@@ -23,11 +23,10 @@
 #ifndef EFFECTUSER_H
 #define EFFECTUSER_H
 
-#include "EffectsEngine.h"
-
 #include <QObject>
-#include <QList>
 #include <QXmlStreamWriter>
+
+#include "EffectsEngine/EffectsEngine.h"
 
 class   QDomElement;
 class   QReadWriteLock;

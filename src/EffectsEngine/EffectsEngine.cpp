@@ -20,15 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EffectsEngine.h"
-
-#include "Effect.h"
-#include "EffectInstance.h"
-#include "Types.h"
-
-#include "VlmcDebug.h"
-
 #include <QApplication>
+#include <QDir>
+#include <QProcess>
+#include <QSettings>
+#include <QXmlStreamWriter>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 # include <QStandardPaths>
@@ -36,14 +32,16 @@
 # include <QDesktopServices>
 #endif
 
-#include <QDir>
-#include <QProcess>
-#include <QSettings>
-#include <QXmlStreamWriter>
-
 #ifdef Q_OS_WIN
-#include <windows.h>
+# include <windows.h>
 #endif
+
+
+#include "EffectsEngine/EffectsEngine.h"
+#include "EffectsEngine/Effect.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "Workflow/Types.h"
+#include "Tools/VlmcDebug.h"
 
 EffectsEngine::EffectsEngine()
 {
