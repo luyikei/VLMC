@@ -24,7 +24,7 @@
 #define WORKFLOWFILERENDERER_H
 
 #include "config.h"
-#include "ISourceRenderer.h"
+#include "Backend/ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 #include "WorkflowRenderer.h"
 #ifdef WITH_GUI

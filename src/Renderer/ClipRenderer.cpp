@@ -24,14 +24,14 @@
 #include <QtGlobal>
 #include <QtCore/qmath.h>
 
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipRenderer.h"
-#include "ISource.h"
-#include "ISourceRenderer.h"
-#include "Library.h"
-#include "Media.h"
-#include "MainWorkflow.h"
-#include "RenderWidget.h"
+#include "Backend/ISource.h"
+#include "Backend/ISourceRenderer.h"
+#include "Library/Library.h"
+#include "Media/Media.h"
+#include "Workflow/MainWorkflow.h"
+#include "Gui/preview/RenderWidget.h"
 #include "VLCMediaPlayer.h"
 #include "VLCMedia.h"
 

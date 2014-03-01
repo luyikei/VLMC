@@ -24,8 +24,8 @@
 #define WORKFLOWRENDERER_H
 
 #include "GenericRenderer.h"
-#include "ISourceRenderer.h"
-#include "MainWorkflow.h"
+#include "Backend/ISourceRenderer.h"
+#include "Workflow/MainWorkflow.h"
 
 #include <QObject>
 

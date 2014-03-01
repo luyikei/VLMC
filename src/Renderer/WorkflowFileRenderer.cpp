@@ -22,7 +22,7 @@
 
 #include "vlmc.h"
 #include "WorkflowFileRenderer.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "VLCMedia.h"
 #include "VLCMediaPlayer.h"
 

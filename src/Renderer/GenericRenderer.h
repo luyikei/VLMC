@@ -30,9 +30,9 @@
 # include <QWidget>
 #endif
 
-#include "EffectUser.h"
-#include "Types.h"
-#include "RendererEventWatcher.h"
+#include "EffectsEngine/EffectUser.h"
+#include "Workflow/Types.h"
+#include "Tools/RendererEventWatcher.h"
 
 class   Clip;
 class   Media;
