@@ -20,16 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Clip.h"
-#include "EffectInstance.h"
+#include "Media/Clip.h"
+#include "EffectsEngine/EffectInstance.h"
 #include "MainWorkflow.h"
-#include "Media.h"
-#include "ISource.h"
-#include "ISourceRenderer.h"
-#include "SettingsManager.h"
+#include "Media/Media.h"
+#include "Backend/ISource.h"
+#include "Backend/ISourceRenderer.h"
+#include "Settings/SettingsManager.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>

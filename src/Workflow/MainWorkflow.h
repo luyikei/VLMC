@@ -24,8 +24,8 @@
 #ifndef MAINWORKFLOW_H
 #define MAINWORKFLOW_H
 
-#include "EffectsEngine.h"
-#include "Singleton.hpp"
+#include "EffectsEngine/EffectsEngine.h"
+#include "Tools/Singleton.hpp"
 #include <QXmlStreamWriter>
 #include "Types.h"
 

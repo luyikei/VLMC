@@ -24,13 +24,13 @@
 #include <QReadWriteLock>
 
 #include "ImageClipWorkflow.h"
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipHelper.h"
-#include "ISource.h"
-#include "ISourceRenderer.h"
+#include "Backend/ISource.h"
+#include "Backend/ISourceRenderer.h"
 #include "MainWorkflow.h"
-#include "Media.h"
-#include "SettingsManager.h"
+#include "Media/Media.h"
+#include "Settings/SettingsManager.h"
 #include "Workflow/Types.h"
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :

@@ -22,15 +22,15 @@
  *****************************************************************************/
 
 #include "vlmc.h"
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
-#include "Library.h"
+#include "Library/Library.h"
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
-#include "SettingsManager.h"
-#include "VlmcDebug.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 
 #include <QDomElement>

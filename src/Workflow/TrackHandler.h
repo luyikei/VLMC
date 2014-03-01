@@ -25,7 +25,7 @@
 
 #include <QObject>
 #include <QXmlStreamWriter>
-#include "Toggleable.hpp"
+#include "Tools/Toggleable.hpp"
 #include "MainWorkflow.h"
 
 class   ClipHelper;

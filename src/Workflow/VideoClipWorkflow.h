@@ -24,7 +24,7 @@
 #define VIDEOCLIPWORKFLOW_H
 
 #include "ClipWorkflow.h"
-#include "EffectsEngine.h"
+#include "EffectsEngine/EffectsEngine.h"
 
 #include <QQueue>
 

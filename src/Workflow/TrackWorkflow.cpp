@@ -23,19 +23,19 @@
 
 #include "TrackWorkflow.h"
 
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "AudioClipWorkflow.h"
-#include "EffectInstance.h"
-#include "EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "EffectsEngine/EffectHelper.h"
 #include "ImageClipWorkflow.h"
-#include "ISource.h"
+#include "Backend/ISource.h"
 #include "MainWorkflow.h"
-#include "Media.h"
+#include "Media/Media.h"
 #include "Types.h"
 #include "VideoClipWorkflow.h"
 #include "vlmc.h"
-#include "VlmcDebug.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QDomDocument>
 #include <QDomElement>

@@ -23,7 +23,7 @@
 #ifndef TRACKWORKFLOW_H
 #define TRACKWORKFLOW_H
 
-#include "EffectUser.h"
+#include "EffectsEngine/EffectUser.h"
 #include "Types.h"
 
 #include <QObject>

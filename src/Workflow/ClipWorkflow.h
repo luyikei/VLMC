@@ -23,11 +23,11 @@
 #ifndef CLIPWORKFLOW_H
 #define CLIPWORKFLOW_H
 
-#include "mdate.h"
+#include "Tools/mdate.h"
 
-#include "EffectUser.h"
+#include "EffectsEngine/EffectUser.h"
 #include "ClipHelper.h"
-#include "Types.h"
+#include "Workflow/Types.h"
 
 #include <QObject>
 #include <QUuid>

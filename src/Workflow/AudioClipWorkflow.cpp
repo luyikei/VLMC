@@ -22,8 +22,8 @@
 
 #include "AudioClipWorkflow.h"
 
-#include "VlmcDebug.h"
-#include "ISourceRenderer.h"
+#include "Tools/VlmcDebug.h"
+#include "Backend/ISourceRenderer.h"
 #include "Workflow/Types.h"
 
 #include <QMutexLocker>

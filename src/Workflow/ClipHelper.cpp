@@ -22,7 +22,7 @@
 
 #include "ClipHelper.h"
 
-#include "Clip.h"
+#include "Media/Clip.h"
 
 ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
                         const QString& uuid /*= QString()*/ ) :

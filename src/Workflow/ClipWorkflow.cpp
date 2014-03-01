@@ -26,13 +26,13 @@
 #include <QWaitCondition>
 
 #include "vlmc.h"
-#include "Clip.h"
+#include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
-#include "ISource.h"
-#include "ISourceRenderer.h"
-#include "Media.h"
-#include "RendererEventWatcher.h"
+#include "Backend/ISource.h"
+#include "Backend/ISourceRenderer.h"
+#include "Media/Media.h"
+#include "Tools/RendererEventWatcher.h"
 #include "Workflow/Types.h"
 
 ClipWorkflow::ClipWorkflow( ClipHelper* ch )
