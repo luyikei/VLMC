@@ -23,10 +23,10 @@
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
 
-#include "EffectHelper.h"
-#include "EffectInstance.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "EffectsEngine/EffectUser.h"
 #include "EffectInstanceWidget.h"
-#include "EffectUser.h"
 #include "EffectInstanceListModel.h"
 
 #include <QStackedLayout>

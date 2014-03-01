@@ -22,9 +22,9 @@
 
 #include "EffectInstanceListModel.h"
 
-#include "EffectHelper.h"
-#include "EffectInstance.h"
-#include "EffectUser.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "EffectsEngine/EffectUser.h"
 
 #include <QApplication>
 #include <QFontMetrics>

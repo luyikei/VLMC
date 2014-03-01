@@ -28,7 +28,7 @@
 class   EffectInstance;
 class   EffectSettingValue;
 
-#include "Effect.h"
+#include "EffectsEngine/Effect.h"
 #include "ui_EffectInstanceWidget.h"
 
 class   ISettingsCategoryWidget;

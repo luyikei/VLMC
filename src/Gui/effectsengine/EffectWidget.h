@@ -25,7 +25,7 @@
 
 #include <QWidget>
 
-#include "Effect.h"
+#include "EffectsEngine/Effect.h"
 
 namespace Ui
 {

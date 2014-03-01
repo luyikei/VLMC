@@ -23,7 +23,7 @@
 #ifndef EFFECTINSTANCELISTMODEL_H
 #define EFFECTINSTANCELISTMODEL_H
 
-#include "EffectsEngine.h"
+#include "EffectsEngine/EffectsEngine.h"
 class   EffectUser;
 
 #include <QAbstractListModel>

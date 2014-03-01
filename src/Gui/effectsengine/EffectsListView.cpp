@@ -21,8 +21,8 @@
  *****************************************************************************/
 
 #include "EffectsListView.h"
-#include "EffectsEngine.h"
 #include "EffectWidget.h"
+#include "EffectsEngine/EffectsEngine.h"
 
 #include <QApplication>
 #include <QDialog>

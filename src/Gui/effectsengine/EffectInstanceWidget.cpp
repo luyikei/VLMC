@@ -25,9 +25,9 @@
 #include "BoolWidget.h"
 #include "ColorWidget.h"
 #include "DoubleSliderWidget.h"
-#include "Effect.h"
-#include "EffectInstance.h"
-#include "EffectSettingValue.h"
+#include "EffectsEngine/Effect.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "EffectsEngine/EffectSettingValue.h"
 
 #include <QFormLayout>
 #include <QGroupBox>
