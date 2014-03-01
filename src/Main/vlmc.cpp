@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include "Types.h"
-#include "VlmcDebug.h"
+#include "Workflow/Types.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QMetaType>
 #include <QTextStream>

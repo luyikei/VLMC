@@ -31,7 +31,7 @@
 #include "project/GuiProjectManager.h"
 #include "IntroDialog.h"
 #include "LanguageHelper.h"
-#include "Types.h"
+#include "Workflow/Types.h"
 
 #include <QApplication>
 #include <QColor>
