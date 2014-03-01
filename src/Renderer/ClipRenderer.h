@@ -83,8 +83,10 @@ public slots:
      *  \warning    The frame number computed may be unaccurate.
      *  \sa         frameChanged();
      */
-    void                    __timeChanged( qint64 time );
-    void                    __videoStopped();
+    void                    timeChanged( qint64 time );
+    void                    videoStopped();
+    void                    videoPaused();
+    void                    videoPlaying();
 };
 
 #endif // CLIPRENDERER_H

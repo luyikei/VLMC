@@ -93,11 +93,13 @@ ClipRenderer::startPreview()
     m_sourceRenderer = m_selectedClip->getMedia()->source()->createRenderer( m_eventWatcher );
     m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 
-    connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( __videoStopped() ) );
+    connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
     connect( m_eventWatcher, SIGNAL( paused() ),  this, SIGNAL( paused() ) );
+    connect( m_eventWatcher, SIGNAL( paused() ), this, SLOT( videoPaused() ) );
     connect( m_eventWatcher, SIGNAL( playing() ), this, SIGNAL( playing() ) );
+    connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( videoPlaying() ) );
     connect( m_eventWatcher, SIGNAL( volumeChanged() ), this, SIGNAL( volumeChanged() ) );
-    connect( m_eventWatcher, SIGNAL( timeChanged( qint64 ) ), this, SLOT( __timeChanged( qint64 ) ) );
+    connect( m_eventWatcher, SIGNAL( timeChanged( qint64 ) ), this, SLOT( timeChanged( qint64 ) ) );
 
     m_sourceRenderer->start();
     m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->getMedia()->source()->nbFrames() );
@@ -112,9 +114,7 @@ ClipRenderer::stop()
 {
     if ( m_clipLoaded == true && m_isRendering == true )
     {
-        m_isRendering = false;
         m_sourceRenderer->stop();
-        m_paused = false;
         if ( m_mediaChanged == true )
             m_clipLoaded = false;
     }
@@ -245,16 +245,29 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
 /////////////////////////////////////////////////////////////////////
 
 void
-ClipRenderer::__videoStopped()
+ClipRenderer::videoStopped()
 {
     m_isRendering = false;
+    m_paused = false;
     if ( m_mediaChanged == true )
         m_clipLoaded = false;
     emit frameChanged( 0, Vlmc::Renderer );
 }
 
 void
-ClipRenderer::__timeChanged( qint64 time )
+ClipRenderer::videoPaused()
+{
+    m_paused = !m_paused;
+}
+
+void
+ClipRenderer::videoPlaying()
+{
+    m_isRendering = true;
+}
+
+void
+ClipRenderer::timeChanged( qint64 time )
 {
     float fps = m_selectedClip->getMedia()->source()->fps();
     qint64 f = qRound64( (qreal)time / 1000.0 * fps );
