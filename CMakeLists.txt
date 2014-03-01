@@ -33,12 +33,12 @@ IF(WIN32)
     ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
 ENDIF(WIN32)
 
-# Find Git Version Patch   
+# Find Git Version Patch
 FIND_PROGRAM(GIT git)
 IF(GIT)
     EXECUTE_PROCESS(
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMAND ${GIT} rev-parse --short HEAD 
+        COMMAND ${GIT} rev-parse --short HEAD
         OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     SET(GIT_PATCH "git${GIT_OUT}")
@@ -122,9 +122,9 @@ SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
 
 # search for Qt4
 if (NOT FORCE_QT4)
-	find_package(Qt5Core QUIET)
-	if (Qt5Core_FOUND)
-		message(STATUS "Using qt5")
+    find_package(Qt5Core QUIET)
+    if (Qt5Core_FOUND)
+        message(STATUS "Using qt5")
         # go on with other packages
         if(WITH_GUI)
             find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
@@ -132,9 +132,9 @@ if (NOT FORCE_QT4)
             find_packages(Qt5 COMPONENTS Xml Network)
         endif()
 
-		macro(qt_use_modules)
-			qt5_use_modules(${ARGN})
-		endmacro()
+        macro(qt_use_modules)
+            qt5_use_modules(${ARGN})
+        endmacro()
 
         macro(qt_wrap_ui)
             qt5_wrap_ui(${ARGN})
@@ -151,17 +151,17 @@ if (NOT FORCE_QT4)
     endif()
 endif()
 if(NOT Qt5Core_FOUND)
-	if (NOT FORCE_QT4)
-		message(STATUS "Could not find Qt5, searching for Qt4 instead...")
-	endif()
+    if (NOT FORCE_QT4)
+        message(STATUS "Could not find Qt5, searching for Qt4 instead...")
+    endif()
 
-	set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork") 
+    set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork")
     if( WITH_GUI )
         list(APPEND NEEDED_QT4_COMPONENTS "QtGui")
     endif()
 
-	find_package(Qt4 REQUIRED COMPONENTS ${NEEDED_QT4_COMPONENTS})
-	message(STATUS "Found Qt4 & ${NEEDED_QT4_COMPONENTS} modules")
+    find_package(Qt4 REQUIRED COMPONENTS ${NEEDED_QT4_COMPONENTS})
+    message(STATUS "Found Qt4 & ${NEEDED_QT4_COMPONENTS} modules")
     macro(qt_use_modules)
 
     endmacro()
@@ -178,13 +178,13 @@ if(NOT Qt5Core_FOUND)
         qt4_add_translation(${ARGN})
     endmacro()
 
-	include(${QT_USE_FILE})
-	add_definitions(${QT_DEFINITIONS})
+    include(${QT_USE_FILE})
+    add_definitions(${QT_DEFINITIONS})
 
-	# On linux & using Qt4 we need to manually add -lX11
-	if (UNIX AND NOT APPLE)
-		list(APPEND VLMC_LIBS -lX11)
-	endif()
+    # On linux & using Qt4 we need to manually add -lX11
+    if (UNIX AND NOT APPLE)
+        list(APPEND VLMC_LIBS -lX11)
+    endif()
 endif()
 
 # layout of VLMC installation

@@ -6,19 +6,19 @@
 
 SET(VLMC_SRCS
     Commands/Commands.cpp
-	Backend/IBackend.h
-	Backend/ISourceRenderer.h
-	Backend/ISource.h
-	Backend/VLC/EventWaiter.cpp
-	Backend/VLC/VLCBackend.cpp
-	Backend/VLC/VLCSourceRenderer.cpp
-	Backend/VLC/VLCVmemRenderer.cpp
-	Backend/VLC/VLCSource.cpp
-	Backend/VLC/VLCMemorySource.cpp
-	Backend/VLC/LibVLCpp/VLCInstance.cpp
-	Backend/VLC/LibVLCpp/VLCMedia.cpp
-	Backend/VLC/LibVLCpp/VLCMediaPlayer.cpp
-	Backend/VLC/LibVLCpp/VLCpp.hpp
+    Backend/IBackend.h
+    Backend/ISourceRenderer.h
+    Backend/ISource.h
+    Backend/VLC/EventWaiter.cpp
+    Backend/VLC/VLCBackend.cpp
+    Backend/VLC/VLCSourceRenderer.cpp
+    Backend/VLC/VLCVmemRenderer.cpp
+    Backend/VLC/VLCSource.cpp
+    Backend/VLC/VLCMemorySource.cpp
+    Backend/VLC/LibVLCpp/VLCInstance.cpp
+    Backend/VLC/LibVLCpp/VLCMedia.cpp
+    Backend/VLC/LibVLCpp/VLCMediaPlayer.cpp
+    Backend/VLC/LibVLCpp/VLCpp.hpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectUser.cpp
@@ -48,7 +48,7 @@ SET(VLMC_SRCS
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
     Tools/QSingleton.hpp
-	Tools/RendererEventWatcher.cpp
+    Tools/RendererEventWatcher.cpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h
@@ -266,13 +266,13 @@ message(${FOUNDATION_FRAMEWORK})
 
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
-	if (NOT Qt4_FOUND)
-	    qt_use_modules(vlmc Core Gui Widgets Xml Network)
-	else()
-		# We need to know the target for this one, which is not the case when doing most of the QT4/5 specific stuff.
-		# We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness
-		TARGET_LINK_LIBRARIES(vlmc ${QT_LIBRARIES})
-	endif()
+    if (NOT Qt4_FOUND)
+        qt_use_modules(vlmc Core Gui Widgets Xml Network)
+    else()
+        # We need to know the target for this one, which is not the case when doing most of the QT4/5 specific stuff.
+        # We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness
+        TARGET_LINK_LIBRARIES(vlmc ${QT_LIBRARIES})
+    endif()
 
 ENDIF( NOT WITH_GUI )
 
