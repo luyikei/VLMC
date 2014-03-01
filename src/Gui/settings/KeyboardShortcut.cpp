@@ -22,7 +22,7 @@
 
 #include "KeyboardShortcut.h"
 #include "KeyboardShortcutInput.h"
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 KeyboardShortcut::KeyboardShortcut( SettingValue *s, QWidget *parent /*= NULL*/ ) :
         ISettingsCategoryWidget( parent, s )

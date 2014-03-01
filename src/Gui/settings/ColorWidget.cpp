@@ -22,7 +22,7 @@
 
 #include "ColorWidget.h"
 
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QColorDialog>
 #include <QPushButton>

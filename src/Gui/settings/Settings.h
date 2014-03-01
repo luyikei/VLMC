@@ -24,7 +24,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 
 #include <QDialog>
 #include <QString>

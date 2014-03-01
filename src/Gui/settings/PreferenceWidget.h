@@ -28,7 +28,7 @@
 #include <QScrollArea>
 #include <QString>
 #include <QHash>
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 
 class   ISettingsCategoryWidget;
 class   SettingValue;

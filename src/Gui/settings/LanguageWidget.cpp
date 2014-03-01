@@ -22,9 +22,9 @@
 
 #include "config.h"
 #include "LanguageWidget.h"
-#include "SettingsManager.h"
-#include "SettingValue.h"
-#include "VlmcDebug.h"
+#include "Settings/SettingsManager.h"
+#include "Settings/SettingValue.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QApplication>
 #include <QComboBox>

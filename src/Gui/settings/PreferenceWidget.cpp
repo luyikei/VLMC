@@ -24,7 +24,6 @@
 
 #include "ISettingsCategoryWidget.h"
 #include "PreferenceWidget.h"
-#include "SettingsManager.h"
 
 #include "BoolWidget.h"
 #include "DoubleWidget.h"

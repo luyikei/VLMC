@@ -25,7 +25,7 @@
 #include "Settings.h"
 
 #include "PreferenceWidget.h"
-#include "SettingsManager.h"
+#include "Settings/SettingsManager.h"
 #include "Panel.h"
 
 #include <QAbstractButton>

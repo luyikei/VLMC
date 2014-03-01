@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "DoubleWidget.h"
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QDoubleSpinBox>
 

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "StringWidget.h"
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QLineEdit>
 

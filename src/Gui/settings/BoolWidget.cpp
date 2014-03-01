@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "BoolWidget.h"
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QCheckBox>
 

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "PathWidget.h"
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QEvent>
 #include <QFileDialog>

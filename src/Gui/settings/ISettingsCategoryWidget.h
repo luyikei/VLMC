@@ -24,7 +24,7 @@
 #ifndef ISETTINGSCATEGORYWIDGET_H
 #define ISETTINGSCATEGORYWIDGET_H
 
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 class   QVariant;
 

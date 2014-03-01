@@ -22,7 +22,7 @@
 
 #include "DoubleSliderWidget.h"
 
-#include "SettingValue.h"
+#include "Settings/SettingValue.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
