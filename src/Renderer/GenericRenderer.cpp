@@ -22,7 +22,7 @@
 
 #include "GenericRenderer.h"
 #include "VLCMediaPlayer.h"
-#include "RenderWidget.h"
+#include "preview/RenderWidget.h"
 #include <QtGlobal>
 
 GenericRenderer::GenericRenderer()

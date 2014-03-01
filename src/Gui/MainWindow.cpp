@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "config.h"
+
 #include <QSizePolicy>
 #include <QDockWidget>
 #include <QFileDialog>
@@ -31,38 +33,38 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
-#include "MainWindow.h"
-#include "config.h"
 #include "Library/Library.h"
-#include "About.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
-
 #include "EffectsEngine/EffectsEngine.h"
 #include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
-#include "export/RendererSettings.h"
-#include "export/ShareOnInternet.h"
 #include "Renderer/WorkflowFileRenderer.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
+
+/* Gui */
+#include "MainWindow.h"
+#include "About.h"
 #include "WorkflowFileRendererDialog.h"
+#include "export/RendererSettings.h"
+#include "export/ShareOnInternet.h"
+#include "UndoStack.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"
-#include "EffectsListView.h"
+#include "effectsengine/EffectsListView.h"
 #include "import/ImportController.h"
-#include "MediaLibrary.h"
-#include "NotificationZone.h"
-#include "PreviewWidget.h"
+#include "library/MediaLibrary.h"
+#include "widgets/NotificationZone.h"
+#include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
-#include "UndoStack.h"
 
 /* Settings / Preferences */
 #include "project/GuiProjectManager.h"
 #include "wizard/ProjectWizard.h"
-#include "Settings.h"
+#include "settings/Settings.h"
 #include "Settings/SettingsManager.h"
 #include "LanguageHelper.h"
 
