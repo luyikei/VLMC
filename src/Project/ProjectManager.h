@@ -34,11 +34,7 @@ class   QFile;
 class   QDomDocument;
 class   QXmlStreamWriter;
 
-#ifdef WITH_GUI
 class   ProjectManager : public QObject
-#else
-class   ProjectManager : public QObject , public Singleton<ProjectManager>
-#endif
 {
     Q_OBJECT
     Q_DISABLE_COPY( ProjectManager );
