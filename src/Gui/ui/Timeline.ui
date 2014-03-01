@@ -23,7 +23,16 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <property name="spacing">
@@ -87,13 +96,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>108</width>
+       <width>120</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>108</width>
+       <width>120</width>
        <height>16777215</height>
       </size>
      </property>

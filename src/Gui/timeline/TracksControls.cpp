@@ -47,6 +47,7 @@ TracksControls::TracksControls( QWidget* parent )
     m_separator->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
     m_separator->setMinimumHeight( 20 );
     m_separator->setMaximumHeight( 20 );
+    m_separator->setMinimumWidth( 120 );
     m_layout->addWidget( m_separator );
 
     m_centralWidget->setLayout( m_layout );
@@ -57,7 +58,6 @@ void
 TracksControls::addVideoTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
-    item->setMinimumWidth( 108 );
     item->setMinimumHeight( track->height() );
     item->setContentsMargins( 0, 0, 0, 0 );
     m_layout->insertWidget( 0, item );
@@ -67,7 +67,6 @@ void
 TracksControls::addAudioTrack( GraphicsTrack* track )
 {
     TrackControls* item = new TrackControls( track, m_centralWidget );
-    item->setMinimumWidth( 108 );
     item->setMinimumHeight( track->height() );
     item->setContentsMargins( 0, 0, 0, 0 );
     m_layout->insertWidget( -1, item );
