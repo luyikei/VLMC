@@ -134,6 +134,11 @@ ClipRenderer::togglePlayPause()
         m_sourceRenderer->playPause();
         m_paused = !m_paused;
     }
+    else
+    {
+        m_sourceRenderer->start();
+        m_isRendering = true;
+    }
 }
 
 int
