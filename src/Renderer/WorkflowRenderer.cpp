@@ -95,6 +95,7 @@ WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
 
     delete m_sourceRenderer;
     m_sourceRenderer = m_source->createRenderer( m_eventWatcher );
+    m_sourceRenderer->setName( "WorkflowRenderer" );
     m_sourceRenderer->enableMemoryInput( m_esHandler, getLockCallback(), getUnlockCallback() );
     m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 }

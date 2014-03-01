@@ -35,6 +35,8 @@
 #include "Tools/RendererEventWatcher.h"
 #include "Workflow/Types.h"
 
+#include "Tools/VlmcDebug.h"
+
 ClipWorkflow::ClipWorkflow( ClipHelper* ch )
     : m_renderer( NULL )
     , m_eventWatcher( NULL )
@@ -142,6 +144,7 @@ ClipWorkflow::stop()
 void
 ClipWorkflow::setTime( qint64 time )
 {
+    vlmcDebug() << "Setting ClipWorkflow" << m_clipHelper->uuid() << "time:" << time;
     m_renderer->setTime( time );
     resyncClipWorkflow();
     QWriteLocker    lock( m_stateLock );

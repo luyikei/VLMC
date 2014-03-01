@@ -213,6 +213,7 @@ VLCSourceRenderer::time() const
 void
 VLCSourceRenderer::setTime( int64_t time )
 {
+    vlmcDebug() << m_name << "Set time:" << time;
     m_mediaPlayer->setTime( time );
 }
 
