@@ -25,7 +25,8 @@
 
 #include "Media/Clip.h"
 #include "Media/Media.h"
-#include "ClipMetadataDisplayer.h"
+
+#include "Gui/media/ClipMetadataDisplayer.h"
 
 #include <QInputDialog>
 #include <QPushButton>

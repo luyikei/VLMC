@@ -26,19 +26,20 @@
 #include "ui_ImportController.h"
 
 #include "Media/Clip.h"
-#include "ClipMetadataDisplayer.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/ISource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
-#include "MediaCellView.h"
-#include "MediaListView.h"
 #include "Metadata/MetaDataManager.h"
-#include "PreviewWidget.h"
 #include "Settings/SettingsManager.h"
 #include "TagWidget.h"
 #include "Media/Transcoder.h"
 #include "Tools/VlmcDebug.h"
+
+#include "media/ClipMetadataDisplayer.h"
+#include "library/MediaCellView.h"
+#include "library/MediaListView.h"
+#include "preview/PreviewWidget.h"
 
 #include <QFileSystemModel>
 #include <QHeaderView>

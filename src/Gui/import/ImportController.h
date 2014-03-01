@@ -30,7 +30,7 @@
 #ifndef IMPORTCONTROLLER_H
 #define IMPORTCONTROLLER_H
 
-#include "StackViewController.h"
+#include "Gui/library/StackViewController.h"
 
 #include <QDialog>
 #include <QUuid>

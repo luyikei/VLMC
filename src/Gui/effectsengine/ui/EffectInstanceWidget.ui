@@ -85,7 +85,7 @@
   <customwidget>
    <class>EffectWidget</class>
    <extends>QWidget</extends>
-   <header>EffectWidget.h</header>
+   <header>effectsengine/EffectWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

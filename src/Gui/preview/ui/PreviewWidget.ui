@@ -509,18 +509,18 @@
   <customwidget>
    <class>PreviewRuler</class>
    <extends>QWidget</extends>
-   <header>PreviewRuler.h</header>
+   <header>Gui/preview/PreviewRuler.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>LCDTimecode</class>
    <extends>QLCDNumber</extends>
-   <header>LCDTimecode.h</header>
+   <header>Gui/preview/LCDTimecode.h</header>
   </customwidget>
   <customwidget>
    <class>RenderWidget</class>
    <extends>QWidget</extends>
-   <header>RenderWidget.h</header>
+   <header>Gui/preview/RenderWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

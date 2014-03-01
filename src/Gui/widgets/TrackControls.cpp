@@ -20,9 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "GraphicsTrack.h"
-#include "EffectStack.h"
 #include "TrackControls.h"
+
+#include "timeline/GraphicsTrack.h"
+#include "effectsengine/EffectStack.h"
+
 #include "Workflow/TrackWorkflow.h"
 
 #include "ui_TrackControls.h"

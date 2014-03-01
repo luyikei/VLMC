@@ -178,13 +178,13 @@
   <customwidget>
    <class>ClipMetadataDisplayer</class>
    <extends>QWidget</extends>
-   <header>ClipMetadataDisplayer.h</header>
+   <header>Gui/media/ClipMetadataDisplayer.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>PreviewWidget</class>
    <extends>QWidget</extends>
-   <header>PreviewWidget.h</header>
+   <header>Gui/preview/PreviewWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
