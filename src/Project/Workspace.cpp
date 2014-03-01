@@ -29,6 +29,8 @@
 #include "SettingsManager.h"
 #include "VlmcDebug.h"
 
+#include <QMutex>
+
 #ifdef WITH_GUI
 # include "NotificationZone.h"
 # include <QMessageBox>

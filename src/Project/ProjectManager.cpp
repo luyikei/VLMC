@@ -33,7 +33,7 @@
 #include "Workspace.h"
 
 #include <QDir>
-#include <QMessageBox>
+#include <QDomDocument>
 
 #include <errno.h>
 #include <signal.h>

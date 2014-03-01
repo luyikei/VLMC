@@ -25,8 +25,8 @@
 
 #include "config.h"
 #include <QObject>
-#include <QDomDocument>
 #include <QStringList>
+#include <QDomElement>
 
 #include "Singleton.hpp"
 

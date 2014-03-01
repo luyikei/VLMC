@@ -27,7 +27,6 @@
 
 #include "ErrorHandler.h"
 
-#include <QMutex>
 #include <QObject>
 #include <QQueue>
 
@@ -35,6 +34,7 @@ class   Clip;
 class   Media;
 
 class   QFileInfo;
+class   QMutex;
 
 class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandler
 {
