@@ -39,14 +39,6 @@ Media::Media(LibVLCpp::Instance* instance, const char *filename )
     m_internalPtr = libvlc_media_new_location( *instance, filename);
 }
 
-Media::Media( LibVLCpp::Media &media )
-    : m_tracks( NULL )
-    , m_nbTracks( 0 )
-    , m_mrl( NULL )
-{
-    m_internalPtr = libvlc_media_duplicate( media );
-}
-
 Media::~Media()
 {
     if ( m_tracks != NULL )

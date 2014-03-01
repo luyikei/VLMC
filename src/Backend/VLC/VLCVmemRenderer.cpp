@@ -31,6 +31,7 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
     : VLCSourceRenderer( backend, source, callback )
     , m_snapshotRequired( false )
 {
+    m_media->parse();
     setName( "VmemRenderer" );
     m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
     m_mediaPlayer->setupVmem( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );

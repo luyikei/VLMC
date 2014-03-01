@@ -36,7 +36,6 @@ namespace LibVLCpp
     public:
 
         Media( Instance* instance, const char* filename );
-        Media(Media &media );
         ~Media();
         void                addOption( const char* opt );
         void                setVideoLockCallback( void* );
@@ -57,6 +56,8 @@ namespace LibVLCpp
         // it is only meant to use when iterating over m_tracksInfo
         int                         m_nbTracks;
         char*                       m_mrl;
+
+        Media(const Media&);
     };
 }
 

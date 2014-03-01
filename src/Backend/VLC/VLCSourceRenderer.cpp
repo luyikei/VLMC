@@ -44,7 +44,7 @@ VLCSourceRenderer::VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *so
     , m_outputFps( .0f )
     , m_outputAudioBitrate( 0 )
 {
-    m_media = new LibVLCpp::Media( *source->media() );
+    m_media = new LibVLCpp::Media( backendInstance->vlcInstance(), source->media()->mrl() );
     initMediaPlayer();
 }
 
@@ -154,6 +154,7 @@ void
 VLCSourceRenderer::setOption( const QString &option )
 {
     Q_ASSERT( m_media != NULL );
+    vlmcDebug() << m_name << "Setting option:" << option;
     m_media->addOption( qPrintable( option ) );
 }
 

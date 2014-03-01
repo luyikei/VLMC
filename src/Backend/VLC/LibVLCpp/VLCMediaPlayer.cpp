@@ -246,3 +246,10 @@ MediaPlayer::setupVmem(const char *chroma, unsigned int width, unsigned int heig
 {
     libvlc_video_set_format( *this, chroma, width, height, pitch );
 }
+
+
+bool
+LibVLCpp::MediaPlayer::willPlay()
+{
+    return libvlc_media_player_will_play( *this ) != 0;
+}
