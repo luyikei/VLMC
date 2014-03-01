@@ -23,7 +23,7 @@
 #ifndef METADATAMANAGER_H
 #define METADATAMANAGER_H
 
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 
 #include <QThread>
 #include <QQueue>

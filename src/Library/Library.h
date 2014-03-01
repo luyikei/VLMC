@@ -30,7 +30,7 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include "Singleton.hpp"
+#include "Tools/Singleton.hpp"
 #include "MediaContainer.h"
 
 #include <QObject>

@@ -27,13 +27,13 @@
   * It can load and unload Clips (Clip.h/Clip.cpp)
   */
 
-#include "Clip.h"
 #include "Library.h"
-#include "Media.h"
-#include "MetaDataManager.h"
-#include "SettingsManager.h"
-#include "VlmcDebug.h"
-#include "Workspace.h"
+#include "Media/Clip.h"
+#include "Media/Media.h"
+#include "Metadata/MetaDataManager.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcDebug.h"
+#include "Project/Workspace.h"
 
 #include <QDomElement>
 #include <QHash>

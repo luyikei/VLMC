@@ -22,8 +22,8 @@
 
 #include <QMutexLocker>
 
-#include "ISource.h"
-#include "Media.h"
+#include "Backend/ISource.h"
+#include "Media/Media.h"
 #include "MetaDataManager.h"
 
 MetaDataManager::MetaDataManager()

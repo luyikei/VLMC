@@ -24,14 +24,14 @@
 #include <QDomElement>
 #include <QUuid>
 
-#include "Clip.h"
 #include "Library.h"
 #include "MediaContainer.h"
-#include "Media.h"
-#include "MetaDataManager.h"
-#include "SettingsManager.h"
-#include "VlmcDebug.h"
-#include "Workspace.h"
+#include "Media/Clip.h"
+#include "Media/Media.h"
+#include "Metadata/MetaDataManager.h"
+#include "Settings/SettingsManager.h"
+#include "Tools/VlmcDebug.h"
+#include "Project/Workspace.h"
 
 MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
 {
