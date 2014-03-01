@@ -22,9 +22,10 @@
 
 #include <QAction>
 
-#include "SettingValue.h"
-#include "SettingsManager.h"
 #include "KeyboardShortcutHelper.h"
+
+#include "Settings/SettingValue.h"
+#include "Settings/SettingsManager.h"
 
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* parent ) :
         QShortcut( parent ),

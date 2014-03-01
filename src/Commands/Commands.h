@@ -25,13 +25,15 @@
 #define COMMANDS_H
 
 #include "config.h"
+
 #ifdef WITH_GUI
 # include <QUndoCommand>
 #endif
 #include <QObject>
 #include <QVector>
-#include "MainWorkflow.h"
-#include "Types.h"
+
+#include "Workflow/MainWorkflow.h"
+#include "Workflow/Types.h"
 
 class   Clip;
 class   ClipHelper;

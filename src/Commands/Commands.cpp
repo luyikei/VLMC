@@ -21,18 +21,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "config.h"
+
 #include "Commands.h"
 
-#include "config.h"
-#include "Clip.h"
-#include "ClipHelper.h"
-#include "EffectHelper.h"
-#include "EffectInstance.h"
-#include "MainWorkflow.h"
-#include "TrackWorkflow.h"
+#include "Media/Clip.h"
+#include "Workflow/ClipHelper.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "EffectsEngine/EffectInstance.h"
+#include "Workflow/MainWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 
 #ifdef WITH_GUI
-# include "UndoStack.h"
+# include "Gui/UndoStack.h"
 
 void
 Commands::trigger( QUndoCommand* command )
