@@ -162,10 +162,11 @@ TracksRuler::paintEvent( QPaintEvent* e )
             painter.drawLine( ( int )f, BIG_MARK_X1, ( int )f, BIG_MARK_X2 );
 
     // Draw the pointer
-    int cursorPos = m_tracksView->cursorPos() * m_factor - offset();
+    int cursorPos = m_tracksView->cursorPos() * m_factor + 0.5 - offset();
     QPolygon cursor( 3 );
-    cursor.setPoints( 3, cursorPos - 9, 11, cursorPos + 9, 11, cursorPos, 30 );
+    cursor.setPoints( 3, cursorPos - 8, 15, cursorPos + 8, 15, cursorPos, 30 );
     painter.setBrush( QBrush( QColor( 82, 97, 122, 150 ) ) );
+    painter.setRenderHint(QPainter::Antialiasing, true);
     painter.drawPolygon( cursor );
 }
 

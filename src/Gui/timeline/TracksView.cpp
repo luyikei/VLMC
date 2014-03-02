@@ -81,7 +81,7 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     setAlignment( Qt::AlignLeft | Qt::AlignTop );
     setCacheMode( QGraphicsView::CacheBackground );
 
-    m_cursorLine = new GraphicsCursorItem( QPen( QColor( 220, 30, 30 ) ) );
+    m_cursorLine = new GraphicsCursorItem( QPen( QColor( 255, 0, 0, 125 ), 2 ) );
 
     m_scene->addItem( m_cursorLine );
 
