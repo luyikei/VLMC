@@ -103,6 +103,7 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
 
 void AudioClipWorkflow::initializeInternals()
 {
+    m_renderer->setName( qPrintable( QString("AudioClipWorkflow " % m_clipHelper->uuid().toString() ) ) );
     m_renderer->setOutputAudioCodec( "f32l" );
     m_renderer->setOutputAudioNumberChannels( 2 );
     m_renderer->setOutputAudioSampleRate( 48000 );

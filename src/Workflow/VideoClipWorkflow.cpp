@@ -80,6 +80,7 @@ void
 VideoClipWorkflow::initializeInternals()
 {
     initFilters();
+    m_renderer->setName( qPrintable( QString("VideoClipWorkflow " % m_clipHelper->uuid().toString() ) ) );
     m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
     m_renderer->setOutputWidth( m_width );
     m_renderer->setOutputHeight( m_height );

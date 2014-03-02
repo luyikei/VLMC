@@ -22,6 +22,7 @@
 
 #include <QMutex>
 #include <QReadWriteLock>
+#include <QStringBuilder>
 
 #include "ImageClipWorkflow.h"
 #include "Media/Clip.h"
@@ -52,6 +53,7 @@ ImageClipWorkflow::~ImageClipWorkflow()
 
 void ImageClipWorkflow::initializeInternals()
 {
+    m_renderer->setName( qPrintable( QString("ImageClipWorkflow " % m_clipHelper->uuid().toString() ) ) );
     m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
     m_renderer->setOutputWidth( m_width );
     m_renderer->setOutputHeight( m_height );

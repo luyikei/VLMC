@@ -67,7 +67,6 @@ ClipWorkflow::initialize()
 
     delete m_renderer;
     m_renderer = m_clipHelper->clip()->getMedia()->source()->createRenderer( m_eventWatcher );
-    m_renderer->setName( qPrintable( QString("ClipWorkflow " % m_clipHelper->uuid().toString() ) ) );
 
     preallocate();
     initializeInternals();
