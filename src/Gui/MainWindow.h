@@ -53,7 +53,8 @@ class MainWindow : public QMainWindow
     Q_DISABLE_COPY( MainWindow )
 
 public:
-    explicit MainWindow( QWidget *parent = 0 );
+    explicit MainWindow( Backend::IBackend* backend,
+                         QWidget *parent = 0 );
     ~MainWindow();
 
     void registerWidgetInWindowMenu( QDockWidget* widget );

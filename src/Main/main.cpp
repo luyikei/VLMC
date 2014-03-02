@@ -27,16 +27,17 @@
  */
 
 #include "config.h"
-#include "MainWindow.h"
-#include "IntroDialog.h"
-#include "LanguageHelper.h"
-#include "Workflow/Types.h"
-#include "Tools/VlmcDebug.h"
-#include "Renderer/ConsoleRenderer.h"
-#include "Renderer/WorkflowFileRenderer.h"
 
-#include "project/GuiProjectManager.h"
+#include "Tools/VlmcDebug.h"
+#include "Workflow/Types.h"
+#include "Renderer/ConsoleRenderer.h"
 #include "Project/ProjectManager.h"
+#include "Backend/IBackend.h"
+
+#include "Gui/MainWindow.h"
+#include "Gui/IntroDialog.h"
+#include "Gui/LanguageHelper.h"
+#include "Gui/project/GuiProjectManager.h"
 
 #include <QApplication>
 #include <QColor>
@@ -50,7 +51,7 @@
 #endif
 
 static void
-VLMCmainCommon( const QCoreApplication &app )
+VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
 {
     app.setApplicationName( "vlmc" );
     app.setOrganizationName( "VideoLAN" );
@@ -63,6 +64,8 @@ VLMCmainCommon( const QCoreApplication &app )
     qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
     qRegisterMetaType<QUuid>( "QUuid" );
+
+    *backend = Backend::getBackend();
 }
 
 /**
@@ -79,7 +82,9 @@ VLMCGuimain( int argc, char **argv )
     XInitThreads();
 #endif
     QApplication app( argc, argv );
-    VLMCmainCommon( app );
+
+    Backend::IBackend* backend;
+    VLMCmainCommon( app, &backend );
 
     /* Load a project file */
     bool        project = false;
@@ -140,7 +145,7 @@ VLMCGuimain( int argc, char **argv )
     d.exec();
 #endif
 
-    MainWindow w;
+    MainWindow w( backend );
 
     //Don't show the wizard if a project has been passed through command line.
     if ( project == false )
@@ -162,7 +167,9 @@ int
 VLMCCoremain( int argc, char **argv )
 {
     QCoreApplication app( argc, argv );
-    VLMCmainCommon( app );
+
+    Backend::IBackend* backend;
+    VLMCmainCommon( app, &backend );
 
     /* Load a project file */
     if ( app.arguments().count() < 3 )

@@ -68,8 +68,8 @@
 #include "Settings/SettingsManager.h"
 #include "LanguageHelper.h"
 
-MainWindow::MainWindow( QWidget *parent ) :
-    QMainWindow( parent ), m_fileRenderer( NULL )
+MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
+    QMainWindow( parent ), m_backend( backend ), m_fileRenderer( NULL )
 {
     m_ui.setupUi( this );
 
@@ -440,7 +440,6 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_backend = Backend::getBackend();
     m_renderer = new WorkflowRenderer( m_backend );
     m_renderer->initializeRenderer();
     m_timeline = new Timeline( m_renderer, this );
