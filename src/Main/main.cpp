@@ -49,6 +49,20 @@
 #include <X11/Xlib.h>
 #endif
 
+static void
+VLMCmainCommon( const QCoreApplication &app )
+{
+    app.setApplicationName( "vlmc" );
+    app.setOrganizationName( "VideoLAN" );
+    app.setOrganizationDomain( "videolan.org" );
+    app.setApplicationVersion( PROJECT_VERSION );
+
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
+    qRegisterMetaType<QUuid>( "QUuid" );
+}
+
 /**
  *  VLMC Entry point
  *  \brief this is the VLMC entry point
@@ -63,15 +77,7 @@ VLMCGuimain( int argc, char **argv )
     XInitThreads();
 #endif
     QApplication app( argc, argv );
-    app.setApplicationName( "vlmc" );
-    app.setOrganizationName( "videolan" );
-    app.setOrganizationDomain( "videolan.org" );
-    app.setApplicationVersion( PROJECT_VERSION );
-
-    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
-    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
-    qRegisterMetaType<QVariant>( "QVariant" );
-    qRegisterMetaType<QUuid>( "QUuid" );
+    VLMCmainCommon( app );
 
     QSettings s;
     s.setFallbacksEnabled( false );
@@ -151,20 +157,13 @@ int
 VLMCCoremain( int argc, char **argv )
 {
     QCoreApplication app( argc, argv );
-    app.setApplicationName( "VLMC" );
-    app.setOrganizationName( "VideoLAN" );
-    app.setOrganizationDomain( "vlmc.org" );
-    app.setApplicationVersion( PROJECT_VERSION );
-
-    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
-    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
-    qRegisterMetaType<QVariant>( "QVariant" );
-
     if ( app.arguments().count() < 3 )
     {
         vlmcCritical() << "Usage: ./vlmc project.vlmc output_file";
         return 1;
     }
+
+    VLMCmainCommon( app );
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
