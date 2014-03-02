@@ -124,15 +124,9 @@ main( int argc, char **argv )
             pid_t pid = fork();
             if( pid < 0 )
                 vlmcFatal("Can't fork to launch VLMC. Exiting.");
-            if( pid == 0 )
-            {
-                signal( SIGSEGV, signalHandler );
-                signal( SIGFPE, signalHandler );
-                signal( SIGABRT, signalHandler );
-                signal( SIGILL, signalHandler );
-                return VLMCmain( argc, argv );
-            }
-            else
+
+            /* We're in the crash handler process */
+            if( pid != 0 )
             {
                 int status;
 
@@ -143,16 +137,24 @@ main( int argc, char **argv )
                     if ( ret == 2 )
                         continue ;
                     else
-                        break ;
+                        return ret ;
                 }
                 else
                 {
                     vlmcCritical() << "Unhandled crash.";
-                    break ;
+                    return 1;
                 }
             }
+            else /* We're actually in the program */
+            {
+                signal( SIGSEGV, signalHandler );
+                signal( SIGFPE, signalHandler );
+                signal( SIGABRT, signalHandler );
+                signal( SIGILL, signalHandler );
+                break; /* Run it */
+            }
         }
-    #else
-        return VLMCmain( argc, argv );
     #endif
+
+    return VLMCmain( argc, argv );
 }
