@@ -22,3 +22,6 @@ wouldn't dare come up with something like python
 < boubak > Tu veux casser l'ABI?
 < boubak > Et ils vont dormir ou les moines?
 
+---
+
+< etix > En fait, je viens de comprendre un truc! les pixels, c'est pas divisible en deux!
