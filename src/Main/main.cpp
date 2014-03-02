@@ -57,6 +57,8 @@ VLMCmainCommon( const QCoreApplication &app )
     app.setOrganizationDomain( "videolan.org" );
     app.setApplicationVersion( PROJECT_VERSION );
 
+    QSettings s;
+
     qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
     qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
@@ -79,13 +81,26 @@ VLMCGuimain( int argc, char **argv )
     QApplication app( argc, argv );
     VLMCmainCommon( app );
 
+    /* Load a project file */
+    bool        project = false;
+    for ( int i = 1; i < argc; i++ )
+    {
+        QString arg = argv[i];
+
+        if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
+        {
+            GUIProjectManager::getInstance()->loadProject( argv[i+1] );
+            project = true;
+            break;
+        }
+    }
+
+    /* Translations */
     QSettings s;
-    s.setFallbacksEnabled( false );
     LanguageHelper::getInstance()->languageChanged(
             s.value( "vlmc/VLMCLang", "default" ) );
 
 #if defined( Q_WS_WIN )
-
     QFile  css(":/styles/windows");
     if ( css.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
@@ -124,24 +139,14 @@ VLMCGuimain( int argc, char **argv )
     IntroDialog d;
     d.exec();
 #endif
+
     MainWindow w;
 
-    /* Check for project file */
-    bool        project = false;
-    for ( int i = 1; i < argc; i++ )
-    {
-        QString arg = argv[i];
-
-        if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
-        {
-            GUIProjectManager::getInstance()->loadProject( argv[i+1] );
-            project = true;
-            break;
-        }
-    }
     //Don't show the wizard if a project has been passed through command line.
     if ( project == false )
         w.showWizard();
+
+    /* Main Window display */
     w.show();
     return app.exec();
 }
@@ -157,13 +162,15 @@ int
 VLMCCoremain( int argc, char **argv )
 {
     QCoreApplication app( argc, argv );
+    VLMCmainCommon( app );
+
+    /* Load a project file */
     if ( app.arguments().count() < 3 )
     {
         vlmcCritical() << "Usage: ./vlmc project.vlmc output_file";
         return 1;
     }
 
-    VLMCmainCommon( app );
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
@@ -184,5 +191,4 @@ VLMCmain( int argc, char **argv )
     return VLMCCoremain( argc, argv );
 #endif
 }
-
 
