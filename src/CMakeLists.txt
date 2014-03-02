@@ -27,7 +27,7 @@ SET(VLMC_SRCS
     EffectsEngine/EffectSettingValue.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
-    Main/guimain.cpp
+    Main/main.cpp
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
