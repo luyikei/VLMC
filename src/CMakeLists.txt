@@ -27,6 +27,7 @@ SET(VLMC_SRCS
     EffectsEngine/EffectSettingValue.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp
+    Main/guimain.cpp
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
@@ -168,7 +169,6 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/ProjectWizard.cpp
         Gui/wizard/VideoPage.cpp
         Gui/wizard/WelcomePage.cpp
-        Main/guimain.cpp
         Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 

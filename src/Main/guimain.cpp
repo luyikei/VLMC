@@ -28,10 +28,15 @@
 
 #include "config.h"
 #include "MainWindow.h"
-#include "project/GuiProjectManager.h"
 #include "IntroDialog.h"
 #include "LanguageHelper.h"
 #include "Workflow/Types.h"
+#include "Tools/VlmcDebug.h"
+#include "Renderer/ConsoleRenderer.h"
+#include "Renderer/WorkflowFileRenderer.h"
+
+#include "project/GuiProjectManager.h"
+#include "Project/ProjectManager.h"
 
 #include <QApplication>
 #include <QColor>
@@ -52,7 +57,7 @@
  *  \return Return value of vlmc
  */
 int
-VLMCmain( int argc, char **argv )
+VLMCGuimain( int argc, char **argv )
 {
 #ifdef Q_WS_X11
     XInitThreads();
@@ -134,3 +139,51 @@ VLMCmain( int argc, char **argv )
     w.show();
     return app.exec();
 }
+
+/**
+ *  VLMC Entry point
+ *  \brief this is the VLMC entry point
+ *  \param argc
+ *  \param argv
+ *  \return Return value of vlmc
+ */
+int
+VLMCCoremain( int argc, char **argv )
+{
+    QCoreApplication app( argc, argv );
+    app.setApplicationName( "VLMC" );
+    app.setOrganizationName( "VideoLAN" );
+    app.setOrganizationDomain( "vlmc.org" );
+    app.setApplicationVersion( PROJECT_VERSION );
+
+    qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
+    qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
+    qRegisterMetaType<QVariant>( "QVariant" );
+
+    if ( app.arguments().count() < 3 )
+    {
+        vlmcCritical() << "Usage: ./vlmc project.vlmc output_file";
+        return 1;
+    }
+
+#ifndef WITH_GUI
+    ConsoleRenderer renderer;
+    ProjectManager  *pm = ProjectManager::getInstance();
+
+    QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
+    pm->loadProject( app.arguments()[1] );
+#endif
+    return app.exec();
+}
+
+int
+VLMCmain( int argc, char **argv )
+{
+#ifdef WITH_GUI
+    return VLMCGuimain( argc, argv );
+#else
+    return VLMCCoremain( argc, argv );
+#endif
+}
+
+
