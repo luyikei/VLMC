@@ -223,10 +223,10 @@ MediaPlayer::setKeyInput( bool enabled )
     libvlc_video_set_key_input( m_internalPtr, enabled );
 }
 
-void
+bool
 MediaPlayer::setAudioOutput(const char *module)
 {
-    libvlc_audio_output_set( m_internalPtr, module );
+    return libvlc_audio_output_set( m_internalPtr, module ) == 0;
 }
 
 void

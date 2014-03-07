@@ -69,7 +69,7 @@ namespace   LibVLCpp
         int                                 getNbAudioTrack();
         int                                 getNbVideoTrack();
         void                                setKeyInput( bool enabled );
-        void                                setAudioOutput(const char* module);
+        bool                                setAudioOutput(const char* module);
         void                                disableTitle();
         void                                setupVmemCallbacks( libvlc_video_lock_cb lock, libvlc_video_unlock_cb unlock,
                                                         libvlc_video_display_cb display, void* data );
