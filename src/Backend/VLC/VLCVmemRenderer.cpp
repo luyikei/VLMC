@@ -20,14 +20,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "VLCVmemRenderer.h"
-
 #include <QImage>
+
+#include "VLCVmemRenderer.h"
 #include "VLCSource.h"
+#include "Tools/VlmcDebug.h"
+
 
 using namespace Backend::VLC;
 
-VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRendererEventCb *callback)
+VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRendererEventCb *callback )
     : VLCSourceRenderer( backend, source, callback )
     , m_snapshotRequired( false )
 {

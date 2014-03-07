@@ -63,6 +63,13 @@ VLCSource::createRenderer( ISourceRendererEventCb *callback )
     return new VLCSourceRenderer( m_backend, this, callback );
 }
 
+static bool
+checkLengthChanged( const libvlc_event_t* event )
+{
+    Q_ASSERT( event->type == libvlc_MediaPlayerLengthChanged );
+    return ( event->u.media_player_length_changed.new_length > 0 );
+}
+
 bool
 VLCSource::preparse()
 {
@@ -73,7 +80,8 @@ VLCSource::preparse()
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
         EventWaiter ew( mediaPlayer, true );
-        ew.add( libvlc_MediaPlayerVout );
+        ew.setValidationCallback( &checkLengthChanged );
+        ew.add( libvlc_MediaPlayerLengthChanged );
         renderer->start();
         if ( ew.wait( 3000 ) != EventWaiter::Success )
         {

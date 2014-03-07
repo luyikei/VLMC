@@ -34,7 +34,7 @@
 using namespace Backend;
 using namespace Backend::VLC;
 
-VLCSourceRenderer::VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *source , ISourceRendererEventCb *callback )
+VLCSourceRenderer::VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *source, ISourceRendererEventCb *callback )
     : m_backend( backendInstance )
     , m_modes( Playback )
     , m_callback( callback )
