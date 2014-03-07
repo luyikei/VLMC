@@ -22,6 +22,7 @@
 
 #include "GuiProjectManager.h"
 
+#include "Main/Core.h"
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Settings/SettingsManager.h"
@@ -49,7 +50,7 @@ GUIProjectManager::GUIProjectManager()
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
                                              "VLMC will automatically save your project "
                                              "at a specified interval" ) );
-    SettingsManager::getInstance()->watchValue( "vlmc/AutomaticBackup", this,
+    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
@@ -57,12 +58,12 @@ GUIProjectManager::GUIProjectManager()
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
                                             "between two automatic save" ) );
-    SettingsManager::getInstance()->watchValue( "vlmc/AutomaticBackupInterval", this,
+    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
     automaticSaveEnabledChanged( VLMC_GET_BOOL( "vlmc/AutomaticBackup" ) );
-    SettingsManager::getInstance()->watchValue( "vlmc/ProjectName", this,
+    Core::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
                                                 SLOT(projectNameChanged(QVariant) ),
                                                 SettingsManager::Project );
 }
@@ -142,7 +143,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
             outputFileName += ".vlmc";
         m_projectFile = new QFile( outputFileName );
         QFileInfo       fInfo( outputFileName );
-        SettingsManager::getInstance()->setValue( "vlmc/Workspace",
+        Core::getInstance()->settings()->setValue( "vlmc/Workspace",
                                                   fInfo.absolutePath(), SettingsManager::Project);
 
         appendToRecentProject( projectName() );

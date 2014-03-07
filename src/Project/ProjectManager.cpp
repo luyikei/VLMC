@@ -22,6 +22,7 @@
 
 #include "config.h"
 
+#include "Main/Core.h"
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/project/GuiProjectManager.h"
@@ -159,8 +160,8 @@ ProjectManager::loadProject( const QString& fileName )
     QDomElement     root = m_domDocument->documentElement();
 
     //Load settings first, as it contains some informations about the workspace.
-    SettingsManager::getInstance()->load( root );
-    SettingsManager::getInstance()->setValue( "vlmc/Workspace", fInfo.absolutePath(), SettingsManager::Project );
+    Core::getInstance()->settings()->load( root );
+    Core::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath(), SettingsManager::Project );
     Timeline::getInstance()->renderer()->loadProject( root );
     Library::getInstance()->loadProject( root );
 }
@@ -171,7 +172,7 @@ ProjectManager::removeProject( const QString& project )
     // Remove all occurence of fileName
     m_recentsProjects.removeAll( project );
 
-    SettingsManager::getInstance()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
 }
 
 void
@@ -188,7 +189,7 @@ ProjectManager::__saveProject( const QString &fileName )
     Library::getInstance()->saveProject( project );
     MainWorkflow::getInstance()->saveProject( project );
     Timeline::getInstance()->renderer()->saveProject( project );
-    SettingsManager::getInstance()->save( project );
+    Core::getInstance()->settings()->save( project );
     saveTimeline( project );
 
     project.writeEndElement();
@@ -209,7 +210,7 @@ ProjectManager::emergencyBackup()
     else
        name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
     __saveProject( name );
-    SettingsManager::getInstance()->setValue( SETTINGS_BACKUP, name, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_BACKUP, name, SettingsManager::Vlmc );
 }
 
 bool
@@ -234,7 +235,7 @@ ProjectManager::appendToRecentProject( const QString& projectName )
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    SettingsManager::getInstance()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
 }
 
 QString

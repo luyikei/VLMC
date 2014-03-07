@@ -23,6 +23,7 @@
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
 
+#include "Main/Core.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectUser.h"
@@ -47,7 +48,7 @@ EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     connect( m_ui->removeButton, SIGNAL( clicked() ), this, SLOT( remove() ) );
     connect( m_ui->addButton, SIGNAL( clicked() ), this, SLOT( add() ) );
 
-    m_ui->addComboBox->addItems( EffectsEngine::getInstance()->effects( Effect::Filter ) );
+    m_ui->addComboBox->addItems( Core::getInstance()->effectsEngine()->effects( Effect::Filter ) );
     m_stackedLayout = new QStackedLayout;
     m_ui->horizontalLayout->addLayout( m_stackedLayout );
     //Add an empty instance widget.

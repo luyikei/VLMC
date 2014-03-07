@@ -33,6 +33,7 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
+#include "Main/Core.h"
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
@@ -74,7 +75,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
     m_ui.setupUi( this );
 
     //We only install message handler here cause it uses configuration.
-    VlmcLogger::getInstance()->setup();
+    Core::getInstance()->logger()->setup();
 
     //Preferences
     initVlmcPreferences();
@@ -84,7 +85,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
 
     //All preferences have been created: restore them:
     loadVlmcPreferences();
-    SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
 
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
@@ -269,7 +270,7 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Language" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
 
-    SettingsManager::getInstance()->watchValue( "vlmc/VLMCLang",
+    Core::getInstance()->settings()->watchValue( "vlmc/VLMCLang",
                                                 LanguageHelper::getInstance(),
                                                 SLOT( languageChanged( const QVariant& ) ),
                                                 SettingsManager::Vlmc );
@@ -348,7 +349,7 @@ void MainWindow::loadVlmcPreferences()
         QSettings s;
         s.clear();
     }
-    SettingsManager::getInstance()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
 }
 
 void
@@ -362,7 +363,7 @@ MainWindow::loadVlmcPreferencesCategory( const QString &subPart )
         QVariant value = s.value( key );
         QString fullKey = subPart + "/" + key;
         vlmcDebug() << "Loading" << fullKey << "=>" << value;
-        SettingsManager::getInstance()->setValue( fullKey, value, SettingsManager::Vlmc );
+        Core::getInstance()->settings()->setValue( fullKey, value, SettingsManager::Vlmc );
     }
 }
 
@@ -476,7 +477,7 @@ MainWindow::setupEffectsList()
                                         QDockWidget::AllDockWidgetFeatures );
     m_effectsList = new EffectsListView( dockedWidget );
     m_effectsList->setType( Effect::Filter );
-    EffectsEngine::getInstance()->loadEffects();
+    Core::getInstance()->effectsEngine()->loadEffects();
     DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_effectsList, Qt::TopDockWidgetArea );
 }
 
@@ -790,7 +791,7 @@ MainWindow::saveSettings()
     clearTemporaryFiles();
     if ( pm->askForSaveIfModified() )
     {
-        SettingsManager* sm = SettingsManager::getInstance();
+        SettingsManager* sm = Core::getInstance()->settings();
         // Save the current geometry
         sm->setValue( "private/MainWindowGeometry", saveGeometry(), SettingsManager::Vlmc );
         // Save the current layout
@@ -868,7 +869,7 @@ MainWindow::restoreSession()
                 QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
         }
     }
-    SettingsManager::getInstance()->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
     return ret;
 }
 

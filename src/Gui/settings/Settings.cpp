@@ -131,7 +131,7 @@ Settings::buttonClicked( QAbstractButton *button )
             }
             //If we're handling vlmc preferences, save the value in the QSettings
             if ( m_type == SettingsManager::Vlmc )
-                SettingsManager::getInstance()->save();
+                Core::getInstance()->settings()->save();
         }
     case QDialogButtonBox::Cancel:
         {

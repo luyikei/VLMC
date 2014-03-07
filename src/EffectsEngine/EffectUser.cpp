@@ -27,6 +27,7 @@
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectInstance.h"
 
+#include "Main/Core.h"
 #include "Workflow/Types.h"
 #include "Tools/VlmcDebug.h"
 
@@ -186,7 +187,7 @@ EffectUser::loadEffects( const QDomElement &parent )
              effect.hasAttribute( "start" ) == true &&
              effect.hasAttribute( "end" ) == true )
         {
-            Effect  *e = EffectsEngine::getInstance()->effect( effect.attribute( "name" ) );
+            Effect  *e = Core::getInstance()->effectsEngine()->effect( effect.attribute( "name" ) );
             if ( e != NULL )
             {
                 EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),

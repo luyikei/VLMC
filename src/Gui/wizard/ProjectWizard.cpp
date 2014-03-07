@@ -97,7 +97,7 @@ ProjectWizard::accept()
     //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
     {
-        SettingsManager *sManager = SettingsManager::getInstance();
+        SettingsManager *sManager = Core::getInstance()->settings();
         GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
         //Save the project workspace
         sManager->setValue( "vlmc/Workspace", field( "projectPath" ), SettingsManager::Project );

@@ -42,12 +42,11 @@ class   QXmlStreamWriter;
 #include <QUuid>
 #include <QMetaType>
 
-#include "Tools/Singleton.hpp"
 #include "EffectsEngine/Effect.h"
 
 class   QSettings;
 
-class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
+class   EffectsEngine : public QObject
 {
     Q_OBJECT
 
@@ -55,14 +54,15 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
         typedef QList<EffectHelper*>    EffectList;
         static const quint32            MaxFramesForMixer = 3;
 
+        EffectsEngine();
+        ~EffectsEngine();
+
         Effect*             effect( const QString& name );
         const QStringList&  effects( Effect::Type type ) const;
         bool                loadEffect( const QString& fileName );
         void                loadEffects();
 
     private:
-        EffectsEngine();
-        ~EffectsEngine();
         void        browseDirectory( const QString& path );
 
     private:
@@ -73,7 +73,6 @@ class   EffectsEngine : public QObject, public Singleton<EffectsEngine>
 
     signals:
         void        effectAdded( Effect*, const QString& name, Effect::Type );
-    friend class    Singleton<EffectsEngine>;
 };
 
 #endif // EFFECTSENGINE_H

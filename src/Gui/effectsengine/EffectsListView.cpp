@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Main/Core.h"
 #include "EffectsListView.h"
 #include "EffectWidget.h"
 #include "EffectsEngine/EffectsEngine.h"
@@ -36,7 +37,7 @@ EffectsListView::EffectsListView( QWidget *parent ) :
     QListView(parent)
 {
     m_model = new QStandardItemModel( this );
-    connect( EffectsEngine::getInstance(),
+    connect( Core::getInstance()->effectsEngine(),
              SIGNAL( effectAdded( Effect*, const QString&, Effect::Type ) ),
              this,
              SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
@@ -90,7 +91,7 @@ EffectsListView::effectActivated( const QModelIndex &index ) const
 {
     if ( index.isValid() == false )
         return ;
-    Effect  *effect = EffectsEngine::getInstance()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
+    Effect  *effect = Core::getInstance()->effectsEngine()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
     QDialog         *dialog = new QDialog();
     QVBoxLayout     *layout = new QVBoxLayout( dialog );
     EffectWidget    *wid = new EffectWidget( dialog );

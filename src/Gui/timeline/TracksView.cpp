@@ -22,6 +22,7 @@
 
 #include "TracksView.h"
 
+#include "Main/Core.h"
 #include "Workflow/ClipHelper.h"
 #include "Workflow/ClipWorkflow.h"
 #include "Commands/Commands.h"
@@ -359,7 +360,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 void
 TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
-    Effect* effect = EffectsEngine::getInstance()->effect( event->mimeData()->data( "vlmc/effect_name") );
+    Effect* effect = Core::getInstance()->effectsEngine()->effect( event->mimeData()->data( "vlmc/effect_name") );
     if ( effect != NULL )
     {
         m_dragEffectItem = new GraphicsEffectItem( effect );

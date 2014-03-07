@@ -23,8 +23,8 @@
 #ifndef SETTINGSMANAGER_H
 #define SETTINGSMANAGER_H
 
+#include "Main/Core.h"
 #include "SettingValue.h"
-#include "Tools/Singleton.hpp"
 
 #include <QString>
 #include <QMap>
@@ -38,23 +38,23 @@ class QDomElement;
 
 
 //Var helpers :
-#define VLMC_GET_STRING( key )      SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toString()
-#define VLMC_GET_INT( key )         SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toInt()
-#define VLMC_GET_UINT( key )        SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toUInt()
-#define VLMC_GET_DOUBLE( key )      SettingsManager::getInstance()->value( key, SettingsManager::Vlmc)->get().toDouble()
-#define VLMC_GET_BOOL( key )        SettingsManager::getInstance()->value( key, SettingsManager::Vlmc)->get().toBool()
-#define VLMC_GET_STRINGLIST( key )  SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toStringList()
-#define VLMC_GET_BYTEARRAY( key )   SettingsManager::getInstance()->value( key, SettingsManager::Vlmc )->get().toByteArray()
+#define VLMC_GET_STRING( key )      Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toString()
+#define VLMC_GET_INT( key )         Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toInt()
+#define VLMC_GET_UINT( key )        Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toUInt()
+#define VLMC_GET_DOUBLE( key )      Core::getInstance()->settings()->value( key, SettingsManager::Vlmc)->get().toDouble()
+#define VLMC_GET_BOOL( key )        Core::getInstance()->settings()->value( key, SettingsManager::Vlmc)->get().toBool()
+#define VLMC_GET_STRINGLIST( key )  Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toStringList()
+#define VLMC_GET_BYTEARRAY( key )   Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toByteArray()
 
-#define VLMC_PROJECT_GET_STRING( key )  SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toString()
-#define VLMC_PROJECT_GET_INT( key )     SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toInt()
-#define VLMC_PROJECT_GET_UINT( key )    SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toUInt()
-#define VLMC_PROJECT_GET_DOUBLE( key )  SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toDouble()
-#define VLMC_PROJECT_GET_BOOL( key )    SettingsManager::getInstance()->value( key, SettingsManager::Project )->get().toBool()
+#define VLMC_PROJECT_GET_STRING( key )  Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toString()
+#define VLMC_PROJECT_GET_INT( key )     Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toInt()
+#define VLMC_PROJECT_GET_UINT( key )    Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toUInt()
+#define VLMC_PROJECT_GET_DOUBLE( key )  Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toDouble()
+#define VLMC_PROJECT_GET_BOOL( key )    Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toBool()
 
 
 #define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc, flags )  \
-SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
+Core::getInstance()->settings()->createVar( type, key, defaultValue, name, \
                                            desc, SettingsManager::Project, flags );
 
 #define VLMC_CREATE_PROJECT_INT( key, defaultValue, name, desc )  \
@@ -70,7 +70,7 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name, \
 
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
-SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
+Core::getInstance()->settings()->createVar( type, key, defaultValue, name,  \
                                            desc, SettingsManager::Vlmc, flags );
 
 /// Vlmc preferences macros
@@ -105,7 +105,7 @@ SettingsManager::getInstance()->createVar( type, key, defaultValue, name,  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
-class   SettingsManager : public QObject, public Singleton<SettingsManager>
+class   SettingsManager : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY( SettingsManager );
@@ -137,6 +137,9 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
             Project,
             Vlmc
         };
+        SettingsManager(){}
+        ~SettingsManager(){}
+
         bool setValue( const QString &key,
                                                 const QVariant &value,
                                                 SettingsManager::Type type = Vlmc);
@@ -160,11 +163,6 @@ class   SettingsManager : public QObject, public Singleton<SettingsManager>
         bool                        load( const QDomElement &element );
 
     private:
-
-        friend class Singleton<SettingsManager>;
-        SettingsManager(){}
-        ~SettingsManager(){}
-
         SettingsContainer            m_classicSettings;
         SettingsContainer            m_xmlSettings;
 

@@ -25,6 +25,7 @@
 #include "ImportController.h"
 #include "ui_ImportController.h"
 
+#include "Main/Core.h"
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/ISource.h"
@@ -287,7 +288,7 @@ ImportController::collapseAllButCurrentPath()
 void
 ImportController::saveCurrentPath()
 {
-    SettingsManager::getInstance()->setValue( "private/ImportPreviouslySelectPath",
+    Core::getInstance()->settings()->setValue( "private/ImportPreviouslySelectPath",
                                               m_currentlyWatchedDir, SettingsManager::Vlmc );
 }
 

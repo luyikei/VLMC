@@ -47,7 +47,7 @@ PreferenceWidget::PreferenceWidget( const QString &name, const char *label, Sett
 {
     QWidget     *container = new QWidget( this );
     SettingsManager::SettingList    settings =
-            SettingsManager::getInstance()->group( name, type );
+            Core::getInstance()->settings()->group( name, type );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 

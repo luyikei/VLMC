@@ -24,6 +24,7 @@
 #include <QStringList>
 #include <QThread>
 
+#include "Main/Core.h"
 #include "Settings/SettingsManager.h"
 #include "Tools/VlmcLogger.h"
 #include "Tools/VlmcDebug.h"
@@ -48,7 +49,7 @@ VlmcLogger::VlmcLogger()
         m_currentLogLevel = VlmcLogger::Verbose;
     else
         m_currentLogLevel = VlmcLogger::Quiet;
-    SettingsManager* settingsManager = SettingsManager::getInstance();
+    SettingsManager* settingsManager = Core::getInstance()->settings();
     settingsManager->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
     settingsManager->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )),
                                  SettingsManager::Vlmc, Qt::DirectConnection );
@@ -147,7 +148,7 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
     //FIXME: This is ok as long as we guarantee no log message will arrive after
     // we uninstall the hook
 
-    VlmcLogger* self = VlmcLogger::getInstance();
+    VlmcLogger* self = Core::getInstance()->logger();
     if ( self->m_logFile != NULL )
     {
         //FIXME: Messages are not guaranteed to arrive in order

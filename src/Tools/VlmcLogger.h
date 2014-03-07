@@ -27,17 +27,18 @@
 #include <cstdio>
 
 #include "Backend/IBackend.h"
-#include "Tools/Singleton.hpp"
 
 /**
  *  \warning    Do not use qDebug() qWarning() etc... from here, unless you know exactly what you're doing
  *              Chances are very high that you end up with a stack overflow !!
  */
-class   VlmcLogger : public QObject, public Singleton<VlmcLogger>
+class   VlmcLogger : public QObject
 {
     Q_OBJECT
 
     public:
+        VlmcLogger();
+        virtual ~VlmcLogger();
         // Keep the same order as Qt's message levels, since that's what we're
         // going to use for comparing log levels in the message handler
         enum    LogLevel
@@ -57,8 +58,6 @@ class   VlmcLogger : public QObject, public Singleton<VlmcLogger>
 
         void            setup();
     private:
-        VlmcLogger();
-        virtual ~VlmcLogger();
         void            writeToFile(const char* msg);
         void            outputToConsole( int level, const char* msg );
 
@@ -68,8 +67,6 @@ class   VlmcLogger : public QObject, public Singleton<VlmcLogger>
 
     private slots:
         void            logLevelChanged( const QVariant& logLevel );
-
-        friend class    Singleton<VlmcLogger>;
 };
 
 #endif // VLMCDEBUG_H
