@@ -22,7 +22,7 @@
 
 #include "config.h"
 #include "LanguageWidget.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Settings/SettingValue.h"
 #include "Tools/VlmcDebug.h"
 

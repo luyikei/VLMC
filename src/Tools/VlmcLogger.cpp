@@ -25,7 +25,7 @@
 #include <QThread>
 
 #include "Main/Core.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/VlmcLogger.h"
 #include "Tools/VlmcDebug.h"
 

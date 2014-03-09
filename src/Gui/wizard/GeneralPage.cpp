@@ -26,7 +26,7 @@
 
 #include "GeneralPage.h"
 #include "ProjectWizard.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Project/ProjectManager.h"
 
 GeneralPage::GeneralPage( QWidget *parent ) :

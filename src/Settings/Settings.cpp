@@ -1,5 +1,5 @@
 /*****************************************************************************
- * SettingsManager.cpp: Backend settings manager
+ * Settings.cpp: Backend settings manager
  *****************************************************************************
  * Copyright (C) 2008-2014 VideoLAN
  *
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "SettingsManager.h"
+#include "Settings.h"
 #include "SettingValue.h"
 #include "Tools/VlmcDebug.h"
 

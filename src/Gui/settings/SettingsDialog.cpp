@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Settings.cpp: Generic preferences interface
+ * SettingsDialog.cpp: Generic preferences interface
  *****************************************************************************
  * Copyright (C) 2008-2014 VideoLAN
  *
@@ -22,10 +22,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Settings.h"
+#include "SettingsDialog.h"
 
 #include "PreferenceWidget.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Panel.h"
 
 #include <QAbstractButton>

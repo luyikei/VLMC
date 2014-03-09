@@ -27,7 +27,7 @@
 #include "Media/Media.h"
 #include "Backend/ISource.h"
 #include "Backend/ISourceRenderer.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "VideoClipWorkflow.h"
 #include "VLCMedia.h"
 #include "Tools/VlmcDebug.h"

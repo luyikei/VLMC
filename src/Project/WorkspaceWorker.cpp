@@ -23,7 +23,7 @@
 #include "Project/WorkspaceWorker.h"
 
 #include "Media/Media.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 
 #include <cerrno>

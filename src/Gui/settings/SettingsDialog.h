@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Settings.h: generic preferences interface
+ * SettingsDialog.h: generic preferences interface
  *****************************************************************************
  * Copyright (C) 2008-2014 VideoLAN
  *
@@ -24,7 +24,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 #include <QDialog>
 #include <QString>

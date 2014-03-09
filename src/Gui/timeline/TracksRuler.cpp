@@ -27,7 +27,7 @@
 #include <QPolygon>
 #include "TracksRuler.h"
 #include "TracksView.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 const int TracksRuler::comboScale[] = { 1, 2, 5, 10, 25, 50, 125, 250, 500, 725, 1500, 3000, 6000, 12000};
 

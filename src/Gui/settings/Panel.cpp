@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 #include "Panel.h"
-#include "Settings.h"
+#include "SettingsDialog.h"
 
 #include <QWidget>
 #include <QVBoxLayout>

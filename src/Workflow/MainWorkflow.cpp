@@ -30,7 +30,7 @@
 #include "MainWorkflow.h"
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 

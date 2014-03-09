@@ -26,7 +26,7 @@
 #include "Main/Project.h"
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Project/Workspace.h"
 
 #include "timeline/Timeline.h"

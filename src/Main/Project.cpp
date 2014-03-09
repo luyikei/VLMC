@@ -27,7 +27,7 @@
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Project/Workspace.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 Project::Project()
 {

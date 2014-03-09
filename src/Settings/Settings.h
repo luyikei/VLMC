@@ -1,5 +1,5 @@
 /*****************************************************************************
- * SettingsManager.h: Backend settings manager
+ * Settings.h: Backend settings manager
  *****************************************************************************
  * Copyright (C) 2008-2014 VideoLAN
  *

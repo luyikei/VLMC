@@ -46,7 +46,7 @@ SET(VLMC_SRCS
     Services/YouTube/YouTubeFeedParser.cpp
     Services/YouTube/YouTubeService.cpp
     Services/YouTube/YouTubeUploader.cpp
-    Settings/SettingsManager.cpp
+    Settings/Settings.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
@@ -146,7 +146,7 @@ ELSE(NOT WITH_GUI)
         Gui/settings/Panel.cpp
         Gui/settings/PathWidget.cpp
         Gui/settings/PreferenceWidget.cpp
-        Gui/settings/Settings.cpp
+        Gui/settings/SettingsDialog.cpp
         Gui/settings/StringWidget.cpp
         Gui/timeline/AbstractGraphicsItem.cpp
         Gui/timeline/AbstractGraphicsMediaItem.cpp

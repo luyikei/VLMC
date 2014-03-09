@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "VideoPage.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 VideoPage::VideoPage( QWidget* parent ) :
     QWizardPage( parent )

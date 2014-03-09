@@ -33,7 +33,7 @@
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "TagWidget.h"
 #include "Media/Transcoder.h"
 #include "Tools/VlmcDebug.h"

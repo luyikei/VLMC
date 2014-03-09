@@ -24,7 +24,7 @@
 
 #include "KeyboardShortcutHelper.h"
 
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* parent ) :
         QShortcut( parent ),

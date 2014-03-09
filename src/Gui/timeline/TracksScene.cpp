@@ -29,7 +29,7 @@
 #include "GraphicsMovieItem.h"
 #include "GraphicsTrack.h"
 #include "Main/Project.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Timeline.h"
 #include "Workflow/TrackWorkflow.h"
 

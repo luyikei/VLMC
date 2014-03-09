@@ -31,7 +31,7 @@
 
 #include <Backend/IBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
-#include <Settings/SettingsManager.h>
+#include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
 
 Core::Core()

@@ -26,7 +26,7 @@
 #include "Media/Clip.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 
 #include "Project/WorkspaceWorker.h"

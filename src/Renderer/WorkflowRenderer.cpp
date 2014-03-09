@@ -41,7 +41,7 @@
 #include "Backend/ISource.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/preview/RenderWidget.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 

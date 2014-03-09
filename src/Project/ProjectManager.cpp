@@ -27,7 +27,7 @@
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/project/GuiProjectManager.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Gui/timeline/Timeline.h"
 #include "Tools/VlmcDebug.h"
 #include "Renderer/WorkflowRenderer.h"

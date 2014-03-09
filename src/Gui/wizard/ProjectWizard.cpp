@@ -26,7 +26,7 @@
 #include <QWizardPage>
 #include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "WelcomePage.h"
 #include "OpenPage.h"
 #include "GeneralPage.h"

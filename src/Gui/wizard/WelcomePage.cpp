@@ -23,7 +23,7 @@
 #include "WelcomePage.h"
 
 #include "project/GuiProjectManager.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 
 #include <QFileDialog>
 #include <QLabel>

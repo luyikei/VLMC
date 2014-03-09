@@ -29,7 +29,7 @@
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
 #include "Gui/widgets/NotificationZone.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Tools/RendererEventWatcher.h"
 
 Transcoder::Transcoder( Media* media )

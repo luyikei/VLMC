@@ -32,7 +32,7 @@
 #include "Backend/ISourceRenderer.h"
 #include "MainWorkflow.h"
 #include "Media/Media.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "Workflow/Types.h"
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :

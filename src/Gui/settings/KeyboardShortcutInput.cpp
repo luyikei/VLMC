@@ -24,7 +24,7 @@
 #include <QKeySequence>
 #include <QTimer>
 
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "KeyboardShortcutInput.h"
 
 KeyboardShortcutInput::KeyboardShortcutInput( const QString& name,

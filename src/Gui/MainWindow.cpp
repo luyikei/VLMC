@@ -53,6 +53,7 @@
 #include "WorkflowFileRendererDialog.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnInternet.h"
+#include "settings/SettingsDialog.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"
@@ -68,7 +69,7 @@
 #include "project/GuiProjectManager.h"
 #include "wizard/ProjectWizard.h"
 #include "settings/Settings.h"
-#include "Settings/SettingsManager.h"
+#include "Settings/Settings.h"
 #include "LanguageHelper.h"
 #include "Commands/KeyboardShortcutHelper.h"
 
