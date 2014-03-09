@@ -24,6 +24,7 @@
 #include "MediaCellView.h"
 #include "ui_MediaCellView.h"
 
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "ClipProperty.h"
 #include "Backend/ISource.h"
@@ -228,7 +229,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
 void
 MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
-    if ( MainWorkflow::getInstance()->contains( m_clip->uuid() ) == true )
+    if ( Project::getInstance()->workflow()->contains( m_clip->uuid() ) == true )
     {
         QMessageBox msgBox;
         msgBox.setText( tr( "This clip or some of its children are contained in the timeline." ) );
@@ -292,10 +293,10 @@ MediaCellView::contextMenuEvent( QContextMenuEvent *event )
         return ;
     if ( copyInWorkspace == selectedAction )
     {
-        if ( Workspace::getInstance()->copyToWorkspace( m_clip->getMedia() ) == false )
+        if ( Project::getInstance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
         {
             QMessageBox::warning( NULL, tr( "Can't copy to workspace" ),
-                                  tr( "Can't copy this media to workspace: %1" ).arg( Workspace::getInstance()->lastError() ) );
+                                  tr( "Can't copy this media to workspace: %1" ).arg( Project::getInstance()->workspace()->lastError() ) );
         }
     }
 }

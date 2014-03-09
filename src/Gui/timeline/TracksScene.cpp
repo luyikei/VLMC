@@ -28,6 +28,7 @@
 #include "GraphicsAudioItem.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsTrack.h"
+#include "Main/Project.h"
 #include "Settings/SettingsManager.h"
 #include "Timeline.h"
 #include "Workflow/TrackWorkflow.h"
@@ -106,7 +107,7 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    UndoStack::getInstance()->beginMacro( "Remove clip(s)" );
+    Project::getInstance()->undoStack()->beginMacro( "Remove clip(s)" );
 
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
@@ -133,5 +134,5 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    UndoStack::getInstance()->endMacro();
+    Project::getInstance()->undoStack()->endMacro();
 }

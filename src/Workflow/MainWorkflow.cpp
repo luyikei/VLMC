@@ -22,6 +22,7 @@
  *****************************************************************************/
 
 #include "vlmc.h"
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
@@ -288,7 +289,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                     return ;
                 }
 
-                Clip* c = Library::getInstance()->clip( uuid );
+                Clip* c = Project::getInstance()->library()->clip( uuid );
                 if ( c != NULL )
                 {
                     ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),

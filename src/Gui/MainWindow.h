@@ -100,7 +100,7 @@ private:
 
     /**
      *  \brief  Will check if there is any video on the Project Timeline.
-     *  \return true, if ( MainWorkflow::getInstance()->getLengthFrame() > 0 )
+     *  \return true, if ( Project::getInstance()->workflow()->getLengthFrame() > 0 )
      *          else false
      */
     bool        checkVideoLength();

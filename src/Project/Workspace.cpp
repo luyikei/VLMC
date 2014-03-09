@@ -22,6 +22,7 @@
 
 #include "Workspace.h"
 
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
@@ -177,10 +178,10 @@ Workspace::pathInProjectDir( const Media *media )
 void
 Workspace::copyAllToWorkspace()
 {
-    if ( Library::getInstance()->m_clips.size() == 0 )
+    if ( Project::getInstance()->library()->m_clips.size() == 0 )
         return ;
-    QHash<QUuid, Clip*>::iterator    it = Library::getInstance()->m_clips.begin();
-    QHash<QUuid, Clip*>::iterator    ite = Library::getInstance()->m_clips.end();
+    QHash<QUuid, Clip*>::iterator    it = Project::getInstance()->library()->m_clips.begin();
+    QHash<QUuid, Clip*>::iterator    ite = Project::getInstance()->library()->m_clips.end();
 
     {
         QMutexLocker    lock( m_mediasToCopyMutex );

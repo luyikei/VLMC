@@ -23,7 +23,6 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include "Tools/Singleton.hpp"
 #include "Tools/ErrorHandler.h"
 
 #include <QObject>
@@ -35,13 +34,15 @@ class   Media;
 class   QFileInfo;
 class   QMutex;
 
-class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandler
+class Workspace : public QObject, public ErrorHandler
 {
     Q_OBJECT
 
     public:
         static const QString        workspacePrefix;
 
+        Workspace();
+        ~Workspace();
         static bool                 isInProjectDir( const QString &path );
         static bool                 isInProjectDir( const QFileInfo &fInfo );
         static bool                 isInProjectDir( const Media *media );
@@ -50,8 +51,6 @@ class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandl
         bool                        copyToWorkspace( Media* media );
         void                        copyAllToWorkspace();
     private:
-        Workspace();
-        ~Workspace();
         void                        startCopyWorker( Media *media );
     private:
         QQueue<Media*>              m_mediasToCopy;
@@ -65,8 +64,6 @@ class Workspace : public QObject, public Singleton<Workspace>, public ErrorHandl
 
     signals:
         void                        notify( QString );
-
-    friend class    Singleton<Workspace>;
 };
 
 #endif // WORKSPACE_H

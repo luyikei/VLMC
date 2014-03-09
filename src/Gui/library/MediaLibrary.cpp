@@ -22,6 +22,7 @@
 
 #include "MediaLibrary.h"
 
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
@@ -41,7 +42,7 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
     setAcceptDrops( true );
 
     StackViewController *nav = new StackViewController( m_ui->mediaListContainer );
-    m_mediaListView = new MediaListView( nav, Library::getInstance() );
+    m_mediaListView = new MediaListView( nav, Project::getInstance()->library() );
     nav->pushViewController( m_mediaListView );
 
     connect( m_ui->importButton, SIGNAL( clicked() ),
@@ -165,7 +166,7 @@ MediaLibrary::dropEvent( QDropEvent *event )
         return;
     }
 
-    Q_ASSERT( Library::getInstance() != NULL );
+    Q_ASSERT( Project::getInstance()->library() != NULL );
 
     foreach ( const QUrl &url, fileList )
     {
@@ -174,13 +175,13 @@ MediaLibrary::dropEvent( QDropEvent *event )
         if ( fileName.isEmpty() )
             continue;
 
-        Media       *media = Library::getInstance()->addMedia( fileName );
+        Media       *media = Project::getInstance()->library()->addMedia( fileName );
 
         if ( media != NULL )
         {
             Clip*       clip = new Clip( media );
             media->setBaseClip( clip );
-            Library::getInstance()->addClip( clip );
+            Project::getInstance()->library()->addClip( clip );
             event->accept();
         }
         else

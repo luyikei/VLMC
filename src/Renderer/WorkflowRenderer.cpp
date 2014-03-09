@@ -33,6 +33,7 @@
 
 #include "WorkflowRenderer.h"
 
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "GenericRenderer.h"
@@ -45,7 +46,7 @@
 #include "Workflow/Types.h"
 
 WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend ) :
-            m_mainWorkflow( MainWorkflow::getInstance() ),
+            m_mainWorkflow( Project::getInstance()->workflow() ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
             m_aspectRatio( "" ),

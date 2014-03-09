@@ -1,5 +1,5 @@
 /*****************************************************************************
- * EffectHelper: Contains informations about effects
+ * Project.cpp: Handles all core project components
  *****************************************************************************
  * Copyright (C) 2008-2014 VideoLAN
  *
@@ -20,48 +20,49 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EffectsEngine/EffectHelper.h"
-#include "EffectsEngine/EffectUser.h"
-#include "Main/Project.h"
+#include "Project.h"
+
+#include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
+#include "Gui/UndoStack.h"
+#include "Project/Workspace.h"
 
-EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,
-                            const QString &uuid ) :
-    Helper( begin, end, uuid ),
-    m_effectInstance( effectInstance ),
-    m_target( NULL )
+Project::Project()
 {
-    if ( Project::getInstance()->workflow()->getLengthFrame() > 0 )
-        m_end = Project::getInstance()->workflow()->getLengthFrame();
-    else
-        m_end = Effect::TrackEffectDefaultLength;
+    m_library = new Library;
+    m_workflow = new MainWorkflow;
+    m_undoStack = new UndoStack( NULL );
+    m_workspace = new Workspace;
 }
 
-EffectInstance*
-EffectHelper::effectInstance()
+Project::~Project()
 {
-    return m_effectInstance;
+    delete m_workspace;
+    delete m_undoStack;
+    delete m_workflow;
+    delete m_library;
 }
 
-const EffectInstance*
-EffectHelper::effectInstance() const
+Library*
+Project::library()
 {
-    return m_effectInstance;
+    return m_library;
 }
 
-EffectUser*
-EffectHelper::target()
+MainWorkflow*
+Project::workflow()
 {
-    return m_target;
+    return m_workflow;
 }
 
-void
-EffectHelper::setTarget( EffectUser *target )
+UndoStack*
+Project::undoStack()
 {
-    m_target = target;
-    if ( target != NULL )
-    {
-        if ( target->length() > 0 && target->length() < m_end )
-            m_end = target->length();
-    }
+    return m_undoStack;
+}
+
+Workspace*
+Project::workspace()
+{
+    return m_workspace;
 }

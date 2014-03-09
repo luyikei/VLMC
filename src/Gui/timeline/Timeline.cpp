@@ -22,6 +22,7 @@
 
 #include "Timeline.h"
 
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "Workflow/ClipHelper.h"
 #include "TracksView.h"
@@ -44,7 +45,7 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
     m_instance = this;
     m_ui.setupUi( this );
 
-    m_mainWorkflow = MainWorkflow::getInstance();
+    m_mainWorkflow = Project::getInstance()->workflow();
 
     m_tracksScene = new TracksScene( this );
     m_tracksView = new TracksView( m_tracksScene, m_mainWorkflow, m_renderer, m_ui.tracksFrame );
@@ -114,7 +115,6 @@ Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
 
 Timeline::~Timeline()
 {
-    MainWorkflow::destroyInstance();
 }
 
 void

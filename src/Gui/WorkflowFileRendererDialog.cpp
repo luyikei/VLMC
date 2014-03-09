@@ -23,6 +23,7 @@
 
 #include "WorkflowFileRendererDialog.h"
 
+#include "Main/Project.h"
 #include "vlmc.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/WorkflowFileRenderer.h"
@@ -67,7 +68,7 @@ WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 void
 WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
-    qint64 totalFrames = MainWorkflow::getInstance()->getLengthFrame();
+    qint64 totalFrames = Project::getInstance()->workflow()->getLengthFrame();
 
     if ( frame <= totalFrames )
     {

@@ -25,7 +25,6 @@
 #define MAINWORKFLOW_H
 
 #include "EffectsEngine/EffectsEngine.h"
-#include "Tools/Singleton.hpp"
 #include <QXmlStreamWriter>
 #include "Types.h"
 
@@ -52,11 +51,14 @@ class   QReadWriteLock;
 /**
  *  \class  Represent the Timeline backend.
  */
-class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
+class   MainWorkflow : public QObject
 {
     Q_OBJECT
 
     public:
+        MainWorkflow( int trackCount = 64 );
+        ~MainWorkflow();
+
         /**
          *  \brief      Initialize the workflow for the render.
          *
@@ -259,8 +261,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                 trackCount() const;
 
     private:
-        MainWorkflow( int trackCount = 64 );
-        ~MainWorkflow();
         /**
          *  \brief  Compute the length of the workflow.
          *
@@ -310,8 +310,6 @@ class   MainWorkflow : public QObject, public Singleton<MainWorkflow>
         quint32                         m_height;
         /// Store the number of track for each track type.
         const quint32                   m_trackCount;
-
-        friend class                    Singleton<MainWorkflow>;
 
     private slots:
         /**

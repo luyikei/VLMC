@@ -26,17 +26,17 @@
 #include <QUndoView>
 
 #include "Commands/KeyboardShortcutHelper.h"
-#include "Tools/QSingleton.hpp"
 
 class QUndoStack;
 class QUndoCommand;
 
-class UndoStack : public QUndoView, public QSingleton<UndoStack>
+class UndoStack : public QUndoView
 {
     Q_OBJECT
     Q_DISABLE_COPY( UndoStack );
 
     public:
+        UndoStack( QWidget* parent );
         void        push( QUndoCommand *command );
         void        beginMacro( const QString &text );
         void        endMacro();
@@ -47,8 +47,6 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
         void        changeEvent( QEvent *event );
 
     private:
-        UndoStack( QWidget* parent );
-
         QUndoStack*     m_undoStack;
 
     public slots:
@@ -61,8 +59,6 @@ class UndoStack : public QUndoView, public QSingleton<UndoStack>
         void            canRedoChanged( bool canRedo );
         void            canUndoChanged( bool canUndo );
         void            retranslateRequired();
-
-    friend class        QSingleton<UndoStack>;
 };
 
 #endif // UNDOSTACK_H

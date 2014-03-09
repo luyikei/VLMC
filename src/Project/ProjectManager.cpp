@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/project/GuiProjectManager.h"
@@ -87,9 +88,7 @@ ProjectManager::ProjectManager() : m_projectFile( NULL ), m_needSave( false )
     VLMC_CREATE_PRIVATE_PROJECT_STRING( "vlmc/Workspace", "" );
 
     //We have to wait for the library to be loaded before loading the workflow
-    connect( Library::getInstance(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
-    //Create the workspace:
-    Workspace::getInstance();
+    connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
 }
 
 ProjectManager::~ProjectManager()
@@ -111,7 +110,7 @@ ProjectManager::loadWorkflow()
     QDomElement     root = m_domDocument->documentElement();
     bool            savedState;
 
-    MainWorkflow::getInstance()->loadProject( root );
+    Project::getInstance()->workflow()->loadProject( root );
     loadTimeline( root );
     if ( m_projectFile != NULL )
     {
@@ -163,7 +162,7 @@ ProjectManager::loadProject( const QString& fileName )
     Core::getInstance()->settings()->load( root );
     Core::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath(), SettingsManager::Project );
     Timeline::getInstance()->renderer()->loadProject( root );
-    Library::getInstance()->loadProject( root );
+    Project::getInstance()->library()->loadProject( root );
 }
 
 void
@@ -186,8 +185,8 @@ ProjectManager::__saveProject( const QString &fileName )
     project.writeStartDocument();
     project.writeStartElement( "vlmc" );
 
-    Library::getInstance()->saveProject( project );
-    MainWorkflow::getInstance()->saveProject( project );
+    Project::getInstance()->library()->saveProject( project );
+    Project::getInstance()->workflow()->saveProject( project );
     Timeline::getInstance()->renderer()->saveProject( project );
     Core::getInstance()->settings()->save( project );
     saveTimeline( project );

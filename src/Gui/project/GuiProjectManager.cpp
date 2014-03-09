@@ -23,6 +23,7 @@
 #include "GuiProjectManager.h"
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Settings/SettingsManager.h"
@@ -37,9 +38,9 @@
 
 GUIProjectManager::GUIProjectManager()
 {
-    connect( this, SIGNAL( projectClosed() ), Library::getInstance(), SLOT( clear() ) );
-    connect( this, SIGNAL( projectClosed() ), MainWorkflow::getInstance(), SLOT( clear() ) );
-    connect( Library::getInstance(), SIGNAL( cleanStateChanged( bool ) ),
+    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->library(), SLOT( clear() ) );
+    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->workflow(), SLOT( clear() ) );
+    connect( Project::getInstance()->library(), SIGNAL( cleanStateChanged( bool ) ),
              this, SLOT( cleanChanged( bool ) ) );
 
     //Automatic save part :
@@ -148,7 +149,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
 
         appendToRecentProject( projectName() );
         if ( relocate == true )
-            Workspace::getInstance()->copyAllToWorkspace();
+            Project::getInstance()->workspace()->copyAllToWorkspace();
         emit projectUpdated( projectName(), true );
     }
     return true;

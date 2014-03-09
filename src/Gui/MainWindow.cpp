@@ -34,6 +34,7 @@
 #include <QSettings>
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
@@ -114,12 +115,12 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
              this, SLOT( projectUpdated( const QString&, bool ) ) );
 
     // Undo/Redo
-    connect( UndoStack::getInstance( this ), SIGNAL( canRedoChanged( bool ) ),
+    connect( Project::getInstance()->undoStack(), SIGNAL( canRedoChanged( bool ) ),
              this, SLOT( canRedoChanged( bool ) ) );
-    connect( UndoStack::getInstance( this ), SIGNAL( canUndoChanged( bool ) ),
+    connect( Project::getInstance()->undoStack(), SIGNAL( canUndoChanged( bool ) ),
              this, SLOT( canUndoChanged( bool ) ) );
-    canRedoChanged( UndoStack::getInstance( this )->canRedo() );
-    canUndoChanged( UndoStack::getInstance( this )->canUndo() );
+    canRedoChanged( Project::getInstance()->undoStack()->canRedo() );
+    canUndoChanged( Project::getInstance()->undoStack()->canUndo() );
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
@@ -128,7 +129,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
              clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaLibrary, SIGNAL( importRequired() ),
              this, SLOT( on_actionImport_triggered() ) );
-    connect( Library::getInstance(), SIGNAL( clipRemoved( const QUuid& ) ),
+    connect( Project::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     //FIXME: Lazy init this
@@ -464,7 +465,8 @@ MainWindow::setupUndoRedoWidget()
                                       QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                       Qt::AllDockWidgetAreas,
                                       QDockWidget::AllDockWidgetFeatures );
-    QWidget         *undoRedoWidget = UndoStack::getInstance( dockedWidget );
+    // FIXME: This will break undo stack layout, though we need to split the UI part form the actual stack
+    QWidget         *undoRedoWidget = Project::getInstance()->undoStack();
     DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::TopDockWidgetArea );
 }
 
@@ -625,7 +627,7 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
-    if ( MainWorkflow::getInstance()->getLengthFrame() <= 0 )
+    if ( Project::getInstance()->workflow()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( NULL, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
@@ -832,13 +834,13 @@ MainWindow::on_actionClose_Project_triggered()
 void
 MainWindow::on_actionUndo_triggered()
 {
-    UndoStack::getInstance( this )->undo();
+    Project::getInstance()->undoStack()->undo();
 }
 
 void
 MainWindow::on_actionRedo_triggered()
 {
-    UndoStack::getInstance( this )->redo();
+    Project::getInstance()->undoStack()->redo();
 }
 
 void

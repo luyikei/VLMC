@@ -23,6 +23,7 @@
 #include "TracksView.h"
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "Workflow/ClipHelper.h"
 #include "Workflow/ClipWorkflow.h"
 #include "Commands/Commands.h"
@@ -375,7 +376,7 @@ void
 TracksView::clipDragEnterEvent( QDragEnterEvent *event )
 {
     const QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
-    Clip *clip = Library::getInstance()->clip( fullId );
+    Clip *clip = Project::getInstance()->library()->clip( fullId );
     if ( clip == NULL )
         return;
     bool hasVideo = clip->getMedia()->source()->hasVideo();
@@ -799,7 +800,7 @@ TracksView::dropEvent( QDropEvent *event )
 
     if ( m_dragAudioItem != NULL || m_dragVideoItem != NULL )
     {
-        UndoStack::getInstance()->beginMacro( "Add clip" );
+        Project::getInstance()->undoStack()->beginMacro( "Add clip" );
 
         if ( m_dragAudioItem )
         {
@@ -835,7 +836,7 @@ TracksView::dropEvent( QDropEvent *event )
             m_dragVideoItem = NULL;
         }
 
-        UndoStack::getInstance()->endMacro();
+        Project::getInstance()->undoStack()->endMacro();
 
         m_lastKnownTrack = NULL;
     }
@@ -1183,7 +1184,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             }
         }
         else
-            UndoStack::getInstance()->beginMacro( "Move clip" );
+            Project::getInstance()->undoStack()->beginMacro( "Move clip" );
         m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
@@ -1194,7 +1195,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         }
 
         if ( effectItem == NULL )
-            UndoStack::getInstance()->endMacro();
+            Project::getInstance()->undoStack()->endMacro();
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;

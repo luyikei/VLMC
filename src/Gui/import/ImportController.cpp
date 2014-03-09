@@ -26,6 +26,7 @@
 #include "ui_ImportController.h"
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/ISource.h"
@@ -155,7 +156,7 @@ void
 ImportController::importMedia( const QString &filePath )
 {
     vlmcDebug() << "Importing" << filePath;
-    if ( Library::getInstance()->mediaAlreadyLoaded( filePath ) == true ||
+    if ( Project::getInstance()->library()->mediaAlreadyLoaded( filePath ) == true ||
          m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
 
@@ -240,7 +241,7 @@ ImportController::accept()
     {
         if ( clip->getMedia()->source()->length() == 0 )
             invalidMedias = true;
-        Library::getInstance()->addClip( clip );
+        Project::getInstance()->library()->addClip( clip );
     }
     if ( invalidMedias == true )
         handleInvalidMedias();

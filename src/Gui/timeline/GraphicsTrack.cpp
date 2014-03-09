@@ -21,6 +21,8 @@
  *****************************************************************************/
 
 #include <QList>
+
+#include "Main/Project.h"
 #include "TracksView.h"
 #include "GraphicsTrack.h"
 #include "Workflow/MainWorkflow.h"
@@ -33,7 +35,7 @@ GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
     m_type = type;
     m_trackNumber = trackNumber;
     m_enabled = true;
-    m_trackWorkflow = MainWorkflow::getInstance()->track( type, trackNumber );
+    m_trackWorkflow = Project::getInstance()->workflow()->track( type, trackNumber );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
     setContentsMargins( 0, 0, 0, 0 );
@@ -62,9 +64,9 @@ GraphicsTrack::setTrackEnabled( bool enabled )
     m_enabled = enabled;
 
     if( enabled )
-        MainWorkflow::getInstance()->unmuteTrack( m_trackNumber, m_type );
+        Project::getInstance()->workflow()->unmuteTrack( m_trackNumber, m_type );
     else
-        MainWorkflow::getInstance()->muteTrack( m_trackNumber, m_type );
+        Project::getInstance()->workflow()->muteTrack( m_trackNumber, m_type );
 }
 
 bool

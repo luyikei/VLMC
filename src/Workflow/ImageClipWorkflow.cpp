@@ -24,6 +24,7 @@
 #include <QReadWriteLock>
 #include <QStringBuilder>
 
+#include "Main/Project.h"
 #include "ImageClipWorkflow.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"
@@ -60,8 +61,8 @@ void ImageClipWorkflow::initializeInternals()
     m_renderer->setOutputFps( (float)VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
     m_renderer->setOutputVideoCodec( "RV32" );
 
-    m_effectFrame->resize( MainWorkflow::getInstance()->getWidth(),
-                            MainWorkflow::getInstance()->getHeight() );
+    m_effectFrame->resize( Project::getInstance()->workflow()->getWidth(),
+                            Project::getInstance()->workflow()->getHeight() );
     m_isRendering = true;
 }
 
@@ -93,8 +94,8 @@ ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
     cw->m_renderLock->lock();
     if ( cw->m_buffer == NULL )
     {
-        cw->m_buffer = new Workflow::Frame( MainWorkflow::getInstance()->getWidth(),
-                                            MainWorkflow::getInstance()->getHeight() );
+        cw->m_buffer = new Workflow::Frame( Project::getInstance()->workflow()->getWidth(),
+                                            Project::getInstance()->workflow()->getHeight() );
     }
     *pp_ret = (uint8_t*)cw->m_buffer->buffer();
 }

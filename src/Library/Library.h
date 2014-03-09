@@ -30,7 +30,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include "Tools/Singleton.hpp"
 #include "MediaContainer.h"
 
 #include <QObject>
@@ -45,21 +44,20 @@ class Media;
  *  \class Library
  *  \brief Library Object that handles public Clips
  */
-class Library : public MediaContainer, public Singleton<Library>
+class Library : public MediaContainer
 {
     Q_OBJECT
     Q_DISABLE_COPY( Library );
 
 public:
+    Library();
+    virtual ~Library(){}
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
 
 private:
-    Library();
-    virtual ~Library(){}
-
     void        setCleanState( bool newState );
 
 private:
@@ -86,7 +84,6 @@ signals:
     void    projectLoaded();
     void    cleanStateChanged( bool newState );
 
-    friend class    Singleton<Library>;
     friend class    Workspace;
 };
 

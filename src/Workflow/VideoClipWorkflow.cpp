@@ -22,6 +22,7 @@
 
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectInstance.h"
+#include "Main/Project.h"
 #include "MainWorkflow.h"
 #include "Media/Media.h"
 #include "Backend/ISource.h"
@@ -61,8 +62,8 @@ VideoClipWorkflow::releasePrealocated()
 void
 VideoClipWorkflow::preallocate()
 {
-    quint32     newWidth = MainWorkflow::getInstance()->getWidth();
-    quint32     newHeight = MainWorkflow::getInstance()->getHeight();
+    quint32     newWidth = Project::getInstance()->workflow()->getWidth();
+    quint32     newHeight = Project::getInstance()->workflow()->getHeight();
     if ( newWidth != m_width || newHeight != m_height )
     {
         m_width = newWidth;
