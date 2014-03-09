@@ -159,8 +159,8 @@ ProjectManager::loadProject( const QString& fileName )
     QDomElement     root = m_domDocument->documentElement();
 
     //Load settings first, as it contains some informations about the workspace.
-    Core::getInstance()->settings()->load( root );
-    Core::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath(), SettingsManager::Project );
+    Project::getInstance()->settings()->load( root );
+    Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
     Timeline::getInstance()->renderer()->loadProject( root );
     Project::getInstance()->library()->loadProject( root );
 }
@@ -171,7 +171,7 @@ ProjectManager::removeProject( const QString& project )
     // Remove all occurence of fileName
     m_recentsProjects.removeAll( project );
 
-    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects );
 }
 
 void
@@ -209,7 +209,7 @@ ProjectManager::emergencyBackup()
     else
        name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
     __saveProject( name );
-    Core::getInstance()->settings()->setValue( SETTINGS_BACKUP, name, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_BACKUP, name );
 }
 
 bool
@@ -234,7 +234,7 @@ ProjectManager::appendToRecentProject( const QString& projectName )
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects );
 }
 
 QString

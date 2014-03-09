@@ -29,6 +29,7 @@ class QUndoStack;
 
 class Library;
 class MainWorkflow;
+class Settings;
 class Workspace;
 
 class Project : public Singleton<Project>
@@ -38,16 +39,17 @@ private:
     ~Project();
 
 public:
-    // Insert settings here
     Library*            library();
     MainWorkflow*       workflow();
     QUndoStack*         undoStack();
+    Settings*           settings();
     Workspace*          workspace();
 
 private:
     Library*            m_library;
     MainWorkflow*       m_workflow;
     QUndoStack*         m_undoStack;
+    Settings*           m_settings;
     Workspace*          m_workspace;
 
     friend class Singleton<Project>;

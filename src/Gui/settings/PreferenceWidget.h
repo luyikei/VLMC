@@ -40,8 +40,7 @@ class   PreferenceWidget : public QScrollArea
     Q_OBJECT
     public:
         typedef QList<ISettingsCategoryWidget*>    SettingsList;
-        PreferenceWidget( const QString &name, const char* category, SettingsManager::Type type,
-                          QWidget* parent = 0 );
+        PreferenceWidget(const QString &name, const char* category, Settings *settings, QWidget* parent = 0 );
         virtual ~PreferenceWidget() {}
 
         virtual bool    save();

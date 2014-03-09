@@ -37,9 +37,10 @@
 #include <QScrollArea>
 #include <QStackedLayout>
 
-SettingsDialog::SettingsDialog( SettingsManager::Type type, QWidget *parent ) :
+SettingsDialog::SettingsDialog(Settings *settings, const QString &title, QWidget *parent ) :
     QDialog( parent ),
-    m_type( type )
+    m_settings( settings ),
+    m_windowTitle( title )
 {
     setMinimumHeight( 400 );
     setMinimumWidth( 600 );
@@ -62,11 +63,9 @@ SettingsDialog::SettingsDialog( SettingsManager::Type type, QWidget *parent ) :
 }
 
 void
-SettingsDialog::addCategory( const QString &name, const char *label,
-                       SettingsManager::Type type,
-                       const QIcon &icon )
+SettingsDialog::addCategory( const QString &name, const char *label, const QIcon &icon )
 {
-    PreferenceWidget    *pWidget = new PreferenceWidget( name, label, type, this );
+    PreferenceWidget    *pWidget = new PreferenceWidget( name, label, m_settings, this );
 
     m_stackedLayout->addWidget( pWidget );
 
@@ -130,8 +129,7 @@ SettingsDialog::buttonClicked( QAbstractButton *button )
                 }
             }
             //If we're handling vlmc preferences, save the value in the QSettings
-            if ( m_type == SettingsManager::Vlmc )
-                Core::getInstance()->settings()->save();
+            m_settings->save();
         }
     case QDialogButtonBox::Cancel:
         {
@@ -178,9 +176,6 @@ SettingsDialog::retranslateUi()
     if ( text.length() >= 1 )
         text[0] = text[0].toUpper();
     m_title->setText( text );
-    if ( m_type == SettingsManager::Project )
-        setWindowTitle( tr( "Project preferences" ) );
-    else
-        setWindowTitle( tr( "VLMC Settings" ) );
+    setWindowTitle( m_windowTitle );
     m_panel->retranslate();
 }

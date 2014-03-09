@@ -27,20 +27,23 @@
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
 #include "Project/Workspace.h"
+#include "Settings/SettingsManager.h"
 
 Project::Project()
 {
     m_library = new Library;
+    m_settings = new Settings( QString() );
+    m_undoStack = new QUndoStack;
     m_workflow = new MainWorkflow;
-    m_undoStack = new QUndoStack();
     m_workspace = new Workspace;
 }
 
 Project::~Project()
 {
     delete m_workspace;
-    delete m_undoStack;
     delete m_workflow;
+    delete m_undoStack;
+    delete m_settings;
     delete m_library;
 }
 
@@ -60,6 +63,12 @@ QUndoStack*
 Project::undoStack()
 {
     return m_undoStack;
+}
+
+Settings*
+Project::settings()
+{
+    return m_settings;
 }
 
 Workspace*

@@ -60,10 +60,9 @@ VlmcLogger::setup()
         m_currentLogLevel = VlmcLogger::Verbose;
     else
         m_currentLogLevel = VlmcLogger::Quiet;
-    SettingsManager* settingsManager = Core::getInstance()->settings();
-    settingsManager->setValue( "private/LogLevel", m_currentLogLevel, SettingsManager::Vlmc );
-    settingsManager->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )),
-                                 SettingsManager::Vlmc, Qt::DirectConnection );
+    Settings* settings = Core::getInstance()->settings();
+    settings->setValue( "private/LogLevel", m_currentLogLevel );
+    settings->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )), Qt::DirectConnection );
 
     int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
     if ( pos > 0 )

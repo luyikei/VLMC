@@ -24,6 +24,7 @@
 #define SETTINGSMANAGER_H
 
 #include "Main/Core.h"
+#include "Main/Project.h"
 #include "SettingValue.h"
 
 #include <QString>
@@ -34,28 +35,30 @@
 #include <QXmlStreamWriter>
 
 class SettingValue;
+
+class QFile;
 class QDomElement;
 
 
 //Var helpers :
-#define VLMC_GET_STRING( key )      Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toString()
-#define VLMC_GET_INT( key )         Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toInt()
-#define VLMC_GET_UINT( key )        Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toUInt()
-#define VLMC_GET_DOUBLE( key )      Core::getInstance()->settings()->value( key, SettingsManager::Vlmc)->get().toDouble()
-#define VLMC_GET_BOOL( key )        Core::getInstance()->settings()->value( key, SettingsManager::Vlmc)->get().toBool()
-#define VLMC_GET_STRINGLIST( key )  Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toStringList()
-#define VLMC_GET_BYTEARRAY( key )   Core::getInstance()->settings()->value( key, SettingsManager::Vlmc )->get().toByteArray()
+#define VLMC_GET_STRING( key )      Core::getInstance()->settings()->value( key )->get().toString()
+#define VLMC_GET_INT( key )         Core::getInstance()->settings()->value( key )->get().toInt()
+#define VLMC_GET_UINT( key )        Core::getInstance()->settings()->value( key )->get().toUInt()
+#define VLMC_GET_DOUBLE( key )      Core::getInstance()->settings()->value( key )->get().toDouble()
+#define VLMC_GET_BOOL( key )        Core::getInstance()->settings()->value( key )->get().toBool()
+#define VLMC_GET_STRINGLIST( key )  Core::getInstance()->settings()->value( key )->get().toStringList()
+#define VLMC_GET_BYTEARRAY( key )   Core::getInstance()->settings()->value( key )->get().toByteArray()
 
-#define VLMC_PROJECT_GET_STRING( key )  Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toString()
-#define VLMC_PROJECT_GET_INT( key )     Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toInt()
-#define VLMC_PROJECT_GET_UINT( key )    Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toUInt()
-#define VLMC_PROJECT_GET_DOUBLE( key )  Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toDouble()
-#define VLMC_PROJECT_GET_BOOL( key )    Core::getInstance()->settings()->value( key, SettingsManager::Project )->get().toBool()
+#define VLMC_PROJECT_GET_STRING( key )  Project::getInstance()->settings()->value( key )->get().toString()
+#define VLMC_PROJECT_GET_INT( key )     Project::getInstance()->settings()->value( key )->get().toInt()
+#define VLMC_PROJECT_GET_UINT( key )    Project::getInstance()->settings()->value( key )->get().toUInt()
+#define VLMC_PROJECT_GET_DOUBLE( key )  Project::getInstance()->settings()->value( key )->get().toDouble()
+#define VLMC_PROJECT_GET_BOOL( key )    Project::getInstance()->settings()->value( key )->get().toBool()
 
 
 #define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc, flags )  \
-Core::getInstance()->settings()->createVar( type, key, defaultValue, name, \
-                                           desc, SettingsManager::Project, flags );
+        Project::getInstance()->settings()->createVar( type, key, defaultValue, name, \
+                                                       desc, flags );
 
 #define VLMC_CREATE_PROJECT_INT( key, defaultValue, name, desc )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::Int, key, defaultValue, name, desc, SettingValue::Nothing )
@@ -70,8 +73,8 @@ Core::getInstance()->settings()->createVar( type, key, defaultValue, name, \
 
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
-Core::getInstance()->settings()->createVar( type, key, defaultValue, name,  \
-                                           desc, SettingsManager::Vlmc, flags );
+        Core::getInstance()->settings()->createVar( type, key, defaultValue, name,  \
+                                                       desc, flags );
 
 /// Vlmc preferences macros
 #define VLMC_CREATE_PREFERENCE_INT( key, defaultValue, name, desc )  \
@@ -105,67 +108,26 @@ Core::getInstance()->settings()->createVar( type, key, defaultValue, name,  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
-class   SettingsManager : public QObject
+class   Settings
 {
-    Q_OBJECT
-    Q_DISABLE_COPY( SettingsManager );
-
     public:
         typedef QList<SettingValue*>                SettingList;
+        typedef QMap<QString, SettingValue*>        SettingMap;
 
-    private:
-        class   SettingsContainer
-        {
-        public:
-            typedef QMap<QString, SettingValue*>        SettingMap;
-
-            bool setValue(const QString &key, const QVariant &value );
-            SettingValue*               value( const QString &key );
-            SettingValue*               createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags );
-            const SettingMap&           settings() const;
-            SettingList                 group( const QString &groupName ) const;
-            void                        lockForRead() const;
-            void                        unlock() const;
-        private:
-            SettingMap                  m_settings;
-            mutable QReadWriteLock      m_rwLock;
-        };
-
-    public:
-        enum Type
-        {
-            Project,
-            Vlmc
-        };
-        SettingsManager(){}
-        ~SettingsManager(){}
-
-        bool setValue( const QString &key,
-                                                const QVariant &value,
-                                                SettingsManager::Type type = Vlmc);
-        SettingValue                *value( const QString &key,
-                                            SettingsManager::Type type = Vlmc );
-        SettingList                 group( const QString &groupName,
-                                            SettingsManager::Type type = Vlmc );
-
-        SettingValue                *createVar( SettingValue::Type type, const QString &key,
-                                               const QVariant &defaultValue,
-                                               const char *name, const char *desc,
-                                               Type varType = Vlmc,
-                                               SettingValue::Flags flags = SettingValue::Nothing );
-        bool                        watchValue( const QString &key,
-                                                QObject* receiver,
-                                                const char *method,
-                                                SettingsManager::Type type,
-                                                Qt::ConnectionType cType = Qt::AutoConnection );
+        Settings( const QString& settingsFile );
+        ~Settings();
+        bool                        setValue(const QString &key, const QVariant &value );
+        SettingValue*               value( const QString &key );
+        SettingValue*               createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags );
+        SettingList                 group( const QString &groupName ) const;
+        bool                        load( const QDomElement &element );
         void                        save() const;
         void                        save( QXmlStreamWriter& project ) const;
-        bool                        load( const QDomElement &element );
-
+        bool                        watchValue( const QString &key, QObject* receiver, const char *method, Qt::ConnectionType cType = Qt::AutoConnection );
     private:
-        SettingsContainer            m_classicSettings;
-        SettingsContainer            m_xmlSettings;
-
+        SettingMap                  m_settings;
+        mutable QReadWriteLock      m_rwLock;
+        QFile*                      m_settingsFile;
 };
 
 #endif

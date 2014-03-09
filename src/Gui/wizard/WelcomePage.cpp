@@ -214,5 +214,5 @@ WelcomePage::setProjectPath( const QString& path )
 void
 WelcomePage::hideWizardAtStartup( bool hidden )
 {
-    Core::getInstance()->settings()->setValue( "private/ShowWizardStartup", !hidden, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/ShowWizardStartup", !hidden );
 }

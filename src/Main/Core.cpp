@@ -22,6 +22,13 @@
 
 #include "Core.h"
 
+#include <QtGlobal>
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+# include <QStandardPaths>
+#else
+# include <QDesktopServices>
+#endif
+
 #include <Backend/IBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
 #include <Settings/SettingsManager.h>
@@ -32,7 +39,11 @@ Core::Core()
     m_backend = Backend::getBackend();
     m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
-    m_settings = new SettingsManager;
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+    m_settings = new Settings( QStandardPaths::writableLocation( QStandardPaths::ConfigLocation ) );
+#else
+    m_settings = new Settings( QDesktopServices::storageLocation( QDesktopServices::ConfigLocation ) ),
+#endif
 }
 
 Core::~Core()
@@ -61,7 +72,7 @@ Core::logger()
     return m_logger;
 }
 
-SettingsManager*
+Settings*
 Core::settings()
 {
     return m_settings;

@@ -54,7 +54,6 @@ GUIProjectManager::GUIProjectManager()
                                              "at a specified interval" ) );
     Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
-                                                SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
     VLMC_CREATE_PREFERENCE_INT( "vlmc/AutomaticBackupInterval", 5,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
@@ -62,13 +61,10 @@ GUIProjectManager::GUIProjectManager()
                                             "between two automatic save" ) );
     Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
-                                                SettingsManager::Vlmc,
                                                 Qt::QueuedConnection );
     automaticSaveEnabledChanged( VLMC_GET_BOOL( "vlmc/AutomaticBackup" ) );
-    Core::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
-                                                SLOT(projectNameChanged(QVariant) ),
-                                                SettingsManager::Project );
-
+    Project::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
+                                                SLOT(projectNameChanged(QVariant) ) );
     connect( Project::getInstance()->undoStack(), SIGNAL( cleanChanged( bool ) ),
              this, SLOT( cleanChanged( bool ) ) );
     connect( this, SIGNAL( projectSaved() ),
@@ -150,8 +146,7 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
             outputFileName += ".vlmc";
         m_projectFile = new QFile( outputFileName );
         QFileInfo       fInfo( outputFileName );
-        Core::getInstance()->settings()->setValue( "vlmc/Workspace",
-                                                  fInfo.absolutePath(), SettingsManager::Project);
+        Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
 
         appendToRecentProject( projectName() );
         if ( relocate == true )

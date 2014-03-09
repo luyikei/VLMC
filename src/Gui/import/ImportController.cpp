@@ -289,8 +289,7 @@ ImportController::collapseAllButCurrentPath()
 void
 ImportController::saveCurrentPath()
 {
-    Core::getInstance()->settings()->setValue( "private/ImportPreviouslySelectPath",
-                                              m_currentlyWatchedDir, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/ImportPreviouslySelectPath", m_currentlyWatchedDir );
 }
 
 void

@@ -88,7 +88,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
 
     //All preferences have been created: restore them:
     loadVlmcPreferences();
-    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
@@ -275,9 +275,7 @@ MainWindow::initVlmcPreferences()
 
     Core::getInstance()->settings()->watchValue( "vlmc/VLMCLang",
                                                 LanguageHelper::getInstance(),
-                                                SLOT( languageChanged( const QVariant& ) ),
-                                                SettingsManager::Vlmc );
-
+                                                SLOT( languageChanged( const QVariant& ) ) );
     //Setup VLMC General Preferences...
     VLMC_CREATE_PREFERENCE_BOOL( "vlmc/ConfirmDeletion", true,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),
@@ -352,7 +350,7 @@ void MainWindow::loadVlmcPreferences()
         QSettings s;
         s.clear();
     }
-    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 }
 
 void
@@ -366,7 +364,7 @@ MainWindow::loadVlmcPreferencesCategory( const QString &subPart )
         QVariant value = s.value( key );
         QString fullKey = subPart + "/" + key;
         vlmcDebug() << "Loading" << fullKey << "=>" << value;
-        Core::getInstance()->settings()->setValue( fullKey, value, SettingsManager::Vlmc );
+        Core::getInstance()->settings()->setValue( fullKey, value );
     }
 }
 
@@ -543,15 +541,11 @@ MainWindow::initToolbar()
 void
 MainWindow::createGlobalPreferences()
 {
-    m_globalPreferences = new SettingsDialog( SettingsManager::Vlmc, this );
-    m_globalPreferences->addCategory( "vlmc", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/vlmc" ) );
-    m_globalPreferences->addCategory( "keyboard", QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/keyboard" ) );
-    m_globalPreferences->addCategory( "youtube", QT_TRANSLATE_NOOP( "Settings", "YouTube" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/youtube" ) );
-    m_globalPreferences->addCategory( "network", QT_TRANSLATE_NOOP( "Settings", "Network" ), SettingsManager::Vlmc,
-                                     QIcon( ":/images/network" ) );
+    m_globalPreferences = new SettingsDialog( Core::getInstance()->settings(), tr( "VLMC Preferences" ), this );
+    m_globalPreferences->addCategory( "vlmc", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
+    m_globalPreferences->addCategory( "keyboard", QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), QIcon( ":/images/keyboard" ) );
+    m_globalPreferences->addCategory( "youtube", QT_TRANSLATE_NOOP( "Settings", "YouTube" ), QIcon( ":/images/youtube" ) );
+    m_globalPreferences->addCategory( "network", QT_TRANSLATE_NOOP( "Settings", "Network" ), QIcon( ":/images/network" ) );
 }
 
 void
@@ -576,13 +570,10 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
-    m_projectPreferences = new SettingsDialog( SettingsManager::Project, this );
-    m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Project,
-                                   QIcon( ":/images/vlmc" ) );
-    m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), SettingsManager::Project,
-                                   QIcon( ":/images/video" ) );
-    m_projectPreferences->addCategory( "audio", QT_TRANSLATE_NOOP( "Settings", "Audio" ), SettingsManager::Project,
-                                   QIcon( ":/images/audio" ) );
+    m_projectPreferences = new SettingsDialog( Project::getInstance()->settings(), tr( "Project preferences" ), this );
+    m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
+    m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
+    m_projectPreferences->addCategory( "audio", QT_TRANSLATE_NOOP( "Settings", "Audio" ), QIcon( ":/images/audio" ) );
 }
 
 void
@@ -795,13 +786,13 @@ MainWindow::saveSettings()
     clearTemporaryFiles();
     if ( pm->askForSaveIfModified() )
     {
-        SettingsManager* sm = Core::getInstance()->settings();
+        Settings* settings = Core::getInstance()->settings();
         // Save the current geometry
-        sm->setValue( "private/MainWindowGeometry", saveGeometry(), SettingsManager::Vlmc );
+        settings->setValue( "private/MainWindowGeometry", saveGeometry() );
         // Save the current layout
-        sm->setValue( "private/MainWindowState", saveState(), SettingsManager::Vlmc );
-        sm->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
-        sm->save();
+        settings->setValue( "private/MainWindowState", saveState() );
+        settings->setValue( "private/CleanQuit", true );
+        settings->save();
         return true;
     }
     return false;
@@ -873,7 +864,7 @@ MainWindow::restoreSession()
                 QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
         }
     }
-    Core::getInstance()->settings()->setValue( "private/CleanQuit", true, SettingsManager::Vlmc );
+    Core::getInstance()->settings()->setValue( "private/CleanQuit", true );
     return ret;
 }
 

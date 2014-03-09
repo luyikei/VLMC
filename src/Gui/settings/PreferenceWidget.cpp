@@ -40,18 +40,17 @@
 #include <QHashIterator>
 #include <QEvent>
 
-PreferenceWidget::PreferenceWidget( const QString &name, const char *label, SettingsManager::Type type,
+PreferenceWidget::PreferenceWidget( const QString &name, const char *label, Settings* settings,
                                     QWidget *parent ) :
     QScrollArea( parent ),
     m_category( label )
 {
     QWidget     *container = new QWidget( this );
-    SettingsManager::SettingList    settings =
-            Core::getInstance()->settings()->group( name, type );
+    Settings::SettingList    settingList = settings->group( name );
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 
-    foreach ( SettingValue* s, settings )
+    foreach ( SettingValue* s, settingList )
     {
         //Do not display private variables
         if ( ( s->flags() & SettingValue::Private ) != 0 )

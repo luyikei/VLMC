@@ -34,8 +34,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* pa
     QString set = VLMC_GET_STRING( name );
     setKey( QKeySequence( set ) );
     Core::getInstance()->settings()->watchValue( name, this,
-                                                SLOT( shortcutUpdated( const QVariant& ) ),
-                                                SettingsManager::Vlmc );
+                                                SLOT( shortcutUpdated( const QVariant& ) ) );
 }
 
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *action,
@@ -47,8 +46,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *ac
     QString set = VLMC_GET_STRING( name );
     action->setShortcut( set );
     Core::getInstance()->settings()->watchValue( name, this,
-                                                SLOT( shortcutUpdated( const QVariant& ) ),
-                                                SettingsManager::Vlmc );
+                                                SLOT( shortcutUpdated( const QVariant& ) ) );
 }
 
 void

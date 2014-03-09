@@ -42,14 +42,13 @@ class   PreferenceWidget;
 class   SettingsDialog : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY( SettingsDialog )
+    Q_DISABLE_COPY( SettingsDialog );
 
     public:
-        SettingsDialog( SettingsManager::Type type, QWidget *parent = 0 );
+        SettingsDialog(Settings *settings, const QString& title, QWidget *parent = 0 );
 
         void                        addCategory( const QString& categorieName,
                                                  const char *label,
-                                                 SettingsManager::Type type,
                                                  const QIcon &icon );
 
     protected:
@@ -63,7 +62,8 @@ class   SettingsDialog : public QDialog
         Panel                       *m_panel;
         QLabel                      *m_title;
         QStackedLayout              *m_stackedLayout;
-        SettingsManager::Type       m_type;
+        Settings*                   m_settings;
+        QString                     m_windowTitle;
 
     public slots:
         void    switchWidget( int index );

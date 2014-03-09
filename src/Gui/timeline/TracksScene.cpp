@@ -101,8 +101,7 @@ TracksScene::askRemoveSelectedItems()
             return ;
         if ( clicked == always )
         {
-            Core::getInstance()->settings()->setValue( "vlmc/ConfirmDeletion",
-                                                       false, SettingsManager::Vlmc );
+            Core::getInstance()->settings()->setValue( "vlmc/ConfirmDeletion", false );
         }
     }
 

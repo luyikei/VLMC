@@ -97,19 +97,19 @@ ProjectWizard::accept()
     //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
     {
-        SettingsManager *sManager = Core::getInstance()->settings();
+        Settings* preferences = Core::getInstance()->settings();
+        Settings* projectPreferences = Project::getInstance()->settings();
         GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
-        //Save the project workspace
-        sManager->setValue( "vlmc/Workspace", field( "projectPath" ), SettingsManager::Project );
-        //And the default vlmc workspace
-        sManager->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ), SettingsManager::Vlmc );
 
-        sManager->setValue( "video/VLMCOutputFPS", field( "fps" ), SettingsManager::Project );
-        sManager->setValue( "video/VideoProjectHeight", field( "height" ), SettingsManager::Project );
-        sManager->setValue( "video/VideoProjectWidth", field( "width" ), SettingsManager::Project );
-        sManager->setValue( "video/AspectRatio", field( "aspectratio" ), SettingsManager::Project );
-        sManager->setValue( "audio/AudioSampleRate", field( "samplerate" ), SettingsManager::Project );
-        sManager->setValue( "audio/NbChannels", field( "samplerate" ), SettingsManager::Project );
+        preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
+
+        projectPreferences->setValue( "vlmc/Workspace", field( "projectPath" ) );
+        projectPreferences->setValue( "video/VLMCOutputFPS", field( "fps" ) );
+        projectPreferences->setValue( "video/VideoProjectHeight", field( "height" ) );
+        projectPreferences->setValue( "video/VideoProjectWidth", field( "width" ) );
+        projectPreferences->setValue( "video/AspectRatio", field( "aspectratio" ) );
+        projectPreferences->setValue( "audio/AudioSampleRate", field( "samplerate" ) );
+        projectPreferences->setValue( "audio/NbChannels", field( "samplerate" ) );
     }
     QDialog::accept();
 }

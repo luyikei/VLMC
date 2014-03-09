@@ -25,7 +25,7 @@
 
 class EffectsEngine;
 class NotificationZone;
-class SettingsManager;
+class Settings;
 class VlmcLogger;
 
 namespace Backend
@@ -40,7 +40,7 @@ class Core : public Singleton<Core>
     public:
         Backend::IBackend*      backend();
         EffectsEngine*          effectsEngine();
-        SettingsManager*        settings();
+        Settings*               settings();
         VlmcLogger*             logger();
 
     private:
@@ -48,8 +48,7 @@ class Core : public Singleton<Core>
         ~Core();
         Backend::IBackend*      m_backend;
         EffectsEngine*          m_effectsEngine;
-        //FIXME: This should only be applications settings.
-        SettingsManager*        m_settings;
+        Settings*               m_settings;
         VlmcLogger*             m_logger;
 
         friend class Singleton<Core>;
