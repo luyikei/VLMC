@@ -112,7 +112,6 @@ ELSE(NOT WITH_GUI)
         Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
         Gui/MainWindow.cpp
-        Gui/UndoStack.cpp
         Gui/WorkflowFileRendererDialog.cpp
         Gui/effectsengine/EffectInstanceWidget.cpp
         Gui/effectsengine/EffectInstanceListModel.cpp

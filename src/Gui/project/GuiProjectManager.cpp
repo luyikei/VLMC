@@ -35,6 +35,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
+#include <QUndoStack>
 
 GUIProjectManager::GUIProjectManager()
 {
@@ -67,6 +68,11 @@ GUIProjectManager::GUIProjectManager()
     Core::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
                                                 SLOT(projectNameChanged(QVariant) ),
                                                 SettingsManager::Project );
+
+    connect( Project::getInstance()->undoStack(), SIGNAL( cleanChanged( bool ) ),
+             this, SLOT( cleanChanged( bool ) ) );
+    connect( this, SIGNAL( projectSaved() ),
+                Project::getInstance()->undoStack(), SLOT( setClean() ) );
 }
 
 bool
@@ -172,6 +178,7 @@ GUIProjectManager::closeProject()
         return false;
     bool ret = ProjectManager::closeProject();
     //This one is for the mainwindow, to update the title bar
+    Project::getInstance()->undoStack()->clear();
     emit projectUpdated( projectName(), true );
     return ret;
 }

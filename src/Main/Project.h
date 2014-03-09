@@ -25,8 +25,9 @@
 
 #include "Tools/Singleton.hpp"
 
+class QUndoStack;
+
 class Library;
-class UndoStack;
 class MainWorkflow;
 class Workspace;
 
@@ -40,13 +41,13 @@ public:
     // Insert settings here
     Library*            library();
     MainWorkflow*       workflow();
-    UndoStack*          undoStack();
+    QUndoStack*         undoStack();
     Workspace*          workspace();
 
 private:
     Library*            m_library;
     MainWorkflow*       m_workflow;
-    UndoStack*          m_undoStack;
+    QUndoStack*         m_undoStack;
     Workspace*          m_workspace;
 
     friend class Singleton<Project>;

@@ -31,21 +31,11 @@
 #include "EffectsEngine/EffectInstance.h"
 #include "Workflow/TrackWorkflow.h"
 
-#ifdef WITH_GUI
-# include "Gui/UndoStack.h"
-
 void
 Commands::trigger( QUndoCommand* command )
 {
     Project::getInstance()->undoStack()->push( command );
 }
-#else
-void
-Commands::trigger( Commands::Generic* command )
-{
-    command->redo();
-}
-#endif
 
 Commands::Generic::Generic() :
         m_valid( true )

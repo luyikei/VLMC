@@ -32,7 +32,6 @@
 #include "Settings/SettingsManager.h"
 #include "Timeline.h"
 #include "Workflow/TrackWorkflow.h"
-#include "UndoStack.h"
 
 #include <QMessageBox>
 #include <QKeyEvent>

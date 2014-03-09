@@ -29,6 +29,8 @@
 #include <QSlider>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QUndoView>
+#include <QUndoStack>
 #include <QUrl>
 #include <QNetworkProxy>
 #include <QSettings>
@@ -51,7 +53,6 @@
 #include "WorkflowFileRendererDialog.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnInternet.h"
-#include "UndoStack.h"
 
 /* Widgets */
 #include "DockWidgetManager.h"
@@ -69,6 +70,7 @@
 #include "settings/Settings.h"
 #include "Settings/SettingsManager.h"
 #include "LanguageHelper.h"
+#include "Commands/KeyboardShortcutHelper.h"
 
 MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
     QMainWindow( parent ), m_backend( backend ), m_fileRenderer( NULL )
@@ -465,8 +467,8 @@ MainWindow::setupUndoRedoWidget()
                                       QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                       Qt::AllDockWidgetAreas,
                                       QDockWidget::AllDockWidgetFeatures );
-    // FIXME: This will break undo stack layout, though we need to split the UI part form the actual stack
-    QWidget         *undoRedoWidget = Project::getInstance()->undoStack();
+    QWidget         *undoRedoWidget = new QUndoView( Project::getInstance()->undoStack(), dockedWidget );
+
     DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::TopDockWidgetArea );
 }
 

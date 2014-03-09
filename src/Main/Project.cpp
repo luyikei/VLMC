@@ -22,16 +22,17 @@
 
 #include "Project.h"
 
+#include <QUndoStack>
+
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
-#include "Gui/UndoStack.h"
 #include "Project/Workspace.h"
 
 Project::Project()
 {
     m_library = new Library;
     m_workflow = new MainWorkflow;
-    m_undoStack = new UndoStack( NULL );
+    m_undoStack = new QUndoStack();
     m_workspace = new Workspace;
 }
 
@@ -55,7 +56,7 @@ Project::workflow()
     return m_workflow;
 }
 
-UndoStack*
+QUndoStack*
 Project::undoStack()
 {
     return m_undoStack;

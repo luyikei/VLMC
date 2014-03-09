@@ -42,7 +42,6 @@
 #include "TracksRuler.h"
 //} this should be fixed, it breaks the design
 #include "Workflow/TrackWorkflow.h"
-#include "Gui/UndoStack.h"
 #include "Tools/VlmcDebug.h"
 #include "Renderer/WorkflowRenderer.h"
 
