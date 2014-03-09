@@ -39,13 +39,13 @@ class QStackedLayout;
 class   Panel;
 class   PreferenceWidget;
 
-class   Settings : public QDialog
+class   SettingsDialog : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY( Settings )
+    Q_DISABLE_COPY( SettingsDialog )
 
     public:
-        Settings( SettingsManager::Type type, QWidget *parent = 0 );
+        SettingsDialog( SettingsManager::Type type, QWidget *parent = 0 );
 
         void                        addCategory( const QString& categorieName,
                                                  const char *label,

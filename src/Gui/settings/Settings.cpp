@@ -37,7 +37,7 @@
 #include <QScrollArea>
 #include <QStackedLayout>
 
-Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
+SettingsDialog::SettingsDialog( SettingsManager::Type type, QWidget *parent ) :
     QDialog( parent ),
     m_type( type )
 {
@@ -62,7 +62,7 @@ Settings::Settings( SettingsManager::Type type, QWidget *parent ) :
 }
 
 void
-Settings::addCategory( const QString &name, const char *label,
+SettingsDialog::addCategory( const QString &name, const char *label,
                        SettingsManager::Type type,
                        const QIcon &icon )
 {
@@ -77,7 +77,7 @@ Settings::addCategory( const QString &name, const char *label,
 }
 
 void
-Settings::buildLayout()
+SettingsDialog::buildLayout()
 {
     // Create the left panel
     m_panel = new Panel( this );
@@ -102,7 +102,7 @@ Settings::buildLayout()
 }
 
 void
-Settings::buttonClicked( QAbstractButton *button )
+SettingsDialog::buttonClicked( QAbstractButton *button )
 {
     switch ( m_buttons->standardButton( button ) )
     {
@@ -144,7 +144,7 @@ Settings::buttonClicked( QAbstractButton *button )
 }
 
 void
-Settings::switchWidget( int index )
+SettingsDialog::switchWidget( int index )
 {
     m_stackedLayout->setCurrentIndex( index );
 
@@ -153,7 +153,7 @@ Settings::switchWidget( int index )
 }
 
 void
-Settings::changeEvent( QEvent *e )
+SettingsDialog::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
@@ -166,7 +166,7 @@ Settings::changeEvent( QEvent *e )
 }
 
 void
-Settings::retranslateUi()
+SettingsDialog::retranslateUi()
 {
     PreferenceWidget *pWidget = qobject_cast<PreferenceWidget*>(
             m_stackedLayout->widget( m_stackedLayout->currentIndex() ) );

@@ -543,7 +543,7 @@ MainWindow::initToolbar()
 void
 MainWindow::createGlobalPreferences()
 {
-    m_globalPreferences = new Settings( SettingsManager::Vlmc, this );
+    m_globalPreferences = new SettingsDialog( SettingsManager::Vlmc, this );
     m_globalPreferences->addCategory( "vlmc", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Vlmc,
                                      QIcon( ":/images/vlmc" ) );
     m_globalPreferences->addCategory( "keyboard", QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), SettingsManager::Vlmc,
@@ -576,7 +576,7 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
-    m_projectPreferences = new Settings( SettingsManager::Project, this );
+    m_projectPreferences = new SettingsDialog( SettingsManager::Project, this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), SettingsManager::Project,
                                    QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), SettingsManager::Project,

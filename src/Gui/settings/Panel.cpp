@@ -85,7 +85,7 @@ Panel::retranslate()
 
     while ( it != ite )
     {
-        it.key()->setText( Settings::tr( it.value() ) );
+        it.key()->setText( SettingsDialog::tr( it.value() ) );
         ++it;
     }
 }
