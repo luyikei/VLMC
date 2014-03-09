@@ -34,6 +34,17 @@ VlmcLogger::VlmcLogger()
     : m_logFile( NULL )
     , m_backendLogLevel( Backend::IBackend::None )
 {
+}
+
+VlmcLogger::~VlmcLogger()
+{
+    if ( m_logFile )
+        fclose( m_logFile );
+}
+
+void
+VlmcLogger::setup()
+{
     //setup log level :
     {
         SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
@@ -94,17 +105,7 @@ VlmcLogger::VlmcLogger()
     }
     Backend::IBackend* backend = Backend::getBackend();
     backend->setLogHandler( this, &VlmcLogger::backendLogHandler );
-}
 
-VlmcLogger::~VlmcLogger()
-{
-    if ( m_logFile )
-        fclose( m_logFile );
-}
-
-void
-VlmcLogger::setup()
-{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     qInstallMessageHandler( VlmcLogger::vlmcMessageHandler );
 #else
