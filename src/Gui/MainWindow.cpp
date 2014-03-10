@@ -727,7 +727,7 @@ MainWindow::on_actionNew_Project_triggered()
 void
 MainWindow::on_actionHelp_triggered()
 {
-    QDesktopServices::openUrl( QUrl( "http://vlmc.org" ) );
+    QDesktopServices::openUrl( QUrl( "http://videolan.org/vlmc" ) );
 }
 
 void
