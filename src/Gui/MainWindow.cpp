@@ -68,7 +68,6 @@
 /* Settings / Preferences */
 #include "project/GuiProjectManager.h"
 #include "wizard/ProjectWizard.h"
-#include "settings/Settings.h"
 #include "Settings/Settings.h"
 #include "LanguageHelper.h"
 #include "Commands/KeyboardShortcutHelper.h"
