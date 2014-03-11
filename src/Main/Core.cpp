@@ -42,7 +42,7 @@ Core::Core()
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
     m_settings = new Settings( QStandardPaths::writableLocation( QStandardPaths::ConfigLocation ) );
 #else
-    m_settings = new Settings( QDesktopServices::storageLocation( QDesktopServices::ConfigLocation ) ),
+    m_settings = new Settings( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) ),
 #endif
 }
 
