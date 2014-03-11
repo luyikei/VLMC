@@ -35,7 +35,7 @@ Project::Project()
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
     m_workflow = new MainWorkflow;
-    m_workspace = new Workspace;
+    m_workspace = new Workspace( m_settings );
 }
 
 Project::~Project()

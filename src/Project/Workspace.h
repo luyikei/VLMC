@@ -23,16 +23,17 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
-#include "Tools/ErrorHandler.h"
-
 #include <QObject>
 #include <QQueue>
 
+#include "Tools/ErrorHandler.h"
+
+class   QMutex;
+class   QFileInfo;
+
 class   Clip;
 class   Media;
-
-class   QFileInfo;
-class   QMutex;
+class   Settings;
 
 class Workspace : public QObject, public ErrorHandler
 {
@@ -41,7 +42,7 @@ class Workspace : public QObject, public ErrorHandler
     public:
         static const QString        workspacePrefix;
 
-        Workspace();
+        Workspace( Settings* settings );
         ~Workspace();
         static bool                 isInProjectDir( const QString &path );
         static bool                 isInProjectDir( const QFileInfo &fInfo );

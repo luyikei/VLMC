@@ -40,7 +40,8 @@
 
 const QString   Workspace::workspacePrefix = "workspace://";
 
-Workspace::Workspace() : m_copyInProgress( false )
+Workspace::Workspace(Settings *settings)
+    : m_copyInProgress( false )
 {
     m_mediasToCopyMutex = new QMutex;
 #ifdef WITH_GUI
