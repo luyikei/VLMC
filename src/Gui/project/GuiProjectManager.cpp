@@ -99,33 +99,10 @@ GUIProjectManager::askForSaveIfModified()
 }
 
 bool
-GUIProjectManager::confirmRelocate() const
-{
-    QMessageBox msgBox;
-    msgBox.setText( tr( "You are about to relocate the project. Every video will be copied to your new workspace." ) );
-    msgBox.setInformativeText( tr( "Do you want to proceed?" ) );
-    msgBox.setStandardButtons( QMessageBox::Ok | QMessageBox::No );
-    msgBox.setDefaultButton( QMessageBox::Ok );
-    int     ret = msgBox.exec();
-
-    switch ( ret )
-    {
-    case QMessageBox::Ok:
-        return true;
-    case QMessageBox::No:
-        return false ;
-    default:
-        return false;
-    }
-}
-
-bool
 GUIProjectManager::createNewProjectFile( bool saveAs )
 {
     if ( m_projectFile == NULL || saveAs == true )
     {
-        bool        relocate = false;
-
         QString defaultPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
         if ( defaultPath.length() == 0 )
             defaultPath = VLMC_GET_STRING( "vlmc/DefaultProjectLocation" );
@@ -134,12 +111,6 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
                                           defaultPath, tr( "VLMC project file(*.vlmc)" ) );
         if ( outputFileName.length() == 0 )
             return false;
-        if ( Workspace::isInProjectDir( outputFileName ) == false )
-        {
-            if ( confirmRelocate() == false )
-                return false;
-            relocate = true;
-        }
         if ( m_projectFile != NULL )
             delete m_projectFile;
         if ( outputFileName.endsWith( ".vlmc" ) == false )
@@ -149,8 +120,6 @@ GUIProjectManager::createNewProjectFile( bool saveAs )
         Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
 
         appendToRecentProject( projectName() );
-        if ( relocate == true )
-            Project::getInstance()->workspace()->copyAllToWorkspace();
         emit projectUpdated( projectName(), true );
     }
     return true;

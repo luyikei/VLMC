@@ -97,8 +97,6 @@ public:
 
     void                        save( QXmlStreamWriter& project );
 
-    bool                        isInWorkspace() const;
-
     void                        onMetaDataComputed();
 
     // This has to be called from the GUI thread.
@@ -111,8 +109,6 @@ protected:
     FileType                    m_fileType;
     QString                     m_fileName;
     Clip*                       m_baseClip;
-    bool                        m_inWorkspace;
-    QString                     m_workspacePath;
 
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
@@ -120,7 +116,6 @@ protected:
 
 signals:
     void                        metaDataComputed();
-    void                        workspaceStateChanged( bool );
     void                        snapshotAvailable();
 };
 

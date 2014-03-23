@@ -31,20 +31,20 @@
 
 Project::Project()
 {
-    m_library = new Library;
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
     m_workflow = new MainWorkflow;
     m_workspace = new Workspace( m_settings );
+    m_library = new Library( m_workspace );
 }
 
 Project::~Project()
 {
+    delete m_library;
     delete m_workspace;
     delete m_workflow;
     delete m_undoStack;
     delete m_settings;
-    delete m_library;
 }
 
 Library*

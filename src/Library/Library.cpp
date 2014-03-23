@@ -39,7 +39,9 @@
 #include <QHash>
 #include <QUuid>
 
-Library::Library() : m_cleanState( true )
+Library::Library( Workspace *workspace )
+    : m_cleanState( true )
+    , m_workspace( workspace )
 {
 }
 
@@ -61,13 +63,7 @@ Library::loadProject( const QDomElement& doc )
         {
             QString mrl = media.attribute( "mrl" );
 
-            //If in workspace: compute the path in workspace
-            if ( mrl.startsWith( Workspace::workspacePrefix ) == true )
-            {
-                //Transforming the workspace://[path] into [project-path]/[path]
-                QString     projectPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-                mrl = projectPath + mrl.mid( Workspace::workspacePrefix.length() );
-            }
+            mrl = m_workspace->toAbsolutePath( mrl );
             Media*  m = addMedia( mrl );
             if ( m == NULL )
                 vlmcWarning() << "Failed to load media" << mrl << "when loading project.";

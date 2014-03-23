@@ -39,6 +39,7 @@ class   QDomElement;
 
 class Clip;
 class Media;
+class Workspace;
 
 /**
  *  \class Library
@@ -50,7 +51,7 @@ class Library : public MediaContainer
     Q_DISABLE_COPY( Library );
 
 public:
-    Library();
+    Library( Workspace* workspace );
     virtual ~Library(){}
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );
@@ -63,6 +64,7 @@ private:
 private:
     QAtomicInt  m_nbMediaToLoad;
     bool        m_cleanState;
+    Workspace*  m_workspace;
 
 public slots:
     /**
@@ -83,8 +85,6 @@ signals:
      */
     void    projectLoaded();
     void    cleanStateChanged( bool newState );
-
-    friend class    Workspace;
 };
 
 #endif // LIBRARY_H

@@ -44,24 +44,26 @@ class Workspace : public QObject, public ErrorHandler
 
         Workspace( Settings* settings );
         ~Workspace();
-        static bool                 isInProjectDir( const QString &path );
-        static bool                 isInProjectDir( const QFileInfo &fInfo );
-        static bool                 isInProjectDir( const Media *media );
-        static QString              pathInProjectDir( const Media* media );
+        bool                        isInWorkspace( const QString &path );
+        bool                        isInWorkspace( const Media *media );
+        QString                     toAbsolutePath( const QString &path );
+        QString                     toWorkspacePath( const Media* media );
 
         bool                        copyToWorkspace( Media* media );
-        void                        copyAllToWorkspace();
     private:
         void                        startCopyWorker( Media *media );
+        bool                        isInWorkspace( const QFileInfo &fInfo );
     private:
         QQueue<Media*>              m_mediasToCopy;
         QMutex                      *m_mediasToCopyMutex;
         bool                        m_copyInProgress;
+        QString                     m_workspaceDir;
 
     public slots:
         void                        clipLoaded( Clip* clip );
     private slots:
         void                        copyTerminated( Media* media, QString dest );
+        void                        workspaceChanged( const QVariant& newWorkspace );
 
     signals:
         void                        notify( QString );

@@ -43,6 +43,10 @@ const QString   Workspace::workspacePrefix = "workspace://";
 Workspace::Workspace(Settings *settings)
     : m_copyInProgress( false )
 {
+    SettingValue* workspaceDir = settings->value( "vlmc/Workspace" );
+    connect(workspaceDir, SIGNAL( changed( QVariant ) ),
+            this, SLOT( workspaceChanged( QVariant ) ) );
+    m_workspaceDir = workspaceDir->get().toString();
     m_mediasToCopyMutex = new QMutex;
 #ifdef WITH_GUI
     connect( this, SIGNAL( notify( QString ) ),
@@ -58,7 +62,7 @@ Workspace::~Workspace()
 bool
 Workspace::copyToWorkspace( Media *media )
 {
-    if ( VLMC_PROJECT_GET_STRING("vlmc/Workspace").length() == 0 )
+    if ( m_workspaceDir.isEmpty() )
     {
         setError( "There is no current workspace. Please create a project first.");
         return false;
@@ -73,10 +77,8 @@ Workspace::copyToWorkspace( Media *media )
     {
         vlmcDebug() << "Copying media:" << media->fileInfo()->absoluteFilePath() << "to workspace.";
         m_copyInProgress = true;
-        if ( media->isInWorkspace() == false )
-        {
-            startCopyWorker( media );
-        }
+        Q_ASSERT( this->isInWorkspace( media ) == false );
+        startCopyWorker( media );
     }
     return true;
 }
@@ -84,8 +86,7 @@ Workspace::copyToWorkspace( Media *media )
 void
 Workspace::startCopyWorker( Media *media )
 {
-    const QString   &projectPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-    const QString   dest = projectPath + '/' + media->fileInfo()->fileName();
+    const QString   dest = m_workspaceDir + '/' + media->fileInfo()->fileName();
 
     if ( QFile::exists( dest ) == true )
     {
@@ -116,7 +117,7 @@ Workspace::clipLoaded( Clip *clip )
     if ( clip->isRootClip() == false )
         return ;
     //If already in workspace : well...
-    if ( clip->getMedia()->isInWorkspace() == true )
+    if ( isInWorkspace( clip->getMedia() ) == true )
         return ;
     copyToWorkspace( clip->getMedia() );
 }
@@ -135,7 +136,7 @@ Workspace::copyTerminated( Media *media, QString dest )
         while ( m_mediasToCopy.size() > 0 )
         {
             Media   *toCopy = m_mediasToCopy.dequeue();
-            if ( toCopy->isInWorkspace() == false )
+            if ( isInWorkspace( media ) == true )
             {
                 startCopyWorker( toCopy );
                 break ;
@@ -146,51 +147,41 @@ Workspace::copyTerminated( Media *media, QString dest )
         m_copyInProgress = false;
 }
 
-bool
-Workspace::isInProjectDir( const QFileInfo &fInfo )
+void
+Workspace::workspaceChanged(const QVariant &newWorkspace)
 {
-    const QString       projectDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-
-    return ( projectDir.length() > 0 && fInfo.absolutePath().startsWith( projectDir ) );
+    m_workspaceDir = newWorkspace.toString();
 }
 
 bool
-Workspace::isInProjectDir( const QString &path )
+Workspace::isInWorkspace( const QFileInfo &fInfo )
+{
+    return ( m_workspaceDir.length() > 0 && fInfo.absolutePath().startsWith( m_workspaceDir ) );
+}
+
+bool
+Workspace::isInWorkspace( const QString &path )
 {
     QFileInfo           fInfo( path );
 
-    return isInProjectDir( fInfo );
+    return isInWorkspace( fInfo );
 }
 
 bool
-Workspace::isInProjectDir(const Media *media)
+Workspace::isInWorkspace(const Media *media)
 {
-    return isInProjectDir( *(media->fileInfo() ) );
+    return isInWorkspace( *(media->fileInfo() ) );
 }
 
 QString
-Workspace::pathInProjectDir( const Media *media )
+Workspace::toAbsolutePath( const QString& path )
 {
-    const QString      projectDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-
-    return ( media->fileInfo()->absoluteFilePath().mid( projectDir.length() ) );
+    QString res = path;
+    return res.replace( Workspace::workspacePrefix, m_workspaceDir );
 }
 
-void
-Workspace::copyAllToWorkspace()
+QString
+Workspace::toWorkspacePath(const Media *media)
 {
-    if ( Project::getInstance()->library()->m_clips.size() == 0 )
-        return ;
-    QHash<QUuid, Clip*>::iterator    it = Project::getInstance()->library()->m_clips.begin();
-    QHash<QUuid, Clip*>::iterator    ite = Project::getInstance()->library()->m_clips.end();
-
-    {
-        QMutexLocker    lock( m_mediasToCopyMutex );
-        while ( it != ite )
-        {
-            m_mediasToCopy.enqueue( it.value()->getMedia() );
-            ++it;
-        }
-    }
-    copyToWorkspace( m_mediasToCopy.dequeue() );
+    return media->fileInfo()->absoluteFilePath().replace( m_workspaceDir, Workspace::workspacePrefix );
 }

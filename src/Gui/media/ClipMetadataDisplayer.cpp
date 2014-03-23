@@ -58,8 +58,6 @@ ClipMetadataDisplayer::metadataUpdated()
     m_ui->nbAudioTracksValueLabel->setText( QString::number( source->nbAudioTracks() ) );
     //Path:
     m_ui->pathValueLabel->setText( m_watchedMedia->fileInfo()->absoluteFilePath() );
-    //Workspace:
-    workspaceStateChanged( m_watchedMedia->isInWorkspace() );
 }
 
 void
@@ -104,17 +102,6 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
         connect( m_watchedMedia, SIGNAL( metaDataComputed() ),
                  this, SLOT( metadataUpdated() ) );
     }
-    connect( m_watchedMedia, SIGNAL( workspaceStateChanged( bool ) ),
-             this, SLOT( workspaceStateChanged( bool ) ) );
-}
-
-void
-ClipMetadataDisplayer::workspaceStateChanged( bool state )
-{
-    if ( state == true )
-        m_ui->inProjectWorkspaceValueLabel->setPixmap( QPixmap( ":/images/ok" ).scaled( 16, 16 ) );
-    else
-        m_ui->inProjectWorkspaceValueLabel->setPixmap( QPixmap( ":/images/ko" ).scaled( 16, 16 ) );
 }
 
 void

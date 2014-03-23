@@ -59,7 +59,6 @@ Media::Media(const QString &path )
     : m_source( NULL )
     , m_fileInfo( NULL )
     , m_baseClip( NULL )
-    , m_inWorkspace( false )
     , m_snapshotImage( NULL )
 {
     setFilePath( path );
@@ -116,10 +115,7 @@ void
 Media::save( QXmlStreamWriter& project )
 {
     project.writeStartElement( "media" );
-    if ( m_inWorkspace == true )
-        project.writeAttribute( "mrl", Workspace::workspacePrefix + m_workspacePath );
-    else
-        project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
+    project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
     project.writeEndElement();
 }
 
@@ -128,12 +124,6 @@ Media::setBaseClip( Clip *clip )
 {
     Q_ASSERT( m_baseClip == NULL );
     m_baseClip = clip;
-}
-
-bool
-Media::isInWorkspace() const
-{
-    return m_inWorkspace;
 }
 
 void
@@ -177,19 +167,6 @@ Media::setFilePath( const QString &filePath )
     delete m_source;
     m_source = backend->createSource( qPrintable( filePath ) );
     MetaDataManager::getInstance()->computeMediaMetadata( this );
-
-    //Don't call this before setting all the internals, as it relies on Media::fileInfo.
-    if ( Workspace::isInProjectDir( this ) == true )
-    {
-        m_inWorkspace = true;
-        m_workspacePath = Workspace::pathInProjectDir( this );
-    }
-    else
-    {
-        m_inWorkspace = false;
-        m_workspacePath = "";
-    }
-    emit workspaceStateChanged( m_inWorkspace );
 }
 
 QPixmap&
