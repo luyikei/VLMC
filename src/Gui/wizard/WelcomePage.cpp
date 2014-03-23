@@ -50,8 +50,6 @@ WelcomePage::WelcomePage( QWidget* parent )
              this, SLOT( selectOpenRadio() ) );
     connect( m_ui.projectsListWidget, SIGNAL( itemDoubleClicked(QListWidgetItem*) ),
              this, SLOT( projectDoubleClicked(QListWidgetItem*) ) );
-    connect( m_ui.hideStartupCheckBox, SIGNAL( clicked(bool) ),
-             this, SLOT( hideWizardAtStartup(bool) ) );
 
     registerField( "loadProject", m_ui.projectsListWidget );
     m_projectPath = new QString();
@@ -87,7 +85,6 @@ WelcomePage::nextId() const
 void
 WelcomePage::initializePage()
 {
-    m_ui.hideStartupCheckBox->setChecked( !VLMC_GET_BOOL( "private/ShowWizardStartup" ) );
     m_ui.createRadioButton->setChecked( true );
     loadRecentsProjects();
 }
@@ -209,10 +206,4 @@ WelcomePage::setProjectPath( const QString& path )
 {
     m_projectPath->clear();
     m_projectPath->append( path );
-}
-
-void
-WelcomePage::hideWizardAtStartup( bool hidden )
-{
-    Core::getInstance()->settings()->setValue( "private/ShowWizardStartup", !hidden );
 }

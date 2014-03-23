@@ -54,7 +54,6 @@ class WelcomePage : public QWizardPage
         void loadRecentsProjects();
         void projectDoubleClicked( QListWidgetItem* item );
         void selectOpenRadio();
-        void hideWizardAtStartup( bool hidden );
 
     private:
         Ui::WelcomePage m_ui;

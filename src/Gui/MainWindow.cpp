@@ -161,8 +161,7 @@ MainWindow::~MainWindow()
 void
 MainWindow::showWizard()
 {
-    if ( VLMC_GET_BOOL( "private/ShowWizardStartup" ) )
-        m_pWizard->show();
+    m_pWizard->show();
 }
 
 void
@@ -330,7 +329,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/RecentsProjects", "" );
-    VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/ShowWizardStartup", true );
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 }
 
