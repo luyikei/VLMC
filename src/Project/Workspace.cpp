@@ -46,7 +46,7 @@ Workspace::Workspace(Settings *settings)
     SettingValue* workspaceDir = settings->value( "vlmc/Workspace" );
     connect(workspaceDir, SIGNAL( changed( QVariant ) ),
             this, SLOT( workspaceChanged( QVariant ) ) );
-    m_workspaceDir = workspaceDir->get().toString();
+    // Wait for the SettingValue to be loaded.
     m_mediasToCopyMutex = new QMutex;
 #ifdef WITH_GUI
     connect( this, SIGNAL( notify( QString ) ),
