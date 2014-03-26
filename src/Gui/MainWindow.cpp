@@ -72,8 +72,11 @@
 #include "LanguageHelper.h"
 #include "Commands/KeyboardShortcutHelper.h"
 
-MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
-    QMainWindow( parent ), m_backend( backend ), m_fileRenderer( NULL )
+MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
+    : QMainWindow( parent )
+    , m_backend( backend )
+    , m_fileRenderer( NULL )
+    , m_wizard( NULL )
 {
     m_ui.setupUi( this );
 
@@ -134,12 +137,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent ) :
     connect( Project::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
              clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
-    //FIXME: Lazy init this
-    // Wizard
-    m_pWizard = new ProjectWizard( this );
-    m_pWizard->setModal( true );
-
-
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
         return ;
@@ -161,7 +158,12 @@ MainWindow::~MainWindow()
 void
 MainWindow::showWizard()
 {
-    m_pWizard->show();
+    if ( m_wizard == NULL )
+    {
+        m_wizard = new ProjectWizard( GUIProjectManager::getInstance(), this );
+        m_wizard->setModal( true );
+    }
+    m_wizard->show();
 }
 
 void
@@ -717,8 +719,8 @@ MainWindow::on_actionShare_On_Internet_triggered()
 void
 MainWindow::on_actionNew_Project_triggered()
 {
-    m_pWizard->restart();
-    m_pWizard->show();
+    m_wizard->restart();
+    m_wizard->show();
 }
 
 void

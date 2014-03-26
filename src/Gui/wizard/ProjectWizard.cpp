@@ -24,16 +24,19 @@
 #include <QString>
 #include <QMessageBox>
 #include <QWizardPage>
-#include "project/GuiProjectManager.h"
+
+#include "Project/ProjectManager.h"
 #include "ProjectWizard.h"
 #include "Settings/Settings.h"
 #include "WelcomePage.h"
 #include "OpenPage.h"
 #include "GeneralPage.h"
 #include "VideoPage.h"
+#include "Tools/VlmcDebug.h"
 
-ProjectWizard::ProjectWizard( QWidget* parent )
+ProjectWizard::ProjectWizard( ProjectManager* projectManager, QWidget* parent /*= NULL*/ )
     : QWizard( parent )
+    , m_projectManager( projectManager )
 {
     // Create Wizard
 
@@ -99,7 +102,11 @@ ProjectWizard::accept()
     {
         Settings* preferences = Core::getInstance()->settings();
         Settings* projectPreferences = Project::getInstance()->settings();
-        GUIProjectManager::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
+//        m_projectManager->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
+        //FIXME: This doesn't ask the user if she wants to save the current project
+        vlmcCritical() << "This is broken";
+        m_projectManager->closeProject();
+        m_projectManager->saveAs( field( "projectPath" ).toString() );
 
         preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
 
@@ -117,5 +124,7 @@ ProjectWizard::accept()
 void
 ProjectWizard::reject()
 {
-    QDialog::reject();
+    if ( m_projectManager->hasProjectLoaded() )
+        return QWizard::reject();
+    qApp->quit();
 }

@@ -213,6 +213,12 @@ ProjectManager::emergencyBackup()
 }
 
 bool
+ProjectManager::hasProjectLoaded() const
+{
+    return m_projectFile != NULL;
+}
+
+bool
 ProjectManager::isBackupFile( const QString& projectFile )
 {
     return projectFile.endsWith( ProjectManager::backupSuffix );

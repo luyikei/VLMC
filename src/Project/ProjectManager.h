@@ -51,6 +51,7 @@ public:
     virtual void    saveAs( const QString &outputFileName );
     bool            loadEmergencyBackup();
     void            emergencyBackup();
+    bool            hasProjectLoaded() const;
 
 protected:
     /**
