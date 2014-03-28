@@ -38,6 +38,9 @@ Project::Project()
     m_workflow = new MainWorkflow( m_projectManager );
     m_workspace = new Workspace( m_settings );
     m_library = new Library( m_workspace, m_projectManager );
+
+    QObject::connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_projectManager, SLOT( cleanChanged( bool ) ) );
+    QObject::connect( m_projectManager, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
 }
 
 Project::~Project()

@@ -103,7 +103,7 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
     vlmcSettings->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 Qt::QueuedConnection );
-    projectSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
+    vlmcSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
                                             "between two automatic save" ), SettingValue::Nothing );
@@ -111,12 +111,7 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 Qt::QueuedConnection );
 
-    Project::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
-                                                SLOT(projectNameChanged(QVariant) ) );
-    connect( Project::getInstance()->undoStack(), SIGNAL( cleanChanged( bool ) ),
-             this, SLOT( cleanChanged( bool ) ) );
-    connect( this, SIGNAL( projectSaved() ),
-                Project::getInstance()->undoStack(), SLOT( setClean() ) );
+    projectSettings->watchValue( "vlmc/ProjectName", this, SLOT(projectNameChanged(QVariant) ) );
 
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
