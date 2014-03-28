@@ -23,67 +23,15 @@
 #ifndef GUIPROJECTMANAGER_H
 #define GUIPROJECTMANAGER_H
 
-#include <QXmlStreamWriter>
 #include "Project/ProjectManager.h"
 
-class   QTimer;
-
-class GUIProjectManager : public ProjectManager, public Singleton<GUIProjectManager>
+class GUIProjectManager : public IProjectManagerUiCb
 {
-    Q_OBJECT
-
 public:
-    GUIProjectManager();
-
-    bool            askForSaveIfModified();
-    void            newProject( const QString& projectName, const QString &workspacePath );
-    /**
-     *  \brief      Save the project using the current project file.
-     */
-    void            saveProject( bool saveAs = false );
-    /**
-     *  \brief      Ask the project manager to close current project.
-     *
-     *  This can fail, as the user will be asked if he wants to save the current project.
-     *  If she selects discard, the project closing procedure is aborted.
-     *  \return     true if the project has been closed. false otherwise.
-     */
-    bool            closeProject();
-    bool            needSave() const;
-    /**
-     *  \brief      Display the open file name dialog, and call the actual project loading
-     *              method.
-     */
-    void            loadProject();
-    /**
-     *  \brief      Check for a project backup file, and load the appropriate file,
-     *              according to the user input.
-     *
-     *  if an outdated project backup is found, the used is asked if she wants to delete
-     *  it.
-     *  This is handled here as there's no use for this in non-GUI mode.
-     */
-    void            loadProject( const QString& fileName );
-
-protected:
-    virtual void    failedToLoad( const QString &reason ) const;
-    virtual void    saveTimeline( QXmlStreamWriter &project );
-    virtual void    loadTimeline( const QDomElement& root );
-
-private:
-    bool            createNewProjectFile( bool saveAs );
-
-private:
-    QTimer*         m_timer;
-
-private slots:
-    void            projectNameChanged( const QVariant& projectName );
-    void            autoSaveRequired();
-    void            cleanChanged( bool val );
-    void            automaticSaveEnabledChanged( const QVariant& enabled );
-    void            automaticSaveIntervalChanged( const QVariant& interval );
-
-    friend class    Singleton<GUIProjectManager>;
+    virtual bool        shouldLoadBackupFile();
+    virtual bool        shouldDeleteOutdatedBackupFile();
+    virtual QString     getProjectFile( const QString &defaultPath, bool isOpen );
+    virtual SaveMode    shouldSaveBeforeClose();
 };
 
 #endif // GUIPROJECTMANAGER_H

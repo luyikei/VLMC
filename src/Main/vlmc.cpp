@@ -24,6 +24,7 @@
 
 #include "Workflow/Types.h"
 #include "Tools/VlmcDebug.h"
+#include "Main/Project.h"
 
 #include <QMetaType>
 #include <QTextStream>
@@ -51,11 +52,7 @@ signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
-    #ifdef WITH_GUI
-        GUIProjectManager::getInstance()->emergencyBackup();
-    #else
-        ProjectManager::getInstance()->emergencyBackup();
-    #endif
+    Project::getInstance()->projectManager()->emergencyBackup();
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );

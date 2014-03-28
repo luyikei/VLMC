@@ -118,7 +118,7 @@ void
 WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
-    ProjectManager* pm = GUIProjectManager::getInstance();
+    ProjectManager* pm = Project::getInstance()->projectManager();
     QStringList recents = pm->recentsProjects();
 
     for ( int i = 0; i < recents.count(); ++i )
@@ -176,7 +176,7 @@ WelcomePage::removeProject()
     if ( project.isEmpty() )
         return;
 
-    GUIProjectManager::getInstance()->removeProject( project );
+    Project::getInstance()->projectManager()->removeProject( project );
     loadRecentsProjects(); // Reload recent projects
 }
 

@@ -20,265 +20,62 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "GuiProjectManager.h"
-
-#include "Main/Core.h"
-#include "Main/Project.h"
-#include "Library/Library.h"
-#include "Workflow/MainWorkflow.h"
-#include "Settings/Settings.h"
-#include "Project/Workspace.h"
-
-#include "timeline/Timeline.h"
-
-#include <QDateTime>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QTimer>
-#include <QUndoStack>
+#include <QObject>
 
-GUIProjectManager::GUIProjectManager()
+#include "GuiProjectManager.h"
+
+bool
+GUIProjectManager::shouldLoadBackupFile()
 {
-    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->library(), SLOT( clear() ) );
-    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->workflow(), SLOT( clear() ) );
-    connect( Project::getInstance()->library(), SIGNAL( cleanStateChanged( bool ) ),
-             this, SLOT( cleanChanged( bool ) ) );
-
-    //Automatic save part :
-    m_timer = new QTimer( this );
-    connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-    VLMC_CREATE_PREFERENCE_BOOL( "vlmc/AutomaticBackup", false,
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
-                                             "VLMC will automatically save your project "
-                                             "at a specified interval" ) );
-    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackup", this,
-                                                SLOT( automaticSaveEnabledChanged(QVariant) ),
-                                                Qt::QueuedConnection );
-    VLMC_CREATE_PREFERENCE_INT( "vlmc/AutomaticBackupInterval", 5,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                            "between two automatic save" ) );
-    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackupInterval", this,
-                                                SLOT( automaticSaveIntervalChanged(QVariant) ),
-                                                Qt::QueuedConnection );
-    automaticSaveEnabledChanged( VLMC_GET_BOOL( "vlmc/AutomaticBackup" ) );
-    Project::getInstance()->settings()->watchValue( "vlmc/ProjectName", this,
-                                                SLOT(projectNameChanged(QVariant) ) );
-    connect( Project::getInstance()->undoStack(), SIGNAL( cleanChanged( bool ) ),
-             this, SLOT( cleanChanged( bool ) ) );
-    connect( this, SIGNAL( projectSaved() ),
-                Project::getInstance()->undoStack(), SLOT( setClean() ) );
+    return QMessageBox::question( NULL, QObject::tr( "Backup file" ),
+                                            QObject::tr( "A backup file exists for this project. "
+                                            "Do you want to load it?" ),
+                                            QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok;
 }
 
 bool
-GUIProjectManager::askForSaveIfModified()
+GUIProjectManager::shouldDeleteOutdatedBackupFile()
 {
-    if ( m_needSave == true )
+    return QMessageBox::question( NULL, QObject::tr( "Backup file" ),
+                                    QObject::tr( "An outdated backup file was found. "
+                                   "Do you want to erase it?" ),
+                                  QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok;
+}
+
+QString
+GUIProjectManager::getProjectFile(const QString &defaultPath, bool isOpen)
+{
+    if ( isOpen )
     {
-        QMessageBox msgBox;
-        msgBox.setText( tr( "The project has been modified." ) );
-        msgBox.setInformativeText( tr( "Do you want to save it?" ) );
-        msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
-        msgBox.setDefaultButton( QMessageBox::Save );
-        int     ret = msgBox.exec();
-
-        switch ( ret )
-        {
-            case QMessageBox::Save:
-                saveProject();
-                break ;
-            case QMessageBox::Discard:
-                break ;
-            case QMessageBox::Cancel:
-            default:
-                return false ;
-        }
+        return QFileDialog::getOpenFileName( NULL, QObject::tr( "Please choose a project file" ),
+                                        defaultPath, QObject::tr( "VLMC project file(*.vlmc)" ) );
     }
-    return true;
+    return QFileDialog::getSaveFileName( NULL, QObject::tr( "Enter the output file name" ),
+                                  defaultPath, QObject::tr( "VLMC project file(*.vlmc)" ) );
 }
 
-bool
-GUIProjectManager::createNewProjectFile( bool saveAs )
+
+
+IProjectManagerUiCb::SaveMode
+GUIProjectManager::shouldSaveBeforeClose()
 {
-    if ( m_projectFile == NULL || saveAs == true )
+    QMessageBox msgBox;
+    msgBox.setText( QObject::tr( "The project has been modified." ) );
+    msgBox.setInformativeText( QObject::tr( "Do you want to save it?" ) );
+    msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
+    msgBox.setDefaultButton( QMessageBox::Save );
+    int     ret = msgBox.exec();
+    switch ( ret )
     {
-        QString defaultPath = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
-        if ( defaultPath.length() == 0 )
-            defaultPath = VLMC_GET_STRING( "vlmc/DefaultProjectLocation" );
-        QString outputFileName =
-            QFileDialog::getSaveFileName( NULL, tr( "Enter the output file name" ),
-                                          defaultPath, tr( "VLMC project file(*.vlmc)" ) );
-        if ( outputFileName.length() == 0 )
-            return false;
-        if ( m_projectFile != NULL )
-            delete m_projectFile;
-        if ( outputFileName.endsWith( ".vlmc" ) == false )
-            outputFileName += ".vlmc";
-        m_projectFile = new QFile( outputFileName );
-        QFileInfo       fInfo( outputFileName );
-        Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
-
-        appendToRecentProject( projectName() );
-        emit projectUpdated( projectName(), true );
+        case QMessageBox::Save:
+            return Save;
+        case QMessageBox::Discard:
+            return Discard;
+        case QMessageBox::Cancel:
+        default:
+            return Cancel;
     }
-    return true;
 }
 
-void
-GUIProjectManager::saveProject( bool saveAs /* = false */ )
-{
-    //If the project is still unsaved, or if we want to
-    //save the project with a new name
-    if ( createNewProjectFile( saveAs ) == false )
-        return ;
-    ProjectManager::saveAs( outputFileName() );
-}
-
-bool
-GUIProjectManager::closeProject()
-{
-    if ( askForSaveIfModified() == false )
-        return false;
-    bool ret = ProjectManager::closeProject();
-    //This one is for the mainwindow, to update the title bar
-    Project::getInstance()->undoStack()->clear();
-    emit projectUpdated( projectName(), true );
-    return ret;
-}
-
-void
-GUIProjectManager::newProject( const QString &projectName, const QString &workspacePath )
-{
-    if ( closeProject() == false )
-        return ;
-    m_projectName = projectName;
-    //Current project file has already been delete/nulled by ProjectManager::closeProject()
-    m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
-    saveProject( false );
-    appendToRecentProject( projectName );
-}
-
-
-void
-GUIProjectManager::autoSaveRequired()
-{
-    if ( m_projectFile == NULL )
-        return ;
-    ProjectManager::__saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
-}
-
-void
-GUIProjectManager::automaticSaveEnabledChanged( const QVariant& val )
-{
-    bool    enabled = val.toBool();
-
-    if ( enabled == true )
-    {
-        int interval = VLMC_GET_INT( "vlmc/AutomaticBackupInterval" );
-        m_timer->start( interval * 1000 * 60 );
-    }
-    else
-        m_timer->stop();
-}
-
-void
-GUIProjectManager::automaticSaveIntervalChanged( const QVariant& val )
-{
-    bool enabled = VLMC_GET_BOOL( "vlmc/AutomaticBackup" );
-
-    if ( enabled == false )
-        return ;
-    m_timer->start( val.toInt() * 1000 * 60 );
-}
-
-bool
-GUIProjectManager::needSave() const
-{
-    return m_needSave;
-}
-
-void
-GUIProjectManager::cleanChanged( bool val )
-{
-    m_needSave = !val;
-    emit projectUpdated( projectName(), val );
-}
-
-
-void
-GUIProjectManager::projectNameChanged( const QVariant& name )
-{
-    m_projectName = name.toString();
-    emit projectUpdated( m_projectName, !m_needSave );
-}
-
-void
-GUIProjectManager::failedToLoad( const QString &reason ) const
-{
-    QMessageBox::warning( NULL, tr( "Failed to load project file" ), reason );
-}
-
-void
-GUIProjectManager::saveTimeline( QXmlStreamWriter &project )
-{
-    Timeline::getInstance()->save( project );
-}
-
-void
-GUIProjectManager::loadTimeline( const QDomElement &root )
-{
-    Timeline::getInstance()->load( root );
-}
-
-void
-GUIProjectManager::loadProject( const QString &fileName )
-{
-    QFile   projectFile( fileName );
-    //If for some reason this happens... better safe than sorry
-    if ( projectFile.exists() == false )
-        return ;
-
-    QString fileToLoad = fileName;
-    QString backupFilename = createAutoSaveOutputFileName( fileName );
-    QFile   autoBackup( backupFilename );
-    if ( autoBackup.exists() == true )
-    {
-        QFileInfo       projectFileInfo( projectFile );
-        QFileInfo       autobackupFileInfo( autoBackup );
-
-        if ( autobackupFileInfo.lastModified() > projectFileInfo.lastModified() )
-        {
-            if ( QMessageBox::question( NULL, tr( "Backup file" ),
-                                        tr( "A backup file exists for this project. "
-                                        "Do you want to load it?" ),
-                                        QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
-            {
-                fileToLoad = backupFilename;
-            }
-        }
-        else
-        {
-            if ( QMessageBox::question( NULL, tr( "Backup file" ),
-                                        tr( "An outdated backup file was found. "
-                                       "Do you want to erase it?" ),
-                                        QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
-            {
-                autoBackup.remove();
-            }
-        }
-    }
-    ProjectManager::loadProject( fileToLoad );
-}
-
-void
-GUIProjectManager::loadProject()
-{
-    QString fileName =
-            QFileDialog::getOpenFileName( NULL, tr( "Please choose a project file" ),
-                                            VLMC_GET_STRING( "vlmc/DefaultProjectLocation" ),
-                                            tr( "VLMC project file(*.vlmc)" ) );
-    if ( fileName.length() <= 0 ) //If the user canceled.
-        return ;
-    loadProject( fileName );
-}

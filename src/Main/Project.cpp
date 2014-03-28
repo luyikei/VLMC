@@ -26,6 +26,7 @@
 
 #include "Library/Library.h"
 #include "Workflow/MainWorkflow.h"
+#include "Project/ProjectManager.h"
 #include "Project/Workspace.h"
 #include "Settings/Settings.h"
 
@@ -36,10 +37,12 @@ Project::Project()
     m_workflow = new MainWorkflow;
     m_workspace = new Workspace( m_settings );
     m_library = new Library( m_workspace );
+    m_projectManager = new ProjectManager;
 }
 
 Project::~Project()
 {
+    delete m_projectManager;
     delete m_library;
     delete m_workspace;
     delete m_workflow;
@@ -75,4 +78,10 @@ Workspace*
 Project::workspace()
 {
     return m_workspace;
+}
+
+ProjectManager*
+Project::projectManager()
+{
+    return m_projectManager;
 }

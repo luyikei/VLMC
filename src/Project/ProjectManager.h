@@ -25,6 +25,8 @@
 
 #include "config.h"
 
+class   QTimer;
+
 #include <QObject>
 #include <QStringList>
 #include <QDomElement>
@@ -37,6 +39,14 @@ class   QXmlStreamWriter;
 
 class   IProjectManagerUiCb
 {
+public:
+    enum SaveMode
+    {
+        Save,       // Save the project
+        Discard,    // Discard it
+        Cancel      // Don't do anything
+    };
+
     virtual ~IProjectManagerUiCb() {}
 
     /**
@@ -44,7 +54,7 @@ class   IProjectManagerUiCb
      *                              it's about to be closed
      * @return True if the project should be saved. False if changes are to be discarded.
      */
-    virtual bool    shouldSaveBeforeClose() = 0;
+    virtual SaveMode    shouldSaveBeforeClose() = 0;
 
     /**
      * @brief getProjectFile    Ask the user where to save a new project
@@ -53,7 +63,7 @@ class   IProjectManagerUiCb
      *                          be saved.
      * @return The selected project file
      */
-    virtual QString    getProjectFile( const QString& defaultPath, bool isOpen );
+    virtual QString    getProjectFile( const QString& defaultPath, bool isOpen ) = 0;
 
     /**
      * @brief shouldLoadBackupFile
@@ -72,32 +82,43 @@ class   ProjectManager : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY( ProjectManager )
+
 public:
     static const QString    unNamedProject;
     static const QString    unSavedProject;
     static const QString    backupSuffix;
 
-    void            loadProject( const QString& fileName );
+    ProjectManager();
+    ~ProjectManager();
+
+    void            setProjectManagerUi( IProjectManagerUiCb* projectManagerUi );
     void            removeProject( const QString& fileName );
     QStringList     recentsProjects() const;
-    virtual bool    closeProject();
-    virtual void    saveAs( const QString &outputFileName );
+    bool            closeProject();
+
+    void            save();
+    void            saveAs();
     bool            loadEmergencyBackup();
     void            emergencyBackup();
     bool            hasProjectLoaded() const;
+    void            newProject( const QString& projectName, const QString &workspacePath );
 
-protected:
+    void            loadProject();
     /**
-     *  This shouldn't be call directly.
-     *  It's only purpose it to write the project for very specific cases.
+     *  \brief      Check for a project backup file, and load the appropriate file,
+     *              according to the user input.
+     *
+     *  if an outdated project backup is found, the used is asked if she wants to delete
+     *  it.
      */
-    void            __saveProject( const QString& fileName );
+    void            loadProject( const QString& fileName );
+private:
+    void            saveProject( const QString& filename );
     /**
      *  \brief      Save the timline.
      *
-     *  In non GUI mode, this does nothing.
      */
-    virtual void    saveTimeline( QXmlStreamWriter& ){}
+    virtual void    saveTimeline(QXmlStreamWriter& project);
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
     /**
@@ -115,9 +136,6 @@ protected:
     virtual void    loadTimeline( const QDomElement& ){}
     QString         createAutoSaveOutputFileName( const QString& baseName ) const;
 
-    ProjectManager();
-    ~ProjectManager();
-
 protected:
     QFile*          m_projectFile;
     QStringList     m_recentsProjects;
@@ -125,11 +143,16 @@ protected:
     QString         m_projectDescription;
     QDomDocument    *m_domDocument;
     bool            m_needSave;
+    QTimer*         m_timer;
+    IProjectManagerUiCb* m_projectManagerUi;
 
-    friend class    Singleton<ProjectManager>;
-
-protected slots:
+private slots:
     void            loadWorkflow();
+    void            automaticSaveEnabledChanged( const QVariant& enabled );
+    void            automaticSaveIntervalChanged( const QVariant& interval );
+    void            cleanChanged( bool val );
+    void            projectNameChanged( const QVariant& projectName );
+    void            autoSaveRequired();
 
 signals:
     /**

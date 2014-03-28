@@ -102,11 +102,7 @@ ProjectWizard::accept()
     {
         Settings* preferences = Core::getInstance()->settings();
         Settings* projectPreferences = Project::getInstance()->settings();
-//        m_projectManager->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
-        //FIXME: This doesn't ask the user if she wants to save the current project
-        vlmcCritical() << "This is broken";
-        m_projectManager->closeProject();
-        m_projectManager->saveAs( field( "projectPath" ).toString() );
+        m_projectManager->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
 
         preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
 

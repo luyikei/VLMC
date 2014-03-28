@@ -29,6 +29,7 @@ class QUndoStack;
 
 class Library;
 class MainWorkflow;
+class ProjectManager;
 class Settings;
 class Workspace;
 
@@ -44,6 +45,7 @@ public:
     QUndoStack*         undoStack();
     Settings*           settings();
     Workspace*          workspace();
+    ProjectManager*     projectManager();
 
 private:
     Library*            m_library;
@@ -51,6 +53,7 @@ private:
     QUndoStack*         m_undoStack;
     Settings*           m_settings;
     Workspace*          m_workspace;
+    ProjectManager*     m_projectManager;
 
     friend class Singleton<Project>;
 };

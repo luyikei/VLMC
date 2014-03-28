@@ -86,9 +86,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     //Preferences
     initVlmcPreferences();
 
-    //Creating the project manager so it can create all the project variables
-    GUIProjectManager::getInstance();
-
+    Project::getInstance()->projectManager()->setProjectManagerUi( new GUIProjectManager );
     //All preferences have been created: restore them:
     loadVlmcPreferences();
     Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
@@ -116,7 +114,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( GUIProjectManager::getInstance(), SIGNAL( projectUpdated( const QString&, bool ) ),
+    connect( Project::getInstance()->projectManager(), SIGNAL( projectUpdated( const QString&, bool ) ),
              this, SLOT( projectUpdated( const QString&, bool ) ) );
 
     // Undo/Redo
@@ -160,7 +158,7 @@ MainWindow::showWizard()
 {
     if ( m_wizard == NULL )
     {
-        m_wizard = new ProjectWizard( GUIProjectManager::getInstance(), this );
+        m_wizard = new ProjectWizard( Project::getInstance()->projectManager(), this );
         m_wizard->setModal( true );
     }
     m_wizard->show();
@@ -373,19 +371,19 @@ MainWindow::loadVlmcPreferencesCategory( const QString &subPart )
 void
 MainWindow::on_actionSave_triggered()
 {
-    GUIProjectManager::getInstance()->saveProject();
+    Project::getInstance()->projectManager()->save();
 }
 
 void
 MainWindow::on_actionSave_As_triggered()
 {
-    GUIProjectManager::getInstance()->saveProject( true );
+    Project::getInstance()->projectManager()->saveAs();
 }
 
 void
 MainWindow::on_actionLoad_Project_triggered()
 {
-    GUIProjectManager::getInstance()->loadProject();
+    Project::getInstance()->projectManager()->loadProject();
 }
 
 void
@@ -782,20 +780,17 @@ MainWindow::on_actionProject_Preferences_triggered()
 bool
 MainWindow::saveSettings()
 {
-    GUIProjectManager   *pm = GUIProjectManager::getInstance();
+    // ??????
     clearTemporaryFiles();
-    if ( pm->askForSaveIfModified() )
-    {
-        Settings* settings = Core::getInstance()->settings();
-        // Save the current geometry
-        settings->setValue( "private/MainWindowGeometry", saveGeometry() );
-        // Save the current layout
-        settings->setValue( "private/MainWindowState", saveState() );
-        settings->setValue( "private/CleanQuit", true );
-        settings->save();
-        return true;
-    }
-    return false;
+    Settings* settings = Core::getInstance()->settings();
+    // Save the current geometry
+    settings->setValue( "private/MainWindowGeometry", saveGeometry() );
+    // Save the current layout
+    settings->setValue( "private/MainWindowState", saveState() );
+    settings->setValue( "private/CleanQuit", true );
+    settings->save();
+    Project::getInstance()->projectManager()->save();
+    return true;
 }
 
 void
@@ -816,12 +811,6 @@ MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
     if ( savedStatus == false )
         title += " *";
     setWindowTitle( title );
-}
-
-void
-MainWindow::on_actionClose_Project_triggered()
-{
-    GUIProjectManager::getInstance()->closeProject();
 }
 
 void
@@ -858,7 +847,7 @@ MainWindow::restoreSession()
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if ( res == QMessageBox::Yes )
         {
-            if ( GUIProjectManager::getInstance()->loadEmergencyBackup() == true )
+            if ( Project::getInstance()->projectManager()->loadEmergencyBackup() == true )
                 ret = true;
             else
                 QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
