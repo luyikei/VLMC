@@ -35,10 +35,43 @@ class   QFile;
 class   QDomDocument;
 class   QXmlStreamWriter;
 
+class   IProjectManagerUiCb
+{
+    virtual ~IProjectManagerUiCb() {}
+
+    /**
+     * @brief shouldSaveBeforeClose Ask the user if she wants to save the project in case
+     *                              it's about to be closed
+     * @return True if the project should be saved. False if changes are to be discarded.
+     */
+    virtual bool    shouldSaveBeforeClose() = 0;
+
+    /**
+     * @brief getProjectFile    Ask the user where to save a new project
+     * @param defaultPath       A default project location, if any.
+     * @param isOpen            True if the project will be opened, false if it's about to
+     *                          be saved.
+     * @return The selected project file
+     */
+    virtual QString    getProjectFile( const QString& defaultPath, bool isOpen );
+
+    /**
+     * @brief shouldLoadBackupFile
+     * @return True if the user wants to load the backup file.
+     */
+    virtual bool    shouldLoadBackupFile() = 0;
+
+    /**
+     * @brief shouldDeleteOutdatedBackupFile
+     * @return True if the user wants to delete this backup file
+     */
+    virtual bool    shouldDeleteOutdatedBackupFile() = 0;
+};
+
 class   ProjectManager : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY( ProjectManager );
+    Q_DISABLE_COPY( ProjectManager )
 public:
     static const QString    unNamedProject;
     static const QString    unSavedProject;
