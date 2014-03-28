@@ -32,6 +32,7 @@ class   Clip;
 class   ClipHelper;
 class   EffectsEngine;
 class   Effect;
+class   ProjectManager;
 class   TrackHandler;
 class   TrackWorkflow;
 namespace   Workflow
@@ -56,7 +57,7 @@ class   MainWorkflow : public QObject
     Q_OBJECT
 
     public:
-        MainWorkflow( int trackCount = 64 );
+        MainWorkflow( ProjectManager* projectManager,  int trackCount = 64 );
         ~MainWorkflow();
 
         /**

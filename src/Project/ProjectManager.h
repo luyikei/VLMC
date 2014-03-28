@@ -26,16 +26,13 @@
 #include "config.h"
 
 class   QTimer;
+class   QFile;
+class   QDomDocument;
+class   QXmlStreamWriter;
 
 #include <QObject>
 #include <QStringList>
 #include <QDomElement>
-
-#include "Tools/Singleton.hpp"
-
-class   QFile;
-class   QDomDocument;
-class   QXmlStreamWriter;
 
 class   IProjectManagerUiCb
 {

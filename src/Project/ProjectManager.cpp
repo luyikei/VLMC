@@ -53,11 +53,6 @@ ProjectManager::ProjectManager()
     : m_projectFile( NULL )
     , m_needSave( false )
 {
-    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->library(), SLOT( clear() ) );
-    connect( this, SIGNAL( projectClosed() ), Project::getInstance()->workflow(), SLOT( clear() ) );
-    connect( Project::getInstance()->library(), SIGNAL( cleanStateChanged( bool ) ),
-             this, SLOT( cleanChanged( bool ) ) );
-
     m_recentsProjects = VLMC_GET_STRINGLIST( SETTINGS_RECENTS );
     //If the variable was empty, it will return a list with one empty string in it.
     m_recentsProjects.removeAll( "" );

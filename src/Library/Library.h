@@ -39,6 +39,7 @@ class   QDomElement;
 
 class Clip;
 class Media;
+class ProjectManager;
 class Workspace;
 
 /**
@@ -51,7 +52,7 @@ class Library : public MediaContainer
     Q_DISABLE_COPY( Library );
 
 public:
-    Library( Workspace* workspace );
+    Library( Workspace* workspace, ProjectManager* projectManager );
     virtual ~Library(){}
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );

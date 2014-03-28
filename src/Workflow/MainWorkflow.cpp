@@ -28,6 +28,7 @@
 #include "ClipWorkflow.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
+#include "Project/ProjectManager.h"
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
 #include "Settings/Settings.h"
@@ -37,7 +38,7 @@
 #include <QDomElement>
 #include <QMutex>
 
-MainWorkflow::MainWorkflow( int trackCount ) :
+MainWorkflow::MainWorkflow( ProjectManager *projectManager, int trackCount ) :
         m_blackOutput( NULL ),
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
@@ -59,6 +60,7 @@ MainWorkflow::MainWorkflow( int trackCount ) :
                  this, SLOT( lengthUpdated( qint64 ) ) );
         m_currentFrame[i] = 0;
     }
+    connect( projectManager, SIGNAL( projectClosed() ), this, SLOT( clear() ) );
 }
 
 MainWorkflow::~MainWorkflow()

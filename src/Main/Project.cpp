@@ -32,22 +32,22 @@
 
 Project::Project()
 {
+    m_projectManager = new ProjectManager;
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
-    m_workflow = new MainWorkflow;
+    m_workflow = new MainWorkflow( m_projectManager );
     m_workspace = new Workspace( m_settings );
-    m_library = new Library( m_workspace );
-    m_projectManager = new ProjectManager;
+    m_library = new Library( m_workspace, m_projectManager );
 }
 
 Project::~Project()
 {
-    delete m_projectManager;
     delete m_library;
     delete m_workspace;
     delete m_workflow;
     delete m_undoStack;
     delete m_settings;
+    delete m_projectManager;
 }
 
 Library*
