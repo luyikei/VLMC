@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEdit">
@@ -62,7 +62,6 @@
     </widget>
     <addaction name="actionNew_Project"/>
     <addaction name="actionLoad_Project"/>
-    <addaction name="actionClose_Project"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
