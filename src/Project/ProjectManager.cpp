@@ -49,64 +49,65 @@ const QString   ProjectManager::unNamedProject = ProjectManager::tr( "Untitled P
 const QString   ProjectManager::unSavedProject = ProjectManager::tr( "Unsaved Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
-ProjectManager::ProjectManager()
+ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSettings )
     : m_projectFile( NULL )
     , m_needSave( false )
+    , m_projectSettings( projectSettings )
+    , m_vlmcSettings( vlmcSettings )
 {
-    m_recentsProjects = VLMC_GET_STRINGLIST( SETTINGS_RECENTS );
-    //If the variable was empty, it will return a list with one empty string in it.
-    m_recentsProjects.removeAll( "" );
+    vlmcSettings->createVar( SettingValue::String, SETTINGS_RECENTS, "", "", "", SettingValue::Private );
 
-    SettingValue    *fps = VLMC_CREATE_PROJECT_VAR( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
+    SettingValue    *fps = projectSettings->createVar( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ),
                                                 SettingValue::Clamped );
     fps->setLimits( 0.1, 120.0 );
-    SettingValue    *width = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectWidth", 480,
+    SettingValue    *width = projectSettings->createVar( SettingValue::Int, "video/VideoProjectWidth", 480,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
                              SettingValue::Clamped | SettingValue::EightMultiple );
     width->setLimits( 32, 2048 );
-    SettingValue    *height = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "video/VideoProjectHeight", 320,
+    SettingValue    *height = projectSettings->createVar( SettingValue::Int, "video/VideoProjectHeight", 320,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
                              SettingValue::Clamped | SettingValue::EightMultiple );
     height->setLimits( 32, 2048 );
-    VLMC_CREATE_PROJECT_STRING( "video/AspectRatio", "16/9",
+    projectSettings->createVar( SettingValue::String, "video/AspectRatio", "16/9",
                                 QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
-                                QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ) );
-    SettingValue    *sampleRate = VLMC_CREATE_PROJECT_VAR( SettingValue::Double, "audio/AudioSampleRate", 44100,
+                                QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ),
+                                SettingValue::Nothing );
+    SettingValue    *sampleRate = projectSettings->createVar( SettingValue::Double, "audio/AudioSampleRate", 44100,
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate"),
                              SettingValue::Clamped );
     sampleRate->setLimits( 11025, 48000 );
-    SettingValue    *audioChannel = VLMC_CREATE_PROJECT_VAR( SettingValue::Int, "audio/NbChannels", 2,
+    SettingValue    *audioChannel = projectSettings->createVar( SettingValue::Int, "audio/NbChannels", 2,
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
                                                              SettingValue::Clamped );
     audioChannel->setLimits( 2, 2 );
-    VLMC_CREATE_PROJECT_VAR( SettingValue::String, "vlmc/ProjectName", unNamedProject,
+    projectSettings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                 SettingValue::NotEmpty );
 
-    VLMC_CREATE_PRIVATE_PROJECT_STRING( "vlmc/Workspace", "" );
+    projectSettings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
 
     m_timer = new QTimer( this );
     connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-    VLMC_CREATE_PREFERENCE_BOOL( "vlmc/AutomaticBackup", false,
+    vlmcSettings->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
                                              "VLMC will automatically save your project "
-                                             "at a specified interval" ) );
-    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackup", this,
+                                             "at a specified interval" ), SettingValue::Nothing );
+    vlmcSettings->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 Qt::QueuedConnection );
-    VLMC_CREATE_PREFERENCE_INT( "vlmc/AutomaticBackupInterval", 5,
+    projectSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                            "between two automatic save" ) );
-    Core::getInstance()->settings()->watchValue( "vlmc/AutomaticBackupInterval", this,
+                                            "between two automatic save" ), SettingValue::Nothing );
+    vlmcSettings->watchValue( "vlmc/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 Qt::QueuedConnection );
 
@@ -118,7 +119,8 @@ ProjectManager::ProjectManager()
                 Project::getInstance()->undoStack(), SLOT( setClean() ) );
 
     //We have to wait for the library to be loaded before loading the workflow
-    connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
+    //FIXME
+    //connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
 }
 
 ProjectManager::~ProjectManager()

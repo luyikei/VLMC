@@ -34,6 +34,8 @@ class   QXmlStreamWriter;
 #include <QStringList>
 #include <QDomElement>
 
+class Settings;
+
 class   IProjectManagerUiCb
 {
 public:
@@ -85,7 +87,7 @@ public:
     static const QString    unSavedProject;
     static const QString    backupSuffix;
 
-    ProjectManager();
+    ProjectManager( Settings *projectSettings , Settings *vlmcSettings );
     ~ProjectManager();
 
     void            setProjectManagerUi( IProjectManagerUiCb* projectManagerUi );
@@ -134,14 +136,16 @@ private:
     QString         createAutoSaveOutputFileName( const QString& baseName ) const;
 
 protected:
-    QFile*          m_projectFile;
-    QStringList     m_recentsProjects;
-    QString         m_projectName;
-    QString         m_projectDescription;
-    QDomDocument    *m_domDocument;
-    bool            m_needSave;
-    QTimer*         m_timer;
-    IProjectManagerUiCb* m_projectManagerUi;
+    QFile*                  m_projectFile;
+    QStringList             m_recentsProjects;
+    QString                 m_projectName;
+    QString                 m_projectDescription;
+    QDomDocument*           m_domDocument;
+    bool                    m_needSave;
+    QTimer*                 m_timer;
+    IProjectManagerUiCb*    m_projectManagerUi;
+    Settings*               m_projectSettings;
+    Settings*               m_vlmcSettings;
 
 private slots:
     void            loadWorkflow();

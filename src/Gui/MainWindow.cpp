@@ -328,7 +328,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/RecentsProjects", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 }
 

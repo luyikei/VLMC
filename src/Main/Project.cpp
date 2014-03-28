@@ -32,8 +32,8 @@
 
 Project::Project()
 {
-    m_projectManager = new ProjectManager;
     m_settings = new Settings( QString() );
+    m_projectManager = new ProjectManager( m_settings, Core::getInstance()->settings() );
     m_undoStack = new QUndoStack;
     m_workflow = new MainWorkflow( m_projectManager );
     m_workspace = new Workspace( m_settings );
@@ -46,8 +46,8 @@ Project::~Project()
     delete m_workspace;
     delete m_workflow;
     delete m_undoStack;
-    delete m_settings;
     delete m_projectManager;
+    delete m_settings;
 }
 
 Library*
