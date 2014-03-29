@@ -347,6 +347,7 @@ ProjectManager::newProject( const QString &projectName, const QString &workspace
     if ( closeProject() == false )
         return ;
     m_projectName = projectName;
+    emit projectNameChanged( projectName );
     //Current project file has already been delete/nulled by ProjectManager::closeProject()
     m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
     save();
