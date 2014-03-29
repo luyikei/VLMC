@@ -89,7 +89,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     Project::getInstance()->projectManager()->setProjectManagerUi( new GUIProjectManager );
     //All preferences have been created: restore them:
     loadVlmcPreferences();
-    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
@@ -328,26 +327,16 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
 }
 
 void MainWindow::loadVlmcPreferences()
 {
     //Load saved preferences :
     loadVlmcPreferencesCategory( "private" );
-    if ( VLMC_GET_STRING( "private/VlmcVersion" ) == PROJECT_VERSION_MAJOR )
-    {
-        loadVlmcPreferencesCategory( "keyboard" );
-        loadVlmcPreferencesCategory( "vlmc" );
-        loadVlmcPreferencesCategory( "youtube" );
-        loadVlmcPreferencesCategory( "network" );
-    }
-    else
-    {
-        QSettings s;
-        s.clear();
-    }
-    Core::getInstance()->settings()->setValue( "private/VlmcVersion", PROJECT_VERSION_MAJOR );
+    loadVlmcPreferencesCategory( "keyboard" );
+    loadVlmcPreferencesCategory( "vlmc" );
+    loadVlmcPreferencesCategory( "youtube" );
+    loadVlmcPreferencesCategory( "network" );
 }
 
 void
