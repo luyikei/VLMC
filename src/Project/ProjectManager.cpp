@@ -267,7 +267,8 @@ ProjectManager::saveAs()
 {
     if ( m_projectManagerUi == NULL )
         return ;
-    const QString& fileName = m_projectManagerUi->getProjectFile( VLMC_GET_STRING( "vlmc/Workspace" ), false );
+    const QString& fileName = m_projectManagerUi->getProjectFile(
+                m_projectSettings->value( "vlmc/Workspace" )->get().toString(), false );
     if ( fileName.isEmpty() )
         return ;
     saveProject( fileName );
