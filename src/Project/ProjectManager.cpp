@@ -239,6 +239,7 @@ ProjectManager::appendToRecentProject( const QString& projectName )
         m_recentsProjects.removeLast();
 
     Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects );
+    Core::getInstance()->settings()->save();
 }
 
 QString
