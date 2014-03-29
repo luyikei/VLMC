@@ -30,6 +30,8 @@
 #include <QReadLocker>
 #include <QStringList>
 #include <QXmlStreamWriter>
+#include <QFileInfo>
+#include <QDir>
 
 #include <QDomElement>
 
@@ -37,8 +39,7 @@
 Settings::Settings(const QString &settingsFile)
     : m_settingsFile( NULL )
 {
-    if ( settingsFile.isEmpty() == false )
-        m_settingsFile = new QFile( settingsFile );
+    setSettingsFile( settingsFile );
 }
 
 Settings::~Settings()
@@ -58,6 +59,25 @@ Settings::watchValue( const QString &key, QObject* receiver, const char *method,
     }
     Q_ASSERT_X( false, __FILE__, "watching value without a created variable" );
     return false;
+}
+
+void
+Settings::setSettingsFile(const QString &settingsFile)
+{
+    delete m_settingsFile;
+    if ( settingsFile.isEmpty() == false )
+    {
+        QFileInfo fInfo( settingsFile );
+        if ( fInfo.exists() == false )
+        {
+            QDir dir = fInfo.dir();
+            if ( dir.exists() == false )
+                dir.mkpath( fInfo.absolutePath() );
+        }
+        m_settingsFile = new QFile( settingsFile );
+    }
+    else
+        m_settingsFile = NULL;
 }
 
 void
@@ -82,9 +102,15 @@ Settings::save( QXmlStreamWriter& project ) const
 }
 
 bool
-Settings::load( const QDomElement &root )
+Settings::load()
 {
-    QDomElement     element = root.firstChildElement( "settings" );
+    QDomDocument    doc("root");
+    if ( doc.setContent( m_settingsFile ) == false )
+    {
+        vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
+        return false;
+    }
+    QDomElement     element = doc.firstChildElement( "settings" );
     if ( element.isNull() == true )
     {
         vlmcWarning() << "Invalid settings node";
@@ -99,8 +125,11 @@ Settings::load( const QDomElement &root )
         if ( key.isEmpty() == true || value.isEmpty() == true )
             vlmcWarning() << "Invalid setting node.";
         else
+        {
+            vlmcDebug() << "Loading" << key << "=>" << value;
             if ( setValue( key, value ) == false )
                 vlmcWarning() << "Loaded invalid project setting:" << key;
+        }
         s = s.nextSiblingElement();
     }
     return true;

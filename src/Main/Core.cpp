@@ -22,6 +22,8 @@
 
 #include "Core.h"
 
+#include <QCoreApplication>
+#include <QDir>
 #include <QtGlobal>
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 # include <QStandardPaths>
@@ -39,11 +41,15 @@ Core::Core()
     m_backend = Backend::getBackend();
     m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
+
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-    m_settings = new Settings( QStandardPaths::writableLocation( QStandardPaths::ConfigLocation ) );
+    QString configDir = QStandardPaths::writableLocation( QStandardPaths::ConfigLocation );
 #else
-    m_settings = new Settings( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) );
+    QString configDir = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
 #endif
+    QString configPath = configDir + QDir::separator() + qApp->organizationName()
+            + QDir::separator() + qApp->applicationName() + ".conf";
+    m_settings = new Settings( configPath );
 }
 
 Core::~Core()

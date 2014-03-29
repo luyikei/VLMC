@@ -120,10 +120,11 @@ class   Settings
         SettingValue*               value( const QString &key );
         SettingValue*               createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags );
         SettingList                 group( const QString &groupName ) const;
-        bool                        load( const QDomElement &element );
+        bool                        load();
         void                        save() const;
         void                        save( QXmlStreamWriter& project ) const;
         bool                        watchValue( const QString &key, QObject* receiver, const char *method, Qt::ConnectionType cType = Qt::AutoConnection );
+        void                        setSettingsFile( const QString& settingsFile );
     private:
         SettingMap                  m_settings;
         mutable QReadWriteLock      m_rwLock;

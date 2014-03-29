@@ -420,7 +420,9 @@ ProjectManager::loadProject( const QString &fileName )
     QDomElement     root = m_domDocument->documentElement();
 
     //Load settings first, as it contains some informations about the workspace.
-    Project::getInstance()->settings()->load( root );
+    Project::getInstance()->settings()->setSettingsFile( fInfo.absoluteFilePath() );
+    Project::getInstance()->settings()->load();
+    //FIXME: This line looks fishy
     Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
     Timeline::getInstance()->renderer()->loadProject( root );
     Project::getInstance()->library()->loadProject( root );

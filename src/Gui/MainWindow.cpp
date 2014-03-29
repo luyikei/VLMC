@@ -33,8 +33,6 @@
 #include <QUndoStack>
 #include <QUrl>
 #include <QNetworkProxy>
-#include <QSettings>
-
 #include "Main/Core.h"
 #include "Main/Project.h"
 #include "Library/Library.h"
@@ -85,10 +83,10 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
     //Preferences
     initVlmcPreferences();
+    //All preferences have been created: restore them:
+    Core::getInstance()->settings()->load();
 
     Project::getInstance()->projectManager()->setProjectManagerUi( new GUIProjectManager );
-    //All preferences have been created: restore them:
-    loadVlmcPreferences();
 
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
@@ -288,7 +286,7 @@ MainWindow::initVlmcPreferences()
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The temporary folder used by VLMC to process videos." ) );
 
     //Setup VLMC Youtube Preference...
-    VLMC_CREATE_PREFERENCE_STRING( "youtube/DeveloperKey", "AI39si7FOtp165Vq644xVkuka84TVQNbztQmQ1dC9stheBfh3-33RZaTu7eJkYJzvxp6XNbvlr4M6-ULjXDERFl62WIo6AQIEQ",
+    VLMC_CREATE_PREFERENCE_STRING( "youtube/DeveloperKey", "",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Youtube Developer Key" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "VLMC's Youtube Developer Key" ) );
 
@@ -327,31 +325,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-}
-
-void MainWindow::loadVlmcPreferences()
-{
-    //Load saved preferences :
-    loadVlmcPreferencesCategory( "private" );
-    loadVlmcPreferencesCategory( "keyboard" );
-    loadVlmcPreferencesCategory( "vlmc" );
-    loadVlmcPreferencesCategory( "youtube" );
-    loadVlmcPreferencesCategory( "network" );
-}
-
-void
-MainWindow::loadVlmcPreferencesCategory( const QString &subPart )
-{
-    QSettings       s;
-    s.setFallbacksEnabled( false );
-    s.beginGroup( subPart );
-    foreach ( QString key, s.allKeys() )
-    {
-        QVariant value = s.value( key );
-        QString fullKey = subPart + "/" + key;
-        vlmcDebug() << "Loading" << fullKey << "=>" << value;
-        Core::getInstance()->settings()->setValue( fullKey, value );
-    }
 }
 
 #undef CREATE_MENU_SHORTCUT
