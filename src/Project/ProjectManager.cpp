@@ -55,8 +55,6 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
     , m_projectSettings( projectSettings )
     , m_vlmcSettings( vlmcSettings )
 {
-    vlmcSettings->createVar( SettingValue::String, SETTINGS_RECENTS, "", "", "", SettingValue::Private );
-
     SettingValue    *fps = projectSettings->createVar( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ),
@@ -95,18 +93,11 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
 
     m_timer = new QTimer( this );
     connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-    vlmcSettings->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
-                                             "VLMC will automatically save your project "
-                                             "at a specified interval" ), SettingValue::Nothing );
+
     vlmcSettings->watchValue( "vlmc/AutomaticBackup", this,
                                                 SLOT( automaticSaveEnabledChanged(QVariant) ),
                                                 Qt::QueuedConnection );
-    vlmcSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                            "between two automatic save" ), SettingValue::Nothing );
+
     vlmcSettings->watchValue( "vlmc/AutomaticBackupInterval", this,
                                                 SLOT( automaticSaveIntervalChanged(QVariant) ),
                                                 Qt::QueuedConnection );
