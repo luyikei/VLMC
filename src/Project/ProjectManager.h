@@ -117,7 +117,7 @@ private:
      *  \brief      Save the timline.
      *
      */
-    virtual void    saveTimeline(QXmlStreamWriter& project);
+    void            saveTimeline(QXmlStreamWriter& project);
     static bool     isBackupFile( const QString& projectFile );
     void            appendToRecentProject( const QString& projectName );
     /**
@@ -129,10 +129,10 @@ private:
      *  \return     The project name.
      */
     QString         projectName() const;
-    virtual QString outputFileName() const;
+    QString         outputFileName() const;
 
-    virtual void    failedToLoad( const QString& reason ) const;
-    virtual void    loadTimeline( const QDomElement& ){}
+    void            failedToLoad( const QString& reason ) const;
+    void            loadTimeline( const QDomElement& ){}
     QString         createAutoSaveOutputFileName( const QString& baseName ) const;
 
 protected:
