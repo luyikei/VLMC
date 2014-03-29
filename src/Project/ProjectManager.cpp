@@ -189,6 +189,7 @@ ProjectManager::saveProject( const QString& fileName )
     QFile   projectFile( fileName );
     projectFile.open( QFile::WriteOnly );
     projectFile.write( projectString );
+    emit projectSaved();
 }
 
 void
@@ -272,7 +273,6 @@ ProjectManager::saveAs()
     if ( fileName.isEmpty() )
         return ;
     saveProject( fileName );
-    emit projectSaved();
     emit projectUpdated( projectName(), true );
 }
 
