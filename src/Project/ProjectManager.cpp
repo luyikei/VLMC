@@ -108,12 +108,8 @@ ProjectManager::saveProject( const QString& fileName )
 void
 ProjectManager::emergencyBackup()
 {
-    QString     name;
-
-    if ( m_projectFile != NULL )
-        name = m_projectFile->fileName() + ProjectManager::backupSuffix;
-    else
-       name = QDir::currentPath() + "/unsavedproject" + ProjectManager::backupSuffix;
+    Q_ASSERT( m_projectFile != NULL );
+    const QString& name = m_projectFile->fileName() + ProjectManager::backupSuffix;
     saveProject( name );
     Core::getInstance()->settings()->setValue( "private/EmergencyBackup", name );
 }
@@ -328,8 +324,7 @@ ProjectManager::autoSaveRequired()
 bool
 ProjectManager::closeProject()
 {
-    if ( m_projectFile == NULL )
-        return true;
+    Q_ASSERT( m_projectFile != NULL );
     if ( m_projectManagerUi != NULL )
     {
         IProjectManagerUiCb::SaveMode mode = m_projectManagerUi->shouldSaveBeforeClose();
