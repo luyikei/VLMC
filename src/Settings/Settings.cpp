@@ -122,7 +122,7 @@ Settings::load()
         QString     key = s.attribute( "key" );
         QString     value = s.attribute( "value" );
 
-        if ( key.isEmpty() == true || value.isEmpty() == true )
+        if ( key.isEmpty() == true )
             vlmcWarning() << "Invalid setting node.";
         else
         {
