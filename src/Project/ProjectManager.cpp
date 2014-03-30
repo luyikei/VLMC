@@ -49,7 +49,7 @@ const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSettings )
     : m_projectFile( NULL )
-    , m_needSave( false )
+    , m_isClean( true )
     , m_libraryCleanState( true )
     , m_projectSettings( projectSettings )
     , m_vlmcSettings( vlmcSettings )
@@ -233,7 +233,7 @@ ProjectManager::loadEmergencyBackup()
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );
-        m_needSave = true;
+        m_isClean = false;
         return true;
     }
     return false;
@@ -276,8 +276,8 @@ ProjectManager::cleanChanged( bool val )
 {
     // This doesn't have to be different since we can force needSave = true when loading
     // a backup project file. This definitely needs testing though
-    m_needSave = val;
-    if ( m_libraryCleanState == m_needSave )
+    m_isClean = val;
+    if ( m_libraryCleanState == m_isClean )
         emit cleanStateChanged( val );
 }
 
@@ -286,7 +286,7 @@ ProjectManager::libraryCleanChanged(bool val)
 {
     Q_ASSERT( m_libraryCleanState != val);
     m_libraryCleanState = val;
-    if ( m_libraryCleanState == m_needSave )
+    if ( m_libraryCleanState == m_isClean )
         emit cleanStateChanged( val );
 }
 
@@ -370,7 +370,7 @@ ProjectManager::loadProject( const QString &fileName )
         //saves its project, vlmc will ask him where to save it.
         delete m_projectFile;
         m_projectFile = NULL;
-        m_needSave = true;
+        m_isClean = true;
     }
 
     QDomElement     root = m_domDocument->documentElement();
@@ -408,7 +408,7 @@ ProjectManager::closeProject()
     }
     delete m_projectFile;
     m_projectFile = NULL;
-    m_needSave = false;
+    m_isClean = true;
     m_projectName = QString();
     //This one is for the mainwindow, to update the title bar
     Project::getInstance()->undoStack()->clear();
