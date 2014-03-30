@@ -25,7 +25,6 @@
 
 #include "config.h"
 
-class   QTimer;
 class   QFile;
 class   QDomDocument;
 class   QXmlStreamWriter;
@@ -141,9 +140,8 @@ protected:
     QString                 m_projectName;
     QString                 m_projectDescription;
     QDomDocument*           m_domDocument;
-    bool                    m_needSave;
+    bool                    m_isClean;
     bool                    m_libraryCleanState;
-    QTimer*                 m_timer;
     IProjectManagerUiCb*    m_projectManagerUi;
     Settings*               m_projectSettings;
     Settings*               m_vlmcSettings;
@@ -155,8 +153,6 @@ public slots:
 
 private slots:
     void            loadWorkflow();
-    void            automaticSaveEnabledChanged( const QVariant& enabled );
-    void            automaticSaveIntervalChanged( const QVariant& interval );
     void            projectNameChanged( const QVariant& projectName );
     void            autoSaveRequired();
 

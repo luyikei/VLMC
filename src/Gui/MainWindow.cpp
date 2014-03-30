@@ -323,16 +323,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-
-    Core::getInstance()->settings()->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
-                                             "VLMC will automatically save your project "
-                                             "at a specified interval" ), SettingValue::Nothing );
-    Core::getInstance()->settings()->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                            "between two automatic save" ), SettingValue::Nothing );
 }
 
 #undef CREATE_MENU_SHORTCUT

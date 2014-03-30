@@ -26,7 +26,6 @@
 #include <QDir>
 #include <QDomDocument>
 #include <QUndoStack>
-#include <QTimer>
 
 #include <errno.h>
 #include <signal.h>
@@ -89,17 +88,6 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
                                 SettingValue::NotEmpty );
 
     projectSettings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
-
-    m_timer = new QTimer( this );
-    connect( m_timer, SIGNAL( timeout() ), this, SLOT( autoSaveRequired() ) );
-
-    vlmcSettings->watchValue( "vlmc/AutomaticBackup", this,
-                                                SLOT( automaticSaveEnabledChanged(QVariant) ),
-                                                Qt::QueuedConnection );
-
-    vlmcSettings->watchValue( "vlmc/AutomaticBackupInterval", this,
-                                                SLOT( automaticSaveIntervalChanged(QVariant) ),
-                                                Qt::QueuedConnection );
 
     projectSettings->watchValue( "vlmc/ProjectName", this, SLOT(projectNameChanged(QVariant) ) );
     //We have to wait for the library to be loaded before loading the workflow
@@ -248,30 +236,6 @@ ProjectManager::failedToLoad( const QString &reason ) const
 }
 
 void
-ProjectManager::automaticSaveEnabledChanged( const QVariant& val )
-{
-    bool    enabled = val.toBool();
-
-    if ( enabled == true )
-    {
-        int interval = m_vlmcSettings->value( "vlmc/AutomaticBackupInterval" )->get().toInt();
-        m_timer->start( interval * 1000 * 60 );
-    }
-    else
-        m_timer->stop();
-}
-
-void
-ProjectManager::automaticSaveIntervalChanged( const QVariant& val )
-{
-    bool enabled = m_vlmcSettings->value( "vlmc/AutomaticBackup" )->get().toBool();
-
-    if ( enabled == false )
-        return ;
-    m_timer->start( val.toInt() * 1000 * 60 );
-}
-
-void
 ProjectManager::cleanChanged( bool val )
 {
     // This doesn't have to be different since we can force needSave = true when loading
@@ -390,7 +354,7 @@ ProjectManager::autoSaveRequired()
 {
     if ( m_projectFile == NULL )
         return ;
-    ProjectManager::saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
+    saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
 }
 
 bool

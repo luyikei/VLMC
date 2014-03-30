@@ -33,6 +33,7 @@ SET(VLMC_SRCS
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
+	Project/AutomaticBackup.cpp
     Project/ProjectManager.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
