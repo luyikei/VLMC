@@ -144,7 +144,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
 MainWindow::~MainWindow()
 {
-    delete m_backend;
     if ( m_fileRenderer )
         delete m_fileRenderer;
     delete m_importController;
