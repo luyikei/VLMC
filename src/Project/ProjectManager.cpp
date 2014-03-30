@@ -301,7 +301,7 @@ ProjectManager::saveAs()
 bool
 ProjectManager::loadEmergencyBackup()
 {
-    QString lastProject = VLMC_GET_STRING( SETTINGS_BACKUP );
+    const QString lastProject = m_vlmcSettings->value( SETTINGS_BACKUP )->get().toString();
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );
@@ -332,7 +332,7 @@ ProjectManager::automaticSaveEnabledChanged( const QVariant& val )
 
     if ( enabled == true )
     {
-        int interval = VLMC_GET_INT( "vlmc/AutomaticBackupInterval" );
+        int interval = m_vlmcSettings->value( "vlmc/AutomaticBackupInterval" )->get().toInt();
         m_timer->start( interval * 1000 * 60 );
     }
     else
@@ -342,7 +342,7 @@ ProjectManager::automaticSaveEnabledChanged( const QVariant& val )
 void
 ProjectManager::automaticSaveIntervalChanged( const QVariant& val )
 {
-    bool enabled = VLMC_GET_BOOL( "vlmc/AutomaticBackup" );
+    bool enabled = m_vlmcSettings->value( "vlmc/AutomaticBackup" )->get().toBool();
 
     if ( enabled == false )
         return ;
@@ -381,7 +381,8 @@ ProjectManager::loadProject()
 {
     if ( m_projectManagerUi == NULL )
         return ;
-    const QString& fileName = m_projectManagerUi->getProjectFile( VLMC_GET_STRING( "vlmc/Workspace" ), true );
+    const QString workspace = m_projectSettings->value( "vlmc/Workspace" )->get().toString();
+    const QString& fileName = m_projectManagerUi->getProjectFile( workspace, true );
     loadProject( fileName );
 }
 
