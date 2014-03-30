@@ -22,7 +22,7 @@
 
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectInstance.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "MainWorkflow.h"
 #include "Media/Media.h"
 #include "Backend/ISource.h"

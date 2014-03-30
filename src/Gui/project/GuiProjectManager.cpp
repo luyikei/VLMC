@@ -53,7 +53,7 @@ GUIProjectManager::getProjectFileDestination( const QString &defaultPath )
 
 
 
-IProjectManagerUiCb::SaveMode
+IProjectUiCb::SaveMode
 GUIProjectManager::shouldSaveBeforeClose()
 {
     QMessageBox msgBox;

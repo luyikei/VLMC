@@ -60,7 +60,7 @@ protected:
     Singleton(const Singleton<T>&);
     Singleton<T>&   operator=(const Singleton<T>&);
 
-private:
+protected:
     static T*      m_instance;
 };
 

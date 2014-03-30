@@ -26,7 +26,7 @@
 #include "ui_ImportController.h"
 
 #include "Main/Core.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/ISource.h"

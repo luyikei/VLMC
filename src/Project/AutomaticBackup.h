@@ -25,7 +25,7 @@
 
 class QTimer;
 
-class ProjectManager;
+class Project;
 class Settings;
 
 #include <QObject>
@@ -35,9 +35,9 @@ class AutomaticBackup : public QObject
     Q_OBJECT
 
     public:
-        explicit AutomaticBackup(Settings* vlmcSettings, QObject *parent = 0);
+        explicit AutomaticBackup( Settings* vlmcSettings, QObject *parent = 0 );
         virtual ~AutomaticBackup();
-        void    setProject( ProjectManager* projectManager );
+        void    setProject( Project* projectManager );
 
     private:
         Settings*   m_vlmcSettings;

@@ -23,7 +23,7 @@
 
 #include "TrackWorkflow.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "AudioClipWorkflow.h"

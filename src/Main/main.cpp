@@ -31,8 +31,8 @@
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 #include "Renderer/ConsoleRenderer.h"
-#include "Project/ProjectManager.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
+#include "Project/Project.h"
 #include "Backend/IBackend.h"
 #include "Main/Core.h"
 
@@ -96,7 +96,7 @@ VLMCGuimain( int argc, char **argv )
 
         if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
         {
-            Project::getInstance()->projectManager()->loadProject( argv[i+1] );
+            Project::load( argv[i+1] );
             project = true;
             break;
         }
@@ -183,7 +183,7 @@ VLMCCoremain( int argc, char **argv )
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
-    ProjectManager  *pm = Project::getInstance()->projectManager();
+    ProjectManager  *pm = Project::getInstance();
 
     QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
     pm->loadProject( app.arguments()[1] );

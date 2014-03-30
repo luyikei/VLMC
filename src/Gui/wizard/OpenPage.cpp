@@ -24,7 +24,7 @@
 #include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "WelcomePage.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 
 OpenPage::OpenPage( QWidget *parent ) :
     QWizardPage(parent)
@@ -53,12 +53,9 @@ OpenPage::changeEvent( QEvent *e )
 bool
 OpenPage::validatePage()
 {
-    ProjectManager* pm = Project::getInstance()->projectManager();
-
-    if ( !WelcomePage::projectPath().isEmpty() )
-        pm->loadProject( WelcomePage::projectPath() );
-
-    return true;
+    if ( WelcomePage::projectPath().isEmpty() == false )
+        return Project::load( WelcomePage::projectPath() );
+    return false;
 }
 
 int

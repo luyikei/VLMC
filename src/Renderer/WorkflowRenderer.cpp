@@ -33,7 +33,7 @@
 
 #include "WorkflowRenderer.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "GenericRenderer.h"

@@ -23,7 +23,7 @@
 
 #include "WorkflowFileRendererDialog.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "vlmc.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/WorkflowFileRenderer.h"

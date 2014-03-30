@@ -24,7 +24,7 @@
 #include <QReadWriteLock>
 #include <QStringBuilder>
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "ImageClipWorkflow.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"

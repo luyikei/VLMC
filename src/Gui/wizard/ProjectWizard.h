@@ -24,7 +24,6 @@
 #ifndef PROJECTWIZARD_H
 #define PROJECTWIZARD_H
 
-class   ProjectManager;
 class   WelcomePage;
 
 #include <QWizard>
@@ -38,7 +37,7 @@ class ProjectWizard : public QWizard
                 Page_Open,
                 Page_General, Page_Video };
 
-         ProjectWizard( ProjectManager *projectManager, QWidget* parent = NULL );
+         ProjectWizard( QWidget* parent = NULL );
          ~ProjectWizard();
 
     protected slots:
@@ -47,9 +46,6 @@ class ProjectWizard : public QWizard
 
     private slots:
         void            showHelp();
-
-    private:
-        ProjectManager* m_projectManager;
 };
 
 #endif

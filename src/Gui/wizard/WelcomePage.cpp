@@ -122,7 +122,7 @@ WelcomePage::loadRecentsProjects()
 
     for ( int i = 0; i < recents.count(); ++i )
     {
-        RecentProjects::Project project = recents.at( i );
+        RecentProjects::RecentProject project = recents.at( i );
         QListWidgetItem* item = new QListWidgetItem( project.name );
         item->setData( FilePath, project.filePath );
         m_ui.projectsListWidget->addItem( item );

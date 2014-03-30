@@ -25,7 +25,7 @@
 
 #include <QObject>
 
-class   ProjectManager;
+class   Project;
 class   Settings;
 
 class RecentProjects : public QObject
@@ -33,17 +33,17 @@ class RecentProjects : public QObject
     Q_OBJECT
 
     public:
-        struct Project
+        struct RecentProject
         {
             QString name;
             QString filePath;
         };
-        typedef QList<Project>      List;
+        typedef QList<RecentProject>      List;
 
 
         explicit RecentProjects(Settings* vlmcSettings, QObject *parent = 0 );
 
-        void            setProject( ProjectManager* projectManager );
+        void            setProject(Project* projectManager );
         void            remove( const QString& projectFile );
         const List&     list() const;
 
@@ -60,7 +60,7 @@ class RecentProjects : public QObject
 
     private:
         Settings*       m_settings;
-        ProjectManager* m_projectManager;
+        Project*        m_project;
         List            m_recentsProjects;
 
 };

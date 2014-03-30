@@ -24,7 +24,7 @@
 #include "config.h"
 
 #include "Commands.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Workflow/ClipHelper.h"
 #include "EffectsEngine/EffectHelper.h"

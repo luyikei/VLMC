@@ -31,7 +31,7 @@
 #include "Media/Clip.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
@@ -40,12 +40,10 @@
 #include <QHash>
 #include <QUuid>
 
-Library::Library( Workspace *workspace , ProjectManager *projectManager )
+Library::Library( Workspace *workspace )
     : m_cleanState( true )
     , m_workspace( workspace )
 {
-    connect( this, SIGNAL( cleanStateChanged( bool ) ),
-             projectManager, SLOT( libraryCleanChanged( bool ) ) );
 }
 
 void

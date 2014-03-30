@@ -23,7 +23,7 @@
 #include "TracksView.h"
 
 #include "Main/Core.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Workflow/ClipHelper.h"
 #include "Workflow/ClipWorkflow.h"
 #include "Commands/Commands.h"

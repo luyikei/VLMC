@@ -52,7 +52,7 @@ class Library : public MediaContainer
     Q_DISABLE_COPY( Library );
 
 public:
-    Library( Workspace* workspace, ProjectManager* projectManager );
+    Library(Workspace* workspace);
     virtual ~Library(){}
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );

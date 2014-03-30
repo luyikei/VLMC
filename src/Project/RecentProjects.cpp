@@ -22,14 +22,14 @@
 
 #include "RecentProjects.h"
 
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 
 RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
     : QObject(parent)
     , m_settings( vlmcSettings )
-    , m_projectManager( NULL )
+    , m_project( NULL )
 {
     vlmcSettings->createVar( SettingValue::String, "private/RecentsProjects", "",
                                                 "", "", SettingValue::Private );
@@ -39,11 +39,11 @@ RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
 }
 
 void
-RecentProjects::setProject(ProjectManager* projectManager)
+RecentProjects::setProject( Project* projectManager )
 {
-    if ( m_projectManager != NULL )
-        disconnect( m_projectManager, SIGNAL( projectLoaded( QString, QString ) ) );
-    m_projectManager = projectManager;
+    if ( m_project != NULL )
+        disconnect( m_project, SIGNAL( projectLoaded( QString, QString ) ) );
+    m_project = projectManager;
     connect( projectManager, SIGNAL( projectLoaded( QString, QString ) ),
              this, SLOT( projectLoaded( QString, QString ) ) );
 }
@@ -52,7 +52,7 @@ void
 RecentProjects::projectLoaded(const QString& projectName, const QString& projectFile)
 {
     removeFromRecentProjects( projectName );
-    Project project;
+    RecentProject project;
     project.name = projectName;
     project.filePath = projectFile;
     m_recentsProjects.prepend( project );
@@ -74,7 +74,7 @@ RecentProjects::flattenProjectList() const
     if ( m_recentsProjects.count() == 0 )
         return QString();
     QString     res;
-    foreach ( Project p, m_recentsProjects )
+    foreach ( RecentProject p, m_recentsProjects )
     {
         res += p.name + '#' + p.filePath + '#';
     }
@@ -119,7 +119,7 @@ RecentProjects::loadRecentProjects( const QVariant& recentProjects )
     QStringList::const_iterator     ite = recentProjectsList.end();
     while ( it != ite )
     {
-        Project project;
+        RecentProject project;
         project.name = *it;
         ++it;
         if ( it == ite )

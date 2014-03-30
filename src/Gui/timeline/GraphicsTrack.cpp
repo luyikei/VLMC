@@ -22,7 +22,7 @@
 
 #include <QList>
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "TracksView.h"
 #include "GraphicsTrack.h"
 #include "Workflow/MainWorkflow.h"

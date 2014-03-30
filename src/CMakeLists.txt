@@ -28,13 +28,12 @@ SET(VLMC_SRCS
     Library/Library.cpp
     Library/MediaContainer.cpp
     Main/Core.cpp
-    Main/Project.cpp
     Main/main.cpp
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
 	Project/AutomaticBackup.cpp
-    Project/ProjectManager.cpp
+	Project/Project.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
 	Project/RecentProjects.cpp

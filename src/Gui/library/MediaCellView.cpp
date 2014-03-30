@@ -24,7 +24,7 @@
 #include "MediaCellView.h"
 #include "ui_MediaCellView.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "ClipProperty.h"
 #include "Backend/ISource.h"

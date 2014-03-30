@@ -22,7 +22,7 @@
 
 #include "Timeline.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Workflow/ClipHelper.h"
 #include "TracksView.h"

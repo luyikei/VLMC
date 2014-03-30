@@ -23,7 +23,7 @@
 #include <QTimer>
 
 #include "AutomaticBackup.h"
-#include "ProjectManager.h"
+#include "Project.h"
 #include "Settings/Settings.h"
 
 AutomaticBackup::AutomaticBackup( Settings* vlmcSettings, QObject *parent )
@@ -51,7 +51,7 @@ AutomaticBackup::~AutomaticBackup()
 }
 
 void
-AutomaticBackup::setProject(ProjectManager* projectManager)
+AutomaticBackup::setProject( Project* projectManager )
 {
     m_timer->disconnect();
     connect( m_timer, SIGNAL( timeout() ), projectManager, SLOT(autoSaveRequired() ) );

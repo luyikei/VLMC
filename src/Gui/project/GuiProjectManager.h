@@ -23,9 +23,9 @@
 #ifndef GUIPROJECTMANAGER_H
 #define GUIPROJECTMANAGER_H
 
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 
-class GUIProjectManager : public IProjectManagerUiCb
+class GUIProjectManager : public IProjectUiCb
 {
 public:
     virtual bool        shouldLoadBackupFile();

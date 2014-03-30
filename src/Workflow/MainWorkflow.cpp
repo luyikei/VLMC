@@ -22,13 +22,13 @@
  *****************************************************************************/
 
 #include "vlmc.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 #include "TrackWorkflow.h"
 #include "TrackHandler.h"
 #include "Settings/Settings.h"

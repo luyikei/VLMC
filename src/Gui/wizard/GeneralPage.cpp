@@ -27,7 +27,7 @@
 #include "GeneralPage.h"
 #include "ProjectWizard.h"
 #include "Settings/Settings.h"
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 
 GeneralPage::GeneralPage( QWidget *parent ) :
     QWizardPage( parent )
@@ -77,7 +77,7 @@ void
 GeneralPage::initializePage()
 {
     //Since this is a new project, it will be unnamed
-    QString     projectName = ProjectManager::unNamedProject;
+    QString     projectName = Project::unNamedProject;
     ui.lineEditName->setText( projectName );
 
     //fetching the global workspace path
@@ -99,7 +99,7 @@ GeneralPage::validatePage()
 {
     if ( m_valid == false )
         return false;
-    const QString       &defaultProjectName = ProjectManager::unNamedProject;
+    const QString       &defaultProjectName = Project::unNamedProject;
     if ( ui.lineEditName->text().isEmpty() ||
          ui.lineEditName->text() == defaultProjectName )
     {

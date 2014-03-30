@@ -22,7 +22,7 @@
 
 #include "Workspace.h"
 
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Library/Library.h"
 #include "Media/Media.h"

@@ -25,7 +25,7 @@
 #include <QMessageBox>
 #include <QWizardPage>
 
-#include "Project/ProjectManager.h"
+#include "Project/Project.h"
 #include "ProjectWizard.h"
 #include "Settings/Settings.h"
 #include "WelcomePage.h"
@@ -34,9 +34,8 @@
 #include "VideoPage.h"
 #include "Tools/VlmcDebug.h"
 
-ProjectWizard::ProjectWizard( ProjectManager* projectManager, QWidget* parent /*= NULL*/ )
+ProjectWizard::ProjectWizard( QWidget* parent /*= NULL*/ )
     : QWizard( parent )
-    , m_projectManager( projectManager )
 {
     // Create Wizard
 
@@ -101,8 +100,9 @@ ProjectWizard::accept()
     if ( currentId() == Page_Video )
     {
         Settings* preferences = Core::getInstance()->settings();
+
+        Project::create( field( "projectName" ).toString(), field( "projectPath" ).toString() );
         Settings* projectPreferences = Project::getInstance()->settings();
-        m_projectManager->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
 
         preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
 
@@ -120,7 +120,7 @@ ProjectWizard::accept()
 void
 ProjectWizard::reject()
 {
-    if ( m_projectManager->hasProjectLoaded() )
+    if ( Project::isProjectLoaded() )
         return QWizard::reject();
     qApp->quit();
 }

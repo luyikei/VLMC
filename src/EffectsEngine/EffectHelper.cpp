@@ -22,7 +22,7 @@
 
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectUser.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Workflow/MainWorkflow.h"
 
 EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64 end,

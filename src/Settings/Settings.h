@@ -24,7 +24,7 @@
 #define SETTINGSMANAGER_H
 
 #include "Main/Core.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "SettingValue.h"
 
 #include <QString>

@@ -34,7 +34,7 @@
 #include <QUrl>
 #include <QNetworkProxy>
 #include "Main/Core.h"
-#include "Main/Project.h"
+#include "Project/Project.h"
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
@@ -85,8 +85,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     //All preferences have been created: restore them:
     Core::getInstance()->settings()->load();
 
-    Project::getInstance()->projectManager()->setProjectManagerUi( new GUIProjectManager );
-
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
     createGlobalPreferences();
@@ -110,7 +108,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( Project::getInstance()->projectManager(), SIGNAL( projectUpdated( const QString&, bool ) ),
+    connect( Project::getInstance(), SIGNAL( projectUpdated( const QString&, bool ) ),
              this, SLOT( projectUpdated( const QString&, bool ) ) );
 
     // Undo/Redo
@@ -153,7 +151,7 @@ MainWindow::showWizard()
 {
     if ( m_wizard == NULL )
     {
-        m_wizard = new ProjectWizard( Project::getInstance()->projectManager(), this );
+        m_wizard = new ProjectWizard( this );
         m_wizard->setModal( true );
     }
     m_wizard->show();
@@ -330,13 +328,13 @@ MainWindow::initVlmcPreferences()
 void
 MainWindow::on_actionSave_triggered()
 {
-    Project::getInstance()->projectManager()->save();
+    Project::getInstance()->save();
 }
 
 void
 MainWindow::on_actionSave_As_triggered()
 {
-    Project::getInstance()->projectManager()->saveAs();
+    Project::getInstance()->saveAs();
 }
 
 void
@@ -347,7 +345,7 @@ MainWindow::on_actionLoad_Project_triggered()
                                     "", tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
-    Project::getInstance()->projectManager()->loadProject( fileName );
+    Project::load( fileName );
 }
 
 void
@@ -753,7 +751,7 @@ MainWindow::saveSettings()
     settings->setValue( "private/MainWindowState", saveState() );
     settings->setValue( "private/CleanQuit", true );
     settings->save();
-    Project::getInstance()->projectManager()->save();
+    Project::getInstance()->save();
     return true;
 }
 
@@ -820,7 +818,7 @@ MainWindow::restoreSession()
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if ( res == QMessageBox::Yes )
         {
-            if ( Project::getInstance()->projectManager()->loadEmergencyBackup() == true )
+            if ( Project::getInstance()->loadEmergencyBackup() == true )
                 ret = true;
             else
                 QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
