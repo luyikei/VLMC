@@ -38,6 +38,7 @@ class VLCBackend : public IBackend, public Singleton<VLCBackend>
 {
     public:
         VLCBackend();
+        virtual ~VLCBackend();
         virtual ISource*        createSource( const char* path );
         virtual IMemorySource*  createMemorySource();
         virtual void            setLogHandler( void* data, LogHandler logHandler );

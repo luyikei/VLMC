@@ -53,6 +53,11 @@ VLCBackend::VLCBackend()
     assert( m_vlcInstance != NULL );
 }
 
+VLCBackend::~VLCBackend()
+{
+    delete m_vlcInstance;
+}
+
 ISource*
 VLCBackend::createSource(const char *path)
 {
