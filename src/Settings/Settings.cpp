@@ -95,6 +95,8 @@ Settings::save( QXmlStreamWriter& project ) const
             continue ;
         project.writeStartElement( "setting" );
         project.writeAttribute( "key", (*it)->key() );
+        if ( (*it)->get().canConvert<QString>() == false )
+            vlmcWarning() << "Can't serialize" << (*it)->key();
         project.writeAttribute( "value", (*it)->get().toString() );
         project.writeEndElement();
     }
