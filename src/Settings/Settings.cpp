@@ -149,6 +149,7 @@ Settings::save() const
         return ;
     QByteArray          settingsContent;
     QXmlStreamWriter    streamWriter( &settingsContent );
+    streamWriter.setAutoFormatting( true );
     save( streamWriter );
     m_settingsFile->open( QFile::WriteOnly );
     m_settingsFile->write( settingsContent );
