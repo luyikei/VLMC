@@ -772,12 +772,21 @@ MainWindow::closeEvent( QCloseEvent* e )
 }
 
 void
-MainWindow::projectUpdated( const QString& projectName, bool savedStatus )
+MainWindow::projectUpdated( const QString& projectName )
 {
     QString title = tr( "VideoLAN Movie Creator" );
     title += " - ";
     title += projectName;
-    if ( savedStatus == false )
+    setWindowTitle( title );
+}
+
+void
+MainWindow::cleanStateChanged( bool isClean )
+{
+    QString title = windowTitle();
+    if ( isClean == true )
+        title.replace(" *", "");
+    else
         title += " *";
     setWindowTitle( title );
 }

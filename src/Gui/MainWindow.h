@@ -155,7 +155,8 @@ private slots:
     void                    on_actionCrash_triggered();
     void                    on_actionImport_triggered();
     void                    toolButtonClicked( QAction *action );
-    void                    projectUpdated( const QString& projectName, bool savedStatus );
+    void                    projectUpdated(const QString& projectName);
+    void                    cleanStateChanged( bool isClean );
     void                    canUndoChanged( bool canUndo );
     void                    canRedoChanged( bool canRedo );
 

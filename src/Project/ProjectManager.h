@@ -162,7 +162,7 @@ signals:
      *      - The clean state has changed
      *      - The revision (if activated) has changed
      */
-    void            projectUpdated( const QString& projectName, bool savedState );
+    void            projectUpdated( const QString& projectName );
 
     /**
      *  \brief      Used to signal that the project has been saved.
