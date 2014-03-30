@@ -45,7 +45,7 @@ Library::Library( Workspace *workspace , ProjectManager *projectManager )
     , m_workspace( workspace )
 {
     connect( this, SIGNAL( cleanStateChanged( bool ) ),
-             projectManager, SLOT( cleanChanged( bool ) ) );
+             projectManager, SLOT( libraryCleanChanged( bool ) ) );
 }
 
 void

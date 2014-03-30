@@ -142,16 +142,21 @@ protected:
     QString                 m_projectDescription;
     QDomDocument*           m_domDocument;
     bool                    m_needSave;
+    bool                    m_libraryCleanState;
     QTimer*                 m_timer;
     IProjectManagerUiCb*    m_projectManagerUi;
     Settings*               m_projectSettings;
     Settings*               m_vlmcSettings;
 
+public slots:
+    void            cleanChanged( bool val );
+    void            libraryCleanChanged( bool val );
+
+
 private slots:
     void            loadWorkflow();
     void            automaticSaveEnabledChanged( const QVariant& enabled );
     void            automaticSaveIntervalChanged( const QVariant& interval );
-    void            cleanChanged( bool val );
     void            projectNameChanged( const QVariant& projectName );
     void            autoSaveRequired();
 
@@ -170,6 +175,13 @@ signals:
      *  Right now, it is only used by the undo stack to flag the current state as clean.
      */
     void            projectSaved();
+
+    /**
+      * @brief cleanStateChanged    Emited when the clean state changes.
+      *
+      * This state is a combination of both library & undoStack clean states.
+      */
+    void            cleanStateChanged( bool value );
 
     /**
      * @brief projectLoaded Emited when a project is loaded (which also include a project

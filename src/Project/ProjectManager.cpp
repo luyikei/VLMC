@@ -50,6 +50,7 @@ const QString   ProjectManager::backupSuffix = "~";
 ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSettings )
     : m_projectFile( NULL )
     , m_needSave( false )
+    , m_libraryCleanState( true )
     , m_projectSettings( projectSettings )
     , m_vlmcSettings( vlmcSettings )
 {
@@ -273,8 +274,20 @@ ProjectManager::automaticSaveIntervalChanged( const QVariant& val )
 void
 ProjectManager::cleanChanged( bool val )
 {
-    m_needSave = !val;
-    emit projectUpdated( projectName() );
+    // This doesn't have to be different since we can force needSave = true when loading
+    // a backup project file. This definitely needs testing though
+    m_needSave = val;
+    if ( m_libraryCleanState == m_needSave )
+        emit cleanStateChanged( val );
+}
+
+void
+ProjectManager::libraryCleanChanged(bool val)
+{
+    Q_ASSERT( m_libraryCleanState != val);
+    m_libraryCleanState = val;
+    if ( m_libraryCleanState == m_needSave )
+        emit cleanStateChanged( val );
 }
 
 void
