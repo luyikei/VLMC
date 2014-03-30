@@ -407,8 +407,6 @@ ProjectManager::closeProject()
     m_projectFile = NULL;
     m_needSave = false;
     m_projectName = QString();
-    //This one is for every part that need to clean something when the project is closed.
-    emit projectClosed();
     //This one is for the mainwindow, to update the title bar
     Project::getInstance()->undoStack()->clear();
     emit projectUpdated( projectName(), true );

@@ -57,7 +57,7 @@ class   MainWorkflow : public QObject
     Q_OBJECT
 
     public:
-        MainWorkflow( ProjectManager* projectManager,  int trackCount = 64 );
+        MainWorkflow( int trackCount = 64 );
         ~MainWorkflow();
 
         /**

@@ -170,7 +170,6 @@ signals:
      *  Right now, it is only used by the undo stack to flag the current state as clean.
      */
     void            projectSaved();
-    void            projectClosed();
 
     /**
      * @brief projectLoaded Emited when a project is loaded (which also include a project

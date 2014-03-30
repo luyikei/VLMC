@@ -35,7 +35,7 @@ Project::Project()
     m_settings = new Settings( QString() );
     m_projectManager = new ProjectManager( m_settings, Core::getInstance()->settings() );
     m_undoStack = new QUndoStack;
-    m_workflow = new MainWorkflow( m_projectManager );
+    m_workflow = new MainWorkflow();
     m_workspace = new Workspace( m_settings );
     m_library = new Library( m_workspace, m_projectManager );
 

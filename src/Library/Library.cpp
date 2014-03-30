@@ -44,8 +44,6 @@ Library::Library( Workspace *workspace , ProjectManager *projectManager )
     : m_cleanState( true )
     , m_workspace( workspace )
 {
-    connect( projectManager, SIGNAL( projectClosed() ),
-             this, SLOT( clear() ) );
     connect( this, SIGNAL( cleanStateChanged( bool ) ),
              projectManager, SLOT( cleanChanged( bool ) ) );
 }
