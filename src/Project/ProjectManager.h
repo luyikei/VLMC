@@ -83,16 +83,23 @@ class   ProjectManager : public QObject
     Q_DISABLE_COPY( ProjectManager )
 
 public:
-    static const QString    unNamedProject;
-    static const QString    unSavedProject;
-    static const QString    backupSuffix;
+    static const QString            unNamedProject;
+    static const QString            unSavedProject;
+    static const QString            backupSuffix;
+    struct RecentProject
+    {
+        QString name;
+        QString filePath;
+    };
+
+    typedef QList<RecentProject>    RecentProjectsList;
 
     ProjectManager( Settings *projectSettings , Settings *vlmcSettings );
     ~ProjectManager();
 
     void            setProjectManagerUi( IProjectManagerUiCb* projectManagerUi );
-    void            removeProject( const QString& fileName );
-    QStringList     recentsProjects() const;
+    void            removeProject( const QString& projectPath );
+    const RecentProjectsList&   recentsProjects() const;
     bool            closeProject();
 
     void            save();
@@ -119,7 +126,7 @@ private:
      */
     void            saveTimeline(QXmlStreamWriter& project);
     static bool     isBackupFile( const QString& projectFile );
-    void            appendToRecentProject( const QString& projectName );
+    void            appendToRecentProject(const QString& projectName , const QString &projectPath);
     /**
      *  \brief      Get the project name
      *
@@ -134,10 +141,16 @@ private:
     void            failedToLoad( const QString& reason ) const;
     void            loadTimeline( const QDomElement& ){}
     QString         createAutoSaveOutputFileName( const QString& baseName ) const;
+    void            removeFromRecentProjects( const QString& projectPath );
+    QString         flattenProjectList() const;
+    void            loadRecentProjects();
+
 
 protected:
     QFile*                  m_projectFile;
-    QStringList             m_recentsProjects;
+    // We list recent projects as a list of [ProjectName,ProjectPath].
+    // Since this is handled as a QVariant, arrays don't work.
+    RecentProjectsList      m_recentsProjects;
     QString                 m_projectName;
     QString                 m_projectDescription;
     QDomDocument*           m_domDocument;

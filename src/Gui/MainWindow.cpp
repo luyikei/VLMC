@@ -324,7 +324,8 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-    VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/RecentsProjects", "" );
+    Core::getInstance()->settings()->createVar( SettingValue::String, "private/RecentsProjects", "",
+                                                "", "", SettingValue::Private );
 
     Core::getInstance()->settings()->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),

@@ -63,7 +63,6 @@ class   SettingValue : public QObject
             Runtime         = 1 << 5, ///< Defines a variable that is not meant to be saved
         };
         Q_DECLARE_FLAGS( Flags, Flag );
-
         /**
          *  \brief      Constructs a setting value with its default value and description
          *

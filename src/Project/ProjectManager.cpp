@@ -104,6 +104,7 @@ ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSetting
 
     projectSettings->watchValue( "vlmc/ProjectName", this, SLOT(projectNameChanged(QVariant) ) );
 
+    loadRecentProjects();
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
     //connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
@@ -122,7 +123,7 @@ ProjectManager::setProjectManagerUi( IProjectManagerUiCb *projectManagerUi )
 }
 
 
-QStringList
+const ProjectManager::RecentProjectsList&
 ProjectManager::recentsProjects() const
 {
     return m_recentsProjects;
@@ -138,7 +139,7 @@ ProjectManager::loadWorkflow()
     loadTimeline( root );
     if ( m_projectFile != NULL )
     {
-        appendToRecentProject( projectName() );
+        appendToRecentProject( projectName(), m_projectFile->fileName() );
         savedState = true;
     }
     else
@@ -149,12 +150,10 @@ ProjectManager::loadWorkflow()
 }
 
 void
-ProjectManager::removeProject( const QString& project )
+ProjectManager::removeProject( const QString& projectPath )
 {
-    // Remove all occurence of fileName
-    m_recentsProjects.removeAll( project );
-
-    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects );
+    removeFromRecentProjects( projectPath );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, flattenProjectList() );
 }
 
 void
@@ -221,15 +220,46 @@ ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
 }
 
 void
-ProjectManager::appendToRecentProject( const QString& projectName )
+ProjectManager::removeFromRecentProjects(const QString &projectPath)
+{
+    RecentProjectsList::iterator it = m_recentsProjects.begin();
+    RecentProjectsList::iterator ite = m_recentsProjects.end();
+    while ( it != ite )
+    {
+        if ( (*it).filePath == projectPath )
+            it = m_recentsProjects.erase( it );
+        else
+            ++it;
+    }
+}
+
+QString
+ProjectManager::flattenProjectList() const
+{
+    if ( m_recentsProjects.count() == 0 )
+        return QString();
+    QString     res;
+    foreach (RecentProject p, m_recentsProjects)
+    {
+        res += p.name + '#' + p.filePath + '#';
+    }
+    res.chop(1);
+    return res;
+}
+
+void
+ProjectManager::appendToRecentProject( const QString& projectName, const QString& projectPath )
 {
     // Append the item to the recents list
-    m_recentsProjects.removeAll( projectName );
-    m_recentsProjects.prepend( projectName );
+    removeFromRecentProjects( projectName );
+    RecentProject project;
+    project.name = projectName;
+    project.filePath = projectPath;
+    m_recentsProjects.prepend( project );
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, m_recentsProjects );
+    Core::getInstance()->settings()->setValue( SETTINGS_RECENTS, flattenProjectList() );
     Core::getInstance()->settings()->save();
 }
 
@@ -343,7 +373,7 @@ ProjectManager::newProject( const QString &projectName, const QString &workspace
     //Current project file has already been delete/nulled by ProjectManager::closeProject()
     m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
     save();
-    appendToRecentProject( projectName );
+    appendToRecentProject( projectName, m_projectFile->fileName() );
 }
 
 void
@@ -426,6 +456,32 @@ ProjectManager::autoSaveRequired()
     if ( m_projectFile == NULL )
         return ;
     ProjectManager::saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
+}
+
+void
+ProjectManager::loadRecentProjects()
+{
+    QString recentProjects = m_vlmcSettings->value( SETTINGS_RECENTS )->get().toString();
+    const QStringList               recentProjectsList = recentProjects.split( '#' );
+    if ( recentProjectsList.count() == 0 )
+        return ;
+    QStringList::const_iterator     it = recentProjectsList.begin();
+    QStringList::const_iterator     ite = recentProjectsList.end();
+    m_recentsProjects.clear();
+    while ( it != ite )
+    {
+        RecentProject project;
+        project.name = *it;
+        ++it;
+        if ( it == ite )
+        {
+            vlmcWarning() << "Invalid flattened recent projects list.";
+            return ;
+        }
+        project.filePath = *it;
+        ++it;
+        m_recentsProjects.append( project );
+    }
 }
 
 bool

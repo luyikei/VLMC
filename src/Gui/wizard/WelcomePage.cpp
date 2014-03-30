@@ -119,14 +119,13 @@ WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
     ProjectManager* pm = Project::getInstance()->projectManager();
-    QStringList recents = pm->recentsProjects();
+    const ProjectManager::RecentProjectsList& recents = pm->recentsProjects();
 
     for ( int i = 0; i < recents.count(); ++i )
     {
-        QFileInfo fi( recents.at( i ) );
-        QListWidgetItem* item = new QListWidgetItem( fi.fileName() );
-        item->setData( FilePath, fi.absoluteFilePath() );
-
+        ProjectManager::RecentProject project = recents.at( i );
+        QListWidgetItem* item = new QListWidgetItem( project.name );
+        item->setData( FilePath, project.filePath );
         m_ui.projectsListWidget->addItem( item );
     }
 }
