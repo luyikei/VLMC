@@ -136,7 +136,6 @@ private:
      *  \return     The project name.
      */
     QString         projectName() const;
-    QString         outputFileName() const;
 
     void            failedToLoad( const QString& reason ) const;
     void            loadTimeline( const QDomElement& ){}

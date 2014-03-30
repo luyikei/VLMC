@@ -319,12 +319,6 @@ ProjectManager::failedToLoad( const QString &reason ) const
     abort();
 }
 
-QString
-ProjectManager::outputFileName() const
-{
-    return m_projectFile->fileName();
-}
-
 void
 ProjectManager::automaticSaveEnabledChanged( const QVariant& val )
 {
