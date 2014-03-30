@@ -22,7 +22,7 @@
 
 #include "WelcomePage.h"
 
-#include "project/GuiProjectManager.h"
+#include "Project/RecentProjects.h"
 #include "Settings/Settings.h"
 
 #include <QFileDialog>
@@ -118,12 +118,11 @@ void
 WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
-    ProjectManager* pm = Project::getInstance()->projectManager();
-    const ProjectManager::RecentProjectsList& recents = pm->recentsProjects();
+    const RecentProjects::List& recents = Core::getInstance()->recentProjects()->list();
 
     for ( int i = 0; i < recents.count(); ++i )
     {
-        ProjectManager::RecentProject project = recents.at( i );
+        RecentProjects::Project project = recents.at( i );
         QListWidgetItem* item = new QListWidgetItem( project.name );
         item->setData( FilePath, project.filePath );
         m_ui.projectsListWidget->addItem( item );
@@ -171,11 +170,11 @@ WelcomePage::removeProject()
     if ( selected.isEmpty() )
         return;
 
-    const QString project = selected.at( 0 )->data( FilePath ).toString();
-    if ( project.isEmpty() )
+    const QString projectPath = selected.at( 0 )->data( FilePath ).toString();
+    if ( projectPath.isEmpty() )
         return;
 
-    Project::getInstance()->projectManager()->removeProject( project );
+    Core::getInstance()->recentProjects()->remove( projectPath );
     loadRecentsProjects(); // Reload recent projects
 }
 

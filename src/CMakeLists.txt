@@ -36,6 +36,7 @@ SET(VLMC_SRCS
     Project/ProjectManager.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
+	Project/RecentProjects.cpp
     Renderer/ClipRenderer.cpp
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp

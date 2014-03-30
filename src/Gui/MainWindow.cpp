@@ -65,6 +65,7 @@
 
 /* Settings / Preferences */
 #include "project/GuiProjectManager.h"
+#include "Project/RecentProjects.h"
 #include "wizard/ProjectWizard.h"
 #include "Settings/Settings.h"
 #include "LanguageHelper.h"
@@ -78,9 +79,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 {
     m_ui.setupUi( this );
 
-    //We only install message handler here cause it uses configuration.
     Core::getInstance()->logger()->setup();
-
     //Preferences
     initVlmcPreferences();
     //All preferences have been created: restore them:
@@ -324,8 +323,6 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
-    Core::getInstance()->settings()->createVar( SettingValue::String, "private/RecentsProjects", "",
-                                                "", "", SettingValue::Private );
 
     Core::getInstance()->settings()->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),

@@ -35,6 +35,7 @@
 #include <EffectsEngine/EffectsEngine.h>
 #include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
+#include "Project/RecentProjects.h"
 
 Core::Core()
 {
@@ -50,6 +51,7 @@ Core::Core()
     QString configPath = configDir + QDir::separator() + qApp->organizationName()
             + QDir::separator() + qApp->applicationName() + ".conf";
     m_settings = new Settings( configPath );
+    m_recentProjects = new RecentProjects( m_settings );
 }
 
 Core::~Core()
@@ -76,6 +78,12 @@ VlmcLogger*
 Core::logger()
 {
     return m_logger;
+}
+
+RecentProjects*
+Core::recentProjects()
+{
+    return m_recentProjects;
 }
 
 Settings*

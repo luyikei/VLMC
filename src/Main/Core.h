@@ -25,6 +25,7 @@
 
 class EffectsEngine;
 class NotificationZone;
+class RecentProjects;
 class Settings;
 class VlmcLogger;
 
@@ -42,6 +43,7 @@ class Core : public Singleton<Core>
         EffectsEngine*          effectsEngine();
         Settings*               settings();
         VlmcLogger*             logger();
+        RecentProjects*         recentProjects();
 
     private:
         Core();
@@ -50,6 +52,7 @@ class Core : public Singleton<Core>
         EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;
         VlmcLogger*             m_logger;
+        RecentProjects*         m_recentProjects;
 
         friend class Singleton<Core>;
 };
