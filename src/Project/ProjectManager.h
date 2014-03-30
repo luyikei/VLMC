@@ -91,8 +91,6 @@ public:
     ~ProjectManager();
 
     void            setProjectManagerUi( IProjectManagerUiCb* projectManagerUi );
-    void            removeProject( const QString& projectPath );
-    bool            closeProject();
 
     void            save();
     void            saveAs();
@@ -103,42 +101,38 @@ public:
 
     void            loadProject();
     /**
-     *  \brief      Check for a project backup file, and load the appropriate file,
+     *  @brief      Check for a project backup file, and load the appropriate file,
      *              according to the user input.
-     *
+     *  @param fileName     The path of the project file to load. This is expected to be
+     *                      an absolute file path.
      *  if an outdated project backup is found, the used is asked if she wants to delete
      *  it.
      */
     void            loadProject( const QString& fileName );
 private:
+    bool            closeProject();
     void            saveProject( const QString& filename );
-    /**
-     *  \brief      Save the timline.
-     *
-     */
-    void            saveTimeline(QXmlStreamWriter& project);
-    static bool     isBackupFile( const QString& projectFile );
     /**
      *  \brief      Get the project name
      *
      *  The project name will be either the project name given in the project wizard,
-     *  or the filename without the extension. If the project is still unsaved,
-     *  ProjectManager::unSavedProject is returned.
+     *  or the filename without the extension.
      *  \return     The project name.
      */
     QString         projectName() const;
 
-    void            failedToLoad( const QString& reason ) const;
     void            loadTimeline( const QDomElement& ){}
-    QString         createAutoSaveOutputFileName( const QString& baseName ) const;
-
+    /**
+     * @brief checkBackupFile   Check for potential backup files and handle them
+     * @param projectFile       The project file being opened
+     * @return                  A path to a backup project if any. projectFile otherwise.
+     */
+    QString         checkBackupFile( const QString& projectFile );
+    void            initSettings();
 
 protected:
     QFile*                  m_projectFile;
-    // We list recent projects as a list of [ProjectName,ProjectPath].
-    // Since this is handled as a QVariant, arrays don't work.
     QString                 m_projectName;
-    QString                 m_projectDescription;
     QDomDocument*           m_domDocument;
     bool                    m_isClean;
     bool                    m_libraryCleanState;
@@ -148,7 +142,6 @@ protected:
 public slots:
     void            cleanChanged( bool val );
     void            libraryCleanChanged( bool val );
-
 
 private slots:
     void            loadWorkflow();

@@ -41,8 +41,6 @@
 #include "Renderer/WorkflowRenderer.h"
 #include "Project/Workspace.h"
 
-#define SETTINGS_BACKUP "private/EmergencyBackup"
-
 const QString   ProjectManager::unNamedProject = ProjectManager::tr( "Untitled Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
@@ -52,43 +50,7 @@ ProjectManager::ProjectManager( Settings* projectSettings )
     , m_libraryCleanState( true )
     , m_projectSettings( projectSettings )
 {
-    SettingValue    *fps = projectSettings->createVar( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ),
-                                                SettingValue::Clamped );
-    fps->setLimits( 0.1, 120.0 );
-    SettingValue    *width = projectSettings->createVar( SettingValue::Int, "video/VideoProjectWidth", 480,
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
-                             SettingValue::Clamped | SettingValue::EightMultiple );
-    width->setLimits( 32, 2048 );
-    SettingValue    *height = projectSettings->createVar( SettingValue::Int, "video/VideoProjectHeight", 320,
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
-                             SettingValue::Clamped | SettingValue::EightMultiple );
-    height->setLimits( 32, 2048 );
-    projectSettings->createVar( SettingValue::String, "video/AspectRatio", "16/9",
-                                QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
-                                QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ),
-                                SettingValue::Nothing );
-    SettingValue    *sampleRate = projectSettings->createVar( SettingValue::Double, "audio/AudioSampleRate", 44100,
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
-                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate"),
-                             SettingValue::Clamped );
-    sampleRate->setLimits( 11025, 48000 );
-    SettingValue    *audioChannel = projectSettings->createVar( SettingValue::Int, "audio/NbChannels", 2,
-                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
-                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
-                                                             SettingValue::Clamped );
-    audioChannel->setLimits( 2, 2 );
-    projectSettings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
-                                SettingValue::NotEmpty );
-
-    projectSettings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
-
-    projectSettings->watchValue( "vlmc/ProjectName", this, SLOT(projectNameChanged(QVariant) ) );
+    initSettings();
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
     //connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
@@ -96,8 +58,7 @@ ProjectManager::ProjectManager( Settings* projectSettings )
 
 ProjectManager::~ProjectManager()
 {
-    if ( m_projectFile != NULL )
-        delete m_projectFile;
+    delete m_projectFile;
 }
 
 void
@@ -133,7 +94,7 @@ ProjectManager::saveProject( const QString& fileName )
     Project::getInstance()->workflow()->saveProject( project );
     Timeline::getInstance()->renderer()->saveProject( project );
     Core::getInstance()->settings()->save( project );
-    saveTimeline( project );
+    Timeline::getInstance()->save( project );
 
     project.writeEndElement();
     project.writeEndDocument();
@@ -145,40 +106,22 @@ ProjectManager::saveProject( const QString& fileName )
 }
 
 void
-ProjectManager::saveTimeline( QXmlStreamWriter &project )
-{
-    Timeline::getInstance()->save( project );
-}
-
-void
 ProjectManager::emergencyBackup()
 {
     QString     name;
 
     if ( m_projectFile != NULL )
-        name = createAutoSaveOutputFileName( m_projectFile->fileName() );
+        name = m_projectFile->fileName() + ProjectManager::backupSuffix;
     else
-       name = createAutoSaveOutputFileName( QDir::currentPath() + "/unsavedproject" );
+       name = QDir::currentPath() + "/unsavedproject" + ProjectManager::backupSuffix;
     saveProject( name );
-    Core::getInstance()->settings()->setValue( SETTINGS_BACKUP, name );
+    Core::getInstance()->settings()->setValue( "private/EmergencyBackup", name );
 }
 
 bool
 ProjectManager::hasProjectLoaded() const
 {
     return m_projectFile != NULL;
-}
-
-bool
-ProjectManager::isBackupFile( const QString& projectFile )
-{
-    return projectFile.endsWith( ProjectManager::backupSuffix );
-}
-
-QString
-ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
-{
-    return baseName + ProjectManager::backupSuffix;
 }
 
 QString
@@ -216,7 +159,7 @@ ProjectManager::saveAs()
 bool
 ProjectManager::loadEmergencyBackup()
 {
-    const QString lastProject = Core::getInstance()->settings()->value( SETTINGS_BACKUP )->get().toString();
+    const QString lastProject = Core::getInstance()->settings()->value( "private/EmergencyBackup" )->get().toString();
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );
@@ -226,12 +169,69 @@ ProjectManager::loadEmergencyBackup()
     return false;
 }
 
-void
-ProjectManager::failedToLoad( const QString &reason ) const
+QString
+ProjectManager::checkBackupFile(const QString& projectFile)
 {
-    vlmcCritical() << tr( "Failed to load the project file: %1. Aborting." ).arg( reason );
-    // Aren't we over reacting a tiny bit?
-    abort();
+    QString backupFilename = projectFile + ProjectManager::backupSuffix;
+    QFile   autoBackup( backupFilename );
+    if ( autoBackup.exists() == true )
+    {
+        QFileInfo       projectFileInfo( projectFile );
+        QFileInfo       autobackupFileInfo( autoBackup );
+
+        if ( autobackupFileInfo.lastModified() > projectFileInfo.lastModified() )
+        {
+            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldLoadBackupFile() )
+                return backupFilename;
+        }
+        else
+        {
+            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldDeleteOutdatedBackupFile() )
+                autoBackup.remove();
+        }
+    }
+    return projectFile;
+}
+
+void
+ProjectManager::initSettings()
+{
+    SettingValue    *fps = m_projectSettings->createVar( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Frame Per Second used when previewing and rendering the project" ),
+                                                SettingValue::Clamped );
+    fps->setLimits( 0.1, 120.0 );
+    SettingValue    *width = m_projectSettings->createVar( SettingValue::Int, "video/VideoProjectWidth", 480,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video width" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Width resolution of the output video" ),
+                             SettingValue::Clamped | SettingValue::EightMultiple );
+    width->setLimits( 32, 2048 );
+    SettingValue    *height = m_projectSettings->createVar( SettingValue::Int, "video/VideoProjectHeight", 320,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video height" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Height resolution of the output video" ),
+                             SettingValue::Clamped | SettingValue::EightMultiple );
+    height->setLimits( 32, 2048 );
+    m_projectSettings->createVar( SettingValue::String, "video/AspectRatio", "16/9",
+                                QT_TRANSLATE_NOOP("PreferenceWidget", "Video aspect ratio" ),
+                                QT_TRANSLATE_NOOP("PreferenceWidget", "The rendered video aspect ratio" ),
+                                SettingValue::Nothing );
+    SettingValue    *sampleRate = m_projectSettings->createVar( SettingValue::Double, "audio/AudioSampleRate", 44100,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio samplerate" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate"),
+                             SettingValue::Clamped );
+    sampleRate->setLimits( 11025, 48000 );
+    SettingValue    *audioChannel = m_projectSettings->createVar( SettingValue::Int, "audio/NbChannels", 2,
+                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
+                                                             QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
+                                                             SettingValue::Clamped );
+    audioChannel->setLimits( 2, 2 );
+    m_projectSettings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
+                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
+                                SettingValue::NotEmpty );
+    m_projectSettings->watchValue( "vlmc/ProjectName", this, SLOT( projectNameChanged( QVariant ) ) );
+
+    m_projectSettings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
 }
 
 void
@@ -266,8 +266,7 @@ ProjectManager::newProject( const QString &projectName, const QString &workspace
     if ( closeProject() == false )
         return ;
     m_projectName = projectName;
-    emit projectNameChanged( projectName );
-    //Current project file has already been delete/nulled by ProjectManager::closeProject()
+    //Current project file has already been delete/nulled by closeProject()
     m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
     save();
     emit projectLoaded( projectName, m_projectFile->fileName() );
@@ -286,74 +285,54 @@ ProjectManager::loadProject()
 void
 ProjectManager::loadProject( const QString &fileName )
 {
+    if ( fileName.isEmpty() == true )
+        return ;
     QFile   projectFile( fileName );
     //If for some reason this happens... better safe than sorry
     if ( projectFile.exists() == false )
         return ;
 
-    QString fileToLoad = fileName;
-    QString backupFilename = createAutoSaveOutputFileName( fileName );
-    if ( backupFilename.isEmpty() == true )
-        return ;
-    QFile   autoBackup( backupFilename );
-    if ( autoBackup.exists() == true )
-    {
-        QFileInfo       projectFileInfo( projectFile );
-        QFileInfo       autobackupFileInfo( autoBackup );
+    QString fileToLoad = checkBackupFile( fileName );
 
-        if ( autobackupFileInfo.lastModified() > projectFileInfo.lastModified() )
-        {
-            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldLoadBackupFile() )
-                fileToLoad = backupFilename;
-        }
-        else
-        {
-            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldDeleteOutdatedBackupFile() )
-                autoBackup.remove();
-        }
-    }
     if ( closeProject() == false )
         return ;
+
     m_projectFile = new QFile( fileToLoad );
-    QFileInfo       fInfo( fileToLoad );
-    if ( m_projectFile->open( QFile::ReadOnly ) == false )
+    m_domDocument = new QDomDocument;
+
+    if ( m_projectFile->open( QFile::ReadOnly ) == false ||
+         m_domDocument->setContent( m_projectFile ) == false )
     {
-        failedToLoad( tr( "Can't open project file. (%1)" ).arg( m_projectFile->errorString() ) );
+        vlmcCritical() << "Can't open project file" << m_projectFile->errorString();
         delete m_projectFile;
         m_projectFile = NULL;
         return ;
     }
-    m_projectFile->close();
-
-    m_domDocument = new QDomDocument;
-    m_domDocument->setContent( m_projectFile );
-    if ( ProjectManager::isBackupFile( fileToLoad ) == true )
+    if ( fileToLoad.endsWith( ProjectManager::backupSuffix ) == true )
     {
-        //Delete the project file representation, so the next time the user
-        //saves its project, vlmc will ask him where to save it.
+        // Delete the project file representation, so the next time the user
+        // saves its project, vlmc will ask her where to save it.
         delete m_projectFile;
         m_projectFile = NULL;
-        m_isClean = true;
+        m_isClean = false;
     }
 
     QDomElement     root = m_domDocument->documentElement();
 
     //Load settings first, as it contains some informations about the workspace.
-    Project::getInstance()->settings()->setSettingsFile( fInfo.absoluteFilePath() );
+    Project::getInstance()->settings()->setSettingsFile( fileName );
     Project::getInstance()->settings()->load();
-    //FIXME: This line looks fishy
-    Project::getInstance()->settings()->setValue( "vlmc/Workspace", fInfo.absolutePath() );
     Timeline::getInstance()->renderer()->loadProject( root );
     Project::getInstance()->library()->loadProject( root );
+    m_projectFile->close();
 }
-
 
 void
 ProjectManager::autoSaveRequired()
 {
     if ( m_projectFile == NULL )
         return ;
-    saveProject( createAutoSaveOutputFileName( m_projectFile->fileName() ) );
+    saveProject( m_projectFile->fileName() + ProjectManager::backupSuffix );
 }
 
 bool
@@ -373,10 +352,7 @@ ProjectManager::closeProject()
     m_projectFile = NULL;
     m_isClean = true;
     m_projectName = QString();
-    //This one is for the mainwindow, to update the title bar
     Project::getInstance()->undoStack()->clear();
     emit projectUpdated( projectName() );
     return true;
 }
-
-#undef SETTINGS_BACKUP
