@@ -34,6 +34,7 @@
 #include "Project/ProjectManager.h"
 #include "Main/Project.h"
 #include "Backend/IBackend.h"
+#include "Main/Core.h"
 
 #include "Gui/MainWindow.h"
 #include "Gui/IntroDialog.h"
@@ -194,9 +195,11 @@ int
 VLMCmain( int argc, char **argv )
 {
 #ifdef WITH_GUI
-    return VLMCGuimain( argc, argv );
+    int res = VLMCGuimain( argc, argv );
 #else
-    return VLMCCoremain( argc, argv );
+    int res = VLMCCoremain( argc, argv );
 #endif
+    Core::destroyInstance();
+    return res;
 }
 
