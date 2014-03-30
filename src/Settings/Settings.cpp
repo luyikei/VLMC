@@ -105,6 +105,11 @@ bool
 Settings::load()
 {
     QDomDocument    doc("root");
+    if ( m_settingsFile->open( QFile::ReadOnly ) == false )
+    {
+        vlmcWarning() << "Failed to open settings file" << m_settingsFile->fileName();
+        return false;
+    }
     if ( doc.setContent( m_settingsFile ) == false )
     {
         vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
@@ -114,6 +119,7 @@ Settings::load()
     if ( element.isNull() == true )
     {
         vlmcWarning() << "Invalid settings node";
+        m_settingsFile->close();
         return false ;
     }
     QDomElement s = element.firstChildElement( "setting" );
@@ -132,6 +138,7 @@ Settings::load()
         }
         s = s.nextSiblingElement();
     }
+    m_settingsFile->close();
     return true;
 }
 
