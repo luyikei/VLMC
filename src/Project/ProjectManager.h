@@ -84,7 +84,6 @@ class   ProjectManager : public QObject
 
 public:
     static const QString            unNamedProject;
-    static const QString            unSavedProject;
     static const QString            backupSuffix;
 
 
@@ -164,6 +163,7 @@ signals:
      *      - The revision (if activated) has changed
      */
     void            projectUpdated( const QString& projectName, bool savedState );
+
     /**
      *  \brief      Used to signal that the project has been saved.
      *

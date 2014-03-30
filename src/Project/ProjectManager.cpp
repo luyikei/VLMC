@@ -45,7 +45,6 @@
 #define SETTINGS_BACKUP "private/EmergencyBackup"
 
 const QString   ProjectManager::unNamedProject = ProjectManager::tr( "Untitled Project" );
-const QString   ProjectManager::unSavedProject = ProjectManager::tr( "Unsaved Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
 ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSettings )
@@ -203,15 +202,12 @@ ProjectManager::createAutoSaveOutputFileName( const QString& baseName ) const
 QString
 ProjectManager::projectName() const
 {
-    //FIXME: Can this be true?
     if ( m_projectName.isEmpty() == true )
     {
-        if ( m_projectFile != NULL )
-        {
-            QFileInfo       fInfo( *m_projectFile );
-            return fInfo.baseName();
-        }
-        return ProjectManager::unSavedProject;
+        Q_ASSERT( m_projectFile != NULL );
+
+        QFileInfo       fInfo( *m_projectFile );
+        return fInfo.baseName();
     }
     return m_projectName;
 }
