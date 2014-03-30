@@ -57,11 +57,9 @@ public:
     /**
      * @brief getProjectFile    Ask the user where to save a new project
      * @param defaultPath       A default project location, if any.
-     * @param isOpen            True if the project will be opened, false if it's about to
-     *                          be saved.
      * @return The selected project file
      */
-    virtual QString    getProjectFile( const QString& defaultPath, bool isOpen ) = 0;
+    virtual QString    getProjectFileDestination( const QString& defaultPath ) = 0;
 
     /**
      * @brief shouldLoadBackupFile
@@ -99,7 +97,6 @@ public:
     bool            hasProjectLoaded() const;
     void            newProject( const QString& projectName, const QString &workspacePath );
 
-    void            loadProject();
     /**
      *  @brief      Check for a project backup file, and load the appropriate file,
      *              according to the user input.

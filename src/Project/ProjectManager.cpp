@@ -148,8 +148,8 @@ ProjectManager::saveAs()
 {
     if ( m_projectManagerUi == NULL )
         return ;
-    const QString& fileName = m_projectManagerUi->getProjectFile(
-                m_projectSettings->value( "vlmc/Workspace" )->get().toString(), false );
+    const QString& fileName = m_projectManagerUi->getProjectFileDestination(
+                m_projectSettings->value( "vlmc/Workspace" )->get().toString() );
     if ( fileName.isEmpty() )
         return ;
     saveProject( fileName );
@@ -270,16 +270,6 @@ ProjectManager::newProject( const QString &projectName, const QString &workspace
     m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
     save();
     emit projectLoaded( projectName, m_projectFile->fileName() );
-}
-
-void
-ProjectManager::loadProject()
-{
-    if ( m_projectManagerUi == NULL )
-        return ;
-    const QString workspace = m_projectSettings->value( "vlmc/Workspace" )->get().toString();
-    const QString& fileName = m_projectManagerUi->getProjectFile( workspace, true );
-    loadProject( fileName );
 }
 
 void
