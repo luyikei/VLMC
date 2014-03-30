@@ -46,12 +46,11 @@
 const QString   ProjectManager::unNamedProject = ProjectManager::tr( "Untitled Project" );
 const QString   ProjectManager::backupSuffix = "~";
 
-ProjectManager::ProjectManager( Settings* projectSettings, Settings* vlmcSettings )
+ProjectManager::ProjectManager( Settings* projectSettings )
     : m_projectFile( NULL )
     , m_isClean( true )
     , m_libraryCleanState( true )
     , m_projectSettings( projectSettings )
-    , m_vlmcSettings( vlmcSettings )
 {
     SettingValue    *fps = projectSettings->createVar( SettingValue::Double, "video/VLMCOutputFPS", 29.97,
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Output video FPS" ),
@@ -217,7 +216,7 @@ ProjectManager::saveAs()
 bool
 ProjectManager::loadEmergencyBackup()
 {
-    const QString lastProject = m_vlmcSettings->value( SETTINGS_BACKUP )->get().toString();
+    const QString lastProject = Core::getInstance()->settings()->value( SETTINGS_BACKUP )->get().toString();
     if ( QFile::exists( lastProject ) == true )
     {
         loadProject(  lastProject );

@@ -87,7 +87,7 @@ public:
 
 
 
-    ProjectManager( Settings *projectSettings , Settings *vlmcSettings );
+    ProjectManager( Settings *projectSettings );
     ~ProjectManager();
 
     void            setProjectManagerUi( IProjectManagerUiCb* projectManagerUi );
@@ -144,7 +144,6 @@ protected:
     bool                    m_libraryCleanState;
     IProjectManagerUiCb*    m_projectManagerUi;
     Settings*               m_projectSettings;
-    Settings*               m_vlmcSettings;
 
 public slots:
     void            cleanChanged( bool val );
