@@ -35,6 +35,7 @@
 #include <EffectsEngine/EffectsEngine.h>
 #include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
+#include "Project/AutomaticBackup.h"
 #include "Project/RecentProjects.h"
 
 Core::Core()
@@ -52,10 +53,12 @@ Core::Core()
             + QDir::separator() + qApp->applicationName() + ".conf";
     m_settings = new Settings( configPath );
     m_recentProjects = new RecentProjects( m_settings );
+    m_automaticBackup = new AutomaticBackup( m_settings );
 }
 
 Core::~Core()
 {
+    delete m_automaticBackup;
     delete m_settings;
     delete m_logger;
     delete m_effectsEngine;
@@ -84,6 +87,12 @@ RecentProjects*
 Core::recentProjects()
 {
     return m_recentProjects;
+}
+
+AutomaticBackup*
+Core::automaticBackup()
+{
+    return m_automaticBackup;
 }
 
 Settings*

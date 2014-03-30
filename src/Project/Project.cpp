@@ -26,11 +26,13 @@
 #include <QFileInfo>
 #include <QUndoStack>
 
+#include "AutomaticBackup.h"
 #include "Library/Library.h"
-#include "Workflow/MainWorkflow.h"
-#include "Project/Project.h"
-#include "Project/Workspace.h"
+#include "Project.h"
+#include "RecentProjects.h"
 #include "Settings/Settings.h"
+#include "Workflow/MainWorkflow.h"
+#include "Workspace.h"
 
 #include "Tools/VlmcDebug.h"
 
@@ -100,7 +102,7 @@ Project::workspace()
 //////////////////////////////////////////////////////////////////////////////////////////
 
 bool
-Project::load(const QString& fileName )
+Project::load( const QString& fileName )
 {
     Project* self = getInstance();
     if ( fileName.isEmpty() == true )
@@ -117,6 +119,8 @@ Project::load(const QString& fileName )
     self->loadProject( fileName );
 
     self->connectComponents();
+    Core::getInstance()->automaticBackup()->setProject( self );
+    Core::getInstance()->recentProjects()->setProject( self );
     return true;
 }
 
@@ -129,6 +133,11 @@ Project::create(const QString& projectName, const QString& projectPath )
     Project::destroyInstance();
     self = Project::getInstance();
     self->newProject( projectName, projectPath );
+
+    self->connectComponents();
+    Core::getInstance()->automaticBackup()->setProject( self );
+    Core::getInstance()->recentProjects()->setProject( self );
+
     return true;
 }
 

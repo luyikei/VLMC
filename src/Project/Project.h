@@ -35,6 +35,7 @@ class QString;
 class QUndoStack;
 class QXmlStreamWriter;
 
+class AutomaticBackup;
 class Library;
 class MainWorkflow;
 class ProjectManager;

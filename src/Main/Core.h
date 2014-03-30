@@ -23,6 +23,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+class AutomaticBackup;
 class EffectsEngine;
 class NotificationZone;
 class RecentProjects;
@@ -44,6 +45,7 @@ class Core : public Singleton<Core>
         Settings*               settings();
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
+        AutomaticBackup*        automaticBackup();
 
     private:
         Core();
@@ -53,6 +55,7 @@ class Core : public Singleton<Core>
         Settings*               m_settings;
         VlmcLogger*             m_logger;
         RecentProjects*         m_recentProjects;
+        AutomaticBackup*        m_automaticBackup;
 
         friend class Singleton<Core>;
 };

@@ -55,6 +55,8 @@ AutomaticBackup::setProject( Project* projectManager )
 {
     m_timer->disconnect();
     connect( m_timer, SIGNAL( timeout() ), projectManager, SLOT(autoSaveRequired() ) );
+    connect( projectManager, SIGNAL( destroyed() ), m_timer, SLOT( stop() ) );
+    m_timer->start();
 }
 
 void
