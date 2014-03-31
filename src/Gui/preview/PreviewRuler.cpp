@@ -54,7 +54,6 @@ void
 PreviewRuler::paintEvent( QPaintEvent * event )
 {
     Q_UNUSED( event );
-    Q_ASSERT( m_renderer );
 
     QPainter painter( this );
     QRect marks( 0, 3, width() - 1, MARK_LARGE + 1 );
@@ -63,7 +62,7 @@ PreviewRuler::paintEvent( QPaintEvent * event )
     painter.setBrush( QBrush( QColor( 50, 50, 50 ) ) );
     painter.drawRect( marks );
 
-    if ( m_renderer->length() > 0 )
+    if ( m_renderer != NULL && m_renderer->length() > 0 )
     {
         qreal linesToDraw = 0;
         qreal spacing = 0;
@@ -174,7 +173,7 @@ PreviewRuler::paintEvent( QPaintEvent * event )
 
     int cursorPos;
 
-    if ( m_renderer->length() > 0 )
+    if ( m_renderer != NULL && m_renderer->length() > 0 )
     {
         cursorPos = m_frame * width() / m_renderer->length();
     }
