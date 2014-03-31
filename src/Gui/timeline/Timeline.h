@@ -32,6 +32,7 @@
 #include <QXmlStreamWriter>
 
 class   MainWorkflow;
+class   Project;
 class   TracksScene;
 class   TracksView;
 class   TracksControls;
@@ -62,7 +63,6 @@ public:
 
     void                save( QXmlStreamWriter& project ) const;
     void                load( const QDomElement &root );
-    void                setRenderer( WorkflowRenderer* renderer );
 
 public slots:
     /**
@@ -83,6 +83,8 @@ public slots:
      * \brief Change the currently selected tool.
      */
     void setTool( ToolButtons button );
+
+    void projectLoading( Project* project );
 
 protected:
     virtual void changeEvent( QEvent *e );

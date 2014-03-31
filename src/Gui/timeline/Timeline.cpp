@@ -23,6 +23,7 @@
 #include "Timeline.h"
 
 #include "Project/Project.h"
+#include "Main/Core.h"
 #include "Media/Clip.h"
 #include "Workflow/ClipHelper.h"
 #include "TracksView.h"
@@ -98,20 +99,14 @@ Timeline::Timeline( QWidget *parent )
     connect( m_tracksView, SIGNAL( audioTrackRemoved() ),
              m_tracksControls, SLOT( removeAudioTrack() ) );
 
-    // Frames updates
-    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
-             Qt::QueuedConnection );
-    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_tracksRuler, SLOT( update() ) );
-    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_renderer, SLOT( rulerCursorChanged(qint64)) );
-
     // Cursor position updates
     connect( m_tracksView->tracksCursor(), SIGNAL( cursorPositionChanged( qint64 ) ),
              m_renderer, SLOT( timelineCursorChanged(qint64) ) );
 
     m_tracksView->createLayout();
+
+    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
+             this, SLOT( projectLoading( Project* ) ), Qt::DirectConnection );
 }
 
 Timeline::~Timeline()
@@ -157,6 +152,20 @@ void
 Timeline::setTool( ToolButtons button )
 {
     tracksView()->setTool( button );
+}
+
+void
+Timeline::projectLoading( Project* project )
+{
+    m_renderer = project->workflowRenderer();
+    // Frames updates
+    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
+             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
+             Qt::QueuedConnection );
+    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
+             m_tracksRuler, SLOT( update() ) );
+    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
+             m_renderer, SLOT( rulerCursorChanged(qint64)) );
 }
 
 void
@@ -228,10 +237,4 @@ Timeline::load( const QDomElement &root )
             vlmcWarning() << "No such timeline item:" << uuid;
         elem = elem.nextSiblingElement();
     }
-}
-
-void
-Timeline::setRenderer( WorkflowRenderer* renderer )
-{
-    m_renderer = renderer;
 }

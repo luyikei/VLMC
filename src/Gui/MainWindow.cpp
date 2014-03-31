@@ -847,7 +847,6 @@ MainWindow::onProjectLoading(Project* project)
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
-    m_timeline->setRenderer( project->workflowRenderer() );
     m_projectPreview->setRenderer( project->workflowRenderer() );
 }
 
