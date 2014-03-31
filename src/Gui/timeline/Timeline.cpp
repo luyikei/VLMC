@@ -53,6 +53,7 @@ Timeline::Timeline( QWidget *parent )
 
     connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
              this, SLOT( projectLoading( Project* ) ), Qt::DirectConnection );
+    m_tracksScene = new TracksScene( this );
 }
 
 Timeline::~Timeline()
@@ -78,9 +79,7 @@ Timeline::initialize()
     delete m_tracksControls;
     delete m_tracksRuler;
     delete m_tracksView;
-    delete m_tracksScene;
 
-    m_tracksScene = new TracksScene( this );
     m_tracksView = new TracksView( m_tracksScene, m_mainWorkflow, m_renderer, m_ui.tracksFrame );
     m_tracksView->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_tracksView->scale(1, 1);
