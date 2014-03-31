@@ -55,7 +55,15 @@ class Core : public QObject, public Singleton<Core>
         void                    onProjectLoaded( Project* project );
 
     signals:
-        void                    projectLoaded( Project* project );
+        /**
+         * @brief projectLoaded Will be emited right before a project starts loading.
+         *
+         * When this is emited, all Project related instances are created. The project itself
+         * however won't be loaded (no settings, no media, ...)
+         * This should be used with Qt::DirectConnection in order not to miss any media/clip
+         * loading events.
+         */
+        void                    projectLoading( Project* project );
 
     private:
         Core();

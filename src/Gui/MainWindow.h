@@ -159,7 +159,7 @@ private slots:
     void                    cleanStateChanged( bool isClean );
     void                    canUndoChanged( bool canUndo );
     void                    canRedoChanged( bool canRedo );
-    void                    onProjectLoaded( Project* project );
+    void                    onProjectLoading( Project* project );
 
 signals:
     void                    toolChanged( ToolButtons );

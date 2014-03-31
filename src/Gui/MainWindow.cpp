@@ -81,8 +81,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     m_ui.setupUi( this );
 
     Core::getInstance()->logger()->setup();
-    connect( Core::getInstance(), SIGNAL( projectLoaded( Project* ) ),
-             this, SLOT( onProjectLoaded( Project* ) ) );
+    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
+             this, SLOT( onProjectLoading( Project* ) ), Qt::DirectConnection );
     //Preferences
     initVlmcPreferences();
     //All preferences have been created: restore them:
@@ -833,7 +833,7 @@ MainWindow::canRedoChanged( bool canRedo )
 }
 
 void
-MainWindow::onProjectLoaded(Project* project)
+MainWindow::onProjectLoading(Project* project)
 {
     createProjectPreferences();
     connect( project, SIGNAL( projectUpdated( const QString&, bool ) ), this, SLOT( projectUpdated( const QString&, bool ) ) );
