@@ -120,8 +120,7 @@ Project::load( const QString& fileName )
     self->loadProject( fileName );
 
     self->connectComponents();
-    Core::getInstance()->automaticBackup()->setProject( self );
-    Core::getInstance()->recentProjects()->setProject( self );
+    Core::getInstance()->onProjectLoaded( self );
     return true;
 }
 
@@ -136,8 +135,7 @@ Project::create(const QString& projectName, const QString& projectPath )
     self->newProject( projectName, projectPath );
 
     self->connectComponents();
-    Core::getInstance()->automaticBackup()->setProject( self );
-    Core::getInstance()->recentProjects()->setProject( self );
+    Core::getInstance()->onProjectLoaded( self );
 
     return true;
 }

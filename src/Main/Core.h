@@ -26,6 +26,7 @@
 class AutomaticBackup;
 class EffectsEngine;
 class NotificationZone;
+class Project;
 class RecentProjects;
 class Settings;
 class VlmcLogger;
@@ -46,6 +47,8 @@ class Core : public Singleton<Core>
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
         AutomaticBackup*        automaticBackup();
+
+        void                    onProjectLoaded( Project* project );
 
     private:
         Core();

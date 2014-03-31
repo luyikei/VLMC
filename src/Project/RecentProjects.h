@@ -40,7 +40,6 @@ class RecentProjects : public QObject
         };
         typedef QList<RecentProject>      List;
 
-
         explicit RecentProjects(Settings* vlmcSettings, QObject *parent = 0 );
 
         void            setProject(Project* projectManager );

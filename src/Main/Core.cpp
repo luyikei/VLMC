@@ -95,6 +95,13 @@ Core::automaticBackup()
     return m_automaticBackup;
 }
 
+void
+Core::onProjectLoaded( Project* project )
+{
+    m_automaticBackup->setProject( project );
+    m_recentProjects->setProject( project );
+}
+
 Settings*
 Core::settings()
 {
