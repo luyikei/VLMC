@@ -45,22 +45,20 @@
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 
-WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend, MainWorkflow* mainWorkflow ) :
-            m_mainWorkflow( mainWorkflow ),
-            m_stopping( false ),
-            m_outputFps( 0.0f ),
-            m_aspectRatio( "" ),
-            m_silencedAudioBuffer( NULL ),
-            m_esHandler( NULL ),
-            m_oldLength( 0 ),
-            m_effectFrame( NULL )
+WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend, MainWorkflow* mainWorkflow )
+    : m_mainWorkflow( mainWorkflow )
+    , m_stopping( false )
+    , m_outputFps( 0.0f )
+    , m_aspectRatio( "" )
+    , m_silencedAudioBuffer( NULL )
+    , m_nbChannels( 2 )
+    , m_rate( 48000 )
+    , m_oldLength( 0 )
+    , m_effectFrame( NULL )
 {
     m_source = backend->createMemorySource();
     m_esHandler = new EsHandler;
     m_esHandler->self = this;
-
-    m_nbChannels = 2;
-    m_rate = 48000;
 
     connect( m_mainWorkflow, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
              this, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ) );
