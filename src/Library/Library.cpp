@@ -46,13 +46,13 @@ Library::Library( Workspace *workspace )
 {
 }
 
-void
-Library::loadProject( const QDomElement& doc )
+bool
+Library::load(const QDomDocument& doc )
 {
     const QDomElement   medias = doc.firstChildElement( "medias" );
 
     if ( medias.isNull() == true )
-        return ;
+        return false;
 
     //Add a virtual media, which represents all the clip.
     //This avoid emitting projectLoaded(); before all the clip are actually loaded.
@@ -73,19 +73,20 @@ Library::loadProject( const QDomElement& doc )
         }
         media = media.nextSiblingElement();
     }
-    const QDomElement   clips = doc.firstChildElement( "clips" );
+    const QDomElement clips = doc.firstChildElement( "clips" );
     if ( clips.isNull() == true )
-        return ;
-    load( clips, this );
+        return false;
+    loadContainer( clips, this );
     mediaLoaded( NULL );
     //Mark the state as clean, as we just loaded a project. Otherwise, a media
     //loading triggers a setCleanState(false) which makes sense when modifying
     //project, but not here.
     setCleanState(true);
+    return true;
 }
 
-void
-Library::saveProject( QXmlStreamWriter& project )
+bool
+Library::save( QXmlStreamWriter& project )
 {
     QHash<QUuid, Clip*>::const_iterator     it = m_clips.begin();
     QHash<QUuid, Clip*>::const_iterator     end = m_clips.end();
@@ -98,9 +99,10 @@ Library::saveProject( QXmlStreamWriter& project )
     }
     project.writeEndElement();
     project.writeStartElement( "clips" );
-    save( project );
+    saveContainer( project );
     project.writeEndElement();
     setCleanState( true );
+    return true;
 }
 
 void

@@ -235,12 +235,12 @@ MainWorkflow::getClipHelper( const QUuid &uuid, unsigned int trackId,
 /**
  *  \warning    The mainworkflow is expected to be already cleared by the ProjectManager
  */
-void
-MainWorkflow::loadProject( const QDomElement &root )
+bool
+MainWorkflow::load(const QDomDocument& root )
 {
     QDomElement     project = root.firstChildElement( "workflow" );
     if ( project.isNull() == true )
-        return ;
+        return false;
 
     QDomElement elem = project.firstChildElement();
 
@@ -252,14 +252,14 @@ MainWorkflow::loadProject( const QDomElement &root )
         if ( ok == false )
         {
             vlmcWarning() << "Invalid track number in project file";
-            return ;
+            return false;
         }
         Workflow::TrackType     type;
         int utype = elem.attribute( "type" ).toInt( &ok );
         if ( ok == false || (utype < 0 && utype >= Workflow::NbTrackType ) )
         {
             vlmcWarning() << "Invalid track type";
-            return ;
+            return false;
         }
         type = static_cast<Workflow::TrackType>( utype );
 
@@ -287,7 +287,7 @@ MainWorkflow::loadProject( const QDomElement &root )
                 if ( uuid.isEmpty() == true || startFrame.isEmpty() == true )
                 {
                     vlmcWarning() << "Invalid clip node";
-                    return ;
+                    return false;
                 }
 
                 Clip* c = Project::getInstance()->library()->clip( uuid );
@@ -304,10 +304,11 @@ MainWorkflow::loadProject( const QDomElement &root )
         }
         elem = elem.nextSiblingElement();
     }
+    return true;
 }
 
-void
-MainWorkflow::saveProject( QXmlStreamWriter& project ) const
+bool
+MainWorkflow::save( QXmlStreamWriter& project )
 {
     project.writeStartElement( "workflow" );
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
@@ -315,6 +316,7 @@ MainWorkflow::saveProject( QXmlStreamWriter& project ) const
         m_tracks[i]->save( project );
     }
     project.writeEndElement();
+    return true;
 }
 
 void

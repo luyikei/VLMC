@@ -25,6 +25,7 @@
 
 #include "Main/Core.h"
 #include "Project/Project.h"
+#include "Project/ILoadSave.h"
 #include "SettingValue.h"
 
 #include <QString>
@@ -108,7 +109,7 @@ class QDomElement;
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
-class   Settings
+class   Settings : public ILoadSave
 {
     public:
         typedef QList<SettingValue*>                SettingList;
@@ -121,10 +122,14 @@ class   Settings
         SettingValue*               createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags );
         SettingList                 group( const QString &groupName ) const;
         bool                        load();
-        void                        save() const;
-        void                        save( QXmlStreamWriter& project ) const;
+        bool                        save();
+        bool                        save( QXmlStreamWriter& project );
         bool                        watchValue( const QString &key, QObject* receiver, const char *method, Qt::ConnectionType cType = Qt::AutoConnection );
         void                        setSettingsFile( const QString& settingsFile );
+
+    private:
+        bool                        load( const QDomDocument& document );
+
     private:
         SettingMap                  m_settings;
         mutable QReadWriteLock      m_rwLock;

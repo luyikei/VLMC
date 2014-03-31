@@ -189,14 +189,14 @@ MediaContainer::count() const
 }
 
 void
-MediaContainer::save( QXmlStreamWriter &project )
+MediaContainer::saveContainer( QXmlStreamWriter &project ) const
 {
     foreach ( Clip* c, m_clips.values() )
         c->save( project );
 }
 
-void
-MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
+bool
+MediaContainer::loadContainer( const QDomElement& clips, MediaContainer *parentMC )
 {
     QDomElement clip = clips.firstChildElement();
 
@@ -248,8 +248,9 @@ MediaContainer::load( const QDomElement &clips, MediaContainer *parentMC )
             c->setNotes( notes );
             QDomElement subClips = clip.firstChildElement( "subClips" );
             if ( subClips.isNull() == false )
-                c->getChilds()->load( subClips, this );
+                c->getChilds()->loadContainer( subClips, this );
         }
         clip = clip.nextSiblingElement();
     }
+    return true;
 }

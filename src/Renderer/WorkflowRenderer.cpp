@@ -368,21 +368,23 @@ WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps, Q
          newOutputFps != fps || newAspectRatio != aspect );
 }
 
-void
-WorkflowRenderer::saveProject( QXmlStreamWriter &project ) const
+bool
+WorkflowRenderer::save( QXmlStreamWriter &project )
 {
     project.writeStartElement( "renderer" );
     saveFilters( project );
     project.writeEndElement();
+    return true;
 }
 
-void
-WorkflowRenderer::loadProject( const QDomElement &project )
+bool
+WorkflowRenderer::load(const QDomDocument& project )
 {
     QDomElement     renderer = project.firstChildElement( "renderer" );
     if ( renderer.isNull() == true )
-        return ;
+        return false;
     loadEffects( renderer );
+    return true;
 }
 
 /////////////////////////////////////////////////////////////////////

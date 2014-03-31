@@ -27,6 +27,7 @@
 
 #include <QObject>
 
+#include "ILoadSave.h"
 #include "Tools/Singleton.hpp"
 
 class QDomDocument;
@@ -60,6 +61,7 @@ class Project : public QObject, public Singleton<Project>
         void            saveAs();
         bool            loadEmergencyBackup();
         void            emergencyBackup();
+        bool            registerLoadSave( ILoadSave* loadSave );
 
     private:
         Q_DISABLE_COPY( Project );
@@ -96,7 +98,6 @@ class Project : public QObject, public Singleton<Project>
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
         void                projectNameChanged( const QVariant& projectName );
-        void                loadWorkflow();
         void                autoSaveRequired();
 
     signals:
@@ -133,10 +134,10 @@ class Project : public QObject, public Singleton<Project>
     private:
         QFile*              m_projectFile;
         QString             m_projectName;
-        QDomDocument*       m_domDocument;
         bool                m_isClean;
         bool                m_libraryCleanState;
         IProjectUiCb*       m_projectManagerUi;
+        QList<ILoadSave*>   m_loadSave;
 
     ///////////////////////////////////
     // Dependent components part below:

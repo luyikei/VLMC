@@ -31,6 +31,7 @@
 #define LIBRARY_H
 
 #include "MediaContainer.h"
+#include "Project/ILoadSave.h"
 
 #include <QObject>
 #include <QXmlStreamWriter>
@@ -46,7 +47,7 @@ class Workspace;
  *  \class Library
  *  \brief Library Object that handles public Clips
  */
-class Library : public MediaContainer
+class Library : public MediaContainer, public ILoadSave
 {
     Q_OBJECT
     Q_DISABLE_COPY( Library );
@@ -60,22 +61,15 @@ public:
     bool            isInCleanState() const;
 
 private:
-    void        setCleanState( bool newState );
+    void            setCleanState( bool newState );
+    virtual bool    load( const QDomDocument& project );
+    virtual bool    save( QXmlStreamWriter& project );
 
 private:
     QAtomicInt  m_nbMediaToLoad;
     bool        m_cleanState;
     Workspace*  m_workspace;
 
-public slots:
-    /**
-     *  \brief
-     */
-    void    loadProject( const QDomElement& project );
-    /**
-     *  \brief
-     */
-    void    saveProject( QXmlStreamWriter& project );
 
 private slots:
     void    mediaLoaded( const Media* m );

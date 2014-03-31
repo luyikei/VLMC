@@ -58,12 +58,6 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
 }
 
 void
-MediaLibrary::setMediaContainer( MediaContainer* container )
-{
-
-}
-
-void
 MediaLibrary::changeEvent( QEvent *e )
 {
     QWidget::changeEvent( e );

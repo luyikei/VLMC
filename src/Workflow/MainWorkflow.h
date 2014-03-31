@@ -26,6 +26,7 @@
 
 #include "EffectsEngine/EffectsEngine.h"
 #include <QXmlStreamWriter>
+#include "Project/ILoadSave.h"
 #include "Types.h"
 
 class   Clip;
@@ -52,7 +53,7 @@ class   QReadWriteLock;
 /**
  *  \class  Represent the Timeline backend.
  */
-class   MainWorkflow : public QObject
+class   MainWorkflow : public QObject, public ILoadSave
 {
     Q_OBJECT
 
@@ -280,6 +281,9 @@ class   MainWorkflow : public QObject
         ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
                                                Workflow::TrackType trackType );
 
+        bool                    load( const QDomDocument& project );
+        bool                    save( QXmlStreamWriter& project );
+
     private:
         /// Pre-filled buffer used when there's nothing to render
         Workflow::Frame         *m_blackOutput;
@@ -323,18 +327,6 @@ class   MainWorkflow : public QObject
         void                            tracksEndReached();
 
     public slots:
-        /**
-         *  \brief  load a project based on a QDomElement
-         *
-         *  \param  project             The project node to load.
-         */
-        void                            loadProject( const QDomElement& project );
-        /**
-         *  \brief          Save the project on a XML stream.
-         *
-         *  \param  project The XML stream representing the project
-         */
-        void                            saveProject( QXmlStreamWriter& project ) const;
         /**
          *  \brief      Clear the workflow.
          *

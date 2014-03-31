@@ -241,7 +241,7 @@ Clip::save( QXmlStreamWriter &project )
     if ( m_childs->count() > 0 )
     {
         project.writeStartElement( "subClips" );
-        m_childs->save( project );
+        m_childs->saveContainer( project );
         project.writeEndElement();
     }
     project.writeEndElement();

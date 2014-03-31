@@ -24,6 +24,7 @@
 #define TIMELINE_H
 
 #include "Workflow/ClipHelper.h"
+#include "Project/ILoadSave.h"
 #include "vlmc.h"
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"
@@ -42,7 +43,7 @@ class   WorkflowRenderer;
 /**
  * \brief Entry point of the timeline widget.
  */
-class Timeline : public QWidget
+class Timeline : public QWidget, public ILoadSave
 {
     Q_OBJECT
     Q_DISABLE_COPY( Timeline )
@@ -60,9 +61,6 @@ public:
     /// Return a pointer to the Timeline instance (singleton).
     static Timeline*    getInstance() { return m_instance; }
     WorkflowRenderer    *renderer() { return m_renderer; }
-
-    void                save( QXmlStreamWriter& project ) const;
-    void                load( const QDomElement &root );
 
 public slots:
     /**
@@ -90,7 +88,10 @@ protected:
     virtual void changeEvent( QEvent *e );
 
 private:
-    void    initialize();
+    void                initialize();
+    virtual bool        save( QXmlStreamWriter& project );
+    virtual bool        load( const QDomDocument& root );
+
 
 private:
     Ui::Timeline        m_ui;

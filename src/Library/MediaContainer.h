@@ -102,9 +102,9 @@ public:
      *
      *  \param  project     The QXmlStreamWriter to write into.
      */
-    void        save( QXmlStreamWriter& project );
+    void        saveContainer( QXmlStreamWriter& project ) const;
 
-    void        load( const QDomElement& root, MediaContainer *parent );
+    bool        loadContainer( const QDomElement& clips, MediaContainer *parent );
 
     /**
      *  \return All the loaded Clip

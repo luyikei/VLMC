@@ -24,6 +24,7 @@
 #define WORKFLOWRENDERER_H
 
 #include "GenericRenderer.h"
+#include "Project/ILoadSave.h"
 #include "Backend/ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 
@@ -41,7 +42,7 @@ class   QWidget;
 class   QWaitCondition;
 class   QMutex;
 
-class   WorkflowRenderer : public GenericRenderer
+class   WorkflowRenderer : public GenericRenderer, public ILoadSave
 {
     Q_OBJECT
     Q_DISABLE_COPY( WorkflowRenderer )
@@ -131,8 +132,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         virtual float       getFps() const;
 
-        void                saveProject( QXmlStreamWriter &project ) const;
-        void                loadProject( const QDomElement& project );
     private:
         /**
          *  \brief          This is a subpart of the togglePlayPause( bool ) method
@@ -143,6 +142,9 @@ class   WorkflowRenderer : public GenericRenderer
          *  \sa             togglePlayPause( bool );
          */
         virtual void        startPreview();
+
+        virtual bool        save( QXmlStreamWriter &project );
+        virtual bool        load( const QDomDocument& project );
 
     protected:
         /**

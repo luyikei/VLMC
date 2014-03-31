@@ -54,7 +54,7 @@ Project::Project()
 {
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
-    m_workflow = new MainWorkflow();
+    m_workflow = new MainWorkflow;
     m_workspace = new Workspace( m_settings );
     m_library = new Library( m_workspace );
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
@@ -124,10 +124,10 @@ Project::load( const QString& fileName )
 
     // Now let's start over with a clean state.
     self = getInstance();
-    self->loadProject( fileName );
-
     self->connectComponents();
     Core::getInstance()->onProjectLoaded( self );
+    self->loadProject( fileName );
+
     return true;
 }
 
@@ -159,10 +159,10 @@ Project::loadProject( const QString &fileName )
     QString fileToLoad = checkBackupFile( fileName );
 
     m_projectFile = new QFile( fileToLoad );
-    m_domDocument = new QDomDocument;
+    QDomDocument doc;
 
     if ( m_projectFile->open( QFile::ReadOnly ) == false ||
-         m_domDocument->setContent( m_projectFile ) == false )
+         doc.setContent( m_projectFile ) == false )
     {
         vlmcCritical() << "Can't open project file" << m_projectFile->errorString();
         delete m_projectFile;
@@ -178,13 +178,8 @@ Project::loadProject( const QString &fileName )
         m_isClean = false;
     }
 
-    QDomElement     root = m_domDocument->documentElement();
-
-    //Load settings first, as it contains some informations about the workspace.
-    Project::getInstance()->settings()->setSettingsFile( fileName );
-    Project::getInstance()->settings()->load();
-    Timeline::getInstance()->renderer()->loadProject( root );
-    Project::getInstance()->library()->loadProject( root );
+    foreach (ILoadSave* listener, m_loadSave)
+        listener->load( doc );
     m_projectFile->close();
     return true;
 }
@@ -209,6 +204,10 @@ Project::connectComponents()
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
     //connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
+    registerLoadSave( m_settings );
+    registerLoadSave( m_library );
+    registerLoadSave( m_workflow );
+    registerLoadSave( m_workflowRenderer );
 }
 
 bool
@@ -235,6 +234,7 @@ Project::closeProject()
 void
 Project::save()
 {
+    Q_ASSERT( m_projectFile != NULL );
     saveProject( m_projectFile->fileName() );
 }
 
@@ -340,15 +340,13 @@ Project::saveProject( const QString& fileName )
     project.writeStartDocument();
     project.writeStartElement( "vlmc" );
 
-    Project::getInstance()->library()->saveProject( project );
-    Project::getInstance()->workflow()->saveProject( project );
-    Timeline::getInstance()->renderer()->saveProject( project );
-    Core::getInstance()->settings()->save( project );
-    Timeline::getInstance()->save( project );
+    foreach ( ILoadSave* listener, m_loadSave )
+        listener->save( project );
 
     project.writeEndElement();
     project.writeEndDocument();
 
+    //FIXME: why not m_projectFile?!
     QFile   projectFile( fileName );
     projectFile.open( QFile::WriteOnly );
     projectFile.write( projectString );
@@ -362,6 +360,15 @@ Project::emergencyBackup()
     const QString& name = m_projectFile->fileName() + Project::backupSuffix;
     saveProject( name );
     Core::getInstance()->settings()->setValue( "private/EmergencyBackup", name );
+}
+
+bool
+Project::registerLoadSave( ILoadSave* loadSave )
+{
+    if ( m_projectFile != NULL )
+        return false;
+    m_loadSave.append( loadSave );
+    return true;
 }
 
 bool
@@ -402,20 +409,6 @@ Project::projectNameChanged( const QVariant& name )
     m_projectName = name.toString();
     emit projectUpdated( m_projectName );
 }
-
-void
-Project::loadWorkflow()
-{
-    QDomElement     root = m_domDocument->documentElement();
-
-    Project::getInstance()->workflow()->loadProject( root );
-    //FIXME: This was a no-op after a previous refactoring.
-    //    loadTimeline( root );
-    emit projectLoaded( name(), m_projectFile->fileName() );
-
-    delete m_domDocument;
-}
-
 
 void
 Project::autoSaveRequired()

@@ -181,10 +181,12 @@ Timeline::projectLoading( Project* project )
              m_tracksRuler, SLOT( update() ) );
     connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
              m_renderer, SLOT( rulerCursorChanged(qint64)) );
+
+    project->registerLoadSave( this );
 }
 
-void
-Timeline::save( QXmlStreamWriter &project ) const
+bool
+Timeline::save( QXmlStreamWriter &project )
 {
     project.writeStartElement( "timeline" );
     for ( int i = 0; i < tracksView()->m_scene->items().size(); ++i )
@@ -209,16 +211,17 @@ Timeline::save( QXmlStreamWriter &project ) const
         project.writeEndElement();
     }
     project.writeEndDocument();
+    return true;
 }
 
-void
-Timeline::load( const QDomElement &root )
+bool
+Timeline::load(const QDomDocument& root )
 {
     QDomElement     project = root.firstChildElement( "timeline" );
     if ( project.isNull() == true )
     {
         vlmcCritical() << "No timeline node in the project file";
-        return ;
+        return false;
     }
 
     QDomElement elem = project.firstChildElement();
@@ -252,4 +255,5 @@ Timeline::load( const QDomElement &root )
             vlmcWarning() << "No such timeline item:" << uuid;
         elem = elem.nextSiblingElement();
     }
+    return true;
 }

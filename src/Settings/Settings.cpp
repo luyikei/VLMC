@@ -80,8 +80,8 @@ Settings::setSettingsFile(const QString &settingsFile)
         m_settingsFile = NULL;
 }
 
-void
-Settings::save( QXmlStreamWriter& project ) const
+bool
+Settings::save( QXmlStreamWriter& project )
 {
     QReadLocker lock( &m_rwLock );
 
@@ -101,23 +101,13 @@ Settings::save( QXmlStreamWriter& project ) const
         project.writeEndElement();
     }
     project.writeEndElement();
+    return true;
 }
 
 bool
-Settings::load()
+Settings::load( const QDomDocument& document )
 {
-    QDomDocument    doc("root");
-    if ( m_settingsFile->open( QFile::ReadOnly ) == false )
-    {
-        vlmcWarning() << "Failed to open settings file" << m_settingsFile->fileName();
-        return false;
-    }
-    if ( doc.setContent( m_settingsFile ) == false )
-    {
-        vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
-        return false;
-    }
-    QDomElement     element = doc.firstChildElement( "settings" );
+    QDomElement     element = document.firstChildElement( "settings" );
     if ( element.isNull() == true )
     {
         vlmcWarning() << "Invalid settings node";
@@ -140,15 +130,33 @@ Settings::load()
         }
         s = s.nextSiblingElement();
     }
-    m_settingsFile->close();
     return true;
 }
 
-void
-Settings::save() const
+bool
+Settings::load()
+{
+    QDomDocument    doc("root");
+    if ( m_settingsFile->open( QFile::ReadOnly ) == false )
+    {
+        vlmcWarning() << "Failed to open settings file" << m_settingsFile->fileName();
+        return false;
+    }
+    if ( doc.setContent( m_settingsFile ) == false )
+    {
+        vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
+        return false;
+    }
+    bool res = load( doc );
+    m_settingsFile->close();
+    return res;
+}
+
+bool
+Settings::save()
 {
     if ( m_settingsFile == NULL )
-        return ;
+        return false;
     QByteArray          settingsContent;
     QXmlStreamWriter    streamWriter( &settingsContent );
     streamWriter.setAutoFormatting( true );
@@ -156,6 +164,7 @@ Settings::save() const
     m_settingsFile->open( QFile::WriteOnly );
     m_settingsFile->write( settingsContent );
     m_settingsFile->close();
+    return true;
 }
 
 bool
