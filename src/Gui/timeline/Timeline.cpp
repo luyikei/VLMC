@@ -41,13 +41,44 @@ Timeline*   Timeline::m_instance = NULL;
 
 Timeline::Timeline( QWidget *parent )
     : QWidget( parent )
+    , m_tracksView( NULL )
+    , m_tracksScene( NULL )
+    , m_tracksRuler( NULL )
+    , m_tracksControls( NULL )
     , m_scale( 1.0 )
 {
     Q_ASSERT( m_instance == NULL );
     m_instance = this;
     m_ui.setupUi( this );
 
-    m_mainWorkflow = Project::getInstance()->workflow();
+    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
+             this, SLOT( projectLoading( Project* ) ), Qt::DirectConnection );
+}
+
+Timeline::~Timeline()
+{
+}
+
+void
+Timeline::changeEvent( QEvent *e )
+{
+    switch ( e->type() )
+    {
+    case QEvent::LanguageChange:
+        m_ui.retranslateUi( this );
+        break;
+    default:
+        break;
+    }
+}
+
+void
+Timeline::initialize()
+{
+    delete m_tracksControls;
+    delete m_tracksRuler;
+    delete m_tracksView;
+    delete m_tracksScene;
 
     m_tracksScene = new TracksScene( this );
     m_tracksView = new TracksView( m_tracksScene, m_mainWorkflow, m_renderer, m_ui.tracksFrame );
@@ -104,26 +135,6 @@ Timeline::Timeline( QWidget *parent )
              m_renderer, SLOT( timelineCursorChanged(qint64) ) );
 
     m_tracksView->createLayout();
-
-    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
-             this, SLOT( projectLoading( Project* ) ), Qt::DirectConnection );
-}
-
-Timeline::~Timeline()
-{
-}
-
-void
-Timeline::changeEvent( QEvent *e )
-{
-    switch ( e->type() )
-    {
-    case QEvent::LanguageChange:
-        m_ui.retranslateUi( this );
-        break;
-    default:
-        break;
-    }
 }
 
 void
@@ -158,6 +169,11 @@ void
 Timeline::projectLoading( Project* project )
 {
     m_renderer = project->workflowRenderer();
+    m_mainWorkflow = project->workflow();
+
+    // Initialize child components:
+    initialize();
+
     // Frames updates
     connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),

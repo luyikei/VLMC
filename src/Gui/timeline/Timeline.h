@@ -90,6 +90,9 @@ protected:
     virtual void changeEvent( QEvent *e );
 
 private:
+    void    initialize();
+
+private:
     Ui::Timeline        m_ui;
     TracksView*         m_tracksView;
     TracksScene*        m_tracksScene;
