@@ -23,7 +23,7 @@
 #ifndef GUIPROJECTMANAGER_H
 #define GUIPROJECTMANAGER_H
 
-#include "Project/Project.h"
+#include "Project/ProjectCallbacks.h"
 
 class GUIProjectManager : public IProjectUiCb
 {

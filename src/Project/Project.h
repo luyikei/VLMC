@@ -36,50 +36,12 @@ class QUndoStack;
 class QXmlStreamWriter;
 
 class AutomaticBackup;
+class IProjectUiCb;
 class Library;
 class MainWorkflow;
 class ProjectManager;
 class Settings;
 class Workspace;
-
-class   IProjectUiCb
-{
-public:
-    enum SaveMode
-    {
-        Save,       // Save the project
-        Discard,    // Discard it
-        Cancel      // Don't do anything
-    };
-
-    virtual ~IProjectUiCb() {}
-
-    /**
-     * @brief shouldSaveBeforeClose Ask the user if she wants to save the project in case
-     *                              it's about to be closed
-     * @return True if the project should be saved. False if changes are to be discarded.
-     */
-    virtual SaveMode    shouldSaveBeforeClose() = 0;
-
-    /**
-     * @brief getProjectFile    Ask the user where to save a new project
-     * @param defaultPath       A default project location, if any.
-     * @return The selected project file
-     */
-    virtual QString    getProjectFileDestination( const QString& defaultPath ) = 0;
-
-    /**
-     * @brief shouldLoadBackupFile
-     * @return True if the user wants to load the backup file.
-     */
-    virtual bool    shouldLoadBackupFile() = 0;
-
-    /**
-     * @brief shouldDeleteOutdatedBackupFile
-     * @return True if the user wants to delete this backup file
-     */
-    virtual bool    shouldDeleteOutdatedBackupFile() = 0;
-};
 
 class Project : public QObject, public Singleton<Project>
 {

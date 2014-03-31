@@ -29,6 +29,7 @@
 #include "AutomaticBackup.h"
 #include "Library/Library.h"
 #include "Project.h"
+#include "ProjectCallbacks.h"
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
 #include "Workflow/MainWorkflow.h"
