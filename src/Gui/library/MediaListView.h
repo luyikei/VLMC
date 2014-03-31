@@ -33,6 +33,7 @@ class   Clip;
 class   Media;
 class   MediaContainer;
 class   MediaCellView;
+class   Project;
 class   StackViewController;
 
 class   QWidget;
@@ -44,10 +45,11 @@ class MediaListView : public ListViewController
 public:
     typedef     QHash<QUuid, MediaCellView*>    MediaList;
 
-    MediaListView( StackViewController *nav, MediaContainer *mc );
+    MediaListView( StackViewController *nav );
     virtual ~MediaListView();
 
     const MediaList                 &mediaList() const;
+    void                            setMediaContainer( MediaContainer* container );
 
 private:
     StackViewController             *m_nav;
@@ -70,6 +72,8 @@ private slots:
      */
     void        __clipRemoved( const QUuid& );
     void        newClipLoaded( Clip *clip );
+
+    void        projectLoading( Project* project );
 
 signals:
     void        clipSelected( Clip* );

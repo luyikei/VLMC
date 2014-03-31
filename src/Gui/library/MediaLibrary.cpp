@@ -42,7 +42,7 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
     setAcceptDrops( true );
 
     StackViewController *nav = new StackViewController( m_ui->mediaListContainer );
-    m_mediaListView = new MediaListView( nav, Project::getInstance()->library() );
+    m_mediaListView = new MediaListView( nav );
     nav->pushViewController( m_mediaListView );
 
     connect( m_ui->importButton, SIGNAL( clicked() ),
@@ -55,6 +55,12 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SLOT( viewChanged( ViewController* ) ) );
     connect( m_ui->filterType, SIGNAL( currentIndexChanged( int ) ),
              this, SLOT( filterTypeChanged() ) );
+}
+
+void
+MediaLibrary::setMediaContainer( MediaContainer* container )
+{
+
 }
 
 void

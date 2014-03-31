@@ -24,25 +24,19 @@
 
 #include "Media/Clip.h"
 #include "MediaCellView.h"
-#include "Library/MediaContainer.h"
+#include "Library/Library.h"
+#include "Main/Core.h"
+#include "Project/Project.h"
 #include "StackViewController.h"
 
 #include <QApplication>
 
-MediaListView::MediaListView( StackViewController *nav, MediaContainer *mc ) :
+MediaListView::MediaListView(StackViewController *nav) :
         ListViewController( nav ),
-        m_nav( nav ),
-        m_mediaContainer( mc )
+        m_nav( nav )
 {
-    connect( mc, SIGNAL( newClipLoaded( Clip* ) ),
-             this, SLOT( newClipLoaded( Clip* ) ) );
-    connect( this, SIGNAL( clipRemoved( const QUuid& ) ),
-             mc, SLOT( deleteClip( const QUuid& ) ) );
-    connect( mc, SIGNAL( clipRemoved( const QUuid& ) ),
-             this, SLOT( __clipRemoved( const QUuid& ) ) );
-    connect( mc, SIGNAL( destroyed() ), this, SLOT( deleteLater() ) );
-    foreach ( Clip *clip, mc->clips() )
-        newClipLoaded( clip );
+    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
+             this, SLOT( projectLoading( Project* ) ) );
 }
 
 MediaListView::~MediaListView()
@@ -66,6 +60,12 @@ MediaListView::newClipLoaded( Clip *clip )
     addCell( cell );
     m_cells.insert( clip->uuid(), cell );
     cellSelection( clip->uuid() );
+}
+
+void
+MediaListView::projectLoading( Project* project )
+{
+    setMediaContainer( project->library() );
 }
 
 void
@@ -117,11 +117,25 @@ void
 MediaListView::showSubClips( const QUuid &uuid )
 {
     Clip    *clip = m_mediaContainer->clip( uuid );
-    m_nav->pushViewController( new MediaListView( m_nav, clip->getChilds() ) );
+    MediaListView* view = new MediaListView( m_nav );
+    view->setMediaContainer( clip->getChilds() );
+    m_nav->pushViewController( view );
 }
 
 const MediaListView::MediaList&
 MediaListView::mediaList() const
 {
     return m_cells;
+}
+
+void
+MediaListView::setMediaContainer( MediaContainer* container )
+{
+    m_mediaContainer = container;
+    connect( m_mediaContainer, SIGNAL( newClipLoaded( Clip* ) ),
+             this, SLOT( newClipLoaded( Clip* ) ) );
+    connect( this, SIGNAL( clipRemoved( const QUuid& ) ),
+             m_mediaContainer, SLOT( deleteClip( const QUuid& ) ) );
+    connect( m_mediaContainer, SIGNAL( clipRemoved( const QUuid& ) ),
+             this, SLOT( __clipRemoved( const QUuid& ) ) );
 }

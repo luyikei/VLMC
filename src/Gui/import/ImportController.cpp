@@ -62,7 +62,8 @@ ImportController::ImportController(QWidget *parent) :
     m_ui->previewContainer->setRenderer( m_clipRenderer );
     m_stackNav = new StackViewController( m_ui->stackViewContainer );
     m_temporaryMedias = new MediaContainer;
-    m_mediaListView = new MediaListView( m_stackNav, m_temporaryMedias );
+    m_mediaListView = new MediaListView( m_stackNav );
+    m_mediaListView->setMediaContainer( m_temporaryMedias );
 //    m_tag = new TagWidget( m_ui->tagContainer, 6 );
     m_filesModel = new QFileSystemModel( this );
     m_stackNav->pushViewController( m_mediaListView );

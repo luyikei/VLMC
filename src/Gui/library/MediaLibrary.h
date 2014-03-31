@@ -28,6 +28,7 @@
 #include "ui_MediaLibrary.h"
 class   Clip;
 class   MediaListView;
+class   MediaContainer;
 class   ViewController;
 
 class MediaLibrary : public QWidget
@@ -38,6 +39,8 @@ class MediaLibrary : public QWidget
     public:
         typedef bool    (*Filter)( const Clip*, const QString& filter );
         explicit MediaLibrary( QWidget *parent = 0);
+        void        setMediaContainer( MediaContainer* container );
+
 
     protected:
         void        dragEnterEvent( QDragEnterEvent *event );
