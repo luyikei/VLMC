@@ -36,6 +36,7 @@ class   EffectsListView;
 class   ImportController;
 class   MediaLibrary;
 class   PreviewWidget;
+class   Project;
 class   ProjectWizard;
 class   SettingsDialog;
 class   Timeline;
@@ -128,7 +129,7 @@ private:
     PreviewWidget*          m_clipPreview;
     PreviewWidget*          m_projectPreview;
     WorkflowFileRenderer*   m_fileRenderer;
-    WorkflowRenderer        *m_renderer;
+    WorkflowRenderer*       m_renderer;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;
@@ -159,6 +160,7 @@ private slots:
     void                    cleanStateChanged( bool isClean );
     void                    canUndoChanged( bool canUndo );
     void                    canRedoChanged( bool canRedo );
+    void                    onProjectLoaded( Project* project );
 
 signals:
     void                    toolChanged( ToolButtons );

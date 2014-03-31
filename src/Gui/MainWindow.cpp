@@ -75,6 +75,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     : QMainWindow( parent )
     , m_backend( backend )
     , m_fileRenderer( NULL )
+    , m_projectPreferences( NULL )
     , m_wizard( NULL )
 {
     m_ui.setupUi( this );
@@ -88,7 +89,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     // GUI
     DockWidgetManager::getInstance( this )->setMainWindow( this );
     createGlobalPreferences();
-    createProjectPreferences();
     initializeDockWidgets();
     initToolbar();
     createStatusBar();
@@ -108,17 +108,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( Project::getInstance(), SIGNAL( projectUpdated( const QString&, bool ) ),
-             this, SLOT( projectUpdated( const QString&, bool ) ) );
-
-    // Undo/Redo
-    connect( Project::getInstance()->undoStack(), SIGNAL( canRedoChanged( bool ) ),
-             this, SLOT( canRedoChanged( bool ) ) );
-    connect( Project::getInstance()->undoStack(), SIGNAL( canUndoChanged( bool ) ),
-             this, SLOT( canUndoChanged( bool ) ) );
-    canRedoChanged( Project::getInstance()->undoStack()->canRedo() );
-    canUndoChanged( Project::getInstance()->undoStack()->canUndo() );
-
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     Q_ASSERT( clipRenderer != NULL );
@@ -126,8 +115,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaLibrary, SIGNAL( importRequired() ),
              this, SLOT( on_actionImport_triggered() ) );
-    connect( Project::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
-             clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
+
 
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
@@ -530,6 +518,7 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
+    delete m_projectPreferences;
     m_projectPreferences = new SettingsDialog( Project::getInstance()->settings(), tr( "Project preferences" ), this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
@@ -844,6 +833,22 @@ void
 MainWindow::canRedoChanged( bool canRedo )
 {
     m_ui.actionRedo->setEnabled( canRedo );
+}
+
+void
+MainWindow::onProjectLoaded(Project* project)
+{
+    createProjectPreferences();
+    connect( project, SIGNAL( projectUpdated( const QString&, bool ) ), this, SLOT( projectUpdated( const QString&, bool ) ) );
+
+    // Undo/Redo
+    connect( project->undoStack(), SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
+    connect( project->undoStack(), SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
+    canUndoChanged( project->undoStack()->canUndo() );
+    canRedoChanged( project->undoStack()->canRedo() );
+
+    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
+    connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 }
 
 #ifdef WITH_CRASHBUTTON
