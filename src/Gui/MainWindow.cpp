@@ -81,6 +81,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     m_ui.setupUi( this );
 
     Core::getInstance()->logger()->setup();
+    connect( Core::getInstance(), SIGNAL( projectLoaded( Project* ) ),
+             this, SLOT( onProjectLoaded( Project* ) ) );
     //Preferences
     initVlmcPreferences();
     //All preferences have been created: restore them:
