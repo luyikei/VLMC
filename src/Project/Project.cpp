@@ -27,6 +27,7 @@
 #include <QUndoStack>
 
 #include "AutomaticBackup.h"
+#include "Backend/IBackend.h"
 #include "Library/Library.h"
 #include "Project.h"
 #include "ProjectCallbacks.h"
@@ -56,7 +57,7 @@ Project::Project()
     m_workflow = new MainWorkflow();
     m_workspace = new Workspace( m_settings );
     m_library = new Library( m_workspace );
-
+    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     connectComponents();
 }
 
@@ -80,6 +81,12 @@ MainWorkflow*
 Project::workflow()
 {
     return m_workflow;
+}
+
+WorkflowRenderer*
+Project::workflowRenderer()
+{
+    return m_workflowRenderer;
 }
 
 QUndoStack*

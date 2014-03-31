@@ -46,7 +46,7 @@ class Timeline : public QWidget
     Q_OBJECT
     Q_DISABLE_COPY( Timeline )
 public:
-    explicit Timeline( WorkflowRenderer* renderer, QWidget *parent = 0 );
+    explicit Timeline( QWidget *parent = 0 );
     virtual ~Timeline();
     /// Return a pointer to the TracksView instance.
     TracksView*         tracksView() { return m_tracksView; }
@@ -62,6 +62,7 @@ public:
 
     void                save( QXmlStreamWriter& project ) const;
     void                load( const QDomElement &root );
+    void                setRenderer( WorkflowRenderer* renderer );
 
 public slots:
     /**

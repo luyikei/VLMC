@@ -35,7 +35,7 @@ class   WorkflowFileRenderer : public WorkflowRenderer
     Q_OBJECT
 
 public:
-    WorkflowFileRenderer( Backend::IBackend* backend );
+    WorkflowFileRenderer( Backend::IBackend* backend , MainWorkflow* workflow );
     virtual ~WorkflowFileRenderer();
 
     void                        run(const QString& outputFileName, quint32 width,

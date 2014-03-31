@@ -42,6 +42,7 @@ class MainWorkflow;
 class ProjectManager;
 class Settings;
 class Workspace;
+class WorkflowRenderer;
 
 class Project : public QObject, public Singleton<Project>
 {
@@ -141,9 +142,10 @@ class Project : public QObject, public Singleton<Project>
     // Dependent components part below:
     public:
         Library*            library();
-        MainWorkflow*       workflow();
         QUndoStack*         undoStack();
         Settings*           settings();
+        MainWorkflow*       workflow();
+        WorkflowRenderer*   workflowRenderer();
         Workspace*          workspace();
 
     private:
@@ -152,6 +154,7 @@ class Project : public QObject, public Singleton<Project>
         QUndoStack*         m_undoStack;
         Settings*           m_settings;
         Workspace*          m_workspace;
+        WorkflowRenderer*   m_workflowRenderer;
 
     friend class Singleton<Project>;
 };

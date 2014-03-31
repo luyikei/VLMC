@@ -28,9 +28,9 @@
 
 #include <QTime>
 
-WorkflowFileRenderer::WorkflowFileRenderer( Backend::IBackend* backend )
-    : WorkflowRenderer( backend )
-    ,   m_renderVideoFrame( NULL )
+WorkflowFileRenderer::WorkflowFileRenderer( Backend::IBackend* backend, MainWorkflow* workflow )
+    : WorkflowRenderer( backend, workflow )
+    , m_renderVideoFrame( NULL )
 {
 }
 

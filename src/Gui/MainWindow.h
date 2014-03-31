@@ -129,7 +129,6 @@ private:
     PreviewWidget*          m_clipPreview;
     PreviewWidget*          m_projectPreview;
     WorkflowFileRenderer*   m_fileRenderer;
-    WorkflowRenderer*       m_renderer;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;

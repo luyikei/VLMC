@@ -390,9 +390,7 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_renderer = new WorkflowRenderer( m_backend );
-    m_renderer->initializeRenderer();
-    m_timeline = new Timeline( m_renderer, this );
+    m_timeline = new Timeline( this );
     m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_timeline->show();
     setCentralWidget( m_timeline );
@@ -466,7 +464,6 @@ MainWindow::setupProjectPreview()
                                         QDockWidget::AllDockWidgetFeatures );
 
     m_projectPreview = new PreviewWidget( dockedWidget );
-    m_projectPreview->setRenderer( m_renderer );
     m_projectPreview->setClipEdition( false );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
@@ -582,13 +579,12 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer( m_backend );
+    m_fileRenderer = new WorkflowFileRenderer( m_backend, Project::getInstance()->workflow() );
 
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
 
-    m_fileRenderer->initializeRenderer();
     m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
 
     if ( dialog->exec() == QDialog::Rejected )
@@ -604,6 +600,8 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
+    Project::getInstance()->workflowRenderer()->stop();
+
     RendererSettings *settings = new RendererSettings( shareOnInternet );
 
     if ( settings->exec() == QDialog::Rejected )
@@ -629,7 +627,6 @@ MainWindow::on_actionRender_triggered()
 {
     if ( checkVideoLength() )
     {
-        m_renderer->stop();
         //Setup dialog box for querying render parameters.
         renderVideoSettings( false );
     }
@@ -640,8 +637,6 @@ MainWindow::on_actionShare_On_Internet_triggered()
 {
     if ( checkVideoLength() )
     {
-        m_renderer->stop();
-
         if( !renderVideoSettings( true ) )
             return;
 
@@ -849,6 +844,9 @@ MainWindow::onProjectLoaded(Project* project)
 
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
+
+    m_timeline->setRenderer( project->workflowRenderer() );
+    m_projectPreview->setRenderer( project->workflowRenderer() );
 }
 
 #ifdef WITH_CRASHBUTTON

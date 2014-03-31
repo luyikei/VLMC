@@ -58,15 +58,9 @@ class   WorkflowRenderer : public GenericRenderer
             double              fps; ///< The fps to use for this rendering session.
         };
 
-        WorkflowRenderer( Backend::IBackend *backend );
+        WorkflowRenderer( Backend::IBackend *backend, MainWorkflow* workflow );
         ~WorkflowRenderer();
 
-        /**
-         *  \brief      Initialize the renderer.
-         *
-         *  This will set the imem string, instantiate EsHandlers, connect signals.
-         */
-        void                initializeRenderer();
         /**
          *  \brief          Play or pause the media.
          *

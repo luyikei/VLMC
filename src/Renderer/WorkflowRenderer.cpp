@@ -45,8 +45,8 @@
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 
-WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend ) :
-            m_mainWorkflow( Project::getInstance()->workflow() ),
+WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend, MainWorkflow* mainWorkflow ) :
+            m_mainWorkflow( mainWorkflow ),
             m_stopping( false ),
             m_outputFps( 0.0f ),
             m_aspectRatio( "" ),
@@ -56,11 +56,6 @@ WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend ) :
             m_effectFrame( NULL )
 {
     m_source = backend->createMemorySource();
-}
-
-void
-WorkflowRenderer::initializeRenderer()
-{
     m_esHandler = new EsHandler;
     m_esHandler->self = this;
 

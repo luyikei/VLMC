@@ -38,8 +38,9 @@
 
 Timeline*   Timeline::m_instance = NULL;
 
-Timeline::Timeline( WorkflowRenderer* renderer, QWidget *parent ) :
-    QWidget( parent ), m_scale( 1.0 ), m_renderer( renderer )
+Timeline::Timeline( QWidget *parent )
+    : QWidget( parent )
+    , m_scale( 1.0 )
 {
     Q_ASSERT( m_instance == NULL );
     m_instance = this;
@@ -227,4 +228,10 @@ Timeline::load( const QDomElement &root )
             vlmcWarning() << "No such timeline item:" << uuid;
         elem = elem.nextSiblingElement();
     }
+}
+
+void
+Timeline::setRenderer( WorkflowRenderer* renderer )
+{
+    m_renderer = renderer;
 }
