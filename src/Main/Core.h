@@ -36,10 +36,14 @@ namespace Backend
     class IBackend;
 }
 
+#include <QObject>
+
 #include <Tools/Singleton.hpp>
 
-class Core : public Singleton<Core>
+class Core : public QObject, public Singleton<Core>
 {
+    Q_OBJECT
+
     public:
         Backend::IBackend*      backend();
         EffectsEngine*          effectsEngine();
@@ -50,9 +54,12 @@ class Core : public Singleton<Core>
 
         void                    onProjectLoaded( Project* project );
 
+    signals:
+        void                    projectLoaded( Project* project );
+
     private:
         Core();
-        ~Core();
+        virtual ~Core();
         Backend::IBackend*      m_backend;
         EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;

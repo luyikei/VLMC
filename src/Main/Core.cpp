@@ -100,6 +100,8 @@ Core::onProjectLoaded( Project* project )
 {
     m_automaticBackup->setProject( project );
     m_recentProjects->setProject( project );
+
+    emit projectLoaded( project );
 }
 
 Settings*
