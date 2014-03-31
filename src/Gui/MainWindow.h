@@ -23,6 +23,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+class QUndoView;
+
 #include <QApplication>
 #include <QSlider>
 #include <QToolButton>
@@ -135,7 +137,8 @@ private:
     ProjectWizard*          m_wizard;
     ImportController*       m_importController;
     MediaLibrary            *m_mediaLibrary;
-    EffectsListView         *m_effectsList;
+    EffectsListView*        m_effectsList;
+    QUndoView*              m_undoView;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );

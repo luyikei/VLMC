@@ -413,8 +413,7 @@ MainWindow::setupUndoRedoWidget()
                                       QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                       Qt::AllDockWidgetAreas,
                                       QDockWidget::AllDockWidgetFeatures );
-    QWidget         *undoRedoWidget = new QUndoView( Project::getInstance()->undoStack(), dockedWidget );
-
+    QUndoView       *undoRedoWidget = new QUndoView( dockedWidget );
     DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::TopDockWidgetArea );
 }
 
@@ -843,6 +842,7 @@ MainWindow::onProjectLoading(Project* project)
     connect( project->undoStack(), SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
     canUndoChanged( project->undoStack()->canUndo() );
     canRedoChanged( project->undoStack()->canRedo() );
+    m_undoView->setStack( project->undoStack() );
 
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
