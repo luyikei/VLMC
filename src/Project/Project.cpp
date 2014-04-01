@@ -50,6 +50,7 @@ Project::Project()
     : m_projectFile( NULL )
     , m_isClean( true )
     , m_libraryCleanState( true )
+    , m_projectManagerUi( NULL )
 {
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
