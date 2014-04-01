@@ -413,8 +413,8 @@ MainWindow::setupUndoRedoWidget()
                                       QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
                                       Qt::AllDockWidgetAreas,
                                       QDockWidget::AllDockWidgetFeatures );
-    QUndoView       *undoRedoWidget = new QUndoView( dockedWidget );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, undoRedoWidget, Qt::TopDockWidgetArea );
+    m_undoView = new QUndoView( dockedWidget );
+    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_undoView, Qt::TopDockWidgetArea );
 }
 
 void
