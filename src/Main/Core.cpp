@@ -37,6 +37,7 @@
 #include <Tools/VlmcLogger.h>
 #include "Project/AutomaticBackup.h"
 #include "Project/RecentProjects.h"
+#include "Project/Workspace.h"
 
 Core::Core()
 {
@@ -54,10 +55,12 @@ Core::Core()
     m_settings = new Settings( configPath );
     m_recentProjects = new RecentProjects( m_settings );
     m_automaticBackup = new AutomaticBackup( m_settings );
+    m_workspace = new Workspace( m_settings );
 }
 
 Core::~Core()
 {
+    delete m_workspace;
     delete m_automaticBackup;
     delete m_settings;
     delete m_logger;
@@ -108,4 +111,11 @@ Settings*
 Core::settings()
 {
     return m_settings;
+}
+
+
+Workspace*
+Core::workspace()
+{
+    return m_workspace;
 }

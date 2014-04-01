@@ -52,7 +52,7 @@ Transcoder::~Transcoder()
 void
 Transcoder::transcodeToPs()
 {
-    QString             outputDir = VLMC_PROJECT_GET_STRING( "vlmc/Workspace" );
+    QString             outputDir = VLMC_GET_STRING( "vlmc/Workspace" );
     Backend::ISource*   source = m_media->source();
     delete m_renderer;
     m_renderer = source->createRenderer( m_eventWatcher );

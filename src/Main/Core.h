@@ -30,6 +30,7 @@ class Project;
 class RecentProjects;
 class Settings;
 class VlmcLogger;
+class Workspace;
 
 namespace Backend
 {
@@ -51,6 +52,7 @@ class Core : public QObject, public Singleton<Core>
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
         AutomaticBackup*        automaticBackup();
+        Workspace*              workspace();
 
         void                    onProjectLoaded( Project* project );
 
@@ -74,6 +76,7 @@ class Core : public QObject, public Singleton<Core>
         VlmcLogger*             m_logger;
         RecentProjects*         m_recentProjects;
         AutomaticBackup*        m_automaticBackup;
+        Workspace*              m_workspace;
 
         friend class Singleton<Core>;
 };

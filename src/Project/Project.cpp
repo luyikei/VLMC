@@ -34,7 +34,6 @@
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
 #include "Workflow/MainWorkflow.h"
-#include "Workspace.h"
 
 #include "Tools/VlmcDebug.h"
 
@@ -55,8 +54,7 @@ Project::Project()
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
     m_workflow = new MainWorkflow;
-    m_workspace = new Workspace( m_settings );
-    m_library = new Library( m_workspace );
+    m_library = new Library( Core::getInstance()->workspace() );
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     connectComponents();
 }
@@ -65,7 +63,6 @@ Project::~Project()
 {
     delete m_projectFile;
     delete m_library;
-    delete m_workspace;
     delete m_workflow;
     delete m_undoStack;
     delete m_settings;
@@ -99,12 +96,6 @@ Settings*
 Project::settings()
 {
     return m_settings;
-}
-
-Workspace*
-Project::workspace()
-{
-    return m_workspace;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -312,8 +303,6 @@ Project::initSettings()
                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                 SettingValue::NotEmpty );
     m_settings->watchValue( "vlmc/ProjectName", this, SLOT( projectNameChanged( QVariant ) ) );
-
-    m_settings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
 }
 
 QString

@@ -106,7 +106,6 @@ ProjectWizard::accept()
 
         preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
 
-        projectPreferences->setValue( "vlmc/Workspace", field( "projectPath" ) );
         projectPreferences->setValue( "video/VLMCOutputFPS", field( "fps" ) );
         projectPreferences->setValue( "video/VideoProjectHeight", field( "height" ) );
         projectPreferences->setValue( "video/VideoProjectWidth", field( "width" ) );

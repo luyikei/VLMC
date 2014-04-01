@@ -25,6 +25,7 @@
 #include "ui_MediaCellView.h"
 
 #include "Project/Project.h"
+#include "Main/Core.h"
 #include "Media/Clip.h"
 #include "ClipProperty.h"
 #include "Backend/ISource.h"
@@ -293,10 +294,10 @@ MediaCellView::contextMenuEvent( QContextMenuEvent *event )
         return ;
     if ( copyInWorkspace == selectedAction )
     {
-        if ( Project::getInstance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
+        if ( Core::getInstance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
         {
             QMessageBox::warning( NULL, tr( "Can't copy to workspace" ),
-                                  tr( "Can't copy this media to workspace: %1" ).arg( Project::getInstance()->workspace()->lastError() ) );
+                                  tr( "Can't copy this media to workspace: %1" ).arg( Core::getInstance()->workspace()->lastError() ) );
         }
     }
 }
