@@ -222,12 +222,7 @@ Clip::save( QXmlStreamWriter &project )
     project.writeStartElement( "clip" );
     if ( isRootClip() == true )
     {
-        // This need to go away. That's not the Clip's job, and we don't want to refer the workspace from all clips
-        Q_ASSERT(false);
-//        if ( m_media->isInWorkspace() == true )
-//            project.writeAttribute( "media", Workspace::toWorkspaceDir( m_media ) );
-//        else
-//            project.writeAttribute( "media", m_media->fileInfo()->absoluteFilePath() );
+        project.writeAttribute( "media", m_media->fileInfo()->fileName() );
     }
     else
     {
