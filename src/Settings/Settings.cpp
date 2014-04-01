@@ -111,8 +111,7 @@ Settings::load( const QDomDocument& document )
     if ( element.isNull() == true )
     {
         vlmcWarning() << "Invalid settings node";
-        m_settingsFile->close();
-        return false ;
+        return false;
     }
     QDomElement s = element.firstChildElement( "setting" );
     while ( s.isNull() == false )
