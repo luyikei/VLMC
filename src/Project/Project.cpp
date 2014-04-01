@@ -117,7 +117,6 @@ Project::load( const QString& fileName )
 
     // Now let's start over with a clean state.
     self = getInstance();
-    self->connectComponents();
     Core::getInstance()->onProjectLoaded( self );
     self->loadProject( fileName );
 
@@ -134,7 +133,6 @@ Project::create(const QString& projectName, const QString& projectPath )
     self = Project::getInstance();
     self->newProject( projectName, projectPath );
 
-    self->connectComponents();
     Core::getInstance()->onProjectLoaded( self );
 
     return true;
