@@ -56,6 +56,7 @@ Project::Project()
     m_workflow = new MainWorkflow;
     m_library = new Library( Core::getInstance()->workspace() );
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
+    initSettings();
     connectComponents();
 }
 

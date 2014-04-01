@@ -215,7 +215,7 @@ Timeline::save( QXmlStreamWriter &project )
 }
 
 bool
-Timeline::load(const QDomDocument& root )
+Timeline::load( const QDomDocument& root )
 {
     QDomElement     project = root.firstChildElement( "timeline" );
     if ( project.isNull() == true )
