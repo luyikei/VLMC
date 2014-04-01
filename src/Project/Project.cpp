@@ -171,7 +171,11 @@ Project::loadProject( const QString &fileName )
     }
 
     foreach (ILoadSave* listener, m_loadSave)
-        listener->load( doc );
+        if ( listener->load( doc ) == false )
+        {
+            vlmcCritical() << "Failed to load project";
+            return false;
+        }
     m_projectFile->close();
     return true;
 }
