@@ -90,7 +90,7 @@ class Project : public QObject, public Singleton<Project>
         QString             name();
         bool                closeProject();
         void                saveProject( const QString& filename );
-        void                newProject( const QString& projectName, const QString &workspacePath );
+        void                newProject( const QString& projectName, const QString& projectPath );
 
 
     private slots:

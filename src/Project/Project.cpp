@@ -176,11 +176,11 @@ Project::loadProject( const QString &fileName )
 }
 
 void
-Project::newProject( const QString &projectName, const QString &workspacePath )
+Project::newProject( const QString &projectName, const QString& projectPath )
 {
     m_projectName = projectName;
     //Current project file has already been delete/nulled by closeProject()
-    m_projectFile = new QFile( workspacePath + '/' + "project.vlmc" );
+    m_projectFile = new QFile( projectPath + "/project.vlmc" );
     save();
     emit projectLoaded( projectName, m_projectFile->fileName() );
 }
@@ -234,8 +234,8 @@ Project::saveAs()
 {
     if ( m_projectManagerUi == NULL )
         return ;
-    const QString& fileName = m_projectManagerUi->getProjectFileDestination(
-                m_settings->value( "vlmc/Workspace" )->get().toString() );
+    QFileInfo fInfo( *m_projectFile );
+    const QString& fileName = m_projectManagerUi->getProjectFileDestination( fInfo.absolutePath() );
     if ( fileName.isEmpty() )
         return ;
     saveProject( fileName );
