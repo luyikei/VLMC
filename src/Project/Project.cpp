@@ -204,7 +204,12 @@ Project::connectComponents()
 bool
 Project::closeProject()
 {
-    Q_ASSERT( m_projectFile != NULL );
+    /*
+     *  This (project file being NULL) is only expected to happen when we load the first
+     *  project from the wizard, or through the command line parameter
+     */
+    if ( m_projectFile == NULL )
+        return true;
     if ( m_projectManagerUi != NULL )
     {
         IProjectUiCb::SaveMode mode = m_projectManagerUi->shouldSaveBeforeClose();
