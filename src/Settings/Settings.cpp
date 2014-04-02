@@ -47,20 +47,6 @@ Settings::~Settings()
     delete m_settingsFile;
 }
 
-bool
-Settings::watchValue( const QString &key, QObject* receiver, const char *method, Qt::ConnectionType cType )
-{
-    SettingValue* s = value( key );
-    if ( s != NULL )
-    {
-        QObject::connect( s, SIGNAL( changed( const QVariant& ) ),
-                 receiver, method , cType );
-        return true;
-    }
-    Q_ASSERT_X( false, __FILE__, "watching value without a created variable" );
-    return false;
-}
-
 void
 Settings::setSettingsFile(const QString &settingsFile)
 {

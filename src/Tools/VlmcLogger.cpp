@@ -46,13 +46,9 @@ void
 VlmcLogger::setup()
 {
     //setup log level :
-    {
-        SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
-                                                        "", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
-        logLevel->setLimits((int)Debug, (int)Verbose);
-        // Purposedly destroying the setting value, as we need to use the manager for other operations.
-        //FIXME: Actually I'm not sure for setting the value since this is a private variable.
-    }
+	SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
+													"", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
+	logLevel->setLimits((int)Debug, (int)Verbose);
     QStringList args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
         m_currentLogLevel = VlmcLogger::Debug;
@@ -60,9 +56,8 @@ VlmcLogger::setup()
         m_currentLogLevel = VlmcLogger::Verbose;
     else
         m_currentLogLevel = VlmcLogger::Quiet;
-    Settings* settings = Core::getInstance()->settings();
-    settings->setValue( "private/LogLevel", m_currentLogLevel );
-    settings->watchValue( "private/LogLevel", this, SLOT(logLevelChanged( const QVariant& )), Qt::DirectConnection );
+	logLevel->set( m_currentLogLevel );
+	connect( logLevel, SIGNAL( changed(QVariant) ), this, SLOT( logLevelChanged( QVariant ) ) );
 
     int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
     if ( pos > 0 )

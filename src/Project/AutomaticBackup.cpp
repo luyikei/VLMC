@@ -31,18 +31,18 @@ AutomaticBackup::AutomaticBackup( Settings* vlmcSettings, QObject *parent )
     , m_vlmcSettings( vlmcSettings )
 {
     m_timer = new QTimer( this );
-    m_vlmcSettings->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
-                                 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
-                                             "VLMC will automatically save your project "
-                                             "at a specified interval" ), SettingValue::Nothing );
-    m_vlmcSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                            "between two automatic save" ), SettingValue::Nothing );
+	SettingValue* autoBackup = m_vlmcSettings->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
+									 QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
+									 QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
+														 "VLMC will automatically save your project "
+														 "at a specified interval" ), SettingValue::Nothing );
+	SettingValue* interval = m_vlmcSettings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
+									QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
+									QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
+														"between two automatic save" ), SettingValue::Nothing );
 
-    vlmcSettings->watchValue( "vlmc/AutomaticBackup", this, SLOT( automaticSaveEnabledChanged( QVariant ) ) );
-    vlmcSettings->watchValue( "vlmc/AutomaticBackupInterval", this, SLOT( automaticSaveIntervalChanged( QVariant ) ) );
+	connect( autoBackup, SIGNAL( changed( QVariant ) ), this, SLOT( automaticSaveEnabledChanged( QVariant ) ) );
+	connect( interval, SIGNAL( changed( QVariant ) ), this, SLOT( automaticSaveIntervalChanged( QVariant ) ) );
 }
 
 AutomaticBackup::~AutomaticBackup()

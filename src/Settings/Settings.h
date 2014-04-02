@@ -124,7 +124,6 @@ class   Settings : public ILoadSave
         bool                        load();
         bool                        save();
         bool                        save( QXmlStreamWriter& project );
-        bool                        watchValue( const QString &key, QObject* receiver, const char *method, Qt::ConnectionType cType = Qt::AutoConnection );
         void                        setSettingsFile( const QString& settingsFile );
 
     private:

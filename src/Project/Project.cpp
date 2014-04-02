@@ -307,11 +307,11 @@ Project::initSettings()
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
                                                              SettingValue::Clamped );
     audioChannel->setLimits( 2, 2 );
-    m_settings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
-                                QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
-                                SettingValue::NotEmpty );
-    m_settings->watchValue( "vlmc/ProjectName", this, SLOT( projectNameChanged( QVariant ) ) );
+	SettingValue* pName = m_settings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
+									QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
+									QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
+									SettingValue::NotEmpty );
+	connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
 }
 
 QString

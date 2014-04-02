@@ -251,13 +251,13 @@ MainWindow::initVlmcPreferences()
                           QT_TRANSLATE_NOOP( "PreferenceWidget", "Select the cut/razor tool in the timeline" ), actionCut_mode );
 
     //Setup VLMC Lang. Preferences...
-    VLMC_CREATE_PREFERENCE_LANGUAGE( "vlmc/VLMCLang", "default",
+    SettingValue* lang = VLMC_CREATE_PREFERENCE_LANGUAGE( "vlmc/VLMCLang", "default",
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "Language" ),
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
 
-    Core::getInstance()->settings()->watchValue( "vlmc/VLMCLang",
-                                                LanguageHelper::getInstance(),
-                                                SLOT( languageChanged( const QVariant& ) ) );
+    connect( lang, SIGNAL( changed( QVariant ) ),
+             LanguageHelper::getInstance(), SLOT( languageChanged( const QVariant& ) ) );
+
     //Setup VLMC General Preferences...
     VLMC_CREATE_PREFERENCE_BOOL( "vlmc/ConfirmDeletion", true,
                                  QT_TRANSLATE_NOOP( "PreferenceWidget", "Confirm clip deletion"),

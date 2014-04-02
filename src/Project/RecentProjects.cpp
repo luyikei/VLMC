@@ -33,11 +33,10 @@ RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
     , m_settings( vlmcSettings )
     , m_project( NULL )
 {
-    vlmcSettings->createVar( SettingValue::String, "private/RecentsProjects", "",
+	SettingValue* recentProjects = vlmcSettings->createVar( SettingValue::String, "private/RecentsProjects", "",
                                                 "", "", SettingValue::Private );
 
-    vlmcSettings->watchValue( "private/RecentsProjects",
-                              this, SLOT( loadRecentProjects( QVariant ) ) );
+	connect( recentProjects, SIGNAL( changed( QVariant ) ), this, SLOT( loadRecentProjects( QVariant ) ) );
 }
 
 void
