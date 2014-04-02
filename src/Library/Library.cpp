@@ -94,7 +94,11 @@ Library::save( QXmlStreamWriter& project )
     project.writeStartElement( "medias" );
     while ( it != end )
     {
-        it.value()->getMedia()->save( project );
+        Q_ASSERT( (*it)->isRootClip() == true );
+        const Media* m = (*it)->getMedia();
+        project.writeStartElement( "media" );
+        project.writeAttribute( "mrl", m_workspace->toWorkspacePath( m ) );
+        project.writeEndElement();
         ++it;
     }
     project.writeEndElement();

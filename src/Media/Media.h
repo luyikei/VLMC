@@ -95,8 +95,6 @@ public:
     const Clip*                 baseClip() const { return m_baseClip; }
     void                        setBaseClip( Clip* clip );
 
-    void                        save( QXmlStreamWriter& project );
-
     void                        onMetaDataComputed();
 
     // This has to be called from the GUI thread.

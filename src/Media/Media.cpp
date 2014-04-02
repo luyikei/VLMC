@@ -112,14 +112,6 @@ Media::source() const
 }
 
 void
-Media::save( QXmlStreamWriter& project )
-{
-    project.writeStartElement( "media" );
-    project.writeAttribute( "mrl", m_fileInfo->absoluteFilePath() );
-    project.writeEndElement();
-}
-
-void
 Media::setBaseClip( Clip *clip )
 {
     Q_ASSERT( m_baseClip == NULL );
