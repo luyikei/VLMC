@@ -66,12 +66,12 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="78"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="79"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Silence</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="87"/>
@@ -81,7 +81,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="91"/>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Lier</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/AbstractGraphicsMediaItem.cpp" line="99"/>
@@ -308,7 +308,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/widgets/ui/CrashHandler.ui" line="188"/>
         <source>Crash_Description</source>
-        <translation>Déscription_du crash </translation>
+        <translation>Description du crash </translation>
     </message>
 </context>
 <context>
@@ -344,7 +344,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="14"/>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés des effets</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="72"/>
@@ -513,12 +513,12 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="37"/>
         <source>New project wizard</source>
-        <translation>Nouvel assistant de projet</translation>
+        <translation>Assistant de création de projet</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="38"/>
         <source>Set General options</source>
-        <translation>Configurer les options général</translation>
+        <translation>Configurer les options générales</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="106"/>
@@ -534,17 +534,17 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="114"/>
         <source>The workspace location must be set.</source>
-        <translation>La destination de l&apos;espace de travail doit être configurer.</translation>
+        <translation>L&apos;emplacement de l&apos;espace de travail doit être configuré.</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="145"/>
         <source>Missing workspace location</source>
-        <translation>Destination de l&apos;espace de travail manquante</translation>
+        <translation>L&apos;emplacement de l&apos;espace de travail est manquant</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/GeneralPage.cpp" line="159"/>
         <source>Invalid workspace location</source>
-        <translation>Déstination de l&apos;espace de travail invalide</translation>
+        <translation>L&apos;emplacement de l&apos;espace de travail est invalide</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="14"/>
@@ -564,7 +564,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="69"/>
         <source>Description</source>
-        <translation>Déscription</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="112"/>
@@ -579,7 +579,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/wizard/ui/GeneralPage.ui" line="145"/>
         <source>Project location</source>
-        <translation>Déstination du projet</translation>
+        <translation>Emplacement du projet</translation>
     </message>
 </context>
 <context>
@@ -981,7 +981,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/wizard/OpenPage.cpp" line="35"/>
         <source>Ready to load this project</source>
-        <translation type="unfinished">Prêt à charger ce projet</translation>
+        <translation>Prêt à charger ce projet</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/OpenPage.ui" line="14"/>
@@ -1513,7 +1513,7 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
     <message>
         <location filename="../src/Gui/wizard/ProjectWizard.cpp" line="86"/>
         <source>Choose the appropriate action then click Next to continue.</source>
-        <translation>Choisissez les action approprieés puis cliquez sur suivant.</translation>
+        <translation>Choisissez l&apos;action appropriée puis cliquez sur Suivant.</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ProjectWizard.cpp" line="89"/>
@@ -1531,7 +1531,7 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
     <message>
         <location filename="../src/Commands/Commands.cpp" line="142"/>
         <source>Moving clip</source>
-        <translation>Dépalcer le clip</translation>
+        <translation>Déplacer le clip</translation>
     </message>
     <message>
         <location filename="../src/Tools/Win32BacktraceGenerator.cpp" line="32"/>
@@ -1644,7 +1644,7 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="273"/>
         <source>Preset</source>
-        <translation type="unfinished">Préréglages</translation>
+        <translation>Préréglages</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="155"/>
@@ -1675,12 +1675,12 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
         <location filename="../src/Gui/export/RendererSettings.cpp" line="115"/>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="124"/>
         <source>Invalid parameters</source>
-        <translation>Parametres invalides</translation>
+        <translation>Paramètres invalides</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="116"/>
         <source>Please enter valid rendering parameters</source>
-        <translation>Veuillez entrer des parametres valides</translation>
+        <translation>Veuillez entrer des paramètres de rendus valides</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="125"/>
@@ -1727,7 +1727,7 @@ Are you sure you want to continue?</source>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="129"/>
         <source>Invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur invalide</translation>
     </message>
     <message>
         <location filename="../src/Gui/settings/Settings.cpp" line="130"/>
@@ -1748,32 +1748,32 @@ Are you sure you want to continue?</source>
         <location filename="../src/Gui/MainWindow.cpp" line="523"/>
         <location filename="../src/Gui/MainWindow.cpp" line="556"/>
         <source>General</source>
-        <translation type="unfinished">Général</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="525"/>
         <source>Keyboard</source>
-        <translation type="unfinished">Clavier</translation>
+        <translation>Clavier</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="527"/>
         <source>YouTube</source>
-        <translation type="unfinished">YouTube</translation>
+        <translation>YouTube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="529"/>
         <source>Network</source>
-        <translation type="unfinished">Réseau</translation>
+        <translation>Réseau</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="558"/>
         <source>Video</source>
-        <translation type="unfinished">Vidéo</translation>
+        <translation>Vidéo</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="560"/>
         <source>Audio</source>
-        <translation type="unfinished">Audio</translation>
+        <translation>Audio</translation>
     </message>
 </context>
 <context>
@@ -1891,7 +1891,7 @@ Are you sure you want to continue?</source>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="186"/>
         <source>Description</source>
-        <translation>Déscription</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/ShareOnInternet.ui" line="206"/>
@@ -1983,7 +1983,7 @@ Please check with your video service provider.</source>
     <message>
         <location filename="../src/Gui/library/ui/StackViewNavController.ui" line="33"/>
         <source>Media List</source>
-        <translation type="unfinished">Liste de médias</translation>
+        <translation>Liste de médias</translation>
     </message>
 </context>
 <context>
@@ -2163,7 +2163,7 @@ Please check with your video service provider.</source>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="149"/>
         <source>16/9</source>
-        <translation type="unfinished">16/9</translation>
+        <translation>16/9</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/VideoPage.ui" line="156"/>
@@ -2243,7 +2243,7 @@ Ensuite, cliquez sur suivant pour continuer...</translation>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="145"/>
         <source>Select a project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un fichier projet</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="147"/>
@@ -2268,11 +2268,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This wizard will help you to create a new project, or open an already existing one.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please select your preferred action below then press next.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Bienvenue dans l&apos;assitant de projet. 
-Cet assistant vous aidera a créer un projet ou a ouvrir un projet existant.
+        <translation>Bienvenue dans l&apos;assistant de projet. 
+Cet assistant vous aidera à créer un projet ou à ouvrir un projet existant.
 
-Sélectionnez vos péférences ci-dessous 
-puis cliquez sur suivant</translation>
+Sélectionnez vos péférences ci-dessous puis cliquez sur suivant</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="43"/>
@@ -2297,7 +2296,7 @@ puis cliquez sur suivant</translation>
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
