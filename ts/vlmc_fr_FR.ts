@@ -344,7 +344,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="14"/>
         <source>Effect Properties</source>
-        <translation>Propriétés des effets</translation>
+        <translation>Propriétés de l&apos;effet</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/ui/EffectInstanceWidget.ui" line="72"/>
@@ -427,7 +427,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="73"/>
         <source>Mixer 2</source>
-        <translation>Mixer 2</translation>
+        <translation>Mélangeur 2</translation>
     </message>
     <message>
         <location filename="../src/Gui/effectsengine/EffectWidget.cpp" line="75"/>
@@ -479,7 +479,7 @@ Vous utilisez Qt %4</translation>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="131"/>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="308"/>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de type projet VLMC (*.vlmc)</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="247"/>
@@ -505,7 +505,7 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="306"/>
         <source>Please choose a project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir un projet</translation>
     </message>
 </context>
 <context>
@@ -601,12 +601,12 @@ Vous utilisez Qt %4</translation>
     <message>
         <location filename="../src/Gui/timeline/GraphicsEffectItem.cpp" line="332"/>
         <source>Set color</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix de la couleur</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/GraphicsEffectItem.cpp" line="334"/>
         <source>Effect Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés de l&apos;effet</translation>
     </message>
 </context>
 <context>
@@ -716,7 +716,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="610"/>
         <source>There is nothing to render.</source>
-        <translation>Il n&apos;y a rien a interpéter.</translation>
+        <translation>Il n&apos;y a rien a interpréter.</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="848"/>
@@ -1016,7 +1016,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Gui/settings/PathWidget.cpp" line="47"/>
         <location filename="../src/Gui/settings/PathWidget.cpp" line="73"/>
         <source>Select a path</source>
-        <translation>Choisissez un fichier</translation>
+        <translation>Choisissez un chemin</translation>
     </message>
 </context>
 <context>
@@ -1039,7 +1039,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="189"/>
         <source>Media preview</source>
-        <translation>Apercu du média</translation>
+        <translation>Aperçu du média</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="190"/>
@@ -1154,7 +1154,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="281"/>
         <source>Ask for confirmation before deleting a clip from the timeline</source>
-        <translation>Demander une confirmation avant de supprimer un clip du band de montage</translation>
+        <translation>Demander une confirmation avant de supprimer un clip du banc de montage</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="289"/>
@@ -1164,7 +1164,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="293"/>
         <source>Youtube Developer Key</source>
-        <translation>Clé developpeur Toutube</translation>
+        <translation>Clé developpeur Youtube</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="294"/>
@@ -1224,7 +1224,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="302"/>
         <source>Leave this field empty, password will be stored in unencrypted form.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laisser ce champ vide, le mot de passe sera enregistré dans un format non chiffré</translation>
     </message>
     <message>
         <location filename="../src/Gui/MainWindow.cpp" line="314"/>
@@ -1324,12 +1324,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="58"/>
         <source>Automatic save interval</source>
-        <translation>Interval de sauvegarde automatique</translation>
+        <translation>Intervalle de sauvegarde automatique</translation>
     </message>
     <message>
         <location filename="../src/Gui/project/GuiProjectManager.cpp" line="59"/>
         <source>This is the interval that VLMC will wait between two automatic save</source>
-        <translation>Interval entre deux sauvegardes automatiques</translation>
+        <translation>Intervalle entre deux sauvegardes automatiques</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="55"/>
@@ -1364,7 +1364,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="69"/>
         <source>Video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspect de la vidéo</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="70"/>
@@ -1384,7 +1384,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="77"/>
         <source>Audio channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de canaux audio</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="78"/>
@@ -1483,14 +1483,14 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
 <context>
     <name>ProjectManager</name>
     <message>
-        <location filename="../src/Project/ProjectManager.cpp" line="43"/>
+        <location filename="../src/Project/ProjectManager.cpp" line="47"/>
         <source>Untitled Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projet sans titre</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="44"/>
         <source>Unsaved Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projet non sauvegardé</translation>
     </message>
     <message>
         <location filename="../src/Project/ProjectManager.cpp" line="145"/>
@@ -1604,42 +1604,42 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="230"/>
         <source>QVGA (320x240) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>QVGA (320x240) - 30 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="235"/>
         <source>VGA (640x480) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>VGA (640x480) - 30 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="240"/>
         <source>SVGA (800x600) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>SVGA (800x600) - 30 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="245"/>
         <source>XVGA (1024x768) - 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>XVGA (1024x768) - 30 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="250"/>
         <source>480p NTSC (720x480) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>NTSC (720x480) - 29,97 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="255"/>
         <source>576p PAL (720x576) - 25 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>576p PAL (720x576) - 25 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="260"/>
         <source>720p (1280x720) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>720p (1280x720) - 29,97 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="265"/>
         <source>1080p (1920x1080) - 29.97 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>1080p (1920x1080) - 29,97 images par seconde</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="273"/>
@@ -1649,12 +1649,12 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="155"/>
         <source>H264</source>
-        <translation type="unfinished"></translation>
+        <translation>H264</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.ui" line="174"/>
         <source>AAC</source>
-        <translation type="unfinished"></translation>
+        <translation>AAC</translation>
     </message>
     <message>
         <location filename="../src/Gui/export/RendererSettings.cpp" line="47"/>
@@ -1714,33 +1714,33 @@ Veuillez vérifier si cette erreur n&apos;est pas due à votre installation de V
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="113"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="113"/>
         <source>Restore default?</source>
         <translation>Réinitialiser ?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="114"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="114"/>
         <source>This will restore all settings default value.
 Are you sure you want to continue?</source>
         <translation>Toutes les préférences seront réinitialisées à leurs valeurs par défaut. Êtes vous sur de vouloir continuer ?</translation>
     </message>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="129"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="129"/>
         <source>Invalid value</source>
         <translation>Valeur invalide</translation>
     </message>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="130"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="130"/>
         <source>Can&apos;t save settings due to an invalid value</source>
-        <translation type="unfinished"></translation>
+        <translation>La sauvegarde ne peut être faite à cause d&apos;une valeur invalide</translation>
     </message>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="184"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="184"/>
         <source>Project preferences</source>
         <translation>Préférences du projet</translation>
     </message>
     <message>
-        <location filename="../src/Gui/settings/Settings.cpp" line="186"/>
+        <location filename="../src/Gui/settings/SettingsDialog.cpp" line="186"/>
         <source>VLMC Settings</source>
         <translation>Préférences de l&apos;application</translation>
     </message>
@@ -1751,7 +1751,7 @@ Are you sure you want to continue?</source>
         <translation>Général</translation>
     </message>
     <message>
-        <location filename="../src/Gui/MainWindow.cpp" line="525"/>
+        <location filename="../src/Gui/MainWindow.cpp" line="492"/>
         <source>Keyboard</source>
         <translation>Clavier</translation>
     </message>
@@ -2060,7 +2060,7 @@ Please check with your video service provider.</source>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="94"/>
         <source>Yes, don&apos;t ask me again</source>
-        <translation>Oui, ne me redemendez pas</translation>
+        <translation>Oui, ne me redemandez pas</translation>
     </message>
     <message>
         <location filename="../src/Gui/timeline/TracksScene.cpp" line="96"/>
@@ -2248,7 +2248,7 @@ Ensuite, cliquez sur suivant pour continuer...</translation>
     <message>
         <location filename="../src/Gui/wizard/WelcomePage.cpp" line="147"/>
         <source>VLMC project file(*.vlmc)</source>
-        <translation type="unfinished"></translation>
+        <translation>fichier de type projet VLMC (*.vlmc)</translation>
     </message>
     <message>
         <location filename="../src/Gui/wizard/ui/WelcomePage.ui" line="14"/>
