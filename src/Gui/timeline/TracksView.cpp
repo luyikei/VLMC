@@ -1124,7 +1124,7 @@ TracksView::mousePressEvent( QMouseEvent *event )
     else if ( event->modifiers() & Qt::ShiftModifier && mediaCollisionList.count() == 0 )
     {
         setDragMode( QGraphicsView::RubberBandDrag );
-        if ( !event->modifiers() & Qt::ControlModifier )
+        if ( !(event->modifiers() & Qt::ControlModifier) )
             scene()->clearSelection();
         event->accept();
     }
