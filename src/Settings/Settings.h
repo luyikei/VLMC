@@ -69,8 +69,6 @@ class QDomElement;
         VLMC_CREATE_PROJECT_VAR( SettingValue::Double, key, defaultValue, name, desc, SettingValue::Nothing )
 #define VLMC_CREATE_PROJECT_BOOL( key, defaultValue, name, desc )  \
         VLMC_CREATE_PROJECT_VAR( SettingValue::Bool, key, defaultValue, name, desc, SettingValue::Nothing )
-#define VLMC_CREATE_PROJECT_PATH( key, defaultValue, name, desc )  \
-        VLMC_CREATE_PROJECT_PATH( SettingValue::Path, key, defaultValue, name, desc, SettingValue::Nothing )
 
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
