@@ -40,12 +40,12 @@ RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
 }
 
 void
-RecentProjects::setProject( Project* projectManager )
+RecentProjects::setProject( Project* project )
 {
     if ( m_project != NULL )
         disconnect( m_project, SIGNAL( projectLoaded( QString, QString ) ) );
-    m_project = projectManager;
-    connect( projectManager, SIGNAL( projectLoaded( QString, QString ) ),
+    m_project = project;
+    connect( project, SIGNAL( projectLoaded( QString, QString ) ),
              this, SLOT( projectLoaded( QString, QString ) ) );
 }
 
