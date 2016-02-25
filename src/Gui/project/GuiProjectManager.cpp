@@ -51,26 +51,3 @@ GUIProjectManager::getProjectFileDestination( const QString &defaultPath )
                                   defaultPath, QObject::tr( "VLMC project file(*.vlmc)" ) );
 }
 
-
-
-IProjectUiCb::SaveMode
-GUIProjectManager::shouldSaveBeforeClose()
-{
-    QMessageBox msgBox;
-    msgBox.setText( QObject::tr( "The project has been modified." ) );
-    msgBox.setInformativeText( QObject::tr( "Do you want to save it?" ) );
-    msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
-    msgBox.setDefaultButton( QMessageBox::Save );
-    int     ret = msgBox.exec();
-    switch ( ret )
-    {
-        case QMessageBox::Save:
-            return Save;
-        case QMessageBox::Discard:
-            return Discard;
-        case QMessageBox::Cancel:
-        default:
-            return Cancel;
-    }
-}
-

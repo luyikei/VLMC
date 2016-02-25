@@ -743,10 +743,28 @@ MainWindow::saveSettings()
 void
 MainWindow::closeEvent( QCloseEvent* e )
 {
-    if ( saveSettings() )
-        e->accept();
-    else
-        e->ignore();
+    if ( Core::getInstance()->currentProject()->isClean() == false )
+    {
+        QMessageBox msgBox;
+        msgBox.setText( QObject::tr( "The project has been modified." ) );
+        msgBox.setInformativeText( QObject::tr( "Do you want to save it?" ) );
+        msgBox.setStandardButtons( QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
+        msgBox.setDefaultButton( QMessageBox::Save );
+        int     ret = msgBox.exec();
+        switch ( ret )
+        {
+        case QMessageBox::Save:
+            Core::getInstance()->currentProject()->save();
+            break;
+        case QMessageBox::Discard:
+            break;
+        case QMessageBox::Cancel:
+            e->ignore();
+            return;
+        }
+    }
+    saveSettings();
+    e->accept();
 }
 
 void

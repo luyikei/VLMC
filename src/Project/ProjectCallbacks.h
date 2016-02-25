@@ -38,13 +38,6 @@ public:
     virtual ~IProjectUiCb() {}
 
     /**
-     * @brief shouldSaveBeforeClose Ask the user if she wants to save the project in case
-     *                              it's about to be closed
-     * @return True if the project should be saved. False if changes are to be discarded.
-     */
-    virtual SaveMode    shouldSaveBeforeClose() = 0;
-
-    /**
      * @brief getProjectFile    Ask the user where to save a new project
      * @param defaultPath       A default project location, if any.
      * @return The selected project file

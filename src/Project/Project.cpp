@@ -62,7 +62,7 @@ Project::Project( QFile* projectFile )
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     initSettings();
     connectComponents();
-    loadProject();
+    load();
 }
 
 Project::Project( const QString& projectName, const QString& projectPath )
@@ -86,7 +86,8 @@ Project::Project( const QString& projectName, const QString& projectPath )
 
 Project::~Project()
 {
-    closeProject();
+    Q_ASSERT( m_projectFile != NULL );
+
     delete m_projectFile;
     delete m_library;
     delete m_workflow;
@@ -127,7 +128,7 @@ Project::settings()
 //////////////////////////////////////////////////////////////////////////////////////////
 
 bool
-Project::loadProject()
+Project::load()
 {
     Q_ASSERT( m_projectFile != NULL );
 
@@ -176,29 +177,6 @@ Project::connectComponents()
     registerLoadSave( m_library );
     registerLoadSave( m_workflow );
     registerLoadSave( m_workflowRenderer );
-}
-
-bool
-Project::closeProject()
-{
-    Q_ASSERT( m_projectFile != NULL );
-
-    //FIXME: This is now called from the destructor, so we can't stop the project closing.
-    if ( m_projectManagerUi != NULL )
-    {
-        IProjectUiCb::SaveMode mode = m_projectManagerUi->shouldSaveBeforeClose();
-        if ( mode == IProjectUiCb::Cancel )
-            return false;
-        if ( mode == IProjectUiCb::Save )
-            save();
-    }
-    delete m_projectFile;
-    m_projectFile = NULL;
-    m_isClean = true;
-    m_projectName = QString();
-    Core::getInstance()->currentProject()->undoStack()->clear();
-    emit projectUpdated( name() );
-    return true;
 }
 
 void
@@ -337,6 +315,12 @@ Project::registerLoadSave( ILoadSave* loadSave )
         return false;
     m_loadSave.append( loadSave );
     return true;
+}
+
+bool
+Project::isClean() const
+{
+    return m_isClean;
 }
 
 QFile* Project::emergencyBackupFile()

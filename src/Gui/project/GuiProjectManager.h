@@ -31,7 +31,6 @@ public:
     virtual bool        shouldLoadBackupFile();
     virtual bool        shouldDeleteOutdatedBackupFile();
     virtual QString     getProjectFileDestination( const QString &defaultPath );
-    virtual SaveMode    shouldSaveBeforeClose();
 };
 
 #endif // GUIPROJECTMANAGER_H

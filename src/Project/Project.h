@@ -61,6 +61,7 @@ class Project : public QObject
         void            saveAs();
         void            emergencyBackup();
         bool            registerLoadSave( ILoadSave* loadSave );
+        bool            isClean() const;
 
     public:
         static QFile* emergencyBackupFile();
@@ -74,7 +75,7 @@ class Project : public QObject
          *  if an outdated project backup is found, the used is asked if she wants to delete
          *  it.
          */
-        bool                loadProject();
+        bool                load();
         /**
          * @brief connectComponents     Connects project specific components' signals & slots
          */
@@ -87,7 +88,6 @@ class Project : public QObject
         QString             checkBackupFile( const QString& projectFile );
         void                initSettings();
         QString             name();
-        bool                closeProject();
         void                saveProject( const QString& filename );
         void                newProject( const QString& projectName, const QString& projectPath );
 
