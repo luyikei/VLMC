@@ -269,6 +269,10 @@ ADD_CUSTOM_COMMAND(
 
 ADD_DEFINITIONS( -W -Wall -Wextra )
 
+
+# Ensure we can use some C++11 features
+target_compile_features(vlmc PUBLIC cxx_nullptr cxx_range_for)
+
 IF(UNIX)
     IF (WITH_PROFILING)
         ADD_DEFINITIONS( -pg )
