@@ -44,10 +44,3 @@ GUIProjectManager::shouldDeleteOutdatedBackupFile()
                                   QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok;
 }
 
-QString
-GUIProjectManager::getProjectFileDestination( const QString &defaultPath )
-{
-    return QFileDialog::getSaveFileName( NULL, QObject::tr( "Enter the output file name" ),
-                                  defaultPath, QObject::tr( "VLMC project file(*.vlmc)" ) );
-}
-

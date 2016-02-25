@@ -30,7 +30,6 @@ class GUIProjectManager : public IProjectUiCb
 public:
     virtual bool        shouldLoadBackupFile();
     virtual bool        shouldDeleteOutdatedBackupFile();
-    virtual QString     getProjectFileDestination( const QString &defaultPath );
 };
 
 #endif // GUIPROJECTMANAGER_H

@@ -38,13 +38,6 @@ public:
     virtual ~IProjectUiCb() {}
 
     /**
-     * @brief getProjectFile    Ask the user where to save a new project
-     * @param defaultPath       A default project location, if any.
-     * @return The selected project file
-     */
-    virtual QString    getProjectFileDestination( const QString& defaultPath ) = 0;
-
-    /**
      * @brief shouldLoadBackupFile
      * @return True if the user wants to load the backup file.
      */

@@ -187,14 +187,11 @@ Project::save()
 }
 
 void
-Project::saveAs()
+Project::saveAs( const QString& fileName )
 {
-    if ( m_projectManagerUi == NULL )
-        return ;
-    QFileInfo fInfo( *m_projectFile );
-    const QString& fileName = m_projectManagerUi->getProjectFileDestination( fInfo.absolutePath() );
-    if ( fileName.isEmpty() )
-        return ;
+    QFile* newProjectFile = new QFile( fileName );
+    delete m_projectFile;
+    m_projectFile = newProjectFile;
     saveProject( fileName );
     emit projectUpdated( name() );
 }

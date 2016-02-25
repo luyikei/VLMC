@@ -58,7 +58,7 @@ class Project : public QObject
         virtual ~Project();
 
         void            save();
-        void            saveAs();
+        void            saveAs(const QString& fileName);
         void            emergencyBackup();
         bool            registerLoadSave( ILoadSave* loadSave );
         bool            isClean() const;
