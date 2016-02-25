@@ -230,7 +230,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
 void
 MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
-    if ( Project::getInstance()->workflow()->contains( m_clip->uuid() ) == true )
+    if ( Core::getInstance()->currentProject()->workflow()->contains( m_clip->uuid() ) == true )
     {
         QMessageBox msgBox;
         msgBox.setText( tr( "This clip or some of its children are contained in the timeline." ) );

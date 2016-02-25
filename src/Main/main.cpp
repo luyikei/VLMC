@@ -96,7 +96,7 @@ VLMCGuimain( int argc, char **argv )
 
         if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
         {
-            Project::load( argv[i+1] );
+            Core::getInstance()->loadProject( argv[i+1] );
             project = true;
             break;
         }
@@ -183,7 +183,7 @@ VLMCCoremain( int argc, char **argv )
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
-    ProjectManager  *pm = Project::getInstance();
+    ProjectManager  *pm = Core::getInstance()->currentProject();
 
     QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
     pm->loadProject( app.arguments()[1] );

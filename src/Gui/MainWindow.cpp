@@ -318,13 +318,13 @@ MainWindow::initVlmcPreferences()
 void
 MainWindow::on_actionSave_triggered()
 {
-    Project::getInstance()->save();
+    Core::getInstance()->currentProject()->save();
 }
 
 void
 MainWindow::on_actionSave_As_triggered()
 {
-    Project::getInstance()->saveAs();
+    Core::getInstance()->currentProject()->saveAs();
 }
 
 void
@@ -335,7 +335,7 @@ MainWindow::on_actionLoad_Project_triggered()
                                     "", tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
-    Project::load( fileName );
+    Core::getInstance()->loadProject( fileName );
 }
 
 void
@@ -517,7 +517,7 @@ void
 MainWindow::createProjectPreferences()
 {
     delete m_projectPreferences;
-    m_projectPreferences = new SettingsDialog( Project::getInstance()->settings(), tr( "Project preferences" ), this );
+    m_projectPreferences = new SettingsDialog( Core::getInstance()->currentProject()->settings(), tr( "Project preferences" ), this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
     m_projectPreferences->addCategory( "audio", QT_TRANSLATE_NOOP( "Settings", "Audio" ), QIcon( ":/images/audio" ) );
@@ -567,7 +567,7 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
-    if ( Project::getInstance()->workflow()->getLengthFrame() <= 0 )
+    if ( Core::getInstance()->currentProject()->workflow()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( NULL, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
@@ -580,7 +580,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer( m_backend, Project::getInstance()->workflow() );
+    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::getInstance()->currentProject()->workflow() );
 
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
@@ -601,7 +601,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
-    Project::getInstance()->workflowRenderer()->stop();
+    Core::getInstance()->currentProject()->workflowRenderer()->stop();
 
     RendererSettings *settings = new RendererSettings( shareOnInternet );
 
@@ -736,7 +736,7 @@ MainWindow::saveSettings()
     settings->setValue( "private/MainWindowState", saveState() );
     settings->setValue( "private/CleanQuit", true );
     settings->save();
-    Project::getInstance()->save();
+    Core::getInstance()->currentProject()->save();
     return true;
 }
 
@@ -772,13 +772,13 @@ MainWindow::cleanStateChanged( bool isClean )
 void
 MainWindow::on_actionUndo_triggered()
 {
-    Project::getInstance()->undoStack()->undo();
+    Core::getInstance()->currentProject()->undoStack()->undo();
 }
 
 void
 MainWindow::on_actionRedo_triggered()
 {
-    Project::getInstance()->undoStack()->redo();
+    Core::getInstance()->currentProject()->undoStack()->redo();
 }
 
 void
@@ -803,7 +803,7 @@ MainWindow::restoreSession()
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if ( res == QMessageBox::Yes )
         {
-            if ( Project::getInstance()->loadEmergencyBackup() == true )
+            if ( Core::getInstance()->restoreProject() == true )
                 ret = true;
             else
                 QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );

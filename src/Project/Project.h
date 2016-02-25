@@ -28,7 +28,6 @@
 #include <QObject>
 
 #include "ILoadSave.h"
-#include "Tools/Singleton.hpp"
 
 class QDomDocument;
 class QFile;
@@ -44,7 +43,7 @@ class ProjectManager;
 class Settings;
 class WorkflowRenderer;
 
-class Project : public QObject, public Singleton<Project>
+class Project : public QObject
 {
     Q_OBJECT
     public:
@@ -52,21 +51,21 @@ class Project : public QObject, public Singleton<Project>
         static const QString            backupSuffix;
 
     public:
-        // Main entry point for loading a project
-        static bool     load( const QString& fileName );
-        static bool     create(const QString& projectName, const QString& projectPath );
-        static bool     isProjectLoaded();
+        Q_DISABLE_COPY( Project );
+        Project( QFile* projectFile );
+        Project( const QString& projectName, const QString& projectPath );
+
+        virtual ~Project();
+
         void            save();
         void            saveAs();
-        bool            loadEmergencyBackup();
         void            emergencyBackup();
         bool            registerLoadSave( ILoadSave* loadSave );
 
-    private:
-        Q_DISABLE_COPY( Project );
-        Project();
-        ~Project();
+    public:
+        static QFile* emergencyBackupFile();
 
+    private:
         /**
          *  @brief      Check for a project backup file, and load the appropriate file,
          *              according to the user input.
@@ -75,7 +74,7 @@ class Project : public QObject, public Singleton<Project>
          *  if an outdated project backup is found, the used is asked if she wants to delete
          *  it.
          */
-        bool                loadProject( const QString& fileName );
+        bool                loadProject();
         /**
          * @brief connectComponents     Connects project specific components' signals & slots
          */
@@ -153,8 +152,6 @@ class Project : public QObject, public Singleton<Project>
         QUndoStack*         m_undoStack;
         Settings*           m_settings;
         WorkflowRenderer*   m_workflowRenderer;
-
-    friend class Singleton<Project>;
 };
 
 #endif // PROJECT_H

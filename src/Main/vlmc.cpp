@@ -22,6 +22,7 @@
 
 #include "config.h"
 
+#include "Main/Core.h"
 #include "Workflow/Types.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Project.h"
@@ -52,7 +53,7 @@ signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
-    Project::getInstance()->emergencyBackup();
+    Core::getInstance()->currentProject()->emergencyBackup();
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );

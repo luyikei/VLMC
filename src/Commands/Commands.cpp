@@ -25,6 +25,7 @@
 
 #include "Commands.h"
 #include "Project/Project.h"
+#include "Main/Core.h"
 #include "Media/Clip.h"
 #include "Workflow/ClipHelper.h"
 #include "EffectsEngine/EffectHelper.h"
@@ -34,7 +35,7 @@
 void
 Commands::trigger( QUndoCommand* command )
 {
-    Project::getInstance()->undoStack()->push( command );
+    Core::getInstance()->currentProject()->undoStack()->push( command );
 }
 
 Commands::Generic::Generic() :
@@ -42,7 +43,7 @@ Commands::Generic::Generic() :
 {
     //This is connected using a direct connection to ensure the view can be refreshed
     //just after the signal has been emited.
-    connect( Project::getInstance()->undoStack(), SIGNAL( retranslateRequired() ),
+    connect( Core::getInstance()->currentProject()->undoStack(), SIGNAL( retranslateRequired() ),
              this, SLOT( retranslate() ), Qt::DirectConnection );
 }
 

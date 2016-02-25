@@ -157,7 +157,7 @@ void
 ImportController::importMedia( const QString &filePath )
 {
     vlmcDebug() << "Importing" << filePath;
-    if ( Project::getInstance()->library()->mediaAlreadyLoaded( filePath ) == true ||
+    if ( Core::getInstance()->currentProject()->library()->mediaAlreadyLoaded( filePath ) == true ||
          m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
 
@@ -242,7 +242,7 @@ ImportController::accept()
     {
         if ( clip->getMedia()->source()->length() == 0 )
             invalidMedias = true;
-        Project::getInstance()->library()->addClip( clip );
+        Core::getInstance()->currentProject()->library()->addClip( clip );
     }
     if ( invalidMedias == true )
         handleInvalidMedias();

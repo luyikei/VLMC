@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Main/Core.h"
 #include "OpenPage.h"
 #include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
@@ -54,7 +55,7 @@ bool
 OpenPage::validatePage()
 {
     if ( WelcomePage::projectPath().isEmpty() == false )
-        return Project::load( WelcomePage::projectPath() );
+        return Core::getInstance()->loadProject( WelcomePage::projectPath() );
     return false;
 }
 

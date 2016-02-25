@@ -46,10 +46,30 @@
 const QString   Project::unNamedProject = Project::tr( "Untitled Project" );
 const QString   Project::backupSuffix = "~";
 
-Project::Project()
-    : m_projectFile( NULL )
+Project::Project( QFile* projectFile )
+    : m_projectFile( projectFile )
     , m_isClean( true )
     , m_libraryCleanState( true )
+    , m_projectManagerUi( NULL )
+{
+    //FIXME: This will be invalidated by the loadProject() method if a backup file is found.
+    m_isClean = projectFile->fileName().endsWith( Project::backupSuffix ) == false;
+
+    m_settings = new Settings( QString() );
+    m_undoStack = new QUndoStack;
+    m_workflow = new MainWorkflow;
+    m_library = new Library( Core::getInstance()->workspace() );
+    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
+    initSettings();
+    connectComponents();
+    loadProject();
+}
+
+Project::Project( const QString& projectName, const QString& projectPath )
+    : m_projectFile( NULL )
+    , m_projectName( projectName )
+    , m_isClean( false )
+    , m_libraryCleanState( false )
     , m_projectManagerUi( NULL )
 {
     m_settings = new Settings( QString() );
@@ -59,10 +79,14 @@ Project::Project()
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     initSettings();
     connectComponents();
+    m_projectFile = new QFile( projectPath + "/project.vlmc" );
+    save();
+    emit projectLoaded( projectName, m_projectFile->fileName() );
 }
 
 Project::~Project()
 {
+    closeProject();
     delete m_projectFile;
     delete m_library;
     delete m_workflow;
@@ -103,53 +127,12 @@ Project::settings()
 //////////////////////////////////////////////////////////////////////////////////////////
 
 bool
-Project::load( const QString& fileName )
+Project::loadProject()
 {
-    Project* self = getInstance();
-    if ( fileName.isEmpty() == true )
-        return false;
-    QFile   projectFile( fileName );
-    if ( projectFile.exists() == false )
-        return false;
-    if ( self->closeProject() == false )
-        return false;
-    Project::destroyInstance();
+    Q_ASSERT( m_projectFile != NULL );
 
-    // Now let's start over with a clean state.
-    self = getInstance();
-    Core::getInstance()->onProjectLoaded( self );
-    self->loadProject( fileName );
+    QString fileToLoad = checkBackupFile( m_projectFile->fileName() );
 
-    return true;
-}
-
-bool
-Project::create(const QString& projectName, const QString& projectPath )
-{
-    Project* self = getInstance();
-    if ( self->closeProject() == false )
-        return false;
-    Project::destroyInstance();
-    self = Project::getInstance();
-    self->newProject( projectName, projectPath );
-
-    Core::getInstance()->onProjectLoaded( self );
-
-    return true;
-}
-
-bool
-Project::isProjectLoaded()
-{
-    return m_instance != NULL;
-}
-
-bool
-Project::loadProject( const QString &fileName )
-{
-    QString fileToLoad = checkBackupFile( fileName );
-
-    m_projectFile = new QFile( fileToLoad );
     QDomDocument doc;
 
     if ( m_projectFile->open( QFile::ReadOnly ) == false ||
@@ -180,16 +163,6 @@ Project::loadProject( const QString &fileName )
 }
 
 void
-Project::newProject( const QString &projectName, const QString& projectPath )
-{
-    m_projectName = projectName;
-    //Current project file has already been delete/nulled by closeProject()
-    m_projectFile = new QFile( projectPath + "/project.vlmc" );
-    save();
-    emit projectLoaded( projectName, m_projectFile->fileName() );
-}
-
-void
 Project::connectComponents()
 {
     connect( m_library, SIGNAL( cleanStateChanged( bool ) ),
@@ -198,7 +171,7 @@ Project::connectComponents()
     connect( this, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
-    //connect( Project::getInstance()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
+    //connect( Core::getInstance()->currentProject()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
     registerLoadSave( m_settings );
     registerLoadSave( m_library );
     registerLoadSave( m_workflow );
@@ -208,12 +181,9 @@ Project::connectComponents()
 bool
 Project::closeProject()
 {
-    /*
-     *  This (project file being NULL) is only expected to happen when we load the first
-     *  project from the wizard, or through the command line parameter
-     */
-    if ( m_projectFile == NULL )
-        return true;
+    Q_ASSERT( m_projectFile != NULL );
+
+    //FIXME: This is now called from the destructor, so we can't stop the project closing.
     if ( m_projectManagerUi != NULL )
     {
         IProjectUiCb::SaveMode mode = m_projectManagerUi->shouldSaveBeforeClose();
@@ -226,7 +196,7 @@ Project::closeProject()
     m_projectFile = NULL;
     m_isClean = true;
     m_projectName = QString();
-    Project::getInstance()->undoStack()->clear();
+    Core::getInstance()->currentProject()->undoStack()->clear();
     emit projectUpdated( name() );
     return true;
 }
@@ -369,17 +339,12 @@ Project::registerLoadSave( ILoadSave* loadSave )
     return true;
 }
 
-bool
-Project::loadEmergencyBackup()
+QFile* Project::emergencyBackupFile()
 {
     const QString lastProject = Core::getInstance()->settings()->value( "private/EmergencyBackup" )->get().toString();
-    if ( QFile::exists( lastProject ) == true )
-    {
-        loadProject(  lastProject );
-        m_isClean = false;
-        return true;
-    }
-    return false;
+    if ( lastProject.isEmpty() == true )
+        return NULL;
+    return new QFile( lastProject );
 }
 
 void

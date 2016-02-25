@@ -101,8 +101,8 @@ ProjectWizard::accept()
     {
         Settings* preferences = Core::getInstance()->settings();
 
-        Project::create( field( "projectName" ).toString(), field( "projectPath" ).toString() );
-        Settings* projectPreferences = Project::getInstance()->settings();
+        Core::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
+        Settings* projectPreferences = Core::getInstance()->currentProject()->settings();
 
         preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
 
@@ -119,7 +119,7 @@ ProjectWizard::accept()
 void
 ProjectWizard::reject()
 {
-    if ( Project::isProjectLoaded() )
+    if ( Core::getInstance()->isProjectLoaded() == true )
         return QWizard::reject();
     qApp->quit();
 }

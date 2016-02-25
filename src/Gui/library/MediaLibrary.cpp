@@ -25,6 +25,7 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Library/Library.h"
+#include "Main/Core.h"
 #include "Media/Media.h"
 #include "MediaCellView.h"
 #include "MediaListView.h"
@@ -166,7 +167,7 @@ MediaLibrary::dropEvent( QDropEvent *event )
         return;
     }
 
-    Q_ASSERT( Project::getInstance()->library() != NULL );
+    Q_ASSERT( Core::getInstance()->currentProject()->library() != NULL );
 
     foreach ( const QUrl &url, fileList )
     {
@@ -175,13 +176,13 @@ MediaLibrary::dropEvent( QDropEvent *event )
         if ( fileName.isEmpty() )
             continue;
 
-        Media       *media = Project::getInstance()->library()->addMedia( fileName );
+        Media       *media = Core::getInstance()->currentProject()->library()->addMedia( fileName );
 
         if ( media != NULL )
         {
             Clip*       clip = new Clip( media );
             media->setBaseClip( clip );
-            Project::getInstance()->library()->addClip( clip );
+            Core::getInstance()->currentProject()->library()->addClip( clip );
             event->accept();
         }
         else

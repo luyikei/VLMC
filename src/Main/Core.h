@@ -53,8 +53,12 @@ class Core : public QObject, public Singleton<Core>
         RecentProjects*         recentProjects();
         AutomaticBackup*        automaticBackup();
         Workspace*              workspace();
+        Project*                currentProject();
 
-        void                    onProjectLoaded( Project* project );
+        bool                    loadProject( const QString& fileName );
+        bool                    newProject( const QString& projectName, const QString& projectPath );
+        bool                    restoreProject();
+        bool                    isProjectLoaded();
 
     signals:
         /**
@@ -77,6 +81,7 @@ class Core : public QObject, public Singleton<Core>
         RecentProjects*         m_recentProjects;
         AutomaticBackup*        m_automaticBackup;
         Workspace*              m_workspace;
+        Project*                m_currentProject;
 
         friend class Singleton<Core>;
 };

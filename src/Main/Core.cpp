@@ -40,6 +40,7 @@
 #include "Project/Workspace.h"
 
 Core::Core()
+    : m_currentProject( NULL )
 {
     m_backend = Backend::getBackend();
     m_effectsEngine = new EffectsEngine;
@@ -60,6 +61,7 @@ Core::Core()
 
 Core::~Core()
 {
+    delete m_currentProject;
     delete m_workspace;
     delete m_automaticBackup;
     delete m_settings;
@@ -98,13 +100,49 @@ Core::automaticBackup()
     return m_automaticBackup;
 }
 
-void
-Core::onProjectLoaded( Project* project )
+bool
+Core::loadProject(const QString& fileName)
 {
-    m_automaticBackup->setProject( project );
-    m_recentProjects->setProject( project );
+    if ( fileName.isEmpty() == true )
+        return false;
+    QFile* projectFile = new QFile( fileName );
+    if ( projectFile->exists() == false )
+        return false;
+    //FIXME: What if the project was unsaved, and the user wants to cancel the operation?
+    delete m_currentProject;
 
-    emit projectLoading( project );
+    //FIXME: Doesn't check for proper project loading
+    m_currentProject = new Project( projectFile );
+    m_automaticBackup->setProject( m_currentProject );
+    m_recentProjects->setProject( m_currentProject );
+    emit projectLoading( m_currentProject );
+    return true;
+}
+
+bool Core::newProject(const QString& projectName, const QString& projectPath)
+{
+    delete m_currentProject;
+    //FIXME: Doesn't check for proper project creation
+    m_currentProject = new Project( projectName, projectPath );
+    return true;
+}
+
+bool
+Core::restoreProject()
+{
+    //FIXME: This doesn't make sense when no GUI is attached, so I'm not sure it fits in the Core class.
+    Q_ASSERT( m_currentProject == NULL );
+    QFile* backupFile = Project::emergencyBackupFile();
+    if ( backupFile == NULL )
+        return false;
+    //FIXME: This lacks error handling
+    m_currentProject = new Project( backupFile );
+    return true;
+}
+
+bool Core::isProjectLoaded()
+{
+    return m_currentProject != NULL;
 }
 
 Settings*
@@ -118,4 +156,9 @@ Workspace*
 Core::workspace()
 {
     return m_workspace;
+}
+
+Project* Core::currentProject()
+{
+    return m_currentProject;
 }

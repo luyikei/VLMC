@@ -22,6 +22,7 @@
 
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectUser.h"
+#include "Main/Core.h"
 #include "Project/Project.h"
 #include "Workflow/MainWorkflow.h"
 
@@ -31,8 +32,8 @@ EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64
     m_effectInstance( effectInstance ),
     m_target( NULL )
 {
-    if ( Project::getInstance()->workflow()->getLengthFrame() > 0 )
-        m_end = Project::getInstance()->workflow()->getLengthFrame();
+    if ( Core::getInstance()->currentProject()->workflow()->getLengthFrame() > 0 )
+        m_end = Core::getInstance()->currentProject()->workflow()->getLengthFrame();
     else
         m_end = Effect::TrackEffectDefaultLength;
 }
