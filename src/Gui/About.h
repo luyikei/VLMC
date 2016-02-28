@@ -31,18 +31,15 @@
 
 class QPlainTextEdit;
 
-class About : public QDialog, public QSingleton<About>
+class About : public QDialog
 {
     Q_OBJECT
     Q_DISABLE_COPY( About )
 
-    friend class    QSingleton<About>;
-
-protected:
-    virtual void    changeEvent( QEvent *e );
+public:
+    explicit        About( QWidget *parent = 0 );
 
 private:
-    explicit        About( QWidget *parent = 0 );
     void            setText( const QString& filename, QPlainTextEdit* widget );
     Ui::AboutVLMC   m_ui;
 };

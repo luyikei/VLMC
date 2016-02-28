@@ -566,7 +566,8 @@ MainWindow::on_actionPreferences_triggered()
 void
 MainWindow::on_actionAbout_triggered()
 {
-    About::getInstance()->exec();
+    About about( this );
+    about.exec();
 }
 
 bool
