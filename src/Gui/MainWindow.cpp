@@ -151,9 +151,9 @@ MainWindow::retranslateUi()
 {
     m_dockedUndoView->setWindowTitle( tr( "History" ) );
     m_dockedEffectsList->setWindowTitle( tr( "Effects List" ) );
-    m_dockedLibrary->setWindowTitle( "Media Library" );
-    m_dockedClipPreview->setWindowTitle( "Clip Preview" );
-    m_dockedProjectPreview->setWindowTitle( "Project Preview" );
+    m_dockedLibrary->setWindowTitle( tr( "Media Library" ) );
+    m_dockedClipPreview->setWindowTitle( tr( "Clip Preview" ) );
+    m_dockedProjectPreview->setWindowTitle( tr( "Project Preview" ) );
 }
 
 void
