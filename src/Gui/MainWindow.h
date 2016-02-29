@@ -88,6 +88,7 @@ private:
     void        setupProjectPreview();
     void        setupEffectsList();
     void        setupUndoRedoWidget();
+    void        retranslateUi();
 #ifdef WITH_CRASHBUTTON
     void        setupCrashTester();
 #endif
@@ -124,6 +125,8 @@ private:
      */
     bool        renderVideoSettings( bool exportType );
 
+    QDockWidget* dockWidget( QWidget* widget, Qt::DockWidgetArea startArea );
+
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
@@ -139,6 +142,11 @@ private:
     MediaLibrary            *m_mediaLibrary;
     EffectsListView*        m_effectsList;
     QUndoView*              m_undoView;
+    QDockWidget*            m_dockedUndoView;
+    QDockWidget*            m_dockedEffectsList;
+    QDockWidget*            m_dockedLibrary;
+    QDockWidget*            m_dockedClipPreview;
+    QDockWidget*            m_dockedProjectPreview;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );

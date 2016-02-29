@@ -109,7 +109,6 @@ ELSE(NOT WITH_GUI)
         Gui/About.cpp
         Gui/AudioSpectrumDrawer.cpp
         Gui/ClipProperty.cpp
-        Gui/DockWidgetManager.cpp
         Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
         Gui/MainWindow.cpp

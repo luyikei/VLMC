@@ -54,7 +54,6 @@
 #include "settings/SettingsDialog.h"
 
 /* Widgets */
-#include "DockWidgetManager.h"
 #include "effectsengine/EffectsListView.h"
 #include "import/ImportController.h"
 #include "library/MediaLibrary.h"
@@ -89,7 +88,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     Core::getInstance()->settings()->load();
 
     // GUI
-    DockWidgetManager::getInstance( this )->setMainWindow( this );
     createGlobalPreferences();
     initializeDockWidgets();
     initToolbar();
@@ -127,6 +125,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     restoreGeometry( VLMC_GET_BYTEARRAY( "private/MainWindowGeometry" ) );
     // Restore the layout
     restoreState( VLMC_GET_BYTEARRAY( "private/MainWindowState" ) );
+    retranslateUi();
 }
 
 MainWindow::~MainWindow()
@@ -148,13 +147,26 @@ MainWindow::showWizard()
 }
 
 void
+MainWindow::retranslateUi()
+{
+    m_dockedUndoView->setWindowTitle( tr( "History" ) );
+    m_dockedEffectsList->setWindowTitle( tr( "Effects List" ) );
+    m_dockedLibrary->setWindowTitle( "Media Library" );
+    m_dockedClipPreview->setWindowTitle( "Clip Preview" );
+    m_dockedProjectPreview->setWindowTitle( "Project Preview" );
+}
+
+void
 MainWindow::changeEvent( QEvent *e )
 {
     switch ( e->type() )
     {
     case QEvent::LanguageChange:
+        // Translate m_ui as a separate step to avoid calling it twice upon first
+        // creation. We call retranslateUi() from MainWindow's constructor, but we also initialize
+        // m_ui, which calls m_ui.retranslateUi()
         m_ui.retranslateUi( this );
-        DockWidgetManager::getInstance()->retranslateUi();
+        retranslateUi();
         break;
     default:
         break;
@@ -397,7 +409,7 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_timeline = new Timeline( this );
+    m_timeline = new Timeline;
     m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_timeline->show();
     setCentralWidget( m_timeline );
@@ -414,66 +426,45 @@ MainWindow::initializeDockWidgets()
 void
 MainWindow::setupUndoRedoWidget()
 {
-    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
-                                      QT_TRANSLATE_NOOP( "DockWidgetManager", "History" ),
-                                      Qt::AllDockWidgetAreas,
-                                      QDockWidget::AllDockWidgetFeatures );
-    m_undoView = new QUndoView( dockedWidget );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_undoView, Qt::TopDockWidgetArea );
+    m_undoView = new QUndoView;
+    m_dockedUndoView = dockWidget( m_undoView, Qt::TopDockWidgetArea );
 }
 
 void
 MainWindow::setupEffectsList()
 {
-    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
-                                        QT_TRANSLATE_NOOP( "DockWidgetManager", "Effects List" ),
-                                        Qt::AllDockWidgetAreas,
-                                        QDockWidget::AllDockWidgetFeatures );
-    m_effectsList = new EffectsListView( dockedWidget );
+    m_effectsList = new EffectsListView;
     m_effectsList->setType( Effect::Filter );
     Core::getInstance()->effectsEngine()->loadEffects();
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_effectsList, Qt::TopDockWidgetArea );
+    m_dockedEffectsList = dockWidget( m_effectsList, Qt::TopDockWidgetArea );
 }
 
 void
 MainWindow::setupLibrary()
 {
-    QDockWidget     *dockedLibrary = DockWidgetManager::getInstance()->createDockedWidget(
-                                                    QT_TRANSLATE_NOOP( "DockWidgetManager", "Media Library" ),
-                                                    Qt::AllDockWidgetAreas,
-                                                    QDockWidget::AllDockWidgetFeatures );
-    m_mediaLibrary = new MediaLibrary( dockedLibrary );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedLibrary, m_mediaLibrary, Qt::TopDockWidgetArea );
+    m_mediaLibrary = new MediaLibrary;
+    m_dockedLibrary = dockWidget( m_mediaLibrary, Qt::TopDockWidgetArea );
 }
 
 void
 MainWindow::setupClipPreview()
 {
-    QDockWidget *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
-                                                QT_TRANSLATE_NOOP( "DockWidgetManager", "Clip Preview" ),
-                                                Qt::AllDockWidgetAreas,
-                                                QDockWidget::AllDockWidgetFeatures );
-    m_clipPreview = new PreviewWidget( dockedWidget );
+    m_clipPreview = new PreviewWidget;
     m_clipPreview->setRenderer( new ClipRenderer );
 
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
     connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_clipPreview, Qt::TopDockWidgetArea );
+    m_dockedClipPreview = dockWidget( m_clipPreview, Qt::TopDockWidgetArea );
 }
 
 void
 MainWindow::setupProjectPreview()
 {
-    QDockWidget     *dockedWidget = DockWidgetManager::getInstance()->createDockedWidget(
-                                        QT_TRANSLATE_NOOP( "DockWidgetManager", "Project Preview" ),
-                                        Qt::AllDockWidgetAreas,
-                                        QDockWidget::AllDockWidgetFeatures );
-
-    m_projectPreview = new PreviewWidget( dockedWidget );
+    m_projectPreview = new PreviewWidget;
     m_projectPreview->setClipEdition( false );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
-    DockWidgetManager::getInstance()->addDockedWidget( dockedWidget, m_projectPreview, Qt::TopDockWidgetArea );
+    m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
 }
 
 void
@@ -627,6 +618,19 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
     delete settings;
 
     return renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
+}
+
+QDockWidget*
+MainWindow::dockWidget( QWidget* widget, Qt::DockWidgetArea startArea )
+{
+    QDockWidget*    dock = new QDockWidget( this );
+
+    dock->setAllowedAreas( Qt::AllDockWidgetAreas );
+    widget->setParent( dock );
+    dock->setWidget( widget );
+    addDockWidget( startArea, dock );
+    registerWidgetInWindowMenu( dock );
+    return dock;
 }
 
 void
