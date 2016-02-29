@@ -51,7 +51,6 @@ SET(VLMC_SRCS
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
-    Tools/QSingleton.hpp
     Tools/RendererEventWatcher.cpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
