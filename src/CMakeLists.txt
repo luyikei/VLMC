@@ -106,7 +106,6 @@ ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
         Commands/KeyboardShortcutHelper.cpp
         Gui/About.cpp
-        Gui/AudioSpectrumDrawer.cpp
         Gui/ClipProperty.cpp
         Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
