@@ -9,7 +9,7 @@ Dependencies
 Get the sources
 ===============
 
-  git clone git://git.videolan.org/vlmc.git
+  git clone https://code.videolan.org/videolan/vlmc.git
 
 Building and packaging VLMC on Linux
 ====================================
