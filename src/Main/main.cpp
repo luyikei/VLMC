@@ -47,6 +47,7 @@
 #include <QPalette>
 #include <QSettings>
 #include <QUuid>
+#include <QTextCodec>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
@@ -82,6 +83,10 @@ VLMCGuimain( int argc, char **argv )
 {
 #ifdef Q_WS_X11
     XInitThreads();
+#endif
+
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
     QApplication app( argc, argv );
 
