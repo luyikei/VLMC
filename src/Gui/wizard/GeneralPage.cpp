@@ -81,10 +81,6 @@ GeneralPage::initializePage()
     updateProjectLocation();
 }
 
-void GeneralPage::cleanupPage()
-{
-}
-
 bool
 GeneralPage::validatePage()
 {

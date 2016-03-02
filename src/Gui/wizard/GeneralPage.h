@@ -36,7 +36,6 @@ protected:
     virtual int         nextId() const;
     virtual void        initializePage();
     virtual bool        validatePage();
-    virtual void        cleanupPage();
 
 private:
     void                setValidity( bool status );
