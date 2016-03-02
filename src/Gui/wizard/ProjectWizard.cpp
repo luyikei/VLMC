@@ -99,8 +99,6 @@ ProjectWizard::accept()
     //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
     {
-        Settings* preferences = Core::getInstance()->settings();
-
         Core::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
         Settings* projectPreferences = Core::getInstance()->currentProject()->settings();
 
