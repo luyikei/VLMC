@@ -212,7 +212,6 @@ VLMCmain( int argc, char **argv )
 #else
     int res = VLMCCoremain( argc, argv );
 #endif
-    Core::destroyInstance();
     return res;
 }
 

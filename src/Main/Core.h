@@ -39,9 +39,7 @@ namespace Backend
 
 #include <QObject>
 
-#include <Tools/Singleton.hpp>
-
-class Core : public QObject, public Singleton<Core>
+class Core : public QObject
 {
     Q_OBJECT
 
@@ -59,6 +57,8 @@ class Core : public QObject, public Singleton<Core>
         bool                    newProject( const QString& projectName, const QString& projectPath );
         bool                    restoreProject();
         bool                    isProjectLoaded();
+
+        static Core*            getInstance();
 
     signals:
         /**
@@ -86,8 +86,6 @@ class Core : public QObject, public Singleton<Core>
         AutomaticBackup*        m_automaticBackup;
         Workspace*              m_workspace;
         Project*                m_currentProject;
-
-        friend class Singleton<Core>;
 };
 
 #endif // CORE_H

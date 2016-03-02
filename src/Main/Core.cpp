@@ -174,3 +174,10 @@ Project* Core::currentProject()
 {
     return m_currentProject;
 }
+
+Core*
+Core::getInstance()
+{
+    static Core core;
+    return &core;
+}
