@@ -46,14 +46,7 @@ Core::Core()
     m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
 
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-    QString configDir = QStandardPaths::writableLocation( QStandardPaths::ConfigLocation );
-#else
-    QString configDir = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
-#endif
-    QString configPath = configDir + QDir::separator() + qApp->organizationName()
-            + QDir::separator() + qApp->applicationName() + ".conf";
-    m_settings = new Settings( configPath );
+    createSettings();
     m_recentProjects = new RecentProjects( m_settings );
     m_automaticBackup = new AutomaticBackup( m_settings );
     m_workspace = new Workspace( m_settings );
@@ -68,6 +61,24 @@ Core::~Core()
     delete m_logger;
     delete m_effectsEngine;
     delete m_backend;
+}
+
+void
+Core::createSettings()
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+    QString configDir = QStandardPaths::writableLocation( QStandardPaths::ConfigLocation );
+#else
+    QString configDir = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
+#endif
+    QString configPath = configDir + QDir::separator() + qApp->organizationName()
+            + QDir::separator() + qApp->applicationName() + ".conf";
+    m_settings = new Settings( configPath );
+    m_settings->createVar( SettingValue::String, "vlmc/WorkspaceLocation", "",
+                                    QT_TRANSLATE_NOOP( "Settings", "Workspace location" ),
+                                    QT_TRANSLATE_NOOP( "Settings", "VLMC's workspace location" ),
+                                    SettingValue::Nothing );
+    m_settings->createVar( SettingValue::Bool, "private/FirstLaunchDone", false, "", "", SettingValue::Private );
 }
 
 Backend::IBackend*

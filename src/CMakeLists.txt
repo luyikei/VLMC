@@ -168,6 +168,10 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/ProjectWizard.cpp
         Gui/wizard/VideoPage.cpp
         Gui/wizard/WelcomePage.cpp
+        Gui/wizard/firstlaunch/FirstLaunchWizard.cpp
+        Gui/wizard/firstlaunch/FirstLaunchPage.cpp
+        Gui/wizard/firstlaunch/WorkspaceLocation.cpp
+        Gui/wizard/firstlaunch/Done.cpp
         Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 
@@ -196,6 +200,9 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/ui/OpenPage.ui
         Gui/wizard/ui/VideoPage.ui
         Gui/wizard/ui/WelcomePage.ui
+        Gui/wizard/ui/firstlaunch/FirstLaunchPage.ui
+        Gui/wizard/ui/firstlaunch/WorkspaceLocation.ui
+        Gui/wizard/ui/firstlaunch/Done.ui
         )
 
     IF (WITH_CRASHHANDLER_GUI)

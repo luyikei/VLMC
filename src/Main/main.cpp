@@ -40,6 +40,7 @@
 #include "Gui/IntroDialog.h"
 #include "Gui/LanguageHelper.h"
 #include "Gui/project/GuiProjectManager.h"
+#include "Gui/wizard/firstlaunch/FirstLaunchWizard.h"
 
 #include <QApplication>
 #include <QColor>
@@ -153,6 +154,13 @@ VLMCGuimain( int argc, char **argv )
 #endif
 
     MainWindow w( backend );
+
+    if ( FirstLaunchWizard::shouldRun() == true )
+    {
+        FirstLaunchWizard wiz;
+        if ( wiz.exec() == QDialog::Rejected )
+            return 1;
+    }
 
     //Don't show the wizard if a project has been passed through command line.
     if ( project == false )

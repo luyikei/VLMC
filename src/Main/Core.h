@@ -74,6 +74,10 @@ class Core : public QObject, public Singleton<Core>
     private:
         Core();
         virtual ~Core();
+
+        void                    createSettings();
+
+    private:
         Backend::IBackend*      m_backend;
         EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;
