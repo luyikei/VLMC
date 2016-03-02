@@ -303,7 +303,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         if ( paused == true && subFrame != m_lastFrame && renderOneFrame == false)
             needRepositioning = true;
         else
-            needRepositioning = ( abs( subFrame - m_lastFrame ) > 1 ) ? true : false;
+            needRepositioning = ( qAbs( subFrame - m_lastFrame ) > 1 ) ? true : false;
     }
     memset( frames, 0, sizeof(*frames) * EffectsEngine::MaxFramesForMixer );
     while ( it != end )
