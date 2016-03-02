@@ -42,7 +42,6 @@ private:
     void                setValidity( bool status );
 
 private slots:
-    void                openWorkspaceDirectory();
     void                updateProjectLocation();
 
 private:

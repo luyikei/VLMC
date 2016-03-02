@@ -104,8 +104,6 @@ ProjectWizard::accept()
         Core::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
         Settings* projectPreferences = Core::getInstance()->currentProject()->settings();
 
-        preferences->setValue( "vlmc/DefaultProjectLocation", field( "workspace" ) );
-
         projectPreferences->setValue( "video/VLMCOutputFPS", field( "fps" ) );
         projectPreferences->setValue( "video/VideoProjectHeight", field( "height" ) );
         projectPreferences->setValue( "video/VideoProjectWidth", field( "width" ) );

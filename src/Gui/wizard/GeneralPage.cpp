@@ -41,16 +41,11 @@ GeneralPage::GeneralPage( QWidget *parent ) :
     pValid = pInvalid = palette();
     pInvalid.setColor( QPalette::Text, QColor( 215, 30, 30 ) );
 
-    connect( ui.pushButtonBrowse, SIGNAL( clicked() ),
-             this, SLOT( openWorkspaceDirectory() ) );
     connect( ui.lineEditName, SIGNAL( textChanged(QString) ),
-             this, SLOT( updateProjectLocation() ) );
-    connect( ui.lineEditWorkspace, SIGNAL( textChanged(QString) ),
              this, SLOT( updateProjectLocation() ) );
 
     registerField( "projectName*", ui.lineEditName );
     registerField( "projectPath*", ui.lineEditProjectLocation );
-    registerField( "workspace*", ui.lineEditWorkspace );
 }
 
 void
@@ -80,10 +75,6 @@ GeneralPage::initializePage()
     QString     projectName = Project::unNamedProject;
     ui.lineEditName->setText( projectName );
 
-    //fetching the global workspace path
-    QString     workspacePath = VLMC_GET_STRING( "vlmc/DefaultProjectLocation" );
-    ui.lineEditWorkspace->setText( workspacePath );
-
     //Reinit description field
     ui.textEditDescription->clear();
 
@@ -108,17 +99,10 @@ GeneralPage::validatePage()
         ui.lineEditName->setFocus();
         return false;
     }
-    if ( ui.lineEditWorkspace->text().isEmpty() )
-    {
-        QMessageBox::information( this, tr( "Form is incomplete" ),
-                                  tr( "The workspace location must be set." ) );
-        ui.lineEditWorkspace->setFocus();
-        return false;
-    }
 
     //Create the project directory in the workspace dir.
     QString     projectPath = ui.lineEditName->text().replace( ' ', '_' );
-    QDir        workspaceDir( ui.lineEditWorkspace->text() );
+    QDir        workspaceDir( VLMC_GET_STRING( "vlmc/WorkspaceLocation" ) );
 
     if ( workspaceDir.exists( projectPath ) == false )
         workspaceDir.mkdir( projectPath );
@@ -126,46 +110,16 @@ GeneralPage::validatePage()
 }
 
 void
-GeneralPage::openWorkspaceDirectory()
-{
-    QString     workspace = QFileDialog::getExistingDirectory( this,
-                                                           "Choose a workspace directory",
-                                                           QDir::homePath() );
-    if ( workspace.isEmpty() )
-        return;
-    ui.lineEditWorkspace->setText( workspace );
-}
-
-void
 GeneralPage::updateProjectLocation()
 {
-    QString     workspacePath = ui.lineEditWorkspace->text();
-    if ( workspacePath.isEmpty() )
-    {
-        ui.lineEditProjectLocation->setText( tr( "Missing workspace location" ) );
-        setValidity( false );
-        return ;
-    }
-    else
-    {
-        QString     pName = ui.lineEditName->text().replace( ' ', '_' );
-        QDir        workspaceDir( workspacePath );
-        QDir        projectDir( QString( "%1/%2" ).arg( workspacePath, pName ) );
+    auto        workspaceLocation = VLMC_GET_STRING( "vlmc/WorkspaceLocation" );
+    QString     pName = ui.lineEditName->text().replace( ' ', '_' );
+    QDir        projectDir( QString( "%1/%2" ).arg( workspaceLocation, pName ) );
 
-        ui.lineEditProjectLocation->setText( projectDir.absolutePath() );
+    ui.lineEditProjectLocation->setText( projectDir.absolutePath() );
 
-        if ( workspaceDir.isRelative() )
-        {
-            ui.lineEditProjectLocation->setText( tr( "Invalid workspace location" ) );
-            setValidity( false );
-            return ;
-        }
-
-        if ( !workspaceDir.exists() )
-            setValidity( false );
-        else //Invalidate the path if the project directory already exists
-            setValidity( !projectDir.exists() );
-    }
+    //Invalidate the path if the project directory already exists
+    setValidity( !projectDir.exists() );
 }
 
 void
