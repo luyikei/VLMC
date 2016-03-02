@@ -54,6 +54,7 @@ Core::Core()
 
 Core::~Core()
 {
+    m_settings->save();
     delete m_currentProject;
     delete m_workspace;
     delete m_automaticBackup;

@@ -745,7 +745,6 @@ MainWindow::saveSettings()
     // Save the current layout
     settings->setValue( "private/MainWindowState", saveState() );
     settings->setValue( "private/CleanQuit", true );
-    settings->save();
     Core::getInstance()->currentProject()->save();
     return true;
 }
