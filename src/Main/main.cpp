@@ -32,7 +32,6 @@
 #include "Workflow/Types.h"
 #include "Renderer/ConsoleRenderer.h"
 #include "Project/Project.h"
-#include "Project/Project.h"
 #include "Backend/IBackend.h"
 #include "Main/Core.h"
 
