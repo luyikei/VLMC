@@ -7,6 +7,13 @@ Makefile*
 /include
 /win32
 
+/src/__/
+/src/config.h
+/src/qrc_resources-ts.cxx
+/src/qrc_resources.cxx
+/src/vlmc_automoc.cpp
+vlmc
+
 /contribs/bin
 /contribs/include
 /contribs/lib
