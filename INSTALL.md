@@ -1,18 +1,14 @@
-Building VLMC
+# Building VLMC
 
-Dependencies
-============
+## Dependencies
+* Latest version of VLC installed (from the git repository)
+* Qt framework >= 4.5.0
 
-- Latest version of VLC installed (from the git repository)
-- Qt framework >= 4.5.0
-
-Get the sources
-===============
+##Get the sources
 
   git clone https://code.videolan.org/videolan/vlmc.git
 
-Building and packaging VLMC on Linux
-====================================
+##Building and packaging VLMC on Linux
 
 A typical way to build VLMC is:
   mkdir build && cd build
@@ -36,26 +32,22 @@ To force building deb:
 To force building rpm:
   cpack -G RPM
    
-Installing on Linux
-===================
+## Installing on Linux
 
-On Linux:
+### To install
   dpkg -i <deb package>
   rpm -i <rpm package>
 
-To remove:
+### To remove:
   dpkg -r vlmc
   rpm -e vlmc
 
 
-Running VLMC
-============
+## Running VLMC
 
 	./vlmc
 
-Issues
-======
+## Issues
 
 If you run into problems, you can ask for help on <vlmc-devel@videolan.org> and
 IRC channel #vlmc on Freenode.
-
