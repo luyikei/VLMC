@@ -149,6 +149,9 @@
    <property name="text">
     <string>&amp;Preferences</string>
    </property>
+   <property name="statusTip">
+    <string>Project Preferences</string>
+  </property>
   </action>
   <action name="actionPreview">
    <property name="checkable">
@@ -184,6 +187,9 @@
    <property name="text">
     <string>&amp;Fullscreen</string>
    </property>
+   <property name="statusTip">
+    <string>Makes VLMC Fullscreen</string>
+  </property>
   </action>
   <action name="actionRender">
    <property name="icon">
@@ -208,6 +214,9 @@
    <property name="text">
     <string>&amp;Load Project</string>
    </property>
+   <property name="statusTip">
+    <string>Loads a VLMC Project</string>
+  </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -217,6 +226,9 @@
    <property name="text">
     <string>&amp;Save</string>
    </property>
+   <property name="statusTip">
+    <string>Saves a VLMC Project</string>
+  </property>
   </action>
   <action name="actionImport">
    <property name="icon">
@@ -227,7 +239,7 @@
     <string>&amp;Import</string>
    </property>
    <property name="statusTip">
-    <string>Import new medias into the current project</string>
+    <string>Imports media into the current VLMC Project</string>
    </property>
   </action>
   <action name="actionProject_Preferences">
@@ -238,6 +250,9 @@
    <property name="text">
     <string>Proj&amp;ect Preferences</string>
    </property>
+   <property name="statusTip">
+    <string>Project Preferences</string>
+  </property>
   </action>
   <action name="actionSave_As">
    <property name="icon">
@@ -247,6 +262,9 @@
    <property name="text">
     <string>Save &amp;As</string>
    </property>
+   <property name="statusTip">
+    <string>Save a VLMC project as a different name</string>
+  </property>
   </action>
   <action name="actionClose_Project">
    <property name="icon">
@@ -254,8 +272,11 @@
      <normaloff>:/images/close</normaloff>:/images/close</iconset>
    </property>
    <property name="text">
-    <string>&amp;Close Project</string>
+    <string>&amp;Close project</string>
    </property>
+   <property name="statusTip">
+    <string>Closes a VLMC project</string>
+  </property>
   </action>
   <action name="actionCrash">
    <property name="text">
@@ -270,6 +291,9 @@
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="statusTip">
+    <string>Undoes the previous action</string>
+  </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
@@ -279,6 +303,9 @@
    <property name="text">
     <string>Redo</string>
    </property>
+   <property name="statusTip">
+    <string>Redoes the previous action</string>
+  </property>
   </action>
   <action name="actionShare_On_Internet">
    <property name="icon">
@@ -289,7 +316,7 @@
     <string>Publish on &amp;Internet</string>
    </property>
    <property name="statusTip">
-    <string>Share your project on youtube</string>
+    <string>Share your project on YouTube</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -316,7 +343,7 @@
     <string>Use the mouse tool to manipulate regions in the timeline</string>
    </property>
    <property name="statusTip">
-    <string>Use the mouse tool to manipulate regions in the timeline</string>
+    <string>Use the Mouse Tool to manipulate regions in the timeline</string>
    </property>
   </action>
   <action name="actionCut_mode">
@@ -333,6 +360,9 @@
    <property name="toolTip">
     <string>Use the scissors to cut regions in the timeline</string>
    </property>
+   <property name="statusTip">
+    <string>Use the Scissor Tool to cut regions in the timeline</string>
+  </property>
   </action>
  </widget>
  <resources>
