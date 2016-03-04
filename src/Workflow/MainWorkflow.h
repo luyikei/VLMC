@@ -264,6 +264,7 @@ class   MainWorkflow : public QObject, public ILoadSave
 
         //FIXME: Ugly workaround
         bool                    save( QXmlStreamWriter& project );
+        bool                    load( const QDomDocument& project );
 
     private:
         /**
@@ -283,8 +284,6 @@ class   MainWorkflow : public QObject, public ILoadSave
          */
         ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
                                                Workflow::TrackType trackType );
-
-        bool                    load( const QDomDocument& project );
 
     private:
         /// Pre-filled buffer used when there's nothing to render

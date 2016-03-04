@@ -143,8 +143,6 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          */
         virtual void        startPreview();
 
-        virtual bool        load( const QDomDocument& project );
-
     protected:
         /**
          *  \brief          Will return a pointer to the function/static method to use
@@ -253,6 +251,7 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
     //FIXME: Ugly workaround
     public:
         bool                save( QXmlStreamWriter &project );
+        bool                load( const QDomDocument& project );
 
     protected:
         MainWorkflow*       m_mainWorkflow;

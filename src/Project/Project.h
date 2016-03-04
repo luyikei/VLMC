@@ -113,6 +113,9 @@ class Project : public QObject
         void                projectClosed();
         void                outdatedBackupFileFound( const QString& path );
 
+private:
+        bool                loadWorkflow( const QDomDocument& root );
+
     private:
         QFile*              m_projectFile;
         QString             m_projectName;

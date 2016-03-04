@@ -72,6 +72,7 @@ class Core : public QObject
         virtual ~Core();
 
         void                    createSettings();
+        void                    connectComponents();
 
     private:
         Backend::IBackend*      m_backend;

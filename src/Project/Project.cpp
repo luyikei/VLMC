@@ -119,6 +119,9 @@ Project::load( const QString& path )
 
     m_settings->load( doc );
     emit projectLoading( m_projectName );
+    Core::getInstance()->library()->load( doc );
+    Core::getInstance()->workflow()->load( doc );
+    Core::getInstance()->workflowRenderer()->load( doc );
     m_isClean = autoBackupFound == false;
     emit cleanStateChanged( m_isClean );
     if ( autoBackupFound == false )

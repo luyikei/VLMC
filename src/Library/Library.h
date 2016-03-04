@@ -63,10 +63,10 @@ public:
     //FIXME: Ugly workaround
 public:
     bool            save( QXmlStreamWriter& project );
+    virtual bool    load( const QDomDocument& project );
 
 private:
     void            setCleanState( bool newState );
-    virtual bool    load( const QDomDocument& project );
 
 private:
     QAtomicInt  m_nbMediaToLoad;
