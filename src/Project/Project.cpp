@@ -116,7 +116,8 @@ Project::load( const QString& path )
     }
 
     m_settings->load( doc );
-    emit projectLoading( m_projectName );
+    auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
+    emit projectLoading( projectName );
     Core::getInstance()->library()->load( doc );
     Core::getInstance()->workflow()->load( doc );
     Core::getInstance()->workflowRenderer()->load( doc );
@@ -124,7 +125,7 @@ Project::load( const QString& path )
     emit cleanStateChanged( m_isClean );
     if ( autoBackupFound == false )
         m_projectFile->close();
-    emit projectLoaded( m_projectName );
+    emit projectLoaded( projectName );
     if ( outdatedBackupFound == true )
         emit outdatedBackupFileFound();
     if ( autoBackupFound == true )
@@ -193,16 +194,7 @@ Project::initSettings()
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
 									SettingValue::NotEmpty );
-    // Use direct connection to have the project name stored in m_projectName as soon as we
-    // are done loading the settings.
-    connect( pName, SIGNAL( changed( QVariant ) ),
-             this, SLOT( projectNameChanged( QVariant ) ), Qt::DirectConnection );
-}
-
-const QString&
-Project::name()
-{
-    return m_projectName;
+    connect( pName, SIGNAL( changed( QVariant ) ), this, SIGNAL( projectUpdated( QVariant ) ) );
 }
 
 void
@@ -256,7 +248,6 @@ Project::closeProject()
     emit projectClosed();
     delete m_projectFile;
     m_projectFile = nullptr;
-    m_projectName.clear();
 }
 
 bool
@@ -299,13 +290,6 @@ Project::libraryCleanChanged(bool val)
     m_libraryCleanState = val;
     if ( m_libraryCleanState == m_isClean )
         emit cleanStateChanged( val );
-}
-
-void
-Project::projectNameChanged( const QVariant& name )
-{
-    m_projectName = name.toString();
-    emit projectUpdated( m_projectName );
 }
 
 void

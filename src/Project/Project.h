@@ -77,7 +77,6 @@ class Project : public QObject
 
     private:
         void                initSettings();
-        const QString&      name();
         void                saveProject( const QString& filename );
 
 
@@ -85,9 +84,6 @@ class Project : public QObject
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
         void                autoSaveRequired();
-
-    private slots:
-        void                projectNameChanged( const QVariant& projectName );
 
     signals:
         /**
@@ -122,7 +118,6 @@ private:
 
     private:
         QFile*              m_projectFile;
-        QString             m_projectName;
         bool                m_isClean;
         bool                m_libraryCleanState;
 
