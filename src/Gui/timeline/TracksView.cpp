@@ -375,7 +375,7 @@ void
 TracksView::clipDragEnterEvent( QDragEnterEvent *event )
 {
     const QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
-    Clip *clip = Core::getInstance()->currentProject()->library()->clip( fullId );
+    Clip *clip = Core::getInstance()->library()->clip( fullId );
     if ( clip == NULL )
         return;
     bool hasVideo = clip->getMedia()->source()->hasVideo();

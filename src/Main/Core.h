@@ -25,6 +25,7 @@
 
 class AutomaticBackup;
 class EffectsEngine;
+class Library;
 class MainWorkflow;
 class NotificationZone;
 class Project;
@@ -59,7 +60,7 @@ class Core : public QObject
         WorkflowRenderer*       workflowRenderer();
         MainWorkflow*           workflow();
         QUndoStack*             undoStack();
-
+        Library*                library();
 
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
@@ -97,6 +98,7 @@ class Core : public QObject
         MainWorkflow*           m_workflow;
         WorkflowRenderer*       m_workflowRenderer;
         QUndoStack*             m_undoStack;
+        Library*                m_library;
 };
 
 #endif // CORE_H

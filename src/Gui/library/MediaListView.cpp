@@ -65,7 +65,7 @@ MediaListView::newClipLoaded( Clip *clip )
 void
 MediaListView::projectLoading( Project* project )
 {
-    setMediaContainer( project->library() );
+    setMediaContainer( Core::getInstance()->library() );
 }
 
 void

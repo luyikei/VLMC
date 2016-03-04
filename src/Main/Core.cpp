@@ -35,12 +35,13 @@
 
 #include <Backend/IBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
-#include <Settings/Settings.h>
-#include <Tools/VlmcLogger.h>
+#include "Library/Library.h"
 #include "Project/AutomaticBackup.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
 #include "Renderer/WorkflowRenderer.h"
+#include <Settings/Settings.h>
+#include <Tools/VlmcLogger.h>
 #include "Workflow/MainWorkflow.h"
 
 Core::Core()
@@ -57,15 +58,18 @@ Core::Core()
     m_workflow = new MainWorkflow;
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new QUndoStack;
+    m_library = new Library( m_workspace );
 
     //FIXME: This requires that we always have a project instance, which is the plan, but is broken for now
     connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
     connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
+    connect( m_library, SIGNAL( cleanStateChanged( bool ) ), m_currentProject, SLOT( libraryCleanChanged( bool ) ) );
 }
 
 Core::~Core()
 {
     m_settings->save();
+    delete m_library;
     delete m_undoStack;
     delete m_workflowRenderer;
     delete m_workflow;
@@ -205,6 +209,12 @@ QUndoStack*
 Core::undoStack()
 {
     return m_undoStack;
+}
+
+Library*
+Core::library()
+{
+    return m_library;
 }
 
 Core*

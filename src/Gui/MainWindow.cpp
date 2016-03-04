@@ -865,7 +865,7 @@ MainWindow::onProjectLoading(Project* project)
     m_undoView->setStack( Core::getInstance()->undoStack() );
 
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
-    connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
+    connect( Core::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     m_projectPreview->setRenderer( Core::getInstance()->workflowRenderer() );
 }

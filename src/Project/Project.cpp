@@ -27,7 +27,6 @@
 
 #include "AutomaticBackup.h"
 #include "Backend/IBackend.h"
-#include "Library/Library.h"
 #include "Project.h"
 #include "ProjectCallbacks.h"
 #include "RecentProjects.h"
@@ -51,7 +50,6 @@ Project::Project( QFile* projectFile )
     m_isClean = projectFile->fileName().endsWith( Project::backupSuffix ) == false;
 
     m_settings = new Settings( QString() );
-    m_library = new Library( Core::getInstance()->workspace() );
     initSettings();
     connectComponents();
     load();
@@ -65,7 +63,6 @@ Project::Project( const QString& projectName, const QString& projectPath )
     , m_projectManagerUi( NULL )
 {
     m_settings = new Settings( QString() );
-    m_library = new Library( Core::getInstance()->workspace() );
     initSettings();
     connectComponents();
     m_projectFile = new QFile( projectPath + "/project.vlmc" );
@@ -78,14 +75,7 @@ Project::~Project()
     Q_ASSERT( m_projectFile != NULL );
 
     delete m_projectFile;
-    delete m_library;
     delete m_settings;
-}
-
-Library*
-Project::library()
-{
-    return m_library;
 }
 
 Settings*
@@ -135,13 +125,10 @@ Project::load()
 void
 Project::connectComponents()
 {
-    connect( m_library, SIGNAL( cleanStateChanged( bool ) ),
-             this, SLOT( libraryCleanChanged( bool ) ) );
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
     //connect( Core::getInstance()->currentProject()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
     registerLoadSave( m_settings );
-    registerLoadSave( m_library );
 }
 
 void

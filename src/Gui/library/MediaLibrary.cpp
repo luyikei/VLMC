@@ -167,8 +167,6 @@ MediaLibrary::dropEvent( QDropEvent *event )
         return;
     }
 
-    Q_ASSERT( Core::getInstance()->currentProject()->library() != NULL );
-
     foreach ( const QUrl &url, fileList )
     {
         const QString       &fileName = url.toLocalFile();
@@ -176,13 +174,13 @@ MediaLibrary::dropEvent( QDropEvent *event )
         if ( fileName.isEmpty() )
             continue;
 
-        Media       *media = Core::getInstance()->currentProject()->library()->addMedia( fileName );
+        Media       *media = Core::getInstance()->library()->addMedia( fileName );
 
         if ( media != NULL )
         {
             Clip*       clip = new Clip( media );
             media->setBaseClip( clip );
-            Core::getInstance()->currentProject()->library()->addClip( clip );
+            Core::getInstance()->library()->addClip( clip );
             event->accept();
         }
         else

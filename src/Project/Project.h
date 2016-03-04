@@ -90,7 +90,7 @@ class Project : public QObject
         void                newProject( const QString& projectName, const QString& projectPath );
 
 
-    private slots:
+    public slots:
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
         void                projectNameChanged( const QVariant& projectName );
@@ -138,11 +138,9 @@ class Project : public QObject
     ///////////////////////////////////
     // Dependent components part below:
     public:
-        Library*            library();
         Settings*           settings();
 
     private:
-        Library*            m_library;
         Settings*           m_settings;
 };
 
