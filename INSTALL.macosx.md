@@ -12,7 +12,7 @@
 ### Get the actual dependencies:
 * brew tap tomahawk-player/tomahawkqt5
 * brew install vlc
-* brew install qt4
+* brew install Qt5
 * brew install frei0r
 
 
