@@ -165,7 +165,7 @@ Core::workspace()
     return m_workspace;
 }
 
-Project* Core::currentProject()
+Project* Core::project()
 {
     return m_currentProject;
 }

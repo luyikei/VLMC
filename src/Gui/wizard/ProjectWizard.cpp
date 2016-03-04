@@ -100,7 +100,7 @@ ProjectWizard::accept()
     if ( currentId() == Page_Video )
     {
         Core::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
-        Settings* projectPreferences = Core::getInstance()->currentProject()->settings();
+        Settings* projectPreferences = Core::getInstance()->project()->settings();
 
         projectPreferences->setValue( "video/VLMCOutputFPS", field( "fps" ) );
         projectPreferences->setValue( "video/VideoProjectHeight", field( "height" ) );

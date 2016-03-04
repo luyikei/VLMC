@@ -56,7 +56,7 @@ class Core : public QObject
         RecentProjects*         recentProjects();
         AutomaticBackup*        automaticBackup();
         Workspace*              workspace();
-        Project*                currentProject();
+        Project*                project();
         WorkflowRenderer*       workflowRenderer();
         MainWorkflow*           workflow();
         QUndoStack*             undoStack();

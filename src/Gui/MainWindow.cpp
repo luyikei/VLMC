@@ -107,11 +107,11 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( Core::getInstance()->currentProject(), SIGNAL( projectUpdated(QString) ),
+    connect( Core::getInstance()->project(), SIGNAL( projectUpdated(QString) ),
              this, SLOT( projectUpdated( QString ) ) );
-    connect( Core::getInstance()->currentProject(), SIGNAL( outdatedBackupFileFound() ),
+    connect( Core::getInstance()->project(), SIGNAL( outdatedBackupFileFound() ),
              this, SLOT( onOudatedBackupFile() ) );
-    connect( Core::getInstance()->currentProject(), SIGNAL( backupProjectLoaded() ),
+    connect( Core::getInstance()->project(), SIGNAL( backupProjectLoaded() ),
              this, SLOT( onBackupFileLoaded() ) );
 
     //Connecting Library stuff:
@@ -331,7 +331,7 @@ MainWindow::initVlmcPreferences()
 void
 MainWindow::on_actionSave_triggered()
 {
-    Core::getInstance()->currentProject()->save();
+    Core::getInstance()->project()->save();
 }
 
 void
@@ -342,7 +342,7 @@ MainWindow::on_actionSave_As_triggered()
                                   QString(), QObject::tr( "VLMC project file(*.vlmc)" ) );
     if ( dest.isEmpty() == true )
         return;
-    Core::getInstance()->currentProject()->saveAs( dest );
+    Core::getInstance()->project()->saveAs( dest );
 }
 
 void
@@ -523,7 +523,7 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
-    m_projectPreferences = new SettingsDialog( Core::getInstance()->currentProject()->settings(), tr( "Project preferences" ), this );
+    m_projectPreferences = new SettingsDialog( Core::getInstance()->project()->settings(), tr( "Project preferences" ), this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
     m_projectPreferences->addCategory( "audio", QT_TRANSLATE_NOOP( "Settings", "Audio" ), QIcon( ":/images/audio" ) );
@@ -758,7 +758,7 @@ MainWindow::saveSettings()
 void
 MainWindow::closeEvent( QCloseEvent* e )
 {
-    if ( Core::getInstance()->currentProject()->isClean() == false )
+    if ( Core::getInstance()->project()->isClean() == false )
     {
         QMessageBox msgBox;
         msgBox.setText( QObject::tr( "The project has been modified." ) );
@@ -769,7 +769,7 @@ MainWindow::closeEvent( QCloseEvent* e )
         switch ( ret )
         {
         case QMessageBox::Save:
-            Core::getInstance()->currentProject()->save();
+            Core::getInstance()->project()->save();
             break;
         case QMessageBox::Discard:
             break;
@@ -870,7 +870,7 @@ MainWindow::onOudatedBackupFile()
                                      "Do you want to erase it?" ),
                                     QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
     {
-        Core::getInstance()->currentProject()->removeBackupFile();
+        Core::getInstance()->project()->removeBackupFile();
     }
 }
 
