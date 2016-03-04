@@ -64,21 +64,8 @@ class Core : public QObject
 
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
-        bool                    restoreProject();
-        bool                    isProjectLoaded();
 
         static Core*            getInstance();
-
-    signals:
-        /**
-         * @brief projectLoaded Will be emited right before a project starts loading.
-         *
-         * When this is emited, all Project related instances are created. The project itself
-         * however won't be loaded (no settings, no media, ...)
-         * This should be used with Qt::DirectConnection in order not to miss any media/clip
-         * loading events.
-         */
-        void                    projectLoading( Project* project );
 
     private:
         Core();

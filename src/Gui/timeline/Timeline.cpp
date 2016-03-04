@@ -51,9 +51,10 @@ Timeline::Timeline( QWidget *parent )
     m_instance = this;
     m_ui.setupUi( this );
 
-    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
-             this, SLOT( projectLoading( Project* ) ), Qt::DirectConnection );
     m_tracksScene = new TracksScene( this );
+    m_renderer = Core::getInstance()->workflowRenderer();
+    m_mainWorkflow = Core::getInstance()->workflow();
+    initialize();
 }
 
 Timeline::~Timeline()
@@ -134,6 +135,15 @@ Timeline::initialize()
              m_renderer, SLOT( timelineCursorChanged(qint64) ) );
 
     m_tracksView->createLayout();
+
+    // Frames updates
+    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
+             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
+             Qt::QueuedConnection );
+    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
+             m_tracksRuler, SLOT( update() ) );
+    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
+             m_renderer, SLOT( rulerCursorChanged(qint64)) );
 }
 
 void
@@ -162,27 +172,6 @@ void
 Timeline::setTool( ToolButtons button )
 {
     tracksView()->setTool( button );
-}
-
-void
-Timeline::projectLoading( Project* project )
-{
-    m_renderer = Core::getInstance()->workflowRenderer();
-    m_mainWorkflow = Core::getInstance()->workflow();
-
-    // Initialize child components:
-    initialize();
-
-    // Frames updates
-    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
-             Qt::QueuedConnection );
-    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_tracksRuler, SLOT( update() ) );
-    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_renderer, SLOT( rulerCursorChanged(qint64)) );
-
-    project->registerLoadSave( this );
 }
 
 bool

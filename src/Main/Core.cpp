@@ -59,11 +59,15 @@ Core::Core()
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new QUndoStack;
     m_library = new Library( m_workspace );
+    m_currentProject = new Project;
 
-    //FIXME: This requires that we always have a project instance, which is the plan, but is broken for now
     connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
     connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
     connect( m_library, SIGNAL( cleanStateChanged( bool ) ), m_currentProject, SLOT( libraryCleanChanged( bool ) ) );
+
+    //FIXME: Pass the project through the constructor since it doesn't change anymore
+    m_automaticBackup->setProject( m_currentProject );
+    m_recentProjects->setProject( m_currentProject );
 }
 
 Core::~Core()
@@ -135,44 +139,17 @@ Core::loadProject(const QString& fileName)
 {
     if ( fileName.isEmpty() == true )
         return false;
-    QFile* projectFile = new QFile( fileName );
-    if ( projectFile->exists() == false )
-        return false;
     //FIXME: What if the project was unsaved, and the user wants to cancel the operation?
-    delete m_currentProject;
+    m_currentProject->load( fileName );
 
-    //FIXME: Doesn't check for proper project loading
-    m_currentProject = new Project( projectFile );
-    m_automaticBackup->setProject( m_currentProject );
-    m_recentProjects->setProject( m_currentProject );
-    emit projectLoading( m_currentProject );
-    return true;
-}
-
-bool Core::newProject(const QString& projectName, const QString& projectPath)
-{
-    delete m_currentProject;
-    //FIXME: Doesn't check for proper project creation
-    m_currentProject = new Project( projectName, projectPath );
     return true;
 }
 
 bool
-Core::restoreProject()
+Core::newProject( const QString& projectName, const QString& projectPath )
 {
-    //FIXME: This doesn't make sense when no GUI is attached, so I'm not sure it fits in the Core class.
-    Q_ASSERT( m_currentProject == NULL );
-    QFile* backupFile = Project::emergencyBackupFile();
-    if ( backupFile == NULL )
-        return false;
-    //FIXME: This lacks error handling
-    m_currentProject = new Project( backupFile );
+    m_currentProject->newProject( projectName, projectPath );
     return true;
-}
-
-bool Core::isProjectLoaded()
-{
-    return m_currentProject != NULL;
 }
 
 Settings*

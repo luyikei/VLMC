@@ -35,8 +35,7 @@ MediaListView::MediaListView(StackViewController *nav) :
         ListViewController( nav ),
         m_nav( nav )
 {
-    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
-             this, SLOT( projectLoading( Project* ) ) );
+    setMediaContainer( Core::getInstance()->library() );
 }
 
 MediaListView::~MediaListView()
@@ -60,12 +59,6 @@ MediaListView::newClipLoaded( Clip *clip )
     addCell( cell );
     m_cells.insert( clip->uuid(), cell );
     cellSelection( clip->uuid() );
-}
-
-void
-MediaListView::projectLoading( Project* project )
-{
-    setMediaContainer( Core::getInstance()->library() );
 }
 
 void

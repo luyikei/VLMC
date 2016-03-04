@@ -24,6 +24,7 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <QDomDocument>
 
 #include "AutomaticBackup.h"
 #include "Backend/IBackend.h"
@@ -31,49 +32,29 @@
 #include "ProjectCallbacks.h"
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
-
 #include "Tools/VlmcDebug.h"
 
-//FIXME: This shouldn't be here
+//FIXME: This is required to save for now, but it feels wrong
+#include "Workflow/MainWorkflow.h"
+#include "Library/Library.h"
+#include "Renderer/WorkflowRenderer.h"
 #include "timeline/Timeline.h"
 
 const QString   Project::unNamedProject = Project::tr( "Untitled Project" );
 const QString   Project::backupSuffix = "~";
 
-Project::Project( QFile* projectFile )
-    : m_projectFile( projectFile )
+Project::Project()
+    : m_projectFile( nullptr )
     , m_isClean( true )
     , m_libraryCleanState( true )
-    , m_projectManagerUi( NULL )
-{
-    //FIXME: This will be invalidated by the loadProject() method if a backup file is found.
-    m_isClean = projectFile->fileName().endsWith( Project::backupSuffix ) == false;
-
-    m_settings = new Settings( QString() );
-    initSettings();
-    connectComponents();
-    load();
-}
-
-Project::Project( const QString& projectName, const QString& projectPath )
-    : m_projectFile( NULL )
-    , m_projectName( projectName )
-    , m_isClean( false )
-    , m_libraryCleanState( false )
-    , m_projectManagerUi( NULL )
+    , m_projectManagerUi( nullptr )
 {
     m_settings = new Settings( QString() );
     initSettings();
-    connectComponents();
-    m_projectFile = new QFile( projectPath + "/project.vlmc" );
-    save();
-    emit projectLoaded( projectName, m_projectFile->fileName() );
 }
 
 Project::~Project()
 {
-    Q_ASSERT( m_projectFile != NULL );
-
     delete m_projectFile;
     delete m_settings;
 }
@@ -87,48 +68,65 @@ Project::settings()
 //////////////////////////////////////////////////////////////////////////////////////////
 
 bool
-Project::load()
+Project::load( const QString& path )
 {
-    Q_ASSERT( m_projectFile != NULL );
+    closeProject();
 
-    QString fileToLoad = checkBackupFile( m_projectFile->fileName() );
+    QString         backupFilename = path + Project::backupSuffix;
+    QFile           autoBackup( backupFilename );
+    QDomDocument    doc;
+    bool            autoBackupFound = false;
+    bool            outdatedBackupFound = false;
 
-    QDomDocument doc;
-
-    if ( m_projectFile->open( QFile::ReadOnly ) == false ||
-         doc.setContent( m_projectFile ) == false )
+    // Always consider the actual project as the project file
+    m_projectFile = new QFile( path );
+    if ( m_projectFile->exists() == false )
     {
-        vlmcCritical() << "Can't open project file" << m_projectFile->errorString();
         delete m_projectFile;
-        m_projectFile = NULL;
         return false;
     }
-    if ( fileToLoad.endsWith( Project::backupSuffix ) == true )
-    {
-        // Delete the project file representation, so the next time the user
-        // saves its project, vlmc will ask her where to save it.
-        delete m_projectFile;
-        m_projectFile = NULL;
-        m_isClean = false;
-    }
 
-    foreach (ILoadSave* listener, m_loadSave)
-        if ( listener->load( doc ) == false )
+    if ( autoBackup.exists() == true )
+    {
+        QFileInfo       projectFileInfo( *m_projectFile );
+        QFileInfo       autobackupFileInfo( autoBackup );
+
+        if ( autobackupFileInfo.lastModified() < projectFileInfo.lastModified() )
+            outdatedBackupFound = true;
+        else
         {
-            vlmcCritical() << "Failed to load project";
+            if ( autoBackup.open( QFile::ReadOnly ) == false )
+            {
+                vlmcCritical() << "Can't open project file" << backupFilename;
+                delete m_projectFile;
+                m_projectFile = nullptr;
+                return false;
+            }
+            autoBackupFound = true;
+            doc.setContent( &autoBackup );
+        }
+    }
+    else
+    {
+        if ( m_projectFile->open( QFile::ReadOnly ) == false )
+        {
+            delete m_projectFile;
+            m_projectFile = nullptr;
             return false;
         }
-    m_projectFile->close();
-    return true;
-}
+        doc.setContent( m_projectFile );
+    }
 
-void
-Project::connectComponents()
-{
-    //We have to wait for the library to be loaded before loading the workflow
-    //FIXME
-    //connect( Core::getInstance()->currentProject()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
-    registerLoadSave( m_settings );
+    m_settings->load( doc );
+    emit projectLoading( m_projectName );
+    m_isClean = autoBackupFound == false;
+    emit cleanStateChanged( m_isClean );
+    if ( autoBackupFound == false )
+        m_projectFile->close();
+    emit projectLoaded( m_projectName );
+    if ( outdatedBackupFound )
+        emit outdatedBackupFileFound( backupFilename );
+    return true;
 }
 
 void
@@ -141,35 +139,19 @@ Project::save()
 void
 Project::saveAs( const QString& fileName )
 {
-    QFile* newProjectFile = new QFile( fileName );
     delete m_projectFile;
-    m_projectFile = newProjectFile;
+    m_projectFile = new QFile( fileName );
     saveProject( fileName );
     emit projectUpdated( name() );
 }
 
-QString
-Project::checkBackupFile(const QString& projectFile)
+void
+Project::newProject( const QString& projectName, const QString& projectPath )
 {
-    QString backupFilename = projectFile + Project::backupSuffix;
-    QFile   autoBackup( backupFilename );
-    if ( autoBackup.exists() == true )
-    {
-        QFileInfo       projectFileInfo( projectFile );
-        QFileInfo       autobackupFileInfo( autoBackup );
-
-        if ( autobackupFileInfo.lastModified() > projectFileInfo.lastModified() )
-        {
-            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldLoadBackupFile() )
-                return backupFilename;
-        }
-        else
-        {
-            if ( m_projectManagerUi != NULL && m_projectManagerUi->shouldDeleteOutdatedBackupFile() )
-                autoBackup.remove();
-        }
-    }
-    return projectFile;
+    closeProject();
+    m_settings->setValue( "vlmc/ProjectName", projectName );
+    m_projectFile = new QFile( projectPath );
+    save();
 }
 
 void
@@ -208,19 +190,15 @@ Project::initSettings()
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
 									SettingValue::NotEmpty );
-	connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
+    // Use direct connection to have the project name stored in m_projectName as soon as we
+    // are done loading the settings.
+    connect( pName, SIGNAL( changed( QVariant ) ),
+             this, SLOT( projectNameChanged( QVariant ) ), Qt::DirectConnection );
 }
 
-QString
+const QString&
 Project::name()
 {
-    if ( m_projectName.isEmpty() == true )
-    {
-        Q_ASSERT( m_projectFile != NULL );
-
-        QFileInfo       fInfo( *m_projectFile );
-        return fInfo.baseName();
-    }
     return m_projectName;
 }
 
@@ -235,13 +213,17 @@ Project::saveProject( const QString& fileName )
     project.writeStartDocument();
     project.writeStartElement( "vlmc" );
 
-    foreach ( ILoadSave* listener, m_loadSave )
-        listener->save( project );
+    m_settings->save( project );
+    Core::getInstance()->workflow()->save( project );
+    Core::getInstance()->library()->save( project );
+    Core::getInstance()->workflowRenderer()->save( project );
+    //FIXME: Timeline configuration isn't saved anymore.
 
     project.writeEndElement();
     project.writeEndDocument();
 
-    //FIXME: why not m_projectFile?!
+    // We are not necessarily saving the project to the "main" project file here
+    // so we don't use m_projectFile
     QFile   projectFile( fileName );
     projectFile.open( QFile::WriteOnly );
     projectFile.write( projectString );
@@ -251,25 +233,33 @@ Project::saveProject( const QString& fileName )
 void
 Project::emergencyBackup()
 {
-    Q_ASSERT( m_projectFile != NULL );
     const QString& name = m_projectFile->fileName() + Project::backupSuffix;
     saveProject( name );
     Core::getInstance()->settings()->setValue( "private/EmergencyBackup", name );
 }
 
 bool
-Project::registerLoadSave( ILoadSave* loadSave )
-{
-    if ( m_projectFile != NULL )
-        return false;
-    m_loadSave.append( loadSave );
-    return true;
-}
-
-bool
 Project::isClean() const
 {
     return m_isClean;
+}
+
+void
+Project::closeProject()
+{
+    if ( m_projectFile == nullptr )
+        return;
+    // FIXME: Restore settings to their default value
+    emit projectClosed();
+    delete m_projectFile;
+    m_projectFile = nullptr;
+    m_projectName.clear();
+}
+
+bool
+Project::hasProjectFile() const
+{
+    return m_projectFile != nullptr;
 }
 
 QFile* Project::emergencyBackupFile()

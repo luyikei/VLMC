@@ -73,8 +73,6 @@ private slots:
     void        __clipRemoved( const QUuid& );
     void        newClipLoaded( Clip *clip );
 
-    void        projectLoading( Project* project );
-
 signals:
     void        clipSelected( Clip* );
     /// Used when the user clicks the deletion arrow.

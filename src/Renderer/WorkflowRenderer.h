@@ -143,7 +143,6 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          */
         virtual void        startPreview();
 
-        virtual bool        save( QXmlStreamWriter &project );
         virtual bool        load( const QDomDocument& project );
 
     protected:
@@ -250,6 +249,10 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          */
         bool                paramsHasChanged( quint32 width, quint32 height,
                                                   double fps, QString aspect );
+
+    //FIXME: Ugly workaround
+    public:
+        bool                save( QXmlStreamWriter &project );
 
     protected:
         MainWorkflow*       m_mainWorkflow;

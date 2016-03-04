@@ -124,7 +124,6 @@ class   Settings : public ILoadSave
         bool                        save( QXmlStreamWriter& project );
         void                        setSettingsFile( const QString& settingsFile );
 
-    private:
         bool                        load( const QDomDocument& document );
 
     private:

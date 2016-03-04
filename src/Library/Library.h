@@ -60,10 +60,13 @@ public:
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
 
+    //FIXME: Ugly workaround
+public:
+    bool            save( QXmlStreamWriter& project );
+
 private:
     void            setCleanState( bool newState );
     virtual bool    load( const QDomDocument& project );
-    virtual bool    save( QXmlStreamWriter& project );
 
 private:
     QAtomicInt  m_nbMediaToLoad;

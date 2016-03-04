@@ -111,11 +111,3 @@ ProjectWizard::accept()
     }
     QDialog::accept();
 }
-
-void
-ProjectWizard::reject()
-{
-    if ( Core::getInstance()->isProjectLoaded() == true )
-        return QWizard::reject();
-    qApp->quit();
-}

@@ -42,7 +42,6 @@ class ProjectWizard : public QWizard
 
     protected slots:
         virtual void    accept();
-        virtual void    reject();
 
     private slots:
         void            showHelp();

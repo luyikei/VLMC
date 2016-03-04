@@ -82,8 +82,6 @@ public slots:
      */
     void setTool( ToolButtons button );
 
-    void projectLoading( Project* project );
-
 protected:
     virtual void changeEvent( QEvent *e );
 

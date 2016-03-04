@@ -80,8 +80,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     m_ui.setupUi( this );
 
     Core::getInstance()->logger()->setup();
-    connect( Core::getInstance(), SIGNAL( projectLoading( Project* ) ),
-             this, SLOT( onProjectLoading( Project* ) ), Qt::DirectConnection );
     //Preferences
     initVlmcPreferences();
     //All preferences have been created: restore them:
@@ -94,6 +92,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     createStatusBar();
     checkFolders();
     loadGlobalProxySettings();
+    createProjectPreferences();
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
 #endif
@@ -107,6 +106,9 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, SLOT( zoomOut() ) );
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
+
+    connect( Core::getInstance()->currentProject(), SIGNAL( projectUpdated(QString) ),
+             this, SLOT( projectUpdated( QString ) ) );
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
@@ -424,6 +426,12 @@ MainWindow::setupUndoRedoWidget()
 {
     m_undoView = new QUndoView;
     m_dockedUndoView = dockWidget( m_undoView, Qt::TopDockWidgetArea );
+    auto stack = Core::getInstance()->undoStack();
+    connect( stack, SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
+    connect( stack, SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
+    canUndoChanged( stack->canUndo() );
+    canRedoChanged( stack->canRedo() );
+    m_undoView->setStack( stack );
 }
 
 void
@@ -446,7 +454,10 @@ void
 MainWindow::setupClipPreview()
 {
     m_clipPreview = new PreviewWidget;
-    m_clipPreview->setRenderer( new ClipRenderer );
+    auto renderer = new ClipRenderer;
+    m_clipPreview->setRenderer( renderer );
+    connect( Core::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
+             renderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
     connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
@@ -458,6 +469,7 @@ MainWindow::setupProjectPreview()
 {
     m_projectPreview = new PreviewWidget;
     m_projectPreview->setClipEdition( false );
+    m_projectPreview->setRenderer( Core::getInstance()->workflowRenderer() );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
     m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
@@ -508,7 +520,6 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
-    delete m_projectPreferences;
     m_projectPreferences = new SettingsDialog( Core::getInstance()->currentProject()->settings(), tr( "Project preferences" ), this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
@@ -738,7 +749,6 @@ MainWindow::saveSettings()
     // Save the current layout
     settings->setValue( "private/MainWindowState", saveState() );
     settings->setValue( "private/CleanQuit", true );
-    Core::getInstance()->currentProject()->save();
     return true;
 }
 
@@ -823,10 +833,8 @@ MainWindow::restoreSession()
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if ( res == QMessageBox::Yes )
         {
-            if ( Core::getInstance()->restoreProject() == true )
-                ret = true;
-            else
-                QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
+            //FIXME: We need a setting with the latest project file & restore the project.
+            QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
         }
     }
     Core::getInstance()->settings()->setValue( "private/CleanQuit", true );
@@ -849,25 +857,6 @@ void
 MainWindow::canRedoChanged( bool canRedo )
 {
     m_ui.actionRedo->setEnabled( canRedo );
-}
-
-void
-MainWindow::onProjectLoading(Project* project)
-{
-    createProjectPreferences();
-    connect( project, SIGNAL( projectUpdated( const QString&, bool ) ), this, SLOT( projectUpdated( const QString&, bool ) ) );
-
-    // Undo/Redo
-    connect( Core::getInstance()->undoStack(), SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
-    connect( Core::getInstance()->undoStack(), SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
-    canUndoChanged( Core::getInstance()->undoStack()->canUndo() );
-    canRedoChanged( Core::getInstance()->undoStack()->canRedo() );
-    m_undoView->setStack( Core::getInstance()->undoStack() );
-
-    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
-    connect( Core::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
-
-    m_projectPreview->setRenderer( Core::getInstance()->workflowRenderer() );
 }
 
 #ifdef WITH_CRASHBUTTON

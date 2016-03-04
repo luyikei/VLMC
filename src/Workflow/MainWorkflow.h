@@ -262,6 +262,9 @@ class   MainWorkflow : public QObject, public ILoadSave
          */
         quint32                 trackCount() const;
 
+        //FIXME: Ugly workaround
+        bool                    save( QXmlStreamWriter& project );
+
     private:
         /**
          *  \brief  Compute the length of the workflow.
@@ -282,7 +285,6 @@ class   MainWorkflow : public QObject, public ILoadSave
                                                Workflow::TrackType trackType );
 
         bool                    load( const QDomDocument& project );
-        bool                    save( QXmlStreamWriter& project );
 
     private:
         /// Pre-filled buffer used when there's nothing to render

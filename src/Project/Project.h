@@ -50,57 +50,46 @@ class Project : public QObject
 
     public:
         Q_DISABLE_COPY( Project );
-        Project( QFile* projectFile );
-        Project( const QString& projectName, const QString& projectPath );
+        Project();
 
         virtual ~Project();
 
         void            save();
         void            saveAs(const QString& fileName);
+        void            newProject( const QString& projectName, const QString& projectPath );
+        /**
+         *  @brief          Check for a project backup file, and load the appropriate file,
+         *                  according to the user input.
+         *  @param fileName The path of the project file to load. This is expected to be
+         *                  an absolute file path.
+         */
+        bool            load(const QString& path);
         void            emergencyBackup();
-        bool            registerLoadSave( ILoadSave* loadSave );
         bool            isClean() const;
+        void            closeProject();
+        bool            hasProjectFile() const;
 
     public:
         static QFile* emergencyBackupFile();
 
     private:
-        /**
-         *  @brief      Check for a project backup file, and load the appropriate file,
-         *              according to the user input.
-         *  @param fileName     The path of the project file to load. This is expected to be
-         *                      an absolute file path.
-         *  if an outdated project backup is found, the used is asked if she wants to delete
-         *  it.
-         */
-        bool                load();
-        /**
-         * @brief connectComponents     Connects project specific components' signals & slots
-         */
-        void                connectComponents();
-        /**
-         * @brief checkBackupFile   Check for potential backup files and handle them
-         * @param projectFile       The project file being opened
-         * @return                  A path to a backup project if any. projectFile otherwise.
-         */
-        QString             checkBackupFile( const QString& projectFile );
         void                initSettings();
-        QString             name();
+        const QString&      name();
         void                saveProject( const QString& filename );
-        void                newProject( const QString& projectName, const QString& projectPath );
 
 
     public slots:
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
-        void                projectNameChanged( const QVariant& projectName );
         void                autoSaveRequired();
+
+    private slots:
+        void                projectNameChanged( const QVariant& projectName );
 
     signals:
         /**
          *  This signal is emitted when :
          *      - The project name has changed
-         *      - The clean state has changed
          *      - The revision (if activated) has changed
          */
         void                projectUpdated( const QString& projectName );
@@ -119,13 +108,10 @@ class Project : public QObject
           */
         void                cleanStateChanged( bool value );
 
-        /**
-         * @brief projectLoaded Emited when a project is loaded (which also include a project
-         *                      being created)
-         * @param projectName   The project name
-         * @param projectPath   The path to the project file
-         */
-        void                projectLoaded( const QString& projectName, const QString& projectPath );
+        void                projectLoading( const QString& projectName );
+        void                projectLoaded( const QString& projectName );
+        void                projectClosed();
+        void                outdatedBackupFileFound( const QString& path );
 
     private:
         QFile*              m_projectFile;
@@ -133,7 +119,6 @@ class Project : public QObject
         bool                m_isClean;
         bool                m_libraryCleanState;
         IProjectUiCb*       m_projectManagerUi;
-        QList<ILoadSave*>   m_loadSave;
 
     ///////////////////////////////////
     // Dependent components part below:
