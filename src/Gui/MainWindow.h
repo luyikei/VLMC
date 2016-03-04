@@ -172,6 +172,7 @@ private slots:
     void                    canRedoChanged( bool canRedo );
     void                    onOudatedBackupFile();
     void                    onBackupFileLoaded();
+    void                    onProjectSaved();
 
 signals:
     void                    toolChanged( ToolButtons );

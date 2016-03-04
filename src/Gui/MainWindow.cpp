@@ -113,6 +113,9 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, SLOT( onOudatedBackupFile() ) );
     connect( Core::getInstance()->project(), SIGNAL( backupProjectLoaded() ),
              this, SLOT( onBackupFileLoaded() ) );
+    connect( Core::getInstance()->project(), SIGNAL( projectSaved() ),
+             this, SLOT( onProjectSaved() ) );
+
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
@@ -785,21 +788,20 @@ MainWindow::closeEvent( QCloseEvent* e )
 void
 MainWindow::projectUpdated( const QString& projectName )
 {
-    QString title = tr( "VideoLAN Movie Creator" );
-    title += " - ";
-    title += projectName;
+    QString title = tr( "%1 VideoLAN Movie Creator [*]" ).arg( projectName );
     setWindowTitle( title );
 }
 
 void
 MainWindow::cleanStateChanged( bool isClean )
 {
-    QString title = windowTitle();
-    if ( isClean == true )
-        title.replace(" *", "");
-    else
-        title += " *";
-    setWindowTitle( title );
+    setWindowModified( isClean == false );
+}
+
+void
+MainWindow::onProjectSaved()
+{
+    setWindowModified( false );
 }
 
 void
