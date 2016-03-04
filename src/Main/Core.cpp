@@ -25,6 +25,8 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QtGlobal>
+#include <QUndoStack>
+
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 # include <QStandardPaths>
 #else
@@ -54,11 +56,17 @@ Core::Core()
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow;
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
+    m_undoStack = new QUndoStack;
+
+    //FIXME: This requires that we always have a project instance, which is the plan, but is broken for now
+    connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
+    connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
 }
 
 Core::~Core()
 {
     m_settings->save();
+    delete m_undoStack;
     delete m_workflowRenderer;
     delete m_workflow;
     delete m_currentProject;
@@ -191,6 +199,12 @@ MainWorkflow*
 Core::workflow()
 {
     return m_workflow;
+}
+
+QUndoStack*
+Core::undoStack()
+{
+    return m_undoStack;
 }
 
 Core*

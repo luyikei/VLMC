@@ -105,7 +105,7 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    Core::getInstance()->currentProject()->undoStack()->beginMacro( "Remove clip(s)" );
+    Core::getInstance()->undoStack()->beginMacro( "Remove clip(s)" );
 
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
@@ -132,5 +132,5 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    Core::getInstance()->currentProject()->undoStack()->endMacro();
+    Core::getInstance()->undoStack()->endMacro();
 }

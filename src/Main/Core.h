@@ -34,6 +34,8 @@ class VlmcLogger;
 class Workspace;
 class WorkflowRenderer;
 
+class QUndoStack;
+
 namespace Backend
 {
     class IBackend;
@@ -56,6 +58,7 @@ class Core : public QObject
         Project*                currentProject();
         WorkflowRenderer*       workflowRenderer();
         MainWorkflow*           workflow();
+        QUndoStack*             undoStack();
 
 
         bool                    loadProject( const QString& fileName );
@@ -93,6 +96,7 @@ class Core : public QObject
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;
         WorkflowRenderer*       m_workflowRenderer;
+        QUndoStack*             m_undoStack;
 };
 
 #endif // CORE_H

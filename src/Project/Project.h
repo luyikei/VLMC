@@ -32,7 +32,6 @@
 class QDomDocument;
 class QFile;
 class QString;
-class QUndoStack;
 class QXmlStreamWriter;
 
 class AutomaticBackup;
@@ -140,12 +139,10 @@ class Project : public QObject
     // Dependent components part below:
     public:
         Library*            library();
-        QUndoStack*         undoStack();
         Settings*           settings();
 
     private:
         Library*            m_library;
-        QUndoStack*         m_undoStack;
         Settings*           m_settings;
 };
 

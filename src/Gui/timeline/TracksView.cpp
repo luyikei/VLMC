@@ -799,7 +799,7 @@ TracksView::dropEvent( QDropEvent *event )
 
     if ( m_dragAudioItem != NULL || m_dragVideoItem != NULL )
     {
-        Core::getInstance()->currentProject()->undoStack()->beginMacro( "Add clip" );
+        Core::getInstance()->undoStack()->beginMacro( "Add clip" );
 
         if ( m_dragAudioItem )
         {
@@ -835,7 +835,7 @@ TracksView::dropEvent( QDropEvent *event )
             m_dragVideoItem = NULL;
         }
 
-        Core::getInstance()->currentProject()->undoStack()->endMacro();
+        Core::getInstance()->undoStack()->endMacro();
 
         m_lastKnownTrack = NULL;
     }
@@ -1183,7 +1183,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             }
         }
         else
-            Core::getInstance()->currentProject()->undoStack()->beginMacro( "Move clip" );
+            Core::getInstance()->undoStack()->beginMacro( "Move clip" );
         m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
@@ -1194,7 +1194,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         }
 
         if ( effectItem == NULL )
-            Core::getInstance()->currentProject()->undoStack()->endMacro();
+            Core::getInstance()->undoStack()->endMacro();
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;

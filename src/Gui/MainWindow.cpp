@@ -792,13 +792,13 @@ MainWindow::cleanStateChanged( bool isClean )
 void
 MainWindow::on_actionUndo_triggered()
 {
-    Core::getInstance()->currentProject()->undoStack()->undo();
+    Core::getInstance()->undoStack()->undo();
 }
 
 void
 MainWindow::on_actionRedo_triggered()
 {
-    Core::getInstance()->currentProject()->undoStack()->redo();
+    Core::getInstance()->undoStack()->redo();
 }
 
 void
@@ -858,11 +858,11 @@ MainWindow::onProjectLoading(Project* project)
     connect( project, SIGNAL( projectUpdated( const QString&, bool ) ), this, SLOT( projectUpdated( const QString&, bool ) ) );
 
     // Undo/Redo
-    connect( project->undoStack(), SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
-    connect( project->undoStack(), SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
-    canUndoChanged( project->undoStack()->canUndo() );
-    canRedoChanged( project->undoStack()->canRedo() );
-    m_undoView->setStack( project->undoStack() );
+    connect( Core::getInstance()->undoStack(), SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
+    connect( Core::getInstance()->undoStack(), SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
+    canUndoChanged( Core::getInstance()->undoStack()->canUndo() );
+    canRedoChanged( Core::getInstance()->undoStack()->canRedo() );
+    m_undoView->setStack( Core::getInstance()->undoStack() );
 
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );

@@ -35,7 +35,7 @@
 void
 Commands::trigger( QUndoCommand* command )
 {
-    Core::getInstance()->currentProject()->undoStack()->push( command );
+    Core::getInstance()->undoStack()->push( command );
 }
 
 Commands::Generic::Generic() :
@@ -43,7 +43,7 @@ Commands::Generic::Generic() :
 {
     //This is connected using a direct connection to ensure the view can be refreshed
     //just after the signal has been emited.
-    connect( Core::getInstance()->currentProject()->undoStack(), SIGNAL( retranslateRequired() ),
+    connect( Core::getInstance()->undoStack(), SIGNAL( retranslateRequired() ),
              this, SLOT( retranslate() ), Qt::DirectConnection );
 }
 

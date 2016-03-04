@@ -24,7 +24,6 @@
 
 #include <QFile>
 #include <QFileInfo>
-#include <QUndoStack>
 
 #include "AutomaticBackup.h"
 #include "Backend/IBackend.h"
@@ -52,7 +51,6 @@ Project::Project( QFile* projectFile )
     m_isClean = projectFile->fileName().endsWith( Project::backupSuffix ) == false;
 
     m_settings = new Settings( QString() );
-    m_undoStack = new QUndoStack;
     m_library = new Library( Core::getInstance()->workspace() );
     initSettings();
     connectComponents();
@@ -67,7 +65,6 @@ Project::Project( const QString& projectName, const QString& projectPath )
     , m_projectManagerUi( NULL )
 {
     m_settings = new Settings( QString() );
-    m_undoStack = new QUndoStack;
     m_library = new Library( Core::getInstance()->workspace() );
     initSettings();
     connectComponents();
@@ -82,7 +79,6 @@ Project::~Project()
 
     delete m_projectFile;
     delete m_library;
-    delete m_undoStack;
     delete m_settings;
 }
 
@@ -90,12 +86,6 @@ Library*
 Project::library()
 {
     return m_library;
-}
-
-QUndoStack*
-Project::undoStack()
-{
-    return m_undoStack;
 }
 
 Settings*
@@ -147,8 +137,6 @@ Project::connectComponents()
 {
     connect( m_library, SIGNAL( cleanStateChanged( bool ) ),
              this, SLOT( libraryCleanChanged( bool ) ) );
-    connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), this, SLOT( cleanChanged( bool ) ) );
-    connect( this, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
     //We have to wait for the library to be loaded before loading the workflow
     //FIXME
     //connect( Core::getInstance()->currentProject()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
