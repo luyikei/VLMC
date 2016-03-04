@@ -160,6 +160,7 @@ VlmcLogger::outputToConsole( int level, const char *msg )
     switch ( (QtMsgType)level )
     {
     case QtDebugMsg:
+    case QtInfoMsg:
         fprintf(stdout, "%s\n", msg);
         break;
     case QtWarningMsg:
