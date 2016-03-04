@@ -557,7 +557,7 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
-    if ( Core::getInstance()->currentProject()->workflow()->getLengthFrame() <= 0 )
+    if ( Core::getInstance()->workflow()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( NULL, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
@@ -570,7 +570,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::getInstance()->currentProject()->workflow() );
+    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::getInstance()->workflow() );
 
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
@@ -591,7 +591,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
-    Core::getInstance()->currentProject()->workflowRenderer()->stop();
+    Core::getInstance()->workflowRenderer()->stop();
 
     RendererSettings *settings = new RendererSettings( shareOnInternet );
 
@@ -867,7 +867,7 @@ MainWindow::onProjectLoading(Project* project)
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
     connect( project->library(), SIGNAL( clipRemoved( const QUuid& ) ), clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
-    m_projectPreview->setRenderer( project->workflowRenderer() );
+    m_projectPreview->setRenderer( Core::getInstance()->workflowRenderer() );
 }
 
 #ifdef WITH_CRASHBUTTON

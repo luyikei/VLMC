@@ -41,7 +41,6 @@ class Library;
 class MainWorkflow;
 class ProjectManager;
 class Settings;
-class WorkflowRenderer;
 
 class Project : public QObject
 {
@@ -143,15 +142,11 @@ class Project : public QObject
         Library*            library();
         QUndoStack*         undoStack();
         Settings*           settings();
-        MainWorkflow*       workflow();
-        WorkflowRenderer*   workflowRenderer();
 
     private:
         Library*            m_library;
-        MainWorkflow*       m_workflow;
         QUndoStack*         m_undoStack;
         Settings*           m_settings;
-        WorkflowRenderer*   m_workflowRenderer;
 };
 
 #endif // PROJECT_H

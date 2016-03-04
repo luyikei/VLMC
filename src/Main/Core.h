@@ -25,12 +25,14 @@
 
 class AutomaticBackup;
 class EffectsEngine;
+class MainWorkflow;
 class NotificationZone;
 class Project;
 class RecentProjects;
 class Settings;
 class VlmcLogger;
 class Workspace;
+class WorkflowRenderer;
 
 namespace Backend
 {
@@ -52,6 +54,9 @@ class Core : public QObject
         AutomaticBackup*        automaticBackup();
         Workspace*              workspace();
         Project*                currentProject();
+        WorkflowRenderer*       workflowRenderer();
+        MainWorkflow*           workflow();
+
 
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
@@ -86,6 +91,8 @@ class Core : public QObject
         AutomaticBackup*        m_automaticBackup;
         Workspace*              m_workspace;
         Project*                m_currentProject;
+        MainWorkflow*           m_workflow;
+        WorkflowRenderer*       m_workflowRenderer;
 };
 
 #endif // CORE_H

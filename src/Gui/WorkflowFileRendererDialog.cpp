@@ -69,7 +69,7 @@ WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 void
 WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
-    qint64 totalFrames = Core::getInstance()->currentProject()->workflow()->getLengthFrame();
+    qint64 totalFrames = Core::getInstance()->workflow()->getLengthFrame();
 
     if ( frame <= totalFrames )
     {

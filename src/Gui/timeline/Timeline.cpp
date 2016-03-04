@@ -167,8 +167,8 @@ Timeline::setTool( ToolButtons button )
 void
 Timeline::projectLoading( Project* project )
 {
-    m_renderer = project->workflowRenderer();
-    m_mainWorkflow = project->workflow();
+    m_renderer = Core::getInstance()->workflowRenderer();
+    m_mainWorkflow = Core::getInstance()->workflow();
 
     // Initialize child components:
     initialize();

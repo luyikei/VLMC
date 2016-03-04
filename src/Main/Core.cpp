@@ -38,6 +38,8 @@
 #include "Project/AutomaticBackup.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
+#include "Renderer/WorkflowRenderer.h"
+#include "Workflow/MainWorkflow.h"
 
 Core::Core()
     : m_currentProject( NULL )
@@ -50,11 +52,15 @@ Core::Core()
     m_recentProjects = new RecentProjects( m_settings );
     m_automaticBackup = new AutomaticBackup( m_settings );
     m_workspace = new Workspace( m_settings );
+    m_workflow = new MainWorkflow;
+    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
 }
 
 Core::~Core()
 {
     m_settings->save();
+    delete m_workflowRenderer;
+    delete m_workflow;
     delete m_currentProject;
     delete m_workspace;
     delete m_automaticBackup;
@@ -173,6 +179,18 @@ Core::workspace()
 Project* Core::currentProject()
 {
     return m_currentProject;
+}
+
+WorkflowRenderer*
+Core::workflowRenderer()
+{
+    return m_workflowRenderer;
+}
+
+MainWorkflow*
+Core::workflow()
+{
+    return m_workflow;
 }
 
 Core*

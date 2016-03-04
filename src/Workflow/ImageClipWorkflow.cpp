@@ -61,8 +61,8 @@ void ImageClipWorkflow::initializeInternals()
     m_renderer->setOutputFps( (float)VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
     m_renderer->setOutputVideoCodec( "RV32" );
 
-    m_effectFrame->resize( Core::getInstance()->currentProject()->workflow()->getWidth(),
-                            Core::getInstance()->currentProject()->workflow()->getHeight() );
+    m_effectFrame->resize( Core::getInstance()->workflow()->getWidth(),
+                            Core::getInstance()->workflow()->getHeight() );
     m_isRendering = true;
 }
 
@@ -94,8 +94,8 @@ ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
     cw->m_renderLock->lock();
     if ( cw->m_buffer == NULL )
     {
-        cw->m_buffer = new Workflow::Frame( Core::getInstance()->currentProject()->workflow()->getWidth(),
-                                            Core::getInstance()->currentProject()->workflow()->getHeight() );
+        cw->m_buffer = new Workflow::Frame( Core::getInstance()->workflow()->getWidth(),
+                                            Core::getInstance()->workflow()->getHeight() );
     }
     *pp_ret = (uint8_t*)cw->m_buffer->buffer();
 }

@@ -33,12 +33,8 @@
 #include "ProjectCallbacks.h"
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
-#include "Workflow/MainWorkflow.h"
 
 #include "Tools/VlmcDebug.h"
-
-//FIXME: List of suspicious include from an architecture point of view:
-#include "Renderer/WorkflowRenderer.h"
 
 //FIXME: This shouldn't be here
 #include "timeline/Timeline.h"
@@ -57,9 +53,7 @@ Project::Project( QFile* projectFile )
 
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
-    m_workflow = new MainWorkflow;
     m_library = new Library( Core::getInstance()->workspace() );
-    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     initSettings();
     connectComponents();
     load();
@@ -74,9 +68,7 @@ Project::Project( const QString& projectName, const QString& projectPath )
 {
     m_settings = new Settings( QString() );
     m_undoStack = new QUndoStack;
-    m_workflow = new MainWorkflow;
     m_library = new Library( Core::getInstance()->workspace() );
-    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     initSettings();
     connectComponents();
     m_projectFile = new QFile( projectPath + "/project.vlmc" );
@@ -90,7 +82,6 @@ Project::~Project()
 
     delete m_projectFile;
     delete m_library;
-    delete m_workflow;
     delete m_undoStack;
     delete m_settings;
 }
@@ -99,18 +90,6 @@ Library*
 Project::library()
 {
     return m_library;
-}
-
-MainWorkflow*
-Project::workflow()
-{
-    return m_workflow;
-}
-
-WorkflowRenderer*
-Project::workflowRenderer()
-{
-    return m_workflowRenderer;
 }
 
 QUndoStack*
@@ -175,8 +154,6 @@ Project::connectComponents()
     //connect( Core::getInstance()->currentProject()->library(), SIGNAL( projectLoaded() ), this, SLOT( loadWorkflow() ) );
     registerLoadSave( m_settings );
     registerLoadSave( m_library );
-    registerLoadSave( m_workflow );
-    registerLoadSave( m_workflowRenderer );
 }
 
 void

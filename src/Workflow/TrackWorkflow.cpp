@@ -339,7 +339,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             //FIXME: We don't handle mixer3 yet.
             mixer->effectInstance()->process( currentFrame * 1000.0 / m_fps,
                                     frames[0]->buffer(),
-                                    frames[1] != NULL ? frames[1]->buffer() : Core::getInstance()->currentProject()->workflow()->blackOutput()->buffer(),
+                                    frames[1] != NULL ? frames[1]->buffer() : Core::getInstance()->workflow()->blackOutput()->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
             m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;
             ret = m_mixerBuffer;
@@ -347,7 +347,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
         //Now handle filters :
-        quint32     *newFrame = applyFilters( ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : Core::getInstance()->currentProject()->workflow()->blackOutput(),
+        quint32     *newFrame = applyFilters( ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : Core::getInstance()->workflow()->blackOutput(),
                                                 currentFrame, currentFrame * 1000.0 / m_fps );
         if ( newFrame != NULL )
         {

@@ -62,8 +62,8 @@ VideoClipWorkflow::releasePrealocated()
 void
 VideoClipWorkflow::preallocate()
 {
-    quint32     newWidth = Core::getInstance()->currentProject()->workflow()->getWidth();
-    quint32     newHeight = Core::getInstance()->currentProject()->workflow()->getHeight();
+    quint32     newWidth = Core::getInstance()->workflow()->getWidth();
+    quint32     newHeight = Core::getInstance()->workflow()->getHeight();
     if ( newWidth != m_width || newHeight != m_height )
     {
         m_width = newWidth;
