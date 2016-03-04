@@ -96,7 +96,7 @@ ENDFOREACH()
 
 IF(QT_LRELEASE_EXECUTABLE)
     ## Wraps the collected translations
-    QT4_ADD_TRANSLATIONS(vlmc_QMS ${vlmc_TS})
+    qt5_add_translation(vlmc_QMS ${vlmc_TS})
 
     ## Create a target that runs lrelease for all the .ts files
     ## "ALL" means that it will be run by default.

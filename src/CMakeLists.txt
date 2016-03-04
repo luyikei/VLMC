@@ -96,9 +96,9 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_D
 
 IF (NOT WITH_GUI)
     LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
-    QT_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
+    qt5_add_resources(VLMC_RCC_SRCS ${VLMC_RCC})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
-    qt_use_modules(vlmc Core Xml Network)
+    qt5_use_modules(vlmc Core Xml Network)
     TARGET_LINK_LIBRARIES(vlmc ${VLMC_LIBS})
 
 #Add GUI stuff if required
@@ -215,8 +215,8 @@ ELSE(NOT WITH_GUI)
         LIST( APPEND VLMC_UIS Gui/widgets/ui/CrashHandler.ui )
     ENDIF(WITH_CRASHHANDLER_GUI)
 
-    QT_WRAP_UI(VLMC_UIS_H ${VLMC_UIS})
-    QT_ADD_RESOURCES(VLMC_RCC_SRCS ${VLMC_RCC})
+    qt5_wrap_ui(VLMC_UIS_H ${VLMC_UIS})
+    qt5_add_resources(VLMC_RCC_SRCS ${VLMC_RCC})
 
     IF( MINGW )
         # resource compilation for MinGW
@@ -249,7 +249,7 @@ message(${FOUNDATION_FRAMEWORK})
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
     if (NOT Qt4_FOUND)
-        qt_use_modules(vlmc Core Gui Widgets Xml Network)
+        qt5_use_modules(vlmc Core Gui Widgets Xml Network)
     else()
         # We need to know the target for this one, which is not the case when doing most of the QT4/5 specific stuff.
         # We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness
@@ -272,10 +272,10 @@ ADD_CUSTOM_COMMAND(
 
 ADD_DEFINITIONS( -W -Wall -Wextra )
 
-if( !APPLE )
+if( NOT APPLE )
     # Ensure we can use some C++11 features
     target_compile_features(vlmc PUBLIC cxx_nullptr cxx_range_for)
-ENDIF( !APPLE )
+endif()
 
 IF(UNIX)
     IF (WITH_PROFILING)

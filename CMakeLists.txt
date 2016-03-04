@@ -13,8 +13,6 @@ SET(PROJECT_CONTACT      "vlmc-devel@videolan.org")
 SET(PROJECT_VENDOR       "VLMC Team")
 SET(ORG_WEBSITE          "videolan.org")
 
-option(FORCE_QT4 "Forces VLMC to build using Qt4" OFF)
-
 # Configuring build type
 IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING
@@ -121,70 +119,16 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
 
 # search for Qt4
-if (NOT FORCE_QT4)
-    find_package(Qt5Core QUIET)
-    if (Qt5Core_FOUND)
-        message(STATUS "Using qt5")
-        # go on with other packages
-        if(WITH_GUI)
-            find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
-        else()
-            find_packages(Qt5 COMPONENTS Xml Network)
-        endif()
-
-        macro(qt_use_modules)
-            qt5_use_modules(${ARGN})
-        endmacro()
-
-        macro(qt_wrap_ui)
-            qt5_wrap_ui(${ARGN})
-        endmacro()
-
-        macro(qt_add_resources)
-            qt5_add_resources(${ARGN})
-        endmacro()
-
-        find_package(Qt5LinguistTools REQUIRED)
-        macro(qt_add_translation)
-            qt5_add_translation(${ARGN})
-        endmacro()
-    endif()
-endif()
-if(NOT Qt5Core_FOUND)
-    if (NOT FORCE_QT4)
-        message(STATUS "Could not find Qt5, searching for Qt4 instead...")
+find_package(Qt5Core QUIET)
+if (Qt5Core_FOUND)
+    # go on with other packages
+    if(WITH_GUI)
+        find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
+    else()
+        find_packages(Qt5 COMPONENTS Xml Network)
     endif()
 
-    set(NEEDED_QT4_COMPONENTS "QtCore" "QtXml" "QtNetwork")
-    if( WITH_GUI )
-        list(APPEND NEEDED_QT4_COMPONENTS "QtGui")
-    endif()
-
-    find_package(Qt4 REQUIRED COMPONENTS ${NEEDED_QT4_COMPONENTS})
-    message(STATUS "Found Qt4 & ${NEEDED_QT4_COMPONENTS} modules")
-    macro(qt_use_modules)
-
-    endmacro()
-
-    macro(qt_wrap_ui)
-        qt4_wrap_ui(${ARGN})
-    endmacro()
-
-    macro(qt_add_resources)
-        qt4_add_resources(${ARGN})
-    endmacro()
-
-    macro(qt_add_translation)
-        qt4_add_translation(${ARGN})
-    endmacro()
-
-    include(${QT_USE_FILE})
-    add_definitions(${QT_DEFINITIONS})
-
-    # On linux & using Qt4 we need to manually add -lX11
-    if (UNIX AND NOT APPLE)
-        list(APPEND VLMC_LIBS -lX11)
-    endif()
+    find_package(Qt5LinguistTools REQUIRED)
 endif()
 
 # layout of VLMC installation
