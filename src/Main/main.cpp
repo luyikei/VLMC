@@ -38,7 +38,6 @@
 #include "Gui/MainWindow.h"
 #include "Gui/IntroDialog.h"
 #include "Gui/LanguageHelper.h"
-#include "Gui/project/GuiProjectManager.h"
 #include "Gui/wizard/firstlaunch/FirstLaunchWizard.h"
 
 #include <QApplication>

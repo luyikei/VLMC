@@ -131,7 +131,6 @@ ELSE(NOT WITH_GUI)
         Gui/preview/LCDTimecode.cpp
         Gui/preview/PreviewRuler.cpp
         Gui/preview/PreviewWidget.cpp
-        Gui/project/GuiProjectManager.cpp
         Gui/settings/BoolWidget.cpp
         Gui/settings/ColorWidget.cpp
         Gui/settings/DoubleWidget.cpp

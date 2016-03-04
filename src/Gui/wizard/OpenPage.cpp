@@ -22,7 +22,6 @@
 
 #include "Main/Core.h"
 #include "OpenPage.h"
-#include "project/GuiProjectManager.h"
 #include "ProjectWizard.h"
 #include "WelcomePage.h"
 #include "Project/Project.h"

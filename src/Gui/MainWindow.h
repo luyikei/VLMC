@@ -170,6 +170,8 @@ private slots:
     void                    cleanStateChanged( bool isClean );
     void                    canUndoChanged( bool canUndo );
     void                    canRedoChanged( bool canRedo );
+    void                    onOudatedBackupFile();
+    void                    onBackupFileLoaded();
 
 signals:
     void                    toolChanged( ToolButtons );

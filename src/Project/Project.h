@@ -35,7 +35,6 @@ class QString;
 class QXmlStreamWriter;
 
 class AutomaticBackup;
-class IProjectUiCb;
 class Library;
 class MainWorkflow;
 class ProjectManager;
@@ -68,6 +67,10 @@ class Project : public QObject
         bool            isClean() const;
         void            closeProject();
         bool            hasProjectFile() const;
+        /**
+         * @brief removeBackupFile Removes the current project backup file, if any
+         */
+        void            removeBackupFile();
 
     public:
         static QFile* emergencyBackupFile();
@@ -111,7 +114,8 @@ class Project : public QObject
         void                projectLoading( const QString& projectName );
         void                projectLoaded( const QString& projectName );
         void                projectClosed();
-        void                outdatedBackupFileFound( const QString& path );
+        void                backupProjectLoaded();
+        void                outdatedBackupFileFound();
 
 private:
         bool                loadWorkflow( const QDomDocument& root );
@@ -121,7 +125,6 @@ private:
         QString             m_projectName;
         bool                m_isClean;
         bool                m_libraryCleanState;
-        IProjectUiCb*       m_projectManagerUi;
 
     ///////////////////////////////////
     // Dependent components part below:

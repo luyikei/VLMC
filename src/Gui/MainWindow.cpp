@@ -63,7 +63,6 @@
 #include "timeline/TracksView.h"
 
 /* Settings / Preferences */
-#include "project/GuiProjectManager.h"
 #include "Project/RecentProjects.h"
 #include "wizard/ProjectWizard.h"
 #include "Settings/Settings.h"
@@ -93,6 +92,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     checkFolders();
     loadGlobalProxySettings();
     createProjectPreferences();
+
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
 #endif
@@ -109,6 +109,10 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
     connect( Core::getInstance()->currentProject(), SIGNAL( projectUpdated(QString) ),
              this, SLOT( projectUpdated( QString ) ) );
+    connect( Core::getInstance()->currentProject(), SIGNAL( outdatedBackupFileFound() ),
+             this, SLOT( onOudatedBackupFile() ) );
+    connect( Core::getInstance()->currentProject(), SIGNAL( backupProjectLoaded() ),
+             this, SLOT( onBackupFileLoaded() ) );
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
@@ -117,7 +121,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaLibrary, SIGNAL( importRequired() ),
              this, SLOT( on_actionImport_triggered() ) );
-
 
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
@@ -857,6 +860,24 @@ void
 MainWindow::canRedoChanged( bool canRedo )
 {
     m_ui.actionRedo->setEnabled( canRedo );
+}
+
+void
+MainWindow::onOudatedBackupFile()
+{
+    if ( QMessageBox::question( NULL, QObject::tr( "Backup file" ),
+                                      QObject::tr( "An outdated backup file was found. "
+                                     "Do you want to erase it?" ),
+                                    QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
+    {
+        Core::getInstance()->currentProject()->removeBackupFile();
+    }
+}
+
+void
+MainWindow::onBackupFileLoaded()
+{
+    //FIXME: Adjust the behavior depending on how we react to a crash
 }
 
 #ifdef WITH_CRASHBUTTON

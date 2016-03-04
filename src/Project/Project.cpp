@@ -29,7 +29,6 @@
 #include "AutomaticBackup.h"
 #include "Backend/IBackend.h"
 #include "Project.h"
-#include "ProjectCallbacks.h"
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
@@ -47,7 +46,6 @@ Project::Project()
     : m_projectFile( nullptr )
     , m_isClean( true )
     , m_libraryCleanState( true )
-    , m_projectManagerUi( nullptr )
 {
     m_settings = new Settings( QString() );
     initSettings();
@@ -127,8 +125,10 @@ Project::load( const QString& path )
     if ( autoBackupFound == false )
         m_projectFile->close();
     emit projectLoaded( m_projectName );
-    if ( outdatedBackupFound )
-        emit outdatedBackupFileFound( backupFilename );
+    if ( outdatedBackupFound == true )
+        emit outdatedBackupFileFound();
+    if ( autoBackupFound == true )
+        emit backupProjectLoaded();
     return true;
 }
 
@@ -263,6 +263,15 @@ bool
 Project::hasProjectFile() const
 {
     return m_projectFile != nullptr;
+}
+
+void
+Project::removeBackupFile()
+{
+    QString         backupFilename = m_projectFile->fileName() + Project::backupSuffix;
+    QFile           autoBackup( backupFilename );
+    if ( autoBackup.exists() )
+        autoBackup.remove();
 }
 
 QFile* Project::emergencyBackupFile()
