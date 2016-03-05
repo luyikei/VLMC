@@ -139,6 +139,13 @@ WelcomePage::loadProject()
 
     if ( projectPath.isEmpty() ) return;
 
+    if ( !QFile(projectPath).exists() )
+    {
+        QMessageBox::warning(this, tr("Invalid project file path"),
+                             tr("Please use an existing project file."));
+        return;
+    }
+
     // Search if the item is already in the list
     QListWidgetItem* item = NULL;
     for ( int i = 0; i < m_ui.projectsListWidget->count(); ++i )
