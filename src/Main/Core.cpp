@@ -89,11 +89,7 @@ Core::~Core()
 void
 Core::createSettings()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-    QString configDir = QStandardPaths::writableLocation( QStandardPaths::ConfigLocation );
-#else
-    QString configDir = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
-#endif
+    QString configDir  = QStandardPaths::writableLocation( QStandardPaths::ConfigLocation );
     QString configPath = configDir + QDir::separator() + qApp->organizationName()
             + QDir::separator() + qApp->applicationName() + ".conf";
     m_settings = new Settings( configPath );
