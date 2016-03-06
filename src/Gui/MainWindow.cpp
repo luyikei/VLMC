@@ -334,7 +334,14 @@ MainWindow::initVlmcPreferences()
 void
 MainWindow::on_actionSave_triggered()
 {
-    Core::getInstance()->project()->save();
+    if ( Core::getInstance()->project()->hasProjectFile() == false )
+    {
+      this->on_actionSave_As_triggered();
+    }
+    else
+    {
+         Core::getInstance()->project()->save();
+    } 
 }
 
 void
