@@ -160,7 +160,9 @@ VlmcLogger::outputToConsole( int level, const char *msg )
     switch ( (QtMsgType)level )
     {
     case QtDebugMsg:
+#if QT_VERSION >= QT_VERSION_CHECK(5,5,0)
     case QtInfoMsg:
+#endif
         fprintf(stdout, "%s\n", msg);
         break;
     case QtWarningMsg:
