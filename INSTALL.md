@@ -2,7 +2,7 @@
 
 ## Dependencies
 * Latest version of VLC installed (from the git repository)
-* Qt framework >= 4.5.0
+* Qt framework >= 5.0.0
 
 ##Get the sources
 
