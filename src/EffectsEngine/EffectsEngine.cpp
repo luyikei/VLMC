@@ -27,11 +27,7 @@
 #include <QXmlStreamWriter>
 
 #include <QtGlobal>
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
 # include <QStandardPaths>
-#else
-# include <QDesktopServices>
-#endif
 
 #ifdef Q_OS_WIN
 # include <windows.h>
@@ -46,14 +42,8 @@
 
 EffectsEngine::EffectsEngine()
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
     m_cache = new QSettings( QStandardPaths::writableLocation(
                     QStandardPaths::CacheLocation ) + "/effects",
-#else
-    m_cache = new QSettings( QDesktopServices::storageLocation(
-                    QDesktopServices::CacheLocation ) + "/effects",
-#endif
-
                              QSettings::IniFormat, this );
     m_cache->setFallbacksEnabled( false );
     //Create the names entry. A bit ugly but faster (I guess...) afterward.
