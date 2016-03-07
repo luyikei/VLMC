@@ -40,7 +40,6 @@ int VLMCmain( int , char** );
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
 #ifdef WITH_GUI
-    #include "Gui/project/GuiProjectManager.h"
     #ifdef WITH_CRASHHANDLER_GUI
         #include "Gui/widgets/CrashHandler.h"
     #endif
@@ -53,7 +52,7 @@ signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
-    Core::getInstance()->currentProject()->emergencyBackup();
+    Core::getInstance()->project()->emergencyBackup();
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );
