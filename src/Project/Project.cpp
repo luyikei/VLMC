@@ -60,7 +60,8 @@ Project::Project( Settings* settings )
     SettingValue    *automaticBackupInterval = settings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
-                                                       "between two automatic save" ), SettingValue::Nothing );
+                                                       "between two automatic save" ), SettingValue::Clamped );
+    automaticBackupInterval->setLimits(1, QVariant(QVariant::Invalid));
 
     connect( m_timer, SIGNAL( timeout() ), this, SLOT(autoSaveRequired() ) );
     connect( this, SIGNAL( destroyed() ), m_timer, SLOT( stop() ) );
@@ -69,8 +70,6 @@ Project::Project( Settings* settings )
              this, SLOT( autoSaveEnabledChanged( QVariant ) ) );
     connect( automaticBackupInterval, SIGNAL( changed( QVariant ) ), this,
              SLOT( autoSaveIntervalChanged( QVariant ) ) );
-
-    m_timer->start();
 }
 
 Project::~Project()
