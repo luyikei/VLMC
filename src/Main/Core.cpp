@@ -58,8 +58,8 @@ Core::Core()
     connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
     connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
     connect( m_library, SIGNAL( cleanStateChanged( bool ) ), m_currentProject, SLOT( libraryCleanChanged( bool ) ) );
-
-    m_recentProjects->setProject( m_currentProject );
+    connect( m_currentProject, SIGNAL( projectLoaded( QString, QString ) ),
+             m_recentProjects, SLOT( projectLoaded( QString, QString ) ) );
 }
 
 Core::~Core()

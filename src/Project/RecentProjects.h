@@ -42,7 +42,6 @@ class RecentProjects : public QObject
 
         explicit RecentProjects(Settings* vlmcSettings, QObject *parent = 0 );
 
-        void            setProject(Project* projectManager );
         void            remove( const QString& projectFile );
         const List&     list() const;
 
@@ -59,7 +58,6 @@ class RecentProjects : public QObject
 
     private:
         Settings*       m_settings;
-        Project*        m_project;
         List            m_recentsProjects;
 
 };

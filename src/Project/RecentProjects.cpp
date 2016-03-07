@@ -31,22 +31,11 @@
 RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
     : QObject(parent)
     , m_settings( vlmcSettings )
-    , m_project( NULL )
 {
 	SettingValue* recentProjects = vlmcSettings->createVar( SettingValue::String, "private/RecentsProjects", "",
                                                 "", "", SettingValue::Private );
 
 	connect( recentProjects, SIGNAL( changed( QVariant ) ), this, SLOT( loadRecentProjects( QVariant ) ) );
-}
-
-void
-RecentProjects::setProject( Project* project )
-{
-    if ( m_project != NULL )
-        disconnect( m_project, SIGNAL( projectLoaded( QString, QString ) ) );
-    m_project = project;
-    connect( project, SIGNAL( projectLoaded( QString, QString ) ),
-             this, SLOT( projectLoaded( QString, QString ) ) );
 }
 
 void
