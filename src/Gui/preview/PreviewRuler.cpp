@@ -46,6 +46,8 @@ PreviewRuler::setRenderer( GenericRenderer* renderer )
     }
     m_renderer = renderer;
 
+    connect( m_renderer, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
+             this, SLOT( updateTimecode( qint64 ) ) );
     connect( m_renderer->eventWatcher(), SIGNAL( stopped() ),
              this, SLOT( clear() ) );
 }
@@ -230,6 +232,7 @@ PreviewRuler::setFrame( qint64 frame, bool broadcastEvent /*= false*/ )
 void
 PreviewRuler::updateTimecode( qint64 frames /*= -1*/ )
 {
+    setFrame( frames );
     if ( m_renderer->length() > 0 )
     {
         int fps = (int)m_renderer->getFps();
