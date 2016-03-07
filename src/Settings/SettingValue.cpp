@@ -30,7 +30,8 @@ SettingValue::SettingValue( const QString& key, SettingValue::Type type, const Q
         m_name( name ),
         m_desc( desc ),
         m_type( type ),
-        m_flags( flags )
+        m_flags( flags ),
+        m_initLoad( true )
 {
 }
 
@@ -52,6 +53,9 @@ SettingValue::set( const QVariant& _val )
         m_val = val;
         emit changed( m_val );
     }
+    else if ( m_initLoad )
+        emit changed( m_val );
+    m_initLoad = false;
 }
 
 const QVariant&

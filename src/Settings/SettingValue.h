@@ -130,6 +130,7 @@ class   SettingValue : public QObject
         Flags           m_flags;
         QVariant        m_min;
         QVariant        m_max;
+        bool            m_initLoad;
     signals:
         /**
          * \brief This signal is emmited while the m_val
