@@ -54,7 +54,6 @@ class Core : public QObject
         Settings*               settings();
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
-        AutomaticBackup*        automaticBackup();
         Workspace*              workspace();
         Project*                project();
         WorkflowRenderer*       workflowRenderer();
@@ -80,7 +79,6 @@ class Core : public QObject
         Settings*               m_settings;
         VlmcLogger*             m_logger;
         RecentProjects*         m_recentProjects;
-        AutomaticBackup*        m_automaticBackup;
         Workspace*              m_workspace;
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;

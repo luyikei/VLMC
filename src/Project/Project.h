@@ -33,6 +33,7 @@ class QDomDocument;
 class QFile;
 class QString;
 class QXmlStreamWriter;
+class QTimer;
 
 class AutomaticBackup;
 class Library;
@@ -49,7 +50,7 @@ class Project : public QObject
 
     public:
         Q_DISABLE_COPY( Project );
-        Project();
+        Project( Settings* settings );
 
         virtual ~Project();
 
@@ -84,6 +85,9 @@ class Project : public QObject
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
         void                autoSaveRequired();
+        void                autoSaveEnabledChanged( const QVariant& enabled );
+        void                autoSaveIntervalChanged( const QVariant& interval );
+
 
     signals:
         /**
@@ -120,6 +124,7 @@ private:
         QFile*              m_projectFile;
         bool                m_isClean;
         bool                m_libraryCleanState;
+        QTimer*             m_timer;
 
     ///////////////////////////////////
     // Dependent components part below:

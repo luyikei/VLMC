@@ -32,11 +32,10 @@ SET(VLMC_SRCS
     Media/Clip.cpp
     Media/Media.cpp
     Metadata/MetaDataManager.cpp
-	Project/AutomaticBackup.cpp
-	Project/Project.cpp
+    Project/Project.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
-	Project/RecentProjects.cpp
+    Project/RecentProjects.cpp
     Renderer/ClipRenderer.cpp
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowFileRenderer.cpp

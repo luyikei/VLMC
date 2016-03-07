@@ -32,7 +32,6 @@
 #include <Backend/IBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
 #include "Library/Library.h"
-#include "Project/AutomaticBackup.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
 #include "Renderer/WorkflowRenderer.h"
@@ -49,20 +48,17 @@ Core::Core()
 
     createSettings();
     m_recentProjects = new RecentProjects( m_settings );
-    m_automaticBackup = new AutomaticBackup( m_settings );
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow;
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new QUndoStack;
     m_library = new Library( m_workspace );
-    m_currentProject = new Project;
+    m_currentProject = new Project( m_settings );
 
     connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
     connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
     connect( m_library, SIGNAL( cleanStateChanged( bool ) ), m_currentProject, SLOT( libraryCleanChanged( bool ) ) );
 
-    //FIXME: Pass the project through the constructor since it doesn't change anymore
-    m_automaticBackup->setProject( m_currentProject );
     m_recentProjects->setProject( m_currentProject );
 }
 
@@ -75,7 +71,6 @@ Core::~Core()
     delete m_workflow;
     delete m_currentProject;
     delete m_workspace;
-    delete m_automaticBackup;
     delete m_settings;
     delete m_logger;
     delete m_effectsEngine;
@@ -118,12 +113,6 @@ RecentProjects*
 Core::recentProjects()
 {
     return m_recentProjects;
-}
-
-AutomaticBackup*
-Core::automaticBackup()
-{
-    return m_automaticBackup;
 }
 
 bool

@@ -25,8 +25,9 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDomDocument>
+#include <QTimer>
 
-#include "AutomaticBackup.h"
+
 #include "Backend/IBackend.h"
 #include "Project.h"
 #include "RecentProjects.h"
@@ -42,19 +43,41 @@
 const QString   Project::unNamedProject = Project::tr( "Untitled Project" );
 const QString   Project::backupSuffix = "~";
 
-Project::Project()
+Project::Project( Settings* settings )
     : m_projectFile( nullptr )
     , m_isClean( true )
     , m_libraryCleanState( true )
+    , m_timer( new QTimer( this ) )
+    , m_settings( new Settings( QString() ) )
 {
-    m_settings = new Settings( QString() );
     initSettings();
+
+    SettingValue    *automaticBackup = settings->createVar( SettingValue::Bool, "vlmc/AutomaticBackup", false,
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save" ),
+                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "When this option is activated,"
+                                                         "VLMC will automatically save your project "
+                                                         "at a specified interval" ), SettingValue::Nothing );
+    SettingValue    *automaticBackupInterval = settings->createVar( SettingValue::Int, "vlmc/AutomaticBackupInterval", 5,
+                                    QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
+                                    QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
+                                                       "between two automatic save" ), SettingValue::Nothing );
+
+    connect( m_timer, SIGNAL( timeout() ), this, SLOT(autoSaveRequired() ) );
+    connect( this, SIGNAL( destroyed() ), m_timer, SLOT( stop() ) );
+
+    connect( automaticBackup, SIGNAL( changed( QVariant ) ),
+             this, SLOT( autoSaveEnabledChanged( QVariant ) ) );
+    connect( automaticBackupInterval, SIGNAL( changed( QVariant ) ), this,
+             SLOT( autoSaveIntervalChanged( QVariant ) ) );
+
+    m_timer->start();
 }
 
 Project::~Project()
 {
     delete m_projectFile;
     delete m_settings;
+    delete m_timer;
 }
 
 Settings*
@@ -193,7 +216,7 @@ Project::initSettings()
 	SettingValue* pName = m_settings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
 									QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
-									SettingValue::NotEmpty );
+                                    SettingValue::NotEmpty );
     connect( pName, SIGNAL( changed( QVariant ) ), this, SIGNAL( projectUpdated( QVariant ) ) );
 }
 
@@ -298,4 +321,27 @@ Project::autoSaveRequired()
     if ( m_projectFile == NULL )
         return ;
     saveProject( m_projectFile->fileName() + Project::backupSuffix );
+}
+
+
+void
+Project::autoSaveEnabledChanged(const QVariant &enabled)
+{
+    if ( enabled.toBool() == true )
+    {
+        int interval = Core::getInstance()->settings()->value( "vlmc/AutomaticBackupInterval" )->get().toInt();
+        m_timer->start( interval * 1000 * 60 );
+    }
+    else
+        m_timer->stop();
+}
+
+void
+Project::autoSaveIntervalChanged(const QVariant &interval)
+{
+    bool enabled = Core::getInstance()->settings()->value( "vlmc/AutomaticBackup" )->get().toBool();
+
+    if ( enabled == false )
+        return ;
+    m_timer->start( interval.toInt() * 1000 * 60 );
 }
