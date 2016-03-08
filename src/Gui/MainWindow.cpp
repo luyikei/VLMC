@@ -353,6 +353,8 @@ MainWindow::on_actionSave_As_triggered()
                                   QString(), QObject::tr( "VLMC project file(*.vlmc)" ) );
     if ( dest.isEmpty() == true )
         return;
+    if ( !dest.endsWith( ".vlmc" ) ) 
+        dest += ".vlmc";
     Core::getInstance()->project()->saveAs( dest );
 }
 
