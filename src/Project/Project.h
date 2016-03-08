@@ -84,6 +84,7 @@ class Project : public QObject
     public slots:
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
+        void                projectUpdated( const QVariant& projectName); // Proxy slot for projectUpdated(QString)
         void                autoSaveRequired();
         void                autoSaveEnabledChanged( const QVariant& enabled );
         void                autoSaveIntervalChanged( const QVariant& interval );
