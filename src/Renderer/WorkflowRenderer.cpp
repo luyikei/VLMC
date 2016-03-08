@@ -274,10 +274,14 @@ WorkflowRenderer::getVolume() const
     return m_sourceRenderer->volume();
 }
 
-void WorkflowRenderer::setVolume( int volume )
+void
+WorkflowRenderer::setVolume( int volume )
 {
     //Returns 0 if the volume was set, -1 if it was out of range
-    m_sourceRenderer->setVolume( volume );
+    if( m_isRendering == true )
+    {
+        m_sourceRenderer->setVolume( volume );
+    }
 }
 
 qint64
