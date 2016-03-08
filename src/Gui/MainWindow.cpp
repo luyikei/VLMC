@@ -107,8 +107,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( Core::getInstance()->project(), SIGNAL( projectUpdated(QString) ),
-             this, SLOT( projectUpdated( QString ) ) );
+    connect( Core::getInstance()->project(), SIGNAL( projectNameChanged(QString) ),
+             this, SLOT( projectNameChanged( QString ) ) );
     connect( Core::getInstance()->project(), SIGNAL( outdatedBackupFileFound() ),
              this, SLOT( onOudatedBackupFile() ) );
     connect( Core::getInstance()->project(), SIGNAL( backupProjectLoaded() ),
@@ -793,7 +793,7 @@ MainWindow::closeEvent( QCloseEvent* e )
 }
 
 void
-MainWindow::projectUpdated( const QString& projectName )
+MainWindow::projectNameChanged( const QString& projectName )
 {
     QString title = tr( "%1 VideoLAN Movie Creator [*]" ).arg( projectName );
     setWindowTitle( title );

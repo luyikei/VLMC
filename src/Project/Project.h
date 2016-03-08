@@ -84,7 +84,7 @@ class Project : public QObject
     public slots:
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
-        void                projectUpdated( const QVariant& projectName); // Proxy slot for projectUpdated(QString)
+        void                projectNameChanged( const QVariant& projectName); // Proxy slot for projectNameChanged(QString)
         void                autoSaveRequired();
         void                autoSaveEnabledChanged( const QVariant& enabled );
         void                autoSaveIntervalChanged( const QVariant& interval );
@@ -96,7 +96,7 @@ class Project : public QObject
          *      - The project name has changed
          *      - The revision (if activated) has changed
          */
-        void                projectUpdated( const QString& projectName );
+        void                projectNameChanged( const QString& projectName );
 
         /**
          *  \brief      Used to signal that the project has been saved.

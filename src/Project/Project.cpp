@@ -216,7 +216,7 @@ Project::initSettings()
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                     SettingValue::NotEmpty );
-    connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectUpdated( QVariant ) ) );
+    connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
 }
 
 void
@@ -315,9 +315,9 @@ Project::libraryCleanChanged(bool val)
 }
 
 void
-Project::projectUpdated(const QVariant &projectName)
+Project::projectNameChanged(const QVariant &projectName)
 {
-    emit projectUpdated( projectName.toString() );
+    emit projectNameChanged( projectName.toString() );
 }
 
 void
