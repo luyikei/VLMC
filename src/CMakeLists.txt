@@ -237,7 +237,6 @@ ELSE(NOT WITH_GUI)
             MACOSX_PACKAGE_LOCATION Resources)
         SET(MACOSX_BUNDLE_ICON_FILE VLMC.icns)
         LIST( APPEND VLMC_SRCS Gui/preview/RenderWidget.mm )
-message(${FOUNDATION_FRAMEWORK})
         list( APPEND VLMC_LIBS ${FOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} )
     ELSE( APPLE )
         ## Since there's no implementation on non-apple platforms, we need to process
