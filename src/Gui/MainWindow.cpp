@@ -177,6 +177,12 @@ MainWindow::changeEvent( QEvent *e )
         m_ui.retranslateUi( this );
         retranslateUi();
         break;
+    case QEvent::WindowStateChange:
+        if ( isFullScreen() )
+            m_ui.actionFullscreen->setChecked( true );
+        else
+            m_ui.actionFullscreen->setChecked( false );
+        break;
     default:
         break;
     }
