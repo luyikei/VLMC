@@ -84,9 +84,6 @@ VLMCGuimain( int argc, char **argv )
     XInitThreads();
 #endif
 
-#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
     QApplication app( argc, argv );
 
     Backend::IBackend* backend;
