@@ -164,7 +164,15 @@ Settings::setValue(const QString &key, const QVariant &value)
     Q_ASSERT_X( false, __FILE__, "setting value without a created variable" );
     return false;
 }
-
+void
+Settings::restoreDefaultValues()
+{
+    QReadLocker lock( &m_rwLock );
+    for (auto s : m_settings)
+    {
+        s->restoreDefault();
+    }
+}
 SettingValue*
 Settings::value(const QString &key)
 {

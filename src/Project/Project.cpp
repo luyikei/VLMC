@@ -266,7 +266,7 @@ Project::closeProject()
 {
     if ( m_projectFile == nullptr )
         return;
-    // FIXME: Restore settings to their default value
+    m_settings->restoreDefaultValues();
     emit projectClosed();
     delete m_projectFile;
     m_projectFile = nullptr;
