@@ -33,6 +33,7 @@
 #include <QUndoStack>
 #include <QUrl>
 #include <QNetworkProxy>
+#include <QSysInfo>
 #include "Main/Core.h"
 #include "Project/Project.h"
 #include "Library/Library.h"
@@ -499,6 +500,13 @@ MainWindow::initToolbar()
     connect( mouseActions, SIGNAL( triggered(QAction*) ),
              this, SLOT( toolButtonClicked( QAction* ) ) );
     m_ui.menuTools->addActions( mouseActions->actions() );
+#if defined ( Q_OS_MAC )
+    // Use native fullscreen on OS X >= LION
+    if ( QSysInfo::macVersion() >= QSysInfo::MV_LION ) {
+        m_ui.actionFullscreen->setEnabled( false );
+        m_ui.actionFullscreen->setVisible( false );
+    }
+#endif
 }
 
 void
