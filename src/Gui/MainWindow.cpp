@@ -361,9 +361,9 @@ MainWindow::on_actionSave_As_triggered()
 void
 MainWindow::on_actionLoad_Project_triggered()
 {
-    // FIXME: We probably could use a default folder.
+    QString folder = VLMC_GET_STRING( "vlmc/WorkspaceLocation" );
     QString fileName = QFileDialog::getOpenFileName( NULL, tr( "Please choose a project file" ),
-                                    "", tr( "VLMC project file(*.vlmc)" ) );
+                                    folder, tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
     Core::getInstance()->loadProject( fileName );
