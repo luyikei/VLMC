@@ -505,7 +505,7 @@ MainWindow::initToolbar()
     mouseActions->addAction( m_ui.actionCut_mode );
     m_ui.actionSelection_mode->setChecked( true );
     m_ui.toolBar->addActions( mouseActions->actions() );
-    connect( mouseActions, SIGNAL( triggered(QAction*) ),
+    connect( mouseActions, SIGNAL( triggered( QAction* ) ),
              this, SLOT( toolButtonClicked( QAction* ) ) );
     m_ui.menuTools->addActions( mouseActions->actions() );
 #if defined ( Q_OS_MAC )
