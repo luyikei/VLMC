@@ -100,11 +100,7 @@ VlmcLogger::setup()
     Backend::IBackend* backend = Backend::getBackend();
     backend->setLogHandler( this, &VlmcLogger::backendLogHandler );
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     qInstallMessageHandler( VlmcLogger::vlmcMessageHandler );
-#else
-    qInstallMsgHandler( VlmcLogger::vlmcMessageHandler );
-#endif
 }
 
 void
@@ -131,15 +127,10 @@ VlmcLogger::writeToFile(const char *msg)
 }
 
 void
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 VlmcLogger::vlmcMessageHandler( QtMsgType type, const QMessageLogContext&, const QString& str )
 {
     const QByteArray byteArray = str.toLocal8Bit();
     const char* msg = byteArray.constData();
-#else
-VlmcLogger::vlmcMessageHandler( QtMsgType type, const char* msg )
-{
-#endif
     //FIXME: This is ok as long as we guarantee no log message will arrive after
     // we uninstall the hook
 

@@ -49,11 +49,7 @@ class   VlmcLogger : public QObject
             Quiet = QtCriticalMsg
         };
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
         static void     vlmcMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& str );
-#else
-        static void     vlmcMessageHandler( QtMsgType type, const char* msg );
-#endif
         static void     backendLogHandler( void* data, Backend::IBackend::LogLevel logLevel, const char* msg );
 
         void            setup();
