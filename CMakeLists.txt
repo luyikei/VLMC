@@ -118,7 +118,7 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 # Manually set Qt5 path for OSX installed using brew
 SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
 
-# search for Qt4
+# search for Qt5
 find_package(Qt5Core QUIET)
 if (Qt5Core_FOUND)
     # go on with other packages
