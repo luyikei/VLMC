@@ -201,15 +201,13 @@ Settings::SettingList
 Settings::group(const QString &groupName) const
 {
     QReadLocker lock( &m_rwLock );
-    SettingMap::const_iterator          it = m_settings.begin();
-    SettingMap::const_iterator          ed = m_settings.end();
     SettingList        ret;
 
     QString grp = groupName + '/';
-    for ( ; it != ed; ++it )
+    for ( auto s : m_settings )
     {
-        if ( (*it)->key().startsWith( grp ) )
-            ret.push_back( *it );
+        if ( s->key().startsWith( grp ) )
+            ret.push_back( s );
     }
     return ret;
 }
