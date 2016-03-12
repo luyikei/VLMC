@@ -3,7 +3,9 @@
 # Authors: Rohit Yadav <rohityadav89@gmail.com>
 #          Ludovic Fauvet <etix@vlmc.org>
 #
-
+#check if version will support target_compile_features command
+#to ensure we can use some C++11 featrues
+cmake_minimum_required(VERSION 3.1)
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
