@@ -99,7 +99,13 @@ ProjectWizard::accept()
     //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
     {
-        Core::getInstance()->newProject( field( "projectName" ).toString(), field( "projectPath" ).toString() );
+        Core::getInstance()->newProject
+                    (
+                    field( "projectName" ).toString(),
+                    QString( "%1/%2.vlmc" )
+                        .arg( field( "projectPath" ).toString() )
+                        .arg( QString( field( "projectName" ).toString() ).replace( " ", "_" ) )
+                    );
         Settings* projectPreferences = Core::getInstance()->project()->settings();
 
         projectPreferences->setValue( "video/VLMCOutputFPS", field( "fps" ) );
