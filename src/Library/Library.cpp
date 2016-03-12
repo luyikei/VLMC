@@ -22,7 +22,7 @@
 
 /** \file
   * This file the library contains class implementation.
-  * It's the the backend part of the Library widget of vlmc.
+  * It's the backend part of the Library widget of vlmc.
   * It can load and unload Medias (Medias.h/Media.cpp)
   * It can load and unload Clips (Clip.h/Clip.cpp)
   */
