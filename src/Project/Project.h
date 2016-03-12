@@ -56,7 +56,7 @@ class Project : public QObject
 
         void            save();
         void            saveAs(const QString& fileName);
-        void            newProject( const QString& projectName, const QString& projectPath );
+        void            newProject( const QString& projectName, const QString& projectFilePath );
         /**
          *  @brief          Check for a project backup file, and load the appropriate file,
          *                  according to the user input.

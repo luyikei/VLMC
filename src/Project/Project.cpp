@@ -172,11 +172,11 @@ Project::saveAs( const QString& fileName )
 }
 
 void
-Project::newProject( const QString& projectName, const QString& projectPath )
+Project::newProject( const QString& projectName, const QString& projectFilePath )
 {
     closeProject();
     m_settings->setValue( "vlmc/ProjectName", projectName );
-    m_projectFile = new QFile( projectPath );
+    m_projectFile = new QFile( projectFilePath );
     save();
 }
 
