@@ -147,7 +147,7 @@ Project::load( const QString& path )
     emit cleanStateChanged( m_isClean );
     if ( autoBackupFound == false )
         m_projectFile->close();
-    emit projectLoaded( projectName );
+    emit projectLoaded( projectName, path );
     if ( outdatedBackupFound == true )
         emit outdatedBackupFileFound();
     if ( autoBackupFound == true )

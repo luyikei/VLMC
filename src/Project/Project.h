@@ -113,7 +113,7 @@ class Project : public QObject
         void                cleanStateChanged( bool value );
 
         void                projectLoading( const QString& projectName );
-        void                projectLoaded( const QString& projectName );
+        void                projectLoaded( const QString& projectName, const QString& projectFilePath );
         void                projectClosed();
         void                backupProjectLoaded();
         void                outdatedBackupFileFound();
