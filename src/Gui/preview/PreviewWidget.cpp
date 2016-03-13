@@ -190,7 +190,6 @@ PreviewWidget::stop()
     {
         m_previewStopped = true;
         m_renderer->stop();
-        m_ui->pushButtonPlay->setIcon( QIcon( ":/images/play" ) );
     }
 }
 
