@@ -42,7 +42,6 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
         m_lastReturnedBuffer( NULL )
 {
-    m_effectsLock = new QReadWriteLock();
 }
 
 void
