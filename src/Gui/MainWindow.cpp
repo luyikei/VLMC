@@ -342,13 +342,9 @@ void
 MainWindow::on_actionSave_triggered()
 {
     if ( Core::getInstance()->project()->hasProjectFile() == false )
-    {
-      this->on_actionSave_As_triggered();
-    }
+        on_actionSave_As_triggered();
     else
-    {
-         Core::getInstance()->project()->save();
-    } 
+        Core::getInstance()->project()->save();
 }
 
 void
