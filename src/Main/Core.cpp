@@ -55,9 +55,9 @@ Core::Core()
     m_library = new Library( m_workspace );
     m_currentProject = new Project( m_settings );
 
-    connect( m_undoStack, SIGNAL( cleanChanged( bool ) ), m_currentProject, SLOT( cleanChanged( bool ) ) );
-    connect( m_currentProject, SIGNAL( projectSaved() ), m_undoStack, SLOT( setClean() ) );
-    connect( m_library, SIGNAL( cleanStateChanged( bool ) ), m_currentProject, SLOT( libraryCleanChanged( bool ) ) );
+    connect( m_undoStack, &QUndoStack::cleanChanged, m_currentProject, &Project::cleanChanged );
+    connect( m_currentProject, &Project::projectSaved, m_undoStack, &QUndoStack::setClean );
+    connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     connect( m_currentProject, SIGNAL( projectLoaded( QString, QString ) ),
              m_recentProjects, SLOT( projectLoaded( QString, QString ) ) );
 }

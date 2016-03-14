@@ -33,7 +33,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* pa
 {
     SettingValue* setting = Core::getInstance()->settings()->value( name );
     setKey( QKeySequence( setting->get().toString() ) );
-    connect( setting, SIGNAL( changed( QVariant ) ), this, SLOT( shortcutUpdated( const QVariant& ) ) );
+    connect( setting, &SettingValue::changed, this, &KeyboardShortcutHelper::shortcutUpdated );
 }
 
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *action,
@@ -44,7 +44,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *ac
 {
     SettingValue* setting = Core::getInstance()->settings()->value( name );
     action->setShortcut( setting->get().toString() );
-    connect( setting, SIGNAL( changed( QVariant ) ), this, SLOT( shortcutUpdated( const QVariant& ) ) );
+    connect( setting, &SettingValue::changed, this, &KeyboardShortcutHelper::shortcutUpdated );
 }
 
 void

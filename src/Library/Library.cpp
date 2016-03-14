@@ -114,6 +114,9 @@ Library::mediaLoaded( const Media* media )
 {
     if ( media != NULL )
     {
+        //FIXME: metaDataComputed in Media class has no arguments, this shouldn't be working;
+        //replacing this with disconnect( media, &Media::metaDataComputed, this, &Library::mediaLoaded );
+        //produces static_assert error
         disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
                  this, SLOT( mediaLoaded( const Media* ) ) );
     }

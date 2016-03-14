@@ -36,10 +36,11 @@ Transcoder::Transcoder( Media* media )
     : m_media( media )
     , m_renderer( NULL )
 {
-    connect( this, SIGNAL( notify( QString ) ),
-             NotificationZone::getInstance(), SLOT( notify( QString ) ) );
-    connect( this, SIGNAL( progress( float ) ),
-             NotificationZone::getInstance(), SLOT( progressUpdated( float ) ) );
+    connect( this, &Transcoder::notify,
+             NotificationZone::getInstance(), &NotificationZone::notify );
+    connect( this, &Transcoder::progress,
+             NotificationZone::getInstance(),
+             static_cast<void(NotificationZone::*)(float)>(&NotificationZone::progressUpdated) );
     m_eventWatcher = new RendererEventWatcher;
 }
 
@@ -62,8 +63,8 @@ Transcoder::transcodeToPs()
     m_destinationFile = outputDir + '/' + m_media->fileInfo()->baseName() + ".ps";
     m_renderer->setOutputFile( qPrintable( m_destinationFile ) );
     m_renderer->setName( qPrintable( QString( "Transcoder " ) + m_media->fileInfo()->baseName() ) );
-    connect( m_eventWatcher, SIGNAL( positionChanged( float ) ), this, SIGNAL( progress( float ) ) );
-    connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( transcodeFinished() ) );
+    connect( m_eventWatcher, &RendererEventWatcher::positionChanged, this, &Transcoder::progress );
+    connect( m_eventWatcher, &RendererEventWatcher::endReached, this, &Transcoder::transcodeFinished );
     emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );
     m_renderer->start();
 }

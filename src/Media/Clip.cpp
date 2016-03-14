@@ -47,8 +47,8 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
     computeLength();
-    connect( media, SIGNAL( metaDataComputed() ),
-             this, SLOT( mediaMetadataUpdated() ) );
+    connect( media, &Media::metaDataComputed,
+             this, &Clip::mediaMetadataUpdated );
 }
 
 Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
