@@ -791,7 +791,7 @@ MainWindow::closeEvent( QCloseEvent* e )
         switch ( ret )
         {
         case QMessageBox::Save:
-            Core::getInstance()->project()->save();
+            on_actionSave_triggered();
             break;
         case QMessageBox::Discard:
             break;
