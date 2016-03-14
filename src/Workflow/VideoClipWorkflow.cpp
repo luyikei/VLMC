@@ -45,11 +45,6 @@ VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
     m_effectsLock = new QReadWriteLock();
 }
 
-VideoClipWorkflow::~VideoClipWorkflow()
-{
-    stop();
-}
-
 void
 VideoClipWorkflow::releasePrealocated()
 {

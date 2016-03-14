@@ -52,6 +52,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch )
 
 ClipWorkflow::~ClipWorkflow()
 {
+    stop();
     delete m_eventWatcher;
     delete m_renderWaitCond;
     delete m_renderLock;

@@ -36,11 +36,6 @@ AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
     m_ptsOffset = 0;
 }
 
-AudioClipWorkflow::~AudioClipWorkflow()
-{
-    stop();
-}
-
 void
 AudioClipWorkflow::preallocate()
 {

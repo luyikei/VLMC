@@ -39,7 +39,6 @@ class   AudioClipWorkflow : public ClipWorkflow
 
     public:
         AudioClipWorkflow( ClipHelper* ch );
-        ~AudioClipWorkflow();
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
     protected:
         virtual quint32             getNbComputedBuffers() const;
