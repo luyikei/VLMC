@@ -182,6 +182,12 @@ VLCSourceRenderer::stop()
     m_mediaPlayer->stop();
 }
 
+bool
+VLCSourceRenderer::isStopped()
+{
+    return m_mediaPlayer->state() == libvlc_Stopped;
+}
+
 void
 VLCSourceRenderer::playPause()
 {

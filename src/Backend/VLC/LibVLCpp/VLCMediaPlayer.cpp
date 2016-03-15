@@ -259,3 +259,9 @@ LibVLCpp::MediaPlayer::willPlay()
 {
     return libvlc_media_player_will_play( *this ) != 0;
 }
+
+libvlc_state_t
+MediaPlayer::state()
+{
+    return libvlc_media_player_get_state( *this );
+}

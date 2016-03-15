@@ -59,6 +59,7 @@ public:
     virtual void    setName( const char* name );
     virtual void    start();
     virtual void    stop();
+    virtual bool    isStopped() override;
     virtual void    playPause();
     virtual void    setPause( bool isPaused ) override;
     virtual void    nextFrame();

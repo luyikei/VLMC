@@ -77,6 +77,7 @@ namespace   LibVLCpp
         void                                setupVmem( const char* chroma, unsigned int width,
                                                        unsigned int height, unsigned int pitch );
         bool                                willPlay();
+        libvlc_state_t                      state();
 
 
         void                                registerEvents( libvlc_callback_t callback, void* data );
