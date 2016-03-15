@@ -4,6 +4,7 @@
 #          Rohit Yadav <rohityadav89@gmail.com>
 #
 
+cmake_minimum_required(VERSION 3.1)
 ## RCC file
 SET(TS_QRC ${CMAKE_SOURCE_DIR}/ts/resources-ts.qrc)
 
