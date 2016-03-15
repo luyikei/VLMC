@@ -82,6 +82,7 @@ ClipWorkflow::initialize()
     connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
     connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
     connect( m_eventWatcher, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
+    connect( m_eventWatcher, &RendererEventWatcher::stopped, this, &ClipWorkflow::mediaPlayerStopped );
     m_renderer->start();
 }
 
@@ -130,14 +131,6 @@ ClipWorkflow::stop()
     if ( m_renderer && m_state != Stopped )
     {
         m_renderer->stop();
-        m_eventWatcher->disconnect();
-        if ( m_state != Error )
-            m_state = Stopped;
-        flushComputedBuffers();
-        m_isRendering = false;
-
-        m_initWaitCond->wakeAll();
-        m_renderWaitCond->wakeAll();
     }
 }
 
@@ -226,6 +219,19 @@ ClipWorkflow::mediaPlayerUnpaused()
 {
     m_state = ClipWorkflow::Rendering;
     m_pauseDuration = mdate() - m_beginPausePts;
+}
+
+void
+ClipWorkflow::mediaPlayerStopped()
+{
+    m_eventWatcher->disconnect();
+    if ( m_state != Error )
+        m_state = Stopped;
+    flushComputedBuffers();
+    m_isRendering = false;
+
+    m_initWaitCond->wakeAll();
+    m_renderWaitCond->wakeAll();
 }
 
 void

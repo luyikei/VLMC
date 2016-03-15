@@ -243,6 +243,7 @@ class   ClipWorkflow : public EffectUser
         void                    clipEndReached();
         void                    mediaPlayerPaused();
         void                    mediaPlayerUnpaused();
+        void                    mediaPlayerStopped();
         void                    resyncClipWorkflow();
 
     protected slots:
