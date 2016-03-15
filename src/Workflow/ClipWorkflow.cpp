@@ -140,12 +140,7 @@ ClipWorkflow::setTime( qint64 time )
     vlmcDebug() << "Setting ClipWorkflow" << m_clipHelper->uuid() << "time:" << time;
     m_renderer->setTime( time );
     resyncClipWorkflow();
-    QWriteLocker    lock( m_stateLock );
-    if ( m_state == ClipWorkflow::Paused )
-    {
-        m_renderer->playPause();
-        m_state = ClipWorkflow::UnpauseRequired;
-    }
+    m_renderer->setPause( false );
 }
 
 bool
@@ -168,15 +163,7 @@ ClipWorkflow::postGetOutput()
 {
     //If we're running out of computed buffers, refill our stack.
     if ( getNbComputedBuffers() < getMaxComputedBuffers() / 3 )
-    {
-        QWriteLocker        lock( m_stateLock );
-        if ( m_state == ClipWorkflow::Paused )
-        {
-            m_state = ClipWorkflow::UnpauseRequired;
-            //This will act like an "unpause";
-            m_renderer->playPause();
-        }
-    }
+        m_renderer->setPause( false );
 }
 
 void
@@ -186,9 +173,7 @@ ClipWorkflow::commonUnlock()
     //no one is available : we would spawn a new buffer, thus modifying the number of available buffers
     if ( getNbComputedBuffers() >= getMaxComputedBuffers() )
     {
-        QWriteLocker lock( m_stateLock );
-        m_state = ClipWorkflow::PauseRequired;
-        m_renderer->playPause();
+        m_renderer->setPause( true );
     }
 }
 
