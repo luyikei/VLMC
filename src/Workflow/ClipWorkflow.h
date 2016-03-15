@@ -71,18 +71,11 @@ class   ClipWorkflow : public EffectUser
             /// \brief  Used when end is reached, IE no more frame has to be rendered, but the trackworkflow
             ///         may eventually ask for some.
             EndReached,         //3
-            // Here start internal states :
-            /// \brief  This state will be used when an unpause
-            ///         has been required
-            UnpauseRequired,    //4
-            /// \brief  This state will be used when a pause
-            ///         has been required
-            PauseRequired,      //5
             /// \brief  This state will be used when the ISourceRenderer is paused,
             ///         because of a sufficient number of computed buffers
-            Paused,             //6
+            Paused,             //4
             /// \brief  An error was encountered, this ClipWorkflow must not be used anymore.
-            Error               //7
+            Error               //5
         };
 
         /**

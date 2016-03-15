@@ -186,9 +186,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
 
     ClipWorkflow::State state = cw->getState();
     if ( state == ClipWorkflow::Rendering ||
-         state == ClipWorkflow::Paused ||
-         state == ClipWorkflow::PauseRequired ||
-         state == ClipWorkflow::UnpauseRequired )
+         state == ClipWorkflow::Paused )
     {
         if ( cw->isResyncRequired() == true || needRepositioning == true )
             adjustClipTime( currentFrame, start, cw );
