@@ -46,6 +46,7 @@ namespace   LibVLCpp
         ~MediaPlayer();
         void                                play();
         void                                pause();
+        void                                setPause( bool isPaused );
         void                                stop();
         int                                 getVolume();
         int                                 setVolume( int volume );

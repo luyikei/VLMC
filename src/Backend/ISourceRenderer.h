@@ -66,6 +66,7 @@ namespace Backend
         virtual void    start() = 0;
         virtual void    stop() = 0;
         virtual void    playPause() = 0;
+        virtual void    setPause( bool isPaused ) = 0;
         virtual void    nextFrame() = 0;
         virtual void    previousFrame() = 0;
 

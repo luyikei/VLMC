@@ -96,6 +96,12 @@ MediaPlayer::pause()
 }
 
 void
+MediaPlayer::setPause( bool isPaused )
+{
+    libvlc_media_player_set_pause( m_internalPtr, isPaused );
+}
+
+void
 MediaPlayer::stop()
 {
     //vlmcDebug() << "Asking for stop media player";

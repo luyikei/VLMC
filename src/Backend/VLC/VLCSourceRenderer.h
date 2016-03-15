@@ -60,6 +60,7 @@ public:
     virtual void    start();
     virtual void    stop();
     virtual void    playPause();
+    virtual void    setPause( bool isPaused ) override;
     virtual void    nextFrame();
     virtual void    previousFrame();
     virtual void    setOutputWidget( void *target );

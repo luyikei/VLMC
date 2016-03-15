@@ -189,6 +189,12 @@ VLCSourceRenderer::playPause()
 }
 
 void
+VLCSourceRenderer::setPause( bool isPaused )
+{
+    m_mediaPlayer->setPause( isPaused );
+}
+
+void
 VLCSourceRenderer::nextFrame()
 {
     m_mediaPlayer->nextFrame();
