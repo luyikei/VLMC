@@ -87,6 +87,7 @@ GeneralPage::validatePage()
     if ( m_valid == false )
         return false;
     const QString       &defaultProjectName = Project::unNamedProject;
+    QString invalid_char = "/?:*\\|";
     if ( ui.lineEditName->text().isEmpty() ||
          ui.lineEditName->text() == defaultProjectName )
     {
@@ -95,6 +96,14 @@ GeneralPage::validatePage()
         ui.lineEditName->setFocus();
         return false;
     }
+    for ( int i = 0; i < invalid_char.length() ; ++i )
+        if ( ui.lineEditName->text().contains( invalid_char[i] ) )
+        {
+            QMessageBox::information( this, tr( "Invalid project name" ),
+                                      tr( "Special characters are not allowed" ) );
+            ui.lineEditName->setFocus();
+            return false;
+        }
 
     //Create the project directory in the workspace dir.
     QString     projectPath = ui.lineEditName->text().replace( ' ', '_' );
