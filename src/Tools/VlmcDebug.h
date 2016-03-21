@@ -27,6 +27,12 @@
 #include <QThread>
 #include <QTime>
 
+inline QDebug operator<<( QDebug& qdbg, const std::string& str )
+{
+    qdbg << str.c_str();
+    return qdbg;
+}
+
 inline QDebug vlmcDebug()
 {
     return (qDebug().nospace() << '[' << qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")) << "] T #" << QThread::currentThreadId() << " D:").space();
