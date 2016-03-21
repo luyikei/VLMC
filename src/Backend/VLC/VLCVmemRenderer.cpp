@@ -33,12 +33,23 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
     : VLCSourceRenderer( backend, source, callback )
     , m_snapshotRequired( false )
 {
-    m_media->parse();
+    m_media.parse();
     setName( "VmemRenderer" );
     m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
-    m_mediaPlayer->setupVmem( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );
-    m_mediaPlayer->setupVmemCallbacks( &VmemRenderer::vmemLock, &VmemRenderer::vmemUnlock, NULL, this );
-    if ( m_mediaPlayer->setAudioOutput( "dummy" ) == false )
+    m_mediaPlayer.setVideoFormat( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );
+    m_mediaPlayer.setVideoCallbacks(
+        // Lock:
+        [this]( void** planes ) {
+            return vmemLock( planes );
+        },
+        // Unlock:
+        nullptr,
+        // Display:
+        [this]( void* picture ) {
+            vmemUnlock( picture );
+        }
+    );
+    if ( m_mediaPlayer.setAudioOutput( "dummy" ) == false )
         vlmcWarning() << "Failed to disable audio output";
 }
 
@@ -52,7 +63,7 @@ VmemRenderer::~VmemRenderer()
     delete m_snapshot;
 }
 
-LibVLCpp::MediaPlayer*
+::VLC::MediaPlayer&
 VmemRenderer::mediaPlayer()
 {
     return m_mediaPlayer;
@@ -69,24 +80,21 @@ VmemRenderer::waitSnapshot()
 }
 
 void*
-VmemRenderer::vmemLock(void *data, void **planes)
+VmemRenderer::vmemLock( void **planes)
 {
-    VmemRenderer* self = reinterpret_cast<VmemRenderer*>( data );
-    self->m_mutex.lock();
-    *planes = self->m_snapshot->bits();
-    return self->m_snapshot;
+    QMutexLocker lock( &m_mutex );
+    *planes = m_snapshot->bits();
+    return m_snapshot;
 }
 
 void
-VmemRenderer::vmemUnlock(void *data, void *picture, void * const *planes)
+VmemRenderer::vmemUnlock( void* picture )
 {
+    QMutexLocker lock( &m_mutex );
     Q_UNUSED( picture );
-    Q_UNUSED( planes );
-    VmemRenderer* self = reinterpret_cast<VmemRenderer*>( data );
-    if ( self->m_snapshotRequired == true )
+    if ( m_snapshotRequired == true )
     {
-        self->m_snapshotRequired = false;
-        self->m_waitCond.wakeAll();
+        m_snapshotRequired = false;
+        m_waitCond.wakeAll();
     }
-    self->m_mutex.unlock();
 }

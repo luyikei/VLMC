@@ -16,10 +16,6 @@ SET(VLMC_SRCS
     Backend/VLC/VLCVmemRenderer.cpp
     Backend/VLC/VLCSource.cpp
     Backend/VLC/VLCMemorySource.cpp
-    Backend/VLC/LibVLCpp/VLCInstance.cpp
-    Backend/VLC/LibVLCpp/VLCMedia.cpp
-    Backend/VLC/LibVLCpp/VLCMediaPlayer.cpp
-    Backend/VLC/LibVLCpp/VLCpp.hpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectUser.cpp
@@ -88,7 +84,6 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}/src
   .
-  Backend/VLC/LibVLCpp
   Gui
 )
 

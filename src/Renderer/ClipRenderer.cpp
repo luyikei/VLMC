@@ -32,8 +32,6 @@
 #include "Media/Media.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/preview/RenderWidget.h"
-#include "VLCMediaPlayer.h"
-#include "VLCMedia.h"
 
 ClipRenderer::ClipRenderer() :
     GenericRenderer(),

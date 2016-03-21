@@ -42,7 +42,7 @@ class VmemRenderer : public VLCSourceRenderer
 public:
     VmemRenderer(VLCBackend *backend, VLCSource* source, ISourceRendererEventCb* callback );
     virtual ~VmemRenderer();
-    LibVLCpp::MediaPlayer*  mediaPlayer();
+    ::VLC::MediaPlayer&  mediaPlayer();
     /**
      * @brief waitSnapshot  Wait for a snapshot to be computed and returns it.
      *  The renderer doesn't own the snapshot, and it will have to be released by
@@ -52,8 +52,8 @@ public:
     QImage *waitSnapshot();
 
 private:
-    static void*    vmemLock( void* data, void **planes );
-    static void     vmemUnlock( void *data, void *picture, void *const *planes );
+    void*    vmemLock( void **planes );
+    void     vmemUnlock( void* picture );
 
 private:
     QImage*         m_snapshot;

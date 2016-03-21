@@ -26,7 +26,7 @@
 #include <QImage>
 
 #include "Backend/ISource.h"
-#include "VLCMedia.h"
+#include "libvlcpp/vlcpp/vlc.hpp"
 
 namespace Backend
 {
@@ -40,7 +40,6 @@ class VLCSource : public ISource
 {
 public:
     VLCSource( VLCBackend* backend, const QString& path );
-    virtual ~VLCSource();
     virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
     virtual bool                preparse();
     virtual bool                isParsed() const;
@@ -56,14 +55,14 @@ public:
     virtual int64_t             nbFrames() const;
 
     // Below this point are backend internal methods:
-    LibVLCpp::Media*            media();
+    ::VLC::Media&               media();
 
 private:
-    bool                        computeSnapshot( VmemRenderer* renderer );
+    bool                        computeSnapshot( VmemRenderer& renderer );
 
 private:
     VLCBackend*                 m_backend;
-    LibVLCpp::Media*            m_media;
+    ::VLC::Media                m_media;
     unsigned int                m_width;
     unsigned int                m_height;
     float                       m_fps;

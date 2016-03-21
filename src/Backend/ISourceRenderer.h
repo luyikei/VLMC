@@ -71,7 +71,7 @@ namespace Backend
         virtual void    nextFrame() = 0;
         virtual void    previousFrame() = 0;
 
-        virtual int     volume() const = 0;
+        virtual int     volume() = 0;
         virtual void    setVolume( int volume ) = 0;
         /**
          * @brief setOutputWidget   Will direct the rendering to the specified widget.
@@ -94,7 +94,7 @@ namespace Backend
         virtual void    setOutputAudioNumberChannels( unsigned int nbChannels ) = 0;
         virtual void    setOutputAudioBitrate( unsigned int aBitrate ) = 0;
 
-        virtual int64_t time() const = 0;
+        virtual int64_t time() = 0;
         virtual void    setTime( int64_t time ) = 0;
         virtual void    setPosition( float position ) = 0;
 

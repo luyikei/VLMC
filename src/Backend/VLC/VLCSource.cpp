@@ -40,17 +40,10 @@ VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     , m_isParsed( false )
     , m_nbFrames( 0 )
 {
-    char buffer[256];
-    sprintf( buffer, "file://%s", qPrintable( path ) );
-    m_media = new LibVLCpp::Media( backend->vlcInstance(), buffer );
+    m_media = ::VLC::Media( backend->vlcInstance(), path.toStdString(), ::VLC::Media::FromPath );
 }
 
-VLCSource::~VLCSource()
-{
-    delete m_media;
-}
-
-LibVLCpp::Media*
+::VLC::Media&
 VLCSource::media()
 {
     return m_media;
@@ -67,28 +60,38 @@ VLCSource::preparse()
 {
     // This assume we won't try to parse the same media twice ast the same time
     m_isParsed = true;
+    Q_ASSERT( m_nbAudioTracks == 0 );
+    Q_ASSERT( m_nbVideoTracks == 0 );
 
-    VmemRenderer*           renderer = new VmemRenderer( m_backend, this, NULL );
-    LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
-    m_media->parse();
-    m_nbVideoTracks = mediaPlayer->getNbVideoTrack();
-    m_nbAudioTracks = mediaPlayer->getNbAudioTrack();
-    //FIXME: handle images with something like m_length = 10000;
-    m_length = m_media->getDuration();
-    if ( hasVideo() == true )
+    VmemRenderer renderer( m_backend, this, NULL );
+    m_media.parse();
+    m_length = m_media.duration();
+    auto tracks = m_media.tracks();
+    for ( const auto& t : tracks )
     {
-        mediaPlayer->getSize( &m_width, &m_height );
-        m_fps = mediaPlayer->getFps();
-        if ( m_fps < 0.1f )
+        if ( t.type() == ::VLC::MediaTrack::Type::Video )
         {
-            vlmcWarning() << "Invalid FPS for source" << m_media->mrl();
-            delete renderer;
-            return false;
+            ++m_nbVideoTracks;
+            //FIXME: This doesn't handle media with multiple video tracks
+            //We assume the first track to be the most valuable one for now.
+            if ( m_nbVideoTracks == 1 )
+            {
+                m_fps = (float)t.fpsNum() / (float)t.fpsDen();
+                if ( m_fps < 0.1f )
+                {
+                    vlmcWarning() << "Invalid FPS for source" << m_media.mrl();
+                    return false;
+                }
+                m_width = t.width();
+                m_height = t.height();
+                m_nbFrames = (int64_t)( (float)( m_length / 1000 ) * m_fps );
+                computeSnapshot( renderer );
+            }
         }
-        m_nbFrames = (int64_t)( (float)( m_length / 1000 ) * m_fps );
-        return computeSnapshot( renderer );
+        else if ( t.type() == ::VLC::MediaTrack::Type::Audio )
+            ++m_nbAudioTracks;
     }
-    delete renderer;
+    //FIXME: handle images with something like m_length = 10000;
     return true;
 }
 
@@ -99,16 +102,16 @@ VLCSource::isParsed() const
 }
 
 bool
-VLCSource::computeSnapshot( VmemRenderer* renderer )
+VLCSource::computeSnapshot( VmemRenderer& renderer )
 {
     Q_ASSERT( m_snapshot == NULL );
     {
-        renderer->setTime( m_length / 3 );
+        renderer.setTime( m_length / 3 );
         //FIXME: This is bad and you should feel bad.
         QThread::usleep( 500000 );
     }
-    m_snapshot = renderer->waitSnapshot();
-    delete renderer;
+    renderer.start();
+    m_snapshot = renderer.waitSnapshot();
     return m_snapshot != NULL;
 }
 

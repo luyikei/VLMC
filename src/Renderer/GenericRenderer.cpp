@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include "GenericRenderer.h"
-#include "VLCMediaPlayer.h"
 #include "preview/RenderWidget.h"
 #include <QtGlobal>
 

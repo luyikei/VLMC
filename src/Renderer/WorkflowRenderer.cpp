@@ -28,9 +28,6 @@
 #include <QWaitCondition>
 #include <inttypes.h>
 
-#include "VLCMedia.h"
-#include "VLCMediaPlayer.h"
-
 #include "WorkflowRenderer.h"
 
 #include "Project/Project.h"

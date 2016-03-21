@@ -29,7 +29,6 @@
 #include "Backend/ISourceRenderer.h"
 #include "Settings/Settings.h"
 #include "VideoClipWorkflow.h"
-#include "VLCMedia.h"
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 

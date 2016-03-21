@@ -50,7 +50,7 @@ class   VlmcLogger : public QObject
         };
 
         static void     vlmcMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& str );
-        static void     backendLogHandler( void* data, Backend::IBackend::LogLevel logLevel, const char* msg );
+        void            backendLogHandler( Backend::IBackend::LogLevel logLevel, const QString& msg );
 
         void            setup();
     private:

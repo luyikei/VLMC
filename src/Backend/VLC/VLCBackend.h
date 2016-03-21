@@ -27,7 +27,7 @@
 
 #include "Backend/IBackend.h"
 #include "Tools/Singleton.hpp"
-#include "VLCInstance.h"
+#include "libvlcpp/vlcpp/vlc.hpp"
 
 namespace Backend
 {
@@ -38,24 +38,16 @@ class VLCBackend : public IBackend, public Singleton<VLCBackend>
 {
     public:
         VLCBackend();
-        virtual ~VLCBackend();
         virtual ISource*        createSource( const char* path );
         virtual IMemorySource*  createMemorySource();
-        virtual void            setLogHandler( void* data, LogHandler logHandler );
+        virtual void            setLogHandler( LogHandler logHandler );
 
         // Accessible from VLCBackend only:
-        LibVLCpp::Instance* vlcInstance();
-    private:
-        static void         logHook( void* data, int level,
-                                     const libvlc_log_t* ctx, const char* fmt,
-                                     va_list args );
+        ::VLC::Instance&        vlcInstance();
 
     private:
         friend class Singleton<VLCBackend>;
-
-        LibVLCpp::Instance*         m_vlcInstance;
-        LogHandler                  m_logHandler;
-        void*                       m_logHandlerData;
+        ::VLC::Instance     m_vlcInstance;
 };
 
 } //VLC

@@ -28,7 +28,7 @@
 
 #include "Backend/ISourceRenderer.h"
 
-#include "VLCMediaPlayer.h"
+#include "libvlcpp/vlcpp/vlc.hpp"
 
 namespace Backend
 {
@@ -65,10 +65,10 @@ public:
     virtual void    nextFrame();
     virtual void    previousFrame();
     virtual void    setOutputWidget( void *target );
-    virtual int64_t time() const;
+    virtual int64_t time();
     virtual void    setTime( int64_t time );
     virtual void    setPosition( float position );
-    virtual int     volume() const;
+    virtual int     volume();
     virtual void    setVolume( int volume );
 
     virtual void    setOutputFile( const char* path );
@@ -101,15 +101,14 @@ private:
     void            initMediaPlayer();
     void            setupStreamOutput();
     QString         setupFileOutput();
-    static void     eventsCallback( const libvlc_event_t* event, void* data );
 
 protected:
     VLCBackend*                 m_backend;
     QString                     m_name;
     Modes                       m_modes;
     // This is a copy, to avoid sharing all options across multiple renderers
-    LibVLCpp::Media*            m_media;
-    LibVLCpp::MediaPlayer*      m_mediaPlayer;
+    ::VLC::Media                m_media;
+    ::VLC::MediaPlayer          m_mediaPlayer;
     ISourceRendererEventCb*     m_callback;
     QString                     m_outputFileName;
     QString                     m_smemChain;

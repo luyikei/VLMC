@@ -23,7 +23,7 @@
 #ifndef IBACKEND_H
 #define IBACKEND_H
 
-class QString;
+#include <functional>
 
 namespace Backend
 {
@@ -42,12 +42,12 @@ class IBackend
             Error,
             None
         };
-        typedef void        (*LogHandler)( void* data, LogLevel logLevel, const char* msg);
+        using LogHandler = std::function<void( LogLevel logLevel, const char* msg )>;
 
-        virtual ~IBackend() {}
+        virtual ~IBackend() = default;
         virtual ISource*        createSource( const char* path ) = 0;
         virtual IMemorySource*  createMemorySource() = 0;
-        virtual void            setLogHandler( void* data, LogHandler logHandler) = 0;
+        virtual void            setLogHandler( LogHandler logHandler ) = 0;
 };
 
 extern IBackend* getBackend();

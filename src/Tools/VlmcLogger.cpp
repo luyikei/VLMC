@@ -98,7 +98,9 @@ VlmcLogger::setup()
         }
     }
     Backend::IBackend* backend = Backend::getBackend();
-    backend->setLogHandler( this, &VlmcLogger::backendLogHandler );
+    backend->setLogHandler( [this]( Backend::IBackend::LogLevel lvl, const QString& msg ) {
+        backendLogHandler( lvl, msg );
+    } );
 
     qInstallMessageHandler( VlmcLogger::vlmcMessageHandler );
 }
@@ -169,17 +171,16 @@ VlmcLogger::outputToConsole( int level, const char *msg )
 }
 
 void
-VlmcLogger::backendLogHandler(void *data, Backend::IBackend::LogLevel logLevel, const char* msg )
+VlmcLogger::backendLogHandler( Backend::IBackend::LogLevel logLevel, const QString& msg )
 {
-    VlmcLogger* self = reinterpret_cast<VlmcLogger*>( data );
     char* newMsg = NULL;
     if ( asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
-              QThread::currentThreadId(), msg ) < 0 )
+              QThread::currentThreadId(), qPrintable( msg ) ) < 0 )
         return ;
 
-    if ( self->m_logFile != NULL )
-        self->writeToFile( newMsg );
-    if ( logLevel < self->m_backendLogLevel )
+    if ( m_logFile != NULL )
+        writeToFile( newMsg );
+    if ( logLevel < m_backendLogLevel )
     {
         free( newMsg );
         return ;
@@ -187,13 +188,13 @@ VlmcLogger::backendLogHandler(void *data, Backend::IBackend::LogLevel logLevel, 
     switch ( logLevel )
     {
         case Backend::IBackend::Debug:
-            self->outputToConsole( Debug, newMsg );
+            outputToConsole( Debug, newMsg );
             break;
         case Backend::IBackend::Warning:
-            self->outputToConsole( Verbose, newMsg );
+            outputToConsole( Verbose, newMsg );
             break;
         case Backend::IBackend::Error:
-            self->outputToConsole( Quiet, newMsg );
+            outputToConsole( Quiet, newMsg );
             break;
         default:
             Q_ASSERT(false);

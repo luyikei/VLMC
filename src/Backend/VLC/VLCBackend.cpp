@@ -37,25 +37,19 @@ IBackend *Backend::getBackend()
 }
 
 VLCBackend::VLCBackend()
-    : m_logHandler( NULL )
-    , m_logHandlerData( NULL )
 {
-    QVector<const char*> argv;
-    argv << "--no-skip-frames"
-        // << "--ffmpeg-debug", "3",
-        << "--text-renderer" << "dummy"
-        << "--no-sub-autodetect-file"           // Don't detect subtitles
-        // << "--no-audio"
-        // << "--no-overlay",
-        << "--no-disable-screensaver";             //No need to disable the screensaver, and save a thread.
+    const char* argv[] =
+    {
+        "--no-skip-frames",
+        // "--ffmpeg-debug", "3",
+        "--text-renderer", "dummy",
+        "--no-sub-autodetect-file",     // Don't detect subtitles
+        // "--no-audio"
+        // "--no-overlay",
+        "--no-disable-screensaver",     //No need to disable the screensaver, and save a thread.
+    };
 
-    m_vlcInstance = new LibVLCpp::Instance( argv.count(), &argv.front() );
-    assert( m_vlcInstance != NULL );
-}
-
-VLCBackend::~VLCBackend()
-{
-    delete m_vlcInstance;
+    m_vlcInstance = ::VLC::Instance( sizeof( argv ) / sizeof( argv[0] ), argv );
 }
 
 ISource*
@@ -71,43 +65,26 @@ VLCBackend::createMemorySource()
 }
 
 void
-VLCBackend::setLogHandler(void *data, IBackend::LogHandler logHandler)
+VLCBackend::setLogHandler( IBackend::LogHandler logHandler )
 {
-    m_vlcInstance->unsetLogHook();
-    m_logHandlerData = data;
-    m_logHandler = logHandler;
-    m_vlcInstance->setLogHook( this, &logHook );
+    m_vlcInstance.logUnset();
+    if ( (bool)logHandler == true )
+    {
+        m_vlcInstance.logSet( [logHandler]( int level, const void*, const std::string& msg ) {
+            auto lvl = IBackend::None;
+            if ( level == LIBVLC_NOTICE || level == LIBVLC_DEBUG )
+                lvl = IBackend::Debug;
+            else if ( level <= LIBVLC_WARNING )
+                lvl = IBackend::Warning;
+            else
+                lvl = IBackend::Error;
+            logHandler( lvl, msg.c_str() );
+        });
+    }
 }
 
-LibVLCpp::Instance*
+::VLC::Instance&
 VLCBackend::vlcInstance()
 {
     return m_vlcInstance;
-}
-
-void
-VLCBackend::logHook( void *data, int level, const libvlc_log_t *ctx, const char *fmt, va_list args )
-{
-    Q_UNUSED( ctx )
-
-    VLCBackend* self = reinterpret_cast<VLCBackend*>( data );
-
-    if ( !self->m_logHandler )
-        return ;
-
-    char* msg;
-    if (vasprintf( &msg, fmt, args ) < 0 )
-        return;
-    if ( level <= LIBVLC_NOTICE )
-        self->m_logHandler( self->m_logHandlerData, Debug, msg );
-    else if ( level == LIBVLC_WARNING )
-        self->m_logHandler( self->m_logHandlerData, Warning, msg );
-    else if ( level == LIBVLC_ERROR )
-        self->m_logHandler( self->m_logHandlerData, Error, msg );
-    else
-    {
-        vlmcCritical() << "Unexpected logging level for VLC log" << level;
-        vlmcCritical() << "VLCBackend:" << msg;
-    }
-    free( msg );
 }

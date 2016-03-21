@@ -8,6 +8,11 @@
 
   git clone https://code.videolan.org/videolan/vlmc.git
 
+## Fetch libvlcpp
+
+  git submodule init
+  git submodule update
+
 ##Building and packaging VLMC on Linux
 
 A typical way to build VLMC is:
