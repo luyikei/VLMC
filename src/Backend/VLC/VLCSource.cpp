@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "EventWaiter.h"
 #include "VLCBackend.h"
 #include "VLCSource.h"
 #include "VLCVmemRenderer.h"
@@ -99,28 +98,14 @@ VLCSource::isParsed() const
     return m_isParsed;
 }
 
-static bool
-checkTimeChanged( const libvlc_event_t* event )
-{
-    Q_ASSERT( event->type == libvlc_MediaPlayerPositionChanged );
-    return ( event->u.media_player_position_changed.new_position > 0.2f );
-}
-
 bool
 VLCSource::computeSnapshot( VmemRenderer* renderer )
 {
     Q_ASSERT( m_snapshot == NULL );
-    LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
     {
-        EventWaiter ew( mediaPlayer, false );
-        ew.add( libvlc_MediaPlayerPositionChanged );
-        ew.setValidationCallback( &checkTimeChanged );
         renderer->setTime( m_length / 3 );
-        if ( ew.wait( 3000 ) != EventWaiter::Success )
-        {
-            delete renderer;
-            return false;
-        }
+        //FIXME: This is bad and you should feel bad.
+        QThread::usleep( 500000 );
     }
     m_snapshot = renderer->waitSnapshot();
     delete renderer;
