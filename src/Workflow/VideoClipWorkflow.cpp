@@ -96,10 +96,9 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
         return NULL;
     if ( getNbComputedBuffers() == 0 )
     {
-        if ( m_renderWaitCond->wait( m_renderLock, 50 ) == false )
+        if ( m_renderWaitCond->wait( m_renderLock, 100 ) == false )
         {
             vlmcWarning() << "Clip workflow" << m_clipHelper->uuid() << "Timed out while waiting for a frame";
-            errorEncountered();
             return NULL;
         }
         if ( shouldRender() == false )
