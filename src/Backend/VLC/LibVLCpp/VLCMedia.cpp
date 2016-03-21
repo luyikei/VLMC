@@ -140,3 +140,9 @@ Media::audioCodec() const
             return m_tracks[i]->i_codec;
     return 0;
 }
+
+int64_t
+Media::getDuration()
+{
+    return libvlc_media_get_duration( *this );
+}

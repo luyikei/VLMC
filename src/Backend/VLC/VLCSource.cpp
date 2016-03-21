@@ -63,13 +63,6 @@ VLCSource::createRenderer( ISourceRendererEventCb *callback )
     return new VLCSourceRenderer( m_backend, this, callback );
 }
 
-static bool
-checkLengthChanged( const libvlc_event_t* event )
-{
-    Q_ASSERT( event->type == libvlc_MediaPlayerLengthChanged );
-    return ( event->u.media_player_length_changed.new_length > 0 );
-}
-
 bool
 VLCSource::preparse()
 {
@@ -78,22 +71,11 @@ VLCSource::preparse()
 
     VmemRenderer*           renderer = new VmemRenderer( m_backend, this, NULL );
     LibVLCpp::MediaPlayer*  mediaPlayer = renderer->mediaPlayer();
-    {
-        EventWaiter ew( mediaPlayer, true );
-        ew.setValidationCallback( &checkLengthChanged );
-        ew.add( libvlc_MediaPlayerLengthChanged );
-        renderer->start();
-        if ( ew.wait( 3000 ) != EventWaiter::Success )
-        {
-            delete renderer;
-            return false;
-        }
-    }
     m_media->parse();
     m_nbVideoTracks = mediaPlayer->getNbVideoTrack();
     m_nbAudioTracks = mediaPlayer->getNbAudioTrack();
     //FIXME: handle images with something like m_length = 10000;
-    m_length = mediaPlayer->getLength();
+    m_length = m_media->getDuration();
     if ( hasVideo() == true )
     {
         mediaPlayer->getSize( &m_width, &m_height );

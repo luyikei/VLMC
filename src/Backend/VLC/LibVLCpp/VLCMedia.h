@@ -49,6 +49,7 @@ namespace LibVLCpp
         void                fetchTrackInfo();
         unsigned int videoCodec() const;
         unsigned int audioCodec() const;
+        int64_t             getDuration();
 
     private:
         libvlc_media_track_t        **m_tracks;
