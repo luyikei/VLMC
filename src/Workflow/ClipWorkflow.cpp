@@ -125,7 +125,8 @@ ClipWorkflow::clipEndReached()
 void
 ClipWorkflow::stop()
 {
-    m_renderer->stop();
+    if ( m_renderer != nullptr )
+        m_renderer->stop();
 }
 
 void
