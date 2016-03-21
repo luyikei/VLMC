@@ -11,7 +11,6 @@ SET(VLMC_SRCS
     Backend/IBackend.h
     Backend/ISourceRenderer.h
     Backend/ISource.h
-    Backend/VLC/EventWaiter.cpp
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
