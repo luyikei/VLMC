@@ -42,6 +42,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch )
     , m_eventWatcher( NULL )
     , m_clipHelper( ch )
     , m_state( ClipWorkflow::Stopped )
+    , m_muted( false )
 {
     m_stateLock = new QReadWriteLock;
     m_initWaitCond = new QWaitCondition;
