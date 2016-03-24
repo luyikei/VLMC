@@ -105,12 +105,21 @@ bool
 VLCSource::computeSnapshot( VmemRenderer& renderer )
 {
     Q_ASSERT( m_snapshot == NULL );
-    {
-        renderer.setTime( m_length / 3 );
-        //FIXME: This is bad and you should feel bad.
-        QThread::usleep( 500000 );
-    }
     renderer.start();
+    {
+        QMutex mutex;
+        QWaitCondition cond;
+        auto em = renderer.mediaPlayer().eventManager();
+        em.onPositionChanged([&mutex, &cond](float pos) {
+            QMutexLocker lock( &mutex );
+            if ( pos > 0.2 )
+                cond.wakeAll();
+        });
+        QMutexLocker lock( &mutex );
+        renderer.setPosition( 0.3 );
+        if ( cond.wait( &mutex, 2000 ) == false )
+            return false;
+    }
     m_snapshot = renderer.waitSnapshot();
     return m_snapshot != NULL;
 }
