@@ -93,7 +93,7 @@ Workspace::startCopyWorker( Media *media )
     {
 #ifdef WITH_GUI
         QMessageBox::StandardButton b =
-                QMessageBox::question( NULL, tr( "File already exists!" ),
+                QMessageBox::question( nullptr, tr( "File already exists!" ),
                                        tr( "A file with the same name already exists, do you want to "
                                            "overwrite it?" ),
                                        QMessageBox::Yes | QMessageBox::No,

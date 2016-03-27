@@ -56,7 +56,7 @@ EffectUser::addEffect( Effect *effect, qint64 start /*= 0*/, qint64 end /*= -1*/
         addEffect( ret );
         return ret;
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -79,12 +79,12 @@ EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
     QReadLocker     lock( m_effectsLock );
 
     if ( m_filters.size() == 0 )
-        return NULL;
+        return nullptr;
     EffectsEngine::EffectList::const_iterator     it = m_filters.constBegin();
     EffectsEngine::EffectList::const_iterator     ite = m_filters.constEnd();
 
-    quint32         *buff1 = NULL;
-    quint32         *buff2 = NULL;
+    quint32         *buff1 = nullptr;
+    quint32         *buff2 = nullptr;
     const quint32   *input = frame->buffer();
     bool            firstBuff = true;
 
@@ -98,7 +98,7 @@ EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
                 buff = &buff1;
             else
                 buff = &buff2;
-            if ( *buff == NULL )
+            if ( *buff == nullptr )
                 *buff = new quint32[frame->nbPixels()];
             EffectInstance      *effect = (*it)->effectInstance();
             effect->process( input, *buff );
@@ -107,7 +107,7 @@ EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
         }
         ++it;
     }
-    if ( buff1 != NULL || buff2 != NULL )
+    if ( buff1 != nullptr || buff2 != nullptr )
     {
         if ( firstBuff == true )
         {
@@ -120,7 +120,7 @@ EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
             return buff1;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -170,7 +170,7 @@ EffectUser::getMixer( qint64 currentFrame )
         }
         ++it;
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -187,11 +187,11 @@ EffectUser::loadEffects( const QDomElement &parent )
              effect.hasAttribute( "end" ) == true )
         {
             Effect  *e = Core::getInstance()->effectsEngine()->effect( effect.attribute( "name" ) );
-            if ( e != NULL )
+            if ( e != nullptr )
             {
                 EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),
                                                     effect.attribute( "end" ).toLongLong() );
-                if ( helper == NULL )
+                if ( helper == nullptr )
                     vlmcCritical() << "Can't load effect" << effect.attribute( "name" );
             }
             else
@@ -245,7 +245,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_filters.size() )
         {
             EffectHelper    *helper = m_filters.takeAt( idx );
-            helper->setTarget( NULL );
+            helper->setTarget( nullptr );
             emit    effectRemoved( helper->uuid() );
         }
     }
@@ -254,7 +254,7 @@ EffectUser::removeEffect( Effect::Type type, qint32 idx )
         if ( idx < m_mixers.size() )
         {
             EffectHelper    *helper = m_mixers.takeAt( idx );
-            helper->setTarget( NULL );
+            helper->setTarget( nullptr );
             emit    effectRemoved( helper->uuid() );
         }
     }
@@ -274,7 +274,7 @@ EffectUser::removeEffect(EffectHelper *helper)
         if ( (*it)->uuid() == helper->uuid() )
         {
             EffectHelper    *eh = *it;
-            eh->setTarget( NULL );
+            eh->setTarget( nullptr );
             m_filters.erase( it );
             emit effectRemoved( eh->uuid() );
             return ;

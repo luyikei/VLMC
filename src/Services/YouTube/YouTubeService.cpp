@@ -45,8 +45,8 @@ YouTubeService::YouTubeService( const QString& devKey,
     m_password = password;
 
     /* Pointers for Authenticator and Uploader Objects */
-    m_auth     = NULL;
-    m_uploader = NULL;
+    m_auth     = nullptr;
+    m_uploader = nullptr;
 }
 
 YouTubeService::~YouTubeService()
@@ -248,7 +248,7 @@ YouTubeService::sslErrors( QNetworkReply* reply, const QList<QSslError> &errors 
     }
 
     /* Prompt for insecure connection */
-    if ( QMessageBox::warning(NULL, tr("YouTube Authentication"),
+    if ( QMessageBox::warning(nullptr, tr("YouTube Authentication"),
                              tr("Connection may be insecure, do you want to continue?"
                                 " One or more SSL errors has occurred: %1").arg(errorString),
                              QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore )

@@ -70,7 +70,7 @@ void
 RendererSettings::selectOutputFileName()
 {
     QString outputFileName =
-            QFileDialog::getSaveFileName( NULL, tr ( "Enter the output file name" ),
+            QFileDialog::getSaveFileName( nullptr, tr ( "Enter the output file name" ),
                                           QDir::currentPath(), tr( "Videos(%1)" ).arg( Media::VideoExtensions ) );
     m_ui.outputFileName->setText( outputFileName );
 }

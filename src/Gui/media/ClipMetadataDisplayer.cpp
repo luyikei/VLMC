@@ -28,10 +28,10 @@
 
 #include <QTime>
 
-ClipMetadataDisplayer::ClipMetadataDisplayer( QWidget *parent /*= NULL*/ ) :
+ClipMetadataDisplayer::ClipMetadataDisplayer( QWidget *parent /*= nullptr*/ ) :
     QWidget( parent ),
     m_ui( new Ui::ClipMetadataDisplayer ),
-    m_watchedClip( NULL )
+    m_watchedClip( nullptr )
 {
     m_ui->setupUi( this );
 }

@@ -42,8 +42,8 @@
 
 GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
         m_effect( effect ),
-        m_effectHelper( NULL ),
-        m_container( NULL )
+        m_effectHelper( nullptr ),
+        m_container( nullptr )
 {
     setOpacity( 0.8 );
     m_effectHelper = new EffectHelper( effect->createInstance() );
@@ -54,7 +54,7 @@ GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
 
 GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
         m_effectHelper( helper ),
-        m_container( NULL )
+        m_container( nullptr )
 {
     setWidth( m_effectHelper->length() );
     m_effect = helper->effectInstance()->effect();
@@ -90,7 +90,7 @@ GraphicsEffectItem::moveable() const
 bool
 GraphicsEffectItem::hasResizeBoundaries() const
 {
-    return ( m_container != NULL );
+    return ( m_container != nullptr );
 }
 
 Workflow::TrackType
@@ -270,7 +270,7 @@ GraphicsEffectItem::triggerResize( EffectUser *target, Workflow::Helper *helper,
                                    qint64 newBegin, qint64 newEnd, qint64 )
 {
     EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
-    if ( eh == NULL )
+    if ( eh == nullptr )
         return ;
     Commands::trigger( new Commands::Effect::Resize( target, eh, newBegin, newEnd ) );
 }
@@ -296,10 +296,10 @@ GraphicsEffectItem::containerMoved( qint64 pos )
 void
 GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
 {
-    if ( m_container != NULL )
+    if ( m_container != nullptr )
         m_container->disconnect( this );
     m_container = item;
-    if ( item != NULL )
+    if ( item != nullptr )
     {
         connect( item, SIGNAL( moved( qint64 ) ), this, SLOT( containerMoved( qint64 ) ) );
         connect( item, SIGNAL( trackChanged( GraphicsTrack* ) ),
@@ -355,7 +355,7 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
 void
 GraphicsEffectItem::setStartPos( qint64 position )
 {
-    if ( m_effectHelper != NULL && m_effectHelper->target() != NULL )
+    if ( m_effectHelper != nullptr && m_effectHelper->target() != nullptr )
     {
         int     nbEffect = m_effectHelper->target()->count( Effect::Filter );
         if ( m_effectHelper->target()->contains( Effect::Filter, m_effectHelper->uuid() ) == true )

@@ -35,7 +35,7 @@ class   StringWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        StringWidget( SettingValue *s, QWidget *parent = NULL );
+        StringWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     private slots:

@@ -39,7 +39,7 @@
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( int trackCount ) :
-        m_blackOutput( NULL ),
+        m_blackOutput( nullptr ),
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
         m_width( 0 ),
@@ -97,7 +97,7 @@ MainWorkflow::startRender( quint32 width, quint32 height )
     m_renderStarted = true;
     m_width = width;
     m_height = height;
-    if ( m_blackOutput != NULL )
+    if ( m_blackOutput != nullptr )
         delete m_blackOutput;
     m_blackOutput = new Workflow::Frame( m_width, m_height );
     memset( m_blackOutput->buffer(), 0, m_blackOutput->size() );
@@ -124,12 +124,12 @@ MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
                                                                        subFrame, paused );
         if ( trackType == Workflow::VideoTrack )
         {
-            if ( ret == NULL )
+            if ( ret == nullptr )
                 return m_blackOutput;
         }
         return ret;
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -291,7 +291,7 @@ MainWorkflow::load(const QDomDocument& root )
                 }
 
                 Clip* c = Core::getInstance()->library()->clip( uuid );
-                if ( c != NULL )
+                if ( c != nullptr )
                 {
                     ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),
                                                       end.toLongLong(), chUuid );

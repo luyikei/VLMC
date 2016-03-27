@@ -163,7 +163,7 @@ public:
         for ( int i = 0; i < collisionList.size(); ++i )
         {
             T   *item = dynamic_cast<T*>( collisionList.at( i ) );
-            if ( item != NULL )
+            if ( item != nullptr )
                 mediaCollisionList.append( item );
         }
         return mediaCollisionList;
@@ -200,7 +200,7 @@ public:
 
     /**
      *  \returns            The AbstractGraphicsMediaItem identified by the given uuid.
-     *                      or NULL if there's no such item.
+     *                      or nullptr if there's no such item.
      *  \param              uuid    The ClipHelper's uuid
      */
     AbstractGraphicsMediaItem*  item( const QUuid& uuid );

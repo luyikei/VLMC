@@ -168,7 +168,7 @@ TrackWorkflow::getClipHelper( const QUuid& uuid )
             return it.value()->getClipHelper();
         ++it;
     }
-    return NULL;
+    return nullptr;
 }
 
 Workflow::OutputBuffer*
@@ -177,7 +177,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
                                         bool renderOneFrame, bool paused )
 {
     if ( cw->isMuted() == true )
-        return NULL;
+        return nullptr;
 
     ClipWorkflow::GetMode       mode = ( paused == false || renderOneFrame == true ?
                                          ClipWorkflow::Pop : ClipWorkflow::Get );
@@ -196,7 +196,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
             cw->initialize();
         //If the init failed, don't even try to call getOutput.
         if ( cw->waitForCompleteInit() == false )
-            return NULL;
+            return nullptr;
         //We check for a difference greater than one to avoid false positive when starting.
         if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClipHelper()->begin() != 0 )
         {
@@ -215,7 +215,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     {
         vlmcFatal( "Unexpected state: %d ", state );
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -274,7 +274,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     bool                                        needRepositioning;
-    Workflow::OutputBuffer                      *ret = NULL;
+    Workflow::OutputBuffer                      *ret = nullptr;
     Workflow::Frame                             *frames[EffectsEngine::MaxFramesForMixer];
     quint32                                     frameId = 0;
     bool                                        renderOneFrame;
@@ -324,23 +324,23 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     if ( m_trackType == Workflow::VideoTrack )
     {
         EffectHelper*   mixer = getMixer( currentFrame );
-        if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
+        if ( mixer != nullptr && frames[0] != nullptr ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.
             mixer->effectInstance()->process( frames[0]->buffer(),
-                                    frames[1] != NULL ? frames[1]->buffer() : Core::getInstance()->workflow()->blackOutput()->buffer(),
-                                    NULL, m_mixerBuffer->buffer() );
+                                    frames[1] != nullptr ? frames[1]->buffer() : Core::getInstance()->workflow()->blackOutput()->buffer(),
+                                    nullptr, m_mixerBuffer->buffer() );
             m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;
             ret = m_mixerBuffer;
         }
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
         //Now handle filters :
-        quint32     *newFrame = applyFilters( ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : Core::getInstance()->workflow()->blackOutput(),
+        quint32     *newFrame = applyFilters( ret != nullptr ? static_cast<const Workflow::Frame*>( ret ) : Core::getInstance()->workflow()->blackOutput(),
                                                 currentFrame );
-        if ( newFrame != NULL )
+        if ( newFrame != nullptr )
         {
-            if ( ret != NULL )
+            if ( ret != nullptr )
                 static_cast<Workflow::Frame*>( ret )->setBuffer( newFrame );
             else //Use the m_mixerBuffer as the frame to return. Ugly but avoid another attribute.
             {
@@ -433,7 +433,7 @@ TrackWorkflow::removeClip( const QUuid& id )
         }
         ++it;
     }
-    return NULL;
+    return nullptr;
 }
 
 ClipWorkflow*
@@ -458,7 +458,7 @@ TrackWorkflow::removeClipWorkflow( const QUuid& id )
         }
         ++it;
     }
-    return NULL;
+    return nullptr;
 }
 
 void
@@ -654,7 +654,7 @@ TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
     if ( helper->target()->effectType() == ClipEffectUser )
     {
         ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
-        Q_ASSERT( cw != NULL );
+        Q_ASSERT( cw != nullptr );
         pos += getClipPosition( cw->getClipHelper()->uuid() );
     }
     emit effectAdded( this, helper, pos );
@@ -672,7 +672,7 @@ TrackWorkflow::__effectMoved( EffectHelper* helper, qint64 pos )
     if ( helper->target()->effectType() == ClipEffectUser )
     {
         ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
-        Q_ASSERT( cw != NULL );
+        Q_ASSERT( cw != nullptr );
         pos += getClipPosition( cw->getClipHelper()->uuid() );
     }
     emit effectMoved( this, helper->uuid(), pos );

@@ -35,7 +35,7 @@ class   ColorWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        ColorWidget( SettingValue *s, QWidget *parent = NULL );
+        ColorWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     private slots:

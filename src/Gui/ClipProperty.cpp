@@ -46,7 +46,7 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     ui->snapshotLabel->setPixmap( m_clip->getMedia()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
     //Metatags
     const QPushButton* button = ui->buttonBox->button( QDialogButtonBox::Apply );
-    Q_ASSERT( button != NULL);
+    Q_ASSERT( button != nullptr);
     connect( button, SIGNAL( clicked() ), this, SLOT( apply() ) );
 
     m_model = new QStringListModel( m_clip->metaTags(), this );

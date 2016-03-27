@@ -37,17 +37,17 @@
 #include <QDomElement>
 #include <QScrollBar>
 
-Timeline*   Timeline::m_instance = NULL;
+Timeline*   Timeline::m_instance = nullptr;
 
 Timeline::Timeline( QWidget *parent )
     : QWidget( parent )
-    , m_tracksView( NULL )
-    , m_tracksScene( NULL )
-    , m_tracksRuler( NULL )
-    , m_tracksControls( NULL )
+    , m_tracksView( nullptr )
+    , m_tracksScene( nullptr )
+    , m_tracksRuler( nullptr )
+    , m_tracksControls( nullptr )
     , m_scale( 1.0 )
 {
-    Q_ASSERT( m_instance == NULL );
+    Q_ASSERT( m_instance == nullptr );
     m_instance = this;
     m_ui.setupUi( this );
 
@@ -183,13 +183,13 @@ Timeline::save( QXmlStreamWriter &project )
         AbstractGraphicsMediaItem* item =
                 dynamic_cast<AbstractGraphicsMediaItem*>( tracksView()->m_scene->items().at( i ) );
 
-        if ( item == NULL )
+        if ( item == nullptr )
             continue ;
         project.writeStartElement( "item" );
         project.writeAttribute( "uuid", item->clipHelper()->uuid().toString() );
         if ( item->itemColor().isValid() == true )
             project.writeAttribute( "color", item->itemColor().name() );
-        if ( item->groupItem() != NULL )
+        if ( item->groupItem() != nullptr )
         {
             project.writeStartElement( "linkedTo" );
                 project.writeStartElement( "item" );
@@ -219,7 +219,7 @@ Timeline::load( const QDomDocument& root )
         QString uuid = elem.attribute( "uuid" );
 
         AbstractGraphicsMediaItem   *item = tracksView()->item( uuid );
-        if ( item != NULL )
+        if ( item != nullptr )
         {
             if ( elem.hasAttribute( "color" ) == true )
             {
@@ -234,7 +234,7 @@ Timeline::load( const QDomDocument& root )
                 {
                     QString     linkedUuid = linkedItem.attribute( "uuid" );
                     AbstractGraphicsMediaItem   *li = tracksView()->item( linkedUuid );
-                    if ( li != NULL )
+                    if ( li != nullptr )
                         item->group( li );
                     linkedItem = linkedItem.nextSiblingElement();
                 }

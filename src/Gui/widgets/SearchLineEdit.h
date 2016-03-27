@@ -34,7 +34,7 @@ class SearchLineEdit : public QLineEdit
     Q_OBJECT
 
     public:
-        SearchLineEdit( QWidget *parent = NULL );
+        SearchLineEdit( QWidget *parent = nullptr );
 
     private:
         void    resizeEvent ( QResizeEvent * event );

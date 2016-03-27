@@ -158,7 +158,7 @@ Project::load( const QString& path )
 void
 Project::save()
 {
-    Q_ASSERT( m_projectFile != NULL );
+    Q_ASSERT( m_projectFile != nullptr );
     saveProject( m_projectFile->fileName() );
 }
 
@@ -333,7 +333,7 @@ QFile* Project::emergencyBackupFile()
 {
     const QString lastProject = Core::getInstance()->settings()->value( "private/EmergencyBackup" )->get().toString();
     if ( lastProject.isEmpty() == true )
-        return NULL;
+        return nullptr;
     return new QFile( lastProject );
 }
 
@@ -365,7 +365,7 @@ Project::projectNameChanged(const QVariant &projectName)
 void
 Project::autoSaveRequired()
 {
-    if ( m_projectFile == NULL )
+    if ( m_projectFile == nullptr )
         return ;
     saveProject( m_projectFile->fileName() + Project::backupSuffix );
 }

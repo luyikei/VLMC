@@ -31,7 +31,7 @@
 
 AudioClipWorkflow::AudioClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_lastReturnedBuffer( NULL )
+        m_lastReturnedBuffer( nullptr )
 {
     m_ptsOffset = 0;
 }
@@ -42,7 +42,7 @@ AudioClipWorkflow::preallocate()
     for ( quint32 i = 0; i < AudioClipWorkflow::nbBuffers; ++i )
     {
         Workflow::AudioSample *as = new Workflow::AudioSample;
-        as->buff = NULL;
+        as->buff = nullptr;
         m_availableBuffers.push_back( as );
     }
 }
@@ -69,15 +69,15 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
 {
     QMutexLocker    lock( m_renderLock );
 
-    if ( m_lastReturnedBuffer != NULL )
+    if ( m_lastReturnedBuffer != nullptr )
     {
         m_availableBuffers.enqueue( m_lastReturnedBuffer );
-        m_lastReturnedBuffer = NULL;
+        m_lastReturnedBuffer = nullptr;
     }
     if ( getNbComputedBuffers() == 0 )
-        return NULL;
+        return nullptr;
     if ( shouldRender() == false )
-        return NULL;
+        return nullptr;
     if ( mode == ClipWorkflow::Get )
         vlmcCritical() << "A sound buffer should never be asked with 'Get' mode";
     Workflow::AudioSample   *buff = m_computedBuffers.dequeue();
@@ -120,13 +120,13 @@ AudioClipWorkflow::lock( void *data, quint8 **pcm_buffer , size_t size )
     AudioClipWorkflow* cw = reinterpret_cast<AudioClipWorkflow*>( data );
     cw->m_renderLock->lock();
 
-    Workflow::AudioSample     *as = NULL;
+    Workflow::AudioSample     *as = nullptr;
     if ( cw->m_availableBuffers.isEmpty() == true )
         as = cw->createBuffer( size );
     else
     {
         as = cw->m_availableBuffers.dequeue();
-        if ( as->buff == NULL )
+        if ( as->buff == nullptr )
         {
             as->buff = new uchar[size];
             as->size = size;
@@ -149,7 +149,7 @@ AudioClipWorkflow::unlock( void* data, uint8_t *pcm_buffer, unsigned int channel
     AudioClipWorkflow* cw = reinterpret_cast<AudioClipWorkflow*>( data );
     pts -= cw->m_ptsOffset;
     Workflow::AudioSample* as = cw->m_computedBuffers.last();
-    if ( as->buff != NULL )
+    if ( as->buff != nullptr )
     {
         as->nbSample = nb_samples;
         as->nbChannels = channels;

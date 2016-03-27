@@ -32,7 +32,7 @@ class   KeyboardShortcutInput : public QPushButton
     Q_OBJECT
 
     public:
-        KeyboardShortcutInput( const QString& name, const QString& initialValue = QString(), QWidget* parent = NULL );
+        KeyboardShortcutInput( const QString& name, const QString& initialValue = QString(), QWidget* parent = nullptr );
         QString         shortcut() const;
 
 protected:

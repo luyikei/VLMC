@@ -169,7 +169,7 @@ Clip::setUuid( const QUuid &uuid )
 Clip*
 Clip::rootClip()
 {
-    if ( m_rootClip == NULL )
+    if ( m_rootClip == nullptr )
         return this;
     return m_rootClip;
 }
@@ -177,7 +177,7 @@ Clip::rootClip()
 bool
 Clip::isRootClip() const
 {
-    return ( m_rootClip == NULL );
+    return ( m_rootClip == nullptr );
 }
 
 Clip*
@@ -260,7 +260,7 @@ Clip::isChild( const QUuid &uuid) const
 {
     Clip*   c = m_parent;
 
-    while ( c != NULL )
+    while ( c != nullptr )
     {
         if ( c->m_uuid == uuid )
             return true;

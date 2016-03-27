@@ -29,7 +29,7 @@ EffectInstance::EffectInstance( Effect *effect ) :
         m_effect( effect ),
         m_width( 0 ),
         m_height( 0 ),
-        m_instance( NULL )
+        m_instance( nullptr )
 {
     init( 1, 1 );
 
@@ -85,7 +85,7 @@ EffectInstance::init( quint32 width, quint32 height )
 bool
 EffectInstance::isInit() const
 {
-    return m_instance != NULL;
+    return m_instance != nullptr;
 }
 
 Effect*

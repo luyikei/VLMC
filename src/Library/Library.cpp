@@ -66,7 +66,7 @@ Library::load(const QDomDocument& doc )
 
             mrl = m_workspace->toAbsolutePath( mrl );
             Media*  m = addMedia( mrl );
-            if ( m == NULL )
+            if ( m == nullptr )
                 vlmcWarning() << "Failed to load media" << mrl << "when loading project.";
             else
                 m_nbMediaToLoad.fetchAndAddAcquire( 1 );
@@ -77,7 +77,7 @@ Library::load(const QDomDocument& doc )
     if ( clips.isNull() == true )
         return false;
     loadContainer( clips, this );
-    mediaLoaded( NULL );
+    mediaLoaded( nullptr );
     //Mark the state as clean, as we just loaded a project. Otherwise, a media
     //loading triggers a setCleanState(false) which makes sense when modifying
     //project, but not here.
@@ -112,7 +112,7 @@ Library::save( QXmlStreamWriter& project )
 void
 Library::mediaLoaded( const Media* media )
 {
-    if ( media != NULL )
+    if ( media != nullptr )
     {
         //FIXME: metaDataComputed in Media class has no arguments, this shouldn't be working;
         //replacing this with disconnect( media, &Media::metaDataComputed, this, &Library::mediaLoaded );
@@ -135,7 +135,7 @@ Media*
 Library::addMedia( const QFileInfo &fileInfo )
 {
     Media* media = MediaContainer::addMedia( fileInfo );
-    if ( media != NULL )
+    if ( media != nullptr )
     {
         setCleanState( false );
         connect( media, SIGNAL( metaDataComputed( const Media* ) ),

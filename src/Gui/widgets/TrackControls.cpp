@@ -119,7 +119,7 @@ TrackControls::setTrackDisabled( bool disable )
 void
 TrackControls::trackNameDoubleClicked()
 {
-    QString     name = QInputDialog::getText( NULL, tr( "Rename track" ),
+    QString     name = QInputDialog::getText( nullptr, tr( "Rename track" ),
                                               tr( "Enter the track new name") );
     if ( name.isEmpty() == false )
     {

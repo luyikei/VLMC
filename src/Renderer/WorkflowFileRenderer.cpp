@@ -28,7 +28,7 @@
 
 WorkflowFileRenderer::WorkflowFileRenderer( Backend::IBackend* backend, MainWorkflow* workflow )
     : WorkflowRenderer( backend, workflow )
-    , m_renderVideoFrame( NULL )
+    , m_renderVideoFrame( nullptr )
 {
 }
 
@@ -78,7 +78,7 @@ WorkflowFileRenderer::lock( void *datas, const char* cookie, int64_t *dts, int64
     if ( self->m_time.isValid() == false ||
         self->m_time.elapsed() >= 1000 )
     {
-        if ( self->m_renderVideoFrame == NULL )
+        if ( self->m_renderVideoFrame == nullptr )
             self->m_renderVideoFrame = new quint8[*bufferSize];
         memcpy( self->m_renderVideoFrame, (uchar*)(*buffer), *bufferSize );
         self->emit imageUpdated( self->m_renderVideoFrame );

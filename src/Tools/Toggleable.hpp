@@ -30,12 +30,12 @@ template <typename T>
 class   Toggleable
 {
     public:
-        Toggleable() : m_ptr( NULL ), m_activated( true )
+        Toggleable() : m_ptr( nullptr ), m_activated( true )
         {
         }
         void    setPtr( T ptr )
         {
-            Q_ASSERT( m_ptr == NULL );
+            Q_ASSERT( m_ptr == nullptr );
             m_ptr = ptr;
         }
         operator T()

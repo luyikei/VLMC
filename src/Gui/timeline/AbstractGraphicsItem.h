@@ -100,7 +100,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
 
         /**
          * \brief Return a pointer to the linked item.
-         * \details This method will return NULL if there is no linked item.
+         * \details This method will return nullptr if there is no linked item.
          */
         AbstractGraphicsItem*   groupItem();
 
@@ -138,7 +138,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
         void setHeight( qint64 height );
         /**
          * \details Returns a pointer to the tracksView which contains the item,
-         * or NULL if the item is not stored in a tracksView.
+         * or nullptr if the item is not stored in a tracksView.
          */
         TracksView*         tracksView();
         /**

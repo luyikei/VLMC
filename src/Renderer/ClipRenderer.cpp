@@ -36,7 +36,7 @@
 ClipRenderer::ClipRenderer() :
     GenericRenderer(),
     m_clipLoaded( false ),
-    m_selectedClip( NULL ),
+    m_selectedClip( nullptr ),
     m_begin( 0 ),
     m_end( -1 ),
     m_mediaChanged( false )
@@ -51,15 +51,15 @@ ClipRenderer::~ClipRenderer()
 void
 ClipRenderer::setClip( Clip* clip )
 {
-    // if the clip is different (or NULL) we have to stop playback.
-    if ( m_selectedClip != NULL &&
-         ( ( clip != NULL && clip->uuid() != m_selectedClip->uuid() ) || clip == NULL ) )
+    // if the clip is different (or nullptr) we have to stop playback.
+    if ( m_selectedClip != nullptr &&
+         ( ( clip != nullptr && clip->uuid() != m_selectedClip->uuid() ) || clip == nullptr ) )
     {
         clipUnloaded( m_selectedClip->uuid() );
     }
-    if ( clip == NULL )
+    if ( clip == nullptr )
     {
-        m_selectedClip = NULL;
+        m_selectedClip = nullptr;
         m_clipLoaded = false;
         return ;
     }
@@ -83,7 +83,7 @@ ClipRenderer::updateInfos( Clip* clip )
 void
 ClipRenderer::startPreview()
 {
-    if ( m_selectedClip == NULL || m_selectedClip->nbFrames() == 0 )
+    if ( m_selectedClip == nullptr || m_selectedClip->nbFrames() == 0 )
         return ;
     updateInfos( m_selectedClip );
 
@@ -198,11 +198,11 @@ ClipRenderer::getLengthMs() const
 void
 ClipRenderer::clipUnloaded( const QUuid& uuid )
 {
-    if ( m_selectedClip != NULL && m_selectedClip->uuid() == uuid )
+    if ( m_selectedClip != nullptr && m_selectedClip->uuid() == uuid )
     {
         stop();
         m_clipLoaded = false;
-        m_selectedClip = NULL;
+        m_selectedClip = nullptr;
         m_isRendering = false;
         m_paused = false;
     }
@@ -211,7 +211,7 @@ ClipRenderer::clipUnloaded( const QUuid& uuid )
 qint64
 ClipRenderer::getCurrentFrame() const
 {
-    if ( m_clipLoaded == false || m_isRendering == false || m_selectedClip == NULL )
+    if ( m_clipLoaded == false || m_isRendering == false || m_selectedClip == nullptr )
         return 0;
     return qRound64( (qreal)m_sourceRenderer->time() / 1000 *
                      (qreal)m_selectedClip->getMedia()->source()->fps() );
@@ -220,7 +220,7 @@ ClipRenderer::getCurrentFrame() const
 float
 ClipRenderer::getFps() const
 {
-    if ( m_selectedClip != NULL )
+    if ( m_selectedClip != nullptr )
         return m_selectedClip->getMedia()->source()->fps();
     return 0.0f;
 }

@@ -25,7 +25,7 @@
 
 #include <QLineEdit>
 
-StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+StringWidget::StringWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_lineEdit = new QLineEdit( this );

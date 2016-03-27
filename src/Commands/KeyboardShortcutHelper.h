@@ -33,9 +33,9 @@ class   KeyboardShortcutHelper : public QShortcut
     Q_OBJECT
 
     public:
-        KeyboardShortcutHelper( const QString &name, QWidget* parent = NULL );
+        KeyboardShortcutHelper( const QString &name, QWidget* parent = nullptr );
         KeyboardShortcutHelper( const QString &name, QAction *action,
-                                QWidget *parent = NULL );
+                                QWidget *parent = nullptr );
         virtual ~KeyboardShortcutHelper()
         {
         }

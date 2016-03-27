@@ -46,7 +46,7 @@ class RenderWidget : public QWidget
 
 public:
 #if defined( Q_OS_MAC )
-    RenderWidget( QWidget* parent = NULL );
+    RenderWidget( QWidget* parent = nullptr );
     NativeNSViewRef id() const;
     void release();
 
@@ -54,7 +54,7 @@ private:
     NativeNSViewRef          m_video;
     QMacCocoaViewContainer*  m_container;
 #else
-    RenderWidget( QWidget* parent = NULL )
+    RenderWidget( QWidget* parent = nullptr )
         : QWidget (parent) {}
     WId id() const { return winId(); }
 #endif

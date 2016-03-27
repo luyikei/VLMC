@@ -63,7 +63,7 @@ EffectsEngine::effect( const QString& name )
     QHash<QString, Effect*>::iterator   it = m_effects.find( name );
     if ( it != m_effects.end() )
         return it.value();
-    return NULL;
+    return nullptr;
 }
 
 bool
@@ -143,10 +143,10 @@ EffectsEngine::loadEffects()
     }
 #elif defined ( Q_OS_WIN32 )
     TCHAR       appDir[128];
-    if ( GetModuleFileName( NULL, appDir, 128 ) > 0 )
+    if ( GetModuleFileName( nullptr, appDir, 128 ) > 0 )
     {
         TCHAR     *pos = strrchr( appDir, '\\' );
-        if ( pos == NULL )
+        if ( pos == nullptr )
         {
             vlmcWarning() << "Can't use ModuleFileName:" << appDir;
             return ;

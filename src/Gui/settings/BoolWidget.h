@@ -35,7 +35,7 @@ class   BoolWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        BoolWidget( SettingValue *s, QWidget *parent = NULL );
+        BoolWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     private slots:

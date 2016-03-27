@@ -107,7 +107,7 @@ MediaLibrary::viewChanged( ViewController *view )
 {
     MediaListView       *mlv = qobject_cast<MediaListView*>( view );
 
-    if ( mlv == NULL )
+    if ( mlv == nullptr )
         return ;
 
     m_mediaListView = mlv;
@@ -176,7 +176,7 @@ MediaLibrary::dropEvent( QDropEvent *event )
 
         Media       *media = Core::getInstance()->library()->addMedia( fileName );
 
-        if ( media != NULL )
+        if ( media != nullptr )
         {
             Clip*       clip = new Clip( media );
             media->setBaseClip( clip );

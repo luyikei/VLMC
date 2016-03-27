@@ -24,7 +24,7 @@
 #include "KeyboardShortcutInput.h"
 #include "Settings/SettingValue.h"
 
-KeyboardShortcut::KeyboardShortcut( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+KeyboardShortcut::KeyboardShortcut( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_input = new KeyboardShortcutInput( s->name(), s->get().toString(), this );

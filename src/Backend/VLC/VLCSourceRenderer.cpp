@@ -359,7 +359,7 @@ VLCSourceRenderer::enableAudioOutputToMemory(void *data, AudioOutputLockCallback
 void
 VLCSourceRenderer::enableMemoryInput( void *data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback )
 {
-    Q_ASSERT( m_media != NULL );
+    Q_ASSERT( m_media != nullptr );
     m_modes |= Imem;
 
     char        buffer[64];

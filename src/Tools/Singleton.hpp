@@ -40,17 +40,17 @@ class       Singleton
 public:
     static T*      getInstance()
     {
-        if ( m_instance == NULL )
+        if ( m_instance == nullptr )
             m_instance = new T;
         return m_instance;
     }
 
     static void    destroyInstance()
     {
-        if ( m_instance != NULL )
+        if ( m_instance != nullptr )
         {
             delete m_instance;
-            m_instance = NULL;
+            m_instance = nullptr;
         }
     }
 protected:
@@ -65,6 +65,6 @@ protected:
 };
 
 template <typename T>
-T*  Singleton<T>::m_instance = NULL;
+T*  Singleton<T>::m_instance = nullptr;
 
 #endif // SINGLETON_HPP

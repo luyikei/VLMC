@@ -29,7 +29,7 @@ class FramelessButton : public QPushButton
 {
     Q_OBJECT
 public:
-    FramelessButton( QWidget *parent = NULL );
+    FramelessButton( QWidget *parent = nullptr );
     QSize           sizeHint() const;
 protected:
     virtual void    paintEvent( QPaintEvent *event );

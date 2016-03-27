@@ -33,7 +33,7 @@
 ShareOnInternet::ShareOnInternet( QWidget* parent )
     : QDialog( parent, Qt::Sheet | Qt::Dialog )
 {
-    m_service = NULL;
+    m_service = nullptr;
     m_serviceProvider = 0;
     m_ui.setupUi( this );
     m_ui.progressBar->setVisible( false );
@@ -83,7 +83,7 @@ ShareOnInternet::publish()
         if( m_service )
             delete m_service;
 
-        m_service = NULL;
+        m_service = nullptr;
 
         m_serviceProvider = m_ui.serviceBox->currentIndex();
     }
@@ -168,7 +168,7 @@ ShareOnInternet::uploadFinished( QString result )
         msg = tr( "Some error has occured while processing your video."
                   "\nPlease check with your video service provider." );
 
-    if( QMessageBox::information( NULL, tr("Video Uploaded"), msg,
+    if( QMessageBox::information( nullptr, tr("Video Uploaded"), msg,
             QMessageBox::Open | QMessageBox::Close ) == QMessageBox::Open )
     {
         QDesktopServices::openUrl( result );

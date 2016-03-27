@@ -37,7 +37,7 @@
 
 
 Settings::Settings(const QString &settingsFile)
-    : m_settingsFile( NULL )
+    : m_settingsFile( nullptr )
 {
     setSettingsFile( settingsFile );
 }
@@ -63,7 +63,7 @@ Settings::setSettingsFile(const QString &settingsFile)
         m_settingsFile = new QFile( settingsFile );
     }
     else
-        m_settingsFile = NULL;
+        m_settingsFile = nullptr;
 }
 
 bool
@@ -140,7 +140,7 @@ Settings::load()
 bool
 Settings::save()
 {
-    if ( m_settingsFile == NULL )
+    if ( m_settingsFile == nullptr )
         return false;
     QByteArray          settingsContent;
     QXmlStreamWriter    streamWriter( &settingsContent );
@@ -182,7 +182,7 @@ Settings::value(const QString &key)
     if ( it != m_settings.end() )
         return *it;
     Q_ASSERT_X( false, __FILE__, "fetching value without a created variable" );
-    return NULL;
+    return nullptr;
 }
 
 SettingValue*
@@ -191,7 +191,7 @@ Settings::createVar(SettingValue::Type type, const QString &key, const QVariant 
     QWriteLocker lock( &m_rwLock );
 
     if ( m_settings.contains( key ) )
-        return NULL;
+        return nullptr;
     SettingValue* val = new SettingValue( key, type, defaultValue, name, desc, flags );
     m_settings.insert( key, val );
     return val;

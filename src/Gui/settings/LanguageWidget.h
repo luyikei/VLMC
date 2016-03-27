@@ -35,7 +35,7 @@ class   LanguageWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        LanguageWidget( SettingValue *s, QWidget *parent = NULL );
+        LanguageWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     private slots:

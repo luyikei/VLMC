@@ -290,13 +290,13 @@ MediaCellView::contextMenuEvent( QContextMenuEvent *event )
     QAction* copyInWorkspace = menu.addAction( "Copy in workspace" );
 
     QAction* selectedAction = menu.exec( event->globalPos() );
-    if ( selectedAction == NULL )
+    if ( selectedAction == nullptr )
         return ;
     if ( copyInWorkspace == selectedAction )
     {
         if ( Core::getInstance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
         {
-            QMessageBox::warning( NULL, tr( "Can't copy to workspace" ),
+            QMessageBox::warning( nullptr, tr( "Can't copy to workspace" ),
                                   tr( "Can't copy this media to workspace: %1" ).arg( Core::getInstance()->workspace()->lastError() ) );
         }
     }

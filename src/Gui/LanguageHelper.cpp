@@ -30,7 +30,7 @@
 
 #define TS_PREFIX "vlmc_"
 
-LanguageHelper::LanguageHelper() : m_translator( NULL ), m_qtTranslator( NULL )
+LanguageHelper::LanguageHelper() : m_translator( nullptr ), m_qtTranslator( nullptr )
 {
     connect( qApp, SIGNAL( aboutToQuit() ), this, SLOT( deleteLater() ) );
 }
@@ -52,14 +52,14 @@ LanguageHelper::languageChanged( const QVariant &vLang )
 void
 LanguageHelper::languageChanged( const QString &lang  )
 {
-    if ( m_translator != NULL ||  m_qtTranslator != NULL )
+    if ( m_translator != nullptr ||  m_qtTranslator != nullptr )
     {
         qApp->removeTranslator( m_translator );
         qApp->removeTranslator( m_qtTranslator );
         delete m_translator;
         delete m_qtTranslator;
-        m_translator = NULL;
-        m_qtTranslator = NULL;
+        m_translator = nullptr;
+        m_qtTranslator = nullptr;
     }
 
     m_translator = new QTranslator();

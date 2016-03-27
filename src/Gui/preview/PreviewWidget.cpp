@@ -36,7 +36,7 @@
 PreviewWidget::PreviewWidget( QWidget *parent )
     : QWidget( parent )
     , m_ui( new Ui::PreviewWidget )
-    , m_renderer( NULL )
+    , m_renderer( nullptr )
     , m_previewStopped( true )
 {
     m_ui->setupUi( this );
@@ -45,7 +45,7 @@ PreviewWidget::PreviewWidget( QWidget *parent )
     for (int i = 0; i < m_ui->toolsWidget->layout()->count(); ++i)
     {
         QWidget* w = m_ui->toolsWidget->layout()->itemAt( i )->widget();
-        if ( w != NULL )
+        if ( w != nullptr )
             w->setAttribute( Qt::WA_LayoutUsesWidgetRect );
     }
 
@@ -228,10 +228,10 @@ void
 PreviewWidget::createNewClipFromMarkers()
 {
     ClipRenderer* clipRenderer = qobject_cast<ClipRenderer*>( m_renderer );
-    Q_ASSERT( clipRenderer != NULL );
+    Q_ASSERT( clipRenderer != nullptr );
 
     Clip* clip = clipRenderer->getClip();
-    if ( clip == NULL )
+    if ( clip == nullptr )
         return ;
     qint64  beg = m_ui->rulerWidget->getMarker( PreviewRuler::Start );
     qint64  end = m_ui->rulerWidget->getMarker( PreviewRuler::Stop );

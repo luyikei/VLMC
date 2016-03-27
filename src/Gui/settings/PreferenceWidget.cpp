@@ -89,7 +89,7 @@ PreferenceWidget::widgetFactory( SettingValue *s )
     case SettingValue::Path:
         return new PathWidget( s, this );
     default:
-        return NULL;
+        return nullptr;
     }
 }
 

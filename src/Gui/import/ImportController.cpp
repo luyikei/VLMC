@@ -136,7 +136,7 @@ ImportController::changeEvent( QEvent *e )
 void
 ImportController::clipSelection( Clip* clip )
 {
-    if ( clip != NULL )
+    if ( clip != nullptr )
     {
         const QUuid& uuid = clip->uuid();
         if ( m_currentUuid == uuid )
@@ -158,7 +158,7 @@ ImportController::importMedia( const QString &filePath )
         return ;
 
     Media*  media = m_temporaryMedias->addMedia( filePath );
-    if ( media == NULL )
+    if ( media == nullptr )
         return ;
 
     connect( media, SIGNAL( metaDataComputed() ), this, SLOT( mediaLoaded() ) );
@@ -222,7 +222,7 @@ ImportController::reject()
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
-    m_clipRenderer->setClip( NULL );
+    m_clipRenderer->setClip( nullptr );
     done( Rejected );
 }
 
@@ -243,14 +243,14 @@ ImportController::accept()
     if ( invalidMedias == true )
         handleInvalidMedias();
     m_temporaryMedias->removeAll();
-    m_clipRenderer->setClip( NULL );
+    m_clipRenderer->setClip( nullptr );
     done( Accepted );
 }
 
 void
 ImportController::handleInvalidMedias()
 {
-    QMessageBox::StandardButton res = QMessageBox::question( NULL, tr( "Invalid medias" ),
+    QMessageBox::StandardButton res = QMessageBox::question( nullptr, tr( "Invalid medias" ),
                                                              tr( "Some of the medias you loaded can't be used for video editing. Do you want VLMC to convert them"
                                                                  " so you can use them in your project?" ),
                            QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );

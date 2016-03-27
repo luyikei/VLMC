@@ -75,7 +75,7 @@ VmemRenderer::waitSnapshot()
     QMutexLocker lock( &m_mutex );
     m_snapshotRequired = true;
     if ( m_waitCond.wait( &m_mutex, 3000 ) == false )
-        return NULL;
+        return nullptr;
     return new QImage( *m_snapshot );
 }
 

@@ -89,7 +89,7 @@ EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
     case    SettingValue::Color:
         return new ColorWidget( s, this );
     default:
-        return NULL;
+        return nullptr;
     }
 }
 

@@ -33,7 +33,7 @@
 
 #define TS_PREFIX "vlmc_"
 
-LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+LanguageWidget::LanguageWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_list = new QComboBox( this );

@@ -32,7 +32,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 
-QString* WelcomePage::m_projectPath = NULL;
+QString* WelcomePage::m_projectPath = nullptr;
 
 WelcomePage::WelcomePage( QWidget* parent )
     : QWizardPage( parent )
@@ -133,7 +133,7 @@ void
 WelcomePage::loadProject()
 {
     QString projectPath =
-            QFileDialog::getOpenFileName( NULL, tr( "Select a project file" ),
+            QFileDialog::getOpenFileName( nullptr, tr( "Select a project file" ),
                                           VLMC_GET_STRING( "vlmc/WorkspaceLocation" ),
                                           tr( "VLMC project file(*.vlmc)" ) );
 
@@ -147,13 +147,13 @@ WelcomePage::loadProject()
     }
 
     // Search if the item is already in the list
-    QListWidgetItem* item = NULL;
+    QListWidgetItem* item = nullptr;
     for ( int i = 0; i < m_ui.projectsListWidget->count(); ++i )
     {
         item = m_ui.projectsListWidget->item( i );
         if ( item->data( FilePath ).toString().contains( projectPath ) )
             break;
-        item = NULL;
+        item = nullptr;
     }
 
     // Item not in list, insert it temporarily

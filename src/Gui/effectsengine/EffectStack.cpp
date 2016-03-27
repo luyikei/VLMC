@@ -110,6 +110,6 @@ void
 EffectStack::add()
 {
     EffectHelper *helper = m_model->add( m_ui->addComboBox->currentText() );
-    if( helper != NULL )
+    if( helper != nullptr )
         addInstanceWidget( helper->effectInstance() );
 }

@@ -116,18 +116,18 @@ TracksScene::askRemoveSelectedItems()
 
         /*FIXME: When undo-ing linked items no longer remain linked*/
         AbstractGraphicsItem* linked_item = item->groupItem();
-        if (linked_item != NULL)
+        if (linked_item != nullptr)
             items.append(linked_item);
 
         ClipHelper  *ch = qobject_cast<ClipHelper*>( item->helper() );
-        if ( ch != NULL )
+        if ( ch != nullptr )
         {
             Commands::trigger( new Commands::Clip::Remove( ch, item->track()->trackWorkflow() ) );
         }
         else
         {
             EffectHelper    *eh = qobject_cast<EffectHelper*>( item->helper() );
-            Q_ASSERT( eh != NULL );
+            Q_ASSERT( eh != nullptr );
             Commands::trigger( new Commands::Effect::Remove( eh, eh->target() ) );
         }
     }

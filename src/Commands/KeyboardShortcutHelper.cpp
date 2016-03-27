@@ -29,7 +29,7 @@
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* parent ) :
         QShortcut( parent ),
         m_name( name ),
-        m_action( NULL )
+        m_action( nullptr )
 {
     SettingValue* setting = Core::getInstance()->settings()->value( name );
     setKey( QKeySequence( setting->get().toString() ) );
@@ -37,7 +37,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QWidget* pa
 }
 
 KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *action,
-                                                QWidget *parent /*= NULL*/ ) :
+                                                QWidget *parent /*= nullptr*/ ) :
     QShortcut( parent ),
     m_name( name ),
     m_action( action )
@@ -50,7 +50,7 @@ KeyboardShortcutHelper::KeyboardShortcutHelper( const QString& name, QAction *ac
 void
 KeyboardShortcutHelper::shortcutUpdated( const QVariant& value )
 {
-    if ( m_action == NULL )
+    if ( m_action == nullptr )
         setKey( QKeySequence( value.toString() ) );
     else
         m_action->setShortcut( value.toString() );

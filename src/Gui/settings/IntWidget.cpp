@@ -25,7 +25,7 @@
 
 #include <QSpinBox>
 
-IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+IntWidget::IntWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_spinbox = new QSpinBox( this );

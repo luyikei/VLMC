@@ -54,7 +54,7 @@ ColorWidget::changed( const QVariant &val )
 void
 ColorWidget::buttonClicked()
 {
-    QColor  color = QColorDialog::getColor( m_color, NULL );
+    QColor  color = QColorDialog::getColor( m_color, nullptr );
     if ( color.isValid() == true )
     {
         m_color = color;

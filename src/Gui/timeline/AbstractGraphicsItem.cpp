@@ -30,11 +30,11 @@
 #include <QGraphicsSceneEvent>
 
 AbstractGraphicsItem::AbstractGraphicsItem() :
-        m_tracksView( NULL ),
-        m_oldTrack( NULL ),
+        m_tracksView( nullptr ),
+        m_oldTrack( nullptr ),
         m_width( 0 ),
         m_height( 0 ),
-        m_group( NULL )
+        m_group( nullptr )
 {
     setFlags( QGraphicsItem::ItemIsSelectable );
     setAcceptHoverEvents( true );
@@ -254,10 +254,10 @@ AbstractGraphicsItem::group( AbstractGraphicsItem* item )
 void
 AbstractGraphicsItem::ungroup()
 {
-    if ( m_group == NULL )
+    if ( m_group == nullptr )
         return;
-    m_group->m_group = NULL;
-    m_group = NULL;
+    m_group->m_group = nullptr;
+    m_group = nullptr;
 }
 
 qint64

@@ -73,9 +73,9 @@
 MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     : QMainWindow( parent )
     , m_backend( backend )
-    , m_fileRenderer( NULL )
-    , m_projectPreferences( NULL )
-    , m_wizard( NULL )
+    , m_fileRenderer( nullptr )
+    , m_projectPreferences( nullptr )
+    , m_wizard( nullptr )
 {
     m_ui.setupUi( this );
 
@@ -120,7 +120,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
-    Q_ASSERT( clipRenderer != NULL );
+    Q_ASSERT( clipRenderer != nullptr );
     connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
     connect( m_mediaLibrary, SIGNAL( importRequired() ),
@@ -147,7 +147,7 @@ MainWindow::~MainWindow()
 void
 MainWindow::showWizard()
 {
-    if ( m_wizard == NULL )
+    if ( m_wizard == nullptr )
     {
         m_wizard = new ProjectWizard( this );
         m_wizard->setModal( true );
@@ -351,7 +351,7 @@ void
 MainWindow::on_actionSave_As_triggered()
 {
     //FIXME: This lacks the current project file path as a default location.
-    QString dest = QFileDialog::getSaveFileName( NULL, QObject::tr( "Enter the output file name" ),
+    QString dest = QFileDialog::getSaveFileName( nullptr, QObject::tr( "Enter the output file name" ),
                                   QString(), QObject::tr( "VLMC project file(*.vlmc)" ) );
     if ( dest.isEmpty() == true )
         return;
@@ -364,7 +364,7 @@ void
 MainWindow::on_actionLoad_Project_triggered()
 {
     QString folder = VLMC_GET_STRING( "vlmc/WorkspaceLocation" );
-    QString fileName = QFileDialog::getOpenFileName( NULL, tr( "Please choose a project file" ),
+    QString fileName = QFileDialog::getOpenFileName( nullptr, tr( "Please choose a project file" ),
                                     folder, tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
@@ -595,7 +595,7 @@ MainWindow::checkVideoLength()
 {
     if ( Core::getInstance()->workflow()->getLengthFrame() <= 0 )
     {
-        QMessageBox::warning( NULL, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
+        QMessageBox::warning( nullptr, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
     }
     return true;
@@ -889,7 +889,7 @@ MainWindow::canRedoChanged( bool canRedo )
 void
 MainWindow::onOudatedBackupFile()
 {
-    if ( QMessageBox::question( NULL, QObject::tr( "Backup file" ),
+    if ( QMessageBox::question( nullptr, QObject::tr( "Backup file" ),
                                       QObject::tr( "An outdated backup file was found. "
                                      "Do you want to erase it?" ),
                                     QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )

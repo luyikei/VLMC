@@ -36,7 +36,7 @@ class   PathWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        PathWidget( SettingValue *s, QWidget *parent = NULL );
+        PathWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     protected:

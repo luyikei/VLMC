@@ -79,8 +79,8 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
     muteAction->setCheckable( true );
     muteAction->setChecked( m_muted );
 
-    QAction* linkAction = NULL;
-    QAction* unlinkAction = NULL;
+    QAction* linkAction = nullptr;
+    QAction* unlinkAction = nullptr;
 
     if ( groupItem() )
         unlinkAction = menu.addAction( tr( "Unlink" ) );
@@ -167,7 +167,7 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
 void
 AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
 {
-    if ( m_tracksView != NULL )
+    if ( m_tracksView != nullptr )
         m_tracksView->removeClip( clip->uuid() );
 }
 
@@ -269,7 +269,7 @@ void
 AbstractGraphicsMediaItem::triggerMove( EffectUser *target, qint64 startPos )
 {
     TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
-    if ( tw == NULL )
+    if ( tw == nullptr )
         return ;
     Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clipHelper, startPos ) );
 }
@@ -285,10 +285,10 @@ AbstractGraphicsMediaItem::triggerResize( EffectUser *target, Workflow::Helper *
                                            qint64 newBegin, qint64 newEnd, qint64 pos )
 {
     ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( helper );
-    if ( clipHelper == NULL )
+    if ( clipHelper == nullptr )
         return ;
     TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
-    if ( tw == NULL )
+    if ( tw == nullptr )
         return ;
     Commands::trigger( new Commands::Clip::Resize( tw, clipHelper, newBegin,
                                                                newEnd, pos ) );

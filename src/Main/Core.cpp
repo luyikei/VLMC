@@ -40,7 +40,7 @@
 #include "Workflow/MainWorkflow.h"
 
 Core::Core()
-    : m_currentProject( NULL )
+    : m_currentProject( nullptr )
 {
     m_backend = Backend::getBackend();
     m_effectsEngine = new EffectsEngine;

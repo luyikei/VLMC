@@ -28,7 +28,7 @@ ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
                         const QString& uuid /*= QString()*/ ) :
     Helper( begin, end, uuid ),
     m_clip( clip ),
-    m_clipWorkflow( NULL )
+    m_clipWorkflow( nullptr )
 {
     if ( begin == -1 )
         m_begin = clip->begin();

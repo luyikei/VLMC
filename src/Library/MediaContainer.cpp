@@ -33,7 +33,7 @@
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
 
-MediaContainer::MediaContainer( Clip* parent /*= NULL*/ ) : m_parent( parent )
+MediaContainer::MediaContainer( Clip* parent /*= nullptr*/ ) : m_parent( parent )
 {
 }
 
@@ -50,21 +50,21 @@ MediaContainer::clip( const QUuid& uuid )
     QHash<QUuid, Clip*>::iterator   it = m_clips.find( uuid );
     if ( it != m_clips.end() )
         return it.value();
-    return NULL;
+    return nullptr;
 }
 
 Clip*
 MediaContainer::clip( const QString &uuid )
 {
     MediaContainer      *mc = this;
-    Clip                *clip = NULL;
+    Clip                *clip = nullptr;
     QStringList         ids = uuid.split( '/' );
 
     foreach ( QString id, ids )
     {
         clip = mc->clip( QUuid( id ) );
-        if ( clip == NULL )
-            return NULL;
+        if ( clip == nullptr )
+            return nullptr;
         mc = clip->getChilds();
     }
     return clip;
@@ -83,14 +83,14 @@ MediaContainer::addMedia( const QFileInfo& fileInfo )
     if ( QFile::exists( fileInfo.absoluteFilePath() ) == false )
     {
         vlmcCritical() << "Can't add" << fileInfo.absoluteFilePath() << ": File not found";
-        return NULL;
+        return nullptr;
     }
     foreach( Clip* it, m_clips.values() )
     {
         if ( (*it->getMedia()->fileInfo()) == fileInfo )
         {
             vlmcWarning() << "Ignoring aleady imported media" << fileInfo.absolutePath();
-            return NULL;
+            return nullptr;
         }
     }
     Media* media = new Media( fileInfo.filePath() );
@@ -205,7 +205,7 @@ MediaContainer::loadContainer( const QDomElement& clips, MediaContainer *parentM
         QString     uuid = clip.attribute( "uuid" );
         QString     metatags = clip.attribute( "metatags" );
         QString     notes = clip.attribute( "notes" );
-        Clip        *c = NULL;
+        Clip        *c = nullptr;
 
         if ( clip.hasAttribute( "media" ) == true )
         {
@@ -241,7 +241,7 @@ MediaContainer::loadContainer( const QDomElement& clips, MediaContainer *parentM
                 addClip( c );
             }
         }
-        if ( c != NULL )
+        if ( c != nullptr )
         {
             if ( metatags.isEmpty() == false )
                 c->setMetaTags( metatags.split( ',' ) );

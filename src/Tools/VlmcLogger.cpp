@@ -31,7 +31,7 @@
 
 
 VlmcLogger::VlmcLogger()
-    : m_logFile( NULL )
+    : m_logFile( nullptr )
     , m_backendLogLevel( Backend::IBackend::None )
 {
 }
@@ -137,7 +137,7 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const QMessageLogContext&, const
     // we uninstall the hook
 
     VlmcLogger* self = Core::getInstance()->logger();
-    if ( self->m_logFile != NULL )
+    if ( self->m_logFile != nullptr )
     {
         //FIXME: Messages are not guaranteed to arrive in order
         self->writeToFile(msg);
@@ -173,12 +173,12 @@ VlmcLogger::outputToConsole( int level, const char *msg )
 void
 VlmcLogger::backendLogHandler( Backend::IBackend::LogLevel logLevel, const QString& msg )
 {
-    char* newMsg = NULL;
+    char* newMsg = nullptr;
     if ( asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
               QThread::currentThreadId(), qPrintable( msg ) ) < 0 )
         return ;
 
-    if ( m_logFile != NULL )
+    if ( m_logFile != nullptr )
         writeToFile( newMsg );
     if ( logLevel < m_backendLogLevel )
     {

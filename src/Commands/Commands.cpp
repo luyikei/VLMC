@@ -229,7 +229,7 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
                                              qint64 newClipPos, qint64 newClipBegin ) :
     m_trackWorkflow( tw ),
     m_toSplit( toSplit ),
-    m_newClip( NULL ),
+    m_newClip( nullptr ),
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {

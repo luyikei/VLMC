@@ -31,7 +31,7 @@
 GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
                               QGraphicsItem *parent ) :
     QGraphicsWidget( parent ),
-    m_emphasizer( NULL )
+    m_emphasizer( nullptr )
 {
     m_type = type;
     m_trackNumber = trackNumber;
@@ -114,7 +114,7 @@ GraphicsTrack::trackWorkflow()
 void
 GraphicsTrack::setEmphasized( bool value )
 {
-    if ( m_emphasizer == NULL )
+    if ( m_emphasizer == nullptr )
         m_emphasizer = new EmphasizedTrackItem( this, maximumWidth(), preferredHeight() );
     if ( value == true )
         m_emphasizer->show();

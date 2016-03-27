@@ -25,7 +25,7 @@
 
 #include <QCheckBox>
 
-BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+BoolWidget::BoolWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_checkbox = new QCheckBox( this );

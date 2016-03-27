@@ -25,7 +25,7 @@
 #include <QtGlobal>
 
 GenericRenderer::GenericRenderer()
-    : m_sourceRenderer( NULL )
+    : m_sourceRenderer( nullptr )
     , m_paused( false )
 {
     m_eventWatcher = new RendererEventWatcher;

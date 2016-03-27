@@ -61,7 +61,7 @@ ExtendedLabel::setElideMode( Qt::TextElideMode mode )
 QSize
 ExtendedLabel::minimumSizeHint() const
 {
-    if ( pixmap() != NULL )
+    if ( pixmap() != nullptr )
         return QLabel::sizeHint();
     const QFontMetrics  &fm = fontMetrics();
     QSize               size( fm.width("..."), fm.height() );
@@ -71,7 +71,7 @@ ExtendedLabel::minimumSizeHint() const
 QSize
 ExtendedLabel::sizeHint() const
 {
-    if ( pixmap() != NULL )
+    if ( pixmap() != nullptr )
         return QLabel::sizeHint();
     const QFontMetrics& fm = fontMetrics();
     QSize size( fm.width( m_text ), fm.height());

@@ -31,7 +31,7 @@ Effect::Effect( const QString &fileName ) :
         m_major( -1 ),
         m_minor( -1 ),
         m_nbParams( -1 ),
-        m_f0r_deinit( NULL )
+        m_f0r_deinit( nullptr )
 {
 }
 
@@ -39,7 +39,7 @@ Effect::~Effect()
 {
     if ( isLoaded() == true )
     {
-        if ( m_f0r_deinit != NULL )
+        if ( m_f0r_deinit != nullptr )
             m_f0r_deinit();
         unload();
     }
@@ -51,7 +51,7 @@ Effect::~Effect()
 dest = reinterpret_cast<typeof( dest )>( resolve( symbolName ) )
 
 #define LOAD_FREI0R_SYMBOL_CHECKED( dest, symbolName )  \
-if ( ( LOAD_FREI0R_SYMBOL( dest, symbolName ) ) == NULL ) \
+if ( ( LOAD_FREI0R_SYMBOL( dest, symbolName ) ) == nullptr ) \
 {                                                                       \
     vlmcCritical() << "Failed to load symbol:" << symbolName;              \
     return false;                                                       \
@@ -85,12 +85,12 @@ Effect::load()
     m_minor = infos.minor_version;
     m_nbParams = infos.num_params;
     m_author = infos.author;
-    if ( m_type == Filter && m_f0r_update == NULL )
+    if ( m_type == Filter && m_f0r_update == nullptr )
     {
         vlmcCritical() << "Failed to load symbol f0r_update. Dropping module" << fileName();
         return false;
     }
-    if ( ( m_type == Mixer2 || m_type == Mixer3 ) && m_f0r_update2 == NULL )
+    if ( ( m_type == Mixer2 || m_type == Mixer3 ) && m_f0r_update2 == nullptr )
     {
         vlmcCritical() << "Failed to load symbol f0r_update2. Dropping module" << fileName();
         return false;

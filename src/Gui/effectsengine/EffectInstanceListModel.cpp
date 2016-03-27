@@ -98,10 +98,10 @@ EffectHelper*
 EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
-        return NULL;
+        return nullptr;
     Effect  *effect = Core::getInstance()->effectsEngine()->effect( effectName );
-    if ( effect == NULL )
-        return NULL;
+    if ( effect == nullptr )
+        return nullptr;
     beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );
     EffectHelper        *helper = m_user->addEffect( effect );
     endInsertRows();

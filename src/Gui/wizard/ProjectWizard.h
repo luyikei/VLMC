@@ -37,7 +37,7 @@ class ProjectWizard : public QWizard
                 Page_Open,
                 Page_General, Page_Video };
 
-         ProjectWizard( QWidget* parent = NULL );
+         ProjectWizard( QWidget* parent = nullptr );
          ~ProjectWizard();
 
     protected slots:

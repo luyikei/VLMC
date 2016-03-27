@@ -31,7 +31,7 @@
 EffectSettingValue::EffectSettingValue( const QString& key, Type type, EffectInstance* instance, quint32 index,
                                         const char *name, const char *desc, Flags flags ) :
     SettingValue( key, type, QVariant(), name, desc, flags ),
-    m_paramBuff( NULL ),
+    m_paramBuff( nullptr ),
     m_buffSize( 0 ),
     m_effectInstance( instance ),
     m_index( index )
@@ -100,7 +100,7 @@ EffectSettingValue::set( const QVariant &val )
 void
 EffectSettingValue::apply()
 {
-    if ( m_paramBuff != NULL )
+    if ( m_paramBuff != nullptr )
         m_effectInstance->effect()->m_f0r_set_param_value( m_effectInstance->m_instance,
                                                            m_paramBuff, m_index );
 }

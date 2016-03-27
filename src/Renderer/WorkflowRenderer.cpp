@@ -47,11 +47,11 @@ WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend, MainWorkflow* ma
     , m_stopping( false )
     , m_outputFps( 0.0f )
     , m_aspectRatio( "" )
-    , m_silencedAudioBuffer( NULL )
+    , m_silencedAudioBuffer( nullptr )
     , m_nbChannels( 2 )
     , m_rate( 48000 )
     , m_oldLength( 0 )
-    , m_effectFrame( NULL )
+    , m_effectFrame( nullptr )
 {
     m_source = backend->createMemorySource();
     m_esHandler = new EsHandler;
@@ -101,7 +101,7 @@ WorkflowRenderer::lock( void *data, const char* cookie, int64_t *dts, int64_t *p
 
     *dts = -1;
     *flags = 0;
-    if ( cookie == NULL || ( cookie[0] != WorkflowRenderer::VideoCookie &&
+    if ( cookie == nullptr || ( cookie[0] != WorkflowRenderer::VideoCookie &&
                              cookie[0] != WorkflowRenderer::AudioCookie ) )
     {
         vlmcCritical() << "Invalid imem input cookie";
@@ -145,7 +145,7 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
     }
     m_effectFrame = applyFilters( ret, m_mainWorkflow->getCurrentFrame() );
     m_pts = *pts = ptsDiff + m_pts;
-    if ( m_effectFrame != NULL )
+    if ( m_effectFrame != nullptr )
         *buffer = m_effectFrame;
     else
         *buffer = ret->buffer();
@@ -167,8 +167,8 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
                                                                                            m_paused ) );
     }
     else
-        renderAudioSample = NULL;
-    if ( renderAudioSample != NULL )
+        renderAudioSample = nullptr;
+    if ( renderAudioSample != nullptr )
     {
 //        vlmcDebug() << "pts diff:" << renderAudioSample->ptsDiff;
         nbSample = renderAudioSample->nbSample;
@@ -180,7 +180,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
     {
         nbSample = m_rate / handler->fps;
         unsigned int    buffSize = m_nbChannels * 2 * nbSample;
-        if ( m_silencedAudioBuffer == NULL )
+        if ( m_silencedAudioBuffer == nullptr )
             m_silencedAudioBuffer = new uint8_t[ buffSize ];
         memset( m_silencedAudioBuffer, 0, buffSize );
         *buffer = m_silencedAudioBuffer;
@@ -197,7 +197,7 @@ WorkflowRenderer::unlock( void *data, const char*, size_t, void* )
 {
     EsHandler*      handler = reinterpret_cast<EsHandler*>( data );
     delete[] handler->self->m_effectFrame;
-    handler->self->m_effectFrame = NULL;
+    handler->self->m_effectFrame = nullptr;
 }
 
 void
@@ -256,11 +256,11 @@ WorkflowRenderer::stop()
     m_paused = false;
     m_stopping = true;
     m_mainWorkflow->stopFrameComputing();
-    if ( m_sourceRenderer != NULL )
+    if ( m_sourceRenderer != nullptr )
         m_sourceRenderer->stop();
     m_mainWorkflow->stop();
     delete[] m_silencedAudioBuffer;
-    m_silencedAudioBuffer = NULL;
+    m_silencedAudioBuffer = nullptr;
 }
 
 int

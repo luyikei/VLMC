@@ -37,7 +37,7 @@
 
 ImageClipWorkflow::ImageClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_buffer( NULL )
+        m_buffer( nullptr )
 {
     //This is used to queue the media player stopping, as it can't be asked for
     //from vlc's input thread (well it can but it will deadlock)
@@ -78,7 +78,7 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode, qint64 currentFrame )
     QMutexLocker    lock( m_renderLock );
 
     quint32 *buff = applyFilters( m_buffer, currentFrame );
-    if ( buff != NULL )
+    if ( buff != nullptr )
     {
         m_effectFrame->setBuffer( buff );
         return m_effectFrame;
@@ -91,7 +91,7 @@ ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
 {
     ImageClipWorkflow* cw = reinterpret_cast<ImageClipWorkflow*>( data );
     cw->m_renderLock->lock();
-    if ( cw->m_buffer == NULL )
+    if ( cw->m_buffer == nullptr )
     {
         cw->m_buffer = new Workflow::Frame( Core::getInstance()->workflow()->getWidth(),
                                             Core::getInstance()->workflow()->getHeight() );
@@ -112,7 +112,7 @@ ImageClipWorkflow::getNbComputedBuffers() const
 {
     QMutexLocker    lock( m_renderLock );
 
-    if ( m_buffer != NULL )
+    if ( m_buffer != nullptr )
         return 1;
     return 0;
 }

@@ -34,7 +34,7 @@
 #include "VideoPage.h"
 #include "Tools/VlmcDebug.h"
 
-ProjectWizard::ProjectWizard( QWidget* parent /*= NULL*/ )
+ProjectWizard::ProjectWizard( QWidget* parent /*= nullptr*/ )
     : QWizard( parent )
 {
     // Create Wizard

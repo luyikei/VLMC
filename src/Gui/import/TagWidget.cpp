@@ -34,7 +34,7 @@ TagWidget::TagWidget( QWidget *parent, int nbButton, QStringList tagList ) :
     m_ui( new Ui::TagWidget ),
     m_nbButton( nbButton ),
     m_defaultTagList( tagList ),
-    m_currentClip( NULL )
+    m_currentClip( nullptr )
 {
     m_ui->setupUi( this );
     m_defaultTagList << "Outdoor" << "Holiday" << "Seaside" << "Sunset" << "Family";
@@ -76,7 +76,7 @@ TagWidget::clipSelected( Clip* clip )
 void
 TagWidget::setMetaTags()
 {
-    if ( m_currentClip != NULL )
+    if ( m_currentClip != nullptr )
     {
         QStringList tagList = m_ui->TagTextEdit->document()->toPlainText().split( ",", QString::SkipEmptyParts );
         m_currentClip->setMetaTags( tagList );
@@ -86,7 +86,7 @@ TagWidget::setMetaTags()
 void
 TagWidget:: buttonTagClicked()
 {
-    if ( m_currentClip != NULL )
+    if ( m_currentClip != nullptr )
     {
         QStringList tagList = m_currentClip->metaTags();
         for (int i = 0; i < m_buttonList.count(); i++)
@@ -106,7 +106,7 @@ void
 TagWidget::setTagTextEdit()
 {
     QString tags;
-    if ( m_currentClip != NULL )
+    if ( m_currentClip != nullptr )
     {
         for( int i = 0; i < m_currentClip->metaTags().count(); i++ )
         {
@@ -123,7 +123,7 @@ TagWidget::setTagTextEdit()
 void
 TagWidget::setButtonList( QStringList tagList )
 {
-    if ( m_currentClip != NULL )
+    if ( m_currentClip != nullptr )
     {
         for( int i = 0; i < tagList.count(); i++ )
         {
@@ -150,5 +150,5 @@ TagWidget::changeEvent( QEvent *e )
 void
 TagWidget::clipDestroyed()
 {
-    m_currentClip = NULL;
+    m_currentClip = nullptr;
 }

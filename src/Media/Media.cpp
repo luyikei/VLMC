@@ -53,13 +53,13 @@ const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *
                                          "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
-QPixmap*        Media::defaultSnapshot = NULL;
+QPixmap*        Media::defaultSnapshot = nullptr;
 
 Media::Media(const QString &path )
-    : m_source( NULL )
-    , m_fileInfo( NULL )
-    , m_baseClip( NULL )
-    , m_snapshotImage( NULL )
+    : m_source( nullptr )
+    , m_fileInfo( nullptr )
+    , m_baseClip( nullptr )
+    , m_snapshotImage( nullptr )
 {
     setFilePath( path );
 }
@@ -114,7 +114,7 @@ Media::source() const
 void
 Media::setBaseClip( Clip *clip )
 {
-    Q_ASSERT( m_baseClip == NULL );
+    Q_ASSERT( m_baseClip == nullptr );
     m_baseClip = clip;
 }
 
@@ -129,9 +129,9 @@ Media::onMetaDataComputed()
             m_fileType = Image;
         else
             m_fileType = Video;
-        if ( m_source->snapshot() != NULL )
+        if ( m_source->snapshot() != nullptr )
         {
-            Q_ASSERT( m_snapshotImage == NULL );
+            Q_ASSERT( m_snapshotImage == nullptr );
             m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
             emit snapshotAvailable();
         }
@@ -167,7 +167,7 @@ Media::snapshot()
     if ( m_snapshot.isNull() == false )
         return m_snapshot;
 
-    if ( m_snapshotImage != NULL )
+    if ( m_snapshotImage != nullptr )
     {
         m_snapshot = QPixmap::fromImage( *m_snapshotImage );
         delete m_snapshotImage;
@@ -175,7 +175,7 @@ Media::snapshot()
         if ( m_snapshot.isNull() == false )
             return m_snapshot;
     }
-    if ( Media::defaultSnapshot == NULL )
+    if ( Media::defaultSnapshot == nullptr )
         Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
     return *Media::defaultSnapshot;
 }

@@ -30,7 +30,7 @@ EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64
                             const QString &uuid ) :
     Helper( begin, end, uuid ),
     m_effectInstance( effectInstance ),
-    m_target( NULL )
+    m_target( nullptr )
 {
     if ( Core::getInstance()->workflow()->getLengthFrame() > 0 )
         m_end = Core::getInstance()->workflow()->getLengthFrame();
@@ -60,7 +60,7 @@ void
 EffectHelper::setTarget( EffectUser *target )
 {
     m_target = target;
-    if ( target != NULL )
+    if ( target != nullptr )
     {
         if ( target->length() > 0 && target->length() < m_end )
             m_end = target->length();

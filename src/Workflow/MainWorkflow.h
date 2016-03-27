@@ -280,7 +280,7 @@ class   MainWorkflow : public QObject, public ILoadSave
          *  \param      uuid : The clip helper's uuid.
          *  \param      trackId : the track id
          *  \param      trackType : the track type (audio or video)
-         *  \returns    The clip helper that matches the given UUID, or NULL.
+         *  \returns    The clip helper that matches the given UUID, or nullptr.
          */
         ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
                                                Workflow::TrackType trackType );

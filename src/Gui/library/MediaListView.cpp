@@ -95,7 +95,7 @@ MediaListView::__clipRemoved( const QUuid &uuid )
     removeCell( cell );
     m_currentUuid = QUuid();
     // cancel out selection state (mostly to inform the renderer)
-    emit clipSelected( NULL );
+    emit clipSelected( nullptr );
 }
 
 void

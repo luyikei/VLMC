@@ -38,12 +38,12 @@ class   MediaContainer : public QObject
     Q_OBJECT
 
 public:
-    MediaContainer( Clip* parent = NULL );
+    MediaContainer( Clip* parent = nullptr );
     ~MediaContainer();
     /**
      *  \brief  returns the clip that match the unique identifier
      *  \param  uuid    the unique identifier of the media
-     *  \return a pointer to the required clip, or NULL if no clips matches
+     *  \return a pointer to the required clip, or nullptr if no clips matches
      */
     Clip*   clip( const QUuid& uuid );
 
@@ -52,7 +52,7 @@ public:
      *
      *  The identifier may be a full id (ie the full path, starting at the root clip)
      *  \param  uuid    the unique identifier of the media
-     *  \return a pointer to the required clip, or NULL if no clips matches
+     *  \return a pointer to the required clip, or nullptr if no clips matches
      */
     Clip*   clip( const QString& uuid );
 
@@ -71,7 +71,7 @@ public:
      *  This method will also handle metadata parsing.
      *  \param  fileInfo    the file info of the media
      *  \return             The newly create media if the media was successfully loaded.
-     *                      NULL otherwise.
+     *                      nullptr otherwise.
      *  \sa     addClip( Clip* clip )
      *  \sa     media( const QUuid& uuid)
      *  \sa     clip( const QUuid& uuid )

@@ -34,7 +34,7 @@
 
 Transcoder::Transcoder( Media* media )
     : m_media( media )
-    , m_renderer( NULL )
+    , m_renderer( nullptr )
 {
     connect( this, &Transcoder::notify,
              NotificationZone::getInstance(), &NotificationZone::notify );

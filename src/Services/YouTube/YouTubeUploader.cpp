@@ -50,7 +50,7 @@ YouTubeUploader::YouTubeUploader( YouTubeService* service,
     #endif
 
     /* Pointer for custom IODevice needed to upload video */
-    m_ioDevice = NULL;
+    m_ioDevice = nullptr;
     uploadInit();
 }
 
@@ -164,7 +164,7 @@ YouTubeUploader::uploadFinished()
     if( m_ioDevice )
         delete m_ioDevice;
 
-    m_ioDevice = NULL;
+    m_ioDevice = nullptr;
 }
 
 QNetworkRequest

@@ -35,7 +35,7 @@ class   IntWidget : public ISettingsCategoryWidget
     Q_OBJECT
 
     public:
-        IntWidget( SettingValue *s, QWidget *parent = NULL );
+        IntWidget( SettingValue *s, QWidget *parent = nullptr );
         bool                    save();
 
     private slots:

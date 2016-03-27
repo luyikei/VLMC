@@ -38,8 +38,8 @@
 #include "Tools/VlmcDebug.h"
 
 ClipWorkflow::ClipWorkflow( ClipHelper* ch )
-    : m_renderer( NULL )
-    , m_eventWatcher( NULL )
+    : m_renderer( nullptr )
+    , m_eventWatcher( nullptr )
     , m_clipHelper( ch )
     , m_state( ClipWorkflow::Stopped )
     , m_muted( false )

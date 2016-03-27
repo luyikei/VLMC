@@ -39,7 +39,7 @@
 
 VideoClipWorkflow::VideoClipWorkflow( ClipHelper *ch ) :
         ClipWorkflow( ch ),
-        m_lastReturnedBuffer( NULL )
+        m_lastReturnedBuffer( nullptr )
 {
 }
 
@@ -87,24 +87,24 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
 {
     QMutexLocker    lock( m_renderLock );
 
-    if ( m_lastReturnedBuffer != NULL )
+    if ( m_lastReturnedBuffer != nullptr )
     {
         m_availableBuffers.enqueue( m_lastReturnedBuffer );
-        m_lastReturnedBuffer = NULL;
+        m_lastReturnedBuffer = nullptr;
     }
     if ( shouldRender() == false )
-        return NULL;
+        return nullptr;
     if ( getNbComputedBuffers() == 0 )
     {
         if ( m_renderWaitCond->wait( m_renderLock, 100 ) == false )
         {
             vlmcWarning() << "Clip workflow" << m_clipHelper->uuid() << "Timed out while waiting for a frame";
-            return NULL;
+            return nullptr;
         }
         if ( shouldRender() == false )
-            return NULL;
+            return nullptr;
     }
-    Workflow::Frame         *buff = NULL;
+    Workflow::Frame         *buff = nullptr;
     if ( mode == ClipWorkflow::Pop )
     {
         buff = m_computedBuffers.dequeue();
@@ -114,7 +114,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
         buff = m_computedBuffers.head();
 
     quint32     *newFrame = applyFilters( buff, currentFrame );
-    if ( newFrame != NULL )
+    if ( newFrame != nullptr )
         buff->setBuffer( newFrame );
 
     postGetOutput();
@@ -127,7 +127,7 @@ VideoClipWorkflow::lock( void *data, uint8_t** p_buffer, size_t size )
     VideoClipWorkflow* cw = reinterpret_cast<VideoClipWorkflow*>( data );
 
     //Mind the fact that frame size in bytes might not be width * height * bpp
-    Workflow::Frame*    frame = NULL;
+    Workflow::Frame*    frame = nullptr;
 
     cw->m_renderLock->lock();
     if ( cw->m_availableBuffers.isEmpty() == true )

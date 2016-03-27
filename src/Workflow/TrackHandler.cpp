@@ -80,14 +80,14 @@ TrackHandler::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             continue ;
         validTrack = true;
         Workflow::OutputBuffer  *ret = m_tracks[i]->getOutput( currentFrame, subFrame, paused );
-        if ( ret == NULL )
+        if ( ret == nullptr )
             continue ;
         else
             return ret;
     }
     if ( validTrack == false )
         allTracksEnded();
-    return NULL;
+    return nullptr;
 }
 
 qint64

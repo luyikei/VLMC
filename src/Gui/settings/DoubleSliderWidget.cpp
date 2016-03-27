@@ -28,7 +28,7 @@
 #include <QLabel>
 #include <QSlider>
 
-DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+DoubleSliderWidget::DoubleSliderWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     //Creating the slider

@@ -56,9 +56,9 @@ class EffectSettingValue : public SettingValue
         template <typename T>
         void            copyToFrei0rBuff( const T* ptr, quint32 size = sizeof( T ) )
         {
-            if ( m_buffSize != size || m_paramBuff == NULL )
+            if ( m_buffSize != size || m_paramBuff == nullptr )
             {
-                delete[] m_paramBuff; //Won't hurt if paramBuff is NULL
+                delete[] m_paramBuff; //Won't hurt if paramBuff is nullptr
                 m_paramBuff = new qint8[size];
                 m_buffSize = size;
             }

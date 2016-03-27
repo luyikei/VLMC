@@ -107,7 +107,7 @@ SettingsDialog::buttonClicked( QAbstractButton *button )
     {
     case QDialogButtonBox::Reset:
         {
-            if ( QMessageBox::question( NULL, tr( "Restore default?" ),
+            if ( QMessageBox::question( nullptr, tr( "Restore default?" ),
                                         tr( "This will restore all settings default value.\nAre you sure you want to continue?" ),
                                         QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel ) == QMessageBox::Ok )
             {
@@ -123,7 +123,7 @@ SettingsDialog::buttonClicked( QAbstractButton *button )
             {
                 if ( qobject_cast<PreferenceWidget*>( m_stackedLayout->widget( i ) )->save() == false )
                 {
-                    QMessageBox::warning( NULL, tr( "Invalid value" ),
+                    QMessageBox::warning( nullptr, tr( "Invalid value" ),
                                           tr( "Can't save settings due to an invalid value" ) );
                     return ;
                 }
@@ -168,7 +168,7 @@ SettingsDialog::retranslateUi()
 {
     PreferenceWidget *pWidget = qobject_cast<PreferenceWidget*>(
             m_stackedLayout->widget( m_stackedLayout->currentIndex() ) );
-    Q_ASSERT( pWidget != NULL );
+    Q_ASSERT( pWidget != nullptr );
 
     // Translate the category name using the current locale
     QString text = tr( pWidget->category() );

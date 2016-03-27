@@ -36,7 +36,7 @@ VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     , m_nbVideoTracks( 0 )
     , m_nbAudioTracks( 0 )
     , m_length( 0 )
-    , m_snapshot( NULL )
+    , m_snapshot( nullptr )
     , m_isParsed( false )
     , m_nbFrames( 0 )
 {
@@ -63,7 +63,7 @@ VLCSource::preparse()
     Q_ASSERT( m_nbAudioTracks == 0 );
     Q_ASSERT( m_nbVideoTracks == 0 );
 
-    VmemRenderer renderer( m_backend, this, NULL );
+    VmemRenderer renderer( m_backend, this, nullptr );
     m_media.parse();
     m_length = m_media.duration();
     auto tracks = m_media.tracks();
@@ -104,7 +104,7 @@ VLCSource::isParsed() const
 bool
 VLCSource::computeSnapshot( VmemRenderer& renderer )
 {
-    Q_ASSERT( m_snapshot == NULL );
+    Q_ASSERT( m_snapshot == nullptr );
     renderer.start();
     {
         QMutex mutex;
@@ -121,7 +121,7 @@ VLCSource::computeSnapshot( VmemRenderer& renderer )
             return false;
     }
     m_snapshot = renderer.waitSnapshot();
-    return m_snapshot != NULL;
+    return m_snapshot != nullptr;
 }
 
 unsigned int
@@ -174,8 +174,8 @@ VLCSource::nbAudioTracks() const
 const uint8_t*
 VLCSource::snapshot() const
 {
-    if ( hasVideo() == false || m_snapshot == NULL )
-        return NULL;
+    if ( hasVideo() == false || m_snapshot == nullptr )
+        return nullptr;
     return m_snapshot->bits();
 }
 

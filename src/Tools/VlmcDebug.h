@@ -52,7 +52,7 @@ inline void vlmcFatal(const char* msg, ...)
 {
     va_list args;
     va_start(args, msg);
-    char* str = NULL;
+    char* str = nullptr;
     if (vasprintf(&str, msg, args) < 0)
     {
         qFatal("[%s] T #%p F: %s", qPrintable(QTime::currentTime().toString("hh:mm:ss.zzz")), reinterpret_cast<void*>(QThread::currentThreadId()), "<Failed to generate message. Have fun>");

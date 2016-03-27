@@ -28,7 +28,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= NULL*/ ) :
+PathWidget::PathWidget( SettingValue *s, QWidget *parent /*= nullptr*/ ) :
         ISettingsCategoryWidget( parent, s )
 {
     m_lineEdit = new QLineEdit( this );
@@ -70,7 +70,7 @@ PathWidget::changed( const QVariant &val )
 void
 PathWidget::selectPathButtonPressed()
 {
-    QString path = QFileDialog::getExistingDirectory( NULL, tr( "Select a path" ),
+    QString path = QFileDialog::getExistingDirectory( nullptr, tr( "Select a path" ),
                                                       m_setting->get().toString() );
     if ( path.length() > 0 )
         m_lineEdit->setText( path );
