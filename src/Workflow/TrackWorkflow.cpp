@@ -50,7 +50,6 @@ TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_lastFrame( 0 ),
         m_trackId( trackId )
 {
-    m_renderOneFrameMutex = new QMutex;
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
 
@@ -74,7 +73,6 @@ TrackWorkflow::~TrackWorkflow()
         it = m_clips.erase( it );
     }
     delete m_clipsLock;
-    delete m_renderOneFrameMutex;
 }
 
 void
@@ -279,18 +277,12 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     Workflow::OutputBuffer                      *ret = NULL;
     Workflow::Frame                             *frames[EffectsEngine::MaxFramesForMixer];
     quint32                                     frameId = 0;
-    bool                                        renderOneFrame = false;
+    bool                                        renderOneFrame;
 
     if ( m_lastFrame == -1 )
         m_lastFrame = currentFrame;
-    {
-        QMutexLocker      lock2( m_renderOneFrameMutex );
-        if ( m_renderOneFrame == true )
-        {
-            m_renderOneFrame = false;
-            renderOneFrame = true;
-        }
-    }
+    renderOneFrame = m_renderOneFrame.testAndSetRelease( true, false );
+
     {
         // This is a bit hackish : when we want to pop a frame in renderOneFrame mode,
         // we also set the position to avoid the stream to be missynchronized.
@@ -518,8 +510,7 @@ TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* 
 void
 TrackWorkflow::renderOneFrame()
 {
-    QMutexLocker    lock( m_renderOneFrameMutex );
-    m_renderOneFrame = true;
+    m_renderOneFrame.store( true );
 }
 
 void

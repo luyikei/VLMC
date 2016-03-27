@@ -120,8 +120,7 @@ class   TrackWorkflow : public EffectUser
         */
         qint64                                  m_length;
 
-        bool                                    m_renderOneFrame;
-        QMutex                                  *m_renderOneFrameMutex;
+        QAtomicInteger<bool>                    m_renderOneFrame;
 
         QReadWriteLock*                         m_clipsLock;
 
