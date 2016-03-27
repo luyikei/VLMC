@@ -143,8 +143,7 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
         //this is a bit hackish though... (especially regarding the "no frame computed" detection)
         ptsDiff = 1000000 / handler->fps;
     }
-    m_effectFrame = applyFilters( ret, m_mainWorkflow->getCurrentFrame(),
-                                      m_mainWorkflow->getCurrentFrame() * 1000.0 / handler->fps );
+    m_effectFrame = applyFilters( ret, m_mainWorkflow->getCurrentFrame() );
     m_pts = *pts = ptsDiff + m_pts;
     if ( m_effectFrame != NULL )
         *buffer = m_effectFrame;

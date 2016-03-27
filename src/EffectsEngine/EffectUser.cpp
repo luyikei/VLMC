@@ -74,8 +74,7 @@ EffectUser::addEffect( EffectHelper *effectHelper )
 }
 
 quint32*
-EffectUser::applyFilters( const Workflow::Frame* frame,
-                             qint64 currentFrame, double time )
+EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
 {
     QReadLocker     lock( m_effectsLock );
 

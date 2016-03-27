@@ -113,8 +113,7 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
     else
         buff = m_computedBuffers.head();
 
-    quint32     *newFrame = applyFilters( buff, currentFrame,
-                                 currentFrame * 1000.0 / clip()->getMedia()->source()->fps() );
+    quint32     *newFrame = applyFilters( buff, currentFrame );
     if ( newFrame != NULL )
         buff->setBuffer( newFrame );
 

@@ -345,7 +345,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
             ret = frames[0];
         //Now handle filters :
         quint32     *newFrame = applyFilters( ret != NULL ? static_cast<const Workflow::Frame*>( ret ) : Core::getInstance()->workflow()->blackOutput(),
-                                                currentFrame, currentFrame * 1000.0 / m_fps );
+                                                currentFrame );
         if ( newFrame != NULL )
         {
             if ( ret != NULL )

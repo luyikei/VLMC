@@ -69,8 +69,7 @@ class EffectUser : public QObject
         void                            initMixers();
 
         //Filters:
-        quint32                         *applyFilters( const Workflow::Frame *frame,
-                                                       qint64 currentFrame, double time );
+        quint32                         *applyFilters( const Workflow::Frame *frame, qint64 currentFrame);
         //Mixers methods:
         EffectHelper                    *getMixer( qint64 currentFrame );
 
