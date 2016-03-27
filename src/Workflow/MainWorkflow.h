@@ -68,7 +68,7 @@ class   MainWorkflow : public QObject, public ILoadSave
          *  \param      height  The height to use with this render session.
          *  This will basically activate all the tracks, newLengthso they can render.
          */
-        void                    startRender( quint32 width, quint32 height, double fps );
+        void                    startRender( quint32 width, quint32 height );
         /**
          *  \brief      Gets a frame from the workflow
          *

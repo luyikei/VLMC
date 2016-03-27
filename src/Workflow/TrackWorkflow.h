@@ -88,8 +88,7 @@ class   TrackWorkflow : public EffectUser
         void                                    muteClip( const QUuid& uuid );
         void                                    unmuteClip( const QUuid& uuid );
 
-        void                                    initRender( quint32 width, quint32 height,
-                                                            double fps );
+        void                                    initRender(quint32 width, quint32 height);
 
         bool                                    contains( const QUuid& uuid ) const;
 
@@ -129,7 +128,6 @@ class   TrackWorkflow : public EffectUser
         const Workflow::TrackType               m_trackType;
         qint64                                  m_lastFrame;
         Workflow::Frame                         *m_mixerBuffer;
-        double                                  m_fps;
         const quint32                           m_trackId;
 
     private slots:

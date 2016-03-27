@@ -49,7 +49,7 @@ TrackHandler::~TrackHandler()
 }
 
 void
-TrackHandler::startRender( quint32 width, quint32 height, double fps )
+TrackHandler::startRender( quint32 width, quint32 height )
 {
     m_endReached = false;
     if ( m_length == 0 )
@@ -58,7 +58,7 @@ TrackHandler::startRender( quint32 width, quint32 height, double fps )
     {
         for ( unsigned int i = 0; i < m_trackCount; ++i )
         {
-            m_tracks[i]->initRender( width, height, fps );
+            m_tracks[i]->initRender( width, height );
         }
     }
 }

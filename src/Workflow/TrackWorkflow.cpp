@@ -574,12 +574,11 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 }
 
 void
-TrackWorkflow::initRender( quint32 width, quint32 height, double fps )
+TrackWorkflow::initRender( quint32 width, quint32 height )
 {
     QReadLocker     lock( m_clipsLock );
 
     m_mixerBuffer->resize( width, height );
-    m_fps = fps;
     m_width = width;
     m_height = height;
     m_isRendering = true;
