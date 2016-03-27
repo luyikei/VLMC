@@ -43,7 +43,6 @@ public:
                                     quint32 abitrate);
     static int                  lock(void* datas, const char* cookie, int64_t *dts, int64_t *pts,
                                       unsigned int *flags, size_t *bufferSize, const void **buffer );
-    virtual float               getFps() const;
 
 private:
     quint8                      *m_renderVideoFrame;

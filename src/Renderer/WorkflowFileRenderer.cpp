@@ -66,12 +66,6 @@ WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
     m_sourceRenderer->start();
 }
 
-float
-WorkflowFileRenderer::getFps() const
-{
-    return m_outputFps;
-}
-
 int
 WorkflowFileRenderer::lock( void *datas, const char* cookie, int64_t *dts, int64_t *pts,
                             unsigned int *flags, size_t *bufferSize, const void **buffer )
