@@ -56,46 +56,46 @@ public:
     VLCSourceRenderer( VLCBackend* backendInstance, const VLCMemorySource *source, ISourceRendererEventCb* callback );
     virtual ~VLCSourceRenderer();
 
-    virtual void    setName( const char* name );
-    virtual void    start();
-    virtual void    stop();
+    virtual void    setName( const char* name ) override;
+    virtual void    start() override;
+    virtual void    stop() override;
     virtual bool    isStopped() override;
-    virtual void    playPause();
+    virtual void    playPause() override;
     virtual void    setPause( bool isPaused ) override;
-    virtual void    nextFrame();
-    virtual void    previousFrame();
-    virtual void    setOutputWidget( void *target );
-    virtual int64_t time();
-    virtual void    setTime( int64_t time );
-    virtual void    setPosition( float position );
-    virtual int     volume();
-    virtual void    setVolume( int volume );
+    virtual void    nextFrame() override;
+    virtual void    previousFrame() override;
+    virtual void    setOutputWidget( void *target ) override;
+    virtual int64_t time() override;
+    virtual void    setTime( int64_t time ) override;
+    virtual void    setPosition( float position ) override;
+    virtual int     volume() override;
+    virtual void    setVolume( int volume ) override;
 
-    virtual void    setOutputFile( const char* path );
+    virtual void    setOutputFile( const char* path ) override;
 
     // Video output
-    virtual void    setOutputVideoCodec( const char* fourCC );
-    virtual void    setOutputWidth( unsigned int width );
-    virtual void    setOutputHeight( unsigned int height );
-    virtual void    setOutputFps( float fps );
-    virtual void    setOutputVideoBitrate( unsigned int vBitrate );
+    virtual void    setOutputVideoCodec( const char* fourCC ) override;
+    virtual void    setOutputWidth( unsigned int width ) override;
+    virtual void    setOutputHeight( unsigned int height ) override;
+    virtual void    setOutputFps( float fps ) override;
+    virtual void    setOutputVideoBitrate( unsigned int vBitrate ) override;
 
     // Audio output:
-    virtual void    setOutputAudioCodec( const char* fourCC );
-    virtual void    setOutputAudioSampleRate( unsigned int sampleRate );
-    virtual void    setOutputAudioNumberChannels( unsigned int nbChannels );
-    virtual void    setOutputAudioBitrate( unsigned int aBitrate );
+    virtual void    setOutputAudioCodec( const char* fourCC ) override;
+    virtual void    setOutputAudioSampleRate( unsigned int sampleRate ) override;
+    virtual void    setOutputAudioNumberChannels( unsigned int nbChannels ) override;
+    virtual void    setOutputAudioBitrate( unsigned int aBitrate ) override;
 
     // imem:
-    virtual void    enableMemoryInput( void* data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback );
+    virtual void    enableMemoryInput( void* data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback ) override;
 
     // smem:
-    virtual void    enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync );
+    virtual void    enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync ) override;
     virtual void    enableAudioOutputToMemory( void* data, AudioOutputLockCallback lock,
-                                               AudioOutputUnlockCallback unlock, bool timeSync );
+                                               AudioOutputUnlockCallback unlock, bool timeSync ) override;
 
     // Below is stuff which is not accessible through IRenderer
-    virtual void    setOption( const QString& option );
+    void    setOption( const QString& option );
 
 private:
     void            initMediaPlayer();
