@@ -168,7 +168,6 @@ AudioClipWorkflow::unlock( void* data, uint8_t *pcm_buffer, unsigned int channel
         else
             cw->m_currentPts = pts;
     }
-    cw->commonUnlock();
     cw->m_renderLock->unlock();
 }
 

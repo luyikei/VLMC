@@ -176,7 +176,6 @@ class   ClipWorkflow : public EffectUser
 
     protected:
         void                    computePtsDiff( qint64 pts );
-        void                    commonUnlock();
         /**
          *  \warning    Must be called from a thread safe context.
          *              This thread safe context has to be set

@@ -160,15 +160,12 @@ ClipWorkflow::postGetOutput()
     //If we're running out of computed buffers, refill our stack.
     if ( getNbComputedBuffers() < getMaxComputedBuffers() / 3 )
         m_renderer->setPause( false );
-}
-
-void
-ClipWorkflow::commonUnlock()
-{
     //Don't test using availableBuffer, as it may evolve if a buffer is required while
     //no one is available : we would spawn a new buffer, thus modifying the number of available buffers
-    if ( getNbComputedBuffers() >= getMaxComputedBuffers() )
+    else if ( getNbComputedBuffers() >= getMaxComputedBuffers() )
     {
+        // It's OK to check from here: if getOutput is not called, it means the clipworkflow is
+        // stopped or preloading, in which case, we don't care about the buffer queue growing uncontrolled
         m_renderer->setPause( true );
     }
 }

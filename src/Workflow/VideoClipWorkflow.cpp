@@ -162,7 +162,6 @@ VideoClipWorkflow::unlock( void *data, uint8_t *buffer, int width,
     cw->computePtsDiff( pts );
     Workflow::Frame     *frame = cw->m_computedBuffers.last();
     frame->ptsDiff = cw->m_currentPts - cw->m_previousPts;
-    cw->commonUnlock();
     cw->m_renderWaitCond->wakeAll();
     cw->m_renderLock->unlock();
 }
