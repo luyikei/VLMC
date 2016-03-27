@@ -161,6 +161,13 @@ RendererSettings::fps() const
     return m_ui.fps->value();
 }
 
+QString
+RendererSettings::aspectRatio() const
+{
+    //FIXME:
+    return "16/10";
+}
+
 quint32
 RendererSettings::videoBitrate() const
 {

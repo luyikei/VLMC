@@ -39,8 +39,8 @@ public:
     virtual ~WorkflowFileRenderer();
 
     void                        run(const QString& outputFileName, quint32 width,
-                                    quint32 height, double fps, quint32 vbitrate,
-                                    quint32 abitrate);
+                                    quint32 height, double fps, const QString& ar,
+                                    quint32 vbitrate, quint32 abitrate);
     static int                  lock(void* datas, const char* cookie, int64_t *dts, int64_t *pts,
                                       unsigned int *flags, size_t *bufferSize, const void **buffer );
 

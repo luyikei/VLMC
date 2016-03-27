@@ -602,7 +602,9 @@ MainWindow::checkVideoLength()
 }
 
 bool
-MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height, double fps, quint32 vbitrate, quint32 abitrate )
+MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height,
+                         double fps, const QString& ar,
+                         quint32 vbitrate, quint32 abitrate )
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
@@ -612,7 +614,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
 
-    m_fileRenderer->run( outputFileName, width, height, fps, vbitrate, abitrate );
+    m_fileRenderer->run( outputFileName, width, height, fps, ar, vbitrate, abitrate );
 
     if ( dialog->exec() == QDialog::Rejected )
     {
@@ -643,10 +645,11 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
     double      fps            = settings->fps();
     quint32     vbitrate       = settings->videoBitrate();
     quint32     abitrate       = settings->audioBitrate();
+    auto        ar             = settings->aspectRatio();
 
     delete settings;
 
-    return renderVideo( outputFileName, width, height, fps, vbitrate, abitrate );
+    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate );
 }
 
 QDockWidget*

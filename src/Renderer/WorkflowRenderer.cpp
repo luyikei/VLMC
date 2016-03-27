@@ -73,12 +73,12 @@ WorkflowRenderer::~WorkflowRenderer()
 }
 
 void
-WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps )
+WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps, const QString& ar )
 {
     m_source->setWidth( width );
     m_source->setHeight( height );
     m_source->setFps( fps );
-    m_source->setAspectRatio( qPrintable( aspectRatio() ) );
+    m_source->setAspectRatio( qPrintable( ar ) );
     m_source->setNumberChannels( m_nbChannels );
     m_source->setSampleRate( m_rate );
     m_esHandler->fps = fps;
@@ -205,16 +205,15 @@ WorkflowRenderer::startPreview()
 {
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
         return ;
-    if ( paramsHasChanged( m_width, m_height, m_outputFps, m_aspectRatio ) == true )
-    {
-        m_width = width();
-        m_height = height();
-        m_outputFps = outputFps();
-        m_aspectRatio = aspectRatio();
-    }
-    initFilters();
 
-    setupRenderer( m_width, m_height, m_outputFps );
+    auto project = Core::getInstance()->project();
+    m_width = project->width();
+    m_height = project->height();
+    m_outputFps = project->fps();
+    m_aspectRatio = project->aspectRatio();
+
+    initFilters();
+    setupRenderer( m_width, m_height, m_outputFps, m_aspectRatio );
 
     m_mainWorkflow->setFullSpeedRender( false );
     m_mainWorkflow->startRender( m_width, m_height );
@@ -330,42 +329,6 @@ Backend::ISourceRenderer::MemoryInputLockCallback WorkflowRenderer::getLockCallb
 Backend::ISourceRenderer::MemoryInputUnlockCallback WorkflowRenderer::getUnlockCallback()
 {
     return WorkflowRenderer::unlock;
-}
-
-quint32
-WorkflowRenderer::width() const
-{
-    return Core::getInstance()->project()->width();
-}
-
-quint32
-WorkflowRenderer::height() const
-{
-    return Core::getInstance()->project()->height();
-}
-
-float
-WorkflowRenderer::outputFps() const
-{
-    return Core::getInstance()->project()->fps();
-}
-
-const QString
-WorkflowRenderer::aspectRatio() const
-{
-    return Core::getInstance()->project()->aspectRatio();
-}
-
-bool
-WorkflowRenderer::paramsHasChanged( quint32 width, quint32 height, double fps, QString aspect )
-{
-    quint32             newWidth = this->width();
-    quint32             newHeight = this->height();
-    float               newOutputFps = outputFps();
-    const QString       newAspectRatio = aspectRatio();
-
-    return ( newWidth != width || newHeight != height ||
-         newOutputFps != fps || newAspectRatio != aspect );
 }
 
 bool

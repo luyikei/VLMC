@@ -114,7 +114,7 @@ private:
      *  \return true if video renders well or not cancelled by the user.
      */
     bool        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
-                             double fps, quint32 vbitrate, quint32 abitrate );
+                             double fps, const QString& ar, quint32 vbitrate, quint32 abitrate );
 
     /**
      *  \brief  Gets video parameters from RendererSettings Dialog

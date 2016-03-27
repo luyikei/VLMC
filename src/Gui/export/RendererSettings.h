@@ -49,6 +49,7 @@ class   RendererSettings : public QDialog
         quint32         width() const;
         quint32         height() const;
         double          fps() const;
+        QString         aspectRatio() const;
         quint32         videoBitrate() const;
         quint32         audioBitrate() const;
         QString         outputFileName() const;

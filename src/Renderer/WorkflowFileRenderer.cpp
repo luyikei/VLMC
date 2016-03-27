@@ -38,12 +38,12 @@ WorkflowFileRenderer::~WorkflowFileRenderer()
 
 void
 WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
-                                       quint32 height, double fps, quint32 vbitrate,
-                                       quint32 abitrate )
+                            quint32 height, double fps, const QString& ar,
+                            quint32 vbitrate, quint32 abitrate )
 {
     m_mainWorkflow->setCurrentFrame( 0, Vlmc::Renderer );
 
-    setupRenderer( width, height, fps );
+    setupRenderer( width, height, fps, ar );
     m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
     m_sourceRenderer->setOutputAudioBitrate( abitrate );
     m_sourceRenderer->setOutputVideoBitrate( vbitrate );

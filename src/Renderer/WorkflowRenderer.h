@@ -205,48 +205,11 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          *  \param  buffer      The buffer to be released
          */
         static void         unlock( void *data, const char* cookie, size_t buffSize, void *buffer );
-        /**
-         *  \brief  Return the renderer specific width
-         *
-         *  The render width can changed depending on the render target.
-         *  This getter will be used to initialized the MainWorkflow with the
-         *  appropriate width.
-         *  \return The video width for the underlying WorkflowRenderer
-         */
-        virtual quint32     width() const;
-        /**
-         *  \brief  Return the renderer specific height
-         *
-         *  The render width can changed depending on the render target.
-         *  This getter will be used to initialized the MainWorkflow with the
-         *  appropriate height.
-         *  \return The video height for the underlying WorkflowRenderer
-         */
-        virtual quint32     height() const;
-        /**
-         *  \return         The output fps for this specific render.
-         *
-         *  The output fps may change according to the rendering target.
-         *  IE the output may be different when previewing and when rendering to a file.
-         *  This method has to be reimplemented in the underlying WorkflowRenderer, to
-         *  adjust itself to the specific renderer fps.
-         *  \warning        This may be confused with getFps(), and therefore, one of the
-         *                  two should be modified.
-         */
-        virtual float       outputFps() const;
-
-        const QString       aspectRatio() const;
 
         /**
          *  \brief          Configure the production chain.
          */
-        void                setupRenderer( quint32 width, quint32 height, double fps );
-        /**
-         *  \brief          Check for parameters modification.
-         *  \return         true if some render parameters has changed.
-         */
-        bool                paramsHasChanged( quint32 width, quint32 height,
-                                                  double fps, QString aspect );
+        void                setupRenderer(quint32 width, quint32 height, double fps , const QString& ar);
 
     //FIXME: Ugly workaround
     public:
