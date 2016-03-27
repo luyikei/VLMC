@@ -43,6 +43,7 @@ namespace Backend
 }
 
 #include <QObject>
+#include <QElapsedTimer>
 
 class Core : public QObject
 {
@@ -60,6 +61,10 @@ class Core : public QObject
         MainWorkflow*           workflow();
         QUndoStack*             undoStack();
         Library*                library();
+        /**
+         * @brief runtime returns the application runtime
+         */
+        qint64                  runtime();
 
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
@@ -85,6 +90,7 @@ class Core : public QObject
         WorkflowRenderer*       m_workflowRenderer;
         QUndoStack*             m_undoStack;
         Library*                m_library;
+        QElapsedTimer           m_timer;
 };
 
 #endif // CORE_H

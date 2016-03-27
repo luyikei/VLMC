@@ -60,6 +60,8 @@ Core::Core()
     connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     connect( m_currentProject, SIGNAL( projectLoaded( QString, QString ) ),
              m_recentProjects, SLOT( projectLoaded( QString, QString ) ) );
+
+    m_timer.start();
 }
 
 Core::~Core()
@@ -173,6 +175,12 @@ Library*
 Core::library()
 {
     return m_library;
+}
+
+qint64
+Core::runtime()
+{
+    return m_timer.elapsed();
 }
 
 Core*
