@@ -35,6 +35,7 @@
 RendererSettings::RendererSettings( bool shareOnInternet )
 {
     m_ui.setupUi( this );
+    auto project = Core::getInstance()->project();
 
     if( shareOnInternet )
     {
@@ -43,13 +44,13 @@ RendererSettings::RendererSettings( bool shareOnInternet )
         m_ui.outputFileNameButton->setVisible( false );
         m_ui.outputFileName->setText(
             VLMC_GET_STRING( "vlmc/TempFolderLocation" ) + "/" +
-            VLMC_PROJECT_GET_STRING( "vlmc/ProjectName" ) + "-vlmc.mp4" );
+            project->name() + "-vlmc.mp4" );
         setWindowTitle( tr("Export Settings: Publish on Internet") );
     }
 
-    m_ui.width->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectWidth" ) );
-    m_ui.height->setValue( VLMC_PROJECT_GET_INT( "video/VideoProjectHeight" ) );
-    m_ui.fps->setValue( VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+    m_ui.width->setValue( project->width() );
+    m_ui.height->setValue( project->height() );
+    m_ui.fps->setValue( project->fps() );
 
     QCompleter* completer = new QCompleter( this );
     completer->setModel( new QDirModel( completer ) );

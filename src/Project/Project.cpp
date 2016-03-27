@@ -287,6 +287,48 @@ Project::removeBackupFile()
         autoBackup.remove();
 }
 
+QString
+Project::name() const
+{
+    return m_settings->value( "vlmc/ProjectName" )->get().toString();
+}
+
+double
+Project::fps() const
+{
+    return m_settings->value( "video/VLMCOutputFPS" )->get().toDouble();
+}
+
+unsigned int
+Project::width() const
+{
+    return m_settings->value( "video/VideoProjectWidth" )->get().toUInt();
+}
+
+unsigned int
+Project::height() const
+{
+    return m_settings->value( "video/VideoProjectHeight" )->get().toUInt();
+}
+
+QString
+Project::aspectRatio() const
+{
+    return m_settings->value( "video/AspectRatio" )->get().toString();
+}
+
+unsigned int
+Project::sampleRate() const
+{
+    return m_settings->value( "audio/AudioSampleRate" )->get().toUInt();
+}
+
+unsigned int
+Project::nbChannels() const
+{
+    return m_settings->value( "audio/NbChannels" )->get().toUInt();
+}
+
 QFile* Project::emergencyBackupFile()
 {
     const QString lastProject = Core::getInstance()->settings()->value( "private/EmergencyBackup" )->get().toString();

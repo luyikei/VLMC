@@ -682,7 +682,7 @@ MainWindow::on_actionShare_On_Internet_triggered()
 
         checkFolders();
         QString fileName = VLMC_GET_STRING( "vlmc/TempFolderLocation" ) + "/" +
-                           VLMC_PROJECT_GET_STRING( "vlmc/ProjectName" ) +
+                           Core::getInstance()->project()->name() +
                            "-vlmc.mp4";
 
         loadGlobalProxySettings();

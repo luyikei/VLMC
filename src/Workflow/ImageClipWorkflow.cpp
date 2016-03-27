@@ -58,7 +58,7 @@ void ImageClipWorkflow::initializeInternals()
     m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
     m_renderer->setOutputWidth( m_width );
     m_renderer->setOutputHeight( m_height );
-    m_renderer->setOutputFps( (float)VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" ) );
+    m_renderer->setOutputFps( Core::getInstance()->project()->fps() );
     m_renderer->setOutputVideoCodec( "RV32" );
 
     m_effectFrame->resize( Core::getInstance()->workflow()->getWidth(),

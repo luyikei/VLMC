@@ -46,7 +46,7 @@ ShareOnInternet::ShareOnInternet( QWidget* parent )
         case YOUTUBE:
             m_ui.username->setText( VLMC_GET_STRING( "youtube/Username" ) );
             m_ui.password->setText( VLMC_GET_STRING( "youtube/Password" ) );
-            m_ui.title->setText( VLMC_PROJECT_GET_STRING( "vlmc/ProjectName" ) );
+            m_ui.title->setText( Core::getInstance()->project()->name() );
             break;
     }
 }

@@ -73,6 +73,15 @@ class Project : public QObject
          */
         void            removeBackupFile();
 
+        // Settings getters
+        QString         name() const;
+        double          fps() const;
+        unsigned int    width() const;
+        unsigned int    height() const;
+        QString         aspectRatio() const;
+        unsigned int    sampleRate() const;
+        unsigned int    nbChannels() const;
+
     public:
         static QFile* emergencyBackupFile();
 

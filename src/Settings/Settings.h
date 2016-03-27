@@ -50,13 +50,6 @@ class QDomElement;
 #define VLMC_GET_STRINGLIST( key )  Core::getInstance()->settings()->value( key )->get().toStringList()
 #define VLMC_GET_BYTEARRAY( key )   Core::getInstance()->settings()->value( key )->get().toByteArray()
 
-#define VLMC_PROJECT_GET_STRING( key )  Core::getInstance()->project()->settings()->value( key )->get().toString()
-#define VLMC_PROJECT_GET_INT( key )     Core::getInstance()->project()->settings()->value( key )->get().toInt()
-#define VLMC_PROJECT_GET_UINT( key )    Core::getInstance()->project()->settings()->value( key )->get().toUInt()
-#define VLMC_PROJECT_GET_DOUBLE( key )  Core::getInstance()->project()->settings()->value( key )->get().toDouble()
-#define VLMC_PROJECT_GET_BOOL( key )    Core::getInstance()->project()->settings()->value( key )->get().toBool()
-
-
 #define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc, flags )  \
         Core::getInstance()->currentProject()->settings()->createVar( type, key, defaultValue, name, \
                                                        desc, flags );

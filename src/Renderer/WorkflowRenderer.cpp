@@ -335,25 +335,25 @@ Backend::ISourceRenderer::MemoryInputUnlockCallback WorkflowRenderer::getUnlockC
 quint32
 WorkflowRenderer::width() const
 {
-    return VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
+    return Core::getInstance()->project()->width();
 }
 
 quint32
 WorkflowRenderer::height() const
 {
-    return VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
+    return Core::getInstance()->project()->height();
 }
 
 float
 WorkflowRenderer::outputFps() const
 {
-    return VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
+    return Core::getInstance()->project()->fps();
 }
 
 const QString
 WorkflowRenderer::aspectRatio() const
 {
-    return VLMC_PROJECT_GET_STRING("video/AspectRatio");
+    return Core::getInstance()->project()->aspectRatio();
 }
 
 bool
