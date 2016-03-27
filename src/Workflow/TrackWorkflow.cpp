@@ -335,8 +335,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         if ( mixer != NULL && frames[0] != NULL ) //There's no point using the mixer if there's no frame rendered.
         {
             //FIXME: We don't handle mixer3 yet.
-            mixer->effectInstance()->process( currentFrame * 1000.0 / m_fps,
-                                    frames[0]->buffer(),
+            mixer->effectInstance()->process( frames[0]->buffer(),
                                     frames[1] != NULL ? frames[1]->buffer() : Core::getInstance()->workflow()->blackOutput()->buffer(),
                                     NULL, m_mixerBuffer->buffer() );
             m_mixerBuffer->ptsDiff = frames[0]->ptsDiff;

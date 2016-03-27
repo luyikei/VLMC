@@ -22,8 +22,8 @@
 
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectSettingValue.h"
-
 #include "EffectsEngine/Effect.h"
+#include "Main/Core.h"
 
 EffectInstance::EffectInstance( Effect *effect ) :
         m_effect( effect ),
@@ -107,16 +107,16 @@ EffectInstance::params()
 }
 
 void
-EffectInstance::process( double time, const quint32 *frame1, const quint32 *frame2,
+EffectInstance::process( const quint32 *frame1, const quint32 *frame2,
                        const quint32 *frame3, quint32 *output )
 {
     Q_ASSERT( m_effect->type() == Effect::Mixer2 );
-    m_effect->m_f0r_update2( m_instance, time, frame1, frame2, frame3, output );
+    m_effect->m_f0r_update2( m_instance, Core::getInstance()->runtime(), frame1, frame2, frame3, output );
 }
 
 void
-EffectInstance::process( double time, const quint32 *input, quint32 *output ) const
+EffectInstance::process( const quint32 *input, quint32 *output ) const
 {
     Q_ASSERT( m_effect->type() == Effect::Filter );
-    m_effect->m_f0r_update( m_instance, time, input, output );
+    m_effect->m_f0r_update( m_instance, Core::getInstance()->runtime(), input, output );
 }
