@@ -114,7 +114,7 @@ AudioClipWorkflow::createBuffer( size_t size )
 }
 
 void
-AudioClipWorkflow::lock( void *data, quint8 **pcm_buffer , size_t size )
+AudioClipWorkflow::lock( void *data, quint8 **pcm_buffer, size_t size )
 {
     AudioClipWorkflow* cw = reinterpret_cast<AudioClipWorkflow*>( data );
     cw->m_renderLock->lock();
