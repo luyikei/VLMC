@@ -72,6 +72,7 @@ TrackWorkflow::~TrackWorkflow()
         delete it.value();
         it = m_clips.erase( it );
     }
+    delete m_mixerBuffer;
     delete m_clipsLock;
 }
 
