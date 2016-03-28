@@ -91,16 +91,8 @@ ENDIF(UNIX)
 SET(WITH_GUI TRUE CACHE BOOL "Enable the VLMC's GUI")
 SET(WITH_CRASHBUTTON FALSE CACHE BOOL "Enable the crash button")
 
-IF(NOT APPLE)
-    SET(WITH_CRASHHANDLER_GUI TRUE CACHE BOOL "Enable the crash handler GUI (with backtrace and restart capabilities)")
-    SET(WITH_CRASHHANDLER TRUE CACHE BOOL "Enable the crash handler")
-ELSE(NOT APPLE)
-    #FIXME: Mac OS port does n't start if crash handler is enabled.
-    SET(WITH_CRASHHANDLER_GUI FALSE CACHE BOOL "Disable crash handler gui...")
-    SET(WITH_CRASHHANDLER False CACHE BOOL "Disable the crash handler")
-    #SET(CMAKE_OSX_ARCHITECTURES i386)
-    #SET(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}")
-ENDIF(NOT APPLE)
+SET(WITH_CRASHHANDLER_GUI FALSE CACHE BOOL "Enable the crash handler GUI (with backtrace and restart capabilities)")
+SET(WITH_CRASHHANDLER FALSE CACHE BOOL "Enable the crash handler")
 
 FIND_PACKAGE(LIBVLC REQUIRED)
 list(APPEND VLMC_LIBS ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
