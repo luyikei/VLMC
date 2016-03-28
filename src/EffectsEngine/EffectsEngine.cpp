@@ -55,6 +55,7 @@ EffectsEngine::EffectsEngine()
 
 EffectsEngine::~EffectsEngine()
 {
+    qDeleteAll( m_effects );
 }
 
 Effect*
