@@ -44,6 +44,7 @@ Settings::Settings(const QString &settingsFile)
 
 Settings::~Settings()
 {
+    qDeleteAll( m_settings );
     delete m_settingsFile;
 }
 
