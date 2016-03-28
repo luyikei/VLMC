@@ -58,6 +58,11 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SLOT( filterTypeChanged() ) );
 }
 
+MediaLibrary::~MediaLibrary()
+{
+    delete m_ui;
+}
+
 void
 MediaLibrary::changeEvent( QEvent *e )
 {
