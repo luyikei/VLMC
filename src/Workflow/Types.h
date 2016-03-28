@@ -109,7 +109,12 @@ namespace   Workflow
     class  AudioSample : public OutputBuffer
     {
         public:
-            AudioSample() : OutputBuffer( AudioTrack ){}
+            AudioSample()
+                : OutputBuffer( AudioTrack )
+                , buff( nullptr )
+                , size( 0 )
+            {
+            }
             unsigned char*  buff;
             size_t          size;
             quint32         nbSample;

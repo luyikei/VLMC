@@ -42,7 +42,6 @@ AudioClipWorkflow::preallocate()
     for ( quint32 i = 0; i < AudioClipWorkflow::nbBuffers; ++i )
     {
         Workflow::AudioSample *as = new Workflow::AudioSample;
-        as->buff = nullptr;
         m_availableBuffers.push_back( as );
     }
 }
