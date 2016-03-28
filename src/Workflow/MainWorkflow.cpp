@@ -49,7 +49,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
     m_currentFrameLock = new QReadWriteLock;
 
     m_tracks = new TrackHandler*[Workflow::NbTrackType];
-    m_currentFrame = new qint64[Workflow::NbTrackType];
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
     {
         Workflow::TrackType trackType = static_cast<Workflow::TrackType>(i);
@@ -65,7 +64,6 @@ MainWorkflow::MainWorkflow( int trackCount ) :
 MainWorkflow::~MainWorkflow()
 {
     delete m_currentFrameLock;
-    delete m_currentFrame;
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
         delete m_tracks[i];
     delete[] m_tracks;

@@ -301,7 +301,7 @@ class   MainWorkflow : public QObject, public ILoadSave
          *  m_currentFrame[MainWorkflow::VideoTrack], which is the value that will be used
          *  when setCurrentFrame() is called.
          */
-        qint64*                         m_currentFrame;
+        qint64                          m_currentFrame[Workflow::NbTrackType];
         /// The workflow length, in frame.
         qint64                          m_lengthFrame;
         /// This boolean describe is a render has been started
