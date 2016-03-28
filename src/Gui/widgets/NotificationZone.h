@@ -39,6 +39,7 @@ class NotificationZone : public QWidget, public Singleton<NotificationZone>
 
     private:
         explicit NotificationZone(QWidget *parent = 0);
+        virtual ~NotificationZone();
 
     private:
         Ui::NotificationZone    *m_ui;

@@ -36,6 +36,11 @@ NotificationZone::NotificationZone(QWidget *parent) :
     connect( m_timer, SIGNAL( timeout() ), this, SLOT( hideNotification() ) );
 }
 
+NotificationZone::~NotificationZone()
+{
+    delete m_ui;
+}
+
 void
 NotificationZone::notify( const QString &message )
 {
