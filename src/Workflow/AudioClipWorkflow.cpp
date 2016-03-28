@@ -125,6 +125,11 @@ AudioClipWorkflow::lock( void *data, quint8 **pcm_buffer, size_t size )
     else
     {
         as = cw->m_availableBuffers.dequeue();
+        if ( as->size < size )
+        {
+            delete[] as->buff;
+            as->buff = nullptr;
+        }
         if ( as->buff == nullptr )
         {
             as->buff = new uchar[size];
