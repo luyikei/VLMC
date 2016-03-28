@@ -36,7 +36,7 @@ class   WorkflowFileRenderer : public WorkflowRenderer
 
 public:
     WorkflowFileRenderer( Backend::IBackend* backend , MainWorkflow* workflow );
-    virtual ~WorkflowFileRenderer();
+    virtual ~WorkflowFileRenderer() = default;
 
     void                        run(const QString& outputFileName, quint32 width,
                                     quint32 height, double fps, const QString& ar,

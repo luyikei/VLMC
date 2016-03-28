@@ -32,10 +32,6 @@ WorkflowFileRenderer::WorkflowFileRenderer( Backend::IBackend* backend, MainWork
 {
 }
 
-WorkflowFileRenderer::~WorkflowFileRenderer()
-{
-}
-
 void
 WorkflowFileRenderer::run( const QString& outputFileName, quint32 width,
                             quint32 height, double fps, const QString& ar,
