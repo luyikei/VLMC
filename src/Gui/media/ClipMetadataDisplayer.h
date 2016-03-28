@@ -37,6 +37,7 @@ class ClipMetadataDisplayer : public QWidget
 
     public:
         explicit ClipMetadataDisplayer( QWidget *parent = 0 );
+        virtual ~ClipMetadataDisplayer();
 
         void                            setWatchedClip( const Clip *clip );
         void                            clear();

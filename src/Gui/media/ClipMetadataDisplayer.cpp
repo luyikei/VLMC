@@ -36,6 +36,11 @@ ClipMetadataDisplayer::ClipMetadataDisplayer( QWidget *parent /*= nullptr*/ ) :
     m_ui->setupUi( this );
 }
 
+ClipMetadataDisplayer::~ClipMetadataDisplayer()
+{
+    delete m_ui;
+}
+
 void
 ClipMetadataDisplayer::metadataUpdated()
 {
