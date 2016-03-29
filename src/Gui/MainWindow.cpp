@@ -565,7 +565,7 @@ MainWindow::clearTemporaryFiles()
 {
     QDir dirUtil;
     if( dirUtil.cd( VLMC_GET_STRING( "vlmc/TempFolderLocation" ) ) )
-        foreach ( const QString &file, dirUtil.entryList( QDir::Files ) )
+        for ( const QString& file: dirUtil.entryList( QDir::Files ) )
             dirUtil.remove( file );
 }
 
