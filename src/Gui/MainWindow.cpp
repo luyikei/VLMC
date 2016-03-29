@@ -473,6 +473,7 @@ MainWindow::setupClipPreview()
 {
     m_clipPreview = new PreviewWidget;
     auto renderer = new ClipRenderer;
+    renderer->setParent( m_clipPreview );
     m_clipPreview->setRenderer( renderer );
     connect( Core::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
              renderer, SLOT( clipUnloaded( const QUuid& ) ) );
