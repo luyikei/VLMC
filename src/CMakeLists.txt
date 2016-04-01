@@ -6,6 +6,21 @@
 #check if version will support target_compile_features command
 #to ensure we can use some C++11 featrues
 cmake_minimum_required(VERSION 3.1)
+
+# Manually set Qt5 path for OSX installed using brew
+SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+
+# search for Qt5
+find_package(Qt5Core QUIET)
+if (Qt5Core_FOUND)
+    # go on with other packages
+    if(WITH_GUI)
+        find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
+    else()
+        find_packages(Qt5 COMPONENTS Xml Network)
+    endif()
+endif()
+
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h

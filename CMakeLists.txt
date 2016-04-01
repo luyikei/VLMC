@@ -106,20 +106,6 @@ endif()
 
 INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
-# Manually set Qt5 path for OSX installed using brew
-SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
-
-# search for Qt5
-find_package(Qt5Core QUIET)
-if (Qt5Core_FOUND)
-    # go on with other packages
-    if(WITH_GUI)
-        find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
-    else()
-        find_packages(Qt5 COMPONENTS Xml Network)
-    endif()
-endif()
-
 # layout of VLMC installation
 # (default values are platform-specific)
 SET (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
