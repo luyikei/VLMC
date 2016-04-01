@@ -34,6 +34,9 @@ endif()
 
 INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 
+# Instruct CMake to run moc automatically when needed.
+SET(CMAKE_AUTOMOC ON)
+
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h

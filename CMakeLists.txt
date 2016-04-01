@@ -64,8 +64,6 @@ SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # Find includes in corresponding build directories
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-SET(CMAKE_AUTOMOC ON)
 
 # Path to contribs
 SET(CONTRIBS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/contribs)
