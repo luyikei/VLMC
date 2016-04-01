@@ -21,6 +21,19 @@ if (Qt5Core_FOUND)
     endif()
 endif()
 
+FIND_PACKAGE(LIBVLC REQUIRED)
+list(APPEND VLMC_LIBS ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
+INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
+
+FIND_PACKAGE(frei0r REQUIRED)
+
+if(APPLE)
+    find_library(FOUNDATION_FRAMEWORK Foundation)
+    find_library(APPKIT_FRAMEWORK AppKit)
+endif()
+
+INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
+
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
