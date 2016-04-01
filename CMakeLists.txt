@@ -118,8 +118,6 @@ if (Qt5Core_FOUND)
     else()
         find_packages(Qt5 COMPONENTS Xml Network)
     endif()
-
-    find_package(Qt5LinguistTools REQUIRED)
 endif()
 
 # layout of VLMC installation

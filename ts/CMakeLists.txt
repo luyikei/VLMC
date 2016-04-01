@@ -62,6 +62,7 @@ function(vlmc_get_ts_files VLMC_TS_FILES_OUT)
 endfunction()
 
 function(vlmc_get_ts VLMC_QM_FILES_OUT)
+    find_package(Qt5LinguistTools)
     if(Qt5LinguistTools_FOUND)
         vlmc_get_ts_files(vlmc_TS)
 
