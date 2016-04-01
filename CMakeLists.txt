@@ -134,7 +134,7 @@ IF (UNIX)
     SET (VLMC_MANUAL_DIR  ${CMAKE_INSTALL_PREFIX}/${VLMC_MANUAL_SUBDIR})
 ENDIF (UNIX)
 
-include(ts/CMakeLists.txt)
+include(ts/translations.cmake)
 SUBDIRS(src)
 SUBDIRS(nsis)
 SUBDIRS(effects)
