@@ -2,7 +2,13 @@
 # VLMC build system
 # Authors: Rohit Yadav <rohityadav89@gmail.com>
 #          Ludovic Fauvet <etix@vlmc.org>
+#          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
 #
+
+# Set path to additional CMake modules
+SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+
+include(git-version)
 
 # Project Info
 SET(PROJECT_NAME_SHORT   "VLMC")
@@ -32,21 +38,11 @@ IF(WIN32)
     ADD_DEFINITIONS( -D__USE_MINGW_ANSI_STDIO=1 )
 ENDIF(WIN32)
 
-# Find Git Version Patch
-FIND_PROGRAM(GIT git)
-IF(GIT)
-    EXECUTE_PROCESS(
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMAND ${GIT} rev-parse --short HEAD
-        OUTPUT_VARIABLE GIT_OUT OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
-    SET(GIT_PATCH "git${GIT_OUT}")
-ENDIF(GIT)
-
 # version: 0.2.x
 cmake_policy(SET CMP0048 NEW)
 STRING(TOLOWER ${PROJECT_NAME_SHORT} PROJECT_NAME_SHORT_LOWER)
 PROJECT(${PROJECT_NAME_SHORT_LOWER} VERSION 0.2.0)
+append_git_version()
 
 MESSAGE(STATUS "VLMC Version: ${CPACK_PACKAGE_VERSION}")
 
@@ -70,9 +66,6 @@ SET(CMAKE_VERBOSE_MAKEFILE OFF)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 SET(CMAKE_AUTOMOC ON)
-
-# Set path to additional CMake modules
-SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 # Path to contribs
 SET(CONTRIBS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/contribs)
