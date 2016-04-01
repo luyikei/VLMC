@@ -213,6 +213,8 @@ ELSE(NOT WITH_GUI)
     qt5_wrap_ui(VLMC_UIS_H ${VLMC_UIS})
     qt5_add_resources(VLMC_RCC_SRCS ${VLMC_RCC})
 
+    vlmc_get_ts(VLMC_QMS)
+
     IF( MINGW )
         # resource compilation for MinGW
         ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/icon.o
@@ -240,7 +242,7 @@ ELSE(NOT WITH_GUI)
         LIST( APPEND VLMC_SRCS Gui/preview/RenderWidget.h )
     ENDIF( APPLE )
 
-    ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
+    ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} ${VLMC_QMS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
     if (NOT Qt4_FOUND)
         qt5_use_modules(vlmc Core Gui Widgets Xml Network)
@@ -249,7 +251,6 @@ ELSE(NOT WITH_GUI)
         # We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness
         TARGET_LINK_LIBRARIES(vlmc ${QT_LIBRARIES})
     endif()
-
 ENDIF( NOT WITH_GUI )
 
 #ADD_DEPENDENCIES( vlmc translations )
