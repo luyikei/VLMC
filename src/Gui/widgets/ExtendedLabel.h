@@ -1,7 +1,7 @@
 /*****************************************************************************
  * ExtendedLabel.h: Provide a QLabel with elidable text in it.
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

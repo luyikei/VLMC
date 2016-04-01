@@ -1,7 +1,7 @@
 /*****************************************************************************
  * Commands.cpp: Contains all the implementation of VLMC commands.
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *          Ludovic Fauvet <etix@l0cal.com>

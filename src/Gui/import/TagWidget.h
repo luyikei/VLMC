@@ -2,7 +2,7 @@
  * TagWidget.h : Widget for tagging media
  *                     Render preview
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Geoffroy Lacarriere <geoffroylaca@gmail.com>
  *

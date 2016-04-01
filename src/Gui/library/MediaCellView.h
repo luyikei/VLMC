@@ -1,7 +1,7 @@
 /*****************************************************************************
  * MediaCellView.h
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Thomas Boquet <thomas.boquet@gmail.com>
  *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>

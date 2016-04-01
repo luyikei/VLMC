@@ -1,7 +1,7 @@
 /*****************************************************************************
  * TracksScene.h: QGraphicsScene that contains the tracks
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Ludovic Fauvet <etix@l0cal.com>
  *

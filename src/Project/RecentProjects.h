@@ -1,7 +1,7 @@
 /*****************************************************************************
  * RecentProjects: Holds a list of recent projects by monitoring project events
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

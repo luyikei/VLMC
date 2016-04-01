@@ -1,7 +1,7 @@
 /*****************************************************************************
  * ISettingsCategorieWidget.h: Common interface for settings widgets.
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzee-Luyssen <hugo@vlmc.org>
  *

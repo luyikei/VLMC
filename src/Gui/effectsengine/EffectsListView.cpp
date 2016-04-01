@@ -1,7 +1,7 @@
 /*****************************************************************************
  * EffectsListView.cpp: Display a list of effects
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

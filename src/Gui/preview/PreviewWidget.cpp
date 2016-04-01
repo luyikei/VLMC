@@ -2,7 +2,7 @@
  * PreviewWidget.cpp : Main widget for preview. Will dispatch on Clip or
  *                     Render preview
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

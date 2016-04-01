@@ -1,7 +1,7 @@
 /*****************************************************************************
  * EffectsEngine.cpp: Manage the effects plugins.
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

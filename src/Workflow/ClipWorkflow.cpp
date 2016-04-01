@@ -1,7 +1,7 @@
 /*****************************************************************************
  * ClipWorkflow.cpp : Clip workflow. Will extract frames from a media
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

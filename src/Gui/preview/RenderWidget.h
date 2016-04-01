@@ -1,7 +1,7 @@
 /*****************************************************************************
  * RenderWidget: Vout render widget
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Rohit Yadav <rohityadav89@gmail.com>
  *

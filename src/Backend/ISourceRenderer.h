@@ -1,7 +1,7 @@
 /*****************************************************************************
  * ISourceRenderer: Defines an interface to render a frame from a media source
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

@@ -1,7 +1,7 @@
 /*****************************************************************************
  * Languagehelper.cpp: Watch for language changes
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *

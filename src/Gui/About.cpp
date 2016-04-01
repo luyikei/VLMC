@@ -1,7 +1,7 @@
 /*****************************************************************************
  * About.cpp: About dialog
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Christophe Courtaut <christophe.courtaut@gmail.com>
  *          Rohit Yadav <rohityadav89@gmail.com>

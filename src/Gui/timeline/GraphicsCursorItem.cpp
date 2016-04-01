@@ -1,7 +1,7 @@
 /*****************************************************************************
  * GraphicsCursorItem.cpp: Timeline's cursor
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Ludovic Fauvet <etix@l0cal.com>
  *

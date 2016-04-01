@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCVmemRenderer.cpp: Private VLC backend implementation of a renderer using vmem
  *****************************************************************************
- * Copyright (C) 2008-2014 VideoLAN
+ * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
