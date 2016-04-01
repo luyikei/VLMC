@@ -5,8 +5,6 @@
 #          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
 #
 
-cmake_minimum_required(VERSION 3.1)
-
 function(vlmc_get_ts_files VLMC_TS_FILES_OUT)
     SET(ALL_LANGUAGES
             ca

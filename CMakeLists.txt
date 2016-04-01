@@ -5,6 +5,8 @@
 #          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
 #
 
+cmake_minimum_required(VERSION 3.1)
+
 # Set path to additional CMake modules
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
@@ -39,7 +41,6 @@ IF(WIN32)
 ENDIF(WIN32)
 
 # version: 0.2.x
-cmake_policy(SET CMP0048 NEW)
 STRING(TOLOWER ${PROJECT_NAME_SHORT} PROJECT_NAME_SHORT_LOWER)
 PROJECT(${PROJECT_NAME_SHORT_LOWER} VERSION 0.2.0)
 append_git_version()
@@ -58,7 +59,6 @@ SITE_NAME(HOSTNAME)
 SET(SYSNAME ${CMAKE_SYSTEM}-${CMAKE_SYSTEM_PROCESSOR})
 
 # CMake Settings
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 SET(CMAKE_COLOR_MAKEFILE ON)
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
