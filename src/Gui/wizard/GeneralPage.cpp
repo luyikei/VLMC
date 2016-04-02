@@ -29,6 +29,8 @@
 #include "Settings/Settings.h"
 #include "Project/Project.h"
 
+static const char invalidChars[] = "/?:*\\|";
+
 GeneralPage::GeneralPage( QWidget *parent ) :
     QWizardPage( parent )
 {
@@ -87,7 +89,6 @@ GeneralPage::validatePage()
     if ( m_valid == false )
         return false;
     const QString       &defaultProjectName = Project::unNamedProject;
-    QString invalid_char = "/?:*\\|";
     if ( ui.lineEditName->text().isEmpty() ||
          ui.lineEditName->text() == defaultProjectName )
     {
@@ -96,8 +97,8 @@ GeneralPage::validatePage()
         ui.lineEditName->setFocus();
         return false;
     }
-    for ( int i = 0; i < invalid_char.length() ; ++i )
-        if ( ui.lineEditName->text().contains( invalid_char[i] ) )
+    for ( const auto& c: invalidChars )
+        if ( ui.lineEditName->text().contains( c ) )
         {
             QMessageBox::information( this, tr( "Invalid project name" ),
                                       tr( "Special characters are not allowed" ) );
