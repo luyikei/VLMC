@@ -41,9 +41,7 @@ void
 PreviewRuler::setRenderer( GenericRenderer* renderer )
 {
     if ( m_renderer )
-    {
-        disconnect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason ) ) );
-    }
+        m_renderer->disconnect( this );
     m_renderer = renderer;
 
     connect( m_renderer, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
