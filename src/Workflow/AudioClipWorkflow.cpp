@@ -52,13 +52,13 @@ AudioClipWorkflow::releasePrealocated()
     while ( m_availableBuffers.isEmpty() == false )
     {
         Workflow::AudioSample *as = m_availableBuffers.takeFirst();
-        delete as->buff;
+        delete[] as->buff;
         delete as;
     }
     while ( m_computedBuffers.isEmpty() == false )
     {
         Workflow::AudioSample *as = m_computedBuffers.takeFirst();
-        delete as->buff;
+        delete[] as->buff;
         delete as;
     }
 }
