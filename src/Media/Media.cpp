@@ -158,7 +158,7 @@ Media::setFilePath( const QString &filePath )
     Backend::IBackend* backend = Backend::getBackend();
     delete m_source;
     m_source = backend->createSource( qPrintable( filePath ) );
-    MetaDataManager::getInstance()->computeMediaMetadata( this );
+    MetaDataManager::instance()->computeMediaMetadata( this );
 }
 
 QPixmap&

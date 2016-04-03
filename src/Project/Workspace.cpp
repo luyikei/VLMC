@@ -51,7 +51,7 @@ Workspace::Workspace(Settings *settings)
     m_mediasToCopyMutex = new QMutex;
 #ifdef WITH_GUI
     connect( this, SIGNAL( notify( QString ) ),
-             NotificationZone::getInstance(), SLOT( notify( QString ) ) );
+             NotificationZone::instance(), SLOT( notify( QString ) ) );
 #endif
 }
 

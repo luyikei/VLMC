@@ -50,7 +50,7 @@ ConsoleRenderer::frameChanged( qint64 frame ) const
     static int      percent = 0;
     int             newPercent;
 
-    newPercent = frame * 100 / MainWorkflow::getInstance()->getLengthFrame();
+    newPercent = frame * 100 / MainWorkflow::instance()->getLengthFrame();
     if ( newPercent != percent )
     {
         percent = newPercent;

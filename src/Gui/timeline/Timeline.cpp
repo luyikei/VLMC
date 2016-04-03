@@ -52,8 +52,8 @@ Timeline::Timeline( QWidget *parent )
     m_ui.setupUi( this );
 
     m_tracksScene = new TracksScene( this );
-    m_renderer = Core::getInstance()->workflowRenderer();
-    m_mainWorkflow = Core::getInstance()->workflow();
+    m_renderer = Core::instance()->workflowRenderer();
+    m_mainWorkflow = Core::instance()->workflow();
     initialize();
 }
 

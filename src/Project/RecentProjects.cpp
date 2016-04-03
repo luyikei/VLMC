@@ -49,7 +49,7 @@ RecentProjects::projectLoaded(const QString& projectName, const QString& project
     while ( m_recentsProjects.count() > 15 )
         m_recentsProjects.removeLast();
 
-    Core::getInstance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
+    Core::instance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
 }
 
 const RecentProjects::List&
@@ -91,7 +91,7 @@ void
 RecentProjects::remove( const QString& projectPath )
 {
     removeFromRecentProjects( projectPath );
-    Core::getInstance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
+    Core::instance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
 }
 
 void

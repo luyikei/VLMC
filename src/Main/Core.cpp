@@ -184,7 +184,7 @@ Core::runtime()
 }
 
 Core*
-Core::getInstance()
+Core::instance()
 {
     static Core core;
     return &core;

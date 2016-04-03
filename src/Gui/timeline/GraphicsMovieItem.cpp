@@ -89,7 +89,7 @@ GraphicsMovieItem::paintRect( QPainter* painter, const QStyleOptionGraphicsItem*
     painter->setRenderHint( QPainter::Antialiasing );
 
     // Get the transformations required to map the text on the viewport
-    QTransform viewPortTransform = Timeline::getInstance()->tracksView()->viewportTransform();
+    QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();
 
     // Determine if a drawing optimization can be used
     if ( option->exposedRect.left() > AbstractGraphicsItem::RounderRectRadius &&
@@ -168,7 +168,7 @@ GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem
     QString text = m_clipHelper->clip()->getMedia()->fileName();
 
     // Get the transformations required to map the text on the viewport
-    QTransform viewPortTransform = Timeline::getInstance()->tracksView()->viewportTransform();
+    QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();
     // Do the transformation
     QRectF mapped = deviceTransform( viewPortTransform ).mapRect( boundingRect() );
     // Create an inner rect

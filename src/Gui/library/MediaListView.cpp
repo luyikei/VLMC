@@ -35,7 +35,7 @@ MediaListView::MediaListView(StackViewController *nav) :
         ListViewController( nav ),
         m_nav( nav )
 {
-    setMediaContainer( Core::getInstance()->library() );
+    setMediaContainer( Core::instance()->library() );
 }
 
 MediaListView::~MediaListView()

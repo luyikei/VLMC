@@ -38,7 +38,7 @@ template <typename T>
 class       Singleton
 {
 public:
-    static T*      getInstance()
+    static T*      instance()
     {
         if ( m_instance == nullptr )
             m_instance = new T;

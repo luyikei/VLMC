@@ -32,8 +32,8 @@ EffectHelper::EffectHelper( EffectInstance *effectInstance, qint64 begin, qint64
     m_effectInstance( effectInstance ),
     m_target( nullptr )
 {
-    if ( Core::getInstance()->workflow()->getLengthFrame() > 0 )
-        m_end = Core::getInstance()->workflow()->getLengthFrame();
+    if ( Core::instance()->workflow()->getLengthFrame() > 0 )
+        m_end = Core::instance()->workflow()->getLengthFrame();
     else
         m_end = Effect::TrackEffectDefaultLength;
 }

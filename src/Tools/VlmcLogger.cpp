@@ -136,7 +136,7 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const QMessageLogContext&, const
     //FIXME: This is ok as long as we guarantee no log message will arrive after
     // we uninstall the hook
 
-    VlmcLogger* self = Core::getInstance()->logger();
+    VlmcLogger* self = Core::instance()->logger();
     if ( self->m_logFile != nullptr )
     {
         //FIXME: Messages are not guaranteed to arrive in order

@@ -52,7 +52,7 @@ signalHandler( int sig )
 {
     signal( sig, SIG_DFL );
 
-    Core::getInstance()->project()->emergencyBackup();
+    Core::instance()->project()->emergencyBackup();
 
     #ifdef WITH_CRASHHANDLER_GUI
         CrashHandler* ch = new CrashHandler( sig );

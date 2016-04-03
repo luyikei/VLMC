@@ -140,9 +140,9 @@ Project::load( const QString& path )
     m_settings->load( doc );
     auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
     emit projectLoading( projectName );
-    Core::getInstance()->library()->load( doc );
-    Core::getInstance()->workflow()->load( doc );
-    Core::getInstance()->workflowRenderer()->load( doc );
+    Core::instance()->library()->load( doc );
+    Core::instance()->workflow()->load( doc );
+    Core::instance()->workflowRenderer()->load( doc );
     m_isClean = autoBackupFound == false;
     emit cleanStateChanged( m_isClean );
     if ( autoBackupFound == false )
@@ -231,9 +231,9 @@ Project::saveProject( const QString& fileName )
     project.writeStartElement( "vlmc" );
 
     m_settings->save( project );
-    Core::getInstance()->workflow()->save( project );
-    Core::getInstance()->library()->save( project );
-    Core::getInstance()->workflowRenderer()->save( project );
+    Core::instance()->workflow()->save( project );
+    Core::instance()->library()->save( project );
+    Core::instance()->workflowRenderer()->save( project );
     //FIXME: Timeline configuration isn't saved anymore.
 
     project.writeEndElement();
@@ -252,7 +252,7 @@ Project::emergencyBackup()
 {
     const QString& name = m_projectFile->fileName() + Project::backupSuffix;
     saveProject( name );
-    Core::getInstance()->settings()->setValue( "private/EmergencyBackup", name );
+    Core::instance()->settings()->setValue( "private/EmergencyBackup", name );
 }
 
 bool
@@ -331,7 +331,7 @@ Project::nbChannels() const
 
 QFile* Project::emergencyBackupFile()
 {
-    const QString lastProject = Core::getInstance()->settings()->value( "private/EmergencyBackup" )->get().toString();
+    const QString lastProject = Core::instance()->settings()->value( "private/EmergencyBackup" )->get().toString();
     if ( lastProject.isEmpty() == true )
         return nullptr;
     return new QFile( lastProject );
@@ -376,7 +376,7 @@ Project::autoSaveEnabledChanged(const QVariant &enabled)
 {
     if ( enabled.toBool() == true )
     {
-        int interval = Core::getInstance()->settings()->value( "vlmc/AutomaticBackupInterval" )->get().toInt();
+        int interval = Core::instance()->settings()->value( "vlmc/AutomaticBackupInterval" )->get().toInt();
         m_timer->start( interval * 1000 * 60 );
     }
     else
@@ -386,7 +386,7 @@ Project::autoSaveEnabledChanged(const QVariant &enabled)
 void
 Project::autoSaveIntervalChanged(const QVariant &interval)
 {
-    bool enabled = Core::getInstance()->settings()->value( "vlmc/AutomaticBackup" )->get().toBool();
+    bool enabled = Core::instance()->settings()->value( "vlmc/AutomaticBackup" )->get().toBool();
 
     if ( enabled == false )
         return ;

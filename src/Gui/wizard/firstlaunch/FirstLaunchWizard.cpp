@@ -50,7 +50,7 @@ FirstLaunchWizard::accept()
 {
     auto workspaceLocation = field( "workspaceLocation" );
     Q_ASSERT( workspaceLocation.toString().isEmpty() == false );
-    Core::getInstance()->settings()->setValue( "vlmc/WorkspaceLocation", workspaceLocation );
-    Core::getInstance()->settings()->setValue( "private/FirstLaunchDone", true );
+    Core::instance()->settings()->setValue( "vlmc/WorkspaceLocation", workspaceLocation );
+    Core::instance()->settings()->setValue( "private/FirstLaunchDone", true );
     QDialog::accept();
 }

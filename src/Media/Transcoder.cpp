@@ -37,9 +37,9 @@ Transcoder::Transcoder( Media* media )
     , m_renderer( nullptr )
 {
     connect( this, &Transcoder::notify,
-             NotificationZone::getInstance(), &NotificationZone::notify );
+             NotificationZone::instance(), &NotificationZone::notify );
     connect( this, &Transcoder::progress,
-             NotificationZone::getInstance(),
+             NotificationZone::instance(),
              static_cast<void(NotificationZone::*)(float)>(&NotificationZone::progressUpdated) );
     m_eventWatcher = new RendererEventWatcher;
 }
@@ -73,7 +73,7 @@ void
 Transcoder::transcodeFinished()
 {
     m_media->setFilePath( m_destinationFile );
-    MetaDataManager::getInstance()->computeMediaMetadata( m_media );
+    MetaDataManager::instance()->computeMediaMetadata( m_media );
     emit done();
     emit notify( m_media->fileInfo()->fileName() + ": Transcode finished" );
 }

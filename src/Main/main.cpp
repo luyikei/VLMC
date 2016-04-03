@@ -97,7 +97,7 @@ VLMCGuimain( int argc, char **argv )
 
         if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
         {
-            Core::getInstance()->loadProject( argv[i+1] );
+            Core::instance()->loadProject( argv[i+1] );
             project = true;
             break;
         }
@@ -105,7 +105,7 @@ VLMCGuimain( int argc, char **argv )
 
     /* Translations */
     QSettings s;
-    LanguageHelper::getInstance()->languageChanged(
+    LanguageHelper::instance()->languageChanged(
             s.value( "vlmc/VLMCLang", "default" ) );
 
 #if defined( Q_WS_WIN )
@@ -191,7 +191,7 @@ VLMCCoremain( int argc, char **argv )
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
-    ProjectManager  *pm = Core::getInstance()->currentProject();
+    ProjectManager  *pm = Core::instance()->currentProject();
 
     //FIXME: only signal projectLoaded( const QString& ) in ProjectManager
     QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );

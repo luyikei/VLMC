@@ -35,7 +35,7 @@
 void
 Commands::trigger( QUndoCommand* command )
 {
-    Core::getInstance()->undoStack()->push( command );
+    Core::instance()->undoStack()->push( command );
 }
 
 Commands::Generic::Generic() :
@@ -46,7 +46,7 @@ Commands::Generic::Generic() :
 
     //FIXME: there is no signal retranslateRequired in QUndoStack class
     //       <3 qt4 connects
-    connect( Core::getInstance()->undoStack(), SIGNAL( retranslateRequired() ),
+    connect( Core::instance()->undoStack(), SIGNAL( retranslateRequired() ),
              this, SLOT( retranslate() ), Qt::DirectConnection );
 }
 

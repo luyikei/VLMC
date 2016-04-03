@@ -118,7 +118,7 @@ void
 WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
-    const RecentProjects::List& recents = Core::getInstance()->recentProjects()->list();
+    const RecentProjects::List& recents = Core::instance()->recentProjects()->list();
 
     for ( int i = 0; i < recents.count(); ++i )
     {
@@ -181,7 +181,7 @@ WelcomePage::removeProject()
     if ( projectPath.isEmpty() )
         return;
 
-    Core::getInstance()->recentProjects()->remove( projectPath );
+    Core::instance()->recentProjects()->remove( projectPath );
     loadRecentsProjects(); // Reload recent projects
 }
 

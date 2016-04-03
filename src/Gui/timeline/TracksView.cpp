@@ -360,7 +360,7 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 void
 TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
-    Effect* effect = Core::getInstance()->effectsEngine()->effect( event->mimeData()->data( "vlmc/effect_name") );
+    Effect* effect = Core::instance()->effectsEngine()->effect( event->mimeData()->data( "vlmc/effect_name") );
     if ( effect != nullptr )
     {
         m_dragEffectItem = new GraphicsEffectItem( effect );
@@ -375,7 +375,7 @@ void
 TracksView::clipDragEnterEvent( QDragEnterEvent *event )
 {
     const QString fullId = QString( event->mimeData()->data( "vlmc/uuid" ) );
-    Clip *clip = Core::getInstance()->library()->clip( fullId );
+    Clip *clip = Core::instance()->library()->clip( fullId );
     if ( clip == nullptr )
         return;
     bool hasVideo = clip->getMedia()->source()->hasVideo();
@@ -470,7 +470,7 @@ TracksView::moveItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
         break ;
     }
     updateDuration();
-    Timeline::getInstance()->tracksRuler()->update();
+    Timeline::instance()->tracksRuler()->update();
 }
 
 QPoint
@@ -799,7 +799,7 @@ TracksView::dropEvent( QDropEvent *event )
 
     if ( m_dragAudioItem != nullptr || m_dragVideoItem != nullptr )
     {
-        Core::getInstance()->undoStack()->beginMacro( "Add clip" );
+        Core::instance()->undoStack()->beginMacro( "Add clip" );
 
         if ( m_dragAudioItem )
         {
@@ -835,7 +835,7 @@ TracksView::dropEvent( QDropEvent *event )
             m_dragVideoItem = nullptr;
         }
 
-        Core::getInstance()->undoStack()->endMacro();
+        Core::instance()->undoStack()->endMacro();
 
         m_lastKnownTrack = nullptr;
     }
@@ -1183,7 +1183,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             }
         }
         else
-            Core::getInstance()->undoStack()->beginMacro( "Move clip" );
+            Core::instance()->undoStack()->beginMacro( "Move clip" );
         m_actionItem->triggerMove( target, targetPos );
         // Update the linked item too
         if ( m_actionItem->groupItem() )
@@ -1194,7 +1194,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         }
 
         if ( effectItem == nullptr )
-            Core::getInstance()->undoStack()->endMacro();
+            Core::instance()->undoStack()->endMacro();
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;

@@ -35,7 +35,7 @@
 RendererSettings::RendererSettings( bool shareOnInternet )
 {
     m_ui.setupUi( this );
-    auto project = Core::getInstance()->project();
+    auto project = Core::instance()->project();
 
     if( shareOnInternet )
     {

@@ -179,13 +179,13 @@ MediaLibrary::dropEvent( QDropEvent *event )
         if ( fileName.isEmpty() )
             continue;
 
-        Media       *media = Core::getInstance()->library()->addMedia( fileName );
+        Media       *media = Core::instance()->library()->addMedia( fileName );
 
         if ( media != nullptr )
         {
             Clip*       clip = new Clip( media );
             media->setBaseClip( clip );
-            Core::getInstance()->library()->addClip( clip );
+            Core::instance()->library()->addClip( clip );
             event->accept();
         }
         else

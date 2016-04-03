@@ -69,7 +69,7 @@ class Core : public QObject
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
 
-        static Core*            getInstance();
+        static Core*            instance();
 
     private:
         Core();

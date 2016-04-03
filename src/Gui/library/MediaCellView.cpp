@@ -68,7 +68,7 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
     if ( clip->getMedia()->source()->isParsed() == false )
     {
         m_ui->thumbnail->setEnabled( false );
-        connect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),
+        connect( MetaDataManager::instance(), SIGNAL( startingComputing( const Media* )),
                  this, SLOT( metadataComputingStarted( const Media* ) ), Qt::DirectConnection );
     }
     connect( clip->getMedia(), SIGNAL( metaDataComputed() ),
@@ -95,7 +95,7 @@ MediaCellView::metadataComputingStarted( const Media *media )
     //Disable the delete button to avoid deleting the media while metadata are computed.
     m_ui->delLabel->setEnabled( false );
     //We don't need this event anymore now.
-    disconnect( MetaDataManager::getInstance(), SIGNAL( startingComputing( const Media* )),
+    disconnect( MetaDataManager::instance(), SIGNAL( startingComputing( const Media* )),
              this, SLOT( metadataComputingStarted( const Media* ) ) );
 }
 
@@ -230,7 +230,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
 void
 MediaCellView::deleteButtonClicked( QWidget*, QMouseEvent* )
 {
-    if ( Core::getInstance()->workflow()->contains( m_clip->uuid() ) == true )
+    if ( Core::instance()->workflow()->contains( m_clip->uuid() ) == true )
     {
         QMessageBox msgBox;
         msgBox.setText( tr( "This clip or some of its children are contained in the timeline." ) );
@@ -294,10 +294,10 @@ MediaCellView::contextMenuEvent( QContextMenuEvent *event )
         return ;
     if ( copyInWorkspace == selectedAction )
     {
-        if ( Core::getInstance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
+        if ( Core::instance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
         {
             QMessageBox::warning( nullptr, tr( "Can't copy to workspace" ),
-                                  tr( "Can't copy this media to workspace: %1" ).arg( Core::getInstance()->workspace()->lastError() ) );
+                                  tr( "Can't copy this media to workspace: %1" ).arg( Core::instance()->workspace()->lastError() ) );
         }
     }
 }

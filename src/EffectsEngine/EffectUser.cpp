@@ -186,7 +186,7 @@ EffectUser::loadEffects( const QDomElement &parent )
              effect.hasAttribute( "start" ) == true &&
              effect.hasAttribute( "end" ) == true )
         {
-            Effect  *e = Core::getInstance()->effectsEngine()->effect( effect.attribute( "name" ) );
+            Effect  *e = Core::instance()->effectsEngine()->effect( effect.attribute( "name" ) );
             if ( e != nullptr )
             {
                 EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),

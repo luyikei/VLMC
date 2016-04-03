@@ -288,7 +288,7 @@ MainWorkflow::load(const QDomDocument& root )
                     return false;
                 }
 
-                Clip* c = Core::getInstance()->library()->clip( uuid );
+                Clip* c = Core::instance()->library()->clip( uuid );
                 if ( c != nullptr )
                 {
                     ClipHelper  *ch = new ClipHelper( c, begin.toLongLong(),

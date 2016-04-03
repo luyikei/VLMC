@@ -99,7 +99,7 @@ EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
         return nullptr;
-    Effect  *effect = Core::getInstance()->effectsEngine()->effect( effectName );
+    Effect  *effect = Core::instance()->effectsEngine()->effect( effectName );
     if ( effect == nullptr )
         return nullptr;
     beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );

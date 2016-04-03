@@ -45,7 +45,7 @@ TracksScene::TracksScene( QObject* parent ) : QGraphicsScene( parent )
 void
 TracksScene::keyPressEvent( QKeyEvent* keyEvent )
 {
-    TracksView* tv = Timeline::getInstance()->tracksView();
+    TracksView* tv = Timeline::instance()->tracksView();
     if ( !tv ) return;
 
     if ( keyEvent->modifiers() == Qt::NoModifier &&
@@ -73,7 +73,7 @@ TracksScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 void
 TracksScene::askRemoveSelectedItems()
 {
-    TracksView* tv = Timeline::getInstance()->tracksView();
+    TracksView* tv = Timeline::instance()->tracksView();
 
     if ( !tv )
         return;
@@ -101,11 +101,11 @@ TracksScene::askRemoveSelectedItems()
             return ;
         if ( clicked == always )
         {
-            Core::getInstance()->settings()->setValue( "vlmc/ConfirmDeletion", false );
+            Core::instance()->settings()->setValue( "vlmc/ConfirmDeletion", false );
         }
     }
 
-    Core::getInstance()->undoStack()->beginMacro( "Remove clip(s)" );
+    Core::instance()->undoStack()->beginMacro( "Remove clip(s)" );
 
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
@@ -132,5 +132,5 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    Core::getInstance()->undoStack()->endMacro();
+    Core::instance()->undoStack()->endMacro();
 }

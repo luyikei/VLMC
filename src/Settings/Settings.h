@@ -42,16 +42,16 @@ class QDomElement;
 
 
 //Var helpers :
-#define VLMC_GET_STRING( key )      Core::getInstance()->settings()->value( key )->get().toString()
-#define VLMC_GET_INT( key )         Core::getInstance()->settings()->value( key )->get().toInt()
-#define VLMC_GET_UINT( key )        Core::getInstance()->settings()->value( key )->get().toUInt()
-#define VLMC_GET_DOUBLE( key )      Core::getInstance()->settings()->value( key )->get().toDouble()
-#define VLMC_GET_BOOL( key )        Core::getInstance()->settings()->value( key )->get().toBool()
-#define VLMC_GET_STRINGLIST( key )  Core::getInstance()->settings()->value( key )->get().toStringList()
-#define VLMC_GET_BYTEARRAY( key )   Core::getInstance()->settings()->value( key )->get().toByteArray()
+#define VLMC_GET_STRING( key )      Core::instance()->settings()->value( key )->get().toString()
+#define VLMC_GET_INT( key )         Core::instance()->settings()->value( key )->get().toInt()
+#define VLMC_GET_UINT( key )        Core::instance()->settings()->value( key )->get().toUInt()
+#define VLMC_GET_DOUBLE( key )      Core::instance()->settings()->value( key )->get().toDouble()
+#define VLMC_GET_BOOL( key )        Core::instance()->settings()->value( key )->get().toBool()
+#define VLMC_GET_STRINGLIST( key )  Core::instance()->settings()->value( key )->get().toStringList()
+#define VLMC_GET_BYTEARRAY( key )   Core::instance()->settings()->value( key )->get().toByteArray()
 
 #define VLMC_CREATE_PROJECT_VAR( type, key, defaultValue, name, desc, flags )  \
-        Core::getInstance()->currentProject()->settings()->createVar( type, key, defaultValue, name, \
+        Core::instance()->currentProject()->settings()->createVar( type, key, defaultValue, name, \
                                                        desc, flags );
 
 #define VLMC_CREATE_PROJECT_INT( key, defaultValue, name, desc )  \
@@ -65,7 +65,7 @@ class QDomElement;
 
 
 #define VLMC_CREATE_PREFERENCE( type, key, defaultValue, name, desc, flags )  \
-        Core::getInstance()->settings()->createVar( type, key, defaultValue, name,  \
+        Core::instance()->settings()->createVar( type, key, defaultValue, name,  \
                                                        desc, flags );
 
 /// Vlmc preferences macros

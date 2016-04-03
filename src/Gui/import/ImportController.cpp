@@ -108,7 +108,7 @@ ImportController::ImportController(QWidget *parent) :
     connect( m_mediaListView, SIGNAL( clipRemoved( const QUuid& ) ),
              m_clipRenderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
-    connect( MetaDataManager::getInstance(), SIGNAL( failedToCompute( Media* ) ),
+    connect( MetaDataManager::instance(), SIGNAL( failedToCompute( Media* ) ),
              this, SLOT( failedToLoad( Media* ) ) );
 }
 
@@ -153,7 +153,7 @@ void
 ImportController::importMedia( const QString &filePath )
 {
     vlmcDebug() << "Importing" << filePath;
-    if ( Core::getInstance()->library()->mediaAlreadyLoaded( filePath ) == true ||
+    if ( Core::instance()->library()->mediaAlreadyLoaded( filePath ) == true ||
          m_temporaryMedias->mediaAlreadyLoaded( filePath ) == true )
         return ;
 
@@ -238,7 +238,7 @@ ImportController::accept()
     {
         if ( clip->getMedia()->source()->length() == 0 )
             invalidMedias = true;
-        Core::getInstance()->library()->addClip( clip );
+        Core::instance()->library()->addClip( clip );
     }
     if ( invalidMedias == true )
         handleInvalidMedias();
@@ -286,7 +286,7 @@ ImportController::collapseAllButCurrentPath()
 void
 ImportController::saveCurrentPath()
 {
-    Core::getInstance()->settings()->setValue( "private/ImportPreviouslySelectPath", m_currentlyWatchedDir );
+    Core::instance()->settings()->setValue( "private/ImportPreviouslySelectPath", m_currentlyWatchedDir );
 }
 
 void

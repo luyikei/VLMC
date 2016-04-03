@@ -33,7 +33,7 @@ using namespace Backend::VLC;
 
 IBackend *Backend::getBackend()
 {
-    return VLCBackend::getInstance();
+    return VLCBackend::instance();
 }
 
 VLCBackend::VLCBackend()

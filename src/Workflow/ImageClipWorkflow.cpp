@@ -58,11 +58,11 @@ void ImageClipWorkflow::initializeInternals()
     m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
     m_renderer->setOutputWidth( m_width );
     m_renderer->setOutputHeight( m_height );
-    m_renderer->setOutputFps( Core::getInstance()->project()->fps() );
+    m_renderer->setOutputFps( Core::instance()->project()->fps() );
     m_renderer->setOutputVideoCodec( "RV32" );
 
-    m_effectFrame->resize( Core::getInstance()->workflow()->getWidth(),
-                            Core::getInstance()->workflow()->getHeight() );
+    m_effectFrame->resize( Core::instance()->workflow()->getWidth(),
+                            Core::instance()->workflow()->getHeight() );
     m_isRendering = true;
 }
 
@@ -93,8 +93,8 @@ ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
     cw->m_renderLock->lock();
     if ( cw->m_buffer == nullptr )
     {
-        cw->m_buffer = new Workflow::Frame( Core::getInstance()->workflow()->getWidth(),
-                                            Core::getInstance()->workflow()->getHeight() );
+        cw->m_buffer = new Workflow::Frame( Core::instance()->workflow()->getWidth(),
+                                            Core::instance()->workflow()->getHeight() );
     }
     *pp_ret = (uint8_t*)cw->m_buffer->buffer();
 }

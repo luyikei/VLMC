@@ -207,7 +207,7 @@ WorkflowRenderer::startPreview()
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
         return ;
 
-    auto project = Core::getInstance()->project();
+    auto project = Core::instance()->project();
     m_width = project->width();
     m_height = project->height();
     m_outputFps = project->fps();

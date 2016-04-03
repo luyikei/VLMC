@@ -36,7 +36,7 @@ GraphicsTrack::GraphicsTrack( Workflow::TrackType type, quint32 trackNumber,
     m_type = type;
     m_trackNumber = trackNumber;
     m_enabled = true;
-    m_trackWorkflow = Core::getInstance()->workflow()->track( type, trackNumber );
+    m_trackWorkflow = Core::instance()->workflow()->track( type, trackNumber );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
     setContentsMargins( 0, 0, 0, 0 );
@@ -65,9 +65,9 @@ GraphicsTrack::setTrackEnabled( bool enabled )
     m_enabled = enabled;
 
     if( enabled )
-        Core::getInstance()->workflow()->unmuteTrack( m_trackNumber, m_type );
+        Core::instance()->workflow()->unmuteTrack( m_trackNumber, m_type );
     else
-        Core::getInstance()->workflow()->muteTrack( m_trackNumber, m_type );
+        Core::instance()->workflow()->muteTrack( m_trackNumber, m_type );
 }
 
 bool

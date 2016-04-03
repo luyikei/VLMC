@@ -37,7 +37,7 @@ EffectsListView::EffectsListView( QWidget *parent ) :
     QListView(parent)
 {
     m_model = new QStandardItemModel( this );
-    connect( Core::getInstance()->effectsEngine(),
+    connect( Core::instance()->effectsEngine(),
              SIGNAL( effectAdded( Effect*, const QString&, Effect::Type ) ),
              this,
              SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
@@ -91,7 +91,7 @@ EffectsListView::effectActivated( const QModelIndex &index ) const
 {
     if ( index.isValid() == false )
         return ;
-    Effect  *effect = Core::getInstance()->effectsEngine()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
+    Effect  *effect = Core::instance()->effectsEngine()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
     QDialog         *dialog = new QDialog();
     QVBoxLayout     *layout = new QVBoxLayout( dialog );
     EffectWidget    *wid = new EffectWidget( dialog );

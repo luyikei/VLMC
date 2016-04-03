@@ -54,7 +54,7 @@ bool
 OpenPage::validatePage()
 {
     if ( WelcomePage::projectPath().isEmpty() == false )
-        return Core::getInstance()->loadProject( WelcomePage::projectPath() );
+        return Core::instance()->loadProject( WelcomePage::projectPath() );
     return false;
 }
 

@@ -59,7 +59,7 @@ public:
     /// Return a pointer to the TracksRuler instance.
     TracksRuler*        tracksRuler() { return m_tracksRuler; }
     /// Return a pointer to the Timeline instance (singleton).
-    static Timeline*    getInstance() { return m_instance; }
+    static Timeline*    instance() { return m_instance; }
     WorkflowRenderer    *renderer() { return m_renderer; }
 
 public slots:

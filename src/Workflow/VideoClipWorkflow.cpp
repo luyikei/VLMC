@@ -55,8 +55,8 @@ VideoClipWorkflow::releasePrealocated()
 void
 VideoClipWorkflow::preallocate()
 {
-    quint32     newWidth = Core::getInstance()->workflow()->getWidth();
-    quint32     newHeight = Core::getInstance()->workflow()->getHeight();
+    quint32     newWidth = Core::instance()->workflow()->getWidth();
+    quint32     newHeight = Core::instance()->workflow()->getHeight();
     if ( newWidth != m_width || newHeight != m_height )
     {
         m_width = newWidth;
@@ -78,7 +78,7 @@ VideoClipWorkflow::initializeInternals()
     m_renderer->enableVideoOutputToMemory( this, &lock, &unlock, m_fullSpeedRender );
     m_renderer->setOutputWidth( m_width );
     m_renderer->setOutputHeight( m_height );
-    m_renderer->setOutputFps( Core::getInstance()->project()->fps() );
+    m_renderer->setOutputFps( Core::instance()->project()->fps() );
     m_renderer->setOutputVideoCodec( "RV32" );
 }
 

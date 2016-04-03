@@ -79,11 +79,11 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 {
     m_ui.setupUi( this );
 
-    Core::getInstance()->logger()->setup();
+    Core::instance()->logger()->setup();
     //Preferences
     initVlmcPreferences();
     //All preferences have been created: restore them:
-    Core::getInstance()->settings()->load();
+    Core::instance()->settings()->load();
 
     // GUI
     createGlobalPreferences();
@@ -108,13 +108,13 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( this, SIGNAL( toolChanged( ToolButtons ) ),
              m_timeline, SLOT( setTool( ToolButtons ) ) );
 
-    connect( Core::getInstance()->project(), SIGNAL( projectNameChanged(QString) ),
+    connect( Core::instance()->project(), SIGNAL( projectNameChanged(QString) ),
              this, SLOT( projectNameChanged( QString ) ) );
-    connect( Core::getInstance()->project(), SIGNAL( outdatedBackupFileFound() ),
+    connect( Core::instance()->project(), SIGNAL( outdatedBackupFileFound() ),
              this, SLOT( onOudatedBackupFile() ) );
-    connect( Core::getInstance()->project(), SIGNAL( backupProjectLoaded() ),
+    connect( Core::instance()->project(), SIGNAL( backupProjectLoaded() ),
              this, SLOT( onBackupFileLoaded() ) );
-    connect( Core::getInstance()->project(), SIGNAL( projectSaved() ),
+    connect( Core::instance()->project(), SIGNAL( projectSaved() ),
              this, SLOT( onProjectSaved() ) );
 
 
@@ -283,7 +283,7 @@ MainWindow::initVlmcPreferences()
                                      QT_TRANSLATE_NOOP( "PreferenceWidget", "The VLMC's UI language" ) );
 
     connect( lang, SIGNAL( changed( QVariant ) ),
-             LanguageHelper::getInstance(), SLOT( languageChanged( const QVariant& ) ) );
+             LanguageHelper::instance(), SLOT( languageChanged( const QVariant& ) ) );
 
     //Setup VLMC General Preferences...
     VLMC_CREATE_PREFERENCE_BOOL( "vlmc/ConfirmDeletion", true,
@@ -341,10 +341,10 @@ MainWindow::initVlmcPreferences()
 void
 MainWindow::on_actionSave_triggered()
 {
-    if ( Core::getInstance()->project()->hasProjectFile() == false )
+    if ( Core::instance()->project()->hasProjectFile() == false )
         on_actionSave_As_triggered();
     else
-        Core::getInstance()->project()->save();
+        Core::instance()->project()->save();
 }
 
 void
@@ -357,7 +357,7 @@ MainWindow::on_actionSave_As_triggered()
         return;
     if ( !dest.endsWith( ".vlmc" ) ) 
         dest += ".vlmc";
-    Core::getInstance()->project()->saveAs( dest );
+    Core::instance()->project()->saveAs( dest );
 }
 
 void
@@ -368,7 +368,7 @@ MainWindow::on_actionLoad_Project_triggered()
                                     folder, tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
-    Core::getInstance()->loadProject( fileName );
+    Core::instance()->loadProject( fileName );
 }
 
 void
@@ -378,7 +378,7 @@ MainWindow::createNotificationZone()
     notifSpacer->setFixedWidth( 75 );
     m_ui.statusbar->addPermanentWidget( notifSpacer );
 
-    m_ui.statusbar->addPermanentWidget( NotificationZone::getInstance() );
+    m_ui.statusbar->addPermanentWidget( NotificationZone::instance() );
 }
 
 void
@@ -444,7 +444,7 @@ MainWindow::setupUndoRedoWidget()
 {
     m_undoView = new QUndoView;
     m_dockedUndoView = dockWidget( m_undoView, Qt::TopDockWidgetArea );
-    auto stack = Core::getInstance()->undoStack();
+    auto stack = Core::instance()->undoStack();
     connect( stack, SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
     connect( stack, SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
     canUndoChanged( stack->canUndo() );
@@ -457,7 +457,7 @@ MainWindow::setupEffectsList()
 {
     m_effectsList = new EffectsListView;
     m_effectsList->setType( Effect::Filter );
-    Core::getInstance()->effectsEngine()->loadEffects();
+    Core::instance()->effectsEngine()->loadEffects();
     m_dockedEffectsList = dockWidget( m_effectsList, Qt::TopDockWidgetArea );
 }
 
@@ -475,7 +475,7 @@ MainWindow::setupClipPreview()
     auto renderer = new ClipRenderer;
     renderer->setParent( m_clipPreview );
     m_clipPreview->setRenderer( renderer );
-    connect( Core::getInstance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
+    connect( Core::instance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
              renderer, SLOT( clipUnloaded( const QUuid& ) ) );
 
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
@@ -488,7 +488,7 @@ MainWindow::setupProjectPreview()
 {
     m_projectPreview = new PreviewWidget;
     m_projectPreview->setClipEdition( false );
-    m_projectPreview->setRenderer( Core::getInstance()->workflowRenderer() );
+    m_projectPreview->setRenderer( Core::instance()->workflowRenderer() );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
     m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
@@ -517,7 +517,7 @@ MainWindow::initToolbar()
 void
 MainWindow::createGlobalPreferences()
 {
-    m_globalPreferences = new SettingsDialog( Core::getInstance()->settings(), tr( "VLMC Preferences" ), this );
+    m_globalPreferences = new SettingsDialog( Core::instance()->settings(), tr( "VLMC Preferences" ), this );
     m_globalPreferences->addCategory( "vlmc", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_globalPreferences->addCategory( "keyboard", QT_TRANSLATE_NOOP( "Settings", "Keyboard" ), QIcon( ":/images/keyboard" ) );
     m_globalPreferences->addCategory( "youtube", QT_TRANSLATE_NOOP( "Settings", "YouTube" ), QIcon( ":/images/youtube" ) );
@@ -546,7 +546,7 @@ MainWindow::loadGlobalProxySettings()
 void
 MainWindow::createProjectPreferences()
 {
-    m_projectPreferences = new SettingsDialog( Core::getInstance()->project()->settings(), tr( "Project preferences" ), this );
+    m_projectPreferences = new SettingsDialog( Core::instance()->project()->settings(), tr( "Project preferences" ), this );
     m_projectPreferences->addCategory( "general", QT_TRANSLATE_NOOP( "Settings", "General" ), QIcon( ":/images/vlmc" ) );
     m_projectPreferences->addCategory( "video", QT_TRANSLATE_NOOP( "Settings", "Video" ), QIcon( ":/images/video" ) );
     m_projectPreferences->addCategory( "audio", QT_TRANSLATE_NOOP( "Settings", "Audio" ), QIcon( ":/images/audio" ) );
@@ -594,7 +594,7 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
-    if ( Core::getInstance()->workflow()->getLengthFrame() <= 0 )
+    if ( Core::instance()->workflow()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( nullptr, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
@@ -609,7 +609,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 {
     if ( m_fileRenderer )
         delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::getInstance()->workflow() );
+    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::instance()->workflow() );
 
     WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
     dialog->setModal( true );
@@ -630,7 +630,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
-    Core::getInstance()->workflowRenderer()->stop();
+    Core::instance()->workflowRenderer()->stop();
 
     RendererSettings *settings = new RendererSettings( shareOnInternet );
 
@@ -686,7 +686,7 @@ MainWindow::on_actionShare_On_Internet_triggered()
 
         checkFolders();
         QString fileName = VLMC_GET_STRING( "vlmc/TempFolderLocation" ) + "/" +
-                           Core::getInstance()->project()->name() +
+                           Core::instance()->project()->name() +
                            "-vlmc.mp4";
 
         loadGlobalProxySettings();
@@ -772,7 +772,7 @@ MainWindow::saveSettings()
 {
     // ??????
     clearTemporaryFiles();
-    Settings* settings = Core::getInstance()->settings();
+    Settings* settings = Core::instance()->settings();
     // Save the current geometry
     settings->setValue( "private/MainWindowGeometry", saveGeometry() );
     // Save the current layout
@@ -784,7 +784,7 @@ MainWindow::saveSettings()
 void
 MainWindow::closeEvent( QCloseEvent* e )
 {
-    if ( Core::getInstance()->project()->isClean() == false )
+    if ( Core::instance()->project()->isClean() == false )
     {
         QMessageBox msgBox;
         msgBox.setText( QObject::tr( "The project has been modified." ) );
@@ -830,13 +830,13 @@ MainWindow::onProjectSaved()
 void
 MainWindow::on_actionUndo_triggered()
 {
-    Core::getInstance()->undoStack()->undo();
+    Core::instance()->undoStack()->undo();
 }
 
 void
 MainWindow::on_actionRedo_triggered()
 {
-    Core::getInstance()->undoStack()->redo();
+    Core::instance()->undoStack()->redo();
 }
 
 void
@@ -865,7 +865,7 @@ MainWindow::restoreSession()
             QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
         }
     }
-    Core::getInstance()->settings()->setValue( "private/CleanQuit", true );
+    Core::instance()->settings()->setValue( "private/CleanQuit", true );
     return ret;
 }
 
@@ -895,7 +895,7 @@ MainWindow::onOudatedBackupFile()
                                      "Do you want to erase it?" ),
                                     QMessageBox::Ok | QMessageBox::No ) == QMessageBox::Ok )
     {
-        Core::getInstance()->project()->removeBackupFile();
+        Core::instance()->project()->removeBackupFile();
     }
 }
 
