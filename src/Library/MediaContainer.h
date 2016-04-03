@@ -111,6 +111,11 @@ public:
      */
     const QHash<QUuid, Clip*>   &clips() const;
 
+    /**
+     *  \breif  Emit newClipLoaded from all clips
+     */
+    void                        reloadAllClips();
+
     Clip*       getParent();
 
     quint32     count() const;

@@ -176,6 +176,13 @@ MediaContainer::clips() const
     return m_clips;
 }
 
+void
+MediaContainer::reloadAllClips()
+{
+    for ( auto *c: m_clips )
+        emit newClipLoaded( c );
+}
+
 Clip*
 MediaContainer::getParent()
 {

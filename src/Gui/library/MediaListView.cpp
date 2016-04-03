@@ -112,6 +112,7 @@ MediaListView::showSubClips( const QUuid &uuid )
     Clip    *clip = m_mediaContainer->clip( uuid );
     MediaListView* view = new MediaListView( m_nav );
     view->setMediaContainer( clip->getChilds() );
+    clip->getChilds()->reloadAllClips();
     m_nav->pushViewController( view );
 }
 
