@@ -140,6 +140,12 @@ class   ClipWorkflow : public EffectUser
          *  \brief  Stop this workflow.
          */
         void                    stop();
+
+        /**
+         *  \brief  Pause this workflow.
+         */
+        void                    pause();
+
         /**
          *  \brief  Set the rendering position
          *  \param  time    The position in millisecond
@@ -243,6 +249,7 @@ class   ClipWorkflow : public EffectUser
 
     signals:
         void                    error( ClipWorkflow* );
+        void                    bufferReachedMax();
 };
 
 #endif // CLIPWORKFLOW_H

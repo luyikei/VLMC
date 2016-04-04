@@ -84,6 +84,7 @@ ClipWorkflow::initialize()
     connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
     connect( m_eventWatcher, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
     connect( m_eventWatcher, &RendererEventWatcher::stopped, this, &ClipWorkflow::mediaPlayerStopped );
+    connect( this, &ClipWorkflow::bufferReachedMax, this, &ClipWorkflow::pause, Qt::QueuedConnection );
     m_renderer->start();
 }
 
@@ -128,6 +129,15 @@ ClipWorkflow::stop()
 {
     if ( m_renderer != nullptr )
         m_renderer->stop();
+}
+
+void
+ClipWorkflow::pause()
+{
+    if ( m_renderer != nullptr ) {
+        m_renderer->setPause( true );
+        vlmcWarning() << "ClipWorkflow:" << m_clipHelper->uuid() << " was paused unexpectedly";
+    }
 }
 
 void

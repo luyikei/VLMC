@@ -172,6 +172,8 @@ AudioClipWorkflow::unlock( void* data, uint8_t *pcm_buffer, unsigned int channel
         else
             cw->m_currentPts = pts;
     }
+    if ( cw->getMaxComputedBuffers() <= cw->getNbComputedBuffers() )
+        emit cw->bufferReachedMax();
     cw->m_renderLock->unlock();
 }
 
