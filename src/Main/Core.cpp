@@ -52,7 +52,7 @@ Core::Core()
     m_workflow = new MainWorkflow;
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new QUndoStack;
-    m_library = new Library( m_workspace );
+    m_library = new Library;
     m_currentProject = new Project( m_settings );
 
     connect( m_undoStack, &QUndoStack::cleanChanged, m_currentProject, &Project::cleanChanged );

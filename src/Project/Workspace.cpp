@@ -173,16 +173,3 @@ Workspace::isInWorkspace(const Media *media)
 {
     return isInWorkspace( *(media->fileInfo() ) );
 }
-
-QString
-Workspace::toAbsolutePath( const QString& path )
-{
-    QString res = path;
-    return res.replace( Workspace::workspacePrefix, m_workspaceDir );
-}
-
-QString
-Workspace::toWorkspacePath(const Media *media)
-{
-    return media->fileInfo()->absoluteFilePath().replace( m_workspaceDir, Workspace::workspacePrefix );
-}

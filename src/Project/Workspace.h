@@ -46,8 +46,6 @@ class Workspace : public QObject, public ErrorHandler
         ~Workspace();
         bool                        isInWorkspace( const QString &path );
         bool                        isInWorkspace( const Media *media );
-        QString                     toAbsolutePath( const QString &path );
-        QString                     toWorkspacePath( const Media* media );
 
         bool                        copyToWorkspace( Media* media );
     private:

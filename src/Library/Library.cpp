@@ -40,9 +40,8 @@
 #include <QHash>
 #include <QUuid>
 
-Library::Library( Workspace *workspace )
+Library::Library()
     : m_cleanState( true )
-    , m_workspace( workspace )
 {
 }
 
@@ -64,8 +63,7 @@ Library::load(const QDomDocument& doc )
         {
             QString mrl = media.attribute( "mrl" );
 
-            mrl = m_workspace->toAbsolutePath( mrl );
-            Media*  m = addMedia( mrl );
+            Media*  m = addMedia( QFileInfo( mrl ) );
             if ( m == nullptr )
                 vlmcWarning() << "Failed to load media" << mrl << "when loading project.";
             else
@@ -97,7 +95,7 @@ Library::save( QXmlStreamWriter& project )
         Q_ASSERT( (*it)->isRootClip() == true );
         const Media* m = (*it)->getMedia();
         project.writeStartElement( "media" );
-        project.writeAttribute( "mrl", m_workspace->toWorkspacePath( m ) );
+        project.writeAttribute( "mrl", m->fileInfo()->absoluteFilePath() );
         project.writeEndElement();
         ++it;
     }

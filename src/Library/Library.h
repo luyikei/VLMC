@@ -53,7 +53,7 @@ class Library : public MediaContainer, public ILoadSave
     Q_DISABLE_COPY( Library );
 
 public:
-    Library(Workspace* workspace);
+    Library();
     virtual ~Library(){}
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );
