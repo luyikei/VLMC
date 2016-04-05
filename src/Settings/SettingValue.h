@@ -35,7 +35,7 @@
 class   SettingValue : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY( SettingValue );
+    Q_DISABLE_COPY( SettingValue )
     public:
         enum    Type
         {
@@ -62,7 +62,7 @@ class   SettingValue : public QObject
             NotEmpty        = 1 << 4, ///< Forces the value not to be empty (likely to be used only with Strings)
             Runtime         = 1 << 5, ///< Defines a variable that is not meant to be saved
         };
-        Q_DECLARE_FLAGS( Flags, Flag );
+        Q_DECLARE_FLAGS( Flags, Flag )
         /**
          *  \brief      Constructs a setting value with its default value and description
          *
