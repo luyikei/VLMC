@@ -14,7 +14,7 @@ if (Qt5Core_FOUND)
     if(WITH_GUI)
         find_package(Qt5 COMPONENTS Widgets Gui Xml Network)
     else()
-        find_packages(Qt5 COMPONENTS Xml Network)
+        find_package(Qt5 COMPONENTS Xml Network)
     endif()
 endif()
 
