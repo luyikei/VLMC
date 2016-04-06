@@ -51,6 +51,8 @@ RendererSettings::RendererSettings( bool shareOnInternet )
     m_ui.width->setValue( project->width() );
     m_ui.height->setValue( project->height() );
     m_ui.fps->setValue( project->fps() );
+    m_ui.videoQuality->setValue( project->videoBitrate() );
+    m_ui.audioQuality->setValue( project->audioBitrate() );
 
     QCompleter* completer = new QCompleter( this );
     completer->setModel( new QDirModel( completer ) );
@@ -111,7 +113,7 @@ RendererSettings::updateVideoPreset( int index )
 void
 RendererSettings::accept()
 {
-    if ( width() <= 0 || height() <= 0 || fps() <= .0f )
+    if ( width() <= 0 || height() <= 0 || fps() <= .0f || audioBitrate() <= 0 || videoBitrate() <= 0 )
     {
         QMessageBox::warning( this, tr( "Invalid parameters" ),
                               tr( "Please enter valid rendering parameters" ) );
