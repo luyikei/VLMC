@@ -42,7 +42,6 @@ class   Project;
 class   ProjectWizard;
 class   SettingsDialog;
 class   Timeline;
-class   WorkflowFileRenderer;
 class   WorkflowRenderer;
 
 namespace Backend
@@ -133,7 +132,6 @@ private:
     Backend::IBackend*      m_backend;
     PreviewWidget*          m_clipPreview;
     PreviewWidget*          m_projectPreview;
-    WorkflowFileRenderer*   m_fileRenderer;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;

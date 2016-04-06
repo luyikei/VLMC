@@ -27,13 +27,12 @@
 #include "Project/Project.h"
 #include "vlmc.h"
 #include "Workflow/MainWorkflow.h"
-#include "Renderer/WorkflowFileRenderer.h"
+#include "Renderer/WorkflowRenderer.h"
 
-WorkflowFileRendererDialog::WorkflowFileRendererDialog( WorkflowFileRenderer* renderer,
-                                                        quint32 width, quint32 height ) :
+WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height ) :
         m_width( width ),
         m_height( height ),
-        m_renderer( renderer )
+        m_renderer( Core::instance()->workflowRenderer() )
 {
     m_ui.setupUi( this );
     connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( cancel() ) );

@@ -63,7 +63,6 @@ SET(VLMC_SRCS
     Project/RecentProjects.cpp
     Renderer/ClipRenderer.cpp
     Renderer/GenericRenderer.cpp
-    Renderer/WorkflowFileRenderer.cpp
     Renderer/WorkflowRenderer.cpp
     Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp

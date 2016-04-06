@@ -26,14 +26,14 @@
 #include <QDialog>
 #include "ui_WorkflowFileRendererDialog.h"
 
-class   WorkflowFileRenderer;
+class   WorkflowRenderer;
 
 class   WorkflowFileRendererDialog : public QDialog
 {
     Q_OBJECT
     Q_DISABLE_COPY( WorkflowFileRendererDialog );
 public:
-    WorkflowFileRendererDialog( WorkflowFileRenderer* renderer, quint32 width, quint32 height );
+    WorkflowFileRendererDialog( quint32 width, quint32 height );
     void    setOutputFileName( const QString& filename );
     void    setProgressBarValue( int val );
 
@@ -41,7 +41,7 @@ private:
     Ui::WorkflowFileRendererDialog      m_ui;
     quint32                             m_width;
     quint32                             m_height;
-    WorkflowFileRenderer                *m_renderer;
+    WorkflowRenderer*                   m_renderer;
 
 public slots:
     void    updatePreview( const uchar* buff );

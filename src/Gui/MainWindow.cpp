@@ -42,7 +42,6 @@
 #include "EffectsEngine/EffectsEngine.h"
 #include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
-#include "Renderer/WorkflowFileRenderer.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
 
@@ -73,7 +72,6 @@
 MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     : QMainWindow( parent )
     , m_backend( backend )
-    , m_fileRenderer( nullptr )
     , m_projectPreferences( nullptr )
     , m_wizard( nullptr )
 {
@@ -139,8 +137,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
 MainWindow::~MainWindow()
 {
-    if ( m_fileRenderer )
-        delete m_fileRenderer;
     delete m_importController;
 }
 
@@ -607,15 +603,12 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
                          double fps, const QString& ar,
                          quint32 vbitrate, quint32 abitrate )
 {
-    if ( m_fileRenderer )
-        delete m_fileRenderer;
-    m_fileRenderer = new WorkflowFileRenderer( m_backend, Core::instance()->workflow() );
-
-    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( m_fileRenderer, width, height );
+    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( width, height );
     dialog->setModal( true );
     dialog->setOutputFileName( outputFileName );
 
-    m_fileRenderer->run( outputFileName, width, height, fps, ar, vbitrate, abitrate );
+    Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
+                                                             fps, ar, vbitrate, abitrate );
 
     if ( dialog->exec() == QDialog::Rejected )
     {
