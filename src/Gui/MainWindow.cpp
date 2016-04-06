@@ -603,20 +603,14 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
                          double fps, const QString& ar,
                          quint32 vbitrate, quint32 abitrate )
 {
-    WorkflowFileRendererDialog  *dialog = new WorkflowFileRendererDialog( width, height );
-    dialog->setModal( true );
-    dialog->setOutputFileName( outputFileName );
-
+    WorkflowFileRendererDialog  dialog( width, height );
+    dialog.setModal( true );
+    dialog.setOutputFileName( outputFileName );
     Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
                                                              fps, ar, vbitrate, abitrate );
 
-    if ( dialog->exec() == QDialog::Rejected )
-    {
-        delete dialog;
+    if ( dialog.exec() == QDialog::Rejected )
         return false;
-    }
-
-    delete dialog;
     return true;
 }
 
@@ -625,23 +619,18 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
 {
     Core::instance()->workflowRenderer()->stop();
 
-    RendererSettings *settings = new RendererSettings( shareOnInternet );
+    RendererSettings settings( shareOnInternet );
 
-    if ( settings->exec() == QDialog::Rejected )
-    {
-        delete settings;
+    if ( settings.exec() == QDialog::Rejected )
         return false;
-    }
 
-    QString     outputFileName = settings->outputFileName();
-    quint32     width          = settings->width();
-    quint32     height         = settings->height();
-    double      fps            = settings->fps();
-    quint32     vbitrate       = settings->videoBitrate();
-    quint32     abitrate       = settings->audioBitrate();
-    auto        ar             = settings->aspectRatio();
-
-    delete settings;
+    QString     outputFileName = settings.outputFileName();
+    quint32     width          = settings.width();
+    quint32     height         = settings.height();
+    double      fps            = settings.fps();
+    quint32     vbitrate       = settings.videoBitrate();
+    quint32     abitrate       = settings.audioBitrate();
+    auto        ar             = settings.aspectRatio();
 
     return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate );
 }
