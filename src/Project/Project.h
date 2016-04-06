@@ -79,6 +79,8 @@ class Project : public QObject
         unsigned int    width() const;
         unsigned int    height() const;
         QString         aspectRatio() const;
+        unsigned int    audioBitrate() const;
+        unsigned int    videoBitrate() const;
         unsigned int    sampleRate() const;
         unsigned int    nbChannels() const;
 

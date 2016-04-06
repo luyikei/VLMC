@@ -207,6 +207,16 @@ Project::initSettings()
                              QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio samplerate"),
                              SettingValue::Clamped );
     sampleRate->setLimits( 11025, 48000 );
+    SettingValue    *aBitRate = m_settings->createVar( SettingValue::Int, "audio/AudioBitRate", 256,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Audio bitrate" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project audio bitrate (kbps)"),
+                             SettingValue::Clamped );
+    aBitRate->setLimits( 8, 512 );
+    SettingValue    *vBitRate = m_settings->createVar( SettingValue::Int, "video/VideoBitRate", 4000,
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Video bitrate" ),
+                             QT_TRANSLATE_NOOP( "PreferenceWidget", "Output project Video bitrate (kbps)"),
+                             SettingValue::Clamped );
+    vBitRate->setLimits( 8, 8192 );
     SettingValue    *audioChannel = m_settings->createVar( SettingValue::Int, "audio/NbChannels", 2,
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Audio channels" ),
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
@@ -315,6 +325,18 @@ QString
 Project::aspectRatio() const
 {
     return m_settings->value( "video/AspectRatio" )->get().toString();
+}
+
+unsigned int
+Project::audioBitrate() const
+{
+    return m_settings->value( "audio/AudioBitRate" )->get().toUInt();
+}
+
+unsigned int
+Project::videoBitrate() const
+{
+    return m_settings->value( "video/VideoBitRate" )->get().toUInt();
 }
 
 unsigned int
