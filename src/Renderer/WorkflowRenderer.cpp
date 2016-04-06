@@ -151,6 +151,17 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
     else
         *buffer = ret->buffer();
     *bufferSize = ret->size();
+
+#ifdef WITH_GUI
+    auto self = handler->self;
+    if ( self->m_time.isValid() == false ||
+         self->m_time.elapsed() >= 1000 )
+    {
+        emit self->imageUpdated( (quint8*)( *buffer ) );
+        self->m_time.restart();
+    }
+#endif
+
     vlmcDebug() << __func__ << "Rendered frame. pts:" << m_pts;
     return 0;
 }
@@ -202,6 +213,34 @@ WorkflowRenderer::unlock( void *data, const char*, size_t, void* )
 }
 
 void
+WorkflowRenderer::start()
+{
+    m_isRendering = true;
+    m_paused = false;
+    m_stopping = false;
+    m_pts = 0;
+    m_audioPts = 0;
+    m_mainWorkflow->startRender( m_width, m_height );
+    m_sourceRenderer->start();
+}
+
+void
+WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
+                                     double fps, const QString& ar,
+                                     quint32 vbitrate, quint32 abitrate )
+{
+    initFilters();
+    setupRenderer( width, height, fps, ar );
+    m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
+    m_sourceRenderer->setOutputAudioBitrate( abitrate );
+    m_sourceRenderer->setOutputVideoBitrate( vbitrate );
+    connect( m_mainWorkflow, &MainWorkflow::mainWorkflowEndReached, this, &WorkflowRenderer::renderComplete );
+    connect( m_mainWorkflow, &MainWorkflow::mainWorkflowEndReached, this, &WorkflowRenderer::stop );
+    m_mainWorkflow->setFullSpeedRender( true );
+    start();
+}
+
+void
 WorkflowRenderer::startPreview()
 {
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
@@ -215,15 +254,8 @@ WorkflowRenderer::startPreview()
 
     initFilters();
     setupRenderer( m_width, m_height, m_outputFps, m_aspectRatio );
-
     m_mainWorkflow->setFullSpeedRender( false );
-    m_mainWorkflow->startRender( m_width, m_height );
-    m_isRendering = true;
-    m_paused = false;
-    m_stopping = false;
-    m_pts = 0;
-    m_audioPts = 0;
-    m_sourceRenderer->start();
+    start();
 }
 
 void

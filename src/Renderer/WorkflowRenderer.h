@@ -29,6 +29,7 @@
 #include "Workflow/MainWorkflow.h"
 
 #include <QObject>
+#include <QTime>
 
 namespace Backend
 {
@@ -132,7 +133,12 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          */
         virtual float       getFps() const;
 
+        void                startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
+                                               double fps, const QString& ar,
+                                               quint32 vbitrate, quint32 abitrate );
+
     private:
+        void                start();
         /**
          *  \brief          This is a subpart of the togglePlayPause( bool ) method
          *
@@ -249,6 +255,9 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
         static const quint8     VideoCookie = '0';
         static const quint8     AudioCookie = '1';
 
+        // For Preview
+        QTime                       m_time;
+
     public slots:
         /**
          *  \brief          The current frame just changed because of the timeline cursor
@@ -271,6 +280,10 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          *  If the length comes to a 0 value again, the permanent playback will be stoped.
          */
         void                mainWorkflowLenghtChanged( qint64 newLength );
+
+    signals:
+        void                        imageUpdated( const uchar* image );
+        void                        renderComplete();
 };
 
 #endif // WORKFLOWRENDERER_H
