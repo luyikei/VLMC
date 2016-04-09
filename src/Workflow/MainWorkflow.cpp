@@ -337,6 +337,7 @@ MainWorkflow::preSave()
 void
 MainWorkflow::postLoad()
 {
+    clear();
     QVariantList l = m_settings->value( "tracks" )->get().toList();
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
         m_tracks[i]->loadFromVariant( l[i] );
