@@ -108,6 +108,7 @@ class   Settings
         typedef QList<SettingValue*>                SettingList;
         typedef QMap<QString, SettingValue*>        SettingMap;
 
+        Settings();
         Settings( const QString& settingsFile );
         ~Settings();
         bool                        setValue(const QString &key, const QVariant &value );

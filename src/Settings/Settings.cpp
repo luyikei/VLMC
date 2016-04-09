@@ -36,6 +36,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+Settings::Settings()
+    : m_settingsFile( nullptr )
+{
+
+}
 
 Settings::Settings(const QString &settingsFile)
     : m_settingsFile( nullptr )
