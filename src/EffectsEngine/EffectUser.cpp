@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QDomElement>
+#include <QVariant>
 #include <QReadWriteLock>
 
 #include "EffectsEngine/EffectUser.h"
@@ -173,54 +173,43 @@ EffectUser::getMixer( qint64 currentFrame )
     return nullptr;
 }
 
-void
-EffectUser::loadEffects( const QDomElement &parent )
+QVariant
+EffectUser::toVariant() const
 {
-    QDomElement     effects = parent.firstChildElement( "effects" );
-    if ( effects.isNull() == true )
-        return ;
-    QDomElement     effect = effects.firstChildElement( "effect" );
-    while ( effect.isNull() == false )
+    QVariantList l;
+    for ( const auto& filter : m_filters )
     {
-        if ( effect.hasAttribute( "name" ) == true &&
-             effect.hasAttribute( "start" ) == true &&
-             effect.hasAttribute( "end" ) == true )
-        {
-            Effect  *e = Core::instance()->effectsEngine()->effect( effect.attribute( "name" ) );
-            if ( e != nullptr )
-            {
-                EffectHelper    *helper = addEffect( e, effect.attribute( "start" ).toLongLong(),
-                                                    effect.attribute( "end" ).toLongLong() );
-                if ( helper == nullptr )
-                    vlmcCritical() << "Can't load effect" << effect.attribute( "name" );
-            }
-            else
-                vlmcCritical() << "Can't load effect" << effect.attribute( "name" );
-        }
-        effect = effect.nextSiblingElement();
+        l << QVariantHash{
+                { "name", filter->effectInstance()->effect()->name() },
+                { "start", filter->begin() },
+                { "end", filter->end() }
+            };
     }
+    return QVariant( l );
 }
 
 void
-EffectUser::saveFilters( QXmlStreamWriter &project ) const
+EffectUser::loadFromVariant( const QVariant& variant )
 {
-    QReadLocker     lock( m_effectsLock );
-
-    if ( m_filters.size() <= 0 )
-        return ;
-    project.writeStartElement( "effects" );
-    EffectsEngine::EffectList::const_iterator   it = m_filters.begin();
-    EffectsEngine::EffectList::const_iterator   ite = m_filters.end();
-    while ( it != ite )
+    for ( const auto& var : variant.toList() )
     {
-        project.writeStartElement( "effect" );
-        project.writeAttribute( "name", (*it)->effectInstance()->effect()->name() );
-        project.writeAttribute( "start", QString::number( (*it)->begin() ) );
-        project.writeAttribute( "end", QString::number( (*it)->end() ) );
-        project.writeEndElement();
-        ++it;
+        QVariantMap m = var.toMap();
+        const QString& name = m["name"].toString();
+        qint64 start = m["start"].toLongLong();
+        qint64 end = m["end"].toLongLong();
+        if ( name.isEmpty() == false )
+        {
+            Effect  *e = Core::instance()->effectsEngine()->effect( name );
+            if ( e != nullptr )
+            {
+                EffectHelper    *helper = addEffect( e, start, end );
+                if ( helper == nullptr )
+                    vlmcCritical() << "Can't load effect" << name;
+            }
+            else
+                vlmcCritical() << "Can't load effect" << name;
+        }
     }
-    project.writeEndElement();
 }
 
 const EffectsEngine::EffectList&

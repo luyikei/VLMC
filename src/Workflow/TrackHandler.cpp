@@ -165,7 +165,6 @@ TrackHandler::save( QXmlStreamWriter& project ) const
             project.writeAttribute( "type", QString::number( (int)m_trackType ) );
             project.writeAttribute( "id", QString::number( i ) );
             m_tracks[i]->save( project );
-            m_tracks[i]->saveFilters( project );
             project.writeEndElement();
         }
     }

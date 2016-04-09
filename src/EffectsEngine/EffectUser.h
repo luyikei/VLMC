@@ -24,7 +24,6 @@
 #define EFFECTUSER_H
 
 #include <QObject>
-#include <QXmlStreamWriter>
 
 #include "EffectsEngine/EffectsEngine.h"
 
@@ -58,8 +57,8 @@ class EffectUser : public QObject
         void                            cleanEffects();
         virtual qint64                  length() const = 0;
         virtual Type                    effectType() const = 0;
-        void                            loadEffects( const QDomElement &project );
-        void                            saveFilters( QXmlStreamWriter &project ) const;
+        virtual QVariant                toVariant() const;
+        void                            loadFromVariant( const QVariant &var );
         bool                            contains( Effect::Type, const QUuid &uuid ) const;
 
     protected:
