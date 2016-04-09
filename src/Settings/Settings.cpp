@@ -68,33 +68,38 @@ Settings::setSettingsFile(const QString &settingsFile)
         m_settingsFile = nullptr;
 }
 
-bool
-Settings::load()
+QJsonDocument
+Settings::readSettingsFromFile()
 {
     if ( m_settingsFile->open( QFile::ReadOnly ) == false )
     {
         vlmcWarning() << "Failed to open settings file" << m_settingsFile->fileName();
-        return false;
+        return QJsonDocument( QJsonObject() );
     }
     QJsonParseError error;
-    m_jsonObject = QJsonDocument::fromJson( m_settingsFile->readAll(), &error ).object();
+    QJsonDocument doc = QJsonDocument::fromJson( m_settingsFile->readAll(), &error );
     if ( error.error != QJsonParseError::NoError )
     {
         vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
         vlmcWarning() << error.errorString();
-        return false;
+        return QJsonDocument( QJsonObject() );
     }
+    return doc;
+}
 
-    for ( auto it = m_jsonObject.constBegin();
-          it != m_jsonObject.constEnd();
-          ++it
-          )
+bool
+Settings::load()
+{
+    if ( m_settingsFile == nullptr )
+        return false;
+
+    QJsonObject top = readSettingsFromFile().object();
+
+    loadJsonFrom( top );
+
+    for ( const auto& child : m_settingsChildren )
     {
-        if ( (*it).type() == QJsonValue::Object )
-            continue ;
-        if ( setValue( it.key(), (*it).toVariant() ) == false )
-            vlmcWarning() << "Loaded invalid project setting:" << it.key();
-
+        child.second->loadJsonFrom( top[ child.first ].toObject() );
     }
 
     m_settingsFile->close();
@@ -106,24 +111,69 @@ Settings::save()
 {
     if ( m_settingsFile == nullptr )
         return false;
-    QJsonDocument doc;
 
     QReadLocker lock( &m_rwLock );
 
-    QJsonObject top;
-    for ( const auto& val : m_settings )
+    QJsonDocument doc = readSettingsFromFile();
+    QJsonObject top = doc.object();
+
+    saveJsonTo( top );
+
+    for ( const auto& child : m_settingsChildren )
     {
-        if ( ( val->flags() & SettingValue::Runtime ) != 0 )
-            continue ;
-        if ( top.insert( val->key(), QJsonValue::fromVariant( val->get() ) ) == top.end() )
-            vlmcWarning() << "Failed to set:" << val->key();
+        QJsonObject object;
+        child.second->saveJsonTo( object );
+        top.insert( child.first, QJsonValue( object ) );
     }
+
     doc.setObject( top );
 
     m_settingsFile->open( QFile::WriteOnly );
     m_settingsFile->write( doc.toJson( QJsonDocument::Compact ) );
     m_settingsFile->close();
     return true;
+}
+
+void
+Settings::loadJsonFrom( const QJsonObject &object )
+{
+    for ( auto it = object.constBegin();
+          it != object.constEnd();
+          ++it
+          )
+    {
+        // Check if the key is a child settings'
+        bool isChildSettings = false;
+        if ( (*it).type() == QJsonValue::Object )
+            for ( const auto& pair : m_settingsChildren )
+                if ( pair.first == it.key() )
+                {
+                    isChildSettings = true;
+                    break;
+                }
+        if ( isChildSettings == true )
+            continue;
+
+        if ( setValue( it.key(), (*it).toVariant() ) == false )
+            vlmcWarning() << "Loaded invalid project setting:" << it.key();
+    }
+}
+
+void
+Settings::saveJsonTo( QJsonObject &object )
+{
+    for ( const auto& val : m_settings )
+    {
+        if ( ( val->flags() & SettingValue::Runtime ) != 0 )
+            continue ;
+        object.insert( val->key(), QJsonValue::fromVariant( val->get() ) );
+    }
+}
+
+void
+Settings::addSettings(const QString &name, Settings &settings)
+{
+    m_settingsChildren << qMakePair( name, &settings );
 }
 
 bool
