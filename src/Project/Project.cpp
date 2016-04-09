@@ -334,8 +334,7 @@ Project::cleanChanged( bool val )
     // This doesn't have to be different since we can force needSave = true when loading
     // a backup project file. This definitely needs testing though
     m_isClean = val;
-    if ( m_libraryCleanState == m_isClean )
-        emit cleanStateChanged( val );
+    emit cleanStateChanged( m_libraryCleanState == true && m_isClean == true );
 }
 
 void
@@ -343,8 +342,7 @@ Project::libraryCleanChanged(bool val)
 {
     Q_ASSERT( m_libraryCleanState != val);
     m_libraryCleanState = val;
-    if ( m_libraryCleanState == m_isClean )
-        emit cleanStateChanged( val );
+    emit cleanStateChanged( m_libraryCleanState == true && m_isClean == true );
 }
 
 void
