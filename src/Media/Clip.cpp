@@ -218,19 +218,6 @@ Clip::clear()
     m_childs->clear();
 }
 
-QString
-Clip::fullId() const
-{
-    const Clip* c = this;
-    QString     id = m_uuid.toString();
-    while ( c->isRootClip() == false )
-    {
-        c = c->getParent();
-        id = c->uuid().toString() + '/' + id;
-    }
-    return id;
-}
-
 bool
 Clip::isChild( const QUuid &uuid) const
 {

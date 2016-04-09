@@ -130,15 +130,6 @@ class   Clip : public QObject
         bool                addSubclip( Clip* clip );
 
         /**
-         *  \brief          Generates a full Clip id
-         *
-         *  A full id is the list of all the parent Clip's UUID, separated by '/'
-         *  IE, {uuid1}/{uuid2}/{uuid2}/{current-clip-uuid}
-         *  \return     The full Clip id.
-         */
-        QString             fullId() const;
-
-        /**
          *  \return         true if the clip is a child of the given clip uuid
          */
         bool                isChild( const QUuid& uuid ) const;
