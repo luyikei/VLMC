@@ -219,7 +219,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
         return;
 
     QMimeData* mimeData = new QMimeData;
-    mimeData->setData( "vlmc/uuid", m_clip->fullId().toLatin1() );
+    mimeData->setData( "vlmc/uuid", m_clip->uuid().toString().toLatin1() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
     Media*  parent = m_clip->getMedia();
