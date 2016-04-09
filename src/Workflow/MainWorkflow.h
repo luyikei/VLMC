@@ -260,9 +260,6 @@ class   MainWorkflow : public QObject
          */
         quint32                 trackCount() const;
 
-        void                    preSave();
-        void                    postLoad();
-
     private:
         /**
          *  \brief  Compute the length of the workflow.
@@ -281,6 +278,9 @@ class   MainWorkflow : public QObject
          */
         ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
                                                Workflow::TrackType trackType );
+
+        void                    preSave();
+        void                    postLoad();
 
     private:
         /// Pre-filled buffer used when there's nothing to render
