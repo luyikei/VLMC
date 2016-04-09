@@ -216,32 +216,6 @@ Clip::clear()
     m_childs->clear();
 }
 
-void
-Clip::save( QXmlStreamWriter &project )
-{
-    project.writeStartElement( "clip" );
-    if ( isRootClip() == true )
-    {
-        project.writeAttribute( "media", m_media->fileInfo()->fileName() );
-    }
-    else
-    {
-        project.writeAttribute( "parent", m_parent->uuid().toString() );
-        project.writeAttribute( "begin", QString::number( m_begin ) );
-        project.writeAttribute( "end", QString::number( m_end ) );
-    }
-    project.writeAttribute( "uuid", m_uuid.toString() );
-    project.writeAttribute( "metatags", m_metaTags.join( "," ) );
-    project.writeAttribute( "notes", m_notes );
-    if ( m_childs->count() > 0 )
-    {
-        project.writeStartElement( "subClips" );
-        m_childs->saveContainer( project );
-        project.writeEndElement();
-    }
-    project.writeEndElement();
-}
-
 QString
 Clip::fullId() const
 {

@@ -45,68 +45,6 @@ Library::Library()
 {
 }
 
-bool
-Library::load(const QDomDocument& doc )
-{
-    const QDomElement   medias = doc.firstChildElement( "medias" );
-
-    if ( medias.isNull() == true )
-        return false;
-
-    //Add a virtual media, which represents all the clip.
-    //This avoid emitting projectLoaded(); before all the clip are actually loaded.
-    m_nbMediaToLoad = 1;
-    QDomElement media = medias.firstChildElement();
-    while ( media.isNull() == false )
-    {
-        if ( media.hasAttribute( "mrl" ) == true )
-        {
-            QString mrl = media.attribute( "mrl" );
-
-            Media*  m = addMedia( QFileInfo( mrl ) );
-            if ( m == nullptr )
-                vlmcWarning() << "Failed to load media" << mrl << "when loading project.";
-            else
-                m_nbMediaToLoad.fetchAndAddAcquire( 1 );
-        }
-        media = media.nextSiblingElement();
-    }
-    const QDomElement clips = doc.firstChildElement( "clips" );
-    if ( clips.isNull() == true )
-        return false;
-    loadContainer( clips, this );
-    mediaLoaded( nullptr );
-    //Mark the state as clean, as we just loaded a project. Otherwise, a media
-    //loading triggers a setCleanState(false) which makes sense when modifying
-    //project, but not here.
-    setCleanState(true);
-    return true;
-}
-
-bool
-Library::save( QXmlStreamWriter& project )
-{
-    QHash<QUuid, Clip*>::const_iterator     it = m_clips.begin();
-    QHash<QUuid, Clip*>::const_iterator     end = m_clips.end();
-
-    project.writeStartElement( "medias" );
-    while ( it != end )
-    {
-        Q_ASSERT( (*it)->isRootClip() == true );
-        const Media* m = (*it)->getMedia();
-        project.writeStartElement( "media" );
-        project.writeAttribute( "mrl", m->fileInfo()->absoluteFilePath() );
-        project.writeEndElement();
-        ++it;
-    }
-    project.writeEndElement();
-    project.writeStartElement( "clips" );
-    saveContainer( project );
-    project.writeEndElement();
-    setCleanState( true );
-    return true;
-}
-
 void
 Library::mediaLoaded( const Media* media )
 {

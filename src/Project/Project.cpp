@@ -137,12 +137,8 @@ Project::load( const QString& path )
         doc.setContent( m_projectFile );
     }
 
-    m_settings->load( doc );
     auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
     emit projectLoading( projectName );
-    Core::instance()->library()->load( doc );
-    Core::instance()->workflow()->load( doc );
-    Core::instance()->workflowRenderer()->load( doc );
     m_isClean = autoBackupFound == false;
     emit cleanStateChanged( m_isClean );
     if ( autoBackupFound == false )
@@ -239,12 +235,6 @@ Project::saveProject( const QString& fileName )
     project.setAutoFormatting( true );
     project.writeStartDocument();
     project.writeStartElement( "vlmc" );
-
-    m_settings->save( project );
-    Core::instance()->workflow()->save( project );
-    Core::instance()->library()->save( project );
-    Core::instance()->workflowRenderer()->save( project );
-    //FIXME: Timeline configuration isn't saved anymore.
 
     project.writeEndElement();
     project.writeEndDocument();

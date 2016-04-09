@@ -26,7 +26,6 @@
 
 #include "EffectsEngine/EffectsEngine.h"
 #include <QXmlStreamWriter>
-#include "Project/ILoadSave.h"
 #include "Types.h"
 
 class   Clip;
@@ -53,7 +52,7 @@ class   QReadWriteLock;
 /**
  *  \class  Represent the Timeline backend.
  */
-class   MainWorkflow : public QObject, public ILoadSave
+class   MainWorkflow : public QObject
 {
     Q_OBJECT
 
@@ -261,10 +260,6 @@ class   MainWorkflow : public QObject, public ILoadSave
          * \brief   Return the number of track for each track type.
          */
         quint32                 trackCount() const;
-
-        //FIXME: Ugly workaround
-        bool                    save( QXmlStreamWriter& project );
-        bool                    load( const QDomDocument& project );
 
     private:
         /**

@@ -25,7 +25,6 @@
 
 #include "Main/Core.h"
 #include "Project/Project.h"
-#include "Project/ILoadSave.h"
 #include "SettingValue.h"
 
 #include <QString>
@@ -100,7 +99,7 @@ class QDomElement;
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
-class   Settings : public ILoadSave
+class   Settings
 {
     public:
         typedef QList<SettingValue*>                SettingList;

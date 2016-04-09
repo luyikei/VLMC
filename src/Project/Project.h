@@ -27,8 +27,6 @@
 
 #include <QObject>
 
-#include "ILoadSave.h"
-
 class QDomDocument;
 class QFile;
 class QString;

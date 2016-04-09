@@ -129,8 +129,6 @@ class   Clip : public QObject
 
         bool                addSubclip( Clip* clip );
 
-        void                save( QXmlStreamWriter& project );
-
         /**
          *  \brief          Generates a full Clip id
          *

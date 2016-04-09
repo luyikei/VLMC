@@ -24,7 +24,6 @@
 #define WORKFLOWRENDERER_H
 
 #include "GenericRenderer.h"
-#include "Project/ILoadSave.h"
 #include "Backend/ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 
@@ -43,7 +42,7 @@ class   QWidget;
 class   QWaitCondition;
 class   QMutex;
 
-class   WorkflowRenderer : public GenericRenderer, public ILoadSave
+class   WorkflowRenderer : public GenericRenderer
 {
     Q_OBJECT
     Q_DISABLE_COPY( WorkflowRenderer )
@@ -216,11 +215,6 @@ class   WorkflowRenderer : public GenericRenderer, public ILoadSave
          *  \brief          Configure the production chain.
          */
         void                setupRenderer(quint32 width, quint32 height, double fps , const QString& ar);
-
-    //FIXME: Ugly workaround
-    public:
-        bool                save( QXmlStreamWriter &project );
-        bool                load( const QDomDocument& project );
 
     protected:
         MainWorkflow*       m_mainWorkflow;

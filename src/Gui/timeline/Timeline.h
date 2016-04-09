@@ -24,7 +24,6 @@
 #define TIMELINE_H
 
 #include "Workflow/ClipHelper.h"
-#include "Project/ILoadSave.h"
 #include "vlmc.h"
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"
@@ -43,7 +42,7 @@ class   WorkflowRenderer;
 /**
  * \brief Entry point of the timeline widget.
  */
-class Timeline : public QWidget, public ILoadSave
+class Timeline : public QWidget
 {
     Q_OBJECT
     Q_DISABLE_COPY( Timeline )
@@ -87,9 +86,6 @@ protected:
 
 private:
     void                initialize();
-    virtual bool        save( QXmlStreamWriter& project );
-    virtual bool        load( const QDomDocument& root );
-
 
 private:
     Ui::Timeline        m_ui;

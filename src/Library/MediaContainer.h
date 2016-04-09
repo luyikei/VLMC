@@ -26,12 +26,10 @@
 #include <QHash>
 #include <QObject>
 #include <QUuid>
-#include <QXmlStreamWriter>
 
 class   Media;
 class   Clip;
 class   QFileInfo;
-class   QDomElement;
 
 class   MediaContainer : public QObject
 {
@@ -93,18 +91,6 @@ public:
      *  \return true if the Clip has been added.
      */
     virtual bool    addClip( Clip* clip );
-
-    /**
-     *  \brief  Save the contained media to the given XML stream
-     *
-     *  This will save all contained clip. If a clip contained subclips, they will be saved
-     *  too, and so on.
-     *
-     *  \param  project     The QXmlStreamWriter to write into.
-     */
-    void        saveContainer( QXmlStreamWriter& project ) const;
-
-    bool        loadContainer( const QDomElement& clips, MediaContainer *parent );
 
     /**
      *  \return All the loaded Clip

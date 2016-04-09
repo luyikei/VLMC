@@ -31,7 +31,6 @@
 #define LIBRARY_H
 
 #include "MediaContainer.h"
-#include "Project/ILoadSave.h"
 
 #include <QObject>
 #include <QXmlStreamWriter>
@@ -47,7 +46,7 @@ class Workspace;
  *  \class Library
  *  \brief Library Object that handles public Clips
  */
-class Library : public MediaContainer, public ILoadSave
+class Library : public MediaContainer
 {
     Q_OBJECT
     Q_DISABLE_COPY( Library );
@@ -59,11 +58,6 @@ public:
     virtual Media   *addMedia( const QFileInfo &fileInfo );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
-
-    //FIXME: Ugly workaround
-public:
-    bool            save( QXmlStreamWriter& project );
-    virtual bool    load( const QDomDocument& project );
 
 private:
     void            setCleanState( bool newState );

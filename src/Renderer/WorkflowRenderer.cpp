@@ -364,25 +364,6 @@ Backend::ISourceRenderer::MemoryInputUnlockCallback WorkflowRenderer::getUnlockC
     return WorkflowRenderer::unlock;
 }
 
-bool
-WorkflowRenderer::save( QXmlStreamWriter &project )
-{
-    project.writeStartElement( "renderer" );
-    saveFilters( project );
-    project.writeEndElement();
-    return true;
-}
-
-bool
-WorkflowRenderer::load(const QDomDocument& project )
-{
-    QDomElement     renderer = project.firstChildElement( "renderer" );
-    if ( renderer.isNull() == true )
-        return false;
-    loadEffects( renderer );
-    return true;
-}
-
 /////////////////////////////////////////////////////////////////////
 /////SLOTS :
 /////////////////////////////////////////////////////////////////////
