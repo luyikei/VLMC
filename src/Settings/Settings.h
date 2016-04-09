@@ -102,8 +102,9 @@ class QJsonDocument;
         VLMC_CREATE_PROJECT_VAR( SettingValue::String, key, defaultValue, "", "", SettingValue::Private )
 
 
-class   Settings
+class   Settings: public QObject
 {
+    Q_OBJECT
     public:
         typedef QList<SettingValue*>                SettingList;
         typedef QMap<QString, SettingValue*>        SettingMap;
@@ -132,6 +133,9 @@ class   Settings
         QJsonDocument               readSettingsFromFile();
         void                        loadJsonFrom( const QJsonObject& object );
         void                        saveJsonTo( QJsonObject& object );
+    signals:
+        void                        postLoad();
+        void                        preSave();
 };
 
 #endif

@@ -162,11 +162,13 @@ Settings::loadJsonFrom( const QJsonObject &object )
         if ( setValue( it.key(), (*it).toVariant() ) == false )
             vlmcWarning() << "Loaded invalid project setting:" << it.key();
     }
+    emit postLoad();
 }
 
 void
 Settings::saveJsonTo( QJsonObject &object )
 {
+    emit preSave();
     for ( const auto& val : m_settings )
     {
         if ( ( val->flags() & SettingValue::Runtime ) != 0 )
