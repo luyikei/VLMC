@@ -114,6 +114,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, SLOT( onBackupFileLoaded() ) );
     connect( Core::instance()->project(), SIGNAL( projectSaved() ),
              this, SLOT( onProjectSaved() ) );
+    connect( Core::instance()->project(), &Project::cleanStateChanged,
+             this, &MainWindow::cleanStateChanged );
 
 
     //Connecting Library stuff:
