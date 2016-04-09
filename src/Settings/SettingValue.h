@@ -48,6 +48,9 @@ class   SettingValue : public QObject
             Path,
             ByteArray, // For now this is only for private variables, and is not expected to be used at any time
             //For effect engine settings:
+            List,
+            Map,
+            Hash,
             Color,
             Position
         };
