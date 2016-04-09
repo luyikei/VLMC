@@ -33,6 +33,7 @@
 #include <QReadWriteLock>
 #include <QVariant>
 #include <QXmlStreamWriter>
+#include <QJsonObject>
 
 class SettingValue;
 
@@ -113,14 +114,12 @@ class   Settings
         SettingList                 group( const QString &groupName ) const;
         bool                        load();
         bool                        save();
-        bool                        save( QJsonDocument& project );
         void                        restoreDefaultValues();
         void                        setSettingsFile( const QString& settingsFile );
 
-        bool                        load( const QJsonDocument& document );
-
     private:
         SettingMap                  m_settings;
+        QJsonObject                 m_jsonObject;
         mutable QReadWriteLock      m_rwLock;
         QFile*                      m_settingsFile;
 };

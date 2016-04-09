@@ -69,45 +69,6 @@ Settings::setSettingsFile(const QString &settingsFile)
 }
 
 bool
-Settings::save( QJsonDocument& doc )
-{
-    QReadLocker lock( &m_rwLock );
-
-    SettingMap::const_iterator     it = m_settings.begin();
-    SettingMap::const_iterator     end = m_settings.end();
-
-    QJsonObject top;
-    for ( ; it != end; ++it )
-    {
-        if ( ( (*it)->flags() & SettingValue::Runtime ) != 0 )
-            continue ;
-        if ( top.insert( (*it)->key(), QJsonValue::fromVariant( (*it)->get() ) ) == top.end() )
-            vlmcWarning() << "Failed to set:" << (*it)->key();
-    }
-    doc.setObject( top );
-    return true;
-}
-
-bool
-Settings::load( const QJsonDocument& doc )
-{
-    if ( doc.isNull() == true )
-    {
-        vlmcWarning() << "Invalid settings node";
-        return false;
-    }
-    for ( auto it = doc.object().constBegin();
-          it != doc.object().constEnd();
-          ++it )
-    {
-        if ( setValue( it.key(), (*it).toVariant() ) == false )
-            vlmcWarning() << "Loaded invalid project setting:" << it.key();
-        
-    }
-    return true;
-}
-
-bool
 Settings::load()
 {
     if ( m_settingsFile->open( QFile::ReadOnly ) == false )
@@ -116,16 +77,28 @@ Settings::load()
         return false;
     }
     QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson( m_settingsFile->readAll(), &error );
+    m_jsonObject = QJsonDocument::fromJson( m_settingsFile->readAll(), &error ).object();
     if ( error.error != QJsonParseError::NoError )
     {
         vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
         vlmcWarning() << error.errorString();
         return false;
     }
-    bool res = load( doc );
+
+    for ( auto it = m_jsonObject.constBegin();
+          it != m_jsonObject.constEnd();
+          ++it
+          )
+    {
+        if ( (*it).type() == QJsonValue::Object )
+            continue ;
+        if ( setValue( it.key(), (*it).toVariant() ) == false )
+            vlmcWarning() << "Loaded invalid project setting:" << it.key();
+
+    }
+
     m_settingsFile->close();
-    return res;
+    return true;
 }
 
 bool
@@ -134,7 +107,19 @@ Settings::save()
     if ( m_settingsFile == nullptr )
         return false;
     QJsonDocument doc;
-    save( doc );
+
+    QReadLocker lock( &m_rwLock );
+
+    QJsonObject top;
+    for ( const auto& val : m_settings )
+    {
+        if ( ( val->flags() & SettingValue::Runtime ) != 0 )
+            continue ;
+        if ( top.insert( val->key(), QJsonValue::fromVariant( val->get() ) ) == top.end() )
+            vlmcWarning() << "Failed to set:" << val->key();
+    }
+    doc.setObject( top );
+
     m_settingsFile->open( QFile::WriteOnly );
     m_settingsFile->write( doc.toJson( QJsonDocument::Compact ) );
     m_settingsFile->close();
