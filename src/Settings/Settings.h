@@ -37,7 +37,7 @@
 class SettingValue;
 
 class QFile;
-class QDomElement;
+class QJsonDocument;
 
 
 //Var helpers :
@@ -113,11 +113,11 @@ class   Settings
         SettingList                 group( const QString &groupName ) const;
         bool                        load();
         bool                        save();
-        bool                        save( QXmlStreamWriter& project );
+        bool                        save( QJsonDocument& project );
         void                        restoreDefaultValues();
         void                        setSettingsFile( const QString& settingsFile );
 
-        bool                        load( const QDomDocument& document );
+        bool                        load( const QJsonDocument& document );
 
     private:
         SettingMap                  m_settings;

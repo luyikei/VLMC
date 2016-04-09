@@ -33,7 +33,8 @@
 #include <QFileInfo>
 #include <QDir>
 
-#include <QDomElement>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 
 Settings::Settings(const QString &settingsFile)
@@ -68,53 +69,40 @@ Settings::setSettingsFile(const QString &settingsFile)
 }
 
 bool
-Settings::save( QXmlStreamWriter& project )
+Settings::save( QJsonDocument& doc )
 {
     QReadLocker lock( &m_rwLock );
 
     SettingMap::const_iterator     it = m_settings.begin();
     SettingMap::const_iterator     end = m_settings.end();
 
-    project.writeStartElement( "settings" );
+    QJsonObject top;
     for ( ; it != end; ++it )
     {
         if ( ( (*it)->flags() & SettingValue::Runtime ) != 0 )
             continue ;
-        project.writeStartElement( "setting" );
-        project.writeAttribute( "key", (*it)->key() );
-        if ( (*it)->get().canConvert<QString>() == false )
-            vlmcWarning() << "Can't serialize" << (*it)->key();
-        project.writeAttribute( "value", (*it)->get().toString() );
-        project.writeEndElement();
+        if ( top.insert( (*it)->key(), QJsonValue::fromVariant( (*it)->get() ) ) == top.end() )
+            vlmcWarning() << "Failed to set:" << (*it)->key();
     }
-    project.writeEndElement();
+    doc.setObject( top );
     return true;
 }
 
 bool
-Settings::load( const QDomDocument& document )
+Settings::load( const QJsonDocument& doc )
 {
-    QDomElement     element = document.firstChildElement( "settings" );
-    if ( element.isNull() == true )
+    if ( doc.isNull() == true )
     {
         vlmcWarning() << "Invalid settings node";
         return false;
     }
-    QDomElement s = element.firstChildElement( "setting" );
-    while ( s.isNull() == false )
+    for ( auto it = doc.object().constBegin();
+          it != doc.object().constEnd();
+          ++it )
     {
-        QString     key = s.attribute( "key" );
-        QString     value = s.attribute( "value" );
-
-        if ( key.isEmpty() == true )
-            vlmcWarning() << "Invalid setting node.";
-        else
-        {
-            vlmcDebug() << "Loading" << key << "=>" << value;
-            if ( setValue( key, value ) == false )
-                vlmcWarning() << "Loaded invalid project setting:" << key;
-        }
-        s = s.nextSiblingElement();
+        if ( setValue( it.key(), (*it).toVariant() ) == false )
+            vlmcWarning() << "Loaded invalid project setting:" << it.key();
+        
     }
     return true;
 }
@@ -122,15 +110,17 @@ Settings::load( const QDomDocument& document )
 bool
 Settings::load()
 {
-    QDomDocument    doc("root");
     if ( m_settingsFile->open( QFile::ReadOnly ) == false )
     {
         vlmcWarning() << "Failed to open settings file" << m_settingsFile->fileName();
         return false;
     }
-    if ( doc.setContent( m_settingsFile ) == false )
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson( m_settingsFile->readAll(), &error );
+    if ( error.error != QJsonParseError::NoError )
     {
         vlmcWarning() << "Failed to load settings file" << m_settingsFile->fileName();
+        vlmcWarning() << error.errorString();
         return false;
     }
     bool res = load( doc );
@@ -143,12 +133,10 @@ Settings::save()
 {
     if ( m_settingsFile == nullptr )
         return false;
-    QByteArray          settingsContent;
-    QXmlStreamWriter    streamWriter( &settingsContent );
-    streamWriter.setAutoFormatting( true );
-    save( streamWriter );
+    QJsonDocument doc;
+    save( doc );
     m_settingsFile->open( QFile::WriteOnly );
-    m_settingsFile->write( settingsContent );
+    m_settingsFile->write( doc.toJson( QJsonDocument::Compact ) );
     m_settingsFile->close();
     return true;
 }
