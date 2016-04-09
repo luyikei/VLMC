@@ -34,7 +34,6 @@
 #include "Renderer/WorkflowRenderer.h"
 
 #include <QHBoxLayout>
-#include <QDomElement>
 #include <QScrollBar>
 
 Timeline*   Timeline::m_instance = nullptr;

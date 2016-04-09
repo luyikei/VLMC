@@ -23,7 +23,6 @@
 //Allow PRId64 to be defined:
 #define __STDC_FORMAT_MACROS
 
-#include <QDomElement>
 #include <QThread>
 #include <QWaitCondition>
 #include <inttypes.h>

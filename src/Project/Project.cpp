@@ -24,7 +24,6 @@
 
 #include <QFile>
 #include <QFileInfo>
-#include <QDomDocument>
 #include <QTimer>
 
 
@@ -33,12 +32,6 @@
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
-
-//FIXME: This is required to save for now, but it feels wrong
-#include "Workflow/MainWorkflow.h"
-#include "Library/Library.h"
-#include "Renderer/WorkflowRenderer.h"
-#include "timeline/Timeline.h"
 
 const QString   Project::unNamedProject = Project::tr( "Untitled Project" );
 const QString   Project::backupSuffix = "~";
@@ -94,7 +87,6 @@ Project::load( const QString& path )
 
     QString         backupFilename = path + Project::backupSuffix;
     QFile           autoBackup( backupFilename );
-    QDomDocument    doc;
     bool            autoBackupFound = false;
     bool            outdatedBackupFound = false;
 
@@ -123,7 +115,7 @@ Project::load( const QString& path )
                 return false;
             }
             autoBackupFound = true;
-            doc.setContent( &autoBackup );
+            m_settings->setSettingsFile( backupFilename );
         }
     }
     else
@@ -134,10 +126,9 @@ Project::load( const QString& path )
             m_projectFile = nullptr;
             return false;
         }
-        doc.setContent( m_projectFile );
+        m_settings->setSettingsFile( path );
     }
 
-    m_settings->setSettingsFile( path );
     m_settings->load();
     auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
     emit projectLoading( projectName );

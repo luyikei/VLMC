@@ -27,10 +27,8 @@
 
 #include <QObject>
 
-class QDomDocument;
 class QFile;
 class QString;
-class QXmlStreamWriter;
 class QTimer;
 
 class AutomaticBackup;
@@ -126,9 +124,6 @@ class Project : public QObject
         void                projectClosed();
         void                backupProjectLoaded();
         void                outdatedBackupFileFound();
-
-private:
-        bool                loadWorkflow( const QDomDocument& root );
 
     private:
         QFile*              m_projectFile;

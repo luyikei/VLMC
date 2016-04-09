@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include <QHash>
-#include <QDomElement>
 #include <QUuid>
 
 #include "Library.h"

@@ -40,8 +40,7 @@
 #include "vlmc.h"
 #include "Tools/VlmcDebug.h"
 
-#include <QDomDocument>
-#include <QDomElement>
+
 #include <QReadLocker>
 #include <QMutex>
 

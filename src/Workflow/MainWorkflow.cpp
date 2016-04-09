@@ -35,7 +35,6 @@
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
 
-#include <QDomElement>
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :

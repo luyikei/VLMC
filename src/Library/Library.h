@@ -31,11 +31,7 @@
 #define LIBRARY_H
 
 #include "MediaContainer.h"
-
 #include <QObject>
-#include <QXmlStreamWriter>
-
-class   QDomElement;
 
 class Clip;
 class Media;

@@ -27,7 +27,6 @@
 
 #include "EffectsEngine/EffectsEngine.h"
 
-class   QDomElement;
 class   QReadWriteLock;
 
 class EffectUser : public QObject

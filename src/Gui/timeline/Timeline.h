@@ -28,9 +28,6 @@
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"
 
-#include <QDomElement>
-#include <QXmlStreamWriter>
-
 class   MainWorkflow;
 class   Project;
 class   TracksScene;
