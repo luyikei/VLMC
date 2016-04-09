@@ -89,6 +89,7 @@ Settings::readSettingsFromFile()
         vlmcWarning() << error.errorString();
         return QJsonDocument( QJsonObject() );
     }
+    m_settingsFile->close();
     return doc;
 }
 
@@ -107,7 +108,6 @@ Settings::load()
         child.second->loadJsonFrom( top[ child.first ].toObject() );
     }
 
-    m_settingsFile->close();
     return true;
 }
 
