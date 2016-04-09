@@ -38,17 +38,19 @@
 #include <QDomElement>
 #include <QMutex>
 
-MainWorkflow::MainWorkflow( int trackCount ) :
+MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_blackOutput( nullptr ),
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
         m_width( 0 ),
         m_height( 0 ),
-        m_trackCount( trackCount )
+        m_trackCount( trackCount ),
+        m_settings( new Settings )
 {
     m_currentFrameLock = new QReadWriteLock;
 
     m_tracks = new TrackHandler*[Workflow::NbTrackType];
+    QVariantList l;
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
     {
         Workflow::TrackType trackType = static_cast<Workflow::TrackType>(i);
@@ -58,7 +60,13 @@ MainWorkflow::MainWorkflow( int trackCount ) :
         connect( m_tracks[i], SIGNAL( lengthChanged(qint64) ),
                  this, SLOT( lengthUpdated( qint64 ) ) );
         m_currentFrame[i] = 0;
+        l << QVariantHash();
     }
+
+    m_settings->createVar( SettingValue::List, "tracks", l, "", "", SettingValue::Nothing );
+    connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );
+    connect( m_settings, &Settings::preSave, this, &MainWorkflow::preSave, Qt::DirectConnection );
+    projectSettings->addSettings( "Workspace", *m_settings );
 }
 
 MainWorkflow::~MainWorkflow()
@@ -68,6 +76,7 @@ MainWorkflow::~MainWorkflow()
         delete m_tracks[i];
     delete[] m_tracks;
     delete m_blackOutput;
+    delete m_settings;
 }
 
 void
@@ -315,6 +324,23 @@ quint32
 MainWorkflow::trackCount() const
 {
     return m_trackCount;
+}
+
+void
+MainWorkflow::preSave()
+{
+    QVariantList l;
+    for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
+        l << m_tracks[i]->toVariant();
+    m_settings->value( "tracks" )->set( l );
+}
+
+void
+MainWorkflow::postLoad()
+{
+    QVariantList l = m_settings->value( "tracks" )->get().toList();
+    for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
+        m_tracks[i]->loadFromVariant( l[i] );
 }
 
 void

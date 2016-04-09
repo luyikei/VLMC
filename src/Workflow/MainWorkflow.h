@@ -41,8 +41,7 @@ namespace   Workflow
     class   AudioSample;
 }
 
-class   QDomDocument;
-class   QDomElement;
+class   Settings;
 class   QMutex;
 class   QReadWriteLock;
 
@@ -57,7 +56,7 @@ class   MainWorkflow : public QObject
     Q_OBJECT
 
     public:
-        MainWorkflow( int trackCount = 64 );
+        MainWorkflow( Settings* projectSettings, int trackCount = 64 );
         ~MainWorkflow();
 
         /**
@@ -261,6 +260,9 @@ class   MainWorkflow : public QObject
          */
         quint32                 trackCount() const;
 
+        void                    preSave();
+        void                    postLoad();
+
     private:
         /**
          *  \brief  Compute the length of the workflow.
@@ -311,6 +313,8 @@ class   MainWorkflow : public QObject
         quint32                         m_height;
         /// Store the number of track for each track type.
         const quint32                   m_trackCount;
+
+        Settings*                       m_settings;
 
     private slots:
         /**

@@ -173,7 +173,6 @@ class   ClipWorkflow : public EffectUser
          */
         bool                    isResyncRequired();
 
-        void                    save( QXmlStreamWriter& project ) const;
         virtual qint64          length() const;
         virtual Type            effectType() const;
 

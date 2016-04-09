@@ -38,8 +38,6 @@ namespace   Workflow
     class   Helper;
 }
 
-class   QDomElement;
-class   QDomElement;
 template <typename T>
 class   QList;
 class   QMutex;
@@ -69,7 +67,8 @@ class   TrackWorkflow : public EffectUser
         //FIXME: this won't be reliable as soon as we change the fps from the configuration
         static const unsigned int               nbFrameBeforePreload = 60;
 
-        void                                    save( QXmlStreamWriter& project ) const;
+        virtual QVariant                        toVariant() const;
+        void                                    loadFromVariant( const QVariant& variant );
         void                                    clear();
 
         void                                    renderOneFrame();

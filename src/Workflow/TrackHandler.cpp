@@ -24,8 +24,7 @@
 #include "TrackWorkflow.h"
 #include "Workflow/Types.h"
 
-#include <QDomDocument>
-#include <QDomElement>
+#include <QVariant>
 
 TrackHandler::TrackHandler( unsigned int nbTracks, Workflow::TrackType trackType ) :
         m_trackCount( nbTracks ),
@@ -154,19 +153,30 @@ TrackHandler::getTrackCount() const
     return m_trackCount;
 }
 
-void
-TrackHandler::save( QXmlStreamWriter& project ) const
+QVariant
+TrackHandler::toVariant() const
 {
+    QVariantList l;
     for ( unsigned int i = 0; i < m_trackCount; ++i)
     {
         if ( m_tracks[i]->getLength() > 0 || m_tracks[i]->count( Effect::Filter ) > 0 )
         {
-            project.writeStartElement( "track" );
-            project.writeAttribute( "type", QString::number( (int)m_trackType ) );
-            project.writeAttribute( "id", QString::number( i ) );
-            m_tracks[i]->save( project );
-            project.writeEndElement();
+            l << QVariantHash{
+                        { "id", i },
+                        { "track", m_tracks[i]->toVariant() }
+                    };
         }
+    }
+    return QVariant( l );
+}
+
+void
+TrackHandler::loadFromVariant( const QVariant &variant )
+{
+    for ( const auto& var : variant.toList() )
+    {
+        quint32 id = var.toMap()["id"].toUInt();
+        m_tracks[ id ]->loadFromVariant( var.toMap()["track"]);
     }
 }
 

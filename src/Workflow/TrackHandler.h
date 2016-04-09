@@ -62,7 +62,8 @@ class   TrackHandler : public QObject
 
         bool                    endIsReached() const;
 
-        void                    save( QXmlStreamWriter& project ) const;
+        QVariant                toVariant() const;
+        void                    loadFromVariant( const QVariant& var );
 
         /**
          *  \brief      Will configure the track workflow so they render only one frame

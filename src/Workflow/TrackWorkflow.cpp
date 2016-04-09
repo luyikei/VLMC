@@ -32,6 +32,7 @@
 #include "ImageClipWorkflow.h"
 #include "Backend/ISource.h"
 #include "Main/Core.h"
+#include "Library/Library.h"
 #include "MainWorkflow.h"
 #include "Media/Media.h"
 #include "Types.h"
@@ -41,8 +42,8 @@
 
 #include <QDomDocument>
 #include <QDomElement>
+#include <QReadLocker>
 #include <QMutex>
-#include <QReadWriteLock>
 
 TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
         m_length( 0 ),
@@ -462,23 +463,51 @@ TrackWorkflow::removeClipWorkflow( const QUuid& id )
     return nullptr;
 }
 
-void
-TrackWorkflow::save( QXmlStreamWriter& project ) const
+QVariant
+TrackWorkflow::toVariant() const
 {
-    QReadLocker     lock( m_clipsLock );
-
-    QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
-    QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
-
-    project.writeStartElement( "clips" );
-    for ( ; it != end ; ++it )
+    QVariantList l;
+    for ( auto it = m_clips.cbegin(); it != m_clips.cend(); it++ )
     {
-        project.writeStartElement( "clip" );
-        project.writeAttribute( "startFrame", QString::number( it.key() ) );
-        it.value()->save( project );
-        project.writeEndElement();
+        l << QVariantHash{
+                    { "clip", (*it)->clip()->uuid() },
+                    { "begin", (*it)->getClipHelper()->begin() },
+                    { "end", (*it)->getClipHelper()->end() },
+                    { "startFrame", it.key() },
+                    { "filters", (*it)->toVariant() }
+                };
     }
-    project.writeEndElement();
+    QVariantHash h{ { "clips", l }, { "filters", EffectUser::toVariant() } };
+    return QVariant( h );
+}
+
+void
+TrackWorkflow::loadFromVariant( const QVariant &variant )
+{
+    for ( const auto& var : variant.toMap()[ "clips" ].toList() )
+    {
+        QVariantMap m = var.toMap();
+        const QString& uuid     = m["clip"].toString();
+        qint64 startFrame       = m["startFrame"].toLongLong();
+        qint64 begin            = m["begin"].toLongLong();
+        qint64 end              = m["end"].toLongLong();
+
+        if ( uuid.isEmpty() )
+        {
+            vlmcWarning() << "Invalid clip node";
+            return ;
+        }
+
+        Clip* c = Core::instance()->library()->clip( uuid );
+        if ( c != nullptr )
+        {
+            ClipHelper  *ch = new ClipHelper( c, begin, end );
+            addClip( ch, startFrame );
+
+            ch->clipWorkflow()->loadFromVariant( m["filters"] );
+        }
+    }
+    EffectUser::loadFromVariant( variant.toMap()["filters"] );
 }
 
 void
