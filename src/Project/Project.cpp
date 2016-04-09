@@ -48,7 +48,7 @@ Project::Project( Settings* settings )
     , m_isClean( true )
     , m_libraryCleanState( true )
     , m_timer( new QTimer( this ) )
-    , m_settings( new Settings( QString() ) )
+    , m_settings( new Settings )
 {
     initSettings();
 
