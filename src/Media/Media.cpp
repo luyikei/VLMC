@@ -31,6 +31,8 @@
 #include "Media.h"
 
 #include "Clip.h"
+#include "Main/Core.h"
+#include "Library/Library.h"
 #include "Metadata/MetaDataManager.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
@@ -144,6 +146,12 @@ Media::onMetaDataComputed()
         // trigger an error for this kind of file since we can't use them.
         vlmcFatal("Got metadata for a file which has no video nor audio.");
     }
+}
+
+QVariant
+Media::toVariant() const
+{
+    return QVariant( m_fileInfo->absoluteFilePath() );
 }
 
 void

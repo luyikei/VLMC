@@ -97,6 +97,8 @@ public:
 
     void                        onMetaDataComputed();
 
+    QVariant                    toVariant() const;
+
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 

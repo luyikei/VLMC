@@ -143,6 +143,9 @@ class   Clip : public QObject
          */
         bool                isChild( const QUuid& uuid ) const;
 
+        QVariant            toVariant() const;
+        QVariant            toVariantFull() const;
+
     private:
         Media               *m_media;
         /**

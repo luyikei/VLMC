@@ -121,6 +121,9 @@ protected:
 
     Clip*                   m_parent;
 
+    Media*          createMediaFromVariant( const QVariant& var );
+    Clip*           createClipFromVariant( const QVariant& var, Clip* parent );
+
 public slots:
     /**
      *  \brief  Removes a Clip from the container and delete it

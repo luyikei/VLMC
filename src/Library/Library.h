@@ -69,6 +69,8 @@ private:
     Workspace*  m_workspace;
 
     Settings*   m_settings;
+    void        preSave();
+    void        postLoad();
 
 private slots:
     void    mediaLoaded( const Media* m );

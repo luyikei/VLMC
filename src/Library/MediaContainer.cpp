@@ -194,3 +194,29 @@ MediaContainer::count() const
 {
     return m_clips.size();
 }
+
+Media*
+MediaContainer::createMediaFromVariant( const QVariant& var )
+{
+    Media* m = addMedia( QFileInfo( var.toString() ) );
+    return m;
+}
+
+Clip*
+MediaContainer::createClipFromVariant( const QVariant &var, Clip* parent )
+{
+    QVariantMap h = var.toMap();
+    Clip* c = nullptr;
+
+    if ( h.contains( "parent" ) )
+        c = new Clip( parent, h["begin"].toULongLong(),
+                h["end"].toULongLong(), h["uuid"].toString() );
+    else {
+        c = new Clip( m_medias[ h["media"].toString() ], 0, -1, h["uuid"].toString() );
+        addClip( c );
+    }
+    if ( h.contains( "subClips" ) )
+        for ( auto& var : h["subClips"].toList() )
+            c->addSubclip( createClipFromVariant( var, c ) );
+    return c;
+}

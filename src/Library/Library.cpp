@@ -36,7 +36,7 @@
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
 
-#include <QDomElement>
+#include <QVariant>
 #include <QHash>
 #include <QUuid>
 
@@ -45,7 +45,34 @@ Library::Library( Settings *projectSettings )
     , m_settings( new Settings )
 {
     m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
+    m_settings->createVar( SettingValue::List, QString( "clips" ), QVariantList(), "", "", SettingValue::Nothing );
+    connect( m_settings, &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
+    connect( m_settings, &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
+
     projectSettings->addSettings( "Library", *m_settings );
+}
+
+void
+Library::preSave()
+{
+    QVariantList l;
+    for ( auto val : m_medias )
+        l << val->toVariant();
+    m_settings->value( "medias" )->set( l );
+    l.clear();
+    for ( auto val : m_clips )
+        l << val->toVariantFull();
+    m_settings->value( "clips" )->set( l );
+}
+
+void
+Library::postLoad()
+{
+    for ( const auto& var : m_settings->value( "medias" )->get().toList() )
+        createMediaFromVariant( var );
+
+    for ( const auto& var : m_settings->value( "clips" )->get().toList() )
+        createClipFromVariant( var, nullptr );
 }
 
 Library::~Library()
@@ -95,6 +122,7 @@ Library::addClip( Clip *clip )
     bool    ret = MediaContainer::addClip( clip );
     if ( ret != false )
         setCleanState( false );
+    m_medias[clip->getMedia()->fileInfo()->absoluteFilePath()] = clip->getMedia();
     return ret;
 }
 

@@ -25,10 +25,12 @@
   */
 
 #include "Clip.h"
+#include "Main/Core.h"
 #include "Backend/ISource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Project/Workspace.h"
+#include <QVariant>
 
 const int   Clip::DefaultFPS = 30;
 
@@ -241,6 +243,40 @@ Clip::isChild( const QUuid &uuid) const
         c = c->m_parent;
     }
     return false;
+}
+
+QVariant
+Clip::toVariant() const
+{
+    QVariantHash h = {
+        { "uuid", m_uuid.toString() },
+        { "metatags", m_metaTags },
+        { "notes", m_notes }
+    };
+    if ( isRootClip() )
+        h.insert( "media", m_media->toVariant() );
+    else
+    {
+        h.insert( "parent", m_parent->uuid().toString() );
+        h.insert( "begin", m_begin );
+        h.insert( "end", m_end );
+    }
+    return QVariant( h );
+
+}
+
+QVariant
+Clip::toVariantFull() const
+{
+    QVariantHash h = toVariant().toHash();
+    if ( m_childs->count() > 0 )
+    {
+        QVariantList l;
+        for ( const auto& c : m_childs->clips() )
+            l << c->toVariant();
+        h.insert( "subClips", l );
+    }
+    return h;
 }
 
 void
