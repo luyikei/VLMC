@@ -47,13 +47,13 @@ Core::Core()
     m_logger = new VlmcLogger;
 
     createSettings();
+    m_currentProject = new Project( m_settings );
+    m_library = new Library( m_currentProject->settings() );
     m_recentProjects = new RecentProjects( m_settings );
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow;
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new QUndoStack;
-    m_library = new Library;
-    m_currentProject = new Project( m_settings );
 
     connect( m_undoStack, &QUndoStack::cleanChanged, m_currentProject, &Project::cleanChanged );
     connect( m_currentProject, &Project::projectSaved, m_undoStack, &QUndoStack::setClean );

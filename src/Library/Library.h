@@ -41,6 +41,7 @@ class Clip;
 class Media;
 class ProjectManager;
 class Workspace;
+class Settings;
 
 /**
  *  \class Library
@@ -52,8 +53,8 @@ class Library : public MediaContainer
     Q_DISABLE_COPY( Library );
 
 public:
-    Library();
-    virtual ~Library(){}
+    Library( Settings* projectSettings );
+    virtual ~Library();
     virtual void    addMedia( Media* media );
     virtual Media   *addMedia( const QFileInfo &fileInfo );
     virtual bool    addClip( Clip *clip );
@@ -67,6 +68,7 @@ private:
     bool        m_cleanState;
     Workspace*  m_workspace;
 
+    Settings*   m_settings;
 
 private slots:
     void    mediaLoaded( const Media* m );

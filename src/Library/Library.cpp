@@ -40,9 +40,17 @@
 #include <QHash>
 #include <QUuid>
 
-Library::Library()
+Library::Library( Settings *projectSettings )
     : m_cleanState( true )
+    , m_settings( new Settings )
 {
+    m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
+    projectSettings->addSettings( "Library", *m_settings );
+}
+
+Library::~Library()
+{
+    delete m_settings;
 }
 
 void

@@ -137,6 +137,8 @@ Project::load( const QString& path )
         doc.setContent( m_projectFile );
     }
 
+    m_settings->setSettingsFile( path );
+    m_settings->load();
     auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
     emit projectLoading( projectName );
     m_isClean = autoBackupFound == false;
@@ -228,22 +230,8 @@ Project::initSettings()
 void
 Project::saveProject( const QString& fileName )
 {
-    QByteArray          projectString;
-
-    QXmlStreamWriter    project( &projectString );
-
-    project.setAutoFormatting( true );
-    project.writeStartDocument();
-    project.writeStartElement( "vlmc" );
-
-    project.writeEndElement();
-    project.writeEndDocument();
-
-    // We are not necessarily saving the project to the "main" project file here
-    // so we don't use m_projectFile
-    QFile   projectFile( fileName );
-    projectFile.open( QFile::WriteOnly );
-    projectFile.write( projectString );
+    m_settings->setSettingsFile( fileName );
+    m_settings->save();
     emit projectSaved();
 }
 
