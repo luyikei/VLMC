@@ -63,6 +63,7 @@ Library::preSave()
     for ( auto val : m_clips )
         l << val->toVariantFull();
     m_settings->value( "clips" )->set( l );
+    setCleanState( true );
 }
 
 void
