@@ -56,18 +56,16 @@ MediaContainer::clip( const QUuid& uuid )
 Clip*
 MediaContainer::clip( const QString &uuid )
 {
-    MediaContainer      *mc = this;
-    Clip                *clip = nullptr;
-    QStringList         ids = uuid.split( '/' );
-
-    foreach ( QString id, ids )
-    {
-        clip = mc->clip( QUuid( id ) );
-        if ( clip == nullptr )
-            return nullptr;
-        mc = clip->getChilds();
-    }
-    return clip;
+    for ( const auto& clip : m_clips )
+        if ( clip->uuid().toString() == uuid )
+            return clip;
+        else
+        {
+            auto c = clip->getChilds()->clip( uuid );
+            if ( c != nullptr )
+                return c;
+        }
+    return nullptr;
 }
 
 void
