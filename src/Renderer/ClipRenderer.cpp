@@ -88,7 +88,7 @@ ClipRenderer::startPreview()
     updateInfos( m_selectedClip );
 
     delete m_sourceRenderer;
-    m_sourceRenderer = m_selectedClip->getMedia()->source()->createRenderer( m_eventWatcher );
+    m_sourceRenderer = m_selectedClip->media()->source()->createRenderer( m_eventWatcher );
     m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 
     connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
@@ -100,7 +100,7 @@ ClipRenderer::startPreview()
     connect( m_eventWatcher, SIGNAL( timeChanged( qint64 ) ), this, SLOT( timeChanged( qint64 ) ) );
 
     m_sourceRenderer->start();
-    m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->getMedia()->source()->nbFrames() );
+    m_sourceRenderer->setPosition( (float)m_begin / (float)m_selectedClip->media()->source()->nbFrames() );
     m_clipLoaded = true;
     m_isRendering = true;
     m_paused = false;
@@ -175,7 +175,7 @@ ClipRenderer::previousFrame()
             Q_ASSERT( m_paused == true );
         }
         /* FIXME: Implement a better way to render previous frame */
-        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->getMedia()->source()->fps() ) );
+        qint64   interval =  static_cast<qint64>( qCeil(1000.0f * 2.0f / m_selectedClip->media()->source()->fps() ) );
         m_sourceRenderer->setTime( m_sourceRenderer->time() - interval );
         m_sourceRenderer->nextFrame();
     }
@@ -191,7 +191,7 @@ qint64
 ClipRenderer::getLengthMs() const
 {
     if ( m_selectedClip )
-        return ( qRound64( (qreal)( m_end - m_begin ) / m_selectedClip->getMedia()->source()->fps() * 1000.0 ) );
+        return ( qRound64( (qreal)( m_end - m_begin ) / m_selectedClip->media()->source()->fps() * 1000.0 ) );
     return 0;
 }
 
@@ -214,14 +214,14 @@ ClipRenderer::getCurrentFrame() const
     if ( m_clipLoaded == false || m_isRendering == false || m_selectedClip == nullptr )
         return 0;
     return qRound64( (qreal)m_sourceRenderer->time() / 1000 *
-                     (qreal)m_selectedClip->getMedia()->source()->fps() );
+                     (qreal)m_selectedClip->media()->source()->fps() );
 }
 
 float
 ClipRenderer::getFps() const
 {
     if ( m_selectedClip != nullptr )
-        return m_selectedClip->getMedia()->source()->fps();
+        return m_selectedClip->media()->source()->fps();
     return 0.0f;
 }
 
@@ -237,7 +237,7 @@ ClipRenderer::previewWidgetCursorChanged( qint64 newFrame )
     if ( m_isRendering == true )
     {
         newFrame += m_begin;
-        qint64 nbSeconds = qRound64( (qreal)newFrame / m_selectedClip->getMedia()->source()->fps() );
+        qint64 nbSeconds = qRound64( (qreal)newFrame / m_selectedClip->media()->source()->fps() );
         m_sourceRenderer->setTime( nbSeconds * 1000 );
     }
 }
@@ -271,7 +271,7 @@ ClipRenderer::videoPlaying()
 void
 ClipRenderer::timeChanged( qint64 time )
 {
-    float fps = m_selectedClip->getMedia()->source()->fps();
+    float fps = m_selectedClip->media()->source()->fps();
     qint64 f = qRound64( (qreal)time / 1000.0 * fps );
     if ( f >= m_end )
         return ;

@@ -68,7 +68,7 @@ ClipWorkflow::initialize()
     m_state = ClipWorkflow::Initializing;
 
     delete m_renderer;
-    m_renderer = m_clipHelper->clip()->getMedia()->source()->createRenderer( m_eventWatcher );
+    m_renderer = m_clipHelper->clip()->media()->source()->createRenderer( m_eventWatcher );
 
     preallocate();
     initializeInternals();
@@ -104,11 +104,11 @@ ClipWorkflow::loadingComplete()
 void
 ClipWorkflow::adjustBegin()
 {
-    if ( m_clipHelper->clip()->getMedia()->fileType() == Media::Video ||
-         m_clipHelper->clip()->getMedia()->fileType() == Media::Audio )
+    if ( m_clipHelper->clip()->media()->fileType() == Media::Video ||
+         m_clipHelper->clip()->media()->fileType() == Media::Audio )
     {
         m_renderer->setTime( m_clipHelper->begin() /
-                                m_clipHelper->clip()->getMedia()->source()->fps() * 1000 );
+                                m_clipHelper->clip()->media()->source()->fps() * 1000 );
     }
 }
 

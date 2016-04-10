@@ -236,7 +236,7 @@ ImportController::accept()
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
-        if ( clip->getMedia()->source()->length() == 0 )
+        if ( clip->media()->source()->length() == 0 )
             invalidMedias = true;
         Core::instance()->library()->addClip( clip );
     }
@@ -258,9 +258,9 @@ ImportController::handleInvalidMedias()
     {
         foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         {
-            if ( clip->getMedia()->source()->length() == 0 )
+            if ( clip->media()->source()->length() == 0 )
             {
-                Transcoder  *transcoder = new Transcoder( clip->getMedia() );
+                Transcoder  *transcoder = new Transcoder( clip->media() );
                 connect( transcoder, SIGNAL( done() ), transcoder, SLOT( deleteLater() ) );
                 transcoder->transcodeToPs();
             }

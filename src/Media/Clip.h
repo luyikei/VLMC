@@ -93,11 +93,11 @@ class   Clip : public QObject
         /**
             \return         Returns the Media that the clip was basep uppon.
         */
-        Media*              getMedia();
-        const Media*        getMedia() const;
+        Media*              media();
+        const Media*        media() const;
 
-        Clip                *getParent();
-        const Clip          *getParent() const;
+        Clip                *parent();
+        const Clip          *parent() const;
         MediaContainer*     mediaContainer();
         const MediaContainer*     mediaContainer() const;
 

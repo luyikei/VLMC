@@ -84,7 +84,7 @@ MediaContainer::addMedia( const QFileInfo& fileInfo )
     }
     foreach( Clip* it, m_clips.values() )
     {
-        if ( (*it->getMedia()->fileInfo()) == fileInfo )
+        if ( (*it->media()->fileInfo()) == fileInfo )
         {
             vlmcWarning() << "Ignoring aleady imported media" << fileInfo.absolutePath();
             return nullptr;
@@ -99,7 +99,7 @@ MediaContainer::mediaAlreadyLoaded( const QFileInfo& fileInfo )
 {
     foreach( Clip* clip, m_clips.values() )
     {
-        if ( clip->getMedia()->fileInfo()->filePath() == fileInfo.filePath() )
+        if ( clip->media()->fileInfo()->filePath() == fileInfo.filePath() )
             return true;
     }
     return false;
@@ -111,7 +111,7 @@ MediaContainer::addClip( Clip* clip )
     foreach ( Clip* c, m_clips.values() )
     {
         if ( clip->uuid() == c->uuid() ||
-             ( clip->getMedia()->fileInfo() == c->getMedia()->fileInfo() &&
+             ( clip->media()->fileInfo() == c->media()->fileInfo() &&
                     ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
         {
             vlmcWarning() << "Clip already loaded.";

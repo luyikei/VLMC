@@ -65,20 +65,20 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         m_ui->clipCountLabel->hide();
         m_ui->arrow->hide();
     }
-    if ( clip->getMedia()->source()->isParsed() == false )
+    if ( clip->media()->source()->isParsed() == false )
     {
         m_ui->thumbnail->setEnabled( false );
         connect( MetaDataManager::instance(), SIGNAL( startingComputing( const Media* )),
                  this, SLOT( metadataComputingStarted( const Media* ) ), Qt::DirectConnection );
     }
-    connect( clip->getMedia(), SIGNAL( metaDataComputed() ),
+    connect( clip->media(), SIGNAL( metaDataComputed() ),
              this, SLOT( metadataUpdated() ) );
     // Snapshot generation will generate a QPixmap, which has to be done on GUI thread
-    connect( clip->getMedia(), SIGNAL( snapshotAvailable() ),
+    connect( clip->media(), SIGNAL( snapshotAvailable() ),
              this, SLOT( snapshotUpdated() ), Qt::QueuedConnection );
 
-    setThumbnail( clip->getMedia()->snapshot() );
-    setTitle( clip->getMedia()->fileName() );
+    setThumbnail( clip->media()->snapshot() );
+    setTitle( clip->media()->fileName() );
     setLength( clip->lengthSecond() * 1000 );
 }
 
@@ -90,7 +90,7 @@ MediaCellView::~MediaCellView()
 void
 MediaCellView::metadataComputingStarted( const Media *media )
 {
-    if ( media != m_clip->getMedia() )
+    if ( media != m_clip->media() )
         return ;
     //Disable the delete button to avoid deleting the media while metadata are computed.
     m_ui->delLabel->setEnabled( false );
@@ -102,18 +102,18 @@ MediaCellView::metadataComputingStarted( const Media *media )
 void
 MediaCellView::metadataUpdated()
 {
-    setLength( m_clip->getMedia()->source()->length() );
+    setLength( m_clip->media()->source()->length() );
     m_ui->thumbnail->setEnabled( true );
     //If the media is a Video or an Image, we must wait for the snapshot to be computer
     //before allowing deletion.
-    if ( m_clip->getMedia()->fileType() == Media::Audio )
+    if ( m_clip->media()->fileType() == Media::Audio )
         m_ui->delLabel->setEnabled( true );
 }
 
 void
 MediaCellView::snapshotUpdated()
 {
-    setThumbnail( m_clip->getMedia()->snapshot() );
+    setThumbnail( m_clip->media()->snapshot() );
     m_ui->delLabel->setEnabled( true );
 }
 
@@ -147,7 +147,7 @@ MediaCellView::nbClipUpdated()
     if ( m_clip->isRootClip() == true )
         nbClips = m_clip->mediaContainer()->count();
     else
-        nbClips = m_clip->getParent()->mediaContainer()->count();
+        nbClips = m_clip->parent()->mediaContainer()->count();
 
     if ( nbClips == 0 )
     {
@@ -222,7 +222,7 @@ MediaCellView::mouseMoveEvent( QMouseEvent* event )
     mimeData->setData( "vlmc/uuid", m_clip->uuid().toString().toLatin1() );
     QDrag* drag = new QDrag( this );
     drag->setMimeData( mimeData );
-    Media*  parent = m_clip->getMedia();
+    Media*  parent = m_clip->media();
     drag->setPixmap( parent->snapshot().scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
@@ -294,7 +294,7 @@ MediaCellView::contextMenuEvent( QContextMenuEvent *event )
         return ;
     if ( copyInWorkspace == selectedAction )
     {
-        if ( Core::instance()->workspace()->copyToWorkspace( m_clip->getMedia() ) == false )
+        if ( Core::instance()->workspace()->copyToWorkspace( m_clip->media() ) == false )
         {
             QMessageBox::warning( nullptr, tr( "Can't copy to workspace" ),
                                   tr( "Can't copy this media to workspace: %1" ).arg( Core::instance()->workspace()->lastError() ) );

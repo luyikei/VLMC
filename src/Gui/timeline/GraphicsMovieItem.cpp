@@ -37,10 +37,10 @@
 GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    QTime length = QTime().addMSecs( clip->getMedia()->source()->length() );
+    QTime length = QTime().addMSecs( clip->media()->source()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
-                     .arg( clip->getMedia()->fileName() )
+                     .arg( clip->media()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
 }
@@ -48,10 +48,10 @@ GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) :
 GraphicsMovieItem::GraphicsMovieItem( ClipHelper* ch ) :
         AbstractGraphicsMediaItem( ch )
 {
-    QTime length = QTime().addMSecs( ch->clip()->getMedia()->source()->length() );
+    QTime length = QTime().addMSecs( ch->clip()->media()->source()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
-                     .arg( ch->clip()->getMedia()->fileName() )
+                     .arg( ch->clip()->media()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
 }
@@ -165,7 +165,7 @@ GraphicsMovieItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = m_clipHelper->clip()->getMedia()->fileName();
+    QString text = m_clipHelper->clip()->media()->fileName();
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();

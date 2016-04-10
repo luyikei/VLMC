@@ -82,7 +82,7 @@ TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
     ClipWorkflow* cw;
     if ( m_trackType == Workflow::VideoTrack )
     {
-        if ( ch->clip()->getMedia()->fileType() == Media::Video )
+        if ( ch->clip()->media()->fileType() == Media::Video )
             cw = new VideoClipWorkflow( ch );
         else
             cw = new ImageClipWorkflow( ch );
@@ -529,7 +529,7 @@ TrackWorkflow::clear()
 void
 TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw )
 {
-    float fps = cw->clip()->getMedia()->source()->fps();
+    float fps = cw->clip()->media()->source()->fps();
     qint64  nbMs = ( currentFrame - start ) / fps * 1000;
     qint64  beginInMs = cw->getClipHelper()->begin() / fps * 1000;
     qint64  startFrame = beginInMs + nbMs;

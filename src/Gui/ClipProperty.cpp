@@ -41,9 +41,9 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     connect( this, SIGNAL( accepted() ), this, SLOT( deleteLater() ) );
     connect( this, SIGNAL( rejected() ), this, SLOT( deleteLater() ) );
 
-    setWindowTitle( m_clip->getMedia()->fileInfo()->fileName() + " " + tr( "properties" ) );
+    setWindowTitle( m_clip->media()->fileInfo()->fileName() + " " + tr( "properties" ) );
     //Snapshot
-    ui->snapshotLabel->setPixmap( m_clip->getMedia()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
+    ui->snapshotLabel->setPixmap( m_clip->media()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
     //Metatags
     const QPushButton* button = ui->buttonBox->button( QDialogButtonBox::Apply );
     Q_ASSERT( button != nullptr);

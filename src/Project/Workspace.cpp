@@ -118,9 +118,9 @@ Workspace::clipLoaded( Clip *clip )
     if ( clip->isRootClip() == false )
         return ;
     //If already in workspace : well...
-    if ( isInWorkspace( clip->getMedia() ) == true )
+    if ( isInWorkspace( clip->media() ) == true )
         return ;
-    copyToWorkspace( clip->getMedia() );
+    copyToWorkspace( clip->media() );
 }
 
 void

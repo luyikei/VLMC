@@ -201,7 +201,7 @@ AbstractGraphicsMediaItem::setEmphasized( bool value )
 bool
 AbstractGraphicsMediaItem::hasResizeBoundaries() const
 {
-    return ( clipHelper()->clip()->getMedia()->fileType() != Media::Image );
+    return ( clipHelper()->clip()->media()->fileType() != Media::Image );
 }
 
 qint64

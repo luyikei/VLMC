@@ -123,7 +123,7 @@ MediaLibrary::viewChanged( ViewController *view )
 bool
 MediaLibrary::filterByName( const Clip *clip, const QString &filter )
 {
-    return ( clip->getMedia()->fileName().contains( filter, Qt::CaseInsensitive ) );
+    return ( clip->media()->fileName().contains( filter, Qt::CaseInsensitive ) );
 }
 
 bool

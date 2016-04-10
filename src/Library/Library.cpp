@@ -124,7 +124,7 @@ Library::addClip( Clip *clip )
     bool    ret = MediaContainer::addClip( clip );
     if ( ret != false )
         setCleanState( false );
-    m_medias[clip->getMedia()->fileInfo()->absoluteFilePath()] = clip->getMedia();
+    m_medias[clip->media()->fileInfo()->absoluteFilePath()] = clip->media();
     return ret;
 }
 
