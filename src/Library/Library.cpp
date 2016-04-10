@@ -69,7 +69,6 @@ Library::preSave()
 void
 Library::postLoad()
 {
-    clear();
     for ( const auto& var : m_settings->value( "medias" )->get().toList() )
         createMediaFromVariant( var );
 

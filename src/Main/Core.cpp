@@ -59,6 +59,8 @@ Core::Core()
     connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     connect( m_currentProject, SIGNAL( projectLoaded( QString, QString ) ),
              m_recentProjects, SLOT( projectLoaded( QString, QString ) ) );
+    connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
+    connect( m_currentProject, &Project::projectClosed, m_workflow, &MainWorkflow::clear );
 
     m_timer.start();
 }
