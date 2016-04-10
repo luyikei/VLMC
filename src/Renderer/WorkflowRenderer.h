@@ -214,7 +214,7 @@ class   WorkflowRenderer : public GenericRenderer
         /**
          *  \brief          Configure the production chain.
          */
-        void                setupRenderer(quint32 width, quint32 height, double fps , const QString& ar);
+        void                setupRenderer();
 
     protected:
         MainWorkflow*       m_mainWorkflow;

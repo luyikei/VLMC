@@ -72,15 +72,15 @@ WorkflowRenderer::~WorkflowRenderer()
 }
 
 void
-WorkflowRenderer::setupRenderer( quint32 width, quint32 height, double fps, const QString& ar )
+WorkflowRenderer::setupRenderer()
 {
-    m_source->setWidth( width );
-    m_source->setHeight( height );
-    m_source->setFps( fps );
-    m_source->setAspectRatio( qPrintable( ar ) );
+    m_source->setWidth( m_width );
+    m_source->setHeight( m_height );
+    m_source->setFps( m_outputFps );
+    m_source->setAspectRatio( qPrintable( m_aspectRatio ) );
     m_source->setNumberChannels( m_nbChannels );
     m_source->setSampleRate( m_rate );
-    m_esHandler->fps = fps;
+    m_esHandler->fps = m_outputFps;
 
 
     delete m_sourceRenderer;
@@ -236,7 +236,7 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
     m_aspectRatio = ar;
 
     initFilters();
-    setupRenderer( width, height, fps, ar );
+    setupRenderer();
     m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
     m_sourceRenderer->setOutputAudioBitrate( abitrate );
     m_sourceRenderer->setOutputVideoBitrate( vbitrate );
@@ -261,7 +261,7 @@ WorkflowRenderer::startPreview()
     m_aspectRatio = project->aspectRatio();
 
     initFilters();
-    setupRenderer( m_width, m_height, m_outputFps, m_aspectRatio );
+    setupRenderer();
     m_mainWorkflow->setFullSpeedRender( false );
     start();
 }
