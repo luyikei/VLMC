@@ -112,7 +112,9 @@ ProjectWizard::accept()
         projectPreferences->setValue( "video/VideoProjectHeight", field( "height" ) );
         projectPreferences->setValue( "video/VideoProjectWidth", field( "width" ) );
         projectPreferences->setValue( "video/AspectRatio", field( "aspectratio" ) );
+        projectPreferences->setValue( "video/VideoBitRate", field( "vbitrate" ) );
         projectPreferences->setValue( "audio/AudioSampleRate", field( "samplerate" ) );
+        projectPreferences->setValue( "audio/AudioBitRate", field( "abitrate" ) );
         projectPreferences->setValue( "audio/NbChannels", field( "samplerate" ) );
     }
     QDialog::accept();
