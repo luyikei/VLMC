@@ -20,105 +20,46 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QStringList>
-
 #include "RecentProjects.h"
-
-#include "Project/Project.h"
 #include "Settings/Settings.h"
-#include "Tools/VlmcDebug.h"
 
 RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
     : QObject(parent)
-    , m_settings( vlmcSettings )
 {
-	SettingValue* recentProjects = vlmcSettings->createVar( SettingValue::String, "private/RecentsProjects", "",
+    m_recentsProjects = vlmcSettings->createVar( SettingValue::List, "private/RecentsProjects", QVariantList(),
                                                 "", "", SettingValue::Private );
+}
 
-	connect( recentProjects, SIGNAL( changed( QVariant ) ), this, SLOT( loadRecentProjects( QVariant ) ) );
+QVariant
+RecentProjects::toVariant() const
+{
+    return QVariant( m_recentsProjects->get().toList() );
 }
 
 void
-RecentProjects::projectLoaded(const QString& projectName, const QString& projectFile)
+RecentProjects::remove( const QString &projectFile )
 {
-    removeFromRecentProjects( projectName );
-    RecentProject project;
-    project.name = projectName;
-    project.filePath = projectFile;
-    m_recentsProjects.prepend( project );
-    while ( m_recentsProjects.count() > 15 )
-        m_recentsProjects.removeLast();
-
-    Core::instance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
-}
-
-const RecentProjects::List&
-RecentProjects::list() const
-{
-    return m_recentsProjects;
-}
-
-QString
-RecentProjects::flattenProjectList() const
-{
-    if ( m_recentsProjects.count() == 0 )
-        return QString();
-    QString     res;
-    foreach ( RecentProject p, m_recentsProjects )
+    QVariantList l = m_recentsProjects->get().toList();
+    for ( int i = 0; i < l.count(); ++i )
     {
-        res += p.name + '#' + p.filePath + '#';
-    }
-    res.chop(1);
-    return res;
-}
-
-void
-RecentProjects::removeFromRecentProjects( const QString &projectPath )
-{
-    List::iterator  it = m_recentsProjects.begin();
-    List::iterator  ite = m_recentsProjects.end();
-
-    while ( it != ite )
-    {
-        if ( (*it).filePath == projectPath )
-            it = m_recentsProjects.erase( it );
-        else
-            ++it;
-    }
-}
-
-void
-RecentProjects::remove( const QString& projectPath )
-{
-    removeFromRecentProjects( projectPath );
-    Core::instance()->settings()->setValue( "private/RecentsProjects", flattenProjectList() );
-}
-
-void
-RecentProjects::loadRecentProjects( const QVariant& recentProjects )
-{
-    // Only watch initial loading, we are now taking ownership of "private/RecentsProjects settings"
-    disconnect( this, SLOT( loadRecentProjects( QVariant ) ) );
-
-    const QStringList   recentProjectsList = recentProjects.toString().split( '#' );
-
-    if ( recentProjectsList.count() == 0 )
-        return ;
-
-    QStringList::const_iterator     it = recentProjectsList.begin();
-    QStringList::const_iterator     ite = recentProjectsList.end();
-    while ( it != ite )
-    {
-        RecentProject project;
-        project.name = *it;
-        ++it;
-        if ( it == ite )
+        if ( l[i].toMap()["file"].toString() == projectFile )
         {
-            vlmcWarning() << "Invalid flattened recent projects list.";
-            return ;
+            l.removeAt( i );
+            --i;
         }
-        project.filePath = *it;
-        ++it;
-        m_recentsProjects.append( project );
     }
+    m_recentsProjects->set( l );
+}
+
+void
+RecentProjects::projectLoaded( const QString& projectName, const QString& projectFile )
+{
+    QVariantList l = m_recentsProjects->get().toList();
+    QVariantMap var {
+        { "name", projectName },
+        { "file", projectFile }
+    };
+    l.removeAll( var );
+    l.insert( 0, var );
+    m_recentsProjects->set( l );
 }

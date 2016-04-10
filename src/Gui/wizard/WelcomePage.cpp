@@ -118,13 +118,13 @@ void
 WelcomePage::loadRecentsProjects()
 {
     m_ui.projectsListWidget->clear();
-    const RecentProjects::List& recents = Core::instance()->recentProjects()->list();
 
-    for ( int i = 0; i < recents.count(); ++i )
+    for ( const auto& var : Core::instance()->recentProjects()->toVariant().toList() )
     {
-        RecentProjects::RecentProject project = recents.at( i );
-        QListWidgetItem* item = new QListWidgetItem( project.name );
-        item->setData( FilePath, project.filePath );
+        const auto& name = var.toMap()["name"].toString();
+        const auto& filePath = var.toMap()["file"].toString();
+        QListWidgetItem* item = new QListWidgetItem( name );
+        item->setData( FilePath, filePath );
         m_ui.projectsListWidget->addItem( item );
     }
 }
