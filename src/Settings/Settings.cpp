@@ -203,6 +203,8 @@ Settings::restoreDefaultValues()
     {
         s->restoreDefault();
     }
+    for ( auto &pair : m_settingsChildren )
+        pair.second->restoreDefaultValues();
 }
 SettingValue*
 Settings::value(const QString &key)
