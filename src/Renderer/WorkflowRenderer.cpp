@@ -228,6 +228,8 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
                                      double fps, const QString& ar,
                                      quint32 vbitrate, quint32 abitrate )
 {
+    if ( m_isRendering == true )
+        return ;
     m_width = width;
     m_height = height;
     m_outputFps = fps;
@@ -247,6 +249,8 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
 void
 WorkflowRenderer::startPreview()
 {
+    if ( m_isRendering == true )
+        return ;
     if ( m_mainWorkflow->getLengthFrame() <= 0 )
         return ;
 
