@@ -28,7 +28,7 @@
 
 #include "Backend/ISourceRenderer.h"
 
-#include "libvlcpp/vlcpp/vlc.hpp"
+#include "vlcpp/vlc.hpp"
 
 namespace Backend
 {

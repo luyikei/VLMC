@@ -285,7 +285,9 @@ ELSE(NOT WITH_GUI)
     endif()
 ENDIF( NOT WITH_GUI )
 
-#ADD_DEPENDENCIES( vlmc translations )
+add_dependencies(vlmc libvlcpp)
+message(STATUS "Contribs prefix: ${CONTRIBS_DIR}")
+include_directories( ${CONTRIBS_DIR}/include )
 
 INSTALL(TARGETS vlmc
         BUNDLE  DESTINATION ${VLMC_BIN_DIR}

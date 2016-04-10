@@ -1,3 +1,0 @@
-[submodule "src/Backend/VLC/libvlcpp"]
-	path = src/Backend/VLC/libvlcpp
-	url = https://code.videolan.org/videolan/libvlcpp.git

@@ -27,7 +27,7 @@
 
 #include "Backend/IBackend.h"
 #include "Tools/Singleton.hpp"
-#include "libvlcpp/vlcpp/vlc.hpp"
+#include "vlcpp/vlc.hpp"
 
 namespace Backend
 {
