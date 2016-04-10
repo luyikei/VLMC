@@ -80,6 +80,7 @@ VideoPage::initializePage()
     ui.spinBoxVideoWidth->setValue( projectWidth );
     ui.spinBoxVideoHeight->setValue( projectHeight );
     ui.doubleSpinBoxVideoFPS->setValue( projectFps );
+    ui.comboBoxAudioBitrate->setCurrentIndex( ui.comboBoxAudioBitrate->findText( "256 Kbps" ) );
 
     switch ( sampleRate )
     {
