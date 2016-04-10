@@ -228,6 +228,11 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
                                      double fps, const QString& ar,
                                      quint32 vbitrate, quint32 abitrate )
 {
+    m_width = width;
+    m_height = height;
+    m_outputFps = fps;
+    m_aspectRatio = ar;
+
     initFilters();
     setupRenderer( width, height, fps, ar );
     m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
