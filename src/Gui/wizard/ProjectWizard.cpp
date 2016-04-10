@@ -113,8 +113,8 @@ ProjectWizard::accept()
         projectPreferences->setValue( "video/VideoProjectWidth", field( "width" ) );
         projectPreferences->setValue( "video/AspectRatio", field( "aspectratio" ) );
         projectPreferences->setValue( "video/VideoBitRate", field( "vbitrate" ) );
-        projectPreferences->setValue( "audio/AudioSampleRate", field( "samplerate" ) );
-        projectPreferences->setValue( "audio/AudioBitRate", field( "abitrate" ) );
+        projectPreferences->setValue( "audio/AudioSampleRate", field( "samplerate" ).toString().replace( " Hz", "" ) );
+        projectPreferences->setValue( "audio/AudioBitRate", field( "abitrate" ).toString().replace( " Kbps", "" ) );
         projectPreferences->setValue( "audio/NbChannels", field( "samplerate" ) );
     }
     QDialog::accept();

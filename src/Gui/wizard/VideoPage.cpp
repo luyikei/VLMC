@@ -41,9 +41,9 @@ VideoPage::VideoPage( QWidget* parent ) :
     registerField( "width", ui.spinBoxVideoWidth );
     registerField( "height", ui.spinBoxVideoHeight );
     registerField( "aspectratio", ui.lineEditVideoAspectRatio );
-    registerField( "samplerate", ui.comboBoxAudioSamplerate );
+    registerField( "samplerate", ui.comboBoxAudioSamplerate, "currentText" );
     registerField( "channels", ui.spinBoxAudioChannels );
-    registerField( "abitrate", ui.comboBoxAudioBitrate );
+    registerField( "abitrate", ui.comboBoxAudioBitrate, "currentText" );
     registerField( "vbitrate", ui.spinBoxVideoBitrate );
 }
 
