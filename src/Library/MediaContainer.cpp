@@ -60,7 +60,7 @@ MediaContainer::clip( const QString &uuid )
             return clip;
         else
         {
-            auto c = clip->getChilds()->clip( uuid );
+            auto c = clip->mediaContainer()->clip( uuid );
             if ( c != nullptr )
                 return c;
         }

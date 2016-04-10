@@ -195,13 +195,13 @@ Clip::getParent() const
 }
 
 MediaContainer*
-Clip::getChilds()
+Clip::mediaContainer()
 {
     return m_childs;
 }
 
 const MediaContainer*
-Clip::getChilds() const
+Clip::mediaContainer() const
 {
     return m_childs;
 }

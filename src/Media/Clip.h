@@ -98,8 +98,8 @@ class   Clip : public QObject
 
         Clip                *getParent();
         const Clip          *getParent() const;
-        MediaContainer*     getChilds();
-        const MediaContainer*     getChilds() const;
+        MediaContainer*     mediaContainer();
+        const MediaContainer*     mediaContainer() const;
 
         /**
             \brief          Returns an unique Uuid for this clip (which is NOT the
