@@ -4,8 +4,10 @@
 #          Ludovic Fauvet <etix@vlmc.org>
 #
 
-# Manually set Qt5 path for OSX installed using brew
-SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+if (APPLE)
+    # Manually set Qt5 path for OSX installed using brew
+    SET(CMAKE_PREFIX_PATH "/usr/local/opt/qt5")
+endif()
 
 # search for Qt5
 find_package(Qt5Core QUIET)
