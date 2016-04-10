@@ -124,7 +124,6 @@ class   Settings: public QObject
 
     private:
         SettingMap                  m_settings;
-        QJsonObject                 m_jsonObject;
         mutable QReadWriteLock      m_rwLock;
         QFile*                      m_settingsFile;
 
