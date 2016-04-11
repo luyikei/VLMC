@@ -37,7 +37,6 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 SET(CMAKE_AUTOMOC ON)
 
 SET(VLMC_SRCS
-    Commands/Commands.cpp
     Backend/IBackend.h
     Backend/ISourceRenderer.h
     Backend/ISource.h
@@ -63,15 +62,10 @@ SET(VLMC_SRCS
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
     Project/RecentProjects.cpp
-    Renderer/ClipRenderer.cpp
     Renderer/GenericRenderer.cpp
     Renderer/WorkflowRenderer.cpp
     Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp
-    Services/YouTube/YouTubeAuthenticator.cpp
-    Services/YouTube/YouTubeFeedParser.cpp
-    Services/YouTube/YouTubeService.cpp
-    Services/YouTube/YouTubeUploader.cpp
     Settings/Settings.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
@@ -128,7 +122,13 @@ IF (NOT WITH_GUI)
 #Add GUI stuff if required
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
+        Commands/Commands.cpp
         Commands/KeyboardShortcutHelper.cpp
+        Renderer/ClipRenderer.cpp
+        Services/YouTube/YouTubeAuthenticator.cpp
+        Services/YouTube/YouTubeFeedParser.cpp
+        Services/YouTube/YouTubeService.cpp
+        Services/YouTube/YouTubeUploader.cpp
         Gui/About.cpp
         Gui/ClipProperty.cpp
         Gui/IntroDialog.cpp
