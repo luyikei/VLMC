@@ -37,7 +37,6 @@
 #include "Backend/ISource.h"
 #include "Backend/Target/FileTarget.h"
 #include "Workflow/MainWorkflow.h"
-#include "Gui/preview/RenderWidget.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"
