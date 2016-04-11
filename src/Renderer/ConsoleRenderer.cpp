@@ -21,9 +21,9 @@
  *****************************************************************************/
 
 #include "ConsoleRenderer.h"
-
-#include "WorkflowFileRenderer.h"
+#include "Main/Core.h"
 #include "Project/Project.h"
+#include "Renderer/WorkflowRenderer.h"
 
 #include <QCoreApplication>
 #include <QStringList>
@@ -31,8 +31,6 @@
 ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     QObject(parent)
 {
-    m_renderer = new WorkflowFileRenderer;
-    m_renderer->initializeRenderer();
     m_outputFileName = qApp->arguments()[2];
     m_width = Core::instance()->project()->width();
     m_height = Core::instance()->project()->height();
@@ -40,9 +38,9 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_ar = Core::instance()->project()->aspectRatio();
     m_vbitrate = Core::instance()->project()->videoBitrate();
     m_abitrate = Core::instance()->project()->audioBitrate();
-    connect( m_renderer, SIGNAL( frameChanged( qint64 ) ),
-             this, SLOT( frameChanged( qint64 ) ) );
-    connect( m_renderer, SIGNAL( renderComplete() ), qApp, SLOT( quit() ) );
+    connect( Core::instance()->workflow(), &MainWorkflow::frameChanged,
+             this, &ConsoleRenderer::frameChanged);
+    connect( Core::instance()->workflowRenderer(), SIGNAL( renderComplete() ), qApp, SLOT( quit() ) );
 }
 
 void
@@ -51,7 +49,7 @@ ConsoleRenderer::frameChanged( qint64 frame ) const
     static int      percent = 0;
     int             newPercent;
 
-    newPercent = frame * 100 / MainWorkflow::instance()->getLengthFrame();
+    newPercent = frame * 100 / Core::instance()->workflow()->getLengthFrame();
     if ( newPercent != percent )
     {
         percent = newPercent;
@@ -62,5 +60,5 @@ ConsoleRenderer::frameChanged( qint64 frame ) const
 void
 ConsoleRenderer::startRender()
 {
-    m_renderer->run( m_outputFileName, m_width, m_height, m_fps, m_vbitrate, m_abitrate );
+    Core::instance()->workflowRenderer()->startRenderToFile( m_outputFileName, m_width, m_height, m_fps, m_ar, m_vbitrate, m_abitrate );
 }
