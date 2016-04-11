@@ -23,6 +23,7 @@
 #include "ConsoleRenderer.h"
 #include "Main/Core.h"
 #include "Project/Project.h"
+#include "Tools/VlmcDebug.h"
 #include "Renderer/WorkflowRenderer.h"
 
 #include <QCoreApplication>
@@ -53,7 +54,7 @@ ConsoleRenderer::frameChanged( qint64 frame ) const
     if ( newPercent != percent )
     {
         percent = newPercent;
-        qDebug().nospace() << percent << "%";
+        vlmcDebug() << "ConsoleRenderer: " << percent << "%";
     }
 }
 
