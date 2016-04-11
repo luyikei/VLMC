@@ -54,6 +54,7 @@ class WelcomePage : public QWizardPage
         void loadRecentsProjects();
         void projectDoubleClicked( QListWidgetItem* item );
         void selectOpenRadio();
+        void itemSelectionChanged();
 
     private:
         Ui::WelcomePage m_ui;

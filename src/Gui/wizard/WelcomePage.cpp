@@ -50,6 +50,7 @@ WelcomePage::WelcomePage( QWidget* parent )
              this, SLOT( selectOpenRadio() ) );
     connect( m_ui.projectsListWidget, SIGNAL( itemDoubleClicked(QListWidgetItem*) ),
              this, SLOT( projectDoubleClicked(QListWidgetItem*) ) );
+    connect( m_ui.projectsListWidget, &QListWidget::itemSelectionChanged, this, &WelcomePage::itemSelectionChanged);
 
     registerField( "loadProject", m_ui.projectsListWidget );
     m_projectPath = new QString();
@@ -94,15 +95,13 @@ WelcomePage::validatePage()
 {
     if ( m_ui.openRadioButton->isChecked() )
     {
-        if ( m_ui.projectsListWidget->selectedItems().count() == 0 )
+        if ( m_projectPath->isEmpty() == true )
         {
             QMessageBox::information( this, tr( "Sorry" ),
                                       tr( "You first need to select a project from "
                                       "the list.\nThen click next to continue..." ) );
             return false;
         }
-        QList<QListWidgetItem*> selected = m_ui.projectsListWidget->selectedItems();
-        setProjectPath( selected.at( 0 )->data( FilePath ).toString() );
         return true;
     }
     return true;
@@ -146,9 +145,14 @@ WelcomePage::loadProject()
         return;
     }
 
-
-
     selectOpenRadio();
+
+    m_ui.projectsListWidget->clearSelection();
+    m_ui.projectsListWidget->clearFocus();
+
+    setProjectPath( projectPath );
+    if ( wizard() )
+        wizard()->next();
 }
 
 void
@@ -171,6 +175,18 @@ WelcomePage::selectOpenRadio()
 {
     m_ui.openRadioButton->setChecked( true );
     m_ui.removeProjectButton->setEnabled( true );
+}
+
+void
+WelcomePage::itemSelectionChanged()
+{
+    if ( m_ui.projectsListWidget->selectedItems().count() == 0 )
+        setProjectPath( "" );
+    else
+    {
+        QList<QListWidgetItem*> selected = m_ui.projectsListWidget->selectedItems();
+        setProjectPath( selected.at( 0 )->data( FilePath ).toString() );
+    }
 }
 
 void
