@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #include "AbstractRenderer.h"
-#include "preview/RenderWidget.h"
 #include <QtGlobal>
 
 AbstractRenderer::AbstractRenderer()
