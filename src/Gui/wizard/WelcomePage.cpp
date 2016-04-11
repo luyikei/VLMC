@@ -146,27 +146,8 @@ WelcomePage::loadProject()
         return;
     }
 
-    // Search if the item is already in the list
-    QListWidgetItem* item = nullptr;
-    for ( int i = 0; i < m_ui.projectsListWidget->count(); ++i )
-    {
-        item = m_ui.projectsListWidget->item( i );
-        if ( item->data( FilePath ).toString().contains( projectPath ) )
-            break;
-        item = nullptr;
-    }
 
-    // Item not in list, insert it temporarily
-    if ( !item )
-    {
-        QFileInfo fi( projectPath );
-        item = new QListWidgetItem( fi.fileName() );
-        item->setData( FilePath, fi.absoluteFilePath() );
 
-        m_ui.projectsListWidget->addItem( item );
-    }
-
-    item->setSelected( true );
     selectOpenRadio();
 }
 
