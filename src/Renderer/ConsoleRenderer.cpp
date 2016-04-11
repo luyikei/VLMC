@@ -23,7 +23,7 @@
 #include "ConsoleRenderer.h"
 
 #include "WorkflowFileRenderer.h"
-#include "SettingsManager.h"
+#include "Project/Project.h"
 
 #include <QCoreApplication>
 #include <QStringList>
@@ -34,11 +34,11 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_renderer = new WorkflowFileRenderer;
     m_renderer->initializeRenderer();
     m_outputFileName = qApp->arguments()[2];
-    m_width = VLMC_PROJECT_GET_UINT( "video/VideoProjectWidth" );
-    m_height = VLMC_PROJECT_GET_UINT( "video/VideoProjectHeight" );
-    m_fps = VLMC_PROJECT_GET_DOUBLE( "video/VLMCOutputFPS" );
-    m_vbitrate = 4000;
-    m_abitrate = 256;
+    m_width = Core::instance()->project()->width();
+    m_height = Core::instance()->project()->height();
+    m_fps = Core::instance()->project()->fps();
+    m_vbitrate = Core::instance()->project()->videoBitrate();
+    m_abitrate = Core::instance()->project()->audioBitrate();
     connect( m_renderer, SIGNAL( frameChanged( qint64 ) ),
              this, SLOT( frameChanged( qint64 ) ) );
     connect( m_renderer, SIGNAL( renderComplete() ), qApp, SLOT( quit() ) );
