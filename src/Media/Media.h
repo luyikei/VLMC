@@ -99,9 +99,10 @@ public:
 
     QVariant                    toVariant() const;
 
+#ifdef WITH_GUI
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
-
+#endif
 protected:
     Backend::ISource*           m_source;
     QString                     m_mrl;
@@ -110,9 +111,11 @@ protected:
     QString                     m_fileName;
     Clip*                       m_baseClip;
 
+#ifdef WITH_GUI
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
     QImage*                     m_snapshotImage;
+#endif
 
 signals:
     void                        metaDataComputed();

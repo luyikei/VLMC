@@ -55,13 +55,17 @@ const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *
                                          "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
+#ifdef WITH_GUI
 QPixmap*        Media::defaultSnapshot = nullptr;
+#endif
 
 Media::Media(const QString &path )
     : m_source( nullptr )
     , m_fileInfo( nullptr )
     , m_baseClip( nullptr )
+#ifdef WITH_GUI
     , m_snapshotImage( nullptr )
+#endif
 {
     setFilePath( path );
 }
@@ -131,12 +135,14 @@ Media::onMetaDataComputed()
             m_fileType = Image;
         else
             m_fileType = Video;
+#ifdef WITH_GUI
         if ( m_source->snapshot() != nullptr )
         {
             Q_ASSERT( m_snapshotImage == nullptr );
             m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
             emit snapshotAvailable();
         }
+#endif
     }
     else if ( m_source->hasAudio() )
         m_fileType = Audio;
@@ -169,6 +175,7 @@ Media::setFilePath( const QString &filePath )
     MetaDataManager::instance()->computeMediaMetadata( this );
 }
 
+#ifdef WITH_GUI
 QPixmap&
 Media::snapshot()
 {
@@ -187,3 +194,4 @@ Media::snapshot()
         Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
     return *Media::defaultSnapshot;
 }
+#endif
