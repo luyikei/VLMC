@@ -49,6 +49,7 @@ private:
     double                  m_fps;
     quint32                 m_vbitrate;
     quint32                 m_abitrate;
+    QString                 m_ar;
 };
 
 #endif // CONSOLERENDERER_H

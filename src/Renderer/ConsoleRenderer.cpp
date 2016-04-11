@@ -37,6 +37,7 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_width = Core::instance()->project()->width();
     m_height = Core::instance()->project()->height();
     m_fps = Core::instance()->project()->fps();
+    m_ar = Core::instance()->project()->aspectRatio();
     m_vbitrate = Core::instance()->project()->videoBitrate();
     m_abitrate = Core::instance()->project()->audioBitrate();
     connect( m_renderer, SIGNAL( frameChanged( qint64 ) ),
