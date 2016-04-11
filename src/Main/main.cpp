@@ -34,11 +34,12 @@
 #include "Project/Project.h"
 #include "Backend/IBackend.h"
 #include "Main/Core.h"
-
+#ifdef WITH_GUI
 #include "Gui/MainWindow.h"
 #include "Gui/IntroDialog.h"
 #include "Gui/LanguageHelper.h"
 #include "Gui/wizard/firstlaunch/FirstLaunchWizard.h"
+#endif
 
 #include <QApplication>
 #include <QColor>
@@ -77,6 +78,7 @@ VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
  *  \param argv
  *  \return Return value of vlmc
  */
+#ifdef WITH_GUI
 int
 VLMCGuimain( int argc, char **argv )
 {
@@ -165,7 +167,7 @@ VLMCGuimain( int argc, char **argv )
     w.show();
     return app.exec();
 }
-
+#endif
 /**
  *  VLMC Entry point
  *  \brief this is the VLMC entry point
