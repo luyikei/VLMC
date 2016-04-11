@@ -193,11 +193,10 @@ VLMCCoremain( int argc, char **argv )
 
 #ifndef WITH_GUI
     ConsoleRenderer renderer;
-    ProjectManager  *pm = Core::instance()->currentProject();
+    Project  *p = Core::instance()->project();
 
-    //FIXME: only signal projectLoaded( const QString& ) in ProjectManager
-    QCoreApplication::connect( pm, SIGNAL( projectLoaded() ), &renderer, SLOT( startRender() ) );
-    pm->loadProject( app.arguments()[1] );
+    QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
+    p->load( app.arguments()[1] );
 #endif
     return app.exec();
 }
