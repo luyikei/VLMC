@@ -40,6 +40,7 @@ class VLCSource : public ISource
 {
 public:
     VLCSource( VLCBackend* backend, const QString& path );
+    virtual ~VLCSource();
     virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
     virtual bool                preparse();
     virtual bool                isParsed() const;

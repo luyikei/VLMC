@@ -43,6 +43,12 @@ VLCSource::VLCSource( VLCBackend* backend, const QString& path )
     m_media = ::VLC::Media( backend->vlcInstance(), path.toStdString(), ::VLC::Media::FromPath );
 }
 
+VLCSource::~VLCSource()
+{
+    if ( m_snapshot )
+        delete[] m_snapshot;
+}
+
 ::VLC::Media&
 VLCSource::media()
 {
