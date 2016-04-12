@@ -35,8 +35,7 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
 {
     m_media.parse();
     setName( "VmemRenderer" );
-    m_snapshot = new QImage( 320, 180, QImage::Format_RGB32 );
-    m_mediaPlayer.setVideoFormat( "RV32", m_snapshot->width(), m_snapshot->height(), m_snapshot->bytesPerLine() );
+    m_mediaPlayer.setVideoFormat( "RV32", 320, 180, 320 * 4 );
     m_mediaPlayer.setVideoCallbacks(
         // Lock:
         [this]( void** planes ) {
@@ -60,7 +59,7 @@ VmemRenderer::~VmemRenderer()
      * destroyed in a potentially locked state, while the vmem tries to lock/unlock.
      */
     stop();
-    delete m_snapshot;
+    delete[] m_snapshot;
 }
 
 ::VLC::MediaPlayer&
@@ -69,21 +68,22 @@ VmemRenderer::mediaPlayer()
     return m_mediaPlayer;
 }
 
-QImage*
+uint8_t*
 VmemRenderer::waitSnapshot()
 {
     QMutexLocker lock( &m_mutex );
     m_snapshotRequired = true;
     if ( m_waitCond.wait( &m_mutex, 3000 ) == false )
         return nullptr;
-    return new QImage( *m_snapshot );
+    return m_snapshot;
 }
 
 void*
 VmemRenderer::vmemLock( void **planes)
 {
     QMutexLocker lock( &m_mutex );
-    *planes = m_snapshot->bits();
+    m_snapshot = new uint8_t[320 * 180 * 4];
+    *planes = m_snapshot;
     return m_snapshot;
 }
 

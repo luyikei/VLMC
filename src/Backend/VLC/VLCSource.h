@@ -23,7 +23,7 @@
 #ifndef VLCRSOURCE_H
 #define VLCRSOURCE_H
 
-#include <QImage>
+#include <QtGlobal>
 
 #include "Backend/ISource.h"
 #include "libvlcpp/vlcpp/vlc.hpp"
@@ -69,7 +69,7 @@ private:
     unsigned int                m_nbVideoTracks;
     unsigned int                m_nbAudioTracks;
     int64_t                     m_length; //in milliseconds.
-    QImage*                     m_snapshot;
+    uint8_t*                    m_snapshot;
     bool                        m_isParsed;
     int64_t                     m_nbFrames;
 };

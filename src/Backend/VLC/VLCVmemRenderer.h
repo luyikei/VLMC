@@ -28,8 +28,6 @@
 
 #include "VLCSourceRenderer.h"
 
-class QImage;
-
 namespace Backend
 {
 namespace VLC
@@ -49,14 +47,14 @@ public:
      *  the caller.
      * @return
      */
-    QImage *waitSnapshot();
+    uint8_t *waitSnapshot();
 
 private:
     void*    vmemLock( void **planes );
     void     vmemUnlock( void* picture );
 
 private:
-    QImage*         m_snapshot;
+    uint8_t*        m_snapshot;
     bool            m_snapshotRequired;
     QMutex          m_mutex;
     QWaitCondition  m_waitCond;

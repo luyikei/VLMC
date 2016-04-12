@@ -176,7 +176,7 @@ VLCSource::snapshot() const
 {
     if ( hasVideo() == false || m_snapshot == nullptr )
         return nullptr;
-    return m_snapshot->bits();
+    return m_snapshot;
 }
 
 int64_t
