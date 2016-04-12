@@ -36,7 +36,7 @@ class RecentProjects : public QObject
     public:
         explicit RecentProjects(Settings* vlmcSettings, QObject *parent = 0 );
 
-        QVariant        toVariant() const;
+        const QVariant& toVariant() const;
         void            remove( const QString& projectFile );
 
     public slots:

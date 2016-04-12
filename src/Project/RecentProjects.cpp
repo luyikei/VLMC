@@ -30,16 +30,16 @@ RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
                                                 "", "", SettingValue::Private );
 }
 
-QVariant
+const QVariant&
 RecentProjects::toVariant() const
 {
-    return QVariant( m_recentsProjects->get().toList() );
+    return m_recentsProjects->get();
 }
 
 void
 RecentProjects::remove( const QString &projectFile )
 {
-    QVariantList l = m_recentsProjects->get().toList();
+    QVariantList l = toVariant().toList();
     for ( int i = 0; i < l.count(); ++i )
     {
         if ( l[i].toMap()["file"].toString() == projectFile )
@@ -54,7 +54,7 @@ RecentProjects::remove( const QString &projectFile )
 void
 RecentProjects::projectLoaded( const QString& projectName, const QString& projectFile )
 {
-    QVariantList l = m_recentsProjects->get().toList();
+    QVariantList l = toVariant().toList();
     QVariantMap var {
         { "name", projectName },
         { "file", projectFile }
