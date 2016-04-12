@@ -20,7 +20,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <QColor>
 #include <QPoint>
 
 #include "EffectsEngine/Effect.h"
@@ -78,8 +77,8 @@ EffectSettingValue::set( const QVariant &val )
         }
     case Color:
         {
-            QColor  color = val.value<QColor>();
-            qreal   rgb[3] = { color.redF(), color.greenF(), color.blueF() };
+            QVariantList l = val.toList();
+            qreal   rgb[3] = { l[0].toFloat(), l[1].toFloat(), l[2].toFloat() };
             copyToFrei0rBuff( rgb, 3 * sizeof(float) );
             break ;
         }
@@ -139,7 +138,9 @@ EffectSettingValue::get()
             f0r_param_color_t   tmp;
             m_effectInstance->effect()->m_f0r_get_param_value( m_effectInstance->m_instance,
                                                                &tmp, m_index );
-            m_val.setValue( QColor::fromRgbF( tmp.r, tmp.g, tmp.b ) );
+            QVariantList l;
+            l << tmp.r << tmp.g << tmp.b;
+            m_val.setValue( l );
             break ;
         }
     case Position:
