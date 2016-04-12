@@ -43,7 +43,7 @@ VmemRenderer::VmemRenderer( VLCBackend* backend, VLCSource *source , ISourceRend
         nullptr,
         // Display:
         [this]( void* picture ) {
-            vmemUnlock( picture );
+            vmemDisplay( picture );
         }
     );
     if ( m_mediaPlayer.setAudioOutput( "dummy" ) == false )
@@ -85,7 +85,7 @@ VmemRenderer::vmemLock( void **planes)
 }
 
 void
-VmemRenderer::vmemUnlock( void* picture )
+VmemRenderer::vmemDisplay( void* picture )
 {
     QMutexLocker lock( &m_mutex );
     Q_UNUSED( picture );

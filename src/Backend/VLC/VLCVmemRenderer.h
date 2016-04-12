@@ -51,7 +51,7 @@ public:
 
 private:
     void*    vmemLock( void **planes );
-    void     vmemUnlock( void* picture );
+    void     vmemDisplay( void* picture );
 
 private:
     uint8_t*        m_snapshot;
