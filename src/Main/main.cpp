@@ -41,10 +41,14 @@
 #include "Gui/wizard/firstlaunch/FirstLaunchWizard.h"
 #endif
 
+#ifdef WITH_GUI
 #include <QApplication>
 #include <QColor>
-#include <QFile>
 #include <QPalette>
+#else
+#include <QCoreApplication>
+#endif
+#include <QFile>
 #include <QSettings>
 #include <QUuid>
 #include <QTextCodec>
