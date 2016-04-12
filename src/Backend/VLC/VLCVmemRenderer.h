@@ -47,7 +47,7 @@ public:
      *  the caller.
      * @return
      */
-    uint8_t *waitSnapshot();
+    const uint8_t *waitSnapshot();
 
 private:
     void*    vmemLock( void **planes );

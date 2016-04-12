@@ -69,7 +69,7 @@ private:
     unsigned int                m_nbVideoTracks;
     unsigned int                m_nbAudioTracks;
     int64_t                     m_length; //in milliseconds.
-    uint8_t*                    m_snapshot;
+    const uint8_t*              m_snapshot;
     bool                        m_isParsed;
     int64_t                     m_nbFrames;
 };

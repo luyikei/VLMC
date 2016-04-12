@@ -66,7 +66,7 @@ VmemRenderer::mediaPlayer()
     return m_mediaPlayer;
 }
 
-uint8_t*
+const uint8_t*
 VmemRenderer::waitSnapshot()
 {
     QMutexLocker lock( &m_mutex );
