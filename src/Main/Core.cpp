@@ -57,8 +57,7 @@ Core::Core()
     connect( m_undoStack, &QUndoStack::cleanChanged, m_currentProject, &Project::cleanChanged );
     connect( m_currentProject, &Project::projectSaved, m_undoStack, &QUndoStack::setClean );
     connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
-    connect( m_currentProject, SIGNAL( projectLoaded( QString, QString ) ),
-             m_recentProjects, SLOT( projectLoaded( QString, QString ) ) );
+    connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
     connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
     connect( m_currentProject, &Project::projectClosed, m_workflow, &MainWorkflow::clear );
 
