@@ -40,6 +40,7 @@ SET(VLMC_SRCS
     Backend/IBackend.h
     Backend/ISourceRenderer.h
     Backend/ISource.h
+    Backend/IRenderTarget.h
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
