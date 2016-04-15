@@ -23,7 +23,7 @@
 #ifndef IRENDERER_H
 #define IRENDERER_H
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace Backend
 {
