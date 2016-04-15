@@ -56,7 +56,7 @@ namespace Backend
                                                    size_t size, int64_t pts );
 
         typedef int (*MemoryInputLockCallback)( void *data, const char* cookie, int64_t *dts, int64_t *pts,
-                         quint32 *flags, size_t *bufferSize, const void **buffer );
+                         uint32_t *flags, size_t *bufferSize, const void **buffer );
         typedef void (*MemoryInputUnlockCallback)( void *data, const char* cookie, size_t buffSize, void *buffer );
 
         virtual void    setName( const char* name ) = 0;
