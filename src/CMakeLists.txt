@@ -47,6 +47,7 @@ SET(VLMC_SRCS
     Backend/VLC/VLCSource.cpp
     Backend/VLC/VLCMemorySource.cpp
     Backend/Target/WidgetTarget.cpp
+    Backend/Target/FileTarget.cpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectUser.cpp
