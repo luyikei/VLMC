@@ -24,6 +24,7 @@
 #define IRENDERER_H
 
 #include <cstdint>
+#include <cstddef>
 
 namespace Backend
 {
