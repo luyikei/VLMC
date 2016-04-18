@@ -84,6 +84,7 @@ WorkflowRenderer::setupRenderer()
 
     delete m_sourceRenderer;
     m_sourceRenderer = m_source->createRenderer( m_eventWatcher );
+    m_renderTarget->configure( m_sourceRenderer );
     m_sourceRenderer->setName( "WorkflowRenderer" );
     m_sourceRenderer->enableMemoryInput( m_esHandler, getLockCallback(), getUnlockCallback() );
 }

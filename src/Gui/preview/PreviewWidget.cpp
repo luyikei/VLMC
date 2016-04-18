@@ -21,9 +21,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <memory>
+
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/ISourceRenderer.h"
+#include "Backend/Target/WidgetTarget.h"
 #include "PreviewWidget.h"
 #include "PreviewRuler.h"
 #include "RenderWidget.h"
@@ -70,6 +73,7 @@ PreviewWidget::setRenderer(GenericRenderer *renderer)
 
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
+    m_renderer->setRenderTarget( std::unique_ptr<Backend::IRenderTarget>( new Backend::WidgetTarget( (void*)m_ui->renderWidget->id() ) ) );
 
 #if defined ( Q_OS_MAC )
     /* Releases the NSView in the RenderWidget*/
