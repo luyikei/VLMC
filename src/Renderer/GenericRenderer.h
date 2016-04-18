@@ -27,7 +27,6 @@
 
 #include <QObject>
 
-#include "EffectsEngine/EffectUser.h"
 #include "Workflow/Types.h"
 #include "Tools/RendererEventWatcher.h"
 
@@ -37,7 +36,7 @@ class   Media;
 /**
  *  \class  Common base for every renderer.
  */
-class   GenericRenderer : public EffectUser
+class   GenericRenderer : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY( GenericRenderer )
@@ -142,13 +141,8 @@ public:
         return m_isRendering;
     }
 
-    EffectUser::Type                effectType() const
-    {
-        return EffectUser::GlobalEffectUser;
-    }
 
     RendererEventWatcher*           eventWatcher();
-
 protected:
     Backend::ISourceRenderer*       m_sourceRenderer;
     RendererEventWatcher*           m_eventWatcher;
@@ -161,6 +155,7 @@ protected:
      *  \sa         isPaused()
      */
     bool                            m_paused;
+    bool                            m_isRendering;
 
 public slots:
     /**

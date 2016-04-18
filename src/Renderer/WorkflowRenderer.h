@@ -230,6 +230,10 @@ class   WorkflowRenderer : public GenericRenderer
         qint64              m_audioPts;
 
     private:
+
+        quint32             m_width;
+        quint32             m_height;
+
         /**
          *  \brief          When there's no sound to play, this is the buffer that'll
          *                  be injected

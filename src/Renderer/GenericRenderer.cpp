@@ -27,6 +27,7 @@
 GenericRenderer::GenericRenderer()
     : m_sourceRenderer( nullptr )
     , m_paused( false )
+    , m_isRendering( false )
 {
     m_eventWatcher = new RendererEventWatcher;
 }
