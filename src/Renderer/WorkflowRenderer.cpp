@@ -35,6 +35,7 @@
 #include "GenericRenderer.h"
 #include "Backend/IBackend.h"
 #include "Backend/ISource.h"
+#include "Backend/Target/FileTarget.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/preview/RenderWidget.h"
 #include "Settings/Settings.h"
@@ -228,7 +229,7 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
     m_aspectRatio = ar;
 
     setupRenderer();
-    m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
+    setRenderTarget( std::unique_ptr<Backend::IRenderTarget>( new Backend::FileTarget( qPrintable( outputFileName ) ) ) );
     m_sourceRenderer->setOutputAudioBitrate( abitrate );
     m_sourceRenderer->setOutputVideoBitrate( vbitrate );
     connect( m_mainWorkflow, &MainWorkflow::mainWorkflowEndReached, this, &WorkflowRenderer::renderComplete );
