@@ -24,11 +24,12 @@
 #define GENERICRENDERER_H
 
 #include "config.h"
-
+#include <memory>
 #include <QObject>
 
 #include "Workflow/Types.h"
 #include "Tools/RendererEventWatcher.h"
+#include "Backend/IRenderTarget.h"
 
 class   Clip;
 class   Media;
@@ -135,6 +136,8 @@ public:
      */
     bool                            isRendering() const;
 
+    void                            setRenderTarget(  std::unique_ptr<Backend::IRenderTarget> target );
+
     RendererEventWatcher*           eventWatcher();
 protected:
     Backend::ISourceRenderer*       m_sourceRenderer;
@@ -149,6 +152,8 @@ protected:
      */
     bool                            m_paused;
     bool                            m_isRendering;
+
+    std::unique_ptr<Backend::IRenderTarget>         m_renderTarget;
 
 public slots:
     /**

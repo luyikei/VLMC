@@ -50,6 +50,12 @@ GenericRenderer::isRendering() const
     return m_isRendering;
 }
 
+void
+GenericRenderer::setRenderTarget( std::unique_ptr<Backend::IRenderTarget> target )
+{
+    m_renderTarget = std::move( target );
+}
+
 #ifdef WITH_GUI
 RendererEventWatcher*
 GenericRenderer::eventWatcher()
