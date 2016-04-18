@@ -26,9 +26,6 @@
 #include "config.h"
 
 #include <QObject>
-#ifdef WITH_GUI
-# include <QWidget>
-#endif
 
 #include "EffectsEngine/EffectUser.h"
 #include "Workflow/Types.h"
@@ -50,15 +47,6 @@ protected:
 
 public:
     virtual ~GenericRenderer();
-
-#ifdef WITH_GUI
-    /**
-     *  \brief  Set the widget used for rendering the output.
-     *  \param  renderWidget    The widget to use for render.
-     *  \sa     setPreviewLabel( QLabel* )
-     */
-    void                setRenderWidget( QWidget* renderWidget );
-#endif
 
     /**
      *  \brief  Set the output volume.
@@ -173,8 +161,6 @@ protected:
      *  \sa         isPaused()
      */
     bool                            m_paused;
-
-    QWidget*                        m_renderWidget;
 
 public slots:
     /**

@@ -89,7 +89,6 @@ ClipRenderer::startPreview()
 
     delete m_sourceRenderer;
     m_sourceRenderer = m_selectedClip->media()->source()->createRenderer( m_eventWatcher );
-    m_sourceRenderer->setOutputWidget( (void *) static_cast< RenderWidget* >( m_renderWidget )->id() );
 
     connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
     connect( m_eventWatcher, SIGNAL( paused() ),  this, SIGNAL( paused() ) );

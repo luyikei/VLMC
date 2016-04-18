@@ -71,8 +71,6 @@ PreviewWidget::setRenderer(GenericRenderer *renderer)
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
 
-    m_renderer->setRenderWidget( m_ui->renderWidget );
-
 #if defined ( Q_OS_MAC )
     /* Releases the NSView in the RenderWidget*/
     m_ui->renderWidget->release();

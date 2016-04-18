@@ -38,12 +38,6 @@ GenericRenderer::~GenericRenderer()
 }
 
 #ifdef WITH_GUI
-void
-GenericRenderer::setRenderWidget(QWidget *renderWidget)
-{
-    m_renderWidget = renderWidget;
-}
-
 RendererEventWatcher*
 GenericRenderer::eventWatcher()
 {
