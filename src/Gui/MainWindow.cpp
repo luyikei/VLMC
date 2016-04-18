@@ -610,6 +610,8 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
     WorkflowFileRendererDialog  dialog( width, height );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
+    if ( m_projectPreview->getGenericRenderer()->isRendering() == true )
+        m_projectPreview->stop();
     Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
                                                              fps, ar, vbitrate, abitrate );
 
