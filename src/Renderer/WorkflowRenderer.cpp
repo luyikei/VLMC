@@ -50,7 +50,6 @@ WorkflowRenderer::WorkflowRenderer( Backend::IBackend* backend, MainWorkflow* ma
     , m_nbChannels( 2 )
     , m_rate( 48000 )
     , m_oldLength( 0 )
-    , m_effectFrame( nullptr )
 {
     m_source = backend->createMemorySource();
     m_esHandler = new EsHandler;
@@ -141,12 +140,8 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
         //this is a bit hackish though... (especially regarding the "no frame computed" detection)
         ptsDiff = 1000000 / handler->fps;
     }
-    m_effectFrame = applyFilters( ret, m_mainWorkflow->getCurrentFrame() );
     m_pts = *pts = ptsDiff + m_pts;
-    if ( m_effectFrame != nullptr )
-        *buffer = m_effectFrame;
-    else
-        *buffer = ret->buffer();
+    *buffer = ret->buffer();
     *bufferSize = ret->size();
 
 #ifdef WITH_GUI
@@ -202,11 +197,9 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
 }
 
 void
-WorkflowRenderer::unlock( void *data, const char*, size_t, void* )
+WorkflowRenderer::unlock( void *, const char*, size_t, void* )
 {
-    EsHandler*      handler = reinterpret_cast<EsHandler*>( data );
-    delete[] handler->self->m_effectFrame;
-    handler->self->m_effectFrame = nullptr;
+    // Nothing to do for now
 }
 
 void
@@ -233,7 +226,6 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
     m_outputFps = fps;
     m_aspectRatio = ar;
 
-    initFilters();
     setupRenderer();
     m_sourceRenderer->setOutputFile( qPrintable( outputFileName ) );
     m_sourceRenderer->setOutputAudioBitrate( abitrate );
@@ -258,7 +250,6 @@ WorkflowRenderer::startPreview()
     m_outputFps = project->fps();
     m_aspectRatio = project->aspectRatio();
 
-    initFilters();
     setupRenderer();
     m_mainWorkflow->setFullSpeedRender( false );
     start();

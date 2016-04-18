@@ -244,8 +244,6 @@ class   WorkflowRenderer : public GenericRenderer
          */
         qint64              m_oldLength;
 
-        quint32             *m_effectFrame;
-
         static const quint8     VideoCookie = '0';
         static const quint8     AudioCookie = '1';
 
