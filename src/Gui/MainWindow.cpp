@@ -486,7 +486,9 @@ MainWindow::setupProjectPreview()
 {
     m_projectPreview = new PreviewWidget;
     m_projectPreview->setClipEdition( false );
-    m_projectPreview->setRenderer( Core::instance()->workflowRenderer() );
+    auto renderer = new WorkflowRenderer( Core::instance()->backend(), Core::instance()->workflow() );
+    renderer->setParent( m_projectPreview );
+    m_projectPreview->setRenderer( renderer );
     KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
     connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
     m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
