@@ -38,6 +38,18 @@ GenericRenderer::~GenericRenderer()
     delete m_eventWatcher;
 }
 
+bool
+GenericRenderer::isPaused() const
+{
+    return m_paused;
+}
+
+bool
+GenericRenderer::isRendering() const
+{
+    return m_isRendering;
+}
+
 #ifdef WITH_GUI
 RendererEventWatcher*
 GenericRenderer::eventWatcher()

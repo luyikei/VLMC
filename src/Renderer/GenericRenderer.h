@@ -125,10 +125,7 @@ public:
      *  \brief  Return true if the renderer is paused
      *  \return true if the renderer is paused. false otherwise.
      */
-    bool                            isPaused() const
-    {
-        return m_paused;
-    }
+    bool                            isPaused() const;
 
     /**
      *  \brief      Return true if the renderer is currently rendering.
@@ -136,11 +133,7 @@ public:
      *              Note that a paused renderer is still rendering
      *  \sa         isPaused()
      */
-    bool                            isRendering() const
-    {
-        return m_isRendering;
-    }
-
+    bool                            isRendering() const;
 
     RendererEventWatcher*           eventWatcher();
 protected:
