@@ -27,7 +27,7 @@
 #include <QWidget>
 #include "Workflow/MainWorkflow.h"
 
-class GenericRenderer;
+class AbstractRenderer;
 class RendererEventWatcher;
 
 namespace Ui {
@@ -42,8 +42,8 @@ class PreviewWidget : public QWidget
 public:
     explicit PreviewWidget( QWidget* parent = nullptr );
     virtual ~PreviewWidget();
-    const GenericRenderer*  getGenericRenderer() const;
-    void                    setRenderer( GenericRenderer *renderer );
+    const AbstractRenderer*  getAbstractRenderer() const;
+    void                    setRenderer( AbstractRenderer *renderer );
     /**
      * @brief setClipEdition Allows to enable/disable markers & create clip buttons
      */
@@ -51,7 +51,7 @@ public:
 
 private:
     Ui::PreviewWidget*      m_ui;
-    GenericRenderer*        m_renderer;
+    AbstractRenderer*        m_renderer;
     bool                    m_previewStopped;
 
 protected:

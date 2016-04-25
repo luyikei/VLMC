@@ -25,7 +25,7 @@
 
 #include <QWidget>
 #include <QPaintEvent>
-#include "Renderer/GenericRenderer.h"
+#include "Renderer/AbstractRenderer.h"
 
 #define MARK_XSMALL 3
 #define MARK_SMALL 5
@@ -46,7 +46,7 @@ public:
 
     PreviewRuler( QWidget* parent = 0 );
     virtual ~PreviewRuler() { }
-    void                setRenderer( GenericRenderer* renderer );
+    void                setRenderer( AbstractRenderer* renderer );
     void                setMarker( Marker m );
     void                hideMarker( Marker m );
     qint64              getMarker( Marker m ) const;
@@ -65,7 +65,7 @@ private slots:
     void                clear();
 
 private:
-    GenericRenderer*    m_renderer;
+    AbstractRenderer*    m_renderer;
     qint64              m_frame;
     qint64              m_markerStart;
     qint64              m_markerStop;

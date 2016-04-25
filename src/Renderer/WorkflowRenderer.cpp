@@ -32,7 +32,7 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectInstance.h"
-#include "GenericRenderer.h"
+#include "AbstractRenderer.h"
 #include "Backend/IBackend.h"
 #include "Backend/ISource.h"
 #include "Backend/Target/FileTarget.h"

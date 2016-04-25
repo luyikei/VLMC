@@ -1,5 +1,5 @@
 /*****************************************************************************
- * GenericRenderer.h: Describe a common behavior for every renderers
+ * AbstractRenderer.h: Describe a common behavior for every renderers
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef GENERICRENDERER_H
-#define GENERICRENDERER_H
+#ifndef ABSTRACTRENDERER_H
+#define ABSTRACTRENDERER_H
 
 #include "config.h"
 #include <memory>
@@ -37,16 +37,16 @@ class   Media;
 /**
  *  \class  Common base for every renderer.
  */
-class   GenericRenderer : public QObject
+class   AbstractRenderer : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY( GenericRenderer )
+    Q_DISABLE_COPY( AbstractRenderer )
 
 protected:
-    explicit GenericRenderer();
+    explicit AbstractRenderer();
 
 public:
-    virtual ~GenericRenderer();
+    virtual ~AbstractRenderer();
 
     /**
      *  \brief  Set the output volume.
@@ -170,4 +170,4 @@ signals:
                                                 Vlmc::FrameChangedReason reason );
 };
 
-#endif // GENERICRENDERER_H
+#endif // ABSTRACTRENDERER_H

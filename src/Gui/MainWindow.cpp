@@ -119,7 +119,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
 
     //Connecting Library stuff:
-    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getGenericRenderer() );
+    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
     Q_ASSERT( clipRenderer != nullptr );
     connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
              clipRenderer, SLOT( setClip( Clip* ) ) );
@@ -610,7 +610,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
     WorkflowFileRendererDialog  dialog( width, height );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
-    if ( m_projectPreview->getGenericRenderer()->isRendering() == true )
+    if ( m_projectPreview->getAbstractRenderer()->isRendering() == true )
         m_projectPreview->stop();
     Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
                                                              fps, ar, vbitrate, abitrate );

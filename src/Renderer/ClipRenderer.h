@@ -23,14 +23,14 @@
 #ifndef CLIPRENDERER_H
 #define CLIPRENDERER_H
 
-#include "GenericRenderer.h"
+#include "AbstractRenderer.h"
 
 #include <QObject>
 
 class   Clip;
 class   Media;
 
-class ClipRenderer : public GenericRenderer
+class ClipRenderer : public AbstractRenderer
 {
     Q_OBJECT
     Q_DISABLE_COPY( ClipRenderer )

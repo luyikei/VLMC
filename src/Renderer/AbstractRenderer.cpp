@@ -1,5 +1,5 @@
 /*****************************************************************************
- * GenericRenderer.cpp: Describe a common behavior for every renderers
+ * AbstractRenderer.cpp: Describe a common behavior for every renderers
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,11 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "GenericRenderer.h"
+#include "AbstractRenderer.h"
 #include "preview/RenderWidget.h"
 #include <QtGlobal>
 
-GenericRenderer::GenericRenderer()
+AbstractRenderer::AbstractRenderer()
     : m_sourceRenderer( nullptr )
     , m_paused( false )
     , m_isRendering( false )
@@ -32,33 +32,33 @@ GenericRenderer::GenericRenderer()
     m_eventWatcher = new RendererEventWatcher;
 }
 
-GenericRenderer::~GenericRenderer()
+AbstractRenderer::~AbstractRenderer()
 {
     delete m_sourceRenderer;
     delete m_eventWatcher;
 }
 
 bool
-GenericRenderer::isPaused() const
+AbstractRenderer::isPaused() const
 {
     return m_paused;
 }
 
 bool
-GenericRenderer::isRendering() const
+AbstractRenderer::isRendering() const
 {
     return m_isRendering;
 }
 
 void
-GenericRenderer::setRenderTarget( std::unique_ptr<Backend::IRenderTarget> target )
+AbstractRenderer::setRenderTarget( std::unique_ptr<Backend::IRenderTarget> target )
 {
     m_renderTarget = std::move( target );
 }
 
 #ifdef WITH_GUI
 RendererEventWatcher*
-GenericRenderer::eventWatcher()
+AbstractRenderer::eventWatcher()
 {
     return m_eventWatcher;
 }

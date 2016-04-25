@@ -34,7 +34,7 @@
 #include "Gui/preview/RenderWidget.h"
 
 ClipRenderer::ClipRenderer() :
-    GenericRenderer(),
+    AbstractRenderer(),
     m_clipLoaded( false ),
     m_selectedClip( nullptr ),
     m_begin( 0 ),

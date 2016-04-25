@@ -66,7 +66,7 @@ PreviewWidget::~PreviewWidget()
 }
 
 void
-PreviewWidget::setRenderer(GenericRenderer *renderer)
+PreviewWidget::setRenderer(AbstractRenderer *renderer)
 {
     delete m_renderer;
     m_renderer = renderer;
@@ -179,8 +179,8 @@ PreviewWidget::on_pushButtonPreviousFrame_clicked()
         m_renderer->previousFrame();
 }
 
-const GenericRenderer*
-PreviewWidget::getGenericRenderer() const
+const AbstractRenderer*
+PreviewWidget::getAbstractRenderer() const
 {
     return m_renderer;
 }

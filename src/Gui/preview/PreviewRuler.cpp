@@ -38,7 +38,7 @@ PreviewRuler::PreviewRuler( QWidget* parent ) :
 }
 
 void
-PreviewRuler::setRenderer( GenericRenderer* renderer )
+PreviewRuler::setRenderer( AbstractRenderer* renderer )
 {
     if ( m_renderer )
         m_renderer->disconnect( this );

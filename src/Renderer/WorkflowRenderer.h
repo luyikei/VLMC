@@ -23,7 +23,7 @@
 #ifndef WORKFLOWRENDERER_H
 #define WORKFLOWRENDERER_H
 
-#include "GenericRenderer.h"
+#include "AbstractRenderer.h"
 #include "Backend/ISourceRenderer.h"
 #include "Workflow/MainWorkflow.h"
 
@@ -42,7 +42,7 @@ class   QWidget;
 class   QWaitCondition;
 class   QMutex;
 
-class   WorkflowRenderer : public GenericRenderer
+class   WorkflowRenderer : public AbstractRenderer
 {
     Q_OBJECT
     Q_DISABLE_COPY( WorkflowRenderer )
