@@ -441,6 +441,7 @@ void
 MainWindow::setupUndoRedoWidget()
 {
     m_undoView = new QUndoView;
+    m_undoView->setObjectName( QStringLiteral( "History" ) );
     m_dockedUndoView = dockWidget( m_undoView, Qt::TopDockWidgetArea );
     auto stack = Core::instance()->undoStack();
     connect( stack, SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
