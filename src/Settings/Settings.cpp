@@ -159,8 +159,14 @@ Settings::loadJsonFrom( const QJsonObject &object )
         if ( isChildSettings == true )
             continue;
 
-        if ( setValue( it.key(), (*it).toVariant() ) == false )
+        SettingValue* val = value( it.key() );
+        if ( val == nullptr )
             vlmcWarning() << "Loaded invalid project setting:" << it.key();
+
+        if ( val->type() == SettingValue::ByteArray )
+            val->set( QByteArray::fromBase64( (*it).toVariant().toByteArray() ) );
+        else
+            val->set( (*it).toVariant() );
     }
     emit postLoad();
 }
@@ -173,7 +179,10 @@ Settings::saveJsonTo( QJsonObject &object )
     {
         if ( ( val->flags() & SettingValue::Runtime ) != 0 )
             continue ;
-        object.insert( val->key(), QJsonValue::fromVariant( val->get() ) );
+        if ( val->type() == SettingValue::ByteArray )
+            object.insert( val->key(), QJsonValue( QString( val->get().toByteArray().toBase64() ) ) );
+        else
+            object.insert( val->key(), QJsonValue::fromVariant( val->get() ) );
     }
 }
 
