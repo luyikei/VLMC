@@ -21,6 +21,7 @@ vlmc
 /contribs/tools
 /contribs/plugins
 /contribs/ts
+/contribs/vlc
 
 .DS_Store
 Thumbs.db

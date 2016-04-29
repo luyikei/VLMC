@@ -10,12 +10,12 @@
 ## Building and Packaging
 
 ### Get the actual dependencies:
-* brew tap tomahawk-player/tomahawkqt5
 * brew install cmake
-* brew install vlc
 * brew install Qt5
 * brew install frei0r
-
+* ./contribs/build-libvlc-for-mac.sh
+* git submodule init
+* git submodule update
 
 ### Compile vlmc:
 Now cd to root source directory and build:
