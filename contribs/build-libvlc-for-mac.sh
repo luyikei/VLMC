@@ -167,7 +167,6 @@ cd ${ARCH}-build
         --disable-macosx \
         --disable-notify \
         --disable-projectm \
-        --disable-growl \
         --disable-faad \
         --disable-bluray \
         --enable-flac \
@@ -178,7 +177,6 @@ cd ${ARCH}-build
         --disable-realrtsp \
         --enable-libass \
         --disable-macosx-avfoundation \
-        --disable-macosx-dialog-provider \
         --disable-macosx-eyetv \
         --disable-macosx-qtkit \
         --disable-qt \
