@@ -12,7 +12,7 @@ OSX_VERSION="10.11"
 ARCH="x86_64"
 MINIMAL_OSX_VERSION="10.7"
 SDKROOT=`xcode-select -print-path`/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$OSX_VERSION.sdk
-UNSTABLE=no
+UNSTABLE=yes
 
 usage()
 {
@@ -21,7 +21,7 @@ usage: $0 [-v] [-d]
 
 OPTIONS
    -v            Be more verbose
-   -u            Use unstable libvlc
+   -u            Do not use unstable libvlc
    -k <sdk>      Use the specified sdk (default: $SDKROOT for $ARCH)
    -a <arch>     Use the specified arch (default: $ARCH)
 EOF
@@ -55,7 +55,7 @@ do
              VERBOSE=yes
              ;;
          u)
-             UNSTABLE=yes
+             UNSTABLE=no
              ;;
          a)
              ARCH=$OPTARG
@@ -181,7 +181,7 @@ cd ${ARCH}-build
         --disable-macosx-dialog-provider \
         --disable-macosx-eyetv \
         --disable-macosx-qtkit \
-        --disable-macosx-quartztext \
+        --disable-qt \
         --disable-macosx-vlc-app \
         --disable-skins2 \
         --disable-xcb \
