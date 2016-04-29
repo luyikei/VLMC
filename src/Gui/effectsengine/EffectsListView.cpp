@@ -45,6 +45,7 @@ EffectsListView::EffectsListView( QWidget *parent ) :
     connect( this, SIGNAL( activated( QModelIndex ) ),
              this, SLOT( effectActivated( QModelIndex ) ) );
     setEditTriggers( QAbstractItemView::NoEditTriggers );
+    setObjectName( QStringLiteral( "Effects List" ) );
 }
 
 void
