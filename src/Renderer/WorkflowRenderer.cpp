@@ -228,8 +228,8 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
     m_outputFps = fps;
     m_aspectRatio = ar;
 
-    setupRenderer();
     setRenderTarget( std::unique_ptr<Backend::IRenderTarget>( new Backend::FileTarget( qPrintable( outputFileName ) ) ) );
+    setupRenderer();
     m_sourceRenderer->setOutputAudioBitrate( abitrate );
     m_sourceRenderer->setOutputVideoBitrate( vbitrate );
     connect( m_mainWorkflow, &MainWorkflow::mainWorkflowEndReached, this, &WorkflowRenderer::renderComplete );
