@@ -149,6 +149,14 @@ class   Clip : public QObject
          *          beginning of the parent Media.
          */
         qint64              m_end;
+        /**
+         *  \brief  This represents the beginning of the Clip in form of [0; 1] float
+         */
+        float              m_beginPosition;
+        /**
+         *  \brief  This represents the end of the Clip in form of [0;1] float
+         */
+        float              m_endPosition;
 
         /**
          *  \brief  The length in frames

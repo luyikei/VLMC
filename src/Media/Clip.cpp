@@ -40,12 +40,15 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
         m_end( end ),
         m_parent( media->baseClip() )
 {
+    int64_t nbSourceFrames = media->source()->nbFrames();
     if ( end == -1 )
-        m_end = media->source()->nbFrames();
+        m_end = nbSourceFrames;
     if ( uuid.isEmpty() == true )
         m_uuid = QUuid::createUuid();
     else
         m_uuid = QUuid( uuid );
+    m_beginPosition = (float)begin / (float)nbSourceFrames;
+    m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
     computeLength();
@@ -61,6 +64,7 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
         m_rootClip( parent->rootClip() ),
         m_parent( parent )
 {
+    int64_t nbSourceFrames = parent->media()->source()->nbFrames();
     if ( begin < 0 )
         m_begin = parent->m_begin;
     if ( end < 0 )
@@ -69,6 +73,8 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
         m_uuid = QUuid::createUuid();
     else
         m_uuid = QUuid( uuid );
+    m_beginPosition = (float)begin / (float)nbSourceFrames;
+    m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
     computeLength();
 }
@@ -108,11 +114,9 @@ Clip::lengthSecond() const
 void
 Clip::computeLength()
 {
-    float   fps = m_media->source()->fps();
-    if ( fps < 0.1f )
-        fps = Clip::DefaultFPS;
+    int64_t sourceLengthSeconds = m_media->source()->length() / 1000;
     m_nbFrames = m_end - m_begin;
-    m_lengthSeconds = qRound64( (float)m_nbFrames / fps );
+    m_lengthSeconds = qRound64( ( m_endPosition - m_beginPosition ) * sourceLengthSeconds );
 }
 
 const QStringList&
@@ -274,6 +278,8 @@ Clip::mediaMetadataUpdated()
     {
         m_begin = 0;
         m_end = m_media->source()->nbFrames();
+        m_beginPosition = 0.0f;
+        m_endPosition = 1.0f;
         computeLength();
     }
 }
