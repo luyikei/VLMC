@@ -121,6 +121,12 @@ VideoClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame )
     return buff;
 }
 
+Workflow::TrackType
+VideoClipWorkflow::type() const
+{
+    return Workflow::VideoTrack;
+}
+
 void
 VideoClipWorkflow::lock( void *data, uint8_t** p_buffer, size_t size )
 {

@@ -34,6 +34,7 @@ class   ImageClipWorkflow : public ClipWorkflow
         ~ImageClipWorkflow();
 
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
+        virtual Workflow::TrackType     type() const;
         /**
          *  \brief      Deactivate time seeking in an ImageClipWorkflow
          */

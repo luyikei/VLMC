@@ -95,6 +95,12 @@ AudioClipWorkflow::getOutput( ClipWorkflow::GetMode mode, qint64 )
     return buff;
 }
 
+Workflow::TrackType
+AudioClipWorkflow::type() const
+{
+    return Workflow::AudioTrack;
+}
+
 void AudioClipWorkflow::initializeInternals()
 {
     m_renderer->setName( qPrintable( QString("AudioClipWorkflow " % m_clipHelper->uuid().toString() ) ) );

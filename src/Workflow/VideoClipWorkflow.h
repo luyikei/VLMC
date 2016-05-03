@@ -37,6 +37,7 @@ class   VideoClipWorkflow : public ClipWorkflow
     public:
         VideoClipWorkflow( ClipHelper* ch );
         virtual Workflow::OutputBuffer  *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame );
+        virtual Workflow::TrackType     type() const;
 
         static const quint32    nbBuffers = 3 * 30; //3 seconds with an average fps of 30
 

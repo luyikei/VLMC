@@ -86,6 +86,12 @@ ImageClipWorkflow::getOutput( ClipWorkflow::GetMode, qint64 currentFrame )
     return m_buffer;
 }
 
+Workflow::TrackType
+ImageClipWorkflow::type() const
+{
+    return Workflow::VideoTrack;
+}
+
 void
 ImageClipWorkflow::lock(void *data, uint8_t **pp_ret, size_t )
 {

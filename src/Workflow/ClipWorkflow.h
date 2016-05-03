@@ -98,6 +98,7 @@ class   ClipWorkflow : public EffectUser
          *  of the rendering process advancement.
          */
         virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame ) = 0;
+        virtual Workflow::TrackType         type() const = 0;
         void                    postGetOutput();
         /**
          * @brief Initialize base variables for the SourceRenderer.
