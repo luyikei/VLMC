@@ -28,7 +28,8 @@ ClipHelper::ClipHelper( Clip* clip, qint64 begin /*= -1*/, qint64 end /*= -1*/,
                         const QString& uuid /*= QString()*/ ) :
     Helper( begin, end, uuid ),
     m_clip( clip ),
-    m_clipWorkflow( nullptr )
+    m_clipWorkflow( nullptr ),
+    m_formats( ClipHelper::None )
 {
     if ( begin == -1 )
         m_begin = clip->begin();
@@ -73,6 +74,20 @@ void
 ClipHelper::setClipWorkflow( ClipWorkflow* cw )
 {
     m_clipWorkflow = cw;
+}
+
+ClipHelper::Formats
+ClipHelper::formats() const
+{
+    return m_formats;
+}
+
+void
+ClipHelper::setFormats( Formats formats )
+{
+    if ( formats.testFlag( ClipHelper::None ) )
+        m_formats = ClipHelper::None;
+    m_formats = formats;
 }
 
 void

@@ -36,6 +36,14 @@ class   ClipHelper : public Workflow::Helper
     Q_OBJECT
 
     public:
+        enum    Format
+        {
+            None          = 0,
+            Audio         = 1 << 0,
+            Video         = 1 << 1,
+        };
+        Q_DECLARE_FLAGS( Formats, Format )
+
         ClipHelper( Clip* clip, qint64 begin = -1, qint64 end = -1,
                     const QString& uuid = QString() );
 
@@ -53,12 +61,19 @@ class   ClipHelper : public Workflow::Helper
         ClipWorkflow    *clipWorkflow();
         void            setClipWorkflow( ClipWorkflow* cw );
 
+        Formats         formats() const;
+        void            setFormats( Formats formats );
+
     private:
         Clip*           m_clip;
         ClipWorkflow*   m_clipWorkflow;
 
+        Formats         m_formats;
+
     private slots:
         void        clipDestroyed();
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( ClipHelper::Formats )
 
 #endif // CLIPHELPER_H
