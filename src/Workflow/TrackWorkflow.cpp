@@ -44,10 +44,9 @@
 #include <QReadLocker>
 #include <QMutex>
 
-TrackWorkflow::TrackWorkflow( Workflow::TrackType type, quint32 trackId  ) :
+TrackWorkflow::TrackWorkflow( quint32 trackId  ) :
         m_length( 0 ),
-        m_trackType( type ),
-        m_lastFrame( 0 ),
+        m_trackType( Workflow::NbTrackType ),
         m_trackId( trackId )
 {
     m_clipsLock = new QReadWriteLock;
@@ -80,15 +79,21 @@ void
 TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
 {
     ClipWorkflow* cw;
-    if ( m_trackType == Workflow::VideoTrack )
-    {
-        if ( ch->clip()->media()->fileType() == Media::Video )
+    if ( ch->clip()->media()->fileType() == Media::FileType::Video )
+        // FIXME: This whole if statement will be gone as soon as I implement a united ClipWorkflow,
+        //        which can generate both audio and video buffers.
+        if ( ch->formats() & ClipHelper::Video )
             cw = new VideoClipWorkflow( ch );
+        else if ( ch->formats() & ClipHelper::Audio )
+            cw = new AudioClipWorkflow( ch );
         else
-            cw = new ImageClipWorkflow( ch );
-    }
-    else
+            vlmcFatal( "Nothing to render from this clip!" );
+    else if ( ch->clip()->media()->fileType() == Media::FileType::Audio )
         cw = new AudioClipWorkflow( ch );
+    else if ( ch->clip()->media()->fileType() == Media::FileType::Image )
+        cw = new ImageClipWorkflow( ch );
+    else
+        vlmcFatal( "Unknown file type!" );
     ch->setClipWorkflow( cw );
     addClip( cw, start );
 }
@@ -268,7 +273,7 @@ TrackWorkflow::stop()
 }
 
 Workflow::OutputBuffer*
-TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
+TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qint64 subFrame, bool paused )
 {
     QReadLocker     lock( m_clipsLock );
 
@@ -301,12 +306,19 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
     {
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
+
+        if ( trackType != cw->type() )
+        {
+            ++it;
+            continue ;
+        }
+
         //Is the clip supposed to render now?
         if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
         {
             ret = renderClip( cw, currentFrame, start, needRepositioning,
                               renderOneFrame, paused );
-            if ( m_trackType == Workflow::VideoTrack )
+            if ( trackType == Workflow::VideoTrack )
             {
                 frames[frameId] = static_cast<Workflow::Frame*>( ret );
                 ++frameId;
@@ -322,7 +334,7 @@ TrackWorkflow::getOutput( qint64 currentFrame, qint64 subFrame, bool paused )
         ++it;
     }
     //Handle mixers:
-    if ( m_trackType == Workflow::VideoTrack )
+    if ( trackType == Workflow::VideoTrack )
     {
         EffectHelper*   mixer = getMixer( currentFrame );
         if ( mixer != nullptr && frames[0] != nullptr ) //There's no point using the mixer if there's no frame rendered.

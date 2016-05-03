@@ -111,14 +111,12 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
         if ( ( m_muted = muteAction->isChecked() ) )
         {
             tracksView()->m_mainWorkflow->muteClip( uuid(),
-                                                    trackId,
-                                                    trackType() );
+                                                    trackId );
         }
         else
         {
             tracksView()->m_mainWorkflow->unmuteClip( uuid(),
-                                                    trackId,
-                                                    trackType() );
+                                                    trackId );
         }
     }
     else if ( selectedAction == linkAction )

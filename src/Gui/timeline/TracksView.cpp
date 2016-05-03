@@ -89,27 +89,24 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     connect( m_cursorLine, SIGNAL( cursorMoved(qint64) ),
              this, SLOT( ensureCursorVisible() ) );
 
-    for ( quint32 type = Workflow::VideoTrack; type < Workflow::NbTrackType; ++type )
+    for ( quint32 i = 0; i < m_mainWorkflow->trackCount(); ++i )
     {
-        for ( quint32 i = 0; i < m_mainWorkflow->trackCount(); ++i )
-        {
-            TrackWorkflow   *tw = m_mainWorkflow->track( static_cast<Workflow::TrackType>( type ), i );
-            //Clips part:
-            connect( tw, SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-                     this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
-            connect( tw, SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
-                     this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
-            connect( tw, SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
-                     this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
-            //Effect part:
-            connect( tw, SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-                     this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
-            connect( tw, SIGNAL( effectRemoved( TrackWorkflow*, QUuid ) ),
-                     this, SLOT( removeItem( TrackWorkflow*, QUuid ) ), Qt::QueuedConnection );
-            connect( tw, SIGNAL( effectMoved( TrackWorkflow*, QUuid, qint64 ) ),
-                     this, SLOT( moveItem( TrackWorkflow*, QUuid, qint64 ) ), Qt::QueuedConnection );
+        TrackWorkflow   *tw = m_mainWorkflow->track( i );
+        //Clips part:
+        connect( tw, SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
+                 this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
+        connect( tw, SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
+                 this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
+        connect( tw, SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
+                 this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
+        //Effect part:
+        connect( tw, SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
+                 this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
+        connect( tw, SIGNAL( effectRemoved( TrackWorkflow*, QUuid ) ),
+                 this, SLOT( removeItem( TrackWorkflow*, QUuid ) ), Qt::QueuedConnection );
+        connect( tw, SIGNAL( effectMoved( TrackWorkflow*, QUuid, qint64 ) ),
+                 this, SLOT( moveItem( TrackWorkflow*, QUuid, qint64 ) ), Qt::QueuedConnection );
 
-        }
     }
 }
 

@@ -27,6 +27,7 @@
 #include "EffectsEngine/EffectsEngine.h"
 #include <QXmlStreamWriter>
 #include "Types.h"
+#include "Tools/Toggleable.hpp"
 
 class   Clip;
 class   ClipHelper;
@@ -145,8 +146,7 @@ class   MainWorkflow : public QObject
          *  \return                 The given clip position, in frame. If not found, -1
          *                          is returned.
          */
-        qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId,
-                                                Workflow::TrackType trackType ) const;
+        qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
 
         /**
          *  \brief      Mute a track.
@@ -157,8 +157,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of the track to mute.
          *  \sa     unmuteTrack( unsigned int, Workflow::TrackType );
          */
-        void                    muteTrack( unsigned int trackId,
-                                           Workflow::TrackType trackType );
+        void                    muteTrack( unsigned int trackId );
         /**
          *  \brief      Unmute a track.
          *
@@ -166,8 +165,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of the track to unmute.
          *  \sa     muteTrack( unsigned int, Workflow::TrackType );
          */
-        void                    unmuteTrack( unsigned int trackId,
-                                             Workflow::TrackType trackType );
+        void                    unmuteTrack( unsigned int trackId );
 
         /**
          *  \brief      Mute a clip.
@@ -176,8 +174,7 @@ class   MainWorkflow : public QObject
          *  \param  trackId     The id of the track containing the clip.
          *  \param  trackType   The type of the track containing the clip.
          */
-        void                    muteClip( const QUuid& uuid, unsigned int trackId,
-                                          Workflow::TrackType trackType );
+        void                    muteClip( const QUuid& uuid, unsigned int trackId );
 
         /**
          *  \brief      Unmute a clip.
@@ -186,8 +183,7 @@ class   MainWorkflow : public QObject
          *  \param  trackId     The id of the track containing the clip.
          *  \param  trackType   The type of the track containing the clip.
          */
-        void                    unmuteClip( const QUuid& uuid, unsigned int trackId,
-                                          Workflow::TrackType trackType );
+        void                    unmuteClip( const QUuid& uuid, unsigned int trackId );
 
         /**
          *  \brief              Get the number of track for a specific type
@@ -195,7 +191,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of the tracks to count
          *  \return             The number of track for the type trackType
          */
-        int                     getTrackCount( Workflow::TrackType trackType ) const;
+        int                     getTrackCount() const;
 
         /**
          *  \brief      Get the width used for rendering.
@@ -251,7 +247,7 @@ class   MainWorkflow : public QObject
          */
         void                    stopFrameComputing();
 
-        TrackWorkflow           *track( Workflow::TrackType type, quint32 trackId );
+        TrackWorkflow           *track( quint32 trackId );
 
         const Workflow::Frame   *blackOutput() const;
 
@@ -276,13 +272,13 @@ class   MainWorkflow : public QObject
          *  \param      trackType : the track type (audio or video)
          *  \returns    The clip helper that matches the given UUID, or nullptr.
          */
-        ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId,
-                                               Workflow::TrackType trackType );
+        ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId );
 
         void                    preSave();
         void                    postLoad();
 
     private:
+        QList<Toggleable<TrackWorkflow*>>     m_tracks;
         /// Pre-filled buffer used when there's nothing to render
         Workflow::Frame         *m_blackOutput;
 
@@ -304,15 +300,14 @@ class   MainWorkflow : public QObject
         /// This boolean describe is a render has been started
         bool                            m_renderStarted;
 
-        /// Contains the trackhandler, indexed by Workflow::TrackType
-        TrackHandler**                  m_tracks;
-
         /// Width used for the render
         quint32                         m_width;
         /// Height used for the render
         quint32                         m_height;
         /// Store the number of track for each track type.
         const quint32                   m_trackCount;
+
+        bool                            m_endReached;
 
         Settings*                       m_settings;
 

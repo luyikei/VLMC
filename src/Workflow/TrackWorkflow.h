@@ -49,10 +49,10 @@ class   TrackWorkflow : public EffectUser
     Q_OBJECT
 
     public:
-        TrackWorkflow( Workflow::TrackType type, quint32 trackId );
+        TrackWorkflow( quint32 trackId );
         ~TrackWorkflow();
 
-        Workflow::OutputBuffer                  *getOutput( qint64 currentFrame,
+        Workflow::OutputBuffer                  *getOutput( Workflow::TrackType trackType, qint64 currentFrame,
                                                            qint64 subFrame, bool paused );
         qint64                                  getLength() const;
         void                                    stop();

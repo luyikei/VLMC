@@ -92,7 +92,6 @@ SET(VLMC_SRCS
     Workflow/Helper.cpp
     Workflow/ImageClipWorkflow.cpp
     Workflow/MainWorkflow.cpp
-    Workflow/TrackHandler.cpp
     Workflow/TrackWorkflow.cpp
     Workflow/Types.cpp
     Workflow/VideoClipWorkflow.cpp
