@@ -47,6 +47,11 @@ class   Toggleable
 //            Q_ASSERT_X( m_activated == true, "Toggleable<T>::operator->", "Pointer is deactivated" );
             return m_ptr;
         }
+        T   operator->() const
+        {
+//            Q_ASSERT_X( m_activated == true, "Toggleable<T>::operator->", "Pointer is deactivated" );
+            return m_ptr;
+        }
         bool    activated() const
         {
             return m_activated;
