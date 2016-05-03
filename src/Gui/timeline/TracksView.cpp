@@ -811,6 +811,7 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
+            m_dragAudioItem->clipHelper()->setFormats( ClipHelper::Audio );
 
             Commands::trigger( new Commands::Clip::Add( m_dragAudioItem->clipHelper(),
                                                                     m_dragAudioItem->track()->trackWorkflow(),
@@ -828,6 +829,7 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
+            m_dragVideoItem->clipHelper()->setFormats( ClipHelper::Video );
 
             Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clipHelper(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
