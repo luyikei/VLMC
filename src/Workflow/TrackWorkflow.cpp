@@ -102,7 +102,7 @@ void
 TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
 {
     QWriteLocker    lock( m_clipsLock );
-    m_clips.insert( start, cw );
+    m_clips.insertMulti( start, cw );
     connect( cw, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
              this, SLOT( __effectAdded( EffectHelper*, qint64 ) ) );
     connect( cw, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
@@ -380,7 +380,7 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         {
             ClipWorkflow* cw = it.value();
             m_clips.erase( it );
-            m_clips[startingFrame] = cw;
+            m_clips.insertMulti( startingFrame, cw );
             cw->requireResync();
             computeLength();
             emit clipMoved( this, cw->getClipHelper()->uuid(), startingFrame );
