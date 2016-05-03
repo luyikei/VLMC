@@ -124,7 +124,7 @@ class   TrackWorkflow : public EffectUser
         QReadWriteLock*                         m_clipsLock;
 
         const Workflow::TrackType               m_trackType;
-        qint64                                  m_lastFrame;
+        qint64                                  m_lastFrame[Workflow::NbTrackType];
         Workflow::Frame                         *m_mixerBuffer;
         const quint32                           m_trackId;
 

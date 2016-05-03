@@ -52,6 +52,9 @@ TrackWorkflow::TrackWorkflow( quint32 trackId  ) :
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
 
+    for ( int i = 0; i < Workflow::NbTrackType; ++i )
+        m_lastFrame[i] = 0;
+
     connect( this, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
              this, SLOT( __effectAdded( EffectHelper*, qint64) ) );
     connect( this, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
@@ -268,7 +271,8 @@ TrackWorkflow::stop()
         stopClipWorkflow( it.value() );
         ++it;
     }
-    m_lastFrame = 0;
+    for ( int i = 0; i < Workflow::NbTrackType; ++i )
+        m_lastFrame[i] = 0;
     m_isRendering = false;
 }
 
@@ -285,8 +289,8 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
     quint32                                     frameId = 0;
     bool                                        renderOneFrame;
 
-    if ( m_lastFrame == -1 )
-        m_lastFrame = currentFrame;
+    if ( m_lastFrame[trackType] == -1 )
+        m_lastFrame[trackType] = currentFrame;
     renderOneFrame = m_renderOneFrame.testAndSetRelease( true, false );
 
     {
@@ -296,10 +300,10 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
         // If this condition is true, the clipworkflow will flush all its buffer
         // as we need to resynchronize after a setTime, so this condition has to remain
         // false. Easy ain't it?
-        if ( paused == true && subFrame != m_lastFrame && renderOneFrame == false)
+        if ( paused == true && subFrame != m_lastFrame[trackType] && renderOneFrame == false)
             needRepositioning = true;
         else
-            needRepositioning = ( qAbs( subFrame - m_lastFrame ) > 1 ) ? true : false;
+            needRepositioning = ( qAbs( subFrame - m_lastFrame[trackType] ) > 1 ) ? true : false;
     }
     memset( frames, 0, sizeof(*frames) * EffectsEngine::MaxFramesForMixer );
     while ( it != end )
@@ -362,7 +366,7 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
             }
         }
     }
-    m_lastFrame = subFrame;
+    m_lastFrame[trackType] = subFrame;
     return ret;
 }
 
