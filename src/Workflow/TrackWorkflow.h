@@ -52,7 +52,7 @@ class   TrackWorkflow : public EffectUser
         TrackWorkflow( quint32 trackId );
         ~TrackWorkflow();
 
-        Workflow::OutputBuffer                  *getOutput( Workflow::TrackType trackType, qint64 currentFrame,
+        Workflow::Frame                         *getOutput( Workflow::TrackType trackType, qint64 currentFrame,
                                                            qint64 subFrame, bool paused );
         qint64                                  getLength() const;
         void                                    stop();
@@ -102,7 +102,7 @@ class   TrackWorkflow : public EffectUser
 
     private:
         void                                    computeLength();
-        Workflow::OutputBuffer                  *renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint64 currentFrame,
+        Workflow::Frame                         *renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint64 currentFrame,
                                                             qint64 start, bool needRepositioning,
                                                             bool renderOneFrame, bool paused );
         void                                    preloadClip( ClipWorkflow* cw );

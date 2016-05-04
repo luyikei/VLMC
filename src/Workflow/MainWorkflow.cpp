@@ -111,7 +111,7 @@ MainWorkflow::startRender( quint32 width, quint32 height )
     computeLength();
 }
 
-const Workflow::OutputBuffer*
+const Workflow::Frame*
 MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
 {
     if ( m_renderStarted == true )
@@ -126,7 +126,7 @@ MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
         }
 
         bool        validTrack = false;
-        Workflow::OutputBuffer  *ret = nullptr;
+        Workflow::Frame  *ret = nullptr;
 
         for ( int i = m_trackCount - 1; i >= 0; --i )
         {

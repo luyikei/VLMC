@@ -133,7 +133,7 @@ WorkflowRenderer::lockVideo( void* data, int64_t *pts, size_t *bufferSize, const
     if ( m_stopping == true )
         return 1;
 
-    ret = static_cast<const Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused ) );
+    ret = m_mainWorkflow->getOutput( Workflow::VideoTrack, m_paused );
     ptsDiff = ret->ptsDiff;
     if ( ptsDiff == 0 )
     {
@@ -169,8 +169,7 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
 
     if ( m_stopping == false && m_paused == false )
     {
-        renderAudioSample = static_cast<const Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
-                                                                                           m_paused ) );
+        renderAudioSample = m_mainWorkflow->getOutput( Workflow::AudioTrack, m_paused );
     }
     else
         renderAudioSample = nullptr;

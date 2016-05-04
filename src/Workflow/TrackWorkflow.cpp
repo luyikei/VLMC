@@ -162,7 +162,7 @@ TrackWorkflow::getClipHelper( const QUuid& uuid )
     return nullptr;
 }
 
-Workflow::OutputBuffer*
+Workflow::Frame*
 TrackWorkflow::renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint64 currentFrame,
                                         qint64 start , bool needRepositioning,
                                         bool renderOneFrame, bool paused )
@@ -258,7 +258,7 @@ TrackWorkflow::stop()
     m_isRendering = false;
 }
 
-Workflow::OutputBuffer*
+Workflow::Frame*
 TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qint64 subFrame, bool paused )
 {
     QReadLocker     lock( m_clipsLock );
@@ -266,7 +266,7 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
     QMap<qint64, ClipWorkflow*>::iterator       it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::iterator       end = m_clips.end();
     bool                                        needRepositioning;
-    Workflow::OutputBuffer                      *ret = nullptr;
+    Workflow::Frame                             *ret = nullptr;
     Workflow::Frame                             *frames[EffectsEngine::MaxFramesForMixer];
     quint32                                     frameId = 0;
     bool                                        renderOneFrame;
@@ -308,7 +308,7 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
                                      renderOneFrame, paused );
             if ( trackType == Workflow::VideoTrack )
             {
-                frames[frameId] = static_cast<Workflow::Frame*>( ret );
+                frames[frameId] = ret;
                 ++frameId;
             }
         }
@@ -337,12 +337,12 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
         else //If there's no mixer, just use the first frame, ignore the rest. It will be cleaned by the responsible ClipWorkflow.
             ret = frames[0];
         //Now handle filters :
-        quint32     *newFrame = applyFilters( ret != nullptr ? static_cast<const Workflow::Frame*>( ret ) : Core::instance()->workflow()->blackOutput(),
+        quint32     *newFrame = applyFilters( ret != nullptr ? ret : Core::instance()->workflow()->blackOutput(),
                                                 currentFrame );
         if ( newFrame != nullptr )
         {
             if ( ret != nullptr )
-                static_cast<Workflow::Frame*>( ret )->setBuffer( newFrame );
+                ret->setBuffer( newFrame );
             else //Use the m_mixerBuffer as the frame to return. Ugly but avoid another attribute.
             {
                 m_mixerBuffer->setBuffer( newFrame );

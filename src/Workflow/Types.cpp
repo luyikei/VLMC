@@ -27,7 +27,6 @@ using namespace Workflow;
 #include <cstring> //memcpy
 
 Frame::Frame() :
-        OutputBuffer( VideoTrack ),
         ptsDiff( 0 ),
         m_buffer( 0 ),
         m_size( 0 ),
@@ -36,7 +35,6 @@ Frame::Frame() :
 }
 
 Frame::Frame( quint32 width, quint32 height ) :
-        OutputBuffer( VideoTrack ),
         ptsDiff( 0 ),
         m_pts( 0 )
 {
@@ -45,7 +43,6 @@ Frame::Frame( quint32 width, quint32 height ) :
 }
 
 Frame::Frame( size_t forcedSize ) :
-    OutputBuffer( VideoTrack ),
     ptsDiff( 0 ),
     m_pts( 0 )
 {

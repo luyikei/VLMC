@@ -79,7 +79,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of track you wish to get the render from.
          *  \param  paused      The paused state of the renderer
          */
-        const Workflow::OutputBuffer    *getOutput( Workflow::TrackType trackType, bool paused );
+        const Workflow::Frame    *getOutput( Workflow::TrackType trackType, bool paused );
         /**
          *  \brief              Set the workflow position by the desired frame
          *  \param              currentFrame: The desired frame to render from
