@@ -90,6 +90,8 @@ public:
     virtual void    enableMemoryInput( void* data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback ) override;
 
     // smem:
+    virtual void    enableOutputToMemory( void* videoData, void* audioData, VideoOutputLockCallback videoLock, VideoOutputUnlockCallback videoUnlock,
+                                          AudioOutputLockCallback audioLock, AudioOutputUnlockCallback audioUnlock, bool timeSync ) override;
     virtual void    enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync ) override;
     virtual void    enableAudioOutputToMemory( void* data, AudioOutputLockCallback lock,
                                                AudioOutputUnlockCallback unlock, bool timeSync ) override;

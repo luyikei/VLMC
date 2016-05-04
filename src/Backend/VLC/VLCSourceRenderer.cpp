@@ -115,8 +115,6 @@ VLCSourceRenderer::setupStreamOutput()
     QString     transcodeStr = ":sout=#transcode{";
     if ( m_modes.testFlag( VideoSmem ) || m_modes.testFlag( FileOutput ) )
     {
-        Q_ASSERT( m_modes.testFlag( AudioSmem ) == false );
-
         if ( m_outputVideoFourCC.isNull() == false )
             transcodeStr += ",vcodec=" + m_outputVideoFourCC;
         if ( m_outputVideoBitrate > 0 )
@@ -130,8 +128,6 @@ VLCSourceRenderer::setupStreamOutput()
     }
     if ( m_modes.testFlag( AudioSmem ) || m_modes.testFlag( FileOutput ) )
     {
-        Q_ASSERT( m_modes.testFlag( VideoSmem ) == false );
-
         if ( m_outputAudioFourCC.isNull() == false )
             transcodeStr += ",acodec=" + m_outputAudioFourCC;
         if ( m_outputAudioBitrate > 0 )
@@ -319,6 +315,30 @@ VLCSourceRenderer::setOutputAudioBitrate(unsigned int aBitrate)
 }
 
 void
+VLCSourceRenderer::enableOutputToMemory( void* videoData, void* audioData, VideoOutputLockCallback videoLock, VideoOutputUnlockCallback videoUnlock,
+                                         AudioOutputLockCallback audioLock, AudioOutputUnlockCallback audioUnlock, bool timeSync )
+{
+    m_modes |= VideoSmem;
+    m_modes |= AudioSmem;
+    m_smemChain = ":smem{";
+    if ( timeSync == true )
+        m_smemChain += "time-sync";
+    else
+        m_smemChain += "no-time-sync";
+    m_smemChain += ",video-data=" % QString::number( reinterpret_cast<intptr_t>( videoData ) )
+            % ",video-prerender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( videoLock ) )
+            % ",video-postrender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( videoUnlock ) )
+            % ",audio-data=" % QString::number( reinterpret_cast<intptr_t>( audioData ) )
+            % ",audio-prerender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( audioLock ) )
+            % ",audio-postrender-callback="
+            % QString::number( reinterpret_cast<intptr_t>( audioUnlock ) )
+            % '}';
+}
+
+void
 VLCSourceRenderer::enableVideoOutputToMemory( void *data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync )
 {
     m_modes |= VideoSmem;
@@ -371,4 +391,3 @@ VLCSourceRenderer::enableMemoryInput( void *data, MemoryInputLockCallback lockCa
     sprintf( buffer, ":imem-data=%p", data );
     m_media.addOption( buffer );
 }
-

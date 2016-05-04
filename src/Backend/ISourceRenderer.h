@@ -99,6 +99,9 @@ namespace Backend
         virtual void    setTime( int64_t time ) = 0;
         virtual void    setPosition( float position ) = 0;
 
+        // For video and audio output to memory:
+        virtual void enableOutputToMemory( void* videoData, void* audioData, VideoOutputLockCallback videoLock, VideoOutputUnlockCallback videoUnlock,
+                                           AudioOutputLockCallback audioLock, AudioOutputUnlockCallback audioUnlock, bool timeSync ) = 0;
         // For video output to memory:
         virtual void enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync ) = 0;
         // For audio output to memory:
