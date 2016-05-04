@@ -26,17 +26,15 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "ClipHelper.h"
-#include "AudioClipWorkflow.h"
+#include "ClipWorkflow.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "ImageClipWorkflow.h"
 #include "Backend/ISource.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
 #include "Media/Media.h"
 #include "Types.h"
-#include "VideoClipWorkflow.h"
 #include "vlmc.h"
 #include "Tools/VlmcDebug.h"
 
@@ -80,22 +78,7 @@ TrackWorkflow::~TrackWorkflow()
 void
 TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
 {
-    ClipWorkflow* cw;
-    if ( ch->clip()->media()->fileType() == Media::FileType::Video )
-        // FIXME: This whole if statement will be gone as soon as I implement a united ClipWorkflow,
-        //        which can generate both audio and video buffers.
-        if ( ch->formats() & ClipHelper::Video )
-            cw = new VideoClipWorkflow( ch );
-        else if ( ch->formats() & ClipHelper::Audio )
-            cw = new AudioClipWorkflow( ch );
-        else
-            vlmcFatal( "Nothing to render from this clip!" );
-    else if ( ch->clip()->media()->fileType() == Media::FileType::Audio )
-        cw = new AudioClipWorkflow( ch );
-    else if ( ch->clip()->media()->fileType() == Media::FileType::Image )
-        cw = new ImageClipWorkflow( ch );
-    else
-        vlmcFatal( "Unknown file type!" );
+    ClipWorkflow* cw = new ClipWorkflow( ch );
     ch->setClipWorkflow( cw );
     addClip( cw, start );
 }
@@ -180,15 +163,15 @@ TrackWorkflow::getClipHelper( const QUuid& uuid )
 }
 
 Workflow::OutputBuffer*
-TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
+TrackWorkflow::renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint64 currentFrame,
                                         qint64 start , bool needRepositioning,
                                         bool renderOneFrame, bool paused )
 {
     if ( cw->isMuted() == true )
         return nullptr;
 
-    ClipWorkflow::GetMode       mode = ( paused == false || renderOneFrame == true ?
-                                         ClipWorkflow::Pop : ClipWorkflow::Get );
+    ClipSmemRenderer::GetMode       mode = ( paused == false || renderOneFrame == true ?
+                                                 ClipSmemRenderer::Pop : ClipSmemRenderer::Get );
 
     ClipWorkflow::State state = cw->getState();
     if ( state == ClipWorkflow::Rendering ||
@@ -196,12 +179,12 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
     {
         if ( cw->isResyncRequired() == true || needRepositioning == true )
             adjustClipTime( currentFrame, start, cw );
-        return cw->getOutput( mode, currentFrame - start );
+        return cw->getOutput( trackType, mode, currentFrame - start );
     }
     else if ( state == ClipWorkflow::Stopped || state == ClipWorkflow::Initializing )
     {
         if ( state == ClipWorkflow::Stopped )
-            cw->initialize();
+            cw->initialize( m_width, m_height );
         //If the init failed, don't even try to call getOutput.
         if ( cw->waitForCompleteInit() == false )
             return nullptr;
@@ -211,7 +194,7 @@ TrackWorkflow::renderClip( ClipWorkflow* cw, qint64 currentFrame,
             //Clip was not started at its real begining: adjust the position
             adjustClipTime( currentFrame, start, cw );
         }
-        return cw->getOutput( mode, currentFrame - start );
+        return cw->getOutput( trackType, mode, currentFrame - start );
     }
     else if ( state == ClipWorkflow::EndReached ||
               state == ClipWorkflow::Error )
@@ -230,7 +213,7 @@ void
 TrackWorkflow::preloadClip( ClipWorkflow* cw )
 {
     if ( cw->getState() == ClipWorkflow::Stopped )
-        cw->initialize();
+        cw->initialize( m_width, m_height );
 }
 
 void
@@ -310,17 +293,19 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
 
-        if ( trackType != cw->type() )
+        if ( ( trackType == Workflow::VideoTrack && cw->getClipHelper()->formats().testFlag( ClipHelper::Video ) == false ) ||
+             ( trackType == Workflow::AudioTrack && cw->getClipHelper()->formats().testFlag( ClipHelper::Audio ) == false ) ||
+             cw->getClipHelper()->formats().testFlag( ClipHelper::None )
+             )
         {
             ++it;
             continue ;
         }
-
         //Is the clip supposed to render now?
         if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
         {
-            ret = renderClip( cw, currentFrame, start, needRepositioning,
-                              renderOneFrame, paused );
+            ret = renderClip( trackType, cw, currentFrame, start, needRepositioning,
+                                     renderOneFrame, paused );
             if ( trackType == Workflow::VideoTrack )
             {
                 frames[frameId] = static_cast<Workflow::Frame*>( ret );
@@ -613,7 +598,7 @@ TrackWorkflow::initRender( quint32 width, quint32 height )
 {
     QReadLocker     lock( m_clipsLock );
 
-    m_mixerBuffer->resize( width, height );
+    m_mixerBuffer->resize( width * height * Workflow::Depth );
     m_width = width;
     m_height = height;
     m_isRendering = true;

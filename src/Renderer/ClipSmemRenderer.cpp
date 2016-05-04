@@ -261,7 +261,7 @@ ClipSmemRenderer::audioUnlock( void *data, uint8_t *pcm_buffer, unsigned int cha
     ClipSmemRenderer* renderer = reinterpret_cast<ClipSmemRenderer*>( data );
 
     Workflow::Frame     *frame = renderer->m_computedBuffers[Workflow::AudioTrack].last();
-    frame->pts = pts;
+    frame->setPts( pts );
     renderer->m_renderWaitCond[Workflow::AudioTrack]->wakeAll();
     if ( maxNumBuffers( Workflow::AudioTrack ) <= renderer->m_computedBuffers[Workflow::AudioTrack].count() )
         emit renderer->bufferReachedMax();
@@ -305,7 +305,7 @@ ClipSmemRenderer::videoUnlock( void *data, uint8_t *buffer, int width, int heigh
     ClipSmemRenderer* renderer = reinterpret_cast<ClipSmemRenderer*>( data );
 
     Workflow::Frame     *frame = renderer->m_computedBuffers[Workflow::VideoTrack].last();
-    frame->pts = pts;
+    frame->setPts( pts );
     renderer->m_renderWaitCond[Workflow::VideoTrack]->wakeAll();
     if ( maxNumBuffers( Workflow::VideoTrack ) <= renderer->m_computedBuffers[Workflow::VideoTrack].count() )
         emit renderer->bufferReachedMax();

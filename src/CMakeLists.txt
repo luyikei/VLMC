@@ -74,6 +74,7 @@ SET(VLMC_SRCS
     Project/WorkspaceWorker.cpp
     Project/RecentProjects.cpp
     Renderer/AbstractRenderer.cpp
+    Renderer/ClipSmemRenderer.cpp
     Renderer/WorkflowRenderer.cpp
     Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp
@@ -86,15 +87,12 @@ SET(VLMC_SRCS
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h
     Tools/VlmcLogger.cpp
-    Workflow/AudioClipWorkflow.cpp
     Workflow/ClipWorkflow.cpp
     Workflow/ClipHelper.cpp
     Workflow/Helper.cpp
-    Workflow/ImageClipWorkflow.cpp
     Workflow/MainWorkflow.cpp
     Workflow/TrackWorkflow.cpp
     Workflow/Types.cpp
-    Workflow/VideoClipWorkflow.cpp
   )
 
 IF (WIN32)

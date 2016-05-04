@@ -31,6 +31,7 @@
 #include "ClipWorkflow.h"
 #include "Backend/ISource.h"
 #include "Backend/ISourceRenderer.h"
+#include "Renderer/ClipSmemRenderer.h"
 #include "Media/Media.h"
 #include "Tools/RendererEventWatcher.h"
 #include "Workflow/Types.h"
@@ -42,6 +43,7 @@ ClipWorkflow::ClipWorkflow( ClipHelper* ch )
     , m_eventWatcher( nullptr )
     , m_clipHelper( ch )
     , m_state( ClipWorkflow::Stopped )
+    , m_fullSpeedRender( false )
     , m_muted( false )
 {
     m_stateLock = new QReadWriteLock;
@@ -61,30 +63,53 @@ ClipWorkflow::~ClipWorkflow()
     delete m_stateLock;
 }
 
+Workflow::Frame*
+ClipWorkflow::getOutput( Workflow::TrackType trackType, ClipSmemRenderer::GetMode mode, qint64 currentFrame )
+{
+    if ( m_clipHelper->clip()->media()->fileType() == Media::Image )
+        mode = ClipSmemRenderer::Get;
+
+    auto ret = m_renderer->getOutput( trackType, mode, currentFrame );
+    if ( ret )
+    {
+        computePtsDiff( ret->pts(), trackType );
+        ret->ptsDiff = m_currentPts[trackType] - m_previousPts[trackType];
+    }
+    if ( trackType == Workflow::VideoTrack )
+    {
+        auto newFrame = applyFilters( ret, currentFrame );
+        if ( newFrame != nullptr )
+            ret->setBuffer( newFrame );
+    }
+
+    return ret;
+}
+
 void
-ClipWorkflow::initialize()
+ClipWorkflow::initialize( quint32 width, quint32 height )
 {
     QWriteLocker lock( m_stateLock );
     m_state = ClipWorkflow::Initializing;
 
     delete m_renderer;
-    m_renderer = m_clipHelper->clip()->media()->source()->createRenderer( m_eventWatcher );
+    m_renderer = new ClipSmemRenderer( m_clipHelper, width, height, m_fullSpeedRender );
+    if ( m_clipHelper->formats() & ClipHelper::Video )
+        initFilters();
 
-    preallocate();
-    initializeInternals();
-
-    m_currentPts = -1;
-    m_previousPts = -1;
+    for ( int i = 0; i < Workflow::NbTrackType; ++i )
+    {
+        m_currentPts[i] = -1;
+        m_previousPts[i] = -1;
+    }
     m_pauseDuration = -1;
 
     //Use QueuedConnection to avoid getting called from intf-event callback, as
     //we will trigger intf-event callback as well when setting time for this clip,
     //thus resulting in a deadlock.
-    connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
-    connect( m_eventWatcher, SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
-    connect( m_eventWatcher, SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
-    connect( m_eventWatcher, &RendererEventWatcher::stopped, this, &ClipWorkflow::mediaPlayerStopped );
-    connect( this, &ClipWorkflow::bufferReachedMax, this, &ClipWorkflow::pause, Qt::QueuedConnection );
+    connect( m_renderer->eventWatcher(), SIGNAL( playing() ), this, SLOT( loadingComplete() ), Qt::QueuedConnection );
+    connect( m_renderer->eventWatcher(), SIGNAL( endReached() ), this, SLOT( clipEndReached() ), Qt::DirectConnection );
+    connect( m_renderer->eventWatcher(), SIGNAL( errorEncountered() ), this, SLOT( errorEncountered() ) );
+    connect( m_renderer->eventWatcher(), &RendererEventWatcher::stopped, this, &ClipWorkflow::mediaPlayerStopped );
     m_renderer->start();
 }
 
@@ -92,9 +117,9 @@ void
 ClipWorkflow::loadingComplete()
 {
     adjustBegin();
-    disconnect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( loadingComplete() ) );
-    connect( m_eventWatcher, SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
-    connect( m_eventWatcher, SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
+    disconnect( m_renderer->eventWatcher(), SIGNAL( playing() ), this, SLOT( loadingComplete() ) );
+    connect( m_renderer->eventWatcher(), SIGNAL( playing() ), this, SLOT( mediaPlayerUnpaused() ), Qt::DirectConnection );
+    connect( m_renderer->eventWatcher(), SIGNAL( paused() ), this, SLOT( mediaPlayerPaused() ), Qt::DirectConnection );
     QWriteLocker lock( m_stateLock );
     m_isRendering = true;
     m_state = Rendering;
@@ -132,15 +157,6 @@ ClipWorkflow::stop()
 }
 
 void
-ClipWorkflow::pause()
-{
-    if ( m_renderer != nullptr ) {
-        m_renderer->setPause( true );
-        vlmcWarning() << "ClipWorkflow:" << m_clipHelper->uuid() << " was paused unexpectedly";
-    }
-}
-
-void
 ClipWorkflow::setTime( qint64 time )
 {
     vlmcDebug() << "Setting ClipWorkflow" << m_clipHelper->uuid() << "time:" << time;
@@ -165,34 +181,24 @@ ClipWorkflow::waitForCompleteInit()
 }
 
 void
-ClipWorkflow::postGetOutput()
-{
-    //If we're running out of computed buffers, refill our stack.
-    if ( getNbComputedBuffers() < getMaxComputedBuffers() / 3 )
-        m_renderer->setPause( false );
-    //Don't test using availableBuffer, as it may evolve if a buffer is required while
-    //no one is available : we would spawn a new buffer, thus modifying the number of available buffers
-    else if ( getNbComputedBuffers() >= getMaxComputedBuffers() )
-    {
-        // It's OK to check from here: if getOutput is not called, it means the clipworkflow is
-        // stopped or preloading, in which case, we don't care about the buffer queue growing uncontrolled
-        m_renderer->setPause( true );
-    }
-}
-
-void
-ClipWorkflow::computePtsDiff( qint64 pts )
+ClipWorkflow::computePtsDiff( qint64 pts, Workflow::TrackType trackType )
 {
     if ( m_pauseDuration != -1 )
     {
         //No need to check for m_currentPtr before, as we can't start in paused mode.
         //so m_currentPts will not be -1
-        m_previousPts = m_currentPts + m_pauseDuration;
+        m_previousPts[trackType] = m_currentPts[trackType] + m_pauseDuration;
         m_pauseDuration = -1;
     }
     else
-        m_previousPts = m_currentPts;
-    m_currentPts = qMax( pts, m_previousPts );
+        m_previousPts[trackType] = m_currentPts[trackType];
+    m_currentPts[trackType] = qMax( pts, m_previousPts[trackType] );
+}
+
+void
+ClipWorkflow::flushComputedBuffers()
+{
+    m_renderer->flushComputedBuffers();
 }
 
 void
@@ -226,8 +232,11 @@ void
 ClipWorkflow::resyncClipWorkflow()
 {
     flushComputedBuffers();
-    m_previousPts = -1;
-    m_currentPts = -1;
+    for ( int i = 0; i < Workflow::NbTrackType; ++i )
+    {
+        m_currentPts[i] = -1;
+        m_previousPts[i] = -1;
+    }
 }
 
 void

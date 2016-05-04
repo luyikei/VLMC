@@ -28,6 +28,7 @@
 #include "EffectsEngine/EffectUser.h"
 #include "ClipHelper.h"
 #include "Workflow/Types.h"
+#include "Renderer/ClipSmemRenderer.h"
 
 #include <QObject>
 #include <QUuid>
@@ -78,17 +79,6 @@ class   ClipWorkflow : public EffectUser
             Error               //5
         };
 
-        /**
-         *  \brief  Used to know which way you want to get a computed output.
-         *          Pop: the buffer is popped and returned
-         *          Get: the buffer is just returned (for paused mode for instance)
-         */
-        enum        GetMode
-        {
-            Pop,
-            Get,
-        };
-
         ClipWorkflow( ClipHelper* clip );
         virtual ~ClipWorkflow();
 
@@ -97,18 +87,14 @@ class   ClipWorkflow : public EffectUser
          *  therefore, you can call this method blindly, without taking care
          *  of the rendering process advancement.
          */
-        virtual Workflow::OutputBuffer      *getOutput( ClipWorkflow::GetMode mode, qint64 currentFrame ) = 0;
-        virtual Workflow::TrackType         type() const = 0;
-        void                    postGetOutput();
+        Workflow::Frame*        getOutput( Workflow::TrackType trackType, ClipSmemRenderer::GetMode mode, qint64 currentFrame );
         /**
          * @brief Initialize base variables for the SourceRenderer.
          *
          * This may also perform some addditional initializations, and
          * therefore should be called before createSoutChain()
          */
-        virtual void            initializeInternals() = 0;
-        virtual void            preallocate() = 0;
-        void                    initialize();
+        void                    initialize( quint32 width, quint32 height );
 
         /**
          *  \return             true if the ClipWorkflow is able to, and should render
@@ -141,11 +127,6 @@ class   ClipWorkflow : public EffectUser
          *  \brief  Stop this workflow.
          */
         void                    stop();
-
-        /**
-         *  \brief  Pause this workflow.
-         */
-        void                    pause();
 
         /**
          *  \brief  Set the rendering position
@@ -181,25 +162,15 @@ class   ClipWorkflow : public EffectUser
         void                    adjustBegin();
 
     protected:
-        void                    computePtsDiff( qint64 pts );
-        /**
-         *  \warning    Must be called from a thread safe context.
-         *              This thread safe context has to be set
-         *              from the underlying ClipWorkflow implementation.
-         */
-        virtual quint32         getNbComputedBuffers() const = 0;
-        virtual quint32         getMaxComputedBuffers() const = 0;
+        void                    computePtsDiff( qint64 pts , Workflow::TrackType trackType );
+
         /**
          *  \brief  Will empty the computed buffers stack.
          *          This has to be implemented in the underlying
          *          clipworkflow implementation.
          */
-        virtual void            flushComputedBuffers() = 0;
+        void                    flushComputedBuffers();
 
-        /**
-         *  \brief  Release the preallocated buffers
-         */
-        virtual void            releasePrealocated() = 0;
 
     private:
         /**
@@ -217,14 +188,14 @@ class   ClipWorkflow : public EffectUser
         bool                    m_resyncRequired;
 
     protected:
-        Backend::ISourceRenderer*   m_renderer;
+        ClipSmemRenderer*           m_renderer;
         RendererEventWatcher*       m_eventWatcher;
         ClipHelper*                 m_clipHelper;
         QMutex*                     m_renderLock;
         QReadWriteLock*             m_stateLock;
         State                       m_state;
-        qint64                      m_previousPts;
-        qint64                      m_currentPts;
+        qint64                      m_previousPts[Workflow::NbTrackType];
+        qint64                      m_currentPts[Workflow::NbTrackType];
         /**
          *  \brief  This is used for basic synchronisation when
          *          the clipworkflow hasn't generate a frame yet,
