@@ -52,6 +52,7 @@ namespace   Workflow
         public:
             explicit Frame();
             Frame( quint32 width, quint32 height );
+            Frame( size_t forcedSize );
             Frame( quint32 width, quint32 height, size_t forcedSize );
             ~Frame();
             quint32         width() const;

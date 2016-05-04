@@ -50,6 +50,18 @@ Frame::Frame( quint32 width, quint32 height ) :
     m_buffer = new quint32[m_nbPixels];
 }
 
+Frame::Frame( size_t forcedSize ) :
+    OutputBuffer( VideoTrack ),
+    ptsDiff( 0 ),
+    m_width( 0 ),
+    m_height( 0 ),
+    m_size( forcedSize ),
+    m_nbPixels( 0 ),
+    m_pts( 0 )
+{
+    m_buffer = new quint32[ ( forcedSize % 4 ) ? forcedSize / 4 + 1 : forcedSize / 4 ];
+}
+
 Frame::Frame(quint32 width, quint32 height, size_t forcedSize) :
     OutputBuffer( VideoTrack ),
     ptsDiff( 0 ),
