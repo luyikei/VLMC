@@ -165,11 +165,11 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
 {
     qint64                              ptsDiff;
     quint32                             nbSample;
-    const Workflow::AudioSample         *renderAudioSample;
+    const Workflow::Frame         *renderAudioSample;
 
     if ( m_stopping == false && m_paused == false )
     {
-        renderAudioSample = static_cast<const Workflow::AudioSample*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
+        renderAudioSample = static_cast<const Workflow::Frame*>( m_mainWorkflow->getOutput( Workflow::AudioTrack,
                                                                                            m_paused ) );
     }
     else
@@ -177,9 +177,8 @@ WorkflowRenderer::lockAudio( EsHandler *handler, int64_t *pts, size_t *bufferSiz
     if ( renderAudioSample != nullptr )
     {
 //        vlmcDebug() << "pts diff:" << renderAudioSample->ptsDiff;
-        nbSample = renderAudioSample->nbSample;
-        *buffer = renderAudioSample->buff;
-        *bufferSize = renderAudioSample->size;
+        *buffer = (uchar*)renderAudioSample->buffer();
+        *bufferSize = renderAudioSample->size();
         ptsDiff = renderAudioSample->ptsDiff;
     }
     else
