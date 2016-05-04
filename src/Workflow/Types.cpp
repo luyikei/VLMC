@@ -33,7 +33,8 @@ Frame::Frame() :
         m_height( 0 ),
         m_buffer( 0 ),
         m_size( 0 ),
-        m_nbPixels( 0 )
+        m_nbPixels( 0 ),
+        m_pts( 0 )
 {
 }
 
@@ -41,7 +42,8 @@ Frame::Frame( quint32 width, quint32 height ) :
         OutputBuffer( VideoTrack ),
         ptsDiff( 0 ),
         m_width( width ),
-        m_height( height )
+        m_height( height ),
+        m_pts( 0 )
 {
     m_nbPixels = width * height;
     m_size = m_nbPixels * Depth;
@@ -52,7 +54,8 @@ Frame::Frame(quint32 width, quint32 height, size_t forcedSize) :
     OutputBuffer( VideoTrack ),
     ptsDiff( 0 ),
     m_width( width ),
-    m_height( height )
+    m_height( height ),
+    m_pts( 0 )
 {
     m_nbPixels = width * height;
     m_size = forcedSize;
@@ -97,6 +100,18 @@ quint32
 Frame::nbPixels() const
 {
     return m_nbPixels;
+}
+
+qint64
+Frame::pts() const
+{
+    return m_pts;
+}
+
+void
+Frame::setPts( qint64 pts )
+{
+    m_pts = pts;
 }
 
 size_t Frame::Size(quint32 width, quint32 height)

@@ -85,6 +85,16 @@ namespace   Workflow
              */
             quint32         nbPixels() const;
             /**
+             *  \brief      Get pts.
+             *
+             */
+            qint64          pts() const;
+            /**
+             *  \brief      Set pts.
+             *
+             */
+            void           setPts( qint64 pts );
+            /**
              *  \warning    Terrible hack !
              *
              *  Remove this ASAP !!
@@ -105,6 +115,7 @@ namespace   Workflow
             quint32     *m_buffer;
             size_t      m_size;
             quint32     m_nbPixels;
+            qint64      m_pts;
     };
     class  AudioSample : public OutputBuffer
     {
