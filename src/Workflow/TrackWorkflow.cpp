@@ -46,7 +46,6 @@
 
 TrackWorkflow::TrackWorkflow( quint32 trackId  ) :
         m_length( 0 ),
-        m_trackType( Workflow::NbTrackType ),
         m_trackId( trackId )
 {
     m_clipsLock = new QReadWriteLock;
@@ -673,12 +672,6 @@ quint32
 TrackWorkflow::trackId() const
 {
     return m_trackId;
-}
-
-Workflow::TrackType
-TrackWorkflow::type() const
-{
-    return m_trackType;
 }
 
 EffectsEngine::EffectList*

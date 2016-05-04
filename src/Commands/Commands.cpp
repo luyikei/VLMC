@@ -117,8 +117,6 @@ Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
     m_newPos( newPos )
 
 {
-    Q_ASSERT( oldTrack->type() == newTrack->type() );
-
     m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
     connect( clipHelper->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     retranslate();

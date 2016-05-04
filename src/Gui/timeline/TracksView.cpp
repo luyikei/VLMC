@@ -248,64 +248,64 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
     if ( m_itemsLoaded.contains( helper->uuid() ) )
         return ;
     qint32                  track = tw->trackId();
-    Workflow::TrackType     trackType = tw->type();
-
-    // If there is not enough tracks to insert
-    // the clip do it now.
-    if ( trackType == Workflow::VideoTrack )
-    {
-        if ( track + 1 >= m_numVideoTrack )
-        {
-            int nbTrackToAdd = ( track + 2 ) - m_numVideoTrack;
-            for ( int i = 0; i < nbTrackToAdd; ++i )
-                addTrack( Workflow::VideoTrack );
-        }
-    }
-    else if ( trackType == Workflow::AudioTrack )
-    {
-        if ( track + 1 >= m_numAudioTrack )
-        {
-            int nbTrackToAdd = ( track + 2 ) - m_numAudioTrack;
-            for ( int i = 0; i < nbTrackToAdd; ++i )
-                addTrack( Workflow::AudioTrack );
-        }
-    }
 
     AbstractGraphicsItem        *item = nullptr;
     ClipHelper                  *clipHelper = qobject_cast<ClipHelper*>( helper );
     if ( clipHelper != nullptr )
     {
         AbstractGraphicsMediaItem   *mediaItem = nullptr;
-        if ( trackType == Workflow::VideoTrack )
+
+        bool hasVideo = clipHelper->formats() & ClipHelper::Video;
+        bool hasAudio = clipHelper->formats() & ClipHelper::Audio;
+
+        // If there is not enough tracks to insert
+        // the clip do it now.
+        if ( hasVideo )
         {
+            if ( track + 1 >= m_numVideoTrack )
+            {
+                int nbTrackToAdd = ( track + 2 ) - m_numVideoTrack;
+                for ( int i = 0; i < nbTrackToAdd; ++i )
+                    addTrack( Workflow::VideoTrack );
+            }
             mediaItem = new GraphicsMovieItem( clipHelper );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
         }
-        else if ( trackType == Workflow::AudioTrack )
+        else if ( hasAudio )
         {
+            if ( track + 1 >= m_numAudioTrack )
+            {
+                int nbTrackToAdd = ( track + 2 ) - m_numAudioTrack;
+                for ( int i = 0; i < nbTrackToAdd; ++i )
+                    addTrack( Workflow::AudioTrack );
+            }
             mediaItem = new GraphicsAudioItem( clipHelper );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
         }
+
         item = mediaItem;
         m_itemsLoaded.insert( helper->uuid() );
         item->m_tracksView = this;
         item->setHeight( item->itemHeight() );
-        item->setTrack( getTrack( trackType, track ) );
+        if ( hasVideo )
+            item->setTrack( getTrack( Workflow::VideoTrack, track ) );
+        else if ( hasAudio )
+            item->setTrack( getTrack( Workflow::AudioTrack, track ) );
         item->setStartPos( start );
         item->m_oldTrack = tw;
         moveItem( item, track, start );
         //If the item has some effects:
         foreach ( EffectHelper *effectHelper, clipHelper->clipWorkflow()->effects( Effect::Filter ) )
         {
-            addEffectItem( effectHelper, trackType, track, start );
+            addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
         }
     }
     else
     {
         EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
-        addEffectItem( effectHelper, trackType, track, start );
+        addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
     }
     updateDuration();
 }
@@ -743,18 +743,21 @@ TracksView::findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time 
 void
 TracksView::removeItem( TrackWorkflow *tw, const QUuid &uuid )
 {
-    GraphicsTrack           *track = getTrack( tw->type(), tw->trackId() );
-
-    if ( track == nullptr )
-        return ;
-    QList<QGraphicsItem*> trackItems = track->childItems();;
-
-    for ( int i = 0; i < trackItems.size(); ++i )
+    for ( int i = 0; i < Workflow::NbTrackType; ++i )
     {
-        AbstractGraphicsItem    *item = dynamic_cast<AbstractGraphicsItem*>( trackItems.at( i ) );
-        if ( !item || item->uuid() != uuid )
-            continue;
-        removeItem( item );
+        GraphicsTrack           *track = getTrack( (Workflow::TrackType)i, tw->trackId() );
+
+        if ( track == nullptr )
+            return ;
+        QList<QGraphicsItem*> trackItems = track->childItems();;
+
+        for ( int i = 0; i < trackItems.size(); ++i )
+        {
+            AbstractGraphicsItem    *item = dynamic_cast<AbstractGraphicsItem*>( trackItems.at( i ) );
+            if ( !item || item->uuid() != uuid )
+                continue;
+            removeItem( item );
+        }
     }
 }
 

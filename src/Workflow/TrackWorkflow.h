@@ -94,7 +94,6 @@ class   TrackWorkflow : public EffectUser
         void                                    stopFrameComputing();
         bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
         quint32                                 trackId() const;
-        Workflow::TrackType                     type() const;
         //FIXME: this is not thread safe if the list gets modified (but it can't be const, as it is intended to be modified...)
         EffectsEngine::EffectList               *filters();
         EffectsEngine::EffectList               *mixers();
@@ -123,7 +122,6 @@ class   TrackWorkflow : public EffectUser
 
         QReadWriteLock*                         m_clipsLock;
 
-        const Workflow::TrackType               m_trackType;
         qint64                                  m_lastFrame[Workflow::NbTrackType];
         Workflow::Frame                         *m_mixerBuffer;
         const quint32                           m_trackId;
