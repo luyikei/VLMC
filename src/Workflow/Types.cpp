@@ -29,11 +29,8 @@ using namespace Workflow;
 Frame::Frame() :
         OutputBuffer( VideoTrack ),
         ptsDiff( 0 ),
-        m_width( 0 ),
-        m_height( 0 ),
         m_buffer( 0 ),
         m_size( 0 ),
-        m_nbPixels( 0 ),
         m_pts( 0 )
 {
 }
@@ -41,38 +38,19 @@ Frame::Frame() :
 Frame::Frame( quint32 width, quint32 height ) :
         OutputBuffer( VideoTrack ),
         ptsDiff( 0 ),
-        m_width( width ),
-        m_height( height ),
         m_pts( 0 )
 {
-    m_nbPixels = width * height;
-    m_size = m_nbPixels * Depth;
-    m_buffer = new quint32[m_nbPixels];
+    m_size = width * height * Depth;
+    m_buffer = new quint32[width * height];
 }
 
 Frame::Frame( size_t forcedSize ) :
     OutputBuffer( VideoTrack ),
     ptsDiff( 0 ),
-    m_width( 0 ),
-    m_height( 0 ),
-    m_size( forcedSize ),
-    m_nbPixels( 0 ),
     m_pts( 0 )
 {
-    m_buffer = new quint32[ ( forcedSize % 4 ) ? forcedSize / 4 + 1 : forcedSize / 4 ];
-}
-
-Frame::Frame(quint32 width, quint32 height, size_t forcedSize) :
-    OutputBuffer( VideoTrack ),
-    ptsDiff( 0 ),
-    m_width( width ),
-    m_height( height ),
-    m_pts( 0 )
-{
-    m_nbPixels = width * height;
     m_size = forcedSize;
-    Q_ASSERT(forcedSize % 4 == 0);
-    m_buffer = new quint32[forcedSize / 4];
+    m_buffer = new quint32[ ( forcedSize % 4 ) ? forcedSize / 4 + 1 : forcedSize / 4 ];
 }
 
 Frame::~Frame()
@@ -91,27 +69,9 @@ const quint32 *Frame::buffer() const
     return m_buffer;
 }
 
-quint32
-Frame::width() const
-{
-    return m_width;
-}
-
-quint32
-Frame::height() const
-{
-    return m_height;
-}
-
 size_t Frame::size() const
 {
     return m_size;
-}
-
-quint32
-Frame::nbPixels() const
-{
-    return m_nbPixels;
 }
 
 qint64
@@ -126,11 +86,6 @@ Frame::setPts( qint64 pts )
     m_pts = pts;
 }
 
-size_t Frame::Size(quint32 width, quint32 height)
-{
-    return width * height * Depth;
-}
-
 void
 Frame::setBuffer( quint32 *buff )
 {
@@ -139,23 +94,11 @@ Frame::setBuffer( quint32 *buff )
 }
 
 void
-Frame::resize( quint32 width, quint32 height )
-{
-    if ( width != m_width || height != m_height )
-    {
-        delete[] m_buffer;
-        m_width = width;
-        m_height = height;
-        m_nbPixels = width * height;
-        m_size = m_nbPixels * Depth;
-        m_buffer = new quint32[m_nbPixels];
-    }
-}
-
-void Frame::resize(size_t size)
+Frame::resize( size_t size )
 {
     if ( size == m_size )
         return ;
     delete[] m_buffer;
-    m_buffer = new quint32[size / sizeof(quint32)];
+    m_size = size;
+    m_buffer = new quint32[ ( size % 4 ) ? size / 4 + 1 : size / 4  ];
 }

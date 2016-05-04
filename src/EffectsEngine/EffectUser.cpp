@@ -99,7 +99,7 @@ EffectUser::applyFilters( const Workflow::Frame* frame, qint64 currentFrame )
             else
                 buff = &buff2;
             if ( *buff == nullptr )
-                *buff = new quint32[frame->nbPixels()];
+                *buff = new quint32[m_width * m_height];
             EffectInstance      *effect = (*it)->effectInstance();
             effect->process( input, *buff );
             input = *buff;

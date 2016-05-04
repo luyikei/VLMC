@@ -53,19 +53,10 @@ namespace   Workflow
             explicit Frame();
             Frame( quint32 width, quint32 height );
             Frame( size_t forcedSize );
-            Frame( quint32 width, quint32 height, size_t forcedSize );
             ~Frame();
-            quint32         width() const;
-            quint32         height() const;
             quint32         *buffer();
             const quint32   *buffer() const;
             void            setBuffer( quint32 *buff );
-            /**
-             *  \brief      Resize the buffer.
-             *
-             *  \warning    This will not resize what's in the frame but drop it instead!
-             */
-            void            resize( quint32 width, quint32 height );
             /**
               * \brief      Resize the buffer
               *
@@ -79,12 +70,6 @@ namespace   Workflow
              *  This is equal to width * height * Depth
              */
             size_t          size() const;
-            /**
-             *  \returns    The frame size in pixels
-             *
-             *  This is equal to width * height
-             */
-            quint32         nbPixels() const;
             /**
              *  \brief      Get pts.
              *
@@ -103,15 +88,7 @@ namespace   Workflow
             //FIXME
             qint64      ptsDiff;
 
-        public:
-            /**
-             * @brief Size  Computes the size, in bytes, a frame with given dimension would use.
-             */
-            static size_t Size( quint32 width, quint32 height );
-
         private:
-            quint32     m_width;
-            quint32     m_height;
             // frei0r uses 32bits only pixels, and expects its buffers as uint32
             quint32     *m_buffer;
             size_t      m_size;
