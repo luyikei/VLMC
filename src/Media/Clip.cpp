@@ -35,18 +35,14 @@
 const int   Clip::DefaultFPS = 30;
 
 Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString& uuid /*= QString()*/ ) :
+        Workflow::Helper( begin, end, uuid ),
         m_media( media ),
-        m_begin( begin ),
-        m_end( end ),
-        m_parent( media->baseClip() )
+        m_parent( media->baseClip() ),
+        m_clipWorkflow( nullptr )
 {
     int64_t nbSourceFrames = media->source()->nbFrames();
     if ( end == -1 )
         m_end = nbSourceFrames;
-    if ( uuid.isEmpty() == true )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = QUuid( uuid );
     m_beginPosition = (float)begin / (float)nbSourceFrames;
     m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
@@ -58,9 +54,8 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QStri
 
 Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
             const QString &uuid /*= QString()*/ ) :
+        Workflow::Helper( begin, end, uuid ),
         m_media( parent->media() ),
-        m_begin( begin ),
-        m_end( end ),
         m_rootClip( parent->rootClip() ),
         m_parent( parent )
 {
@@ -69,10 +64,6 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
         m_begin = parent->m_begin;
     if ( end < 0 )
         m_end = parent->m_end;
-    if ( uuid.isEmpty() == true )
-        m_uuid = QUuid::createUuid();
-    else
-        m_uuid = QUuid( uuid );
     m_beginPosition = (float)begin / (float)nbSourceFrames;
     m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
@@ -97,12 +88,6 @@ const Media*
 Clip::media() const
 {
     return m_media;
-}
-
-qint64
-Clip::nbFrames() const
-{
-    return m_nbFrames;
 }
 
 qint64
@@ -268,6 +253,32 @@ Clip::toVariantFull() const
         h.insert( "subClips", l );
     }
     return h;
+}
+
+Clip::Formats
+Clip::formats() const
+{
+    return m_formats;
+}
+
+void
+Clip::setFormats( Formats formats )
+{
+    if ( formats.testFlag( Clip::None ) )
+        m_formats = Clip::None;
+    m_formats = formats;
+}
+
+ClipWorkflow*
+Clip::clipWorkflow() const
+{
+    return m_clipWorkflow;
+}
+
+void
+Clip::setClipWorkflow( ClipWorkflow *cw )
+{
+    m_clipWorkflow = cw;
 }
 
 void

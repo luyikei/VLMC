@@ -42,7 +42,7 @@ AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
 {
     m_clipHelper = new ClipHelper( clip );
     // Adjust the width
-    setWidth( clip->nbFrames() );
+    setWidth( clip->length() );
     // Automatically adjust future changes
     connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),

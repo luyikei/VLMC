@@ -28,19 +28,28 @@
 #ifndef CLIP_H__
 # define CLIP_H__
 
-#include <QObject>
+#include "Workflow/Helper.h"
 #include <QStringList>
 #include <QUuid>
 #include <QXmlStreamWriter>
 
 class   MediaContainer;
 class   Media;
+class   ClipWorkflow;
 
-class   Clip : public QObject
+class   Clip : public Workflow::Helper
 {
     Q_OBJECT
 
     public:
+        enum    Format
+        {
+            None          = 0,
+            Audio         = 1 << 0,
+            Video         = 1 << 1,
+        };
+        Q_DECLARE_FLAGS( Formats, Format )
+
         static const int DefaultFPS;
         /**
          *  \brief  Constructs a Clip that is a subpart of a Media.
@@ -63,27 +72,6 @@ class   Clip : public QObject
          */
         Clip( Clip *creator, qint64 begin = -1, qint64 end = -1, const QString& uuid = QString() );
         virtual ~Clip();
-
-        /**
-         *  \return         The clip beginning, in frame, starting at 0
-         */
-        qint64              begin() const
-        {
-            return m_begin;
-        }
-
-        /**
-         *  \return         The clip end, in frame, starting at 0.
-         */
-        qint64              end() const
-        {
-            return m_end;
-        }
-
-        /**
-            \return         Returns the clip length in frame.
-        */
-        qint64              nbFrames() const;
 
         /**
             \return         Returns the clip length in seconds.
@@ -137,18 +125,14 @@ class   Clip : public QObject
         QVariant            toVariant() const;
         QVariant            toVariantFull() const;
 
+        Formats             formats() const;
+        void                setFormats( Formats formats );
+
+        ClipWorkflow*       clipWorkflow() const;
+        void                setClipWorkflow( ClipWorkflow* cw );
+
     private:
         Media               *m_media;
-        /**
-         *  \brief  This represents the beginning of the Clip in frames, from the
-         *          beginning of the parent Media.
-         */
-        qint64              m_begin;
-        /**
-         *  \brief  This represents the end of the Clip in frames, from the
-         *          beginning of the parent Media.
-         */
-        qint64              m_end;
         /**
          *  \brief  This represents the beginning of the Clip in form of [0; 1] float
          */
@@ -160,18 +144,15 @@ class   Clip : public QObject
 
         /**
          *  \brief  The length in frames
+         *     
          */
         qint64              m_nbFrames;
+
         /**
          *  \brief  The length in seconds (Be carreful, VLC uses MILLIseconds)
          */
         qint64              m_lengthSeconds;
-        /**
-         *  The Clip's timeline UUID. Used to identify the Clip in the
-         *  timeline, as a unique object, even if this clip is present more than
-         *  once.
-         */
-        QUuid               m_uuid;
+
         QStringList         m_metaTags;
         QString             m_notes;
 
@@ -186,6 +167,10 @@ class   Clip : public QObject
 
         Clip*               m_parent;
 
+        Formats             m_formats;
+
+        ClipWorkflow*       m_clipWorkflow;
+
     private slots:
         void                mediaMetadataUpdated();
 
@@ -197,5 +182,7 @@ class   Clip : public QObject
 
         friend class    ClipHelper;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( Clip::Formats )
 
 #endif //CLIP_H__
