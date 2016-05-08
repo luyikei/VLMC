@@ -24,7 +24,6 @@
 
 #include "Main/Core.h"
 #include "Project/Project.h"
-#include "Workflow/ClipHelper.h"
 #include "Workflow/ClipWorkflow.h"
 #include "Commands/Commands.h"
 #include "EffectsEngine/EffectHelper.h"
@@ -250,13 +249,13 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
     qint32                  track = tw->trackId();
 
     AbstractGraphicsItem        *item = nullptr;
-    ClipHelper                  *clipHelper = qobject_cast<ClipHelper*>( helper );
-    if ( clipHelper != nullptr )
+    Clip                  *clip = qobject_cast<Clip*>( helper );
+    if ( clip != nullptr )
     {
         AbstractGraphicsMediaItem   *mediaItem = nullptr;
 
-        bool hasVideo = clipHelper->formats() & ClipHelper::Video;
-        bool hasAudio = clipHelper->formats() & ClipHelper::Audio;
+        bool hasVideo = clip->formats() & Clip::Video;
+        bool hasAudio = clip->formats() & Clip::Audio;
 
         // If there is not enough tracks to insert
         // the clip do it now.
@@ -268,7 +267,7 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
                 for ( int i = 0; i < nbTrackToAdd; ++i )
                     addTrack( Workflow::VideoTrack );
             }
-            mediaItem = new GraphicsMovieItem( clipHelper );
+            mediaItem = new GraphicsMovieItem( clip );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
         }
@@ -280,7 +279,7 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
                 for ( int i = 0; i < nbTrackToAdd; ++i )
                     addTrack( Workflow::AudioTrack );
             }
-            mediaItem = new GraphicsAudioItem( clipHelper );
+            mediaItem = new GraphicsAudioItem( clip );
             connect( mediaItem, SIGNAL( split(AbstractGraphicsMediaItem*,qint64) ),
                      this, SLOT( split(AbstractGraphicsMediaItem*,qint64) ) );
         }
@@ -297,7 +296,7 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
         item->m_oldTrack = tw;
         moveItem( item, track, start );
         //If the item has some effects:
-        foreach ( EffectHelper *effectHelper, clipHelper->clipWorkflow()->effects( Effect::Filter ) )
+        for ( EffectHelper *effectHelper : clip->clipWorkflow()->effects( Effect::Filter ) )
         {
             addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
         }
@@ -425,13 +424,13 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         if ( itemList.size() > 0 )
         {
             AbstractGraphicsMediaItem   *item = itemList.first();
-            ClipHelper                  *clipHelper = qobject_cast<ClipHelper*>( item->helper() );
-            Q_ASSERT( clipHelper != nullptr );
+            Clip                  *clip = qobject_cast<Clip*>( item->helper() );
+            Q_ASSERT( clip != nullptr );
 
-            m_dragEffectItem->setWidth( item->clipHelper()->length() );
+            m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
-            m_dragEffectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
+            m_dragEffectItem->effectHelper()->setTarget( clip->clipWorkflow() );
         }
         else
         {
@@ -803,7 +802,7 @@ TracksView::dropEvent( QDropEvent *event )
 
         if ( m_dragAudioItem )
         {
-            m_itemsLoaded.insert( m_dragAudioItem->clipHelper()->uuid() );
+            m_itemsLoaded.insert( m_dragAudioItem->clip()->uuid() );
 
             updateDuration();
             if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
@@ -811,9 +810,9 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragAudioItem->m_oldTrack = m_dragAudioItem->track()->trackWorkflow();
-            m_dragAudioItem->clipHelper()->setFormats( ClipHelper::Audio );
+            m_dragAudioItem->clip()->setFormats( Clip::Audio );
 
-            Commands::trigger( new Commands::Clip::Add( m_dragAudioItem->clipHelper(),
+            Commands::trigger( new Commands::Clip::Add( m_dragAudioItem->clip(),
                                                                     m_dragAudioItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
             m_dragAudioItem = nullptr;
@@ -821,7 +820,7 @@ TracksView::dropEvent( QDropEvent *event )
 
         if ( m_dragVideoItem )
         {
-            m_itemsLoaded.insert( m_dragVideoItem->clipHelper()->uuid() );
+            m_itemsLoaded.insert( m_dragVideoItem->clip()->uuid() );
 
             updateDuration();
             if ( getTrack( Workflow::VideoTrack, m_numVideoTrack - 1 )->childItems().count() > 0 )
@@ -829,9 +828,9 @@ TracksView::dropEvent( QDropEvent *event )
             event->acceptProposedAction();
 
             m_dragVideoItem->m_oldTrack = m_dragVideoItem->track()->trackWorkflow();
-            m_dragVideoItem->clipHelper()->setFormats( ClipHelper::Video );
+            m_dragVideoItem->clip()->setFormats( Clip::Video );
 
-            Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clipHelper(),
+            Commands::trigger( new Commands::Clip::Add( m_dragVideoItem->clip(),
                                                                     m_dragVideoItem->track()->trackWorkflow(),
                                                                     (qint64)mappedXPos ) );
             m_dragVideoItem = nullptr;
@@ -849,7 +848,7 @@ TracksView::dropEvent( QDropEvent *event )
             m_itemsLoaded.insert( m_dragEffectItem->helper()->uuid() );
             AbstractGraphicsMediaItem   *item = clips.first();
             Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                          item->clipHelper()->clipWorkflow() ) );
+                                                          item->clip()->clipWorkflow() ) );
             m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
             event->acceptProposedAction();
             m_dragEffectItem->setContainer( item );
@@ -974,10 +973,10 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                 AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
                 if ( mediaItem != nullptr )
                 {
-                    ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( mediaItem->helper() );
-                    Q_ASSERT( clipHelper != nullptr );
+                    Clip  *clip = qobject_cast<Clip*>( mediaItem->helper() );
+                    Q_ASSERT( clip != nullptr );
                     m_effectTarget = mediaItem;
-//                    effectItem->effectHelper()->setTarget( clipHelper->clipWorkflow() );
+//                    effectItem->effectHelper()->setTarget( clip->clipWorkflow() );
                     break ;
                 }
             }
@@ -1179,7 +1178,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             effectItem->setContainer( nullptr );
             if ( m_effectTarget != nullptr )
             {
-                target = m_effectTarget->clipHelper()->clipWorkflow();
+                target = m_effectTarget->clip()->clipWorkflow();
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
                 effectItem->setContainer( m_effectTarget );
             }
@@ -1219,7 +1218,7 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         EffectUser          *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         if ( effectItem != nullptr && m_effectTarget != nullptr )
-            target = m_effectTarget->clipHelper()->clipWorkflow();
+            target = m_effectTarget->clip()->clipWorkflow();
         m_actionItem->triggerResize( target, m_actionItem->helper(),
                                      newBegin, newEnd, m_actionItem->pos().x() );
         updateDuration();
@@ -1423,8 +1422,8 @@ TracksView::split( AbstractGraphicsMediaItem *item, qint64 frame )
     //therefore, the position of the newly created clip is
     //the splitted clip pos + the splitting point (ie startPos() + frame)
     Commands::trigger( new Commands::Clip::Split( item->track()->trackWorkflow(),
-                                            item->clipHelper(), item->startPos() + frame,
-                                            frame + item->clipHelper()->begin() ) );
+                                            item->clip(), item->startPos() + frame,
+                                            frame + item->clip()->begin() ) );
 }
 
 AbstractGraphicsMediaItem*

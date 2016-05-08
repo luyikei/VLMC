@@ -23,7 +23,6 @@
 #ifndef ABSTRACTGRAPHICSMEDIAITEM_H
 #define ABSTRACTGRAPHICSMEDIAITEM_H
 
-class   ClipHelper;
 #include "AbstractGraphicsItem.h"
 
 #include <QUuid>
@@ -43,14 +42,13 @@ class AbstractGraphicsMediaItem : public AbstractGraphicsItem
 
 public:
     AbstractGraphicsMediaItem( Clip* clip );
-    AbstractGraphicsMediaItem( ClipHelper* ch );
     virtual ~AbstractGraphicsMediaItem();
 
     /// Should return the unique uid of the contained media.
     virtual const QUuid& uuid() const;
 
-    ClipHelper  *clipHelper();
-    const ClipHelper*   clipHelper() const;
+    Clip  *clip();
+    const Clip*   clip() const;
 
     virtual void        setEmphasized( bool value );
     virtual qint64      begin() const;
@@ -74,7 +72,7 @@ protected:
     virtual qint64      maxEnd() const;
 
 protected:
-    ClipHelper*         m_clipHelper;
+    Clip*               m_clip;
 
 private slots:
     void    clipDestroyed( Clip* clip );

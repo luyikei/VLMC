@@ -25,7 +25,6 @@
 
 #include "Project/Project.h"
 #include "Media/Clip.h"
-#include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectHelper.h"
@@ -76,10 +75,10 @@ TrackWorkflow::~TrackWorkflow()
 }
 
 void
-TrackWorkflow::addClip( ClipHelper* ch, qint64 start )
+TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
-    ClipWorkflow* cw = new ClipWorkflow( ch );
-    ch->setClipWorkflow( cw );
+    ClipWorkflow* cw = new ClipWorkflow( clip );
+    clip->setClipWorkflow( cw );
     addClip( cw, start );
 }
 
@@ -97,9 +96,9 @@ TrackWorkflow::addClip( ClipWorkflow* cw, qint64 start )
     // For errors, we don't want this to be called directly from a VLC thread, so we queue it.
     connect( cw, SIGNAL( error( ClipWorkflow* ) ),
              this, SLOT( clipWorkflowFailure( ClipWorkflow* ) ), Qt::QueuedConnection );
-    connect( cw->getClipHelper(), SIGNAL( destroyed( QUuid ) ),
+    connect( cw->clip(), SIGNAL( destroyed( QUuid ) ),
              this, SLOT( clipDestroyed( QUuid ) ) );
-    emit clipAdded( this, cw->getClipHelper(), start );
+    emit clipAdded( this, cw->clip(), start );
     computeLength();
 }
 
@@ -117,7 +116,7 @@ TrackWorkflow::computeLength()
     else
     {
         QMap<qint64, ClipWorkflow*>::const_iterator it = m_clips.end() - 1;
-        qint64  newLength = it.key() + it.value()->getClipHelper()->length();
+        qint64  newLength = it.key() + it.value()->clip()->length();
         if ( m_length != newLength )
             changed = true;
         m_length = newLength;
@@ -140,23 +139,23 @@ TrackWorkflow::getClipPosition( const QUuid& uuid ) const
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
+        if ( it.value()->clip()->uuid() == uuid )
             return it.key();
         ++it;
     }
     return -1;
 }
 
-ClipHelper*
-TrackWorkflow::getClipHelper( const QUuid& uuid )
+Clip*
+TrackWorkflow::clip( const QUuid& uuid )
 {
     QMap<qint64, ClipWorkflow*>::const_iterator     it = m_clips.begin();
     QMap<qint64, ClipWorkflow*>::const_iterator     end = m_clips.end();
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
-            return it.value()->getClipHelper();
+        if ( it.value()->clip()->uuid() == uuid )
+            return it.value()->clip();
         ++it;
     }
     return nullptr;
@@ -189,7 +188,7 @@ TrackWorkflow::renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint
         if ( cw->waitForCompleteInit() == false )
             return nullptr;
         //We check for a difference greater than one to avoid false positive when starting.
-        if ( (  qAbs(start - currentFrame) > 1 ) || cw->getClipHelper()->begin() != 0 )
+        if ( (  qAbs(start - currentFrame) > 1 ) || cw->clip()->begin() != 0 )
         {
             //Clip was not started at its real begining: adjust the position
             adjustClipTime( currentFrame, start, cw );
@@ -232,14 +231,14 @@ TrackWorkflow::hasNoMoreFrameToRender( qint64 currentFrame ) const
 {
     if ( m_clips.size() == 0 )
         return true;
-    //This is the last video by chronological order :
+    //This is the last video by clipronological order :
     QMap<qint64, ClipWorkflow*>::const_iterator   it = m_clips.end() - 1;
     ClipWorkflow* cw = it.value();
     //Check if the Clip is in error state. If so, don't bother checking anything else.
     if ( cw->getState() == ClipWorkflow::Error )
         return true;
     //If it ends before the current frame, we reached end.
-    return ( cw->getClipHelper()->length() + it.key() < currentFrame );
+    return ( cw->clip()->length() + it.key() < currentFrame );
 }
 
 void
@@ -293,16 +292,16 @@ TrackWorkflow::getOutput( Workflow::TrackType trackType, qint64 currentFrame, qi
         qint64          start = it.key();
         ClipWorkflow*   cw = it.value();
 
-        if ( ( trackType == Workflow::VideoTrack && cw->getClipHelper()->formats().testFlag( ClipHelper::Video ) == false ) ||
-             ( trackType == Workflow::AudioTrack && cw->getClipHelper()->formats().testFlag( ClipHelper::Audio ) == false ) ||
-             cw->getClipHelper()->formats().testFlag( ClipHelper::None )
+        if ( ( trackType == Workflow::VideoTrack && cw->clip()->formats().testFlag( Clip::Video ) == false ) ||
+             ( trackType == Workflow::AudioTrack && cw->clip()->formats().testFlag( Clip::Audio ) == false ) ||
+             cw->clip()->formats().testFlag( Clip::None )
              )
         {
             ++it;
             continue ;
         }
         //Is the clip supposed to render now?
-        if ( start <= currentFrame && currentFrame <= start + cw->getClipHelper()->length() )
+        if ( start <= currentFrame && currentFrame <= start + cw->clip()->length() )
         {
             ret = renderClip( trackType, cw, currentFrame, start, needRepositioning,
                                      renderOneFrame, paused );
@@ -364,14 +363,14 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == id )
+        if ( it.value()->clip()->uuid() == id )
         {
             ClipWorkflow* cw = it.value();
             m_clips.erase( it );
             m_clips.insertMulti( startingFrame, cw );
             cw->requireResync();
             computeLength();
-            emit clipMoved( this, cw->getClipHelper()->uuid(), startingFrame );
+            emit clipMoved( this, cw->clip()->uuid(), startingFrame );
             return ;
         }
         ++it;
@@ -388,14 +387,14 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == id )
+        if ( it.value()->clip()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             m_clips.erase( it );
             stopClipWorkflow( cw );
             computeLength();
             cw->disconnect();
-            cw->getClipHelper()->disconnect( this );
+            cw->clip()->disconnect( this );
             emit clipRemoved( this, id );
             cw->deleteLater();
             return ;
@@ -419,7 +418,7 @@ TrackWorkflow::removeClip( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == id )
+        if ( it.value()->clip()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             Clip*           clip = cw->clip();
@@ -427,8 +426,8 @@ TrackWorkflow::removeClip( const QUuid& id )
             stopClipWorkflow( cw );
             computeLength();
             cw->disconnect();
-            cw->getClipHelper()->disconnect( this );
-            emit clipRemoved( this, cw->getClipHelper()->uuid() );
+            cw->clip()->disconnect( this );
+            emit clipRemoved( this, cw->clip()->uuid() );
             cw->deleteLater();
             return clip;
         }
@@ -447,14 +446,14 @@ TrackWorkflow::removeClipWorkflow( const QUuid& id )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == id )
+        if ( it.value()->clip()->uuid() == id )
         {
             ClipWorkflow*   cw = it.value();
             cw->disconnect();
             m_clips.erase( it );
             computeLength();
-            cw->getClipHelper()->disconnect( this );
-            emit clipRemoved( this, cw->getClipHelper()->uuid() );
+            cw->clip()->disconnect( this );
+            emit clipRemoved( this, cw->clip()->uuid() );
             return cw;
         }
         ++it;
@@ -470,8 +469,8 @@ TrackWorkflow::toVariant() const
     {
         l << QVariantHash{
                     { "clip", (*it)->clip()->uuid() },
-                    { "begin", (*it)->getClipHelper()->begin() },
-                    { "end", (*it)->getClipHelper()->end() },
+                    { "begin", (*it)->clip()->begin() },
+                    { "end", (*it)->clip()->end() },
                     { "startFrame", it.key() },
                     { "filters", (*it)->toVariant() }
                 };
@@ -500,10 +499,10 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
         Clip* c = Core::instance()->library()->clip( uuid );
         if ( c != nullptr )
         {
-            ClipHelper  *ch = new ClipHelper( c, begin, end );
-            addClip( ch, startFrame );
+            Clip  *clip = new Clip( c, begin, end );
+            addClip( clip, startFrame );
 
-            ch->clipWorkflow()->loadFromVariant( m["filters"] );
+            clip->clipWorkflow()->loadFromVariant( m["filters"] );
         }
     }
     EffectUser::loadFromVariant( variant.toMap()["filters"] );
@@ -531,7 +530,7 @@ TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* 
 {
     float fps = cw->clip()->media()->source()->fps();
     qint64  nbMs = ( currentFrame - start ) / fps * 1000;
-    qint64  beginInMs = cw->getClipHelper()->begin() / fps * 1000;
+    qint64  beginInMs = cw->clip()->begin() / fps * 1000;
     qint64  startFrame = beginInMs + nbMs;
     cw->setTime( startFrame );
 }
@@ -561,7 +560,7 @@ TrackWorkflow::muteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
+        if ( it.value()->clip()->uuid() == uuid )
         {
             it.value()->mute();
             return ;
@@ -582,7 +581,7 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->uuid() == uuid )
+        if ( it.value()->clip()->uuid() == uuid )
         {
             it.value()->unmute();
             return ;
@@ -624,8 +623,8 @@ TrackWorkflow::contains( const QUuid &uuid ) const
 
     while ( it != end )
     {
-        if ( it.value()->getClipHelper()->clip()->uuid() == uuid ||
-             it.value()->getClipHelper()->clip()->isChild( uuid ) )
+        if ( it.value()->clip()->uuid() == uuid ||
+             it.value()->clip()->isChild( uuid ) )
             return true;
         ++it;
     }
@@ -678,7 +677,7 @@ TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
     {
         ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
         Q_ASSERT( cw != nullptr );
-        pos += getClipPosition( cw->getClipHelper()->uuid() );
+        pos += getClipPosition( cw->clip()->uuid() );
     }
     emit effectAdded( this, helper, pos );
 }
@@ -696,7 +695,7 @@ TrackWorkflow::__effectMoved( EffectHelper* helper, qint64 pos )
     {
         ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
         Q_ASSERT( cw != nullptr );
-        pos += getClipPosition( cw->getClipHelper()->uuid() );
+        pos += getClipPosition( cw->clip()->uuid() );
     }
     emit effectMoved( this, helper->uuid(), pos );
 }

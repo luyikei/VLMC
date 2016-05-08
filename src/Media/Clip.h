@@ -179,8 +179,6 @@ class   Clip : public Workflow::Helper
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
-
-        friend class    ClipHelper;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( Clip::Formats )

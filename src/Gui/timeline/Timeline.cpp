@@ -25,7 +25,6 @@
 #include "Project/Project.h"
 #include "Main/Core.h"
 #include "Media/Clip.h"
-#include "Workflow/ClipHelper.h"
 #include "TracksView.h"
 #include "TracksScene.h"
 #include "TracksControls.h"

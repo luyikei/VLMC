@@ -36,7 +36,7 @@ class QWheelEvent;
 class QGraphicsWidget;
 class QGraphicsLinearLayout;
 
-class   ClipHelper;
+class   Clip;
 class   Effect;
 class   EffectHelper;
 class   GraphicsAudioItem;
@@ -201,7 +201,7 @@ public:
     /**
      *  \returns            The AbstractGraphicsMediaItem identified by the given uuid.
      *                      or nullptr if there's no such item.
-     *  \param              uuid    The ClipHelper's uuid
+     *  \param              uuid    The Clip's uuid
      */
     AbstractGraphicsMediaItem*  item( const QUuid& uuid );
 

@@ -26,11 +26,11 @@
 
 class QMutex;
 class QWaitCondition;
+class Clip;
 
 #include <QObject>
 #include <QQueue>
 
-#include "Workflow/ClipHelper.h"
 #include "Workflow/Types.h"
 #include "Tools/RendererEventWatcher.h"
 
@@ -52,7 +52,7 @@ public:
         Get,
     };
 
-    explicit ClipSmemRenderer( ClipHelper* ch, quint32 width = 0, quint32 height = 0, bool fullSpeedRender = false );
+    explicit ClipSmemRenderer( Clip* clip, quint32 width = 0, quint32 height = 0, bool fullSpeedRender = false );
     ~ClipSmemRenderer();
 
     Workflow::Frame*            getOutput( Workflow::TrackType trackType, GetMode mode, qint64 currentFrame );

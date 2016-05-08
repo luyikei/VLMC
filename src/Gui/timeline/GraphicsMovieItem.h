@@ -39,9 +39,7 @@ public:
      * \brief See http://doc.trolltech.com/4.5/qgraphicsitem.html#type
      */
     enum { Type = UserType + 1 };
-    GraphicsMovieItem( Clip* clipHelper );
-    /// The same CTOR, but this one won't create a new ClipHelper.
-    GraphicsMovieItem( ClipHelper* clipHelper );
+    GraphicsMovieItem( Clip* clip );
     virtual ~GraphicsMovieItem();
 
     virtual int type() const { return Type; }

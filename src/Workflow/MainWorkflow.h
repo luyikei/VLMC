@@ -30,7 +30,7 @@
 #include "Tools/Toggleable.hpp"
 
 class   Clip;
-class   ClipHelper;
+class   Clip;
 class   EffectsEngine;
 class   Effect;
 class   ProjectManager;
@@ -235,7 +235,7 @@ class   MainWorkflow : public QObject
          *  \return     true if the current workflow contains the clip which the uuid was
          *              passed. Falsed otherwise.
          *
-         *  \param      uuid    The Clip uuid, not the ClipHelper's.
+         *  \param      uuid    The Clip uuid, not the Clip's.
          */
         bool                    contains( const QUuid& uuid ) const;
 
@@ -267,12 +267,12 @@ class   MainWorkflow : public QObject
         void                    computeLength();
 
         /**
-         *  \param      uuid : The clip helper's uuid.
+         *  \param      uuid : The clip's uuid.
          *  \param      trackId : the track id
          *  \param      trackType : the track type (audio or video)
-         *  \returns    The clip helper that matches the given UUID, or nullptr.
+         *  \returns    The clip that matches the given UUID, or nullptr.
          */
-        ClipHelper*             getClipHelper( const QUuid& uuid, unsigned int trackId );
+        Clip*                   clip( const QUuid& uuid, unsigned int trackId );
 
         void                    preSave();
         void                    postLoad();
@@ -340,7 +340,7 @@ class   MainWorkflow : public QObject
          *  \brief      Used to notify a change to the timeline and preview widget cursor
          *
          *  \param      newFrame    The new rendered frame
-         *  \param      reason      The reason for changing frame. Usually, if emitted
+         *  \param      reason      The reason for clipanging frame. Usually, if emitted
          *                          from the MainWorkflow, this should be "Renderer"
          */
         void                    frameChanged( qint64 newFrame,

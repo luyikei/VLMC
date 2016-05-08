@@ -212,7 +212,7 @@ class   WorkflowRenderer : public AbstractRenderer
         static void         unlock( void *data, const char* cookie, size_t buffSize, void *buffer );
 
         /**
-         *  \brief          Configure the production chain.
+         *  \brief          Configure the production clipain.
          */
         void                setupRenderer();
 

@@ -34,7 +34,6 @@
 #include "Workflow/MainWorkflow.h"
 
 class   Clip;
-class   ClipHelper;
 class   EffectUser;
 
 namespace Commands
@@ -79,13 +78,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos );
+                Add( ::Clip* clip, TrackWorkflow* tw, qint64 pos );
                 virtual ~Add();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                ClipHelper                  *m_clipHelper;
+                ::Clip                      *m_clip;
                 TrackWorkflow               *m_trackWorkflow;
                 qint64                      m_pos;
         };
@@ -96,7 +95,7 @@ namespace Commands
 
             public:
                 Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                        ClipHelper *clipHelper, qint64 newPos );
+                        ::Clip *clip, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
@@ -104,7 +103,7 @@ namespace Commands
             private:
                 TrackWorkflow   *m_oldTrack;
                 TrackWorkflow   *m_newTrack;
-                ClipHelper      *m_clipHelper;
+                ::Clip          *m_clip;
                 qint64          m_newPos;
                 qint64          m_oldPos;
         };
@@ -114,13 +113,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( ClipHelper* clip, TrackWorkflow* tw );
+                Remove( ::Clip* clip, TrackWorkflow* tw );
                 virtual void internalRedo();
                 virtual void internalUndo();
                 virtual void    retranslate();
 
             private:
-                ClipHelper                  *m_clipHelper;
+                ::Clip                      *m_clip;
                 TrackWorkflow               *m_trackWorkflow;
                 qint64                      m_pos;
         };
@@ -137,7 +136,7 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Resize( TrackWorkflow* tw, ClipHelper* clipHelper,
+                Resize( TrackWorkflow* tw, ::Clip* clip,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
@@ -145,7 +144,7 @@ namespace Commands
 
             private:
                 TrackWorkflow*              m_trackWorkflow;
-                ClipHelper*                 m_clipHelper;
+                ::Clip*                     m_clip;
                 qint64                      m_newBegin;
                 qint64                      m_newEnd;
                 qint64                      m_oldBegin;
@@ -159,7 +158,7 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Split( TrackWorkflow *tw, ClipHelper* toSplit, qint64 newClipPos,
+                Split( TrackWorkflow *tw, ::Clip* toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
                 ~Split();
                 virtual void    internalRedo();
@@ -167,8 +166,8 @@ namespace Commands
                 virtual void    retranslate();
             private:
                 TrackWorkflow               *m_trackWorkflow;
-                ClipHelper*                 m_toSplit;
-                ClipHelper*                 m_newClip;
+                ::Clip*                     m_toSplit;
+                ::Clip*                     m_newClip;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;

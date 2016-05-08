@@ -27,7 +27,6 @@
 #include "Project/Project.h"
 #include "Main/Core.h"
 #include "Media/Clip.h"
-#include "Workflow/ClipHelper.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "Workflow/TrackWorkflow.h"
@@ -78,12 +77,12 @@ Commands::Generic::undo()
         internalUndo();
 }
 
-Commands::Clip::Add::Add( ClipHelper* ch, TrackWorkflow* tw, qint64 pos ) :
-        m_clipHelper( ch ),
+Commands::Clip::Add::Add( ::Clip* clip, TrackWorkflow* tw, qint64 pos ) :
+        m_clip( clip ),
         m_trackWorkflow( tw ),
         m_pos( pos )
 {
-    connect( ch->clip(), &::Clip::destroyed, this, &Add::invalidate );
+    connect( clip, &::Clip::destroyed, this, &Add::invalidate );
     retranslate();
 }
 
@@ -94,13 +93,13 @@ Commands::Clip::Add::~Add()
 void
 Commands::Clip::Add::internalRedo()
 {
-    m_trackWorkflow->addClip( m_clipHelper, m_pos );
+    m_trackWorkflow->addClip( m_clip, m_pos );
 }
 
 void
 Commands::Clip::Add::internalUndo()
 {
-    m_trackWorkflow->removeClip( m_clipHelper->uuid() );
+    m_trackWorkflow->removeClip( m_clip->uuid() );
 }
 
 void
@@ -110,15 +109,15 @@ Commands::Clip::Add::retranslate()
 }
 
 Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                                            ClipHelper *clipHelper, qint64 newPos ) :
+                                            ::Clip *clip, qint64 newPos ) :
     m_oldTrack( oldTrack ),
     m_newTrack( newTrack ),
-    m_clipHelper( clipHelper ),
+    m_clip( clip ),
     m_newPos( newPos )
 
 {
-    m_oldPos = oldTrack->getClipPosition( clipHelper->uuid() );
-    connect( clipHelper->clip(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
+    m_oldPos = oldTrack->getClipPosition( clip->uuid() );
+    connect( clip, SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     retranslate();
 }
 
@@ -137,11 +136,11 @@ Commands::Clip::Move::internalRedo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        ClipWorkflow    *cw = m_oldTrack->removeClipWorkflow( m_clipHelper->uuid() );
+        ClipWorkflow    *cw = m_oldTrack->removeClipWorkflow( m_clip->uuid() );
         m_newTrack->addClip( cw, m_newPos );
     }
     else
-        m_oldTrack->moveClip( m_clipHelper->uuid(), m_newPos );
+        m_oldTrack->moveClip( m_clip->uuid(), m_newPos );
 }
 
 void
@@ -149,19 +148,19 @@ Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        ClipWorkflow    *cw = m_newTrack->removeClipWorkflow( m_clipHelper->uuid() );
+        ClipWorkflow    *cw = m_newTrack->removeClipWorkflow( m_clip->uuid() );
         m_oldTrack->addClip( cw, m_oldPos );
     }
     else
-        m_newTrack->moveClip( m_clipHelper->uuid(), m_oldPos );
+        m_newTrack->moveClip( m_clip->uuid(), m_oldPos );
 }
 
-Commands::Clip::Remove::Remove( ClipHelper* ch, TrackWorkflow* tw ) :
-        m_clipHelper( ch ), m_trackWorkflow( tw )
+Commands::Clip::Remove::Remove( ::Clip* clip, TrackWorkflow* tw ) :
+        m_clip( clip ), m_trackWorkflow( tw )
 {
-    connect( ch->clip(), &::Clip::destroyed, this, &Remove::invalidate );
+    connect( clip, &::Clip::destroyed, this, &Remove::invalidate );
     retranslate();
-    m_pos = tw->getClipPosition( ch->uuid() );
+    m_pos = tw->getClipPosition( clip->uuid() );
 }
 
 void
@@ -173,27 +172,27 @@ Commands::Clip::Remove::retranslate()
 void
 Commands::Clip::Remove::internalRedo()
 {
-    m_trackWorkflow->removeClip( m_clipHelper->uuid() );
+    m_trackWorkflow->removeClip( m_clip->uuid() );
 }
 
 void
 Commands::Clip::Remove::internalUndo()
 {
-    m_trackWorkflow->addClip( m_clipHelper, m_pos );
+    m_trackWorkflow->addClip( m_clip, m_pos );
 }
 
-Commands::Clip::Resize::Resize( TrackWorkflow* tw, ClipHelper* ch, qint64 newBegin,
+Commands::Clip::Resize::Resize( TrackWorkflow* tw, ::Clip* clip, qint64 newBegin,
                                 qint64 newEnd, qint64 newPos ) :
     m_trackWorkflow( tw ),
-    m_clipHelper( ch ),
+    m_clip( clip ),
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
-    connect( ch->clip(), &::Clip::destroyed, this, &Resize::invalidate );
-    m_oldBegin = ch->begin();
-    m_oldEnd = ch->end();
-    m_oldPos = tw->getClipPosition( ch->uuid() );
+    connect( clip, &::Clip::destroyed, this, &Resize::invalidate );
+    m_oldBegin = clip->begin();
+    m_oldEnd = clip->end();
+    m_oldPos = tw->getClipPosition( clip->uuid() );
     retranslate();
 }
 
@@ -208,9 +207,9 @@ Commands::Clip::Resize::internalRedo()
 {
     if ( m_newBegin != m_newEnd )
     {
-        m_trackWorkflow->moveClip( m_clipHelper->uuid(), m_newPos );
+        m_trackWorkflow->moveClip( m_clip->uuid(), m_newPos );
     }
-    m_clipHelper->setBoundaries( m_newBegin, m_newEnd );
+    m_clip->setBoundaries( m_newBegin, m_newEnd );
 }
 
 void
@@ -218,12 +217,12 @@ Commands::Clip::Resize::internalUndo()
 {
     if ( m_oldBegin != m_newBegin )
     {
-        m_trackWorkflow->moveClip( m_clipHelper->uuid(), m_oldPos );
+        m_trackWorkflow->moveClip( m_clip->uuid(), m_oldPos );
     }
-    m_clipHelper->setBoundaries( m_oldBegin, m_oldEnd );
+    m_clip->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
+Commands::Clip::Split::Split( TrackWorkflow *tw, ::Clip *toSplit,
                                              qint64 newClipPos, qint64 newClipBegin ) :
     m_trackWorkflow( tw ),
     m_toSplit( toSplit ),
@@ -231,8 +230,8 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, ClipHelper *toSplit,
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {
-    connect( toSplit->clip(), &::Clip::destroyed, this, &Split::invalidate );
-    m_newClip = new ClipHelper( toSplit->clip(), newClipBegin, toSplit->end() );
+    connect( toSplit, &::Clip::destroyed, this, &Split::invalidate );
+    m_newClip = new ::Clip( toSplit, newClipBegin, toSplit->end() );
     m_oldEnd = toSplit->end();
     retranslate();
 }

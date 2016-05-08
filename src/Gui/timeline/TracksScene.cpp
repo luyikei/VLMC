@@ -23,7 +23,6 @@
 #include "TracksScene.h"
 
 #include "Commands/Commands.h"
-#include "Workflow/ClipHelper.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsMovieItem.h"
@@ -119,10 +118,10 @@ TracksScene::askRemoveSelectedItems()
         if (linked_item != nullptr)
             items.append(linked_item);
 
-        ClipHelper  *ch = qobject_cast<ClipHelper*>( item->helper() );
-        if ( ch != nullptr )
+        Clip  *clip = qobject_cast<Clip*>( item->helper() );
+        if ( clip != nullptr )
         {
-            Commands::trigger( new Commands::Clip::Remove( ch, item->track()->trackWorkflow() ) );
+            Commands::trigger( new Commands::Clip::Remove( clip, item->track()->trackWorkflow() ) );
         }
         else
         {

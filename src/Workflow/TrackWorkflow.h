@@ -31,7 +31,7 @@
 #include <QXmlStreamWriter>
 
 class   Clip;
-class   ClipHelper;
+class   Clip;
 class   ClipWorkflow;
 namespace   Workflow
 {
@@ -59,10 +59,10 @@ class   TrackWorkflow : public EffectUser
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         Clip*                                   removeClip( const QUuid& id );
         ClipWorkflow*                           removeClipWorkflow( const QUuid& id );
-        void                                    addClip( ClipHelper*, qint64 start );
+        void                                    addClip( Clip*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
-        ClipHelper                              *getClipHelper( const QUuid& uuid );
+        Clip                                    *clip( const QUuid& uuid );
 
         //FIXME: this won't be reliable as soon as we change the fps from the configuration
         static const unsigned int               nbFrameBeforePreload = 60;

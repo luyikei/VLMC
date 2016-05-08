@@ -23,7 +23,6 @@
 
 #include "GraphicsAudioItem.h"
 
-#include "Workflow/ClipHelper.h"
 #include "Backend/ISource.h"
 #include "Media/Media.h"
 #include "TracksView.h"
@@ -44,20 +43,6 @@ GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
                      .arg( clip->media()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
-}
-
-GraphicsAudioItem::GraphicsAudioItem( ClipHelper* ch ) :
-        AbstractGraphicsMediaItem( ch )
-{
-    setFlags( QGraphicsItem::ItemIsSelectable );
-
-    QTime length = QTime().addMSecs( ch->clip()->media()->source()->length() );
-    QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
-                     "<br><b>Length:</b> %2" )
-                     .arg( ch->clip()->media()->fileName() )
-                     .arg( length.toString("hh:mm:ss.zzz") ) );
-    setToolTip( tooltip );
-    setAcceptHoverEvents( true );
 }
 
 GraphicsAudioItem::~GraphicsAudioItem()
@@ -171,7 +156,7 @@ GraphicsAudioItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsItem
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = m_clipHelper->clip()->media()->fileName();
+    QString text = m_clip->media()->fileName();
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();

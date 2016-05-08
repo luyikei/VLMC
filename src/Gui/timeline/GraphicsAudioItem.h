@@ -40,7 +40,6 @@ public:
      */
     enum { Type = UserType + 4 };
     GraphicsAudioItem( Clip* clip );
-    GraphicsAudioItem( ClipHelper *ch );
     virtual ~GraphicsAudioItem();
 
     virtual int type() const { return Type; }

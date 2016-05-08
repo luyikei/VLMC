@@ -23,7 +23,7 @@
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
-#include "Workflow/ClipHelper.h"
+#include "Media/Clip.h"
 #include "vlmc.h"
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"

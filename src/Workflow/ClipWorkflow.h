@@ -26,7 +26,6 @@
 #include "Tools/mdate.h"
 
 #include "EffectsEngine/EffectUser.h"
-#include "ClipHelper.h"
 #include "Workflow/Types.h"
 #include "Renderer/ClipSmemRenderer.h"
 
@@ -79,7 +78,7 @@ class   ClipWorkflow : public EffectUser
             Error               //5
         };
 
-        ClipWorkflow( ClipHelper* clip );
+        ClipWorkflow( Clip* clip );
         virtual ~ClipWorkflow();
 
         /**
@@ -110,17 +109,13 @@ class   ClipWorkflow : public EffectUser
         State                   getState() const;
 
         /**
-            \brief              Returns the ClipHelper this workflow instance is based
+            \brief              Returns the Clip this workflow instance is based
                                 uppon, so that you can query information on it.
-            \return             A pointer to a ClipHelper instance.
+            \return             A pointer to a Clip instance.
         */
-        inline ClipHelper*      getClipHelper()
-        {
-            return m_clipHelper;
-        }
         inline Clip*            clip()
         {
-            return m_clipHelper->clip();
+            return m_clip;
         }
 
         /**
@@ -190,7 +185,7 @@ class   ClipWorkflow : public EffectUser
     protected:
         ClipSmemRenderer*           m_renderer;
         RendererEventWatcher*       m_eventWatcher;
-        ClipHelper*                 m_clipHelper;
+        Clip*                       m_clip;
         QMutex*                     m_renderLock;
         QReadWriteLock*             m_stateLock;
         State                       m_state;

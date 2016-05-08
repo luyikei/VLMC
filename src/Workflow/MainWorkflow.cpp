@@ -24,7 +24,6 @@
 #include "vlmc.h"
 #include "Project/Project.h"
 #include "Media/Clip.h"
-#include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
@@ -249,11 +248,11 @@ MainWorkflow::setCurrentFrame( qint64 currentFrame, Vlmc::FrameChangedReason rea
     emit frameChanged( currentFrame, reason );
 }
 
-ClipHelper*
-MainWorkflow::getClipHelper( const QUuid &uuid, unsigned int trackId )
+Clip*
+MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
 {
     Q_ASSERT( trackId < m_trackCount );
-    return m_tracks[trackId]->getClipHelper( uuid );
+    return m_tracks[trackId]->clip( uuid );
 }
 
 void

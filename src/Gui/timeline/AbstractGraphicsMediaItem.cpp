@@ -27,7 +27,6 @@
 #include "GraphicsTrack.h"
 
 #include "Media/Clip.h"
-#include "Workflow/ClipHelper.h"
 #include "Commands/Commands.h"
 #include "Media/Media.h"
 
@@ -40,24 +39,12 @@
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
         m_muted( false )
 {
-    m_clipHelper = new ClipHelper( clip );
+    m_clip = new Clip( clip );
     // Adjust the width
     setWidth( clip->length() );
     // Automatically adjust future changes
-    connect( m_clipHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( m_clip, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     connect( clip, SIGNAL( unloaded( Clip* ) ),
-             this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
-}
-
-AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( ClipHelper* ch ) :
-        m_clipHelper( ch ),
-        m_muted( false )
-{
-    // Adjust the width
-    setWidth( ch->length() );
-    // Automatically adjust future changes
-    connect( ch, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
-    connect( ch->clip(), SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
 }
 
@@ -142,7 +129,7 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
             Q_ASSERT( item1TrackId >= 0 );
             item1->group( this );
             tracksView()->moveItem( item1, item1TrackId , startPos() );
-            track()->trackWorkflow()->moveClip( item1->clipHelper()->uuid(), startPos() );
+            track()->trackWorkflow()->moveClip( item1->clip()->uuid(), startPos() );
         }
     }
     else if ( selectedAction == unlinkAction )
@@ -169,22 +156,22 @@ AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
         m_tracksView->removeClip( clip->uuid() );
 }
 
-ClipHelper*
-AbstractGraphicsMediaItem::clipHelper()
+Clip*
+AbstractGraphicsMediaItem::clip()
 {
-    return m_clipHelper;
+    return m_clip;
 }
 
-const ClipHelper*
-AbstractGraphicsMediaItem::clipHelper() const
+const Clip*
+AbstractGraphicsMediaItem::clip() const
 {
-    return m_clipHelper;
+    return m_clip;
 }
 
 const QUuid&
 AbstractGraphicsMediaItem::uuid() const
 {
-    return m_clipHelper->uuid();
+    return m_clip->uuid();
 }
 
 void
@@ -199,19 +186,21 @@ AbstractGraphicsMediaItem::setEmphasized( bool value )
 bool
 AbstractGraphicsMediaItem::hasResizeBoundaries() const
 {
-    return ( clipHelper()->clip()->media()->fileType() != Media::Image );
+    return ( clip()->media()->fileType() != Media::Image );
 }
 
 qint64
 AbstractGraphicsMediaItem::maxBegin() const
 {
-    return ( m_clipHelper->clip()->begin() );
+    // Assume that the clip always has a parent.
+    return clip()->parent()->begin();
 }
 
 qint64
 AbstractGraphicsMediaItem::maxEnd() const
 {
-    return clipHelper()->clip()->end();
+    // Assume that the clip always has a parent.
+    return clip()->parent()->end();
 }
 
 void
@@ -253,14 +242,14 @@ AbstractGraphicsMediaItem::mousePressEvent( QGraphicsSceneMouseEvent* event )
 qint64
 AbstractGraphicsMediaItem::begin() const
 {
-    return m_clipHelper->begin();
+    return m_clip->begin();
 }
 
 
 qint64
 AbstractGraphicsMediaItem::end() const
 {
-    return m_clipHelper->end();
+    return m_clip->end();
 }
 
 void
@@ -269,26 +258,26 @@ AbstractGraphicsMediaItem::triggerMove( EffectUser *target, qint64 startPos )
     TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
     if ( tw == nullptr )
         return ;
-    Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clipHelper, startPos ) );
+    Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clip, startPos ) );
 }
 
 Workflow::Helper*
 AbstractGraphicsMediaItem::helper()
 {
-    return m_clipHelper;
+    return m_clip;
 }
 
 void
 AbstractGraphicsMediaItem::triggerResize( EffectUser *target, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos )
 {
-    ClipHelper  *clipHelper = qobject_cast<ClipHelper*>( helper );
-    if ( clipHelper == nullptr )
+    Clip  *clip = qobject_cast<Clip*>( helper );
+    if ( clip == nullptr )
         return ;
     TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
     if ( tw == nullptr )
         return ;
-    Commands::trigger( new Commands::Clip::Resize( tw, clipHelper, newBegin,
+    Commands::trigger( new Commands::Clip::Resize( tw, clip, newBegin,
                                                                newEnd, pos ) );
 }
 

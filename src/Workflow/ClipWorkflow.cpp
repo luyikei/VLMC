@@ -27,7 +27,6 @@
 
 #include "vlmc.h"
 #include "Media/Clip.h"
-#include "ClipHelper.h"
 #include "ClipWorkflow.h"
 #include "Backend/ISource.h"
 #include "Backend/ISourceRenderer.h"
@@ -38,10 +37,10 @@
 
 #include "Tools/VlmcDebug.h"
 
-ClipWorkflow::ClipWorkflow( ClipHelper* ch )
+ClipWorkflow::ClipWorkflow( Clip* clip )
     : m_renderer( nullptr )
     , m_eventWatcher( nullptr )
-    , m_clipHelper( ch )
+    , m_clip( clip )
     , m_state( ClipWorkflow::Stopped )
     , m_fullSpeedRender( false )
     , m_muted( false )
@@ -66,7 +65,7 @@ ClipWorkflow::~ClipWorkflow()
 Workflow::Frame*
 ClipWorkflow::getOutput( Workflow::TrackType trackType, ClipSmemRenderer::GetMode mode, qint64 currentFrame )
 {
-    if ( m_clipHelper->clip()->media()->fileType() == Media::Image )
+    if ( m_clip->media()->fileType() == Media::Image )
         mode = ClipSmemRenderer::Get;
 
     auto ret = m_renderer->getOutput( trackType, mode, currentFrame );
@@ -92,8 +91,8 @@ ClipWorkflow::initialize( quint32 width, quint32 height )
     m_state = ClipWorkflow::Initializing;
 
     delete m_renderer;
-    m_renderer = new ClipSmemRenderer( m_clipHelper, width, height, m_fullSpeedRender );
-    if ( m_clipHelper->formats() & ClipHelper::Video )
+    m_renderer = new ClipSmemRenderer( m_clip, width, height, m_fullSpeedRender );
+    if ( m_clip->formats() & Clip::Video )
         initFilters();
 
     for ( int i = 0; i < Workflow::NbTrackType; ++i )
@@ -129,11 +128,11 @@ ClipWorkflow::loadingComplete()
 void
 ClipWorkflow::adjustBegin()
 {
-    if ( m_clipHelper->clip()->media()->fileType() == Media::Video ||
-         m_clipHelper->clip()->media()->fileType() == Media::Audio )
+    if ( m_clip->media()->fileType() == Media::Video ||
+         m_clip->media()->fileType() == Media::Audio )
     {
-        m_renderer->setTime( m_clipHelper->begin() /
-                                m_clipHelper->clip()->media()->source()->fps() * 1000 );
+        m_renderer->setTime( m_clip->begin() /
+                                m_clip->media()->source()->fps() * 1000 );
     }
 }
 
@@ -159,7 +158,7 @@ ClipWorkflow::stop()
 void
 ClipWorkflow::setTime( qint64 time )
 {
-    vlmcDebug() << "Setting ClipWorkflow" << m_clipHelper->uuid() << "time:" << time;
+    vlmcDebug() << "Setting ClipWorkflow" << m_clip->uuid() << "time:" << time;
     m_renderer->setTime( time );
     resyncClipWorkflow();
     m_renderer->setPause( false );
@@ -299,7 +298,7 @@ ClipWorkflow::shouldRender() const
 qint64
 ClipWorkflow::length() const
 {
-    return m_clipHelper->length();
+    return m_clip->length();
 }
 
 EffectUser::Type

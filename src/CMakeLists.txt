@@ -88,7 +88,6 @@ SET(VLMC_SRCS
     Tools/VlmcDebug.h
     Tools/VlmcLogger.cpp
     Workflow/ClipWorkflow.cpp
-    Workflow/ClipHelper.cpp
     Workflow/Helper.cpp
     Workflow/MainWorkflow.cpp
     Workflow/TrackWorkflow.cpp

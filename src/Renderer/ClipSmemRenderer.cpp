@@ -33,21 +33,21 @@
 #include "Media/Media.h"
 #include "Main/Core.h"
 
-ClipSmemRenderer::ClipSmemRenderer( ClipHelper* ch, quint32 width, quint32 height, bool fullSpeedRender )
+ClipSmemRenderer::ClipSmemRenderer( Clip* clip, quint32 width, quint32 height, bool fullSpeedRender )
     : m_eventWatcher( new RendererEventWatcher )
     , m_width( width )
     , m_height( height )
 {
-    m_renderer = ch->clip()->media()->source()->createRenderer( m_eventWatcher );
-    m_renderer->setName( qPrintable( QString( "ClipSmemRenderer " ) + ch->uuid().toString() ) );
+    m_renderer = clip->media()->source()->createRenderer( m_eventWatcher );
+    m_renderer->setName( qPrintable( QString( "ClipSmemRenderer " ) + clip->uuid().toString() ) );
 
-    if ( ch->formats() & ClipHelper::Audio )
+    if ( clip->formats() & Clip::Audio )
     {
         m_renderer->setOutputAudioCodec( "f32l" );
         m_renderer->setOutputAudioNumberChannels( 2 );
         m_renderer->setOutputAudioSampleRate( 48000 );
     }
-    if ( ch->formats() & ClipHelper::Video )
+    if ( clip->formats() & Clip::Video )
     {
         m_renderer->setOutputWidth( m_width );
         m_renderer->setOutputHeight( m_height );
@@ -55,11 +55,11 @@ ClipSmemRenderer::ClipSmemRenderer( ClipHelper* ch, quint32 width, quint32 heigh
         m_renderer->setOutputVideoCodec( "RV32" );
     }
 
-    if ( ch->formats() == ( ClipHelper::Video | ClipHelper::Audio ) )
+    if ( clip->formats() == ( Clip::Video | Clip::Audio ) )
         m_renderer->enableOutputToMemory( this, this, &videoLock, &videoUnlock, &audioLock, &audioUnlock, fullSpeedRender );
-    else if ( ch->formats() & ClipHelper::Video )
+    else if ( clip->formats() & Clip::Video )
         m_renderer->enableVideoOutputToMemory( this, &videoLock, &videoUnlock, fullSpeedRender );
-    else if ( ch->formats() & ClipHelper::Audio )
+    else if ( clip->formats() & Clip::Audio )
         m_renderer->enableAudioOutputToMemory( this, &audioLock, &audioUnlock, fullSpeedRender );
 
     for ( int i = 0; i < Workflow::NbTrackType; ++i )
