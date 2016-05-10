@@ -46,10 +46,7 @@ MediaContainer::~MediaContainer()
 Clip*
 MediaContainer::clip( const QUuid& uuid )
 {
-    QHash<QUuid, Clip*>::iterator   it = m_clips.find( uuid );
-    if ( it != m_clips.end() )
-        return it.value();
-    return nullptr;
+    return clip( uuid.toString() );
 }
 
 Clip*
