@@ -36,6 +36,7 @@
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
+        m_mediaContainer( new MediaContainer ),
         m_blackOutput( nullptr ),
         m_lengthFrame( 0 ),
         m_renderStarted( false ),
@@ -72,6 +73,7 @@ MainWorkflow::~MainWorkflow()
     delete m_currentFrameLock;
     delete m_blackOutput;
     delete m_settings;
+    delete m_mediaContainer;
 }
 
 void

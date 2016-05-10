@@ -45,6 +45,7 @@ namespace   Workflow
 class   Settings;
 class   QMutex;
 class   QReadWriteLock;
+class   MediaContainer;
 
 #include <QObject>
 #include <QUuid>
@@ -278,6 +279,7 @@ class   MainWorkflow : public QObject
         void                    postLoad();
 
     private:
+        MediaContainer*                 m_mediaContainer;
         QList<Toggleable<TrackWorkflow*>>     m_tracks;
         /// Pre-filled buffer used when there's nothing to render
         Workflow::Frame         *m_blackOutput;
