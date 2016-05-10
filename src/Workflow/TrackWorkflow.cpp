@@ -496,14 +496,13 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
             return ;
         }
 
-        Clip* c = Core::instance()->library()->clip( uuid );
-        if ( c != nullptr )
-        {
-            Clip  *clip = new Clip( c, begin, end );
-            addClip( clip, startFrame );
+        Clip  *clip = Core::instance()->workflow()->createClip( QUuid( uuid ) );
+        if ( clip == nullptr )
+            continue ;
+        clip->setBoundaries( begin, end );
+        addClip( clip, startFrame );
 
-            clip->clipWorkflow()->loadFromVariant( m["filters"] );
-        }
+        clip->clipWorkflow()->loadFromVariant( m["filters"] );
     }
     EffectUser::loadFromVariant( variant.toMap()["filters"] );
 }
