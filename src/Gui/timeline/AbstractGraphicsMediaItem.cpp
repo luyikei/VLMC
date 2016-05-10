@@ -37,9 +37,9 @@
 #include <QCoreApplication>
 
 AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
+        m_clip( clip ),
         m_muted( false )
 {
-    m_clip = new Clip( clip );
     // Adjust the width
     setWidth( clip->length() );
     // Automatically adjust future changes

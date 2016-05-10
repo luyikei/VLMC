@@ -383,7 +383,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragAudioItem )
             delete m_dragAudioItem;
-        m_dragAudioItem = new GraphicsAudioItem( clip );
+        m_dragAudioItem = new GraphicsAudioItem( Core::instance()->workflow()->createClip( clip->uuid() ) );
         m_dragAudioItem->m_tracksView = this;
         m_dragAudioItem->setHeight( m_dragAudioItem->itemHeight() );
         m_dragAudioItem->setTrack( getTrack( m_dragAudioItem->trackType(), 0 ) );
@@ -394,7 +394,7 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
     {
         if ( m_dragVideoItem )
             delete m_dragVideoItem;
-        m_dragVideoItem = new GraphicsMovieItem( clip );
+        m_dragVideoItem = new GraphicsMovieItem( Core::instance()->workflow()->createClip( clip->uuid() ) );
         m_dragVideoItem->m_tracksView = this;
         m_dragVideoItem->setHeight( m_dragVideoItem->itemHeight() );
         m_dragVideoItem->setTrack( getTrack( m_dragVideoItem->trackType(), 0 ) );
@@ -779,6 +779,9 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
     bool updateDurationNeeded = false;
     if ( m_dragAudioItem || m_dragVideoItem )
         updateDurationNeeded = true;
+
+    Core::instance()->workflow()->deleteClip( m_dragAudioItem->clip()->uuid() );
+    Core::instance()->workflow()->deleteClip( m_dragVideoItem->clip()->uuid() );
 
     delete m_dragAudioItem;
     delete m_dragVideoItem;
