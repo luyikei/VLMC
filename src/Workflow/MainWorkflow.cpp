@@ -342,6 +342,26 @@ MainWorkflow::trackCount() const
     return m_trackCount;
 }
 
+Clip*
+MainWorkflow::createClip( const QUuid& uuid )
+{
+    Clip* clip = Core::instance()->library()->clip( uuid );
+    if ( clip == nullptr )
+    {
+        vlmcCritical() << "Couldn't find an acceptable parent to be added.";
+        return nullptr;
+    }
+    auto newClip = new Clip( clip );
+    m_mediaContainer->addClip( newClip );
+    return newClip;
+}
+
+void
+MainWorkflow::deleteClip( const QUuid& uuid )
+{
+    m_mediaContainer->deleteClip( uuid );
+}
+
 void
 MainWorkflow::preSave()
 {

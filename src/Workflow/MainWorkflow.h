@@ -257,6 +257,19 @@ class   MainWorkflow : public QObject
          */
         quint32                 trackCount() const;
 
+        /**
+         * \brief       Create a clip from a parent clip's uuid.
+         *
+         * The clip will be added to this MediaContainer, not to the Library.
+         * The parent clip should be in the Library.
+         */
+        Clip*                   createClip( const QUuid& uuid );
+
+        /**
+         * \brief       Delete a clip.
+         */
+        void                    deleteClip( const QUuid& uuid );
+
     private:
         /**
          *  \brief  Compute the length of the workflow.
