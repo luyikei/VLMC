@@ -45,6 +45,7 @@ INCLUDE_DIRECTORIES(${FREI0R_INCLUDE_DIR})
 SET(CMAKE_AUTOMOC ON)
 
 SET(VLMC_SRCS
+    Commands/Commands.cpp
     Backend/IBackend.h
     Backend/ISourceRenderer.h
     Backend/ISource.h
@@ -117,7 +118,7 @@ INCLUDE_DIRECTORIES(
 CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 IF (NOT WITH_GUI)
-    LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp )
+    LIST (APPEND VLMC_SRCS Main/main.cpp Renderer/ConsoleRenderer.cpp Commands/AbstractUndoStack.cpp)
     qt5_add_resources(VLMC_RCC_SRCS ${VLMC_RCC})
     ADD_EXECUTABLE(vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_RCC_SRCS})
     qt5_use_modules(vlmc Core Network)
@@ -126,7 +127,6 @@ IF (NOT WITH_GUI)
 #Add GUI stuff if required
 ELSE(NOT WITH_GUI)
      LIST( APPEND VLMC_SRCS
-        Commands/Commands.cpp
         Commands/KeyboardShortcutHelper.cpp
         Renderer/ClipRenderer.cpp
         Services/YouTube/YouTubeAuthenticator.cpp
