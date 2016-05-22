@@ -32,7 +32,7 @@
 #include "Workflow/TrackWorkflow.h"
 
 void
-Commands::trigger( QUndoCommand* command )
+Commands::trigger( Generic* command )
 {
     Core::instance()->undoStack()->push( command );
 }

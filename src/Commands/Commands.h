@@ -67,11 +67,7 @@ namespace Commands
             void            invalidated();
     };
 
-#ifdef WITH_GUI
-    void        trigger( QUndoCommand* command );
-#else
     void        trigger( Generic* command );
-#endif
 
     namespace   Clip
     {
