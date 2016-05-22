@@ -53,6 +53,8 @@ RendererSettings::RendererSettings( bool shareOnInternet )
     m_ui.fps->setValue( project->fps() );
     m_ui.videoQuality->setValue( project->videoBitrate() );
     m_ui.audioQuality->setValue( project->audioBitrate() );
+    m_ui.nbChannels->setValue( project->nbChannels() );
+    m_ui.sampleRate->setValue( project->sampleRate() );
 
     QCompleter* completer = new QCompleter( this );
     completer->setModel( new QDirModel( completer ) );
@@ -168,6 +170,18 @@ RendererSettings::aspectRatio() const
 {
     //FIXME:
     return "16/10";
+}
+
+quint32
+RendererSettings::nbChannels() const
+{
+    return m_ui.nbChannels->value();
+}
+
+quint32
+RendererSettings::sampleRate() const
+{
+    return m_ui.sampleRate->value();
 }
 
 quint32

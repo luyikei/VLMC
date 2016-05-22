@@ -134,7 +134,8 @@ class   WorkflowRenderer : public AbstractRenderer
 
         void                startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                double fps, const QString& ar,
-                                               quint32 vbitrate, quint32 abitrate );
+                                               quint32 vbitrate, quint32 abitrate,
+                                               quint32 nbChannels, quint32 sampleRate );
 
     private:
         void                start();

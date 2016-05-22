@@ -606,7 +606,8 @@ MainWindow::checkVideoLength()
 bool
 MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height,
                          double fps, const QString& ar,
-                         quint32 vbitrate, quint32 abitrate )
+                         quint32 vbitrate, quint32 abitrate,
+                         quint32 nbChannels, quint32 sampleRate )
 {
     WorkflowFileRendererDialog  dialog( width, height );
     dialog.setModal( true );
@@ -614,7 +615,8 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
     if ( m_projectPreview->getAbstractRenderer()->isRendering() == true )
         m_projectPreview->stop();
     Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
-                                                             fps, ar, vbitrate, abitrate );
+                                                             fps, ar, vbitrate, abitrate,
+                                                             nbChannels, sampleRate );
 
     if ( dialog.exec() == QDialog::Rejected )
         return false;
@@ -638,8 +640,10 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
     quint32     vbitrate       = settings.videoBitrate();
     quint32     abitrate       = settings.audioBitrate();
     auto        ar             = settings.aspectRatio();
+    auto        nbChannels     = settings.nbChannels();
+    auto        sampleRate     = settings.sampleRate();
 
-    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate );
+    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate, nbChannels, sampleRate );
 }
 
 QDockWidget*

@@ -62,6 +62,8 @@ ConsoleRenderer::startRender()
                                                              project->fps(),
                                                              project->aspectRatio(),
                                                              project->videoBitrate(),
-                                                             project->audioBitrate()
+                                                             project->audioBitrate(),
+                                                             project->nbChannels(),
+                                                             project->sampleRate()
                                                              );
 }

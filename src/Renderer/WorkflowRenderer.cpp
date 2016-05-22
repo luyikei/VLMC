@@ -216,7 +216,8 @@ WorkflowRenderer::start()
 void
 WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                      double fps, const QString& ar,
-                                     quint32 vbitrate, quint32 abitrate )
+                                     quint32 vbitrate, quint32 abitrate,
+                                     quint32 nbChannels, quint32 sampleRate )
 {
     if ( m_isRendering == true )
         return ;
@@ -224,6 +225,8 @@ WorkflowRenderer::startRenderToFile( const QString& outputFileName, quint32 widt
     m_height = height;
     m_outputFps = fps;
     m_aspectRatio = ar;
+    m_nbChannels = nbChannels;
+    m_rate = sampleRate;
 
     setRenderTarget( std::unique_ptr<Backend::IRenderTarget>( new Backend::FileTarget( qPrintable( outputFileName ) ) ) );
     setupRenderer();
