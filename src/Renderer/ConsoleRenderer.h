@@ -44,12 +44,6 @@ private slots:
 private:
     WorkflowFileRenderer    *m_renderer;
     QString                 m_outputFileName;
-    quint32                 m_width;
-    quint32                 m_height;
-    double                  m_fps;
-    quint32                 m_vbitrate;
-    quint32                 m_abitrate;
-    QString                 m_ar;
 };
 
 #endif // CONSOLERENDERER_H
