@@ -30,6 +30,7 @@
 #include "EffectsEngine/EffectHelper.h"
 #include "EffectsEngine/EffectInstance.h"
 #include "Workflow/TrackWorkflow.h"
+#include "AbstractUndoStack.h"
 
 void
 Commands::trigger( Generic* command )

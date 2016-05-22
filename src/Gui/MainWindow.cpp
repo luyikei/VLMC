@@ -30,7 +30,6 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUndoView>
-#include <QUndoStack>
 #include <QUrl>
 #include <QNetworkProxy>
 #include <QSysInfo>
@@ -44,6 +43,7 @@
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
+#include "Commands/AbstractUndoStack.h"
 
 /* Gui */
 #include "MainWindow.h"

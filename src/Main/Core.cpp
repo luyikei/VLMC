@@ -25,7 +25,6 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QtGlobal>
-#include <QUndoStack>
 #include <QStandardPaths>
 
 
@@ -38,6 +37,7 @@
 #include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
 #include "Workflow/MainWorkflow.h"
+#include "Commands/AbstractUndoStack.h"
 
 Core::Core()
 {
@@ -52,10 +52,12 @@ Core::Core()
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow( m_currentProject->settings() );
     m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
-    m_undoStack = new QUndoStack;
+    m_undoStack = new Commands::AbstractUndoStack;
 
-    connect( m_undoStack, &QUndoStack::cleanChanged, m_currentProject, &Project::cleanChanged );
-    connect( m_currentProject, &Project::projectSaved, m_undoStack, &QUndoStack::setClean );
+    connect( m_undoStack, &Commands::AbstractUndoStack::cleanChanged,
+             m_currentProject, &Project::cleanChanged );
+    connect( m_currentProject, &Project::projectSaved,
+             m_undoStack, &Commands::AbstractUndoStack::setClean );
     connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
     connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
@@ -165,7 +167,7 @@ Core::workflow()
     return m_workflow;
 }
 
-QUndoStack*
+Commands::AbstractUndoStack*
 Core::undoStack()
 {
     return m_undoStack;

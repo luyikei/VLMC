@@ -35,11 +35,14 @@ class VlmcLogger;
 class Workspace;
 class WorkflowRenderer;
 
-class QUndoStack;
-
 namespace Backend
 {
     class IBackend;
+}
+
+namespace Commands
+{
+    class AbstractUndoStack;
 }
 
 #include <QObject>
@@ -59,7 +62,7 @@ class Core : public QObject
         Project*                project();
         WorkflowRenderer*       workflowRenderer();
         MainWorkflow*           workflow();
-        QUndoStack*             undoStack();
+        Commands::AbstractUndoStack*   undoStack();
         Library*                library();
         /**
          * @brief runtime returns the application runtime
@@ -88,7 +91,7 @@ class Core : public QObject
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;
         WorkflowRenderer*       m_workflowRenderer;
-        QUndoStack*             m_undoStack;
+        Commands::AbstractUndoStack*   m_undoStack;
         Library*                m_library;
         QElapsedTimer           m_timer;
 };

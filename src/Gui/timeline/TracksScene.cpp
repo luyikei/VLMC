@@ -23,6 +23,7 @@
 #include "TracksScene.h"
 
 #include "Commands/Commands.h"
+#include "Commands/AbstractUndoStack.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "GraphicsAudioItem.h"
 #include "GraphicsMovieItem.h"

@@ -26,6 +26,7 @@
 #include "Project/Project.h"
 #include "Workflow/ClipWorkflow.h"
 #include "Commands/Commands.h"
+#include "Commands/AbstractUndoStack.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "GraphicsMovieItem.h"
 #include "GraphicsAudioItem.h"
