@@ -53,16 +53,18 @@ namespace Commands
             void            redo();
             void            undo();
             bool            isValid() const;
+#ifndef WITH_GUI
+            void            setText( const QString& text ) ;
+            QString         text() const;
+#endif
         private:
             bool            m_valid;
+            QString         m_text;
         protected slots:
             virtual void    retranslate() = 0;
             void            invalidate();
         signals:
             void            invalidated();
-#ifndef WITH_GUI
-            virtual void    setText( const QString& ) {}
-#endif
     };
 
 #ifdef WITH_GUI

@@ -63,6 +63,20 @@ Commands::Generic::isValid() const
     return m_valid;
 }
 
+#ifndef WITH_GUI
+void
+Commands::Generic::setText( const QString& text )
+{
+    m_text = text;
+}
+
+QString
+Commands::Generic::text() const
+{
+    return m_text;
+}
+#endif
+
 void
 Commands::Generic::redo()
 {
