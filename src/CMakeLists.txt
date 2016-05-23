@@ -2,7 +2,10 @@
 # VLMC build system
 # Authors: Rohit Yadav <rohityadav89@gmail.com>
 #          Ludovic Fauvet <etix@vlmc.org>
+#          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
 #
+
+include(FindPkgConfig)
 
 if (APPLE)
     # Manually set Qt5 path for OSX installed using brew
@@ -20,9 +23,14 @@ if (Qt5Core_FOUND)
     endif()
 endif()
 
-FIND_PACKAGE(LIBVLC REQUIRED)
-list(APPEND VLMC_LIBS ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
-INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIR})
+# We need to use pkg-config, as the medialibrary will use the pkg-config provided
+# libvlc
+pkg_check_modules(LIBVLC REQUIRED libvlc>=3.0)
+
+# There's a special place in hell for people who use libvlccore in their apps.
+list(APPEND VLMC_LIBS ${LIBVLC_LIBRARIES} vlccore)
+link_directories(${LIBVLC_LIBRARY_DIRS})
+INCLUDE_DIRECTORIES(${LIBVLC_INCLUDE_DIRS})
 
 FIND_PACKAGE(frei0r REQUIRED)
 
