@@ -62,9 +62,6 @@ SET(SYSNAME ${CMAKE_SYSTEM}-${CMAKE_SYSTEM_PROCESSOR})
 SET(CMAKE_COLOR_MAKEFILE ON)
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
-# Path to contribs
-SET(CONTRIBS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/contribs)
-
 # Optionally allow embedding libvlc into the binary as
 # VLMC requires libVLC
 # SET (WITH_LIBVLC FALSE CACHE BOOL "Compile LibVLC in VLMC")
