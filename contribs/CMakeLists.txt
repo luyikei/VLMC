@@ -15,14 +15,3 @@ ExternalProject_Add(
     BUILD_COMMAND make
     INSTALL_COMMAND make install
 )
-
-# Now find medialibrary
-ExternalProject_Add(
-    medialibrary
-    PREFIX ${PREFIX}
-    UPDATE_COMMAND ""
-    GIT_REPOSITORY https://code.videolan.org/videolan/medialibrary.git
-    CONFIGURE_COMMAND <SOURCE_DIR>/bootstrap && <SOURCE_DIR>/configure --prefix=${PREFIX}/install --disable-tests
-    BUILD_COMMAND make
-    INSTALL_COMMAND make install
-)

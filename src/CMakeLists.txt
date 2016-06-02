@@ -290,7 +290,6 @@ ELSE(NOT WITH_GUI)
 ENDIF( NOT WITH_GUI )
 
 add_dependencies(vlmc libvlcpp)
-add_dependencies(vlmc medialibrary)
 message(STATUS "Contribs prefix: ${CONTRIBS_DIR}")
 include_directories( ${CONTRIBS_DIR}/include )
 
