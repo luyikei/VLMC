@@ -34,6 +34,7 @@
 
 #include <Backend/IBackend.h>
 #include "Library/Library.h"
+#include "Library/MediaLibrary.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
 #include <Settings/Settings.h>
@@ -48,6 +49,7 @@ Core::Core()
     createSettings();
     m_currentProject = new Project( m_settings );
     m_library = new Library( m_currentProject->settings() );
+    m_ml.reset( new MediaLibrary( m_settings ) );
     m_recentProjects = new RecentProjects( m_settings );
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow( m_currentProject->settings() );
