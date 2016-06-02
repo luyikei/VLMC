@@ -24,7 +24,7 @@
 # include "config.h"
 #endif
 
-#include "MediaLibrary.h"
+#include "MediaLibraryView.h"
 
 #include "Project/Project.h"
 #include "Media/Clip.h"
@@ -40,8 +40,8 @@
 #include <QUrl>
 #include <QMimeData>
 
-MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
-    m_ui( new Ui::MediaLibrary() )
+MediaLibraryView::MediaLibraryView(QWidget *parent) : QWidget(parent),
+    m_ui( new Ui::MediaLibraryView() )
 {
     m_ui->setupUi( this );
     setAcceptDrops( true );
@@ -62,13 +62,13 @@ MediaLibrary::MediaLibrary(QWidget *parent) : QWidget(parent),
              this, SLOT( filterTypeChanged() ) );
 }
 
-MediaLibrary::~MediaLibrary()
+MediaLibraryView::~MediaLibraryView()
 {
     delete m_ui;
 }
 
 void
-MediaLibrary::changeEvent( QEvent *e )
+MediaLibraryView::changeEvent( QEvent *e )
 {
     QWidget::changeEvent( e );
     switch ( e->type() )
@@ -82,7 +82,7 @@ MediaLibrary::changeEvent( QEvent *e )
 }
 
 void
-MediaLibrary::filterUpdated( const QString &filter )
+MediaLibraryView::filterUpdated( const QString &filter )
 {
     const MediaListView::MediaList              &medias = m_mediaListView->mediaList();
     MediaListView::MediaList::const_iterator    it = medias.begin();
@@ -97,8 +97,8 @@ MediaLibrary::filterUpdated( const QString &filter )
     }
 }
 
-MediaLibrary::Filter
-MediaLibrary::currentFilter()
+MediaLibraryView::Filter
+MediaLibraryView::currentFilter()
 {
     switch ( m_ui->filterType->currentIndex() )
     {
@@ -112,7 +112,7 @@ MediaLibrary::currentFilter()
 }
 
 void
-MediaLibrary::viewChanged( ViewController *view )
+MediaLibraryView::viewChanged( ViewController *view )
 {
     MediaListView       *mlv = qobject_cast<MediaListView*>( view );
 
@@ -125,25 +125,25 @@ MediaLibrary::viewChanged( ViewController *view )
 }
 
 bool
-MediaLibrary::filterByName( const Clip *clip, const QString &filter )
+MediaLibraryView::filterByName( const Clip *clip, const QString &filter )
 {
     return ( clip->media()->fileName().contains( filter, Qt::CaseInsensitive ) );
 }
 
 bool
-MediaLibrary::filterByTags( const Clip *clip, const QString &filter )
+MediaLibraryView::filterByTags( const Clip *clip, const QString &filter )
 {
     return ( clip->matchMetaTag( filter ) );
 }
 
 void
-MediaLibrary::filterTypeChanged()
+MediaLibraryView::filterTypeChanged()
 {
     filterUpdated( m_ui->filterInput->text() );
 }
 
 void
-MediaLibrary::dragEnterEvent( QDragEnterEvent *event )
+MediaLibraryView::dragEnterEvent( QDragEnterEvent *event )
 {
     if ( event->mimeData()->hasFormat( "text/uri-list" ) )
     {
@@ -154,19 +154,19 @@ MediaLibrary::dragEnterEvent( QDragEnterEvent *event )
 }
 
 void
-MediaLibrary::dragMoveEvent( QDragMoveEvent *event )
+MediaLibraryView::dragMoveEvent( QDragMoveEvent *event )
 {
     event->acceptProposedAction();
 }
 
 void
-MediaLibrary::dragLeaveEvent( QDragLeaveEvent *event )
+MediaLibraryView::dragLeaveEvent( QDragLeaveEvent *event )
 {
    event->accept();
 }
 
 void
-MediaLibrary::dropEvent( QDropEvent *event )
+MediaLibraryView::dropEvent( QDropEvent *event )
 {
     const QList<QUrl>         &fileList = event->mimeData()->urls();
 

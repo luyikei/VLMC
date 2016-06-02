@@ -20,26 +20,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef MEDIALIBRARY_H
-#define MEDIALIBRARY_H
+#ifndef MEDIALIBRARYVIEW_H
+#define MEDIALIBRARYVIEW_H
 
 #include <QWidget>
 
-#include "ui/MediaLibrary.h"
+#include "ui/MediaLibraryView.h"
+
 class   Clip;
 class   MediaListView;
 class   MediaContainer;
 class   ViewController;
 
-class MediaLibrary : public QWidget
+class MediaLibraryView : public QWidget
 {
     Q_OBJECT
-    Q_DISABLE_COPY( MediaLibrary )
+    Q_DISABLE_COPY( MediaLibraryView )
 
     public:
         typedef bool    (*Filter)( const Clip*, const QString& filter );
-        explicit MediaLibrary( QWidget *parent = 0);
-        virtual ~MediaLibrary();
+        explicit MediaLibraryView( QWidget *parent = 0);
+        virtual ~MediaLibraryView();
 
     protected:
         void        dragEnterEvent( QDragEnterEvent *event );
@@ -62,8 +63,8 @@ class MediaLibrary : public QWidget
         static bool         filterByTags( const Clip *clip, const QString &filter );
 
     private:
-        Ui::MediaLibrary    *m_ui;
-        MediaListView       *m_mediaListView;
+        Ui::MediaLibraryView *m_ui;
+        MediaListView        *m_mediaListView;
 
     private slots:
         void                filterUpdated( const QString &filter );
@@ -80,4 +81,4 @@ class MediaLibrary : public QWidget
         void                clipSelected( Clip* );
 };
 
-#endif // MEDIALIBRARY_H
+#endif // MEDIALIBRARYVIEW_H

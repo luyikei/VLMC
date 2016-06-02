@@ -37,7 +37,7 @@ class QUndoView;
 
 class   EffectsListView;
 class   ImportController;
-class   MediaLibrary;
+class   MediaLibraryView;
 class   PreviewWidget;
 class   Project;
 class   ProjectWizard;
@@ -130,7 +130,7 @@ private:
     SettingsDialog*         m_projectPreferences;
     ProjectWizard*          m_wizard;
     ImportController*       m_importController;
-    MediaLibrary            *m_mediaLibrary;
+    MediaLibraryView            *m_mediaLibrary;
     EffectsListView*        m_effectsList;
     QUndoView*              m_undoView;
     QDockWidget*            m_dockedUndoView;

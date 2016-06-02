@@ -56,7 +56,7 @@
 /* Widgets */
 #include "effectsengine/EffectsListView.h"
 #include "import/ImportController.h"
-#include "library/MediaLibrary.h"
+#include "library/MediaLibraryView.h"
 #include "widgets/NotificationZone.h"
 #include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
@@ -495,7 +495,7 @@ MainWindow::setupEffectsList()
 void
 MainWindow::setupLibrary()
 {
-    m_mediaLibrary = new MediaLibrary;
+    m_mediaLibrary = new MediaLibraryView;
     m_dockedLibrary = dockWidget( m_mediaLibrary, Qt::TopDockWidgetArea );
 }
 

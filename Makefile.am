@@ -187,7 +187,7 @@ vlmc_SOURCES += \
 	src/Gui/import/TagWidget.cpp \
 	src/Gui/library/ListViewController.cpp \
 	src/Gui/library/MediaCellView.cpp \
-	src/Gui/library/MediaLibrary.cpp \
+	src/Gui/library/MediaLibraryView.cpp \
 	src/Gui/library/MediaListView.cpp \
 	src/Gui/library/StackViewController.cpp \
 	src/Gui/library/StackViewNavController.cpp \
@@ -256,7 +256,7 @@ vlmc_SOURCES += \
 	src/Gui/library/ListViewController.h \
 	src/Gui/library/StackViewController.h \
 	src/Gui/library/MediaListView.h \
-	src/Gui/library/MediaLibrary.h \
+	src/Gui/library/MediaLibraryView.h \
 	src/Gui/library/MediaCellView.h \
 	src/Gui/library/StackViewNavController.h \
 	src/Gui/library/ViewController.h \
@@ -301,7 +301,7 @@ nodist_vlmc_SOURCES += \
 	src/Gui/settings/ColorWidget.moc.cpp \
 	src/Gui/import/ImportController.moc.cpp \
 	src/Gui/library/StackViewController.moc.cpp \
-	src/Gui/library/MediaLibrary.moc.cpp \
+	src/Gui/library/MediaLibraryView.moc.cpp \
 	src/Gui/wizard/firstlaunch/FirstLaunchPage.moc.cpp \
 	src/Gui/settings/Panel.moc.cpp \
 	src/Gui/preview/RenderWidget.moc.cpp \
@@ -357,7 +357,7 @@ vlmc_UI = \
 	src/Gui/ui/ImportController.ui \
 	src/Gui/ui/TagWidget.ui \
 	src/Gui/ui/MediaCellView.ui \
-	src/Gui/ui/MediaLibrary.ui \
+	src/Gui/ui/MediaLibraryView.ui \
 	src/Gui/ui/StackViewNavController.ui \
 	src/Gui/ui/ClipMetadataDisplayer.ui \
 	src/Gui/ui/PreviewWidget.ui \
