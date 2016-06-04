@@ -138,7 +138,11 @@ Settings::save()
     doc.setObject( top );
 
     m_settingsFile->open( QFile::WriteOnly );
+#ifdef NDEBUG
     m_settingsFile->write( doc.toJson( QJsonDocument::Compact ) );
+#else
+    m_settingsFile->write( doc.toJson( QJsonDocument::Indented ) );
+#endif
     m_settingsFile->close();
     return true;
 }
