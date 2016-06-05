@@ -156,6 +156,12 @@ Core::library()
     return m_library;
 }
 
+MediaLibrary*
+Core::mediaLibrary()
+{
+    return m_ml.get();
+}
+
 qint64
 Core::runtime()
 {
