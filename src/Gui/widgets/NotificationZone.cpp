@@ -55,12 +55,6 @@ NotificationZone::notify( const QString &message )
 }
 
 void
-NotificationZone::progressUpdated( float ratio )
-{
-    progressUpdated( static_cast<int>( ratio * 100.0f ) );
-}
-
-void
 NotificationZone::progressUpdated( int percent )
 {
     m_ui->progressBar->show();

@@ -47,12 +47,7 @@ class NotificationZone : public QWidget, public Singleton<NotificationZone>
 
     public slots:
         void        notify( const QString& message );
-        /**
-         *  \brief  Update the progress bar.
-         *
-         *  \param  ratio   The progress ratio, from 0.0 to 1.0
-         */
-        void        progressUpdated( float ratio );
+
         /**
          *  \brief  Update the progress bar.
          *

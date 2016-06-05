@@ -42,8 +42,7 @@ Transcoder::Transcoder( Media* media )
     connect( this, &Transcoder::notify,
              NotificationZone::instance(), &NotificationZone::notify );
     connect( this, &Transcoder::progress,
-             NotificationZone::instance(),
-             static_cast<void(NotificationZone::*)(float)>(&NotificationZone::progressUpdated) );
+             NotificationZone::instance(), &NotificationZone::progressUpdated );
     m_eventWatcher = new Backend::VLC::RendererEventWatcher;
 }
 
@@ -66,7 +65,9 @@ Transcoder::transcodeToPs()
     m_destinationFile = outputDir + '/' + m_media->fileInfo()->baseName() + ".ps";
     m_renderer->setOutputFile( qPrintable( m_destinationFile ) );
     m_renderer->setName( qPrintable( QString( "Transcoder " ) + m_media->fileInfo()->baseName() ) );
-    connect( m_eventWatcher, &Backend::VLC::RendererEventWatcher::positionChanged, this, &Transcoder::progress );
+    connect( m_eventWatcher, &Backend::VLC::RendererEventWatcher::positionChanged, [this](float pos) {
+        emit progress(static_cast<int>( pos * 100 ) );
+    });
     connect( m_eventWatcher, &Backend::VLC::RendererEventWatcher::endReached, this, &Transcoder::transcodeFinished );
     emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );
     m_renderer->start();

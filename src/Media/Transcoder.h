@@ -56,7 +56,7 @@ class Transcoder : public QObject
         void        transcodeFinished();
 
     signals:
-        void        progress( float pos );
+        void        progress( int percent );
         void        done();
         //used for notification:
         void        notify( QString );
