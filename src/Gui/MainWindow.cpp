@@ -42,6 +42,7 @@
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
 #include "Backend/IBackend.h"
+#include "Library/MediaLibrary.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/ClipRenderer.h"
 #include "Commands/AbstractUndoStack.h"
@@ -108,6 +109,16 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, &MainWindow::cleanStateChanged );
     connect( Core::instance()->recentProjects(), &RecentProjects::updated,
              this, &MainWindow::updateRecentProjects );
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::progressUpdated,
+             NotificationZone::instance(), &NotificationZone::progressUpdated );
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryStarted,
+         [](const QString& folder) {
+            NotificationZone::instance()->notify( "Discovering " + folder + "..." );
+    });
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::reloadStarted,
+        [](const QString& folder) {
+            NotificationZone::instance()->notify( "Reloading medialibrary (" + folder + ")..." );
+    });
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
@@ -385,7 +396,7 @@ MainWindow::on_actionSave_As_triggered()
                                   path, QObject::tr( "VLMC project file(*.vlmc)" ) );
     if ( dest.isEmpty() == true )
         return;
-    if ( !dest.endsWith( ".vlmc" ) ) 
+    if ( !dest.endsWith( ".vlmc" ) )
         dest += ".vlmc";
     Core::instance()->project()->saveAs( dest );
 }
