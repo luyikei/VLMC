@@ -27,6 +27,7 @@
 #include "FirstLaunchWizard.h"
 #include "WorkspaceLocation.h"
 #include "FirstLaunchPage.h"
+#include "MediaLibraryDirs.h"
 #include "Done.h"
 #include "Settings/Settings.h"
 
@@ -39,6 +40,7 @@ FirstLaunchWizard::FirstLaunchWizard( QWidget* parent )
 
     addPage( new FirstLaunchPage( this ) );
     addPage( new WorkspaceLocation( this ) );
+    addPage( new MediaLibraryDirs( this ) );
     addPage( new Done( this ) );
 }
 
@@ -53,8 +55,10 @@ void
 FirstLaunchWizard::accept()
 {
     auto workspaceLocation = field( "workspaceLocation" );
+    auto mlDirs = field( "mlDirs" );
     Q_ASSERT( workspaceLocation.toString().isEmpty() == false );
     Core::instance()->settings()->setValue( "vlmc/WorkspaceLocation", workspaceLocation );
     Core::instance()->settings()->setValue( "private/FirstLaunchDone", true );
+    Core::instance()->settings()->setValue( "vlmc/mlDirs", mlDirs );
     QDialog::accept();
 }

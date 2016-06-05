@@ -229,6 +229,7 @@ vlmc_SOURCES += \
 	src/Gui/wizard/firstlaunch/FirstLaunchPage.cpp \
 	src/Gui/wizard/firstlaunch/WorkspaceLocation.cpp \
 	src/Gui/wizard/firstlaunch/Done.cpp \
+	src/Gui/wizard/firstlaunch/MediaLibraryDirs.cpp \
 	$(NULL)
 
 if HAVE_DARWIN
@@ -255,6 +256,7 @@ vlmc_SOURCES += \
 	src/Gui/wizard/firstlaunch/WorkspaceLocation.h \
 	src/Gui/wizard/firstlaunch/Done.h \
 	src/Gui/wizard/OpenPage.h \
+	src/Gui/wizard/firstlaunch/MediaLibraryDirs.h \
 	src/Gui/timeline/Timeline.h \
 	src/Gui/timeline/ThumbnailImageProvider.h \
 	src/Gui/About.h \
@@ -382,6 +384,7 @@ vlmc_UI = \
 	src/Gui/ui/VideoPage.ui \
 	src/Gui/ui/WelcomePage.ui \
 	src/Gui/ui/FirstLaunchPage.ui \
+	src/Gui/ui/MediaLibraryDirs.ui \
 	src/Gui/ui/WorkspaceLocation.ui \
 	src/Gui/ui/Done.ui \
 	$(NULL)
