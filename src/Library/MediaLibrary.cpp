@@ -24,20 +24,45 @@
 #include "Settings/Settings.h"
 
 MediaLibrary::MediaLibrary( Settings* settings )
+    : m_initialized( false )
 {
     m_ml.reset( NewMediaLibrary() );
-    settings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariant(),
-                                       "", "", SettingValue::Nothing );
-    connect( settings, &Settings::postLoad, this, &MediaLibrary::postLoad, Qt::DirectConnection );
+    auto s = settings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
+                        "Media Library folders", "List of folders VLMC will search for media files",
+                         SettingValue::Folders );
+    connect( s, &SettingValue::changed, this, &MediaLibrary::mlDirsChanged );
+    auto ws = settings->value( "vlmc/WorkspaceLocation" );
+    connect( ws, &SettingValue::changed, this, &MediaLibrary::workspaceChanged );
 }
 
-void MediaLibrary::postLoad()
+void
+MediaLibrary::mlDirsChanged( const QVariant& value )
 {
-    auto workspace = VLMC_GET_STRING( "vlmc/Workspace" ).toStdString();
-    Q_ASSERT( workspace.length() != 0 );
-    m_ml->initialize( workspace + "/ml.db", workspace + "/thumbnails/", this );
+    // We can't handle this event without an initialized media library, and therefor without a valid
+    // workspace. In theory, the workspace SettingValue is created before the mlDirs,
+    // so it should be loaded before.
+    Q_ASSERT( m_initialized == true );
+
+    const auto list = value.toStringList();
+    Q_ASSERT( list.empty() == false );
+    for ( const auto f : list )
+        m_ml->discover( f.toStdString() );
 }
 
+void
+MediaLibrary::workspaceChanged( const QVariant& workspace )
+{
+    Q_ASSERT( workspace.isNull() == false && workspace.canConvert<QString>() );
+
+    if ( m_initialized == false )
+    {
+        auto w = workspace.toString().toStdString();
+        Q_ASSERT( w.empty() == false );
+        m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
+        m_initialized = true;
+    }
+    //else FIXME, and relocate the media library
+}
 
 void MediaLibrary::onMediaAdded( std::vector<medialibrary::MediaPtr> )
 {

@@ -39,8 +39,17 @@ class MediaLibrary : public QObject, private medialibrary::IMediaLibraryCb
 public:
     explicit MediaLibrary( Settings* settings );
 
+signals:
+    void    progressUpdated( int percent );
+    void    discoveryStarted( QString );
+    void    discoveryCompleted( QString );
+    void    reloadStarted( QString );
+    void    reloadCompleted( QString );
+
+
 private:
-    void postLoad();
+    void mlDirsChanged( const QVariant& value );
+    void workspaceChanged(const QVariant& workspace );
 
 private:
     virtual void onMediaAdded( std::vector<medialibrary::MediaPtr> media ) override;
@@ -62,6 +71,7 @@ private:
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary> m_ml;
+    bool m_initialized;
 };
 
 #endif // MEDIALIBRARY_H
