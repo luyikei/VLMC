@@ -52,7 +52,7 @@ class   SettingValue : public QObject
             Map,
             Hash,
             Color,
-            Position
+            Position,
         };
         enum    Flag
         {
@@ -64,6 +64,7 @@ class   SettingValue : public QObject
             EightMultiple   = 1 << 3, ///< Forces the value to be a multiple of 8
             NotEmpty        = 1 << 4, ///< Forces the value not to be empty (likely to be used only with Strings)
             Runtime         = 1 << 5, ///< Defines a variable that is not meant to be saved
+            Folders         = 1 << 6, ///< Specifies that a setting should only contain folders.
         };
         Q_DECLARE_FLAGS( Flags, Flag )
         /**

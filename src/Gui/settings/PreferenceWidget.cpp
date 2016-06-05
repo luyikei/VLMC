@@ -30,6 +30,7 @@
 #include "PreferenceWidget.h"
 
 #include "BoolWidget.h"
+#include "FolderListWidget.h"
 #include "DoubleWidget.h"
 #include "IntWidget.h"
 #include "KeyboardShortcut.h"
@@ -92,6 +93,12 @@ PreferenceWidget::widgetFactory( SettingValue *s )
         return new BoolWidget( s, this );
     case SettingValue::Path:
         return new PathWidget( s, this );
+    case SettingValue::List:
+    {
+        if ( s->flags().testFlag( SettingValue::Folders ))
+            return new FolderListWidget( s, this );
+        return nullptr;
+    }
     default:
         return nullptr;
     }

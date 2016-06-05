@@ -213,6 +213,7 @@ vlmc_SOURCES += \
 	src/Gui/settings/PreferenceWidget.cpp \
 	src/Gui/settings/SettingsDialog.cpp \
 	src/Gui/settings/StringWidget.cpp \
+	src/Gui/settings/FolderListWidget.cpp \
 	src/Gui/timeline/Timeline.cpp \
 	src/Gui/timeline/ThumbnailImageProvider.cpp \
 	src/Gui/widgets/ExtendedLabel.cpp \
@@ -284,6 +285,7 @@ vlmc_SOURCES += \
 	src/Gui/settings/LanguageWidget.h \
 	src/Gui/settings/Panel.h \
 	src/Gui/settings/PreferenceWidget.h \
+	src/Gui/settings/FolderListWidget.h \
 	src/Gui/import/ImportController.h \
 	src/Gui/import/TagWidget.h \
 	src/Gui/effectsengine/EffectStack.h \
@@ -350,6 +352,7 @@ nodist_vlmc_SOURCES += \
 	src/Gui/settings/PathWidget.moc.cpp \
 	src/Gui/settings/IntWidget.moc.cpp \
 	src/Gui/settings/StringWidget.moc.cpp \
+	src/Gui/settings/FolderListWidget.moc.cpp \
 	src/Gui/effectsengine/EffectsListView.moc.cpp \
 	$(NULL)
 
@@ -363,6 +366,7 @@ vlmc_UI = \
 	src/Gui/ui/TagWidget.ui \
 	src/Gui/ui/MediaCellView.ui \
 	src/Gui/ui/MediaLibraryView.ui \
+	src/Gui/ui/FolderListWidget.ui \
 	src/Gui/ui/StackViewNavController.ui \
 	src/Gui/ui/ClipMetadataDisplayer.ui \
 	src/Gui/ui/PreviewWidget.ui \
