@@ -27,7 +27,6 @@ class AutomaticBackup;
 class Library;
 class MainWorkflow;
 class MediaLibrary;
-class NotificationZone;
 class Project;
 class RecentProjects;
 class Settings;
