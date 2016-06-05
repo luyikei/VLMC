@@ -47,8 +47,8 @@ const QString   Workspace::workspacePrefix = "workspace://";
 Workspace::Workspace(Settings *settings)
     : m_copyInProgress( false )
 {
-    settings->createVar( SettingValue::String, "vlmc/Workspace", "", "", "", SettingValue::Private );
-    SettingValue* workspaceDir = settings->value( "vlmc/Workspace" );
+    SettingValue* workspaceDir = settings->createVar( SettingValue::String, "vlmc/Workspace", "",
+                                                      "", "", SettingValue::Private );
     connect(workspaceDir, SIGNAL( changed( QVariant ) ),
             this, SLOT( workspaceChanged( QVariant ) ) );
     // Wait for the SettingValue to be loaded.
