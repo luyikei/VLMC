@@ -61,6 +61,7 @@ SET(VLMC_SRCS
     Backend/IService.h
     Backend/IConsumer.h
     Backend/IProducer.h
+    Backend/ITrack.h
     Backend/IProfile.h
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
