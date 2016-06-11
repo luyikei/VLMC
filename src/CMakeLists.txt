@@ -58,6 +58,7 @@ SET(CMAKE_AUTOMOC ON)
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
+    Backend/IService.h
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
