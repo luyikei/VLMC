@@ -106,6 +106,7 @@ SET(VLMC_SRCS
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
     Tools/RendererEventWatcher.cpp
+    Tools/ConsumerEventWatcher.cpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h
