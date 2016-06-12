@@ -4,7 +4,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +24,9 @@
 
 
 #include "vlmc.h"
+#include "Backend/MLT/MLTTractor.h"
+#include "Backend/MLT/MLTTrack.h"
+#include "Renderer/AbstractRenderer.h"
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "ClipWorkflow.h"
@@ -32,6 +36,7 @@
 #include "TrackWorkflow.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
+#include "Tools/ConsumerEventWatcher.h"
 #include "Workflow/Types.h"
 
 #include <QMutex>
@@ -44,8 +49,11 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_width( 0 ),
         m_height( 0 ),
         m_trackCount( trackCount ),
-        m_settings( new Settings )
+        m_settings( new Settings ),
+        m_renderer( new AbstractRenderer ),
+        m_tractor( new Backend::MLT::MLTTractor )
 {
+    m_renderer->setProducer( m_tractor );
     m_currentFrameLock = new QReadWriteLock;
 
     for ( unsigned int i = 0; i < Workflow::NbTrackType; ++i )
@@ -55,7 +63,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     {
         Toggleable<TrackWorkflow*> track;
         m_tracks << track;
-        m_tracks[i].setPtr( new TrackWorkflow( i ) );
+        m_tracks[i].setPtr( new TrackWorkflow( i, m_tractor ) );
         connect( m_tracks[i], SIGNAL( lengthChanged( qint64 ) ),
                  this, SLOT( lengthUpdated(qint64) ) );
     }
@@ -71,6 +79,8 @@ MainWorkflow::~MainWorkflow()
     for ( auto track : m_tracks )
         delete track;
     m_tracks.clear();
+    delete m_tractor;
+    delete m_renderer;
     delete m_currentFrameLock;
     delete m_blackOutput;
     delete m_settings;
@@ -242,6 +252,12 @@ MainWorkflow::tracksEndReached()
     emit mainWorkflowEndReached();
 }
 
+AbstractRenderer*
+MainWorkflow::renderer()
+{
+    return m_renderer;
+}
+
 int
 MainWorkflow::getTrackCount() const
 {
@@ -368,7 +384,20 @@ MainWorkflow::lengthUpdated( qint64 )
 void
 MainWorkflow::rulerCursorChanged( qint64 time )
 {
+    /*
+    auto producer = track( 0 )->m_track;
+    producer->setPosition( time );
+    if( m_consumer->isConnected() == false )
+    {
+        m_consumer->connect( producer );
+        m_consumer->start();
+    }
+    else
+        producer->playPause();
 
+    if ( m_consumer->isStopped() )
+        m_consumer->start();
+        */
 }
 
 TrackWorkflow*

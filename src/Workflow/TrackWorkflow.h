@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu        <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,6 +34,14 @@
 class   Clip;
 class   Clip;
 class   ClipWorkflow;
+class   MainWorkflow;
+
+namespace   Backend
+{
+class ITrack;
+class ITractor;
+}
+
 namespace   Workflow
 {
     class   Helper;
@@ -49,7 +58,7 @@ class   TrackWorkflow : public EffectUser
     Q_OBJECT
 
     public:
-        TrackWorkflow( quint32 trackId );
+        TrackWorkflow( quint32 trackId, Backend::ITractor* tractor );
         ~TrackWorkflow();
 
         qint64                                  getLength() const;
@@ -101,9 +110,10 @@ class   TrackWorkflow : public EffectUser
         void                                    computeLength();
         void                                    adjustClipTime( qint64 currentFrame, qint64 start, Clip* cw );
 
-
     private:
-        QMap<qint64, Clip*>             m_clips;
+        Backend::ITrack*                        m_track;
+
+        QMap<qint64, Clip*>                     m_clips;
 
         /**
          *  \brief      The track length in frames.

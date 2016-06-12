@@ -24,7 +24,6 @@
 
 #include "AbstractRenderer.h"
 
-#include "Backend/MLT/MLTBackend.h"
 #include "Tools/RendererEventWatcher.h"
 #include "Backend/MLT/MLTConsumer.h"
 
@@ -72,6 +71,7 @@ AbstractRenderer::togglePlayPause()
 {
     if ( m_producer == nullptr || m_consumer.get() == nullptr )
         return;
+
     if ( m_consumer->isStopped() )
     {
         m_consumer->start();

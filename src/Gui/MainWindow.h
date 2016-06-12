@@ -38,6 +38,7 @@ class QUndoView;
 class   EffectsListView;
 class   ImportController;
 class   MediaLibrary;
+class   PreviewWidget;
 class   Project;
 class   ProjectWizard;
 class   SettingsDialog;
@@ -83,6 +84,8 @@ private:
     void        initToolbar();
     bool        saveSettings();
     void        setupLibrary();
+    void        setupClipPreview();
+    void        setupProjectPreview();
     void        setupEffectsList();
     void        setupUndoRedoWidget();
     void        retranslateUi();
@@ -129,6 +132,8 @@ private:
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
     Backend::IBackend*      m_backend;
+    PreviewWidget*          m_clipPreview;
+    PreviewWidget*          m_projectPreview;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;
@@ -140,6 +145,8 @@ private:
     QDockWidget*            m_dockedUndoView;
     QDockWidget*            m_dockedEffectsList;
     QDockWidget*            m_dockedLibrary;
+    QDockWidget*            m_dockedClipPreview;
+    QDockWidget*            m_dockedProjectPreview;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );

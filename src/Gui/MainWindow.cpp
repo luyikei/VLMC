@@ -40,6 +40,7 @@
 #include "Tools/VlmcLogger.h"
 #include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
+#include "Workflow/TrackWorkflow.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
 #include "Commands/AbstractUndoStack.h"
@@ -57,6 +58,7 @@
 #include "import/ImportController.h"
 #include "library/MediaLibrary.h"
 #include "widgets/NotificationZone.h"
+#include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
 
@@ -115,6 +117,14 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( Core::instance()->project(), &Project::cleanStateChanged,
              this, &MainWindow::cleanStateChanged );
 
+    //Connecting Library stuff:
+    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
+    Q_ASSERT( clipRenderer != nullptr );
+    connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
+             clipRenderer, SLOT( setClip( Clip* ) ) );
+    connect( m_mediaLibrary, SIGNAL( importRequired() ),
+             this, SLOT( on_actionImport_triggered() ) );
+
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
         return ;
@@ -148,6 +158,8 @@ MainWindow::retranslateUi()
     m_dockedUndoView->setWindowTitle( tr( "History" ) );
     m_dockedEffectsList->setWindowTitle( tr( "Effects List" ) );
     m_dockedLibrary->setWindowTitle( tr( "Media Library" ) );
+    m_dockedClipPreview->setWindowTitle( tr( "Clip Preview" ) );
+    m_dockedProjectPreview->setWindowTitle( tr( "Project Preview" ) );
 }
 
 void
@@ -419,6 +431,8 @@ MainWindow::initializeDockWidgets()
 
     setupLibrary();
     setupEffectsList();
+    setupClipPreview();
+    setupProjectPreview();
     setupUndoRedoWidget();
 }
 
@@ -450,6 +464,32 @@ MainWindow::setupLibrary()
 {
     m_mediaLibrary = new MediaLibrary;
     m_dockedLibrary = dockWidget( m_mediaLibrary, Qt::TopDockWidgetArea );
+}
+
+void
+MainWindow::setupClipPreview()
+{
+    m_clipPreview = new PreviewWidget;
+    auto renderer = new ClipRenderer;
+    renderer->setParent( m_clipPreview );
+    m_clipPreview->setRenderer( renderer );
+    connect( Core::instance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
+             renderer, SLOT( clipUnloaded( const QUuid& ) ) );
+
+    KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
+    connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
+    m_dockedClipPreview = dockWidget( m_clipPreview, Qt::TopDockWidgetArea );
+}
+
+void
+MainWindow::setupProjectPreview()
+{
+    m_projectPreview = new PreviewWidget;
+    m_projectPreview->setClipEdition( false );
+    m_projectPreview->setRenderer( Core::instance()->workflow()->renderer() );
+    KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
+    connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
+    m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
 }
 
 void

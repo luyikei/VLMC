@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,6 +30,8 @@
 #include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Backend/VLC/VLCSource.h"
+#include "Backend/MLT/MLTTrack.h"
+#include "Backend/MLT/MLTTractor.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
@@ -41,12 +44,15 @@
 #include <QReadLocker>
 #include <QMutex>
 
-TrackWorkflow::TrackWorkflow( quint32 trackId  ) :
+TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
         m_length( 0 ),
         m_trackId( trackId )
 {
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
+
+    m_track = new Backend::MLT::MLTTrack;
+    tractor->setTrack( *m_track, trackId );
 
     for ( int i = 0; i < Workflow::NbTrackType; ++i )
         m_lastFrame[i] = 0;
@@ -61,6 +67,7 @@ TrackWorkflow::TrackWorkflow( quint32 trackId  ) :
 
 TrackWorkflow::~TrackWorkflow()
 {
+    delete m_track;
     delete m_mixerBuffer;
     delete m_clipsLock;
 }
@@ -68,7 +75,12 @@ TrackWorkflow::~TrackWorkflow()
 void
 TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
-    m_clips.insertMulti( start, clip );
+    // Avoid adding an audio track of a video for now since a video track will be enough for MLT.
+    if ( !( clip->media()->producer()->hasVideo() && clip->formats().testFlag( Clip::Audio ) ) )
+    {
+        m_track->insertAt( *clip->producer(), start );
+        m_clips.insert( start, clip );
+    }
     computeLength();
 }
 
@@ -173,8 +185,14 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         if ( it.value()->uuid() == id )
         {
             auto clip = it.value();
+
+            auto producer = m_track->clipAt( it.key() );
+            m_track->remove( m_track->clipIndexAt( it.key() ) );
+            m_track->insertAt( *producer, startingFrame );
+            delete producer;
+
             m_clips.erase( it );
-            m_clips.insertMulti( startingFrame, clip );
+            m_clips.insert( startingFrame, clip );
             computeLength();
             emit clipMoved( this, clip->uuid(), startingFrame );
             return ;
@@ -219,6 +237,7 @@ TrackWorkflow::removeClip( const QUuid& id )
         if ( it.value()->uuid() == id )
         {
             auto    clip = it.value();
+            m_track->remove( m_track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
             computeLength();
             clip->disconnect( this );

@@ -31,6 +31,7 @@
 #include "TracksRuler.h"
 #include "Workflow/MainWorkflow.h"
 #include "Tools/VlmcDebug.h"
+#include "Renderer/AbstractRenderer.h"
 
 #include <QHBoxLayout>
 #include <QScrollBar>
@@ -127,23 +128,23 @@ Timeline::initialize()
     connect( m_tracksView, SIGNAL( audioTrackRemoved() ),
              m_tracksControls, SLOT( removeAudioTrack() ) );
 
+    auto renderer = Core::instance()->workflow()->renderer();
+
     // Cursor position updates
-    /* TODO
-    connect( m_tracksView->tracksCursor(), SIGNAL( cursorPositionChanged( qint64 ) ),
-             m_renderer, SLOT( timelineCursorChanged(qint64) ) );
-             */
+    connect( m_tracksView->tracksCursor(), &GraphicsCursorItem::cursorPositionChanged,
+             renderer, &AbstractRenderer::setPosition );
 
     m_tracksView->createLayout();
 
+
     // Frames updates
-    /* TODO
-    connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
-             m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
+    connect( renderer, &AbstractRenderer::frameChanged,
+             m_tracksView->tracksCursor(), &GraphicsCursorItem::frameChanged,
              Qt::QueuedConnection );
-    connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_tracksRuler, SLOT( update() ) ); */
-    connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_mainWorkflow, SLOT( rulerCursorChanged(qint64)) );
+    connect( renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
+             m_tracksRuler, SLOT( update() ) );
+    connect( m_tracksRuler, &TracksRuler::frameChanged,
+             renderer, &AbstractRenderer::setPosition );
 }
 
 void

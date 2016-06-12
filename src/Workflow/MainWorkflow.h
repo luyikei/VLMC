@@ -4,7 +4,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,6 +37,13 @@ class   Effect;
 class   ProjectManager;
 class   TrackHandler;
 class   TrackWorkflow;
+class   AbstractRenderer;
+
+namespace Backend
+{
+class ITractor;
+}
+
 namespace   Workflow
 {
     class   Frame;
@@ -259,6 +267,8 @@ class   MainWorkflow : public QObject
          */
         void                    deleteClip( const QUuid& uuid );
 
+        AbstractRenderer*       renderer();
+
     private:
         /**
          *  \brief  Compute the length of the workflow.
@@ -314,6 +324,9 @@ class   MainWorkflow : public QObject
         bool                            m_endReached;
 
         Settings*                       m_settings;
+
+        AbstractRenderer*               m_renderer;
+        Backend::ITractor*              m_tractor;
 
     private slots:
         /**
