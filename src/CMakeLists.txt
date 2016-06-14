@@ -65,6 +65,7 @@ SET(VLMC_SRCS
     Backend/IProfile.h
     Backend/ITractor.h
     Backend/ITransition.h
+    Backend/IFilter.h
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
