@@ -138,7 +138,7 @@ ImportController::clipSelection( Clip* clip )
         if ( m_currentUuid == uuid )
             return ;
         m_ui->metadataContainer->setWatchedClip( clip );
-        //TODO m_clipRenderer->stop();
+        m_clipRenderer->stop();
         m_currentUuid = uuid;
     //    m_tag->clipSelected( clip );
     }
@@ -214,11 +214,11 @@ ImportController::treeViewDoubleClicked( const QModelIndex& index )
 void
 ImportController::reject()
 {
-    //TODO m_clipRenderer->stop();
+    m_clipRenderer->stop();
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
-    //TODO m_clipRenderer->setClip( nullptr );
+    m_clipRenderer->setClip( nullptr );
     done( Rejected );
 }
 
@@ -228,7 +228,7 @@ ImportController::accept()
     bool    invalidMedias = false;
 
     m_mediaListView->clear();
-    //TODO m_clipRenderer->stop();
+    m_clipRenderer->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
@@ -239,7 +239,7 @@ ImportController::accept()
     if ( invalidMedias == true )
         handleInvalidMedias();
     m_temporaryMedias->removeAll();
-    //TODO m_clipRenderer->setClip( nullptr );
+    m_clipRenderer->setClip( nullptr );
     done( Accepted );
 }
 
