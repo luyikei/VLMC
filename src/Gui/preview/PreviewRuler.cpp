@@ -49,6 +49,7 @@ PreviewRuler::setRenderer( AbstractRenderer* renderer )
              this, &PreviewRuler::updateTimecode );
     connect( m_renderer->eventWatcher(), SIGNAL( stopped() ),
              this, SLOT( clear() ) );
+    connect( m_renderer, SIGNAL( lengthChanged(qint64) ), this, SLOT( update() ) );
 }
 
 void
