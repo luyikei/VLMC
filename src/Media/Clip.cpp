@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ *          Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,54 +27,49 @@
 
 #include "Clip.h"
 #include "Main/Core.h"
-#include "Backend/VLC/VLCSource.h"
+#include "Backend/MLT/MLTProducer.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Project/Workspace.h"
+#include "EffectsEngine/EffectHelper.h"
 #include <QVariant>
 
-const int   Clip::DefaultFPS = 30;
-
-Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString& uuid /*= QString()*/ ) :
+Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IProducer::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
         Workflow::Helper( begin, end, uuid ),
         m_media( media ),
+        m_producer( m_media->producer()->cut( begin, end ) ),
         m_parent( media->baseClip() ),
         m_clipWorkflow( nullptr )
 {
-    int64_t nbSourceFrames = media->source()->nbFrames();
-    if ( end == -1 )
-        m_end = nbSourceFrames;
-    m_beginPosition = (float)begin / (float)nbSourceFrames;
-    m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
-    computeLength();
-    connect( media, &Media::metaDataComputed,
-             this, &Clip::mediaMetadataUpdated );
 }
 
-Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -1*/,
+Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
             const QString &uuid /*= QString()*/ ) :
         Workflow::Helper( begin, end, uuid ),
         m_media( parent->media() ),
         m_rootClip( parent->rootClip() ),
         m_parent( parent )
 {
-    int64_t nbSourceFrames = parent->media()->source()->nbFrames();
-    if ( begin < 0 )
-        m_begin = parent->m_begin;
-    if ( end < 0 )
-        m_end = parent->m_end;
-    m_beginPosition = (float)begin / (float)nbSourceFrames;
-    m_endPosition = (float)end / (float)nbSourceFrames;
     m_childs = new MediaContainer( this );
-    computeLength();
+    if ( begin == -1 )
+        begin = parent->begin();
+    else
+        begin = parent->begin() + begin;
+
+    if ( end == Backend::IProducer::EndOfParent )
+        end = parent->end();
+    else
+        end = parent->begin() + end;
+    m_producer = parent->producer()->cut( begin, end );
 }
 
 Clip::~Clip()
 {
     emit unloaded( this );
     delete m_childs;
+    delete m_producer;
     if ( isRootClip() == true )
         delete m_media;
 }
@@ -93,15 +89,7 @@ Clip::media() const
 qint64
 Clip::lengthSecond() const
 {
-    return m_lengthSeconds;
-}
-
-void
-Clip::computeLength()
-{
-    int64_t sourceLengthSeconds = m_media->source()->length() / 1000;
-    m_nbFrames = m_end - m_begin;
-    m_lengthSeconds = qRound64( ( m_endPosition - m_beginPosition ) * sourceLengthSeconds );
+    return qRound64( m_producer->playableLength() / m_producer->fps() );
 }
 
 const QStringList&
@@ -155,6 +143,42 @@ void
 Clip::setUuid( const QUuid &uuid )
 {
     m_uuid = uuid;
+}
+
+qint64
+Clip::begin() const
+{
+    return m_producer->begin();
+}
+
+qint64
+Clip::end() const
+{
+    return m_producer->end();
+}
+
+void
+Clip::setBegin( qint64 begin )
+{
+    m_producer->setBegin( begin );
+}
+
+void
+Clip::setEnd( qint64 end )
+{
+    m_producer->setEnd( end );
+}
+
+qint64
+Clip::length() const
+{
+    return m_producer->playableLength();
+}
+
+void
+Clip::setBoundaries( qint64 begin, qint64 end )
+{
+    m_producer->setBoundaries( begin, end );
 }
 
 Clip*
@@ -234,8 +258,8 @@ Clip::toVariant() const
     else
     {
         h.insert( "parent", m_parent->uuid().toString() );
-        h.insert( "begin", m_begin );
-        h.insert( "end", m_end );
+        h.insert( "begin", begin() );
+        h.insert( "end", end() );
     }
     return QVariant( h );
 
@@ -269,28 +293,14 @@ Clip::setFormats( Formats formats )
     m_formats = formats;
 }
 
-ClipWorkflow*
-Clip::clipWorkflow() const
+Backend::IProducer*
+Clip::producer()
 {
-    return m_clipWorkflow;
-}
-
-void
-Clip::setClipWorkflow( ClipWorkflow *cw )
-{
-    m_clipWorkflow = cw;
+    return m_producer;
 }
 
 void
 Clip::mediaMetadataUpdated()
 {
-    Q_ASSERT ( isRootClip() == true );
-    if ( m_end == 0 )
-    {
-        m_begin = 0;
-        m_end = m_media->source()->nbFrames();
-        m_beginPosition = 0.0f;
-        m_endPosition = 1.0f;
-        computeLength();
-    }
 }
+

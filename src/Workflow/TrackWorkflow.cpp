@@ -288,7 +288,7 @@ TrackWorkflow::clear()
 void
 TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, Clip* c )
 {
-    float fps = c->media()->source()->fps();
+    float fps = c->media()->producer()->fps();
     qint64  nbMs = ( currentFrame - start ) / fps * 1000;
     qint64  beginInMs = c->begin() / fps * 1000;
     qint64  startFrame = beginInMs + nbMs;

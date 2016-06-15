@@ -30,7 +30,6 @@
 #include "Library.h"
 #include "Media/Clip.h"
 #include "Media/Media.h"
-#include "Metadata/MetaDataManager.h"
 #include "Project/Project.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"

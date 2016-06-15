@@ -36,7 +36,7 @@
 GraphicsMovieItem::GraphicsMovieItem( Clip* clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    QTime length = QTime().addMSecs( clip->media()->source()->length() );
+    QTime length = QTime().addMSecs( clip->media()->producer()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( clip->media()->fileName() )

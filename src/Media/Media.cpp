@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ *          Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,9 +34,9 @@
 #include "Clip.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
-#include "Metadata/MetaDataManager.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
+#include "Backend/MLT/MLTProducer.h"
 #include "Backend/VLC/VLCSource.h"
 #include "Backend/VLC/VLCBackend.h"
 
@@ -60,7 +61,7 @@ QPixmap*        Media::defaultSnapshot = nullptr;
 #endif
 
 Media::Media(const QString &path )
-    : m_source( nullptr )
+    : m_producer( nullptr )
     , m_fileInfo( nullptr )
     , m_baseClip( nullptr )
 #ifdef WITH_GUI
@@ -72,7 +73,7 @@ Media::Media(const QString &path )
 
 Media::~Media()
 {
-    delete m_source;
+    delete m_producer;
     delete m_fileInfo;
 }
 
@@ -105,18 +106,6 @@ Media::fileName() const
     return m_fileName;
 }
 
-Backend::VLC::VLCSource*
-Media::source()
-{
-    return m_source;
-}
-
-const Backend::VLC::VLCSource*
-Media::source() const
-{
-    return m_source;
-}
-
 void
 Media::setBaseClip( Clip *clip )
 {
@@ -124,40 +113,22 @@ Media::setBaseClip( Clip *clip )
     m_baseClip = clip;
 }
 
-void
-Media::onMetaDataComputed()
-{
-    emit metaDataComputed();
-    if ( m_source->hasVideo() == true )
-    {
-        const QString filter = "*." + m_fileInfo->suffix().toLower();
-        if ( Media::ImageExtensions.contains( filter ) )
-            m_fileType = Image;
-        else
-            m_fileType = Video;
-#ifdef WITH_GUI
-        if ( m_source->snapshot() != nullptr )
-        {
-            Q_ASSERT( m_snapshotImage == nullptr );
-            m_snapshotImage = new QImage( m_source->snapshot(), 320, 180, QImage::Format_RGB32 );
-            emit snapshotAvailable();
-        }
-#endif
-    }
-    else if ( m_source->hasAudio() )
-        m_fileType = Audio;
-    else
-    {
-        // We expect this case to be handled by the metadata manager. It should
-        // trigger an error for this kind of file since we can't use them.
-        vlmcFatal("Got metadata for a file which has no video nor audio.");
-    }
-}
-
 QVariant
 Media::toVariant() const
 {
     return QVariant( m_fileInfo->absoluteFilePath() );
+}
+
+Backend::IProducer*
+Media::producer()
+{
+    return m_producer;
+}
+
+const Backend::IProducer*
+Media::producer() const
+{
+    return m_producer;
 }
 
 void
@@ -169,29 +140,15 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
 
-    auto backend = Backend::getVLCBackend();
-    delete m_source;
-    m_source = backend->createSource( qPrintable( filePath ) );
-    MetaDataManager::instance()->computeMediaMetadata( this );
+    delete m_producer;
+    m_producer = new Backend::MLT::MLTProducer( qPrintable( filePath ) );
 }
 
 #ifdef WITH_GUI
 QPixmap&
 Media::snapshot()
 {
-    if ( m_snapshot.isNull() == false )
-        return m_snapshot;
-
-    if ( m_snapshotImage != nullptr )
-    {
-        m_snapshot = QPixmap::fromImage( *m_snapshotImage );
-        delete m_snapshotImage;
-
-        if ( m_snapshot.isNull() == false )
-            return m_snapshot;
-    }
-    if ( Media::defaultSnapshot == nullptr )
-        Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
+    Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
     return *Media::defaultSnapshot;
 }
 #endif

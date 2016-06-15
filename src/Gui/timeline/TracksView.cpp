@@ -376,8 +376,8 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
     Clip *clip = Core::instance()->library()->clip( fullId );
     if ( clip == nullptr )
         return;
-    bool hasVideo = clip->media()->source()->hasVideo();
-    bool hasAudio = clip->media()->source()->hasAudio();
+    bool hasVideo = clip->media()->producer()->hasVideo();
+    bool hasAudio = clip->media()->producer()->hasAudio();
     if ( hasAudio == false && hasVideo == false )
         return ;
 

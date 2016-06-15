@@ -92,7 +92,6 @@ SET(VLMC_SRCS
     Main/main.cpp
     Media/Clip.cpp
     Media/Media.cpp
-    Metadata/MetaDataManager.cpp
     Project/Project.cpp
     Project/Workspace.cpp
     Project/WorkspaceWorker.cpp
@@ -220,7 +219,6 @@ ELSE(NOT WITH_GUI)
         Gui/wizard/firstlaunch/FirstLaunchPage.cpp
         Gui/wizard/firstlaunch/WorkspaceLocation.cpp
         Gui/wizard/firstlaunch/Done.cpp
-        Media/Transcoder.cpp #Won't be needed without the import, so let's put it in GUI list
         )
 
     SET(VLMC_UIS

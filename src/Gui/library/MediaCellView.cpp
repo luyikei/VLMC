@@ -31,7 +31,6 @@
 #include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
-#include "Metadata/MetaDataManager.h"
 #include "Workflow/MainWorkflow.h"
 #include "Project/Workspace.h"
 
@@ -65,12 +64,6 @@ MediaCellView::MediaCellView( Clip* clip, QWidget *parent ) :
         m_ui->clipCountLabel->hide();
         m_ui->arrow->hide();
     }
-    if ( clip->media()->source()->isParsed() == false )
-    {
-        m_ui->thumbnail->setEnabled( false );
-        connect( MetaDataManager::instance(), SIGNAL( startingComputing( const Media* )),
-                 this, SLOT( metadataComputingStarted( const Media* ) ), Qt::DirectConnection );
-    }
     connect( clip->media(), SIGNAL( metaDataComputed() ),
              this, SLOT( metadataUpdated() ) );
     // Snapshot generation will generate a QPixmap, which has to be done on GUI thread
@@ -94,15 +87,12 @@ MediaCellView::metadataComputingStarted( const Media *media )
         return ;
     //Disable the delete button to avoid deleting the media while metadata are computed.
     m_ui->delLabel->setEnabled( false );
-    //We don't need this event anymore now.
-    disconnect( MetaDataManager::instance(), SIGNAL( startingComputing( const Media* )),
-             this, SLOT( metadataComputingStarted( const Media* ) ) );
 }
 
 void
 MediaCellView::metadataUpdated()
 {
-    setLength( m_clip->media()->source()->length() );
+    setLength( m_clip->media()->producer()->length() );
     m_ui->thumbnail->setEnabled( true );
     //If the media is a Video or an Image, we must wait for the snapshot to be computer
     //before allowing deletion.

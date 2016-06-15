@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ *          Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,6 +43,7 @@
 
 namespace Backend
 {
+class   IProducer;
 namespace VLC
 {
     class   VLCSource;
@@ -78,8 +80,6 @@ public:
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
-    Backend::VLC::VLCSource *source();
-    const Backend::VLC::VLCSource *source() const;
     /**
      *  \brief                  Set this media's path.
      *
@@ -102,12 +102,15 @@ public:
 
     QVariant                    toVariant() const;
 
+    Backend::IProducer*         producer();
+    const Backend::IProducer*   producer() const;
+
 #ifdef WITH_GUI
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 #endif
 protected:
-    Backend::VLC::VLCSource*    m_source;
+    Backend::IProducer*         m_producer;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
     FileType                    m_fileType;

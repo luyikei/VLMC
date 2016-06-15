@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,14 +42,8 @@ public:
 
     virtual void            togglePlayPause();
     virtual void            stop();
-    virtual void            setVolume( int volume );
-    virtual int             getVolume() const;
-    virtual void            nextFrame();
-    virtual void            previousFrame();
     virtual qint64          length() const;
     virtual qint64          getLengthMs() const;
-    virtual qint64          getCurrentFrame() const;
-    virtual float           getFps() const;
     virtual Clip            *getClip();
 
 private:
@@ -57,8 +52,6 @@ private:
 private:
     bool                    m_clipLoaded;
     Clip*                   m_selectedClip;
-    qint64                  m_begin;
-    qint64                  m_end;
     /**
      *  \brief  This flags is used to know if a new media has been selected in the
      * library. If so, we must relaunch the render if the play button is clicked again.
@@ -72,7 +65,6 @@ public slots:
      */
     void                    setClip( Clip* clip );
     void                    clipUnloaded( const QUuid& uuid );
-    virtual void            previewWidgetCursorChanged( qint64 newFrame );
     void                    updateInfos( Clip* clip );
 
     /**
@@ -83,10 +75,8 @@ public slots:
      *  \warning    The frame number computed may be unaccurate.
      *  \sa         frameChanged();
      */
-    void                    timeChanged( qint64 time );
+    void                    positionChanged( qint64 time );
     void                    videoStopped();
-    void                    videoPaused();
-    void                    videoPlaying();
 };
 
 #endif // CLIPRENDERER_H

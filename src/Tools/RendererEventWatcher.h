@@ -1,5 +1,6 @@
 /*****************************************************************************
- * RendererEventWatcher.h: Watches events from a IConsumer and convert them to SIGNAL
+ * RendererEventWatcher.h: Watches events from a IConsumer and IProducer
+ *                         and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -24,35 +25,33 @@
 #define RENDEREREVENTWATCHER_H
 
 #include <QObject>
-#include "Backend/VLC/VLCSourceRenderer.h"
 
-class RendererEventWatcher : public QObject, public Backend::ISourceRendererEventCb
+#include "Backend/IConsumer.h"
+#include "Backend/IProducer.h"
+
+class RendererEventWatcher : public QObject, public Backend::IConsumerEventCb, public Backend::IProducerEventCb
 {
     Q_OBJECT
 public:
     explicit RendererEventWatcher(QObject *parent = 0);
 
 private:
-    virtual void    onTimeChanged( int64_t );
     virtual void    onPlaying();
     virtual void    onPaused();
     virtual void    onStopped();
     virtual void    onEndReached();
     virtual void    onVolumeChanged();
-    virtual void    onPositionChanged( float );
+    virtual void    onPositionChanged( int64_t );
     virtual void    onLengthChanged( int64_t );
-    virtual void    onErrorEncountered();
 
 signals:
-    void            timeChanged( qint64 );
     void            playing();
     void            paused();
     void            stopped();
     void            endReached();
     void            volumeChanged();
-    void            positionChanged( float );
+    void            positionChanged( qint64 );
     void            lengthChanged( qint64 );
-    void            errorEncountered();
 };
 
 #endif // RENDEREREVENTWATCHER_H

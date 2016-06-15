@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,12 +29,18 @@
 #include <QObject>
 
 #include "Workflow/Types.h"
-#include "Tools/RendererEventWatcher.h"
-#include "Backend/VLC/VLCSourceRenderer.h"
-#include "Backend/IRenderTarget.h"
+#include "Backend/IConsumer.h"
 
 class   Clip;
 class   Media;
+
+class RendererEventWatcher;
+
+namespace Backend
+{
+class IConsumer;
+class IProducer;
+}
 
 /**
  *  \class  Common base for every renderer.
@@ -43,10 +50,8 @@ class   AbstractRenderer : public QObject
     Q_OBJECT
     Q_DISABLE_COPY( AbstractRenderer )
 
-protected:
-    explicit AbstractRenderer();
-
 public:
+    explicit AbstractRenderer();
     virtual ~AbstractRenderer();
 
     /**
@@ -54,7 +59,7 @@ public:
      *  \param  volume the volume (int)
      *  \sa     getVolume()
      */
-    virtual void        setVolume( int volume ) = 0;
+    virtual void        setVolume( int volume );
 
     /**
      *  \brief          Play or pause the media.
@@ -68,51 +73,53 @@ public:
      *  \param  forcePause  Will force the pause if true.
      *  \sa     stop()
      */
-    virtual void        togglePlayPause() = 0;
+    virtual void        togglePlayPause();
 
     /**
      *  \brief Render the next frame
      *  \sa     previousFrame()
      */
-    virtual void                    nextFrame() = 0;
+    virtual void                    nextFrame();
 
     /**
      *  \brief  Render the previous frame
      *  \sa     nextFrame();
      */
-    virtual void                    previousFrame() = 0;
+    virtual void                    previousFrame();
 
     /**
      *  \brief Stop the renderer.
      *  \sa togglePlayPause( bool );
      */
-    virtual void                    stop() = 0;
+    virtual void                    stop();
+
+    virtual void                    setPosition( qint64 pos );
 
     /**
      *  \brief   Return the volume
      *  \return  The Return the volume the audio level (int)
      *  \sa     setVolume( int )
      */
-    virtual int                     getVolume() const = 0;
+    virtual int                     getVolume() const;
 
     /**
      * \brief   Return the length in milliseconds
      * \return  The length of the underlying rendered target in milliseconds
      *  \sa     getLength()
      */
-    virtual qint64                  getLengthMs() const = 0;
+    virtual qint64                  getLengthMs() const;
 
     /**
      *  \brief  Return the current frame number
      *  \return The current frame
      */
-    virtual qint64                  getCurrentFrame() const = 0;
+    virtual qint64                  getCurrentFrame() const;
 
     /**
      *  \brief Return the number of frames per second
      *  \return     The current fps
      */
-    virtual float                   getFps() const = 0;
+    virtual float                   getFps() const;
 
     /**
      *  \brief      Return the length in frames
@@ -121,13 +128,13 @@ public:
      *  \return     The length that has to be rendered in frames
      *  \sa         getLengthMs()
      */
-    virtual qint64                  length() const = 0;
+    virtual qint64                  length() const;
 
     /**
      *  \brief  Return true if the renderer is paused
      *  \return true if the renderer is paused. false otherwise.
      */
-    bool                            isPaused() const;
+    virtual bool                    isPaused() const;
 
     /**
      *  \brief      Return true if the renderer is currently rendering.
@@ -135,26 +142,18 @@ public:
      *              Note that a paused renderer is still rendering
      *  \sa         isPaused()
      */
-    bool                            isRendering() const;
+    virtual bool                    isRendering() const;
 
-    void                            setRenderTarget(  std::unique_ptr<Backend::IRenderTarget> target );
+    virtual void                    setProducer( Backend::IProducer* producer );
+    virtual void                    setConsumer( std::unique_ptr<Backend::IConsumer> consuemr );
 
     RendererEventWatcher*           eventWatcher();
 protected:
-    Backend::VLC::VLCSourceRenderer*       m_sourceRenderer;
-    RendererEventWatcher*           m_eventWatcher;
+    std::unique_ptr<Backend::IConsumer>             m_consumer;
 
-    /**
-     *  \brief  This flag allows us to know if the render is paused
-     *          or not, without using libvlc, especially for the render preview.
-     *  If the video is stopped, then this flag will be equal to false
-     *  \warning    This is not thread safe.
-     *  \sa         isPaused()
-     */
-    bool                            m_paused;
-    bool                            m_isRendering;
+    Backend::IProducer*                             m_producer;
+    RendererEventWatcher*                           m_eventWatcher;
 
-    std::unique_ptr<Backend::IRenderTarget>         m_renderTarget;
 
 public slots:
     /**
@@ -163,12 +162,13 @@ public slots:
      *  This mainly means that the current rendered frame should change.
      *  \param      newFrame    The new frame to render from.
      */
-    virtual void                    previewWidgetCursorChanged( qint64 newFrame ) = 0;
+    virtual void                    previewWidgetCursorChanged( qint64 newFrame );
 
 
 signals:
     void                            frameChanged( qint64 newFrame,
                                                 Vlmc::FrameChangedReason reason );
+    void                            lengthChanged( qint64 length ); // In frames
 };
 
 #endif // ABSTRACTRENDERER_H

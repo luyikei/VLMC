@@ -4,6 +4,7 @@
  * Copyright (C) 2008-2016 VideoLAN
  *
  * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ *          Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,6 +33,7 @@
 #include <QStringList>
 #include <QUuid>
 #include <QXmlStreamWriter>
+#include "Backend/IProducer.h"
 
 class   MediaContainer;
 class   Media;
@@ -60,7 +62,7 @@ class   Clip : public Workflow::Helper
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( Media *parent, qint64 begin = 0, qint64 end = -1, const QString &uuid = QString() );
+        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IProducer::EndOfMedia, const QString &uuid = QString() );
         /**
          *  \brief  Clones a Clip, potentially with a new begin and end.
          *
@@ -70,7 +72,7 @@ class   Clip : public Workflow::Helper
          *  \param  end     The end, in frames, from the parent's beginning. If not given,
          *                  the end of the parent will be used.
          */
-        Clip( Clip *creator, qint64 begin = -1, qint64 end = -1, const QString& uuid = QString() );
+        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IProducer::EndOfParent, const QString& uuid = QString() );
         virtual ~Clip();
 
         /**
@@ -98,14 +100,19 @@ class   Clip : public Workflow::Helper
         const QUuid         &uuid() const;
         void                setUuid( const QUuid &uuid );
 
+        virtual qint64      begin() const override;
+        virtual qint64      end() const override;
+        virtual void        setBegin( qint64 begin ) override;
+        virtual void        setEnd( qint64 end ) override;
+        virtual qint64      length() const override;
+        virtual void        setBoundaries( qint64 begin, qint64 end ) override;
+
         const QStringList   &metaTags() const;
         void                setMetaTags( const QStringList &tags );
         bool                matchMetaTag( const QString &tag ) const;
 
         const QString       &notes() const;
         void                setNotes( const QString &notes );
-
-        void                computeLength();
 
         bool                isRootClip() const;
         Clip*               rootClip();
@@ -128,30 +135,11 @@ class   Clip : public Workflow::Helper
         Formats             formats() const;
         void                setFormats( Formats formats );
 
-        ClipWorkflow*       clipWorkflow() const;
-        void                setClipWorkflow( ClipWorkflow* cw );
+        Backend::IProducer* producer();
 
     private:
-        Media               *m_media;
-        /**
-         *  \brief  This represents the beginning of the Clip in form of [0; 1] float
-         */
-        float              m_beginPosition;
-        /**
-         *  \brief  This represents the end of the Clip in form of [0;1] float
-         */
-        float              m_endPosition;
-
-        /**
-         *  \brief  The length in frames
-         *     
-         */
-        qint64              m_nbFrames;
-
-        /**
-         *  \brief  The length in seconds (Be carreful, VLC uses MILLIseconds)
-         */
-        qint64              m_lengthSeconds;
+        Media*              m_media;
+        Backend::IProducer* m_producer;
 
         QStringList         m_metaTags;
         QString             m_notes;

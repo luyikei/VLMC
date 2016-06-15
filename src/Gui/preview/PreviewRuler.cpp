@@ -25,6 +25,7 @@
 #include <QPolygon>
 #include <QBrush>
 #include "PreviewRuler.h"
+#include "Tools/RendererEventWatcher.h"
 
 PreviewRuler::PreviewRuler( QWidget* parent ) :
         QWidget( parent ),
@@ -44,8 +45,8 @@ PreviewRuler::setRenderer( AbstractRenderer* renderer )
         m_renderer->disconnect( this );
     m_renderer = renderer;
 
-    connect( m_renderer, SIGNAL( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
-             this, SLOT( updateTimecode( qint64 ) ) );
+    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged,
+             this, &PreviewRuler::updateTimecode );
     connect( m_renderer->eventWatcher(), SIGNAL( stopped() ),
              this, SLOT( clear() ) );
 }

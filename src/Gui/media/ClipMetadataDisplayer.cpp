@@ -47,20 +47,20 @@ ClipMetadataDisplayer::metadataUpdated()
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
-    const auto* source = m_watchedMedia->source();
+    const auto* producer = m_watchedMedia->producer();
     updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
     m_ui->nameValueLabel->setText( m_watchedMedia->fileInfo()->fileName() );
     //Resolution
-    m_ui->resolutionValueLabel->setText( QString::number( source->width() )
-                                       + " x " + QString::number( source->height() ) );
+    m_ui->resolutionValueLabel->setText( QString::number( producer->width() )
+                                       + " x " + QString::number( producer->height() ) );
     //FPS
-    m_ui->fpsValueLabel->setText( QString::number( source->fps() ) );
+    m_ui->fpsValueLabel->setText( QString::number( producer->fps() ) );
     //nb tracks :
-    m_ui->nbVideoTracksValueLabel->setText( QString::number( source->nbVideoTracks() ) );
-    m_ui->nbAudioTracksValueLabel->setText( QString::number( source->nbAudioTracks() ) );
+    m_ui->nbVideoTracksValueLabel->setText( QString::number( producer->nbVideoTracks() ) );
+    m_ui->nbAudioTracksValueLabel->setText( QString::number( producer->nbAudioTracks() ) );
     //Path:
     m_ui->pathValueLabel->setText( m_watchedMedia->fileInfo()->absoluteFilePath() );
 }
@@ -100,19 +100,13 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
     m_watchedClip = clip;
     m_watchedMedia = clip->media();
     connect( m_watchedClip, SIGNAL( unloaded( Clip* ) ), this, SLOT( clipDestroyed( Clip* ) ) );
-    if ( m_watchedMedia->source()->isParsed() == true )
-        metadataUpdated();
-    else
-    {
-        connect( m_watchedMedia, SIGNAL( metaDataComputed() ),
-                 this, SLOT( metadataUpdated() ) );
-    }
+    metadataUpdated();
 }
 
 void
 ClipMetadataDisplayer::updateInterface()
 {
-    bool visible = m_watchedMedia->source()->hasVideo();
+    bool visible = m_watchedMedia->producer()->hasVideo();
     m_ui->fpsLabel->setVisible( visible );
     m_ui->fpsValueLabel->setVisible( visible );
     m_ui->resolutionLabel->setVisible( visible );

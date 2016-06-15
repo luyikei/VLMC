@@ -25,6 +25,7 @@
 
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
+#include "Backend/MLT/MLTConsumer.h"
 #include "PreviewWidget.h"
 #include "PreviewRuler.h"
 #include "RenderWidget.h"
@@ -64,13 +65,16 @@ PreviewWidget::~PreviewWidget()
 }
 
 void
-PreviewWidget::setRenderer(AbstractRenderer *renderer)
+PreviewWidget::setRenderer( AbstractRenderer* renderer )
 {
     delete m_renderer;
     m_renderer = renderer;
 
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
+    auto consumer = new Backend::MLT::MLTSdlConsumer;
+    consumer->setWindowId( m_ui->renderWidget->id() );
+    m_renderer->setConsumer( std::unique_ptr<Backend::IConsumer>( consumer ) );
 
 #if defined ( Q_OS_MAC )
     /* Releases the NSView in the RenderWidget*/

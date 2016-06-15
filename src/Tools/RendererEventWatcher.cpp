@@ -1,5 +1,6 @@
 /*****************************************************************************
- * RendererEventWatcher.cpp: Watches events from a IConsumer and convert them to SIGNAL
+ * RendererEventWatcher.cpp: Watches events from a IConsumer and IProducer
+ *                           and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -25,12 +26,6 @@
 RendererEventWatcher::RendererEventWatcher(QObject *parent) :
     QObject(parent)
 {
-}
-
-void
-RendererEventWatcher::onTimeChanged(int64_t time )
-{
-    emit timeChanged( time );
 }
 
 void
@@ -64,19 +59,13 @@ RendererEventWatcher::onVolumeChanged()
 }
 
 void
-RendererEventWatcher::onPositionChanged( float pos )
+RendererEventWatcher::onPositionChanged( int64_t pos )
 {
     emit positionChanged( pos );
 }
 
 void
-RendererEventWatcher::onLengthChanged(int64_t length )
+RendererEventWatcher::onLengthChanged( int64_t length )
 {
     emit lengthChanged( length );
-}
-
-void
-RendererEventWatcher::onErrorEncountered()
-{
-    emit errorEncountered();
 }
