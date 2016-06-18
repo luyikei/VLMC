@@ -24,9 +24,13 @@
 
 
 #include "vlmc.h"
+#include "Backend/MLT/MLTConsumer.h"
 #include "Backend/MLT/MLTTractor.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Renderer/AbstractRenderer.h"
+#ifdef WITH_GUI
+#include "Gui/WorkflowFileRendererDialog.h"
+#endif
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Library/Library.h"
@@ -36,6 +40,7 @@
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/RendererEventWatcher.h"
+#include "Tools/ConsumerEventWatcher.h"
 #include "Workflow/Types.h"
 
 #include <QMutex>
@@ -171,6 +176,61 @@ void
 MainWorkflow::deleteClip( const QUuid& uuid )
 {
     m_mediaContainer->deleteClip( uuid );
+}
+
+bool
+MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, quint32 height,
+                                 double fps, const QString &ar, quint32 vbitrate, quint32 abitrate,
+                                 quint32 nbChannels, quint32 sampleRate )
+{
+    m_renderer->stop();
+
+    if ( m_tractor->playableLength() == 0 )
+        return false;
+
+    Backend::MLT::MLTFFmpegConsumer consumer;
+    ConsumerEventWatcher            cEventWatcher;
+    consumer.setCallback( &cEventWatcher );
+    consumer.setTarget( qPrintable( outputFileName ) );
+    consumer.setWidth( width );
+    consumer.setHeight( height );
+    consumer.setFrameRate( fps * 100, 100 );
+    auto temp = ar.split( "/" );
+    consumer.setAspectRatio( temp[0].toInt(), temp[1].toInt() );
+    consumer.setVideoBitrate( vbitrate );
+    consumer.setAudioBitrate( abitrate );
+    consumer.setChannels( nbChannels );
+    consumer.setAudioSampleRate( sampleRate );
+    consumer.connect( *m_tractor );
+
+#ifdef WITH_GUI
+    WorkflowFileRendererDialog  dialog( width, height, m_tractor->playableLength(), m_renderer->eventWatcher() );
+    dialog.setModal( true );
+    dialog.setOutputFileName( outputFileName );
+    connect( &cEventWatcher, &ConsumerEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
+    connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&consumer]{ consumer.stop(); } );
+#endif
+
+    connect( &cEventWatcher, &ConsumerEventWatcher::stopped, this, [&consumer]{ consumer.stop(); } );
+    connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&consumer]{ consumer.stop(); } );
+
+    m_tractor->setPosition( 0 );
+    consumer.start();
+
+#ifdef WITH_GUI
+    if ( dialog.exec() == QDialog::Rejected )
+        return false;
+#else
+    while ( consumer.isStopped() == false )
+        SleepS( 1 );
+#endif
+    return true;
+}
+
+bool
+MainWorkflow::canRender()
+{
+    return m_tractor->playableLength() > 0;
 }
 
 void

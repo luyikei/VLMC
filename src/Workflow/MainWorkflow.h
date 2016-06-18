@@ -37,6 +37,7 @@ class   AbstractRenderer;
 namespace Backend
 {
 class ITractor;
+class IProducer;
 }
 
 class   Settings;
@@ -139,6 +140,12 @@ class   MainWorkflow : public QObject
          * \brief       Delete a clip.
          */
         void                    deleteClip( const QUuid& uuid );
+
+        bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
+                                                   double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
+                                                   quint32 nbChannels, quint32 sampleRate );
+
+        bool                    canRender();
 
         AbstractRenderer*       renderer();
 

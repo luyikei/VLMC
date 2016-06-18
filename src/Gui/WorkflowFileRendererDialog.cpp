@@ -27,20 +27,19 @@
 #include "Project/Project.h"
 #include "vlmc.h"
 #include "Workflow/MainWorkflow.h"
-#include "Renderer/WorkflowRenderer.h"
+#include "Tools/RendererEventWatcher.h"
+#include "Backend/IProducer.h"
 
-WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height ) :
+WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height,
+                                                        qint64 totalFrames, RendererEventWatcher* eventWatcher ) :
         m_width( width ),
         m_height( height ),
-        m_renderer( Core::instance()->workflowRenderer() )
+        m_totalFrames( totalFrames )
 {
     m_ui.setupUi( this );
     connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( cancel() ) );
-    connect( m_renderer, SIGNAL( renderComplete() ), this, SLOT( accept() ) );
-    connect( m_renderer, SIGNAL( frameChanged( qint64 ) ), this, SLOT( frameChanged( qint64 ) ) );
-    connect( m_renderer, SIGNAL( imageUpdated( const uchar* ) ),
-             this, SLOT( updatePreview( const uchar* ) ),
-             Qt::QueuedConnection );
+
+    connect( eventWatcher, &RendererEventWatcher::positionChanged, this, &WorkflowFileRendererDialog::frameChanged );
 }
 
 void
@@ -60,31 +59,24 @@ WorkflowFileRendererDialog::setProgressBarValue( int val )
 void
 WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 {
-    m_ui.previewLabel->setPixmap(
-            QPixmap::fromImage( QImage( buff, m_width, m_height,
-                                        QImage::Format_RGB32 ) ) );
 }
 
 void
 WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
-    /* TODO
-    qint64 totalFrames = Core::instance()->workflow()->getLengthFrame();
-
-    if ( frame <= totalFrames )
+    // Since frame is 0-indexed
+    frame++;
+    if ( frame <= m_totalFrames )
     {
-        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg(QString::number( frame ),
-                                        QString::number( totalFrames ) ) );
-        setProgressBarValue( frame * 100 / totalFrames );
+        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg( QString::number( frame ),
+                                        QString::number( m_totalFrames ) ) );
+        setProgressBarValue( frame * 100 / m_totalFrames );
     }
-    */
 }
 
 void
 WorkflowFileRendererDialog::cancel()
 {
-    /* TODO
-    m_renderer->stop();
+    emit stop();
     close();
-    */
 }

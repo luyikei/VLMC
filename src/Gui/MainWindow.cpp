@@ -47,7 +47,6 @@
 /* Gui */
 #include "MainWindow.h"
 #include "About.h"
-#include "WorkflowFileRendererDialog.h"
 #include "export/RendererSettings.h"
 #include "export/ShareOnInternet.h"
 #include "settings/SettingsDialog.h"
@@ -589,43 +588,17 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
-    /* TODO
-    if ( Core::instance()->workflow()->getLengthFrame() <= 0 )
+    if ( Core::instance()->workflow()->canRender() == false )
     {
         QMessageBox::warning( nullptr, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
-    }*/
-    return true;
-}
-
-bool
-MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 height,
-                         double fps, const QString& ar,
-                         quint32 vbitrate, quint32 abitrate,
-                         quint32 nbChannels, quint32 sampleRate )
-{
-    /* TODO
-    WorkflowFileRendererDialog  dialog( width, height );
-    dialog.setModal( true );
-    dialog.setOutputFileName( outputFileName );
-    if ( m_projectPreview->getAbstractRenderer()->isRendering() == true )
-        m_projectPreview->stop();
-    Core::instance()->workflowRenderer()->startRenderToFile( outputFileName, width, height,
-                                                             fps, ar, vbitrate, abitrate,
-                                                             nbChannels, sampleRate );
-
-    if ( dialog.exec() == QDialog::Rejected )
-        return false;
-        */
+    }
     return true;
 }
 
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
-    /* TODO
-    Core::instance()->workflowRenderer()->stop();
-
     RendererSettings settings( shareOnInternet );
 
     if ( settings.exec() == QDialog::Rejected )
@@ -641,8 +614,10 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
     auto        nbChannels     = settings.nbChannels();
     auto        sampleRate     = settings.sampleRate();
 
-    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate, nbChannels, sampleRate );*/
-    return true;
+
+    return  Core::instance()->workflow()->startRenderToFile( outputFileName, width, height,
+                                                             fps, ar, vbitrate, abitrate,
+                                                             nbChannels, sampleRate );
 }
 
 QDockWidget*

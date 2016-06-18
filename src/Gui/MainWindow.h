@@ -108,16 +108,6 @@ private:
     bool        checkVideoLength();
 
     /**
-     *  \brief  Renders video by the parameters: outputFileName, width, height,
-     *          fps, vbitrate, abitrate, nbChannels, sampleRate
-     *          Also, displays a rendering dialog with snapshots and progress.
-     *  \return true if video renders well or not cancelled by the user.
-     */
-    bool        renderVideo( const QString& outputFileName, quint32 width, quint32 height,
-                             double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
-                             quint32 nbChannels, quint32 sampleRate );
-
-    /**
      *  \brief  Gets video parameters from RendererSettings Dialog
      *          exportType when set to true, renders video to user defined location
      *          and when set to false, renders video to temporary folder.
