@@ -31,8 +31,6 @@
 #include <QXmlStreamWriter>
 
 class   Clip;
-class   Clip;
-class   ClipWorkflow;
 class   MainWorkflow;
 
 class   EffectHelper;
@@ -49,8 +47,6 @@ namespace   Workflow
     class   Helper;
 }
 
-template <typename T>
-class   QList;
 class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
@@ -63,28 +59,15 @@ class   TrackWorkflow : public QObject
         TrackWorkflow( quint32 trackId, Backend::ITractor* tractor );
         ~TrackWorkflow();
 
-        qint64                                  getLength() const;
-        void                                    stop();
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         Clip*                                   removeClip( const QUuid& id );
         void                                    addClip( Clip*, qint64 start );
-        void                                    addClip( ClipWorkflow*, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
         Clip                                    *clip( const QUuid& uuid );
-
-        //FIXME: this won't be reliable as soon as we change the fps from the configuration
-        static const unsigned int               nbFrameBeforePreload = 60;
 
         virtual QVariant                        toVariant() const;
         void                                    loadFromVariant( const QVariant& variant );
         void                                    clear();
-
-        void                                    renderOneFrame();
-
-        /**
-         *  \sa     MainWorkflow::setFullSpeedRender();
-         */
-        void                                    setFullSpeedRender( bool val );
 
         /**
          *  \brief      Mute a clip
@@ -95,20 +78,11 @@ class   TrackWorkflow : public QObject
         void                                    muteClip( const QUuid& uuid );
         void                                    unmuteClip( const QUuid& uuid );
 
-        void                                    initRender(quint32 width, quint32 height);
-
         bool                                    contains( const QUuid& uuid ) const;
 
-        void                                    stopFrameComputing();
-        bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
         quint32                                 trackId() const;
-        virtual qint64                          length() const;
 
         Backend::IProducer*                     producer();
-
-    private:
-        void                                    computeLength();
-        void                                    adjustClipTime( qint64 currentFrame, qint64 start, Clip* cw );
 
     private:
         Backend::ITractor*                      m_tractor;
@@ -117,17 +91,7 @@ class   TrackWorkflow : public QObject
 
         QMap<qint64, Clip*>                     m_clips;
 
-        /**
-         *  \brief      The track length in frames.
-        */
-        qint64                                  m_length;
-
-        QAtomicInteger<bool>                    m_renderOneFrame;
-
         QReadWriteLock*                         m_clipsLock;
-
-        qint64                                  m_lastFrame[Workflow::NbTrackType];
-        Workflow::Frame                         *m_mixerBuffer;
         const quint32                           m_trackId;
 
     private slots:

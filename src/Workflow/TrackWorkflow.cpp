@@ -43,11 +43,9 @@
 #include <QMutex>
 
 TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
-        m_length( 0 ),
         m_trackId( trackId )
 {
     m_clipsLock = new QReadWriteLock;
-    m_mixerBuffer = new Workflow::Frame;
 
     auto audioTrack = new Backend::MLT::MLTTrack;
     audioTrack->setVideoOutput( false );
@@ -63,9 +61,6 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
 
     tractor->setTrack( *m_tractor, trackId );
 
-    for ( int i = 0; i < Workflow::NbTrackType; ++i )
-        m_lastFrame[i] = 0;
-
     connect( this, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
              this, SLOT( __effectAdded( EffectHelper*, qint64) ) );
     connect( this, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
@@ -79,7 +74,6 @@ TrackWorkflow::~TrackWorkflow()
     delete m_audioTrack;
     delete m_videoTrack;
     delete m_tractor;
-    delete m_mixerBuffer;
     delete m_clipsLock;
 }
 
@@ -91,36 +85,7 @@ TrackWorkflow::addClip( Clip* clip, qint64 start )
     else if ( clip->formats().testFlag( Clip::Video ) )
         m_videoTrack->insertAt( *clip->producer(), start );
     m_clips.insertMulti( start, clip );
-    computeLength();
-}
-
-//Must be called from a thread safe method (m_clipsLock locked)
-void
-TrackWorkflow::computeLength()
-{
-    bool    changed = false;
-    if ( m_clips.count() == 0 )
-    {
-        if ( m_length != 0 )
-            changed = true;
-        m_length = 0;
-    }
-    else
-    {
-        auto it = m_clips.end() - 1;
-        qint64  newLength = it.key() + it.value()->length();
-        if ( m_length != newLength )
-            changed = true;
-        m_length = newLength;
-    }
-    if ( changed == true )
-        emit lengthChanged( m_length );
-}
-
-qint64
-TrackWorkflow::getLength() const
-{
-    return m_length;
+    emit clipAdded( this, clip, start );
 }
 
 qint64
@@ -153,35 +118,6 @@ TrackWorkflow::clip( const QUuid& uuid )
     return nullptr;
 }
 
-bool
-TrackWorkflow::hasNoMoreFrameToRender( qint64 currentFrame ) const
-{
-    if ( m_clips.size() == 0 )
-        return true;
-    //This is the last video by clipronological order :
-    auto   it = m_clips.end() - 1;
-    auto   clip = it.value();
-    //If it ends before the current frame, we reached end.
-    return ( clip->length() + it.key() < currentFrame );
-}
-
-void
-TrackWorkflow::stop()
-{
-    /* TODO
-    auto       it = m_clips.begin();
-    auto       end = m_clips.end();
-
-    while ( it != end )
-    {
-        stopClipWorkflow( it.value() );
-        ++it;
-    }
-    for ( int i = 0; i < Workflow::NbTrackType; ++i )
-        m_lastFrame[i] = 0;
-    m_isRendering = false;*/
-}
-
 void
 TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 {
@@ -203,7 +139,6 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 
             m_clips.erase( it );
             m_clips.insertMulti( startingFrame, clip );
-            computeLength();
             emit clipMoved( this, clip->uuid(), startingFrame );
             return ;
         }
@@ -225,7 +160,6 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
         {
             auto   clip = it.value();
             m_clips.erase( it );
-            computeLength();
             clip->disconnect( this );
             emit clipRemoved( this, id );
             return ;
@@ -250,7 +184,6 @@ TrackWorkflow::removeClip( const QUuid& id )
             auto    track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
             track->remove( track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
-            computeLength();
             clip->disconnect( this );
             emit clipRemoved( this, clip->uuid() );
             return clip;
@@ -313,34 +246,6 @@ TrackWorkflow::clear()
 {
     QWriteLocker    lock( m_clipsLock );
     m_clips.clear();
-    m_length = 0;
-}
-
-void
-TrackWorkflow::adjustClipTime( qint64 currentFrame, qint64 start, Clip* c )
-{
-    float fps = c->media()->producer()->fps();
-    qint64  nbMs = ( currentFrame - start ) / fps * 1000;
-    qint64  beginInMs = c->begin() / fps * 1000;
-    qint64  startFrame = beginInMs + nbMs;
-    // TODO cw->setTime( startFrame );
-}
-
-void
-TrackWorkflow::renderOneFrame()
-{
-    m_renderOneFrame.store( true );
-}
-
-void
-TrackWorkflow::setFullSpeedRender( bool val )
-{
-    /* TODO
-    foreach ( ClipWorkflow* cw, m_clips.values() )
-    {
-        cw->setFullSpeedRender( val );
-    }
-    */
 }
 
 void
@@ -389,31 +294,6 @@ TrackWorkflow::unmuteClip( const QUuid &uuid )
             */
 }
 
-void
-TrackWorkflow::initRender( quint32 width, quint32 height )
-{
-    QReadLocker     lock( m_clipsLock );
-
-    m_mixerBuffer->resize( width * height * Workflow::Depth );
-    /* TODO
-    m_width = width;
-    m_height = height;
-    m_isRendering = true;
-    auto       it = m_clips.begin();
-    auto       end = m_clips.end();
-    while ( it != end )
-    {
-        qint64          start = it.key();
-        ClipWorkflow*   cw = it.value();
-        if ( start < TrackWorkflow::nbFrameBeforePreload )
-            preloadClip( cw );
-        ++it;
-    }
-    initFilters();
-    initMixers();
-    */
-}
-
 bool
 TrackWorkflow::contains( const QUuid &uuid ) const
 {
@@ -428,29 +308,6 @@ TrackWorkflow::contains( const QUuid &uuid ) const
         ++it;
     }
     return false;
-}
-
-void
-TrackWorkflow::stopFrameComputing()
-{
-    /* TODO
-    auto       it = m_clips.begin();
-    auto       end = m_clips.end();
-
-    while ( it != end )
-    {
-        ClipWorkflow*   cw = it.value();
-
-        ClipWorkflow::State state = cw->getState();
-        if ( state == ClipWorkflow::Stopped ||
-             state == ClipWorkflow::Error )
-        {
-            return ;
-        }
-        cw->stop();
-        ++it;
-    }
-    */
 }
 
 quint32
@@ -491,12 +348,6 @@ TrackWorkflow::__effectMoved( EffectHelper* helper, qint64 pos )
     }
     emit effectMoved( this, helper->uuid(), pos );
     */
-}
-
-qint64
-TrackWorkflow::length() const
-{
-    return m_length;
 }
 
 Backend::IProducer*

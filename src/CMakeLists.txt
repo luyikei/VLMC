@@ -87,7 +87,6 @@ SET(VLMC_SRCS
     Project/WorkspaceWorker.cpp
     Project/RecentProjects.cpp
     Renderer/AbstractRenderer.cpp
-    Renderer/WorkflowRenderer.cpp
     Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp
     Settings/Settings.cpp
@@ -103,7 +102,7 @@ SET(VLMC_SRCS
     Workflow/Helper.cpp
     Workflow/MainWorkflow.cpp
     Workflow/TrackWorkflow.cpp
-    Workflow/Types.cpp
+    Workflow/Types.h
   )
 
 IF (WIN32)

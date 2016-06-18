@@ -41,7 +41,6 @@
 #include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
 #include "Workflow/TrackWorkflow.h"
-#include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
 #include "Commands/AbstractUndoStack.h"
 

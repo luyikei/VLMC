@@ -45,7 +45,6 @@
 //} this should be fixed, it breaks the design
 #include "Workflow/TrackWorkflow.h"
 #include "Tools/VlmcDebug.h"
-#include "Renderer/WorkflowRenderer.h"
 
 #include <QGraphicsLinearLayout>
 #include <QGraphicsWidget>

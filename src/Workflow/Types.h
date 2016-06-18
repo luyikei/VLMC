@@ -39,55 +39,6 @@ namespace   Workflow
         AudioTrack, ///< Represents an audio track
         NbTrackType, ///< Used to know how many types we have
     };
-
-    class   Frame
-    {
-        public:
-            explicit Frame();
-            Frame( quint32 width, quint32 height );
-            Frame( size_t forcedSize );
-            ~Frame();
-            quint32         *buffer();
-            const quint32   *buffer() const;
-            void            setBuffer( quint32 *buff );
-            /**
-              * \brief      Resize the buffer
-              *
-              * This will allocate a new buffer and drop the old one.
-              * \param      size    The size, in bytes.
-              */
-            void            resize( size_t size );
-            /**
-             *  \returns    The frame size in octets
-             *
-             *  This is equal to width * height * Depth
-             */
-            size_t          size() const;
-            /**
-             *  \brief      Get pts.
-             *
-             */
-            qint64          pts() const;
-            /**
-             *  \brief      Set pts.
-             *
-             */
-            void           setPts( qint64 pts );
-            /**
-             *  \warning    Terrible hack !
-             *
-             *  Remove this ASAP !!
-             */
-            //FIXME
-            qint64      ptsDiff;
-
-        private:
-            // frei0r uses 32bits only pixels, and expects its buffers as uint32
-            quint32     *m_buffer;
-            size_t      m_size;
-            quint32     m_nbPixels;
-            qint64      m_pts;
-    };
 }
 
 namespace   Vlmc

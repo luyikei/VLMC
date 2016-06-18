@@ -29,11 +29,8 @@
 #include "Tools/Toggleable.hpp"
 
 class   Clip;
-class   Clip;
 class   EffectsEngine;
 class   Effect;
-class   ProjectManager;
-class   TrackHandler;
 class   TrackWorkflow;
 class   AbstractRenderer;
 
@@ -42,15 +39,7 @@ namespace Backend
 class ITractor;
 }
 
-namespace   Workflow
-{
-    class   Frame;
-    class   AudioSample;
-}
-
 class   Settings;
-class   QMutex;
-class   QReadWriteLock;
 class   MediaContainer;
 
 #include <QObject>
@@ -66,72 +55,6 @@ class   MainWorkflow : public QObject
     public:
         MainWorkflow( Settings* projectSettings, int trackCount = 64 );
         ~MainWorkflow();
-
-        /**
-         *  \brief      Initialize the workflow for the render.
-         *
-         *  \param      width   The width to use with this render session.
-         *  \param      height  The height to use with this render session.
-         *  This will basically activate all the tracks, newLengthso they can render.
-         */
-        void                    startRender( quint32 width, quint32 height );
-
-        /**
-         *  \brief              Set the workflow position by the desired frame
-         *  \param              currentFrame: The desired frame to render from
-         *  \param              reason: The program part which required this frame change
-                                        (to avoid cyclic events)
-        */
-        void                    setCurrentFrame( qint64 currentFrame,
-                                                Vlmc::FrameChangedReason reason );
-
-        /**
-         *  \brief              Get the workflow length in frames.
-         *  \return             Returns the global length of the workflow
-         *                      in frames.
-        */
-        qint64                  getLengthFrame() const;
-
-        /**
-         *  \brief              Get the currently rendered frame.
-         *  \param      lock    If true, m_currentFrameLock will be locked for read.
-         *                      If false, it won't be locked. This is usefull when calling
-         *                      getCurentFrame from underlying workflows
-         *  \return             Returns the current frame.
-         *  \warning            Locks the m_currentFrameLock ReadWriteLock, unless false is
-         *                      passed.
-         */
-        qint64                  getCurrentFrame( bool lock = true ) const;
-
-        /**
-         *  \brief      Stops the rendering.
-         *
-         *  This will stop every ClipWorkflow that are currently rendering.
-         *  Calling this methid will cause the workflow to return to frame 0, and emit
-         *  the signal frameChanged(), with the reason: Renderer
-         */
-        void                    stop();
-
-        /**
-         *  \brief              Unconditionnaly switch to the next frame.
-         *
-         *  \param  trackType   The type of the frame counter to increment.
-         *                      Though it seems odd to speak about frame for AudioTrack,
-         *                      it's mainly a render position used for
-         *                      synchronisation purpose.
-         *  \sa         previousFrame( Workflow::TrackType );
-         */
-        void                    nextFrame( Workflow::TrackType trackType );
-        /**
-         *  \brief      Unconditionnaly switch to the previous frame.
-         *
-         *  \param      trackType   The type of the frame counter to decrement.
-         *                          Though it seems odd to speak about frame for
-         *                          AudioTrack, it's mainly a render position used for
-         *                          synchronisation purpose.
-         *  \sa         nextFrame( Workflow::TrackType );
-         */
-        void                    previousFrame( Workflow::TrackType trackType );
 
         /**
          *  \brief              Return the given clip position.
@@ -190,44 +113,6 @@ class   MainWorkflow : public QObject
         int                     getTrackCount() const;
 
         /**
-         *  \brief      Get the width used for rendering.
-         *
-         *  This value is used by the ClipWorkflow that generates the frames.
-         *  If this value is edited in the preferences, it will only change after the
-         *  current render has been stopped.
-         *  \return     The width (in pixels) of the currently rendered frames
-         *  \sa         getHeight()
-         */
-        quint32                getWidth() const;
-        /**
-         *  \brief      Get the height used for rendering.
-         *
-         *  This value is used by the ClipWorkflow that generates the frames.
-         *  If this value is edited in the preferences, it will only change after the
-         *  current render has been stopped.
-         *  \return     The height (in pixels) of the currently rendered frames
-         *  \sa         getWidth()
-         */
-        quint32                getHeight() const;
-
-        /**
-         *  \brief          Will render one frame only
-         *
-         *  It will change the ClipWorkflow frame getting mode from Get to Pop, just for
-         *  one frame
-         */
-        void                    renderOneFrame();
-
-        /**
-         *  \brief              Set the render speed.
-         *
-         *  This will activate or deactivate vlc's pace-control
-         *  \param  val         If true, ClipWorkflow will use no-pace-control
-         *                      else, pace-control.
-         */
-        void                    setFullSpeedRender( bool val );
-
-        /**
          *  \return     true if the current workflow contains the clip which the uuid was
          *              passed. Falsed otherwise.
          *
@@ -235,17 +120,7 @@ class   MainWorkflow : public QObject
          */
         bool                    contains( const QUuid& uuid ) const;
 
-        /**
-         *  \brief      Stop the frame computing process.
-         *
-         *  This will stop all the currently running ClipWorkflow.
-         *  This is meant to be called just before the stop() method.
-         */
-        void                    stopFrameComputing();
-
         TrackWorkflow           *track( quint32 trackId );
-
-        const Workflow::Frame   *blackOutput() const;
 
         /**
          * \brief   Return the number of track for each track type.
@@ -268,14 +143,6 @@ class   MainWorkflow : public QObject
         AbstractRenderer*       renderer();
 
     private:
-        /**
-         *  \brief  Compute the length of the workflow.
-         *
-         *  This is meant to be used internally, after an operation occurs on the workflow
-         *  such as adding a clip, removing it...
-         *  This method will update the attribute m_lengthFrame
-         */
-        void                    computeLength();
 
         /**
          *  \param      uuid : The clip's uuid.
@@ -291,50 +158,12 @@ class   MainWorkflow : public QObject
     private:
         MediaContainer*                 m_mediaContainer;
         QList<Toggleable<TrackWorkflow*>>     m_tracks;
-        /// Pre-filled buffer used when there's nothing to render
-        Workflow::Frame         *m_blackOutput;
-
-        /// Lock for the m_currentFrame atribute.
-        QReadWriteLock*                 m_currentFrameLock;
-        /**
-         *  \brief  An array of currently rendered frame.
-         *
-         *  This must be indexed with Workflow::TrackType.
-         *  The Audio array entry is designed to synchronize the renders internally, as it
-         *  is not actually a frame.
-         *  If you wish to know which frame is really rendered, you must use
-         *  m_currentFrame[MainWorkflow::VideoTrack], which is the value that will be used
-         *  when setCurrentFrame() is called.
-         */
-        qint64                          m_currentFrame[Workflow::NbTrackType];
-        /// The workflow length, in frame.
-        qint64                          m_lengthFrame;
-        /// This boolean describe is a render has been started
-        bool                            m_renderStarted;
-
-        /// Width used for the render
-        quint32                         m_width;
-        /// Height used for the render
-        quint32                         m_height;
-        /// Store the number of track for each track type.
         const quint32                   m_trackCount;
-
-        bool                            m_endReached;
 
         Settings*                       m_settings;
 
         AbstractRenderer*               m_renderer;
         Backend::ITractor*              m_tractor;
-
-    private slots:
-        /**
-         *  \brief  Called when a track end is reached
-         *
-         *  If all track has reached end, the mainWorkflowEndReached() signal will be
-         *  emitted;
-         *  \sa     mainWorkflowEndReached()
-         */
-        void                            tracksEndReached();
 
     public slots:
         /**
@@ -347,10 +176,6 @@ class   MainWorkflow : public QObject
          *  \sa     cleared()
          */
         void                            clear();
-
-        void                            lengthUpdated( qint64 lengthUpdated );
-
-        void                            rulerCursorChanged( qint64 time );
 
     signals:
         /**
