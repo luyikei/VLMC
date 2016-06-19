@@ -147,6 +147,22 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 }
 
 void
+TrackWorkflow::resizeClip( const QUuid &id, qint64 begin, qint64 end )
+{
+    QWriteLocker    lock( m_clipsLock );
+
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+    {
+        auto clip = it.value();
+        if ( clip->uuid() == id )
+        {
+            auto track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            track->resizeClip( track->clipIndexAt( it.key() ), begin, end );
+        }
+    }
+}
+
+void
 TrackWorkflow::clipDestroyed( const QUuid& id )
 {
     QWriteLocker    lock( m_clipsLock );

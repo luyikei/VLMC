@@ -221,21 +221,13 @@ Commands::Clip::Resize::retranslate()
 void
 Commands::Clip::Resize::internalRedo()
 {
-    if ( m_newBegin != m_newEnd )
-    {
-        m_trackWorkflow->moveClip( m_clip->uuid(), m_newPos );
-    }
-    m_clip->setBoundaries( m_newBegin, m_newEnd );
+    m_trackWorkflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd );
 }
 
 void
 Commands::Clip::Resize::internalUndo()
 {
-    if ( m_oldBegin != m_newBegin )
-    {
-        m_trackWorkflow->moveClip( m_clip->uuid(), m_oldPos );
-    }
-    m_clip->setBoundaries( m_oldBegin, m_oldEnd );
+    m_trackWorkflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd );
 }
 
 Commands::Clip::Split::Split( TrackWorkflow *tw, ::Clip *toSplit,
