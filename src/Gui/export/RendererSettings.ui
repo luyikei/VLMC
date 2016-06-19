@@ -298,10 +298,10 @@
    <item row="8" column="1">
     <widget class="QSpinBox" name="sampleRate">
      <property name="maximum">
-      <number>10000</number>
+      <number>100000</number>
      </property>
      <property name="value">
-      <number>4800</number>
+      <number>48000</number>
      </property>
     </widget>
    </item>
