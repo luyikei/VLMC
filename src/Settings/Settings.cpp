@@ -42,7 +42,7 @@ Settings::Settings()
 
 }
 
-Settings::Settings(const QString &settingsFile)
+Settings::Settings( const QString &settingsFile )
     : m_settingsFile( nullptr )
 {
     setSettingsFile( settingsFile );
@@ -55,7 +55,7 @@ Settings::~Settings()
 }
 
 void
-Settings::setSettingsFile(const QString &settingsFile)
+Settings::setSettingsFile( const QString &settingsFile )
 {
     delete m_settingsFile;
     if ( settingsFile.isEmpty() == false )
@@ -187,13 +187,13 @@ Settings::saveJsonTo( QJsonObject &object )
 }
 
 void
-Settings::addSettings(const QString &name, Settings &settings)
+Settings::addSettings( const QString &name, Settings &settings )
 {
     m_settingsChildren << qMakePair( name, &settings );
 }
 
 bool
-Settings::setValue(const QString &key, const QVariant &value)
+Settings::setValue( const QString &key, const QVariant &value )
 {
     SettingMap::iterator   it = m_settings.find( key );
     if ( it != m_settings.end() )
@@ -215,8 +215,9 @@ Settings::restoreDefaultValues()
     for ( auto &pair : m_settingsChildren )
         pair.second->restoreDefaultValues();
 }
+
 SettingValue*
-Settings::value(const QString &key)
+Settings::value( const QString &key )
 {
     QReadLocker lock( &m_rwLock );
 
@@ -228,7 +229,7 @@ Settings::value(const QString &key)
 }
 
 SettingValue*
-Settings::createVar(SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags)
+Settings::createVar( SettingValue::Type type, const QString &key, const QVariant &defaultValue, const char *name, const char *desc, SettingValue::Flags flags )
 {
     QWriteLocker lock( &m_rwLock );
 
@@ -240,7 +241,7 @@ Settings::createVar(SettingValue::Type type, const QString &key, const QVariant 
 }
 
 Settings::SettingList
-Settings::group(const QString &groupName) const
+Settings::group( const QString &groupName ) const
 {
     QReadLocker lock( &m_rwLock );
     SettingList        ret;
