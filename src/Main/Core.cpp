@@ -71,8 +71,8 @@ Core::~Core()
     delete m_currentProject;
     delete m_workspace;
     delete m_settings;
-    delete m_logger;
     delete m_backend;
+    delete m_logger;
 }
 
 void
