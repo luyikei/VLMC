@@ -28,12 +28,11 @@
 #include <QStandardPaths>
 
 
-#include <Backend/IBackend.h>
+#include <Backend/VLC/VLCBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
 #include "Library/Library.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
-#include "Renderer/WorkflowRenderer.h"
 #include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
 #include "Workflow/MainWorkflow.h"
@@ -41,7 +40,7 @@
 
 Core::Core()
 {
-    m_backend = Backend::getBackend();
+    m_backend = Backend::getVLCBackend();
     m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
 
@@ -51,7 +50,6 @@ Core::Core()
     m_recentProjects = new RecentProjects( m_settings );
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow( m_currentProject->settings() );
-    m_workflowRenderer = new WorkflowRenderer( Backend::getBackend(), m_workflow );
     m_undoStack = new Commands::AbstractUndoStack;
 
     connect( m_undoStack, &Commands::AbstractUndoStack::cleanChanged,
@@ -71,7 +69,6 @@ Core::~Core()
     m_settings->save();
     delete m_library;
     delete m_undoStack;
-    delete m_workflowRenderer;
     delete m_workflow;
     delete m_currentProject;
     delete m_workspace;
@@ -95,7 +92,7 @@ Core::createSettings()
     m_settings->createVar( SettingValue::Bool, "private/FirstLaunchDone", false, "", "", SettingValue::Private );
 }
 
-Backend::IBackend*
+Backend::VLC::VLCBackend*
 Core::backend()
 {
     return m_backend;
@@ -153,12 +150,6 @@ Core::workspace()
 Project* Core::project()
 {
     return m_currentProject;
-}
-
-WorkflowRenderer*
-Core::workflowRenderer()
-{
-    return m_workflowRenderer;
 }
 
 MainWorkflow*

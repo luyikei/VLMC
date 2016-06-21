@@ -71,7 +71,7 @@ VLCMemorySource::setSampleRate(unsigned int sampleRate)
     m_sampleRate = sampleRate;
 }
 
-ISourceRenderer*
+VLCSourceRenderer*
 VLCMemorySource::createRenderer( ISourceRendererEventCb *callback )
 {
     return new VLCSourceRenderer( m_backend, this, callback );

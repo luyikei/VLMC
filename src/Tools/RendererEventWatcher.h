@@ -1,5 +1,5 @@
 /*****************************************************************************
- * RendererEventWatcher.h: Watches events from a ISourceRenderer and convert them to SIGNAL
+ * RendererEventWatcher.h: Watches events from a IConsumer and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -24,7 +24,7 @@
 #define RENDEREREVENTWATCHER_H
 
 #include <QObject>
-#include "Backend/ISourceRenderer.h"
+#include "Backend/VLC/VLCSourceRenderer.h"
 
 class RendererEventWatcher : public QObject, public Backend::ISourceRendererEventCb
 {

@@ -29,8 +29,8 @@
 #include "TracksScene.h"
 #include "TracksControls.h"
 #include "TracksRuler.h"
+#include "Workflow/MainWorkflow.h"
 #include "Tools/VlmcDebug.h"
-#include "Renderer/WorkflowRenderer.h"
 
 #include <QHBoxLayout>
 #include <QScrollBar>
@@ -50,7 +50,6 @@ Timeline::Timeline( QWidget *parent )
     m_ui.setupUi( this );
 
     m_tracksScene = new TracksScene( this );
-    m_renderer = Core::instance()->workflowRenderer();
     m_mainWorkflow = Core::instance()->workflow();
     initialize();
 }
@@ -79,7 +78,7 @@ Timeline::initialize()
     delete m_tracksRuler;
     delete m_tracksView;
 
-    m_tracksView = new TracksView( m_tracksScene, m_mainWorkflow, m_renderer, m_ui.tracksFrame );
+    m_tracksView = new TracksView( m_tracksScene, m_mainWorkflow, nullptr, m_ui.tracksFrame );
     m_tracksView->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_tracksView->scale(1, 1);
 
@@ -129,19 +128,22 @@ Timeline::initialize()
              m_tracksControls, SLOT( removeAudioTrack() ) );
 
     // Cursor position updates
+    /* TODO
     connect( m_tracksView->tracksCursor(), SIGNAL( cursorPositionChanged( qint64 ) ),
              m_renderer, SLOT( timelineCursorChanged(qint64) ) );
+             */
 
     m_tracksView->createLayout();
 
     // Frames updates
+    /* TODO
     connect( m_renderer, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_tracksView->tracksCursor(), SLOT( frameChanged( qint64, Vlmc::FrameChangedReason ) ),
              Qt::QueuedConnection );
     connect( m_renderer, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_tracksRuler, SLOT( update() ) );
+             m_tracksRuler, SLOT( update() ) ); */
     connect( m_tracksRuler, SIGNAL( frameChanged(qint64,Vlmc::FrameChangedReason) ),
-             m_renderer, SLOT( rulerCursorChanged(qint64)) );
+             m_mainWorkflow, SLOT( rulerCursorChanged(qint64)) );
 }
 
 void

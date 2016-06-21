@@ -34,7 +34,7 @@
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Workflow/Helper.h"
-#include "Backend/ISource.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 //Ugly part {
@@ -297,10 +297,11 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
         item->m_oldTrack = tw;
         moveItem( item, track, start );
         //If the item has some effects:
+        /* TODO
         for ( EffectHelper *effectHelper : clip->clipWorkflow()->effects( Effect::Filter ) )
         {
             addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
-        }
+        }*/
     }
     else
     {
@@ -431,7 +432,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
-            m_dragEffectItem->effectHelper()->setTarget( clip->clipWorkflow() );
+            // TODO m_dragEffectItem->effectHelper()->setTarget( clip->clipWorkflow() );
         }
         else
         {
@@ -851,8 +852,10 @@ TracksView::dropEvent( QDropEvent *event )
         {
             m_itemsLoaded.insert( m_dragEffectItem->helper()->uuid() );
             AbstractGraphicsMediaItem   *item = clips.first();
+            /* TODO
             Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
                                                           item->clip()->clipWorkflow() ) );
+                                                          */
             m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
             event->acceptProposedAction();
             m_dragEffectItem->setContainer( item );
@@ -1180,12 +1183,14 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( effectItem != nullptr )
         {
             effectItem->setContainer( nullptr );
+            /* TODO
             if ( m_effectTarget != nullptr )
             {
                 target = m_effectTarget->clip()->clipWorkflow();
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
                 effectItem->setContainer( m_effectTarget );
             }
+            */
         }
         else
             Core::instance()->undoStack()->beginMacro( "Move clip" );
@@ -1221,8 +1226,9 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         }
         EffectUser          *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
-        if ( effectItem != nullptr && m_effectTarget != nullptr )
+        /* TODO if ( effectItem != nullptr && m_effectTarget != nullptr )
             target = m_effectTarget->clip()->clipWorkflow();
+            */
         m_actionItem->triggerResize( target, m_actionItem->helper(),
                                      newBegin, newEnd, m_actionItem->pos().x() );
         updateDuration();

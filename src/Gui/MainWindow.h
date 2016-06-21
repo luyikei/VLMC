@@ -29,6 +29,7 @@ class QUndoView;
 #include <QSlider>
 #include <QToolButton>
 #include <QButtonGroup>
+#include <QDockWidget>
 
 #include "vlmc.h"
 #include "config.h"
@@ -37,7 +38,6 @@ class QUndoView;
 class   EffectsListView;
 class   ImportController;
 class   MediaLibrary;
-class   PreviewWidget;
 class   Project;
 class   ProjectWizard;
 class   SettingsDialog;
@@ -46,7 +46,10 @@ class   WorkflowRenderer;
 
 namespace Backend
 {
-    class IBackend;
+namespace VLC
+{
+class VLCBackend;
+}
 }
 
 class MainWindow : public QMainWindow
@@ -55,7 +58,7 @@ class MainWindow : public QMainWindow
     Q_DISABLE_COPY( MainWindow )
 
 public:
-    explicit MainWindow( Backend::IBackend* backend,
+    explicit MainWindow( Backend::VLC::VLCBackend* backend,
                          QWidget *parent = 0 );
     ~MainWindow();
 
@@ -83,8 +86,6 @@ private:
     void        initToolbar();
     bool        saveSettings();
     void        setupLibrary();
-    void        setupClipPreview();
-    void        setupProjectPreview();
     void        setupEffectsList();
     void        setupUndoRedoWidget();
     void        retranslateUi();
@@ -130,9 +131,7 @@ private:
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
-    Backend::IBackend*      m_backend;
-    PreviewWidget*          m_clipPreview;
-    PreviewWidget*          m_projectPreview;
+    Backend::VLC::VLCBackend*      m_backend;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;
@@ -144,8 +143,6 @@ private:
     QDockWidget*            m_dockedUndoView;
     QDockWidget*            m_dockedEffectsList;
     QDockWidget*            m_dockedLibrary;
-    QDockWidget*            m_dockedClipPreview;
-    QDockWidget*            m_dockedProjectPreview;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );

@@ -29,6 +29,7 @@
 
 #include "Workflow/Types.h"
 #include "Tools/RendererEventWatcher.h"
+#include "Backend/VLC/VLCSourceRenderer.h"
 #include "Backend/IRenderTarget.h"
 
 class   Clip;
@@ -140,7 +141,7 @@ public:
 
     RendererEventWatcher*           eventWatcher();
 protected:
-    Backend::ISourceRenderer*       m_sourceRenderer;
+    Backend::VLC::VLCSourceRenderer*       m_sourceRenderer;
     RendererEventWatcher*           m_eventWatcher;
 
     /**

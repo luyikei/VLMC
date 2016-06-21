@@ -26,8 +26,7 @@
 
 #include "Media/Clip.h"
 #include "ClipRenderer.h"
-#include "Backend/ISource.h"
-#include "Backend/ISourceRenderer.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Workflow/MainWorkflow.h"
@@ -89,7 +88,7 @@ ClipRenderer::startPreview()
 
     delete m_sourceRenderer;
     m_sourceRenderer = m_selectedClip->media()->source()->createRenderer( m_eventWatcher );
-    m_renderTarget->configure( m_sourceRenderer);
+    //TODO m_renderTarget->configure( m_sourceRenderer );
 
     connect( m_eventWatcher, SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
     connect( m_eventWatcher, SIGNAL( paused() ),  this, SIGNAL( paused() ) );

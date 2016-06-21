@@ -24,13 +24,12 @@
 
 #include "Transcoder.h"
 
-#include "Backend/ISource.h"
-#include "Backend/ISourceRenderer.h"
+#include "Backend/VLC/VLCSource.h"
+#include "Backend/VLC/VLCSourceRenderer.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
 #include "Gui/widgets/NotificationZone.h"
 #include "Settings/Settings.h"
-#include "Tools/RendererEventWatcher.h"
 
 Transcoder::Transcoder( Media* media )
     : m_media( media )
@@ -41,7 +40,7 @@ Transcoder::Transcoder( Media* media )
     connect( this, &Transcoder::progress,
              NotificationZone::instance(),
              static_cast<void(NotificationZone::*)(float)>(&NotificationZone::progressUpdated) );
-    m_eventWatcher = new RendererEventWatcher;
+    m_eventWatcher = new Backend::VLC::RendererEventWatcher;
 }
 
 Transcoder::~Transcoder()
@@ -54,7 +53,7 @@ void
 Transcoder::transcodeToPs()
 {
     QString             outputDir = VLMC_GET_STRING( "vlmc/Workspace" );
-    Backend::ISource*   source = m_media->source();
+    auto*   source = m_media->source();
     delete m_renderer;
     m_renderer = source->createRenderer( m_eventWatcher );
 
@@ -63,8 +62,8 @@ Transcoder::transcodeToPs()
     m_destinationFile = outputDir + '/' + m_media->fileInfo()->baseName() + ".ps";
     m_renderer->setOutputFile( qPrintable( m_destinationFile ) );
     m_renderer->setName( qPrintable( QString( "Transcoder " ) + m_media->fileInfo()->baseName() ) );
-    connect( m_eventWatcher, &RendererEventWatcher::positionChanged, this, &Transcoder::progress );
-    connect( m_eventWatcher, &RendererEventWatcher::endReached, this, &Transcoder::transcodeFinished );
+    connect( m_eventWatcher, &Backend::VLC::RendererEventWatcher::positionChanged, this, &Transcoder::progress );
+    connect( m_eventWatcher, &Backend::VLC::RendererEventWatcher::endReached, this, &Transcoder::transcodeFinished );
     emit notify( "Transcoding " + m_media->fileInfo()->absoluteFilePath() + " to " + m_destinationFile );
     m_renderer->start();
 }

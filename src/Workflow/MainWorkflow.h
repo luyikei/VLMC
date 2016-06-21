@@ -69,18 +69,7 @@ class   MainWorkflow : public QObject
          *  This will basically activate all the tracks, newLengthso they can render.
          */
         void                    startRender( quint32 width, quint32 height );
-        /**
-         *  \brief      Gets a frame from the workflow
-         *
-         *  \return A pointer to an output buffer. This pointer must NOT be released.
-         *          Both types of this output buffer are not guarantied to be filled.
-         *          However, if VideoTrack was passed as trackType, the video member of
-         *          the output buffer is guarantied to be filled. The same applies for
-         *          AudioTrack
-         *  \param  trackType   The type of track you wish to get the render from.
-         *  \param  paused      The paused state of the renderer
-         */
-        const Workflow::Frame    *getOutput( Workflow::TrackType trackType, bool paused );
+
         /**
          *  \brief              Set the workflow position by the desired frame
          *  \param              currentFrame: The desired frame to render from
@@ -349,6 +338,8 @@ class   MainWorkflow : public QObject
         void                            clear();
 
         void                            lengthUpdated( qint64 lengthUpdated );
+
+        void                            rulerCursorChanged( qint64 time );
 
     signals:
         /**

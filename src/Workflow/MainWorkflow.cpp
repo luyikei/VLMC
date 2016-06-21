@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+
 #include "vlmc.h"
 #include "Project/Project.h"
 #include "Media/Clip.h"
@@ -110,50 +111,18 @@ MainWorkflow::startRender( quint32 width, quint32 height )
         for ( auto track : m_tracks )
             track->initRender( width, height );
     computeLength();
-}
-
-const Workflow::Frame*
-MainWorkflow::getOutput( Workflow::TrackType trackType, bool paused )
-{
-    if ( m_renderStarted == true )
+    // TODO
+    auto track1 = m_tracks[0];
+    for ( auto& var : track1->toVariant().toMap()[ "clips" ].toList() )
     {
-        qint64              currentFrame;
-        qint64              subFrame;
+        QVariantMap m = var.toMap();
+        const QString& uuid     = m["clip"].toString();
+        qint64 startFrame       = m["startFrame"].toLongLong();
+        qint64 begin            = m["begin"].toLongLong();
+        qint64 end              = m["end"].toLongLong();
 
-        {
-            QReadLocker         lock2( m_currentFrameLock );
-            currentFrame = m_currentFrame[Workflow::VideoTrack];
-            subFrame = m_currentFrame[trackType];
-        }
-
-        bool        validTrack = false;
-        Workflow::Frame  *ret = nullptr;
-
-        for ( int i = m_trackCount - 1; i >= 0; --i )
-        {
-            if ( m_tracks[i].activated() == false || m_tracks[i]->hasNoMoreFrameToRender( currentFrame ) )
-                continue ;
-            validTrack = true;
-            ret = m_tracks[i]->getOutput( trackType, currentFrame, subFrame, paused );
-            if ( ret == nullptr )
-                continue ;
-            else
-                break ;
-        }
-        if ( validTrack == false )
-        {
-            m_endReached = true;
-            emit mainWorkflowEndReached();
-        }
-
-        if ( trackType == Workflow::VideoTrack )
-        {
-            if ( ret == nullptr )
-                return m_blackOutput;
-        }
-        return ret;
+        Clip*  clip             = m_mediaContainer->clip( uuid );
     }
-    return nullptr;
 }
 
 void
@@ -394,6 +363,12 @@ MainWorkflow::lengthUpdated( qint64 )
         m_lengthFrame = maxLength;
         emit ( m_lengthFrame );
     }
+}
+
+void
+MainWorkflow::rulerCursorChanged( qint64 time )
+{
+
 }
 
 TrackWorkflow*

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ISource: Describes a source being rendered by a ISourceRenderer
+ * ISource: Describes a source being rendered by a IConsumer
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -27,14 +27,14 @@
 
 namespace Backend
 {
-    class ISourceRendererEventCb;
-    class ISourceRenderer;
+    class IConsumerEventCb;
+    class IConsumer;
 
     class ISource
     {
         public:
             virtual ~ISource() {}
-            virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback ) = 0;
+            virtual IConsumer*      createConsumer( IConsumerEventCb* callback ) = 0;
             /**
              * @brief preparse  Parse this source for its information.
              *                  This method will block until computing is finished.
@@ -64,7 +64,7 @@ namespace Backend
             virtual void                setAspectRatio( const char* aspectRatio ) = 0;
             virtual void                setNumberChannels( unsigned int nbChannels ) = 0;
             virtual void                setSampleRate( unsigned int sampleRate ) = 0;
-            virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback ) = 0;
+            virtual IConsumer*    createRenderer( IConsumerEventCb* callback ) = 0;
     };
 }
 

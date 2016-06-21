@@ -52,13 +52,10 @@ class   TrackWorkflow : public EffectUser
         TrackWorkflow( quint32 trackId );
         ~TrackWorkflow();
 
-        Workflow::Frame                         *getOutput( Workflow::TrackType trackType, qint64 currentFrame,
-                                                           qint64 subFrame, bool paused );
         qint64                                  getLength() const;
         void                                    stop();
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         Clip*                                   removeClip( const QUuid& id );
-        ClipWorkflow*                           removeClipWorkflow( const QUuid& id );
         void                                    addClip( Clip*, qint64 start );
         void                                    addClip( ClipWorkflow*, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
@@ -102,16 +99,11 @@ class   TrackWorkflow : public EffectUser
 
     private:
         void                                    computeLength();
-        Workflow::Frame                         *renderClip( Workflow::TrackType trackType, ClipWorkflow* cw, qint64 currentFrame,
-                                                            qint64 start, bool needRepositioning,
-                                                            bool renderOneFrame, bool paused );
-        void                                    preloadClip( ClipWorkflow* cw );
-        void                                    stopClipWorkflow( ClipWorkflow* cw );
-        void                                    adjustClipTime( qint64 currentFrame, qint64 start, ClipWorkflow* cw );
+        void                                    adjustClipTime( qint64 currentFrame, qint64 start, Clip* cw );
 
 
     private:
-        QMap<qint64, ClipWorkflow*>             m_clips;
+        QMap<qint64, Clip*>             m_clips;
 
         /**
          *  \brief      The track length in frames.
@@ -131,7 +123,6 @@ class   TrackWorkflow : public EffectUser
         void                __effectRemoved( const QUuid& );
         void                __effectMoved( EffectHelper*, qint64 );
         void                clipDestroyed( const QUuid &uuid );
-        void                clipWorkflowFailure( ClipWorkflow* cw );
 
     signals:
         void                lengthChanged( qint64 newLength );

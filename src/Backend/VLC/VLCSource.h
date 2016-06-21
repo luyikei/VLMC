@@ -30,18 +30,20 @@
 
 namespace Backend
 {
+class ISourceRendererEventCb;
 namespace VLC
 {
 
+class VLCSourceRenderer;
 class VLCBackend;
 class VmemRenderer;
 
-class VLCSource : public ISource
+class VLCSource
 {
 public:
     VLCSource( VLCBackend* backend, const QString& path );
     virtual ~VLCSource();
-    virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
+    virtual VLCSourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
     virtual bool                preparse();
     virtual bool                isParsed() const;
     virtual quint32             width() const;

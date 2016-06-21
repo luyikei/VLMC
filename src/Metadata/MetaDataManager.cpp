@@ -25,6 +25,7 @@
 #include "Backend/ISource.h"
 #include "Media/Media.h"
 #include "MetaDataManager.h"
+#include "Backend/VLC/VLCSource.h"
 
 MetaDataManager::MetaDataManager()
     : m_computeInProgress( false )
@@ -60,7 +61,7 @@ MetaDataManager::run()
             }
             target = m_mediaToCompute.dequeue();
         }
-        Backend::ISource* targetSource = target->source();
+        auto* targetSource = target->source();
         if ( targetSource->preparse() == false )
             emit failedToCompute( target );
         else

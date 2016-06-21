@@ -68,6 +68,7 @@ WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 void
 WorkflowFileRendererDialog::frameChanged( qint64 frame )
 {
+    /* TODO
     qint64 totalFrames = Core::instance()->workflow()->getLengthFrame();
 
     if ( frame <= totalFrames )
@@ -76,11 +77,14 @@ WorkflowFileRendererDialog::frameChanged( qint64 frame )
                                         QString::number( totalFrames ) ) );
         setProgressBarValue( frame * 100 / totalFrames );
     }
+    */
 }
 
 void
 WorkflowFileRendererDialog::cancel()
 {
+    /* TODO
     m_renderer->stop();
     close();
+    */
 }

@@ -151,8 +151,8 @@ Commands::Clip::Move::internalRedo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        ClipWorkflow    *cw = m_oldTrack->removeClipWorkflow( m_clip->uuid() );
-        m_newTrack->addClip( cw, m_newPos );
+        auto    c = m_oldTrack->removeClip( m_clip->uuid() );
+        m_newTrack->addClip( c, m_newPos );
     }
     else
         m_oldTrack->moveClip( m_clip->uuid(), m_newPos );
@@ -163,8 +163,8 @@ Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        ClipWorkflow    *cw = m_newTrack->removeClipWorkflow( m_clip->uuid() );
-        m_oldTrack->addClip( cw, m_oldPos );
+        auto    c = m_oldTrack->removeClip( m_clip->uuid() );
+        m_newTrack->addClip( c, m_newPos );
     }
     else
         m_newTrack->moveClip( m_clip->uuid(), m_oldPos );

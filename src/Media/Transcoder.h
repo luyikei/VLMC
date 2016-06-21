@@ -29,7 +29,11 @@
 
 namespace Backend
 {
-    class ISourceRenderer;
+namespace VLC
+{
+class VLCSourceRenderer;
+class RendererEventWatcher;
+}
 }
 
 class RendererEventWatcher;
@@ -45,8 +49,8 @@ class Transcoder : public QObject
     private:
         Media*                      m_media;
         QString                     m_destinationFile;
-        Backend::ISourceRenderer*   m_renderer;
-        RendererEventWatcher*       m_eventWatcher;
+        Backend::VLC::VLCSourceRenderer*   m_renderer;
+        Backend::VLC::RendererEventWatcher*       m_eventWatcher;
 
     private slots:
         void        transcodeFinished();

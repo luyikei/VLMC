@@ -39,7 +39,7 @@
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
 #include "EffectsEngine/EffectsEngine.h"
-#include "Backend/IBackend.h"
+#include "Backend/VLC/VLCBackend.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
@@ -58,7 +58,6 @@
 #include "import/ImportController.h"
 #include "library/MediaLibrary.h"
 #include "widgets/NotificationZone.h"
-#include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
 #include "timeline/TracksView.h"
 
@@ -69,7 +68,7 @@
 #include "LanguageHelper.h"
 #include "Commands/KeyboardShortcutHelper.h"
 
-MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
+MainWindow::MainWindow( Backend::VLC::VLCBackend* backend, QWidget *parent )
     : QMainWindow( parent )
     , m_backend( backend )
     , m_projectPreferences( nullptr )
@@ -117,15 +116,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( Core::instance()->project(), &Project::cleanStateChanged,
              this, &MainWindow::cleanStateChanged );
 
-
-    //Connecting Library stuff:
-    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
-    Q_ASSERT( clipRenderer != nullptr );
-    connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
-             clipRenderer, SLOT( setClip( Clip* ) ) );
-    connect( m_mediaLibrary, SIGNAL( importRequired() ),
-             this, SLOT( on_actionImport_triggered() ) );
-
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
         return ;
@@ -159,8 +149,6 @@ MainWindow::retranslateUi()
     m_dockedUndoView->setWindowTitle( tr( "History" ) );
     m_dockedEffectsList->setWindowTitle( tr( "Effects List" ) );
     m_dockedLibrary->setWindowTitle( tr( "Media Library" ) );
-    m_dockedClipPreview->setWindowTitle( tr( "Clip Preview" ) );
-    m_dockedProjectPreview->setWindowTitle( tr( "Project Preview" ) );
 }
 
 void
@@ -432,8 +420,6 @@ MainWindow::initializeDockWidgets()
 
     setupLibrary();
     setupEffectsList();
-    setupClipPreview();
-    setupProjectPreview();
     setupUndoRedoWidget();
 }
 
@@ -465,34 +451,6 @@ MainWindow::setupLibrary()
 {
     m_mediaLibrary = new MediaLibrary;
     m_dockedLibrary = dockWidget( m_mediaLibrary, Qt::TopDockWidgetArea );
-}
-
-void
-MainWindow::setupClipPreview()
-{
-    m_clipPreview = new PreviewWidget;
-    auto renderer = new ClipRenderer;
-    renderer->setParent( m_clipPreview );
-    m_clipPreview->setRenderer( renderer );
-    connect( Core::instance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
-             renderer, SLOT( clipUnloaded( const QUuid& ) ) );
-
-    KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
-    connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
-    m_dockedClipPreview = dockWidget( m_clipPreview, Qt::TopDockWidgetArea );
-}
-
-void
-MainWindow::setupProjectPreview()
-{
-    m_projectPreview = new PreviewWidget;
-    m_projectPreview->setClipEdition( false );
-    auto renderer = new WorkflowRenderer( Core::instance()->backend(), Core::instance()->workflow() );
-    renderer->setParent( m_projectPreview );
-    m_projectPreview->setRenderer( renderer );
-    KeyboardShortcutHelper* renderShortcut = new KeyboardShortcutHelper( "keyboard/renderpreview", this );
-    connect( renderShortcut, SIGNAL( activated() ), m_projectPreview, SLOT( on_pushButtonPlay_clicked() ) );
-    m_dockedProjectPreview = dockWidget( m_projectPreview, Qt::TopDockWidgetArea );
 }
 
 void
@@ -595,11 +553,12 @@ MainWindow::on_actionAbout_triggered()
 bool
 MainWindow::checkVideoLength()
 {
+    /* TODO
     if ( Core::instance()->workflow()->getLengthFrame() <= 0 )
     {
         QMessageBox::warning( nullptr, tr ( "VLMC Renderer" ), tr( "There is nothing to render." ) );
         return false;
-    }
+    }*/
     return true;
 }
 
@@ -609,6 +568,7 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
                          quint32 vbitrate, quint32 abitrate,
                          quint32 nbChannels, quint32 sampleRate )
 {
+    /* TODO
     WorkflowFileRendererDialog  dialog( width, height );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
@@ -620,12 +580,14 @@ MainWindow::renderVideo( const QString& outputFileName, quint32 width, quint32 h
 
     if ( dialog.exec() == QDialog::Rejected )
         return false;
+        */
     return true;
 }
 
 bool
 MainWindow::renderVideoSettings( bool shareOnInternet )
 {
+    /* TODO
     Core::instance()->workflowRenderer()->stop();
 
     RendererSettings settings( shareOnInternet );
@@ -643,7 +605,8 @@ MainWindow::renderVideoSettings( bool shareOnInternet )
     auto        nbChannels     = settings.nbChannels();
     auto        sampleRate     = settings.sampleRate();
 
-    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate, nbChannels, sampleRate );
+    return renderVideo( outputFileName, width, height, fps, ar, vbitrate, abitrate, nbChannels, sampleRate );*/
+    return true;
 }
 
 QDockWidget*

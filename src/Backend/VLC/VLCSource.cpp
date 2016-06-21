@@ -22,6 +22,7 @@
 
 #include "VLCBackend.h"
 #include "VLCSource.h"
+#include "VLCSourceRenderer.h"
 #include "VLCVmemRenderer.h"
 #include "Tools/VlmcDebug.h"
 
@@ -55,7 +56,7 @@ VLCSource::media()
     return m_media;
 }
 
-ISourceRenderer*
+VLCSourceRenderer*
 VLCSource::createRenderer( ISourceRendererEventCb *callback )
 {
     return new VLCSourceRenderer( m_backend, this, callback );

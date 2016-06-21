@@ -33,11 +33,13 @@ class RecentProjects;
 class Settings;
 class VlmcLogger;
 class Workspace;
-class WorkflowRenderer;
 
 namespace Backend
 {
-    class IBackend;
+namespace VLC
+{
+    class VLCBackend;
+}
 }
 
 namespace Commands
@@ -53,14 +55,13 @@ class Core : public QObject
     Q_OBJECT
 
     public:
-        Backend::IBackend*      backend();
+        Backend::VLC::VLCBackend*      backend();
         EffectsEngine*          effectsEngine();
         Settings*               settings();
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
         Workspace*              workspace();
         Project*                project();
-        WorkflowRenderer*       workflowRenderer();
         MainWorkflow*           workflow();
         Commands::AbstractUndoStack*   undoStack();
         Library*                library();
@@ -82,7 +83,7 @@ class Core : public QObject
         void                    connectComponents();
 
     private:
-        Backend::IBackend*      m_backend;
+        Backend::VLC::VLCBackend*      m_backend;
         EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;
         VlmcLogger*             m_logger;
@@ -90,7 +91,6 @@ class Core : public QObject
         Workspace*              m_workspace;
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;
-        WorkflowRenderer*       m_workflowRenderer;
         Commands::AbstractUndoStack*   m_undoStack;
         Library*                m_library;
         QElapsedTimer           m_timer;

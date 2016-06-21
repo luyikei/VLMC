@@ -32,7 +32,7 @@
 
 VlmcLogger::VlmcLogger()
     : m_logFile( nullptr )
-    , m_backendLogLevel( Backend::IBackend::None )
+    , m_backendLogLevel( Backend::VLC::VLCBackend::None )
 {
 }
 
@@ -87,18 +87,18 @@ VlmcLogger::setup()
             if ( ok == true )
             {
                 if ( vlcLogLevel >= 3 )
-                    m_backendLogLevel = Backend::IBackend::Debug;
+                    m_backendLogLevel = Backend::VLC::VLCBackend::Debug;
                 else if ( vlcLogLevel == 2 )
-                    m_backendLogLevel = Backend::IBackend::Warning;
+                    m_backendLogLevel = Backend::VLC::VLCBackend::Warning;
                 else if ( vlcLogLevel == 1 )
-                    m_backendLogLevel = Backend::IBackend::Error;
+                    m_backendLogLevel = Backend::VLC::VLCBackend::Error;
             }
             else
                 vlmcWarning() << tr("Invalid value supplied for argument --vlcverbose" );
         }
     }
-    Backend::IBackend* backend = Backend::getBackend();
-    backend->setLogHandler( [this]( Backend::IBackend::LogLevel lvl, const QString& msg ) {
+    auto* backend = Backend::getVLCBackend();
+    backend->setLogHandler( [this]( Backend::VLC::VLCBackend::LogLevel lvl, const QString& msg ) {
         backendLogHandler( lvl, msg );
     } );
 
@@ -171,7 +171,7 @@ VlmcLogger::outputToConsole( int level, const char *msg )
 }
 
 void
-VlmcLogger::backendLogHandler( Backend::IBackend::LogLevel logLevel, const QString& msg )
+VlmcLogger::backendLogHandler( Backend::VLC::VLCBackend::LogLevel logLevel, const QString& msg )
 {
     char* newMsg = nullptr;
     if ( asprintf( &newMsg, "[%s] T #%p [Backend] %s", qPrintable( QTime::currentTime().toString( "hh:mm:ss.zzz" ) ),
@@ -187,13 +187,13 @@ VlmcLogger::backendLogHandler( Backend::IBackend::LogLevel logLevel, const QStri
     }
     switch ( logLevel )
     {
-        case Backend::IBackend::Debug:
+        case Backend::VLC::VLCBackend::Debug:
             outputToConsole( Debug, newMsg );
             break;
-        case Backend::IBackend::Warning:
+        case Backend::VLC::VLCBackend::Warning:
             outputToConsole( Verbose, newMsg );
             break;
-        case Backend::IBackend::Error:
+        case Backend::VLC::VLCBackend::Error:
             outputToConsole( Quiet, newMsg );
             break;
         default:

@@ -32,7 +32,7 @@
 #include "Workflow/Types.h"
 #include "Renderer/ConsoleRenderer.h"
 #include "Project/Project.h"
-#include "Backend/IBackend.h"
+#include "Backend/VLC/VLCBackend.h"
 #include "Main/Core.h"
 #ifdef WITH_GUI
 #include "Gui/MainWindow.h"
@@ -58,7 +58,7 @@
 #endif
 
 static void
-VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
+VLMCmainCommon( const QCoreApplication &app, Backend::VLC::VLCBackend** backend )
 {
     app.setApplicationName( "vlmc" );
     app.setOrganizationName( "VideoLAN" );
@@ -72,7 +72,7 @@ VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
     qRegisterMetaType<QVariant>( "QVariant" );
     qRegisterMetaType<QUuid>( "QUuid" );
 
-    *backend = Backend::getBackend();
+    *backend = Backend::getVLCBackend();
 }
 
 /**
@@ -92,7 +92,7 @@ VLMCGuimain( int argc, char **argv )
 
     QApplication app( argc, argv );
 
-    Backend::IBackend* backend;
+    Backend::VLC::VLCBackend* backend;
     VLMCmainCommon( app, &backend );
 
     /* Load a project file */
@@ -184,7 +184,7 @@ VLMCCoremain( int argc, char **argv )
 {
     QCoreApplication app( argc, argv );
 
-    Backend::IBackend* backend;
+    Backend::VLC::VLCBackend* backend;
     VLMCmainCommon( app, &backend );
 
     /* Load a project file */

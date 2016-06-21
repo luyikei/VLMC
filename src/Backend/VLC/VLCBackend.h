@@ -25,7 +25,6 @@
 
 #include <cstdarg>
 
-#include "Backend/IBackend.h"
 #include "Tools/Singleton.hpp"
 #include "vlcpp/vlc.hpp"
 
@@ -33,13 +32,23 @@ namespace Backend
 {
 namespace VLC
 {
-
-class VLCBackend : public IBackend, public Singleton<VLCBackend>
+class VLCMemorySource;
+class VLCSource;
+class VLCBackend : public Singleton<VLCBackend>
 {
     public:
+        enum LogLevel
+        {
+            Debug,
+            Warning,
+            Error,
+            None
+        };
+        using LogHandler = std::function<void( LogLevel logLevel, const char* msg )>;
+
         VLCBackend();
-        virtual ISource*        createSource( const char* path );
-        virtual IMemorySource*  createMemorySource();
+        virtual VLCSource*        createSource( const char* path );
+        virtual VLCMemorySource*  createMemorySource();
         virtual void            setLogHandler( LogHandler logHandler );
 
         // Accessible from VLCBackend only:
@@ -52,7 +61,7 @@ class VLCBackend : public IBackend, public Singleton<VLCBackend>
 
 } //VLC
 
-IBackend* getBackend();
+VLC::VLCBackend* getVLCBackend();
 
 
 } //Backend

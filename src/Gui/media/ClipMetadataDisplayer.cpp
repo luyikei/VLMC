@@ -23,7 +23,7 @@
 #include "ClipMetadataDisplayer.h"
 
 #include "Media/Clip.h"
-#include "Backend/ISource.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Media/Media.h"
 
 #include <QTime>
@@ -47,7 +47,7 @@ ClipMetadataDisplayer::metadataUpdated()
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
-    const Backend::ISource* source = m_watchedMedia->source();
+    const auto* source = m_watchedMedia->source();
     updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );

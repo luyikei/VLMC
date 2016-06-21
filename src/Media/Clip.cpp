@@ -26,7 +26,7 @@
 
 #include "Clip.h"
 #include "Main/Core.h"
-#include "Backend/ISource.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Project/Workspace.h"

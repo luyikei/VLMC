@@ -34,12 +34,14 @@ namespace LibVLCpp
 
 namespace Backend
 {
+class ISourceRendererEventCb;
 namespace VLC
 {
 
 class VLCBackend;
+class VLCSourceRenderer;
 
-class VLCMemorySource : public IMemorySource
+class VLCMemorySource
 {
 public:
     VLCMemorySource( VLCBackend* backend );
@@ -50,7 +52,7 @@ public:
     virtual void                setAspectRatio( const char* aspectRatio );
     virtual void                setNumberChannels( unsigned int nbChannels );
     virtual void                setSampleRate( unsigned int sampleRate );
-    virtual ISourceRenderer*    createRenderer( ISourceRendererEventCb* callback );
+    virtual VLCSourceRenderer*  createRenderer( ISourceRendererEventCb* callback );
 
     // Below this point are backend internal methods:
     LibVLCpp::Media*            media();

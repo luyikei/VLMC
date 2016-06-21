@@ -31,7 +31,7 @@
 using namespace Backend;
 using namespace Backend::VLC;
 
-IBackend *Backend::getBackend()
+VLCBackend *Backend::getVLCBackend()
 {
     return VLCBackend::instance();
 }
@@ -52,32 +52,32 @@ VLCBackend::VLCBackend()
     m_vlcInstance = ::VLC::Instance( sizeof( argv ) / sizeof( argv[0] ), argv );
 }
 
-ISource*
+VLCSource*
 VLCBackend::createSource(const char *path)
 {
     return new VLCSource( this, path );
 }
 
-IMemorySource*
+VLCMemorySource*
 VLCBackend::createMemorySource()
 {
     return new VLCMemorySource( this );
 }
 
 void
-VLCBackend::setLogHandler( IBackend::LogHandler logHandler )
+VLCBackend::setLogHandler( VLCBackend::LogHandler logHandler )
 {
     m_vlcInstance.logUnset();
     if ( (bool)logHandler == true )
     {
         m_vlcInstance.logSet( [logHandler]( int level, const void*, const std::string& msg ) {
-            auto lvl = IBackend::None;
+            auto lvl = VLCBackend::None;
             if ( level == LIBVLC_NOTICE || level == LIBVLC_DEBUG )
-                lvl = IBackend::Debug;
+                lvl = VLCBackend::Debug;
             else if ( level <= LIBVLC_WARNING )
-                lvl = IBackend::Warning;
+                lvl = VLCBackend::Warning;
             else
-                lvl = IBackend::Error;
+                lvl = VLCBackend::Error;
             logHandler( lvl, msg.c_str() );
         });
     }

@@ -29,7 +29,7 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
-#include "Backend/ISource.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
@@ -142,7 +142,7 @@ ImportController::clipSelection( Clip* clip )
         if ( m_currentUuid == uuid )
             return ;
         m_ui->metadataContainer->setWatchedClip( clip );
-        m_clipRenderer->stop();
+        //TODO m_clipRenderer->stop();
         m_currentUuid = uuid;
     //    m_tag->clipSelected( clip );
     }
@@ -218,11 +218,11 @@ ImportController::treeViewDoubleClicked( const QModelIndex& index )
 void
 ImportController::reject()
 {
-    m_clipRenderer->stop();
+    //TODO m_clipRenderer->stop();
     m_mediaListView->clear();
     m_temporaryMedias->clear();
     collapseAllButCurrentPath();
-    m_clipRenderer->setClip( nullptr );
+    //TODO m_clipRenderer->setClip( nullptr );
     done( Rejected );
 }
 
@@ -232,7 +232,7 @@ ImportController::accept()
     bool    invalidMedias = false;
 
     m_mediaListView->clear();
-    m_clipRenderer->stop();
+    //TODO m_clipRenderer->stop();
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
@@ -243,7 +243,7 @@ ImportController::accept()
     if ( invalidMedias == true )
         handleInvalidMedias();
     m_temporaryMedias->removeAll();
-    m_clipRenderer->setClip( nullptr );
+    //TODO m_clipRenderer->setClip( nullptr );
     done( Accepted );
 }
 

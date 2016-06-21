@@ -58,16 +58,11 @@ SET(CMAKE_AUTOMOC ON)
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
-    Backend/ISourceRenderer.h
-    Backend/ISource.h
-    Backend/IRenderTarget.h
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
     Backend/VLC/VLCSource.cpp
     Backend/VLC/VLCMemorySource.cpp
-    Backend/Target/WidgetTarget.cpp
-    Backend/Target/FileTarget.cpp
     EffectsEngine/EffectsEngine.cpp
     EffectsEngine/Effect.cpp
     EffectsEngine/EffectUser.cpp
@@ -86,7 +81,6 @@ SET(VLMC_SRCS
     Project/WorkspaceWorker.cpp
     Project/RecentProjects.cpp
     Renderer/AbstractRenderer.cpp
-    Renderer/ClipSmemRenderer.cpp
     Renderer/WorkflowRenderer.cpp
     Services/AbstractSharingService.h
     Services/UploaderIODevice.cpp
@@ -99,7 +93,6 @@ SET(VLMC_SRCS
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h
     Tools/VlmcLogger.cpp
-    Workflow/ClipWorkflow.cpp
     Workflow/Helper.cpp
     Workflow/MainWorkflow.cpp
     Workflow/TrackWorkflow.cpp
@@ -149,7 +142,6 @@ ELSE(NOT WITH_GUI)
         Gui/IntroDialog.cpp
         Gui/LanguageHelper.cpp
         Gui/MainWindow.cpp
-        Gui/WorkflowFileRendererDialog.cpp
         Gui/effectsengine/EffectInstanceWidget.cpp
         Gui/effectsengine/EffectInstanceListModel.cpp
         Gui/effectsengine/EffectsListView.cpp

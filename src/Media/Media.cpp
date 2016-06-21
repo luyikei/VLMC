@@ -36,8 +36,8 @@
 #include "Metadata/MetaDataManager.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
-#include "Backend/ISource.h"
-#include "Backend/IBackend.h"
+#include "Backend/VLC/VLCSource.h"
+#include "Backend/VLC/VLCBackend.h"
 
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "
@@ -105,13 +105,13 @@ Media::fileName() const
     return m_fileName;
 }
 
-Backend::ISource*
+Backend::VLC::VLCSource*
 Media::source()
 {
     return m_source;
 }
 
-const Backend::ISource*
+const Backend::VLC::VLCSource*
 Media::source() const
 {
     return m_source;
@@ -169,7 +169,7 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
 
-    Backend::IBackend* backend = Backend::getBackend();
+    auto backend = Backend::getVLCBackend();
     delete m_source;
     m_source = backend->createSource( qPrintable( filePath ) );
     MetaDataManager::instance()->computeMediaMetadata( this );

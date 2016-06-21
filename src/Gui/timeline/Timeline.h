@@ -34,7 +34,6 @@ class   TracksScene;
 class   TracksView;
 class   TracksControls;
 class   TracksRuler;
-class   WorkflowRenderer;
 
 /**
  * \brief Entry point of the timeline widget.
@@ -56,7 +55,6 @@ public:
     TracksRuler*        tracksRuler() { return m_tracksRuler; }
     /// Return a pointer to the Timeline instance (singleton).
     static Timeline*    instance() { return m_instance; }
-    WorkflowRenderer    *renderer() { return m_renderer; }
 
 public slots:
     /**
@@ -92,7 +90,6 @@ private:
     TracksControls*     m_tracksControls;
     double              m_scale;
     MainWorkflow*       m_mainWorkflow;
-    WorkflowRenderer*   m_renderer;
     static Timeline*    m_instance;
 };
 

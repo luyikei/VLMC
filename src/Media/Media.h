@@ -42,7 +42,10 @@
 
 namespace Backend
 {
-    class   ISource;
+namespace VLC
+{
+    class   VLCSource;
+}
 }
 class Clip;
 
@@ -75,8 +78,8 @@ public:
     const QFileInfo             *fileInfo() const;
     const QString               &mrl() const;
     const QString               &fileName() const;
-    Backend::ISource *source();
-    const Backend::ISource *source() const;
+    Backend::VLC::VLCSource *source();
+    const Backend::VLC::VLCSource *source() const;
     /**
      *  \brief                  Set this media's path.
      *
@@ -104,7 +107,7 @@ public:
     QPixmap&                    snapshot();
 #endif
 protected:
-    Backend::ISource*           m_source;
+    Backend::VLC::VLCSource*    m_source;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
     FileType                    m_fileType;

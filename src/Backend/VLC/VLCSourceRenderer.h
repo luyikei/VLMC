@@ -25,23 +25,67 @@
 
 #include <QFlags>
 #include <QString>
-
-#include "Backend/ISourceRenderer.h"
+#include <QObject>
 
 #include "vlcpp/vlc.hpp"
 
 namespace Backend
 {
+class ISourceRendererEventCb
+{
+public:
+    virtual ~ISourceRendererEventCb() = default;
+    virtual void    onTimeChanged( int64_t ) = 0;
+    virtual void    onPlaying() = 0;
+    virtual void    onPaused() = 0;
+    virtual void    onStopped() = 0;
+    virtual void    onEndReached() = 0;
+    virtual void    onVolumeChanged() = 0;
+    virtual void    onPositionChanged( float ) = 0;
+    virtual void    onLengthChanged( int64_t ) = 0;
+    virtual void    onErrorEncountered() = 0;
+};
+
 namespace VLC
 {
+
+class RendererEventWatcher : public QObject, public Backend::ISourceRendererEventCb
+{
+    Q_OBJECT
+public:
+    explicit RendererEventWatcher(QObject *parent = 0) : QObject( parent ) {};
+
+private:
+    virtual void    onTimeChanged( int64_t time ) { emit timeChanged( time ); }
+    virtual void    onPlaying() { emit playing(); }
+    virtual void    onPaused() { emit paused(); }
+    virtual void    onStopped() { emit stopped(); }
+    virtual void    onEndReached() { emit endReached(); }
+    virtual void    onVolumeChanged() { emit volumeChanged(); }
+    virtual void    onPositionChanged( float pos ) { emit positionChanged( pos ); }
+    virtual void    onLengthChanged( int64_t length ) { emit lengthChanged( length ); }
+    virtual void    onErrorEncountered() { emit errorEncountered(); }
+
+signals:
+    void            timeChanged( qint64 );
+    void            playing();
+    void            paused();
+    void            stopped();
+    void            endReached();
+    void            volumeChanged();
+    void            positionChanged( float );
+    void            lengthChanged( qint64 );
+    void            errorEncountered();
+};
 
 class VLCBackend;
 class VLCSource;
 class VLCMemorySource;
 
-class VLCSourceRenderer : public ISourceRenderer
+class VLCSourceRenderer
 {
 public:
+
     enum Mode
     {
         Playback = 0,
@@ -52,49 +96,61 @@ public:
     };
     Q_DECLARE_FLAGS( Modes, Mode )
 
+    typedef void (*VideoOutputLockCallback)( void* data, uint8_t** p_buffer, size_t size );
+    typedef void (*VideoOutputUnlockCallback)( void* data, uint8_t* buffer, int width,
+                                    int height, int bpp, size_t size, int64_t pts );
+    typedef void (*AudioOutputLockCallback)( void* data, uint8_t** p_buffer, size_t size );
+    typedef void (*AudioOutputUnlockCallback)( void* data, uint8_t* buffer, unsigned int channels,
+                                               unsigned int rate, unsigned int nb_samples, unsigned int bits_per_sample,
+                                               size_t size, int64_t pts );
+
+    typedef int (*MemoryInputLockCallback)( void *data, const char* cookie, int64_t *dts, int64_t *pts,
+                     uint32_t *flags, size_t *bufferSize, const void **buffer );
+    typedef void (*MemoryInputUnlockCallback)( void *data, const char* cookie, size_t buffSize, void *buffer );
+
     VLCSourceRenderer( VLCBackend* backendInstance, VLCSource *source, ISourceRendererEventCb* callback );
     VLCSourceRenderer( VLCBackend* backendInstance, const VLCMemorySource *source, ISourceRendererEventCb* callback );
     virtual ~VLCSourceRenderer();
 
-    virtual void    setName( const char* name ) override;
-    virtual void    start() override;
-    virtual void    stop() override;
-    virtual bool    isStopped() override;
-    virtual void    playPause() override;
-    virtual void    setPause( bool isPaused ) override;
-    virtual void    nextFrame() override;
-    virtual void    previousFrame() override;
-    virtual void    setOutputWidget( void *target ) override;
-    virtual int64_t time() override;
-    virtual void    setTime( int64_t time ) override;
-    virtual void    setPosition( float position ) override;
-    virtual int     volume() override;
-    virtual void    setVolume( int volume ) override;
+    virtual void    setName( const char* name );
+    virtual void    start();
+    virtual void    stop();
+    virtual bool    isStopped();
+    virtual void    playPause();
+    virtual void    setPause( bool isPaused );
+    virtual void    nextFrame();
+    virtual void    previousFrame();
+    virtual void    setOutputWidget( void *target );
+    virtual int64_t time();
+    virtual void    setTime( int64_t time );
+    virtual void    setPosition( float position );
+    virtual int     volume();
+    virtual void    setVolume( int volume );
 
-    virtual void    setOutputFile( const char* path ) override;
+    virtual void    setOutputFile( const char* path );
 
     // Video output
-    virtual void    setOutputVideoCodec( const char* fourCC ) override;
-    virtual void    setOutputWidth( unsigned int width ) override;
-    virtual void    setOutputHeight( unsigned int height ) override;
-    virtual void    setOutputFps( float fps ) override;
-    virtual void    setOutputVideoBitrate( unsigned int vBitrate ) override;
+    virtual void    setOutputVideoCodec( const char* fourCC );
+    virtual void    setOutputWidth( unsigned int width );
+    virtual void    setOutputHeight( unsigned int height );
+    virtual void    setOutputFps( float fps );
+    virtual void    setOutputVideoBitrate( unsigned int vBitrate );
 
     // Audio output:
-    virtual void    setOutputAudioCodec( const char* fourCC ) override;
-    virtual void    setOutputAudioSampleRate( unsigned int sampleRate ) override;
-    virtual void    setOutputAudioNumberChannels( unsigned int nbChannels ) override;
-    virtual void    setOutputAudioBitrate( unsigned int aBitrate ) override;
+    virtual void    setOutputAudioCodec( const char* fourCC );
+    virtual void    setOutputAudioSampleRate( unsigned int sampleRate );
+    virtual void    setOutputAudioNumberChannels( unsigned int nbChannels );
+    virtual void    setOutputAudioBitrate( unsigned int aBitrate );
 
     // imem:
-    virtual void    enableMemoryInput( void* data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback ) override;
+    virtual void    enableMemoryInput( void* data, MemoryInputLockCallback lockCallback, MemoryInputUnlockCallback unlockCallback );
 
     // smem:
     virtual void    enableOutputToMemory( void* videoData, void* audioData, VideoOutputLockCallback videoLock, VideoOutputUnlockCallback videoUnlock,
-                                          AudioOutputLockCallback audioLock, AudioOutputUnlockCallback audioUnlock, bool timeSync ) override;
-    virtual void    enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync ) override;
+                                          AudioOutputLockCallback audioLock, AudioOutputUnlockCallback audioUnlock, bool timeSync );
+    virtual void    enableVideoOutputToMemory( void* data, VideoOutputLockCallback lock, VideoOutputUnlockCallback unlock, bool timeSync );
     virtual void    enableAudioOutputToMemory( void* data, AudioOutputLockCallback lock,
-                                               AudioOutputUnlockCallback unlock, bool timeSync ) override;
+                                               AudioOutputUnlockCallback unlock, bool timeSync );
 
     // Below is stuff which is not accessible through IRenderer
     void    setOption( const QString& option );

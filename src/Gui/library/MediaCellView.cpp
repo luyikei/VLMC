@@ -28,7 +28,7 @@
 #include "Main/Core.h"
 #include "Media/Clip.h"
 #include "ClipProperty.h"
-#include "Backend/ISource.h"
+#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Metadata/MetaDataManager.h"
