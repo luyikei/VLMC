@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,12 +26,15 @@
 
 #include <functional>
 
+#include <string>
+#include <map>
+
 namespace Backend
 {
 
-class ISourceRenderer;
-class ISource;
-class IMemorySource;
+class IConsumer;
+class IProfile;
+class IFilterInfo;
 
 class IBackend
 {
@@ -45,13 +49,14 @@ class IBackend
         using LogHandler = std::function<void( LogLevel logLevel, const char* msg )>;
 
         virtual ~IBackend() = default;
-        virtual ISource*        createSource( const char* path ) = 0;
-        virtual IMemorySource*  createMemorySource() = 0;
-        virtual void            setLogHandler( LogHandler logHandler ) = 0;
+        virtual IProfile&                   profile() = 0;
+        virtual const std::map<std::string, IFilterInfo*>&    availableFilters() const = 0;
+        virtual IFilterInfo*                                  filterInfo( const std::string& id ) const = 0;
+
+        virtual void                        setLogHandler( LogHandler logHandler ) = 0;
 };
 
-extern IBackend* getBackend();
-
+extern IBackend* instance();
 }
 
 #endif // IBACKEND_H
