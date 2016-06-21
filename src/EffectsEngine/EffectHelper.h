@@ -54,6 +54,7 @@ class   EffectHelper : public Workflow::Helper
                       const QString& uuid = QString() );
         EffectHelper( Backend::IFilter* filter,
                       const QString& uuid = QString() );
+        EffectHelper( const QVariant& variant );
         ~EffectHelper();
 
         virtual qint64  begin() const override;
@@ -74,6 +75,14 @@ class   EffectHelper : public Workflow::Helper
         const Backend::IFilter*         filter() const;
 
         SettingValue*                   value( const QString& key );
+
+        // Handle one filter.
+        void                            loadFromVariant( const QVariant& variant );
+        QVariant                        toVariant();
+
+        // Handle one service
+        static QVariant                 toVariant( Backend::IService* service );
+        static void                     loadFromVariant( const QVariant& variant, Backend::IService* service );
 
     private:
         Backend::MLT::MLTFilter*    m_filter;

@@ -73,6 +73,12 @@ EffectHelper::EffectHelper( Backend::IFilter *filter, const QString& uuid )
     initParams();
 }
 
+EffectHelper::EffectHelper( const QVariant& variant )
+    : EffectHelper( variant.toMap()["identifier"].toString() )
+{
+    loadFromVariant( variant );
+}
+
 EffectHelper::~EffectHelper()
 {
     delete m_filter;
@@ -147,7 +153,7 @@ EffectHelper::set( SettingValue* value, const QVariant& variant )
 }
 
 QVariant
-EffectHelper::defaultValue( const char *id, SettingValue::Type type )
+EffectHelper::defaultValue( const char* id, SettingValue::Type type )
 {
     switch ( type )
     {
@@ -166,6 +172,49 @@ SettingValue*
 EffectHelper::value( const QString& key )
 {
     return m_settings.value( key );
+}
+
+void
+EffectHelper::loadFromVariant( const QVariant& variant )
+{
+    auto m = variant.toMap()["parameters"].toMap();
+    for ( auto it = m.cbegin(); it != m.cend(); ++it )
+        value( it.key() )->set( it.value() );
+}
+
+QVariant
+EffectHelper::toVariant()
+{
+    QVariantHash h;
+    for ( const auto param : filterInfo()->paramInfos() )
+    {
+        auto val = value( QString::fromStdString( param->identifier() ) );
+        h.insert( val->key(), val->get() );
+    }
+    return QVariantHash{ { "identifier", identifier() }, { "parameters", h } };
+}
+
+QVariant
+EffectHelper::toVariant( Backend::IService* service )
+{
+    QVariantList filters;
+    for ( int i = 0; i < service->filterCount(); ++ i )
+    {
+        EffectHelper helper( service->filter( i ) );
+        filters << helper.toVariant();
+    }
+    return filters;
+}
+
+void
+EffectHelper::loadFromVariant( const QVariant& variant, Backend::IService* service )
+{
+    for ( auto& var : variant.toList() )
+    {
+        EffectHelper helper( var );
+        service->attach( *helper.filter() );
+        helper.filter()->connect( *helper.filter() );
+    }
 }
 
 qint64

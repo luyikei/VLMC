@@ -27,6 +27,7 @@
 #include "MediaContainer.h"
 #include "Media/Clip.h"
 #include "Media/Media.h"
+#include "EffectsEngine/EffectHelper.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
@@ -211,5 +212,10 @@ MediaContainer::createClipFromVariant( const QVariant &var, Clip* parent )
     if ( h.contains( "subClips" ) )
         for ( auto& var : h["subClips"].toList() )
             c->addSubclip( createClipFromVariant( var, c ) );
+
+    if ( h.contains( "filters" ) )
+        for ( auto& var : h["filters"].toList() )
+            EffectHelper::loadFromVariant( var, c->producer() );
+
     return c;
 }

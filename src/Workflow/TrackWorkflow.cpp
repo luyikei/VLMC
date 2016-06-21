@@ -212,22 +212,21 @@ TrackWorkflow::removeClip( const QUuid& id )
 QVariant
 TrackWorkflow::toVariant() const
 {
-    /*
     QVariantList l;
-    for ( auto it = m_clips.cbegin(); it != m_clips.cend(); it++ )
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
     {
         auto    clip = it.value();
-        l << QVariantHash{
-                    { "clip", clip->uuid() },
-                    { "begin", clip->begin() },
-                    { "end", clip->end() },
-                    { "startFrame", it.key() },
-                    { "filters", clip->toVariant() }
-                };
+        QVariantHash h;
+        h.insert( "parent", clip->parent()->uuid().toString() );
+        h.insert( "begin", clip->begin() );
+        h.insert( "end", clip->end() );
+        h.insert( "formats", (int)clip->formats() );
+        h.insert( "filters", EffectHelper::toVariant( clip->producer() ) );
+        h.insert( "startFrame", it.key() );
+        l << h;
     }
-    QVariantHash h{ { "clips", l } };
-    return QVariant( h );*/
-    return QVariant();
+    QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_tractor ) } };
+    return QVariant( h );
 }
 
 void
@@ -235,26 +234,16 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
 {
     for ( auto& var : variant.toMap()[ "clips" ].toList() )
     {
-        QVariantMap m = var.toMap();
-        const QString& uuid     = m["clip"].toString();
-        qint64 startFrame       = m["startFrame"].toLongLong();
-        qint64 begin            = m["begin"].toLongLong();
-        qint64 end              = m["end"].toLongLong();
-
-        if ( uuid.isEmpty() )
-        {
-            vlmcWarning() << "Invalid clip node";
-            return ;
-        }
-
-        Clip  *clip = Core::instance()->workflow()->createClip( QUuid( uuid ) );
-        if ( clip == nullptr )
-            continue ;
-        clip->setBoundaries( begin, end );
-        addClip( clip, startFrame );
-
-        // TODO clip->clipWorkflow()->loadFromVariant( m["filters"] );
+        auto m = var.toMap();
+        auto c = Core::instance()->workflow()->createClip( m["parent"].toString() );
+        c->setBoundaries( m["begin"].toULongLong(),
+                          m["end"].toULongLong()
+                         );
+        c->setFormats( (Clip::Formats)m["formats"].toInt() );
+        EffectHelper::loadFromVariant( m["filters"], c->producer() );
+        addClip( c, m["startFrame"].toLongLong() );
     }
+    EffectHelper::loadFromVariant( variant.toMap()["filters"], m_tractor );
 }
 
 void

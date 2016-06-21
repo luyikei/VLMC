@@ -261,6 +261,7 @@ Clip::toVariant() const
         h.insert( "begin", begin() );
         h.insert( "end", end() );
     }
+    h.insert( "filters", EffectHelper::toVariant( m_producer ) );
     return QVariant( h );
 
 }
