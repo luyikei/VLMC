@@ -25,8 +25,7 @@
   * This file contain the templated singleton.
   * Class/struct to be singletonized just have to
   * iherit from this classe with the class/struct type in template
-  * parameter.You have to do few other things, but you know your job,
-  * don't you? :)
+  * parameter.
   */
 
 #ifndef SINGLETON_HPP
@@ -55,10 +54,11 @@ public:
     }
 protected:
     Singleton(){}
-    virtual ~Singleton(){}
-    //Not implemented since these methods should *NEVER* been called. If they do, it probably won't compile :)
-    Singleton(const Singleton<T>&);
-    Singleton<T>&   operator=(const Singleton<T>&);
+    ~Singleton() = default;
+    Singleton(const Singleton<T>&) = delete;
+    Singleton(Singleton<T>&&) = delete;
+    Singleton<T>&   operator=(const Singleton<T>&) = delete;
+    Singleton<T>&   operator=(Singleton<T>&&) = delete;
 
 protected:
     static T*      m_instance;
