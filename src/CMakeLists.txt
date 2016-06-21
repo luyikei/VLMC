@@ -66,6 +66,15 @@ SET(VLMC_SRCS
     Backend/ITractor.h
     Backend/ITransition.h
     Backend/IFilter.h
+    Backend/MLT/MLTBackend.cpp
+    Backend/MLT/MLTConsumer.cpp
+    Backend/MLT/MLTProducer.cpp
+    Backend/MLT/MLTTrack.cpp
+    Backend/MLT/MLTService.cpp
+    Backend/MLT/MLTProfile.cpp
+    Backend/MLT/MLTFilter.cpp
+    Backend/MLT/MLTTransition.cpp
+    Backend/MLT/MLTTractor.cpp
     Backend/VLC/VLCBackend.cpp
     Backend/VLC/VLCSourceRenderer.cpp
     Backend/VLC/VLCVmemRenderer.cpp
