@@ -28,7 +28,7 @@
 #include <QStandardPaths>
 
 
-#include <Backend/VLC/VLCBackend.h>
+#include <Backend/IBackend.h>
 #include <EffectsEngine/EffectsEngine.h>
 #include "Library/Library.h"
 #include "Project/RecentProjects.h"
@@ -40,7 +40,7 @@
 
 Core::Core()
 {
-    m_backend = Backend::getVLCBackend();
+    m_backend = Backend::instance();
     m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
 
@@ -92,7 +92,7 @@ Core::createSettings()
     m_settings->createVar( SettingValue::Bool, "private/FirstLaunchDone", false, "", "", SettingValue::Private );
 }
 
-Backend::VLC::VLCBackend*
+Backend::IBackend*
 Core::backend()
 {
     return m_backend;

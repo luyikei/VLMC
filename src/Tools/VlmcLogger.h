@@ -26,7 +26,7 @@
 #include <QObject>
 #include <cstdio>
 
-#include "Backend/VLC/VLCBackend.h"
+#include "Backend/IBackend.h"
 
 /**
  *  \warning    Do not use qDebug() qWarning() etc... from here, unless you know exactly what you're doing
@@ -50,7 +50,7 @@ class   VlmcLogger : public QObject
         };
 
         static void     vlmcMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& str );
-        void            backendLogHandler( Backend::VLC::VLCBackend::LogLevel logLevel, const QString& msg );
+        void            backendLogHandler( Backend::IBackend::LogLevel logLevel, const QString& msg );
 
         void            setup();
     private:
@@ -59,7 +59,7 @@ class   VlmcLogger : public QObject
 
         FILE*                           m_logFile;
         LogLevel                        m_currentLogLevel;
-        Backend::VLC::VLCBackend::LogLevel     m_backendLogLevel;
+        Backend::IBackend::LogLevel     m_backendLogLevel;
 
     private slots:
         void            logLevelChanged( const QVariant& logLevel );

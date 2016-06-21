@@ -46,10 +46,7 @@ class   WorkflowRenderer;
 
 namespace Backend
 {
-namespace VLC
-{
-class VLCBackend;
-}
+class IBackend;
 }
 
 class MainWindow : public QMainWindow
@@ -58,7 +55,7 @@ class MainWindow : public QMainWindow
     Q_DISABLE_COPY( MainWindow )
 
 public:
-    explicit MainWindow( Backend::VLC::VLCBackend* backend,
+    explicit MainWindow( Backend::IBackend* backend,
                          QWidget *parent = 0 );
     ~MainWindow();
 
@@ -131,7 +128,7 @@ private:
     Ui::MainWindow          m_ui;
     QSlider*                m_zoomSlider;
     Timeline*               m_timeline;
-    Backend::VLC::VLCBackend*      m_backend;
+    Backend::IBackend*      m_backend;
     SettingsDialog*         m_globalPreferences;
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;

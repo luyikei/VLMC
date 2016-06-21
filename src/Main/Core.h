@@ -36,10 +36,7 @@ class Workspace;
 
 namespace Backend
 {
-namespace VLC
-{
-    class VLCBackend;
-}
+    class IBackend;
 }
 
 namespace Commands
@@ -55,7 +52,7 @@ class Core : public QObject
     Q_OBJECT
 
     public:
-        Backend::VLC::VLCBackend*      backend();
+        Backend::IBackend*      backend();
         EffectsEngine*          effectsEngine();
         Settings*               settings();
         VlmcLogger*             logger();
@@ -83,7 +80,7 @@ class Core : public QObject
         void                    connectComponents();
 
     private:
-        Backend::VLC::VLCBackend*      m_backend;
+        Backend::IBackend*      m_backend;
         EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;
         VlmcLogger*             m_logger;

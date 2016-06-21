@@ -38,8 +38,7 @@
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
-#include "EffectsEngine/EffectsEngine.h"
-#include "Backend/VLC/VLCBackend.h"
+#include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/WorkflowRenderer.h"
 #include "Renderer/ClipRenderer.h"
@@ -68,7 +67,7 @@
 #include "LanguageHelper.h"
 #include "Commands/KeyboardShortcutHelper.h"
 
-MainWindow::MainWindow( Backend::VLC::VLCBackend* backend, QWidget *parent )
+MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     : QMainWindow( parent )
     , m_backend( backend )
     , m_projectPreferences( nullptr )
