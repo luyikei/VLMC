@@ -50,14 +50,14 @@ Core::Core()
     m_workflow = new MainWorkflow( m_currentProject->settings() );
     m_undoStack = new Commands::AbstractUndoStack;
 
-    connect( m_undoStack, &Commands::AbstractUndoStack::cleanChanged,
+    QObject::connect( m_undoStack, &Commands::AbstractUndoStack::cleanChanged,
              m_currentProject, &Project::cleanChanged );
-    connect( m_currentProject, &Project::projectSaved,
+    QObject::connect( m_currentProject, &Project::projectSaved,
              m_undoStack, &Commands::AbstractUndoStack::setClean );
-    connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
-    connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
-    connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
-    connect( m_currentProject, &Project::projectClosed, m_workflow, &MainWorkflow::clear );
+    QObject::connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
+    QObject::connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
+    QObject::connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
+    QObject::connect( m_currentProject, &Project::projectClosed, m_workflow, &MainWorkflow::clear );
 
     m_timer.start();
 }

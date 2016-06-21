@@ -43,13 +43,10 @@ namespace Commands
     class AbstractUndoStack;
 }
 
-#include <QObject>
 #include <QElapsedTimer>
 
-class Core : public QObject
+class Core
 {
-    Q_OBJECT
-
     public:
         Backend::IBackend*      backend();
         Settings*               settings();
@@ -72,7 +69,7 @@ class Core : public QObject
 
     private:
         Core();
-        virtual ~Core();
+        ~Core();
 
         void                    createSettings();
         void                    connectComponents();
