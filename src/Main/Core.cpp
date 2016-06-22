@@ -166,10 +166,3 @@ Core::runtime()
 {
     return m_timer.elapsed();
 }
-
-Core*
-Core::instance()
-{
-    static Core core;
-    return &core;
-}

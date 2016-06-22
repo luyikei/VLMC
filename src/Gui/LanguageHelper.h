@@ -43,7 +43,7 @@ private:
     QTranslator             *m_translator;
     QTranslator             *m_qtTranslator;
 
-    friend class    Singleton<LanguageHelper>;
+    friend Singleton_t::AllowInstantiation;
 };
 
 #endif // LANGUAGEHELPER_H

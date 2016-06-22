@@ -44,8 +44,9 @@ namespace Commands
 }
 
 #include <QElapsedTimer>
+#include "Tools/Singleton.hpp"
 
-class Core
+class Core : public ScopedSingleton<Core>
 {
     public:
         Backend::IBackend*      backend();
@@ -65,8 +66,6 @@ class Core
         bool                    loadProject( const QString& fileName );
         bool                    newProject( const QString& projectName, const QString& projectPath );
 
-        static Core*            instance();
-
     private:
         Core();
         ~Core();
@@ -85,6 +84,8 @@ class Core
         Commands::AbstractUndoStack*   m_undoStack;
         Library*                m_library;
         QElapsedTimer           m_timer;
+
+        friend Singleton_t::AllowInstantiation;
 };
 
 #endif // CORE_H

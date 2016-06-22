@@ -63,7 +63,7 @@ class NotificationZone : public QWidget, public Singleton<NotificationZone>
     private slots:
         void        hideNotification();
 
-    friend class    Singleton<NotificationZone>;
+    friend Singleton_t::AllowInstantiation;
 };
 
 #endif // NOTIFICATIONZONE_H

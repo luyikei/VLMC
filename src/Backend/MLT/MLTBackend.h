@@ -66,7 +66,7 @@ class MLTBackend : public IBackend, public Singleton<MLTBackend>
 
         std::map<std::string, IFilterInfo*>    m_availableFilters;
 
-    friend Singleton<MLTBackend>;
+    friend Singleton_t::AllowInstantiation;
 };
 
 } // MLT
