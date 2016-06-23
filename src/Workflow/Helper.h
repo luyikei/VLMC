@@ -34,21 +34,19 @@ namespace   Workflow
         Q_OBJECT
 
         protected: //This class is not meant to be used by itself.
-            Helper( qint64 begin = 0, qint64 end = -1, const QString &uuid = QString() );
+            Helper( const QString &uuid = QString() );
             ~Helper();
 
         public:
             virtual const QUuid&    uuid() const;
-            virtual qint64          begin() const;
-            virtual qint64          end() const;
-            virtual void            setBegin( qint64 begin );
-            virtual void            setEnd( qint64 end );
-            virtual qint64          length() const;
-            virtual void            setBoundaries( qint64 begin, qint64 end );
+            virtual qint64          begin() const = 0;
+            virtual qint64          end() const = 0;
+            virtual void            setBegin( qint64 begin ) = 0;
+            virtual void            setEnd( qint64 end ) = 0;
+            virtual qint64          length() const = 0;
+            virtual void            setBoundaries( qint64 begin, qint64 end ) = 0;
 
         protected:
-            qint64                  m_begin;
-            qint64                  m_end;
             QUuid                   m_uuid;
 
         signals:

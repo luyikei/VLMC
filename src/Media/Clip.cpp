@@ -35,7 +35,7 @@
 #include <QVariant>
 
 Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IProducer::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
-        Workflow::Helper( begin, end, uuid ),
+        Workflow::Helper( uuid ),
         m_media( media ),
         m_producer( m_media->producer()->cut( begin, end ) ),
         m_parent( media->baseClip() ),
@@ -47,7 +47,7 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IProduce
 
 Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
             const QString &uuid /*= QString()*/ ) :
-        Workflow::Helper( begin, end, uuid ),
+        Workflow::Helper( uuid ),
         m_media( parent->media() ),
         m_rootClip( parent->rootClip() ),
         m_parent( parent )

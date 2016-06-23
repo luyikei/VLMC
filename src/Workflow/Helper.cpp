@@ -24,9 +24,7 @@
 
 using namespace Workflow;
 
-Helper::Helper( qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString &uuid/* = QString()*/ ) :
-    m_begin( begin ),
-    m_end( end )
+Helper::Helper( const QString &uuid/* = QString()*/ )
 {
     if ( uuid.isNull() == true )
         m_uuid = QUuid::createUuid();
@@ -36,46 +34,6 @@ Helper::Helper( qint64 begin /*= 0*/, qint64 end /*= -1*/, const QString &uuid/*
 
 Helper::~Helper()
 {
-}
-
-qint64
-Helper::begin() const
-{
-    return m_begin;
-}
-
-qint64
-Helper::end() const
-{
-    return m_end;
-}
-
-void
-Helper::setBegin( qint64 begin )
-{
-    m_begin = begin;
-    emit lengthUpdated();
-}
-
-void
-Helper::setEnd(qint64 end)
-{
-    m_end = end;
-    emit lengthUpdated();
-}
-
-void
-Helper::setBoundaries( qint64 begin, qint64 end )
-{
-    m_begin = begin;
-    m_end = end;
-    emit lengthUpdated();
-}
-
-qint64
-Helper::length() const
-{
-    return m_end - m_begin;
 }
 
 const QUuid&

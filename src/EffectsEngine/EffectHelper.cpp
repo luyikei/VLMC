@@ -45,7 +45,7 @@ conv( std::string str, SettingValue::Type type )
 
 EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
                             const QString &uuid ) :
-    Helper( begin, end, uuid ),
+    Helper( uuid ),
     m_filter( new Backend::MLT::MLTFilter( id ) ),
     m_service( nullptr ),
     m_filterInfo( nullptr )
@@ -63,7 +63,7 @@ EffectHelper::EffectHelper( const QString& id, qint64 begin, qint64 end, const Q
 }
 
 EffectHelper::EffectHelper( Backend::IFilter *filter, const QString& uuid )
-    : Helper( filter->begin(), filter->end(), uuid )
+    : Helper( uuid )
     , m_filter( dynamic_cast<Backend::MLT::MLTFilter*>( filter ) )
     , m_service( nullptr )
     , m_filterInfo( nullptr )
