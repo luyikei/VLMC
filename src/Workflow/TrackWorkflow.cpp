@@ -59,13 +59,6 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
     m_tractor->setTrack( *m_audioTrack, 1 );
 
     tractor->setTrack( *m_tractor, trackId );
-
-    connect( this, SIGNAL( effectAdded( EffectHelper*, qint64 ) ),
-             this, SLOT( __effectAdded( EffectHelper*, qint64) ) );
-    connect( this, SIGNAL( effectMoved( EffectHelper*, qint64 ) ),
-             this, SLOT( __effectMoved( EffectHelper*, qint64 ) ) );
-    connect( this, SIGNAL( effectRemoved( QUuid ) ),
-             this, SLOT( __effectRemoved(QUuid ) ) );
 }
 
 TrackWorkflow::~TrackWorkflow()
@@ -318,40 +311,6 @@ quint32
 TrackWorkflow::trackId() const
 {
     return m_trackId;
-}
-
-void
-TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
-{
-    /* TODO
-    if ( helper->target()->effectType() == ClipEffectUser )
-    {
-        ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
-        Q_ASSERT( cw != nullptr );
-        pos += getClipPosition( cw->clip()->uuid() );
-    }
-    emit effectAdded( this, helper, pos );
-    */
-}
-
-void
-TrackWorkflow::__effectRemoved( const QUuid& uuid )
-{
-    emit effectRemoved( this, uuid );
-}
-
-void
-TrackWorkflow::__effectMoved( EffectHelper* helper, qint64 pos )
-{
-    /* TODO
-    if ( helper->target()->effectType() == ClipEffectUser )
-    {
-        ClipWorkflow    *cw = qobject_cast<ClipWorkflow*>( helper->target() );
-        Q_ASSERT( cw != nullptr );
-        pos += getClipPosition( cw->clip()->uuid() );
-    }
-    emit effectMoved( this, helper->uuid(), pos );
-    */
 }
 
 Backend::IProducer*

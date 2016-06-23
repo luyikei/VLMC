@@ -96,9 +96,6 @@ class   TrackWorkflow : public QObject
         const quint32                           m_trackId;
 
     private slots:
-        void                __effectAdded( EffectHelper*, qint64 );
-        void                __effectRemoved( const QUuid& );
-        void                __effectMoved( EffectHelper*, qint64 );
         void                clipDestroyed( const QUuid &uuid );
 
     signals:
@@ -108,14 +105,10 @@ class   TrackWorkflow : public QObject
         void                clipMoved( TrackWorkflow*, const QUuid&, qint64 );
 
         //these signals are here to ease connection with tracksview, as it only
-        //monitors tracks, and not generics EffectUsers
+        //monitors tracks
         void                effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
         void                effectRemoved( TrackWorkflow*, const QUuid& );
         void                effectMoved( TrackWorkflow*, const QUuid&, qint64 );
-
-        void                effectAdded( EffectHelper *helper, qint64 pos );
-        void                effectMoved( EffectHelper *helper, qint64 newPos );
-        void                effectRemoved( const QUuid& );
 
 };
 
