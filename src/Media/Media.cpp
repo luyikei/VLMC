@@ -37,8 +37,6 @@
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
 #include "Backend/MLT/MLTProducer.h"
-#include "Backend/VLC/VLCSource.h"
-#include "Backend/VLC/VLCBackend.h"
 
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "

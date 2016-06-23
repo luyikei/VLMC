@@ -23,7 +23,6 @@
 #include "ClipMetadataDisplayer.h"
 
 #include "Media/Clip.h"
-#include "Backend/VLC/VLCSource.h"
 #include "Media/Media.h"
 
 #include <QTime>

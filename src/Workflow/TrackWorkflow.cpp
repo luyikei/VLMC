@@ -27,7 +27,6 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "Backend/VLC/VLCSource.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Backend/MLT/MLTTractor.h"
 #include "Main/Core.h"

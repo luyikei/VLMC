@@ -36,7 +36,6 @@
 #include "GraphicsCursorItem.h"
 #include "GraphicsTrack.h"
 #include "Workflow/Helper.h"
-#include "Backend/VLC/VLCSource.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 //Ugly part {

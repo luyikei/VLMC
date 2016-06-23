@@ -22,7 +22,6 @@
 
 #include "Media/Clip.h"
 #include "GraphicsMovieItem.h"
-#include "Backend/VLC/VLCSource.h"
 #include "Media/Media.h"
 #include "TracksView.h"
 #include "Timeline.h"
