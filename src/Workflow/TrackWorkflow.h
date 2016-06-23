@@ -24,7 +24,6 @@
 #ifndef TRACKWORKFLOW_H
 #define TRACKWORKFLOW_H
 
-#include "EffectsEngine/EffectUser.h"
 #include "Types.h"
 
 #include <QObject>
@@ -35,6 +34,8 @@ class   Clip;
 class   Clip;
 class   ClipWorkflow;
 class   MainWorkflow;
+
+class   EffectHelper;
 
 namespace   Backend
 {
@@ -54,7 +55,7 @@ class   QMutex;
 class   QReadWriteLock;
 class   QWaitCondition;
 
-class   TrackWorkflow : public EffectUser
+class   TrackWorkflow : public QObject
 {
     Q_OBJECT
 
@@ -101,11 +102,7 @@ class   TrackWorkflow : public EffectUser
         void                                    stopFrameComputing();
         bool                                    hasNoMoreFrameToRender( qint64 currentFrame ) const;
         quint32                                 trackId() const;
-        //FIXME: this is not thread safe if the list gets modified (but it can't be const, as it is intended to be modified...)
-        EffectsEngine::EffectList               *filters();
-        EffectsEngine::EffectList               *mixers();
         virtual qint64                          length() const;
-        virtual Type                            effectType() const;
 
         Backend::IProducer*                     producer();
 
@@ -148,6 +145,11 @@ class   TrackWorkflow : public EffectUser
         void                effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
         void                effectRemoved( TrackWorkflow*, const QUuid& );
         void                effectMoved( TrackWorkflow*, const QUuid&, qint64 );
+
+        void                effectAdded( EffectHelper *helper, qint64 pos );
+        void                effectMoved( EffectHelper *helper, qint64 newPos );
+        void                effectRemoved( const QUuid& );
+
 };
 
 #endif // TRACKWORKFLOW_H

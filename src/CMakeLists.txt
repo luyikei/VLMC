@@ -75,7 +75,6 @@ SET(VLMC_SRCS
     Backend/MLT/MLTFilter.cpp
     Backend/MLT/MLTTransition.cpp
     Backend/MLT/MLTTractor.cpp
-    EffectsEngine/EffectUser.cpp
     EffectsEngine/EffectHelper.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp

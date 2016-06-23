@@ -380,10 +380,10 @@ TrackWorkflow::initRender( quint32 width, quint32 height )
     QReadLocker     lock( m_clipsLock );
 
     m_mixerBuffer->resize( width * height * Workflow::Depth );
+    /* TODO
     m_width = width;
     m_height = height;
     m_isRendering = true;
-    /* TODO
     auto       it = m_clips.begin();
     auto       end = m_clips.end();
     while ( it != end )
@@ -444,18 +444,6 @@ TrackWorkflow::trackId() const
     return m_trackId;
 }
 
-EffectsEngine::EffectList*
-TrackWorkflow::filters()
-{
-    return &m_filters;
-}
-
-EffectsEngine::EffectList*
-TrackWorkflow::mixers()
-{
-    return &m_mixers;
-}
-
 void
 TrackWorkflow::__effectAdded( EffectHelper* helper, qint64 pos )
 {
@@ -496,10 +484,10 @@ TrackWorkflow::length() const
     return m_length;
 }
 
-EffectUser::Type
-TrackWorkflow::effectType() const
+Backend::IProducer*
+TrackWorkflow::producer()
 {
-    return TrackEffectUser;
+    return m_track;
 }
 
 Backend::IProducer*
