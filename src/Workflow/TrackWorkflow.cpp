@@ -49,8 +49,19 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
     m_clipsLock = new QReadWriteLock;
     m_mixerBuffer = new Workflow::Frame;
 
-    m_track = new Backend::MLT::MLTTrack;
-    tractor->setTrack( *m_track, trackId );
+    auto audioTrack = new Backend::MLT::MLTTrack;
+    audioTrack->setVideoOutput( false );
+    m_audioTrack = audioTrack;
+
+    auto videoTrack = new Backend::MLT::MLTTrack;
+    videoTrack->setAudioOutput( false );
+    m_videoTrack = videoTrack;
+
+    m_tractor = new Backend::MLT::MLTTractor;
+    m_tractor->setTrack( *m_videoTrack, 0 );
+    m_tractor->setTrack( *m_audioTrack, 1 );
+
+    tractor->setTrack( *m_tractor, trackId );
 
     for ( int i = 0; i < Workflow::NbTrackType; ++i )
         m_lastFrame[i] = 0;
@@ -65,7 +76,9 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
 
 TrackWorkflow::~TrackWorkflow()
 {
-    delete m_track;
+    delete m_audioTrack;
+    delete m_videoTrack;
+    delete m_tractor;
     delete m_mixerBuffer;
     delete m_clipsLock;
 }
@@ -73,12 +86,11 @@ TrackWorkflow::~TrackWorkflow()
 void
 TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
-    // Avoid adding an audio track of a video for now since a video track will be enough for MLT.
-    if ( !( clip->media()->producer()->hasVideo() && clip->formats().testFlag( Clip::Audio ) ) )
-    {
-        m_track->insertAt( *clip->producer(), start );
-        m_clips.insert( start, clip );
-    }
+    if ( clip->formats().testFlag( Clip::Audio ) )
+        m_audioTrack->insertAt( *clip->producer(), start );
+    else if ( clip->formats().testFlag( Clip::Video ) )
+        m_videoTrack->insertAt( *clip->producer(), start );
+    m_clips.insertMulti( start, clip );
     computeLength();
 }
 
@@ -183,14 +195,14 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         if ( it.value()->uuid() == id )
         {
             auto clip = it.value();
-
-            auto producer = m_track->clipAt( it.key() );
-            m_track->remove( m_track->clipIndexAt( it.key() ) );
-            m_track->insertAt( *producer, startingFrame );
+            auto track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            auto producer = track->clipAt( it.key() );
+            track->remove( track->clipIndexAt( it.key() ) );
+            track->insertAt( *producer, startingFrame );
             delete producer;
 
             m_clips.erase( it );
-            m_clips.insert( startingFrame, clip );
+            m_clips.insertMulti( startingFrame, clip );
             computeLength();
             emit clipMoved( this, clip->uuid(), startingFrame );
             return ;
@@ -235,7 +247,8 @@ TrackWorkflow::removeClip( const QUuid& id )
         if ( it.value()->uuid() == id )
         {
             auto    clip = it.value();
-            m_track->remove( m_track->clipIndexAt( it.key() ) );
+            auto    track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            track->remove( track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
             computeLength();
             clip->disconnect( this );
@@ -250,6 +263,7 @@ TrackWorkflow::removeClip( const QUuid& id )
 QVariant
 TrackWorkflow::toVariant() const
 {
+    /*
     QVariantList l;
     for ( auto it = m_clips.cbegin(); it != m_clips.cend(); it++ )
     {
@@ -263,7 +277,8 @@ TrackWorkflow::toVariant() const
                 };
     }
     QVariantHash h{ { "clips", l } };
-    return QVariant( h );
+    return QVariant( h );*/
+    return QVariant();
 }
 
 void
@@ -487,11 +502,5 @@ TrackWorkflow::length() const
 Backend::IProducer*
 TrackWorkflow::producer()
 {
-    return m_track;
-}
-
-Backend::IProducer*
-TrackWorkflow::producer()
-{
-    return m_track;
+    return m_tractor;
 }

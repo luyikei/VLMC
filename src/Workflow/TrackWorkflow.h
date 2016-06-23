@@ -111,7 +111,9 @@ class   TrackWorkflow : public QObject
         void                                    adjustClipTime( qint64 currentFrame, qint64 start, Clip* cw );
 
     private:
-        Backend::ITrack*                        m_track;
+        Backend::ITractor*                      m_tractor;
+        Backend::ITrack*                        m_audioTrack;
+        Backend::ITrack*                        m_videoTrack;
 
         QMap<qint64, Clip*>                     m_clips;
 
