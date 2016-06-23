@@ -45,31 +45,10 @@ class EffectUser : public QObject
          *
          *  \param      effect  The effect instance. Can be either mixer or filter.
          */
-        EffectHelper                    *addEffect( Effect *effect, qint64 start = 0, qint64 end = -1 );
-        void                            addEffect( EffectHelper *effect );
-        void                            moveEffect( EffectHelper *helper, qint64 newPos );
-        void                            removeEffect( EffectHelper *helper );
-        const EffectsEngine::EffectList &effects( Effect::Type type ) const;
-        void                            removeEffect( Effect::Type type, qint32 idx );
-        void                            swapFilters( qint32 idx, qint32 idx2 );
-        qint32                          count( Effect::Type type ) const;
-        void                            cleanEffects();
-        virtual qint64                  length() const = 0;
-        virtual Type                    effectType() const = 0;
-        virtual QVariant                toVariant() const;
-        void                            loadFromVariant( const QVariant &var );
-        bool                            contains( Effect::Type, const QUuid &uuid ) const;
 
     protected:
         EffectUser();
         virtual ~EffectUser();
-        void                            initFilters();
-        void                            initMixers();
-
-        //Filters:
-        quint32                         *applyFilters( const Workflow::Frame *frame, qint64 currentFrame);
-        //Mixers methods:
-        EffectHelper                    *getMixer( qint64 currentFrame );
 
     protected:
         /**

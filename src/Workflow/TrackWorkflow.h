@@ -40,6 +40,7 @@ namespace   Backend
 {
 class ITrack;
 class ITractor;
+class IProducer;
 }
 
 namespace   Workflow
@@ -105,6 +106,8 @@ class   TrackWorkflow : public EffectUser
         EffectsEngine::EffectList               *mixers();
         virtual qint64                          length() const;
         virtual Type                            effectType() const;
+
+        Backend::IProducer*                     producer();
 
     private:
         void                                    computeLength();

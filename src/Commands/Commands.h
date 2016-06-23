@@ -34,7 +34,12 @@
 #include "Workflow/MainWorkflow.h"
 
 class   Clip;
-class   EffectUser;
+
+namespace Backend
+{
+class IService;
+}
+class   EffectHelper;
 
 namespace Commands
 {
@@ -178,13 +183,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Add( EffectHelper *helper, EffectUser *target );
+                Add( EffectHelper *helper, Backend::IService* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
                 EffectHelper    *m_helper;
-                EffectUser      *m_target;
+                Backend::IService*      m_target;
         };
 
         class   Move : public Generic
@@ -192,14 +197,14 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser, qint64 pos );
+                Move( EffectHelper* helper, Backend::IService* from, Backend::IService* to, qint64 pos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
                 EffectHelper    *m_helper;
-                EffectUser      *m_old;
-                EffectUser      *m_new;
+                Backend::IService      *m_from;
+                Backend::IService      *m_to;
                 qint64          m_oldPos;
                 qint64          m_newPos;
                 qint64          m_newEnd;
@@ -211,13 +216,12 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd );
+                Resize( EffectHelper* helper, qint64 newBegin, qint64 newEnd );
                 virtual void        internalRedo();
                 virtual void        internalUndo();
                 virtual void        retranslate();
             private:
-                EffectUser          *m_target;
-                EffectHelper        *m_helper;
+                EffectHelper*       m_helper;
                 qint64              m_newBegin;
                 qint64              m_newEnd;
                 qint64              m_oldBegin;
@@ -229,13 +233,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( EffectHelper *helper, EffectUser *user );
+                Remove( EffectHelper *helper, Backend::IService* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                EffectHelper    *m_helper;
-                EffectUser      *m_user;
+                EffectHelper*       m_helper;
+                Backend::IService* m_target;
         };
     }
 }

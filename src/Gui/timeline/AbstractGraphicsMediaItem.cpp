@@ -253,12 +253,11 @@ AbstractGraphicsMediaItem::end() const
 }
 
 void
-AbstractGraphicsMediaItem::triggerMove( EffectUser *target, qint64 startPos )
+AbstractGraphicsMediaItem::triggerMove( TrackWorkflow* target, qint64 startPos )
 {
-    TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
-    if ( tw == nullptr )
+    if ( target == nullptr )
         return ;
-    Commands::trigger( new Commands::Clip::Move( m_oldTrack, tw, m_clip, startPos ) );
+    Commands::trigger( new Commands::Clip::Move( m_oldTrack, target, m_clip, startPos ) );
 }
 
 Workflow::Helper*
@@ -268,16 +267,15 @@ AbstractGraphicsMediaItem::helper()
 }
 
 void
-AbstractGraphicsMediaItem::triggerResize( EffectUser *target, Workflow::Helper *helper,
+AbstractGraphicsMediaItem::triggerResize( TrackWorkflow* target, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos )
 {
     Clip  *clip = qobject_cast<Clip*>( helper );
     if ( clip == nullptr )
         return ;
-    TrackWorkflow   *tw = qobject_cast<TrackWorkflow*>( target );
-    if ( tw == nullptr )
+    if ( target == nullptr )
         return ;
-    Commands::trigger( new Commands::Clip::Resize( tw, clip, newBegin,
+    Commands::trigger( new Commands::Clip::Resize( target, clip, newBegin,
                                                                newEnd, pos ) );
 }
 

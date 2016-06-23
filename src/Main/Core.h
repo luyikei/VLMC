@@ -24,7 +24,6 @@
 #define CORE_H
 
 class AutomaticBackup;
-class EffectsEngine;
 class Library;
 class MainWorkflow;
 class NotificationZone;
@@ -53,7 +52,6 @@ class Core : public QObject
 
     public:
         Backend::IBackend*      backend();
-        EffectsEngine*          effectsEngine();
         Settings*               settings();
         VlmcLogger*             logger();
         RecentProjects*         recentProjects();
@@ -81,7 +79,6 @@ class Core : public QObject
 
     private:
         Backend::IBackend*      m_backend;
-        EffectsEngine*          m_effectsEngine;
         Settings*               m_settings;
         VlmcLogger*             m_logger;
         RecentProjects*         m_recentProjects;

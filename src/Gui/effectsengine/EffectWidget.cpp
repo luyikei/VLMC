@@ -20,6 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include "Backend/IFilter.h"
 #include "EffectWidget.h"
 #include "ui_EffectWidget.h"
 
@@ -36,44 +37,21 @@ EffectWidget::~EffectWidget()
 }
 
 void
-EffectWidget::setEffect( Effect *effect )
+EffectWidget::setFilterInfo( Backend::IFilterInfo* info )
 {
     clear();
-    m_effect = effect;
-    m_ui->nameValueLabel->setText( m_effect->name() );
-    m_ui->descValueLabel->setText( m_effect->description() );
-    m_ui->typeValueLabel->setText( nameFromType( m_effect->type() ) );
-    m_ui->authorValueLabel->setText( m_effect->author() );
-    QString version = QString::number( m_effect->getMajor() ) + '.' +
-                      QString::number( m_effect->getMinor() );
-    m_ui->versionValueLabel->setText( version );
+    m_ui->nameValueLabel->setText( QString::fromStdString( info->name() ) );
+    m_ui->descValueLabel->setText( QString::fromStdString( info->description() ) );
+    m_ui->authorValueLabel->setText( QString::fromStdString( info->author() ) );
 
 }
 
 void
 EffectWidget::clear()
 {
-    m_ui->nameValueLabel->setText( "" );
-    m_ui->descValueLabel->setText( "" );
-    m_ui->typeValueLabel->setText( "" );
-    m_ui->authorValueLabel->setText( "" );
-    m_ui->versionValueLabel->setText( "" );
-}
-
-QString
-EffectWidget::nameFromType( Effect::Type type )
-{
-    switch ( type )
-    {
-    case Effect::Filter:
-        return tr( "Filter" );
-    case Effect::Source:
-        return tr( "Source" );
-    case Effect::Mixer2:
-        return tr( "Mixer 2" );
-    case Effect::Mixer3:
-        return tr( "Mixer 3" );
-    default:
-        return tr( "Unknown type" );
-    }
+    m_ui->nameValueLabel->setText( QStringLiteral( "" ) );
+    m_ui->descValueLabel->setText( QStringLiteral( "" ) );
+    m_ui->typeValueLabel->setText( QStringLiteral( "" ) );
+    m_ui->authorValueLabel->setText( QStringLiteral( "" ) );
+    m_ui->versionValueLabel->setText( QStringLiteral( "" ) );
 }

@@ -21,9 +21,10 @@
  *****************************************************************************/
 
 #include "Main/Core.h"
+#include "Backend/IBackend.h"
+#include "Backend/IFilter.h"
 #include "EffectsListView.h"
 #include "EffectWidget.h"
-#include "EffectsEngine/EffectsEngine.h"
 
 #include <QApplication>
 #include <QDialog>
@@ -37,28 +38,14 @@ EffectsListView::EffectsListView( QWidget *parent ) :
     QListView(parent)
 {
     m_model = new QStandardItemModel( this );
-    connect( Core::instance()->effectsEngine(),
-             SIGNAL( effectAdded( Effect*, const QString&, Effect::Type ) ),
-             this,
-             SLOT( effectAdded(Effect*, const QString&, Effect::Type) ) );
     setModel( m_model );
     connect( this, SIGNAL( activated( QModelIndex ) ),
              this, SLOT( effectActivated( QModelIndex ) ) );
     setEditTriggers( QAbstractItemView::NoEditTriggers );
     setObjectName( QStringLiteral( "Effects List" ) );
-}
 
-void
-EffectsListView::effectAdded( Effect *, const QString& name, Effect::Type type )
-{
-    if ( type == m_type )
-        m_model->appendRow( new QStandardItem( name ) );
-}
-
-void
-EffectsListView::setType( Effect::Type type )
-{
-    m_type = type;
+    for ( auto filter : Backend::instance()->availableFilters() )
+        m_model->appendRow( new QStandardItem( QString::fromStdString( filter.second->identifier() ) ) );
 }
 
 void
@@ -92,13 +79,14 @@ EffectsListView::effectActivated( const QModelIndex &index ) const
 {
     if ( index.isValid() == false )
         return ;
-    Effect  *effect = Core::instance()->effectsEngine()->effect( m_model->data( index, Qt::DisplayRole ).toString() );
+    auto filterInfo = Backend::instance()->filterInfo( m_model->data( index, Qt::DisplayRole ).toString().toStdString() );
+
     QDialog         *dialog = new QDialog();
     QVBoxLayout     *layout = new QVBoxLayout( dialog );
     EffectWidget    *wid = new EffectWidget( dialog );
     layout->addWidget( wid );
-    wid->setEffect( effect );
-    dialog->setWindowTitle( tr( "%1 informations" ).arg( effect->name() ) );
+    wid->setFilterInfo( filterInfo );
+    dialog->setWindowTitle( tr( "%1 informations" ).arg( QString::fromStdString( filterInfo->name() ) ) );
     dialog->exec();
     delete dialog;
 }

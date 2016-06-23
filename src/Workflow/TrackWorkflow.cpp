@@ -26,8 +26,6 @@
 
 #include "Project/Project.h"
 #include "Media/Clip.h"
-#include "ClipWorkflow.h"
-#include "EffectsEngine/EffectInstance.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Backend/VLC/VLCSource.h"
 #include "Backend/MLT/MLTTrack.h"
@@ -264,7 +262,7 @@ TrackWorkflow::toVariant() const
                     { "filters", clip->toVariant() }
                 };
     }
-    QVariantHash h{ { "clips", l }, { "filters", EffectUser::toVariant() } };
+    QVariantHash h{ { "clips", l } };
     return QVariant( h );
 }
 
@@ -293,7 +291,6 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
 
         // TODO clip->clipWorkflow()->loadFromVariant( m["filters"] );
     }
-    EffectUser::loadFromVariant( variant.toMap()["filters"] );
 }
 
 void
@@ -503,4 +500,10 @@ EffectUser::Type
 TrackWorkflow::effectType() const
 {
     return TrackEffectUser;
+}
+
+Backend::IProducer*
+TrackWorkflow::producer()
+{
+    return m_track;
 }

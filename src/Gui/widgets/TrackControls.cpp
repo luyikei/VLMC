@@ -25,6 +25,8 @@
 #include "timeline/GraphicsTrack.h"
 #include "effectsengine/EffectStack.h"
 
+#include "Backend/ITrack.h"
+
 #include "Workflow/TrackWorkflow.h"
 
 #include "ui_TrackControls.h"
@@ -136,6 +138,6 @@ TrackControls::trackNameDoubleClicked()
 void
 TrackControls::fxButtonClicked()
 {
-    EffectStack *stack = new EffectStack( m_track->trackWorkflow(), this );
+    EffectStack *stack = new EffectStack( m_track->trackWorkflow()->producer(), this );
     stack->show();
 }

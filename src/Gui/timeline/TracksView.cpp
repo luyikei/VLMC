@@ -24,7 +24,9 @@
 
 #include "Main/Core.h"
 #include "Project/Project.h"
-#include "Workflow/ClipWorkflow.h"
+#include "Backend/IBackend.h"
+#include "Backend/IFilter.h"
+#include "Backend/ITrack.h"
 #include "Commands/Commands.h"
 #include "Commands/AbstractUndoStack.h"
 #include "EffectsEngine/EffectHelper.h"
@@ -296,12 +298,11 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
         item->setStartPos( start );
         item->m_oldTrack = tw;
         moveItem( item, track, start );
-        //If the item has some effects:
-        /* TODO
-        for ( EffectHelper *effectHelper : clip->clipWorkflow()->effects( Effect::Filter ) )
+
+        for ( int i = 0; i < clip->producer()->filterCount(); ++i )
         {
-            addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
-        }*/
+            addEffectItem( new EffectHelper( clip->producer()->filter( i ) ), Workflow::VideoTrack, track, start );
+        }
     }
     else
     {
@@ -358,15 +359,19 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 void
 TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
-    Effect* effect = Core::instance()->effectsEngine()->effect( event->mimeData()->data( "vlmc/effect_name") );
-    if ( effect != nullptr )
+    m_dragEffectItem = new GraphicsEffectItem( new EffectHelper( qPrintable( event->mimeData()->data( "vlmc/effect_name") ) ) );
+    if ( m_dragEffectItem->effectHelper()->filter()->isValid() == true )
     {
-        m_dragEffectItem = new GraphicsEffectItem( effect );
         m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
         m_dragEffectItem->m_tracksView = this;
     }
     else
-        vlmcWarning() << "Can't find effect name" << event->mimeData()->data( "vlmc/effect_name");
+    {
+        vlmcWarning() << "Can't create a filter:" << event->mimeData()->data( "vlmc/effect_name");
+        delete m_dragEffectItem;
+        m_dragEffectItem = nullptr;
+        event->ignore();
+    }
 }
 
 void
@@ -432,7 +437,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
-            // TODO m_dragEffectItem->effectHelper()->setTarget( clip->clipWorkflow() );
+            m_dragEffectItem->effectHelper()->setTarget( clip->producer() );
         }
         else
         {
@@ -445,7 +450,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                     m_dragEffectItem->setWidth( m_dragEffectItem->helper()->length() );
                     m_dragEffectItem->setStartPos( 0 );
                     m_dragEffectItem->setTrack( track );
-                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow() );
+                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow()->producer() );
                     break ;
                 }
             }
@@ -474,19 +479,16 @@ TracksView::moveItem( TrackWorkflow *tw, const QUuid& uuid, qint64 time )
 QPoint
 TracksView::boundEffectInClip( GraphicsEffectItem *effectItem, QPoint position )
 {
-    if ( effectItem->effectHelper()->target()->effectType() == EffectUser::ClipEffectUser )
+    QList<QGraphicsItem*>   list = effectItem->collidingItems( Qt::IntersectsItemShape );
+    foreach ( QGraphicsItem *graphicsItem, list )
     {
-        QList<QGraphicsItem*>   list = effectItem->collidingItems( Qt::IntersectsItemShape );
-        foreach ( QGraphicsItem *graphicsItem, list )
-        {
-            AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( graphicsItem );
-            if ( mediaItem == nullptr )
-                continue ;
-            if ( position.x() < mediaItem->pos().x() )
-                position.setX( mediaItem->pos().x() );
-            if ( position.x() + effectItem->width() > mediaItem->pos().x() + mediaItem->width() )
-                position.setX( mediaItem->pos().x() + mediaItem->width() - effectItem->width() );
-        }
+        AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( graphicsItem );
+        if ( mediaItem == nullptr )
+            continue ;
+        if ( position.x() < mediaItem->pos().x() )
+            position.setX( mediaItem->pos().x() );
+        if ( position.x() + effectItem->width() > mediaItem->pos().x() + mediaItem->width() )
+            position.setX( mediaItem->pos().x() + mediaItem->width() - effectItem->width() );
     }
     return position;
 }
@@ -782,8 +784,10 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
     if ( m_dragAudioItem || m_dragVideoItem )
         updateDurationNeeded = true;
 
-    Core::instance()->workflow()->deleteClip( m_dragAudioItem->clip()->uuid() );
-    Core::instance()->workflow()->deleteClip( m_dragVideoItem->clip()->uuid() );
+    if ( m_dragAudioItem != nullptr )
+        Core::instance()->workflow()->deleteClip( m_dragAudioItem->clip()->uuid() );
+    if ( m_dragVideoItem != nullptr )
+        Core::instance()->workflow()->deleteClip( m_dragVideoItem->clip()->uuid() );
 
     delete m_dragAudioItem;
     delete m_dragVideoItem;
@@ -847,15 +851,17 @@ TracksView::dropEvent( QDropEvent *event )
     }
     else if ( m_dragEffectItem != nullptr )
     {
+        Core::instance()->undoStack()->beginMacro( "Add filter" );
+
         QList<AbstractGraphicsMediaItem*>   clips = mediaItems<AbstractGraphicsMediaItem>( event->pos() );
         if ( clips.size() > 0 )
         {
             m_itemsLoaded.insert( m_dragEffectItem->helper()->uuid() );
             AbstractGraphicsMediaItem   *item = clips.first();
-            /* TODO
+
             Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                          item->clip()->clipWorkflow() ) );
-                                                          */
+                                                          item->clip()->producer() ) );
+
             m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
             event->acceptProposedAction();
             m_dragEffectItem->setContainer( item );
@@ -874,7 +880,7 @@ TracksView::dropEvent( QDropEvent *event )
                         addTrack( Workflow::VideoTrack );
                     m_dragEffectItem->m_oldTrack = track->trackWorkflow();
                     Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                                  track->trackWorkflow() ) );
+                                                                  track->trackWorkflow()->producer() ) );
 
                     event->acceptProposedAction();
                     m_dragEffectItem->setContainer( nullptr );
@@ -882,6 +888,8 @@ TracksView::dropEvent( QDropEvent *event )
                 }
             }
         }
+
+        Core::instance()->undoStack()->endMacro();
     }
 }
 
@@ -983,15 +991,15 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                     Clip  *clip = qobject_cast<Clip*>( mediaItem->helper() );
                     Q_ASSERT( clip != nullptr );
                     m_effectTarget = mediaItem;
-//                    effectItem->effectHelper()->setTarget( clip->clipWorkflow() );
+                    effectItem->effectHelper()->setTarget( clip->producer() );
                     break ;
                 }
             }
-//            if ( m_effectTarget == nullptr ) //Avoid doing this all the time.
-//            {
-//                GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
-//                effectItem->effectHelper()->setTarget( track->trackWorkflow() );
-//            }
+            if ( m_effectTarget == nullptr ) //Avoid doing this all the time.
+            {
+                GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
+                effectItem->effectHelper()->setTarget( track->trackWorkflow()->producer() );
+            }
         }
     }
     else if ( event->modifiers() == Qt::NoModifier &&
@@ -1178,33 +1186,33 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         if ( getTrack( Workflow::AudioTrack, m_numAudioTrack - 1 )->childItems().count() > 0 )
             addTrack( Workflow::AudioTrack );
 
-        EffectUser  *target = m_actionItem->track()->trackWorkflow();
         qint64      targetPos = m_actionItem->startPos();
         if ( effectItem != nullptr )
         {
             effectItem->setContainer( nullptr );
-            /* TODO
             if ( m_effectTarget != nullptr )
             {
-                target = m_effectTarget->clip()->clipWorkflow();
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
                 effectItem->setContainer( m_effectTarget );
             }
-            */
         }
         else
-            Core::instance()->undoStack()->beginMacro( "Move clip" );
-        m_actionItem->triggerMove( target, targetPos );
-        // Update the linked item too
-        if ( m_actionItem->groupItem() )
         {
-            m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->track()->trackWorkflow(),
-                                                    m_actionItem->groupItem()->startPos() );
-            m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
-        }
+            auto target = m_actionItem->track()->trackWorkflow();
 
-        if ( effectItem == nullptr )
+            Core::instance()->undoStack()->beginMacro( "Move clip" );
+
+            m_actionItem->triggerMove( target, targetPos );
+            // Update the linked item too
+            if ( m_actionItem->groupItem() )
+            {
+                m_actionItem->groupItem()->triggerMove( m_actionItem->groupItem()->track()->trackWorkflow(),
+                                                        m_actionItem->groupItem()->startPos() );
+                m_actionItem->groupItem()->m_oldTrack = m_actionItem->groupItem()->track()->trackWorkflow();
+            }
+
             Core::instance()->undoStack()->endMacro();
+        }
 
         m_actionItem->m_oldTrack = m_actionItem->track()->trackWorkflow();
         m_actionRelativeX = -1;
@@ -1224,13 +1232,18 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             newBegin = m_actionItem->helper()->begin();
             newEnd = newBegin + m_actionItem->width();
         }
-        EffectUser          *target = m_actionItem->track()->trackWorkflow();
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
-        /* TODO if ( effectItem != nullptr && m_effectTarget != nullptr )
-            target = m_effectTarget->clip()->clipWorkflow();
-            */
-        m_actionItem->triggerResize( target, m_actionItem->helper(),
-                                     newBegin, newEnd, m_actionItem->pos().x() );
+        if ( effectItem != nullptr && m_effectTarget != nullptr )
+        {
+            effectItem->triggerResize( nullptr, m_actionItem->helper(),
+                                       newBegin, newEnd, m_actionItem->pos().x() );
+        }
+        else
+        {
+            auto    target = m_actionItem->track()->trackWorkflow();
+            m_actionItem->triggerResize( target, m_actionItem->helper(),
+                                         newBegin, newEnd, m_actionItem->pos().x() );
+        }
         updateDuration();
     }
 

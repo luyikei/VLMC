@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ *          Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,33 +24,69 @@
 #ifndef EFFECTHELPER_H
 #define EFFECTHELPER_H
 
-class   EffectInstance;
-class   EffectUser;
-
 #include <QObject>
 #include <QMetaType>
 
+#include "Settings/Settings.h"
+#include "Backend/IFilter.h"
 #include "Workflow/Helper.h"
 
+namespace Backend
+{
+namespace MLT
+{
+class MLTFilter;
+}
+class IFilter;
+class IService;
+}
+
+class Effect;
 
 class   EffectHelper : public Workflow::Helper
 {
     Q_OBJECT
 
     public:
-        EffectHelper( EffectInstance *effectInstance, qint64 begin = 0, qint64 end = -1,
+        EffectHelper( const char* id, qint64 begin = 0, qint64 end = -1,
                       const QString& uuid = QString() );
+        EffectHelper( const QString& id, qint64 begin = 0, qint64 end = -1,
+                      const QString& uuid = QString() );
+        EffectHelper( Backend::IFilter* filter,
+                      const QString& uuid = QString() );
+        ~EffectHelper();
 
-        EffectInstance          *effectInstance();
-        const EffectInstance    *effectInstance() const;
-        EffectUser              *target();
-        void                    setTarget( EffectUser *target );
+        virtual qint64  begin() const override;
+        virtual qint64  end() const override;
+        virtual void    setBegin(qint64 begin) override;
+        virtual void    setEnd(qint64 end) override;
+        virtual qint64  length() const override;
+        virtual void    setBoundaries( qint64 begin, qint64 end ) override;
+
+        void                setTarget( Backend::IService* service );
+        Backend::IService*  target();
+
+        Backend::IFilterInfo*           filterInfo();
+
+        QString                         identifier();
+
+        Backend::IFilter*               filter();
+        const Backend::IFilter*         filter() const;
+
+        SettingValue*                   value( const QString& key );
 
     private:
-        EffectInstance          *m_effectInstance;
-        EffectUser              *m_target;
+        Backend::MLT::MLTFilter*    m_filter;
+        Backend::IService*          m_service;
+        Backend::IFilterInfo*       m_filterInfo;
+
+        Settings                    m_settings;
+
+        void                        set( SettingValue* value, const QVariant& variant );
+        QVariant                    defaultValue( const char* id, SettingValue::Type type );
+        void                        initParams();
 };
 
-Q_DECLARE_METATYPE( EffectHelper* );
+Q_DECLARE_METATYPE( Backend::IFilter* );
 
 #endif // EFFECTHELPER_H

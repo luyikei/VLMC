@@ -23,11 +23,14 @@
 #include "EffectInstanceWidget.h"
 
 #include "Gui/settings/BoolWidget.h"
-#include "Gui/settings/ColorWidget.h"
+#include "Gui/settings/IntWidget.h"
+#include "Gui/settings/StringWidget.h"
+#include "Gui/settings/DoubleWidget.h"
 #include "Gui/settings/DoubleSliderWidget.h"
-#include "EffectsEngine/Effect.h"
-#include "EffectsEngine/EffectInstance.h"
-#include "EffectsEngine/EffectSettingValue.h"
+#include "EffectsEngine/EffectHelper.h"
+#include "Backend/IFilter.h"
+#include "Main/Core.h"
+#include "Tools/VlmcDebug.h"
 
 #include <QFormLayout>
 #include <QGroupBox>
@@ -45,25 +48,22 @@ EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
 }
 
 void
-EffectInstanceWidget::setEffectInstance( EffectInstance *instance )
+EffectInstanceWidget::setEffectHelper( std::unique_ptr<EffectHelper> helper )
 {
     clear();
-    m_effect = instance;
-    m_ui->effectWidget->setEffect( instance->effect() );
+    m_helper = std::move( helper );
+    m_ui->effectWidget->setFilterInfo( m_helper->filterInfo() );
 
-    EffectInstance::ParamList::iterator         it = instance->params().begin();
-    EffectInstance::ParamList::iterator         ite = instance->params().end();
-    while ( it != ite )
+    for ( auto param : m_helper->filterInfo()->paramInfos() )
     {
-        EffectSettingValue          *s = it.value();
-        ISettingsCategoryWidget     *widget = widgetFactory( s );
-        QLabel                      *label = new QLabel( tr( s->name() ), this );
+        SettingValue*               s = m_helper->value( QString::fromStdString( param->identifier() ) );
+        ISettingsCategoryWidget*    widget = widgetFactory( s );
+        QLabel*                     label = new QLabel( tr( s->name() ), this );
         m_widgets.push_back( label );
         m_widgets.push_back( widget );
         widget->setToolTip( s->description() );
         m_ui->settingsLayout->addRow( label , widget );
         m_settings.push_back( widget );
-        ++it;
     }
 }
 
@@ -78,16 +78,21 @@ EffectInstanceWidget::clear()
 }
 
 ISettingsCategoryWidget*
-EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
+EffectInstanceWidget::widgetFactory( SettingValue *s )
 {
     switch ( s->type() )
     {
     case    SettingValue::Bool:
         return new BoolWidget( s, this );
     case    SettingValue::Double:
-        return new DoubleSliderWidget( s, this );
-    case    SettingValue::Color:
-        return new ColorWidget( s, this );
+        if ( s->flags().testFlag( SettingValue::Clamped ) == true )
+            return new DoubleSliderWidget( s, this );
+        else
+            return new DoubleWidget( s, this );
+    case    SettingValue::Int:
+        return new IntWidget( s, this );
+    case    SettingValue::String:
+        return new StringWidget( s, this );
     default:
         return nullptr;
     }
@@ -96,6 +101,6 @@ EffectInstanceWidget::widgetFactory( EffectSettingValue *s )
 void
 EffectInstanceWidget::save()
 {
-    foreach ( ISettingsCategoryWidget* val, m_settings )
+    for ( ISettingsCategoryWidget* val : m_settings )
         val->save();
 }

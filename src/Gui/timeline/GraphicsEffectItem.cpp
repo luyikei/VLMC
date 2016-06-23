@@ -22,9 +22,10 @@
 
 #include "GraphicsEffectItem.h"
 
+#include "Backend/IFilter.h"
+#include "Backend/ITrack.h"
 #include "Commands/Commands.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "EffectsEngine/EffectInstance.h"
 #include "Workflow/TrackWorkflow.h"
 
 #include "effectsengine/EffectInstanceWidget.h"
@@ -40,27 +41,22 @@
 #include <QMenu>
 #include <QPainter>
 
-GraphicsEffectItem::GraphicsEffectItem( Effect *effect ) :
-        m_effect( effect ),
-        m_effectHelper( nullptr ),
-        m_container( nullptr )
-{
-    setOpacity( 0.8 );
-    m_effectHelper = new EffectHelper( effect->createInstance() );
-    connect( m_effectHelper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
-    setWidth( m_effectHelper->length() );
-    m_itemColor = Qt::blue;
-}
-
 GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
         m_effectHelper( helper ),
         m_container( nullptr )
 {
+    if ( m_effectHelper->filter()->isValid() == false )
+        return;
     setWidth( m_effectHelper->length() );
-    m_effect = helper->effectInstance()->effect();
+    m_effect = helper->filterInfo();
     connect( helper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setOpacity( 0.8 );
     m_itemColor = Qt::blue;
+}
+
+GraphicsEffectItem::~GraphicsEffectItem()
+{
+    delete m_effectHelper;
 }
 
 const QUuid&
@@ -205,7 +201,7 @@ GraphicsEffectItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsIte
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = m_effect->name();
+    QString text = QString::fromStdString( m_effect->name() );
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();
@@ -234,8 +230,6 @@ GraphicsEffectItem::begin() const
 qint64
 GraphicsEffectItem::end() const
 {
-    if ( m_effectHelper->end() < 0 )
-        return m_effectHelper->target()->length();
     return m_effectHelper->end();
 }
 
@@ -248,8 +242,8 @@ GraphicsEffectItem::maxBegin() const
 qint64
 GraphicsEffectItem::maxEnd() const
 {
-    Q_ASSERT( m_effectHelper->target() );
-    return m_effectHelper->target()->length();
+    Q_ASSERT( m_effectHelper->filter() );
+    return m_effectHelper->filter()->length();
 }
 
 Workflow::Helper*
@@ -259,20 +253,28 @@ GraphicsEffectItem::helper()
 }
 
 void
-GraphicsEffectItem::triggerMove( EffectUser *target, qint64 startPos )
+GraphicsEffectItem::triggerMove( TrackWorkflow* target, qint64 startPos )
 {
-    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->target(),
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->producer(),
+                                                   target->producer(), startPos ) );
+}
+
+void
+GraphicsEffectItem::triggerMove( Backend::IService* target, qint64 startPos )
+{
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->producer(),
                                                    target, startPos ) );
 }
 
 void
-GraphicsEffectItem::triggerResize( EffectUser *target, Workflow::Helper *helper,
+GraphicsEffectItem::triggerResize( TrackWorkflow* target, Workflow::Helper* helper,
                                    qint64 newBegin, qint64 newEnd, qint64 )
 {
+    Q_UNUSED( target )
     EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
     if ( eh == nullptr )
         return ;
-    Commands::trigger( new Commands::Effect::Resize( target, eh, newBegin, newEnd ) );
+    Commands::trigger( new Commands::Effect::Resize( eh, newBegin, newEnd ) );
 }
 
 qint32
@@ -338,7 +340,11 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
         return;
 
     if ( selectedAction == removeAction )
+    {
+        setSelected( true );
         scene()->askRemoveSelectedItems();
+        m_tracksView->removeItem( this );
+    }
     else if ( selectedAction == changeColorAction )
     {
         m_itemColor = QColorDialog::getColor( m_itemColor, tracksView() );
@@ -347,7 +353,7 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
     else if ( selectedAction == changeEffectProperties )
     {
         EffectInstanceWidget *effectProperties = new EffectInstanceWidget();
-        effectProperties->setEffectInstance( m_effectHelper->effectInstance() );
+        effectProperties->setEffectHelper( std::unique_ptr<EffectHelper>( new EffectHelper( m_effectHelper->filter() ) ) );
         effectProperties->show();
     }
 }
@@ -357,10 +363,8 @@ GraphicsEffectItem::setStartPos( qint64 position )
 {
     if ( m_effectHelper != nullptr && m_effectHelper->target() != nullptr )
     {
-        int     nbEffect = m_effectHelper->target()->count( Effect::Filter );
-        if ( m_effectHelper->target()->contains( Effect::Filter, m_effectHelper->uuid() ) == true )
-            --nbEffect;
-        QGraphicsItem::setPos( position, nbEffect * itemHeight() );
+        int     nbFilter = m_effectHelper->target()->filterCount() - 1;
+        QGraphicsItem::setPos( position, nbFilter * itemHeight() );
     }
     else
         QGraphicsItem::setPos( position, 0 );

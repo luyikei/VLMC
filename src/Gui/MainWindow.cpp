@@ -454,8 +454,6 @@ void
 MainWindow::setupEffectsList()
 {
     m_effectsList = new EffectsListView;
-    m_effectsList->setType( Effect::Filter );
-    Core::instance()->effectsEngine()->loadEffects();
     m_dockedEffectsList = dockWidget( m_effectsList, Qt::TopDockWidgetArea );
 }
 

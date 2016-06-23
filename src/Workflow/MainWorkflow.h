@@ -25,8 +25,6 @@
 #ifndef MAINWORKFLOW_H
 #define MAINWORKFLOW_H
 
-#include "EffectsEngine/EffectsEngine.h"
-#include <QXmlStreamWriter>
 #include "Types.h"
 #include "Tools/Toggleable.hpp"
 

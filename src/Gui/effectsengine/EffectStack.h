@@ -24,12 +24,15 @@
 #define EFFECTSTACK_H
 
 #include <QDialog>
-
-class   EffectUser;
-
 #include <QStandardItemModel>
 
-class   EffectInstance;
+namespace Backend
+{
+class IService;
+class IFilter;
+}
+
+class   EffectHelper;
 class   EffectInstanceListModel;
 class   EffectInstanceWidget;
 
@@ -45,11 +48,11 @@ class EffectStack : public QDialog
     Q_OBJECT
 
     public:
-        explicit EffectStack( EffectUser *user, QWidget *parent = 0 );
+        explicit EffectStack( Backend::IService* service, QWidget *parent = 0 );
         ~EffectStack();
 
     private:
-        void        addInstanceWidget( EffectInstance *instance );
+        void        addEffectHelper( EffectHelper* helper );
 
     private slots:
         void        selectedChanged( const QModelIndex &index );
@@ -61,7 +64,7 @@ class EffectStack : public QDialog
     private:
         Ui::EffectStack                 *m_ui;
         EffectInstanceListModel         *m_model;
-        EffectUser                      *m_user;
+        Backend::IService               *m_service;
         QStackedLayout                  *m_stackedLayout;
         QHash<QString, EffectInstanceWidget*>   m_instanceWidgets;
 };

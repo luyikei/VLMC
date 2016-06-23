@@ -28,9 +28,10 @@
 #include "Main/Core.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "EffectsEngine/EffectInstance.h"
 #include "Workflow/TrackWorkflow.h"
 #include "AbstractUndoStack.h"
+#include "Backend/IService.h"
+#include "Backend/IFilter.h"
 
 void
 Commands::trigger( Generic* command )
@@ -278,9 +279,9 @@ Commands::Clip::Split::internalUndo()
     m_toSplit->setEnd( m_oldEnd );
 }
 
-Commands::Effect::Add::Add( EffectHelper *helper, EffectUser *target ) :
-        m_helper( helper ),
-        m_target( target )
+Commands::Effect::Add::Add( EffectHelper* helper, Backend::IService* target )
+    : m_helper( helper )
+    , m_target( target )
 {
     retranslate();
 }
@@ -288,73 +289,73 @@ Commands::Effect::Add::Add( EffectHelper *helper, EffectUser *target ) :
 void
 Commands::Effect::Add::retranslate()
 {
-    setText( tr( "Adding effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    // setText( tr( "Adding effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
 Commands::Effect::Add::internalRedo()
 {
-    m_target->addEffect( m_helper );
+    m_target->attach( *m_helper->filter() );
+    m_helper->filter()->connect( *m_target );
 }
 
 void
 Commands::Effect::Add::internalUndo()
 {
-    m_target->removeEffect( m_helper );
+    m_target->detach( *m_helper->filter() );
 }
 
-Commands::Effect::Move::Move( EffectHelper *helper, EffectUser *old, EffectUser *newUser,
-                              qint64 pos) :
-    m_helper( helper ),
-    m_old( old ),
-    m_new( newUser ),
-    m_newPos( pos )
+Commands::Effect::Move::Move( EffectHelper* helper, Backend::IService* from, Backend::IService* to,
+                              qint64 pos)
+    : m_helper( helper )
+    , m_from( from )
+    , m_to( to )
+    , m_newPos( pos )
 {
     m_oldPos = helper->begin();
     m_oldEnd = helper->end();
-    m_newEnd = m_helper->end() - ( m_helper->begin() - pos );
+    m_newEnd = helper->end() - helper->begin() + pos;
     retranslate();
 }
 
 void
 Commands::Effect::Move::retranslate()
 {
-    setText( tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    // setText( tr( "Moving effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
 Commands::Effect::Move::internalRedo()
 {
-    if ( m_old != m_new )
+    if ( m_from != m_to )
     {
-        m_old->removeEffect( m_helper );
+        m_from->detach( *m_helper->filter() );
         m_helper->setBoundaries( m_newPos, m_newEnd );
-        m_new->addEffect( m_helper );
+        m_to->attach( *m_helper->filter() );
 
     }
     else
-        m_new->moveEffect( m_helper, m_newPos );
+        m_helper->setBoundaries( m_newPos, m_newEnd );
 }
 
 void
 Commands::Effect::Move::internalUndo()
 {
-    if ( m_old != m_new )
+    if ( m_from != m_to )
     {
-        m_new->removeEffect( m_helper );
+        m_to->detach( *m_helper->filter() );
         m_helper->setBoundaries( m_oldPos, m_oldEnd );
         //This must be called after setting boundaries, as the effect's begin is its begin boundary
-        m_old->addEffect( m_helper );
+        m_from->attach( *m_helper->filter() );
     }
     else
-        m_new->moveEffect( m_helper, m_oldPos );
+        m_helper->setBoundaries( m_oldPos, m_oldEnd );
 }
 
-Commands::Effect::Resize::Resize( EffectUser *target, EffectHelper *helper, qint64 newBegin, qint64 newEnd ) :
-        m_target( target ),
-        m_helper( helper ),
-        m_newBegin( newBegin ),
-        m_newEnd( newEnd )
+Commands::Effect::Resize::Resize( EffectHelper* helper, qint64 newBegin, qint64 newEnd )
+    : m_helper( helper )
+    , m_newBegin( newBegin )
+    , m_newEnd( newEnd )
 {
     m_oldBegin = helper->begin();
     m_oldEnd = helper->end();
@@ -364,46 +365,43 @@ Commands::Effect::Resize::Resize( EffectUser *target, EffectHelper *helper, qint
 void
 Commands::Effect::Resize::retranslate()
 {
-    setText( tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    // setText( tr( "Resizing effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
 Commands::Effect::Resize::internalRedo()
 {
-    if ( m_newBegin != m_oldBegin )
-        m_target->moveEffect( m_helper, m_newBegin );
     m_helper->setBoundaries( m_newBegin, m_newEnd );
 }
 
 void
 Commands::Effect::Resize::internalUndo()
 {
-    if ( m_oldBegin != m_newBegin )
-        m_target->moveEffect( m_helper, m_oldBegin );
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::Effect::Remove::Remove( EffectHelper *helper, EffectUser *user ) :
-        m_helper( helper ),
-        m_user( user )
+Commands::Effect::Remove::Remove( EffectHelper* helper, Backend::IService* target )
+    : m_helper( helper )
+    , m_target( target )
 {
-    retranslate();
+
 }
 
 void
 Commands::Effect::Remove::retranslate()
 {
-    setText( tr( "Deleting effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
+    // setText( tr( "Deleting effect %1" ).arg( m_helper->effectInstance()->effect()->name() ) );
 }
 
 void
 Commands::Effect::Remove::internalRedo()
 {
-    m_user->removeEffect( m_helper );
+    m_target->detach( *m_helper->filter() );
 }
 
 void
 Commands::Effect::Remove::internalUndo()
 {
-    m_user->addEffect( m_helper );
+    m_target->attach( *m_helper->filter() );
+    m_helper->filter()->connect( *m_target );
 }

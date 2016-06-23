@@ -29,7 +29,6 @@
 
 
 #include <Backend/IBackend.h>
-#include <EffectsEngine/EffectsEngine.h>
 #include "Library/Library.h"
 #include "Project/RecentProjects.h"
 #include "Project/Workspace.h"
@@ -41,7 +40,6 @@
 Core::Core()
 {
     m_backend = Backend::instance();
-    m_effectsEngine = new EffectsEngine;
     m_logger = new VlmcLogger;
 
     createSettings();
@@ -74,7 +72,6 @@ Core::~Core()
     delete m_workspace;
     delete m_settings;
     delete m_logger;
-    delete m_effectsEngine;
     delete m_backend;
 }
 
@@ -96,12 +93,6 @@ Backend::IBackend*
 Core::backend()
 {
     return m_backend;
-}
-
-EffectsEngine*
-Core::effectsEngine()
-{
-    return m_effectsEngine;
 }
 
 VlmcLogger*

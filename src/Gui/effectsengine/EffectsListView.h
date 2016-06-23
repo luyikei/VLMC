@@ -23,7 +23,6 @@
 #ifndef EFFECTLISTVIEW_H
 #define EFFECTLISTVIEW_H
 
-#include "EffectsEngine/Effect.h"
 
 #include <QListView>
 
@@ -35,7 +34,6 @@ class EffectsListView : public QListView
 
     public:
         explicit            EffectsListView(QWidget *parent = 0);
-        void                setType( Effect::Type type );
 
     protected:
         void                mousePressEvent( QMouseEvent *event );
@@ -43,11 +41,8 @@ class EffectsListView : public QListView
 
     private:
         QStandardItemModel  *m_model;
-        Effect::Type        m_type;
         QPoint              m_dragStartPos;
-    public slots:
-        void                effectAdded( Effect *effect, const QString& name,
-                                         Effect::Type type );
+
     private slots:
         void                effectActivated( const QModelIndex& index ) const;
 };

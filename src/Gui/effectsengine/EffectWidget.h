@@ -25,11 +25,14 @@
 
 #include <QWidget>
 
-#include "EffectsEngine/Effect.h"
-
 namespace Ui
 {
     class EffectWidget;
+}
+
+namespace Backend
+{
+class IFilterInfo;
 }
 
 class EffectWidget : public QWidget
@@ -39,15 +42,11 @@ class EffectWidget : public QWidget
     public:
         explicit EffectWidget( QWidget *parent = 0 );
         ~EffectWidget();
-        void                setEffect( Effect* effect );
+        void                setFilterInfo( Backend::IFilterInfo* info );
         void                clear();
 
     private:
-        static QString                      nameFromType( Effect::Type type );
-
-    private:
         Ui::EffectWidget    *m_ui;
-        Effect              *m_effect;
 };
 
 #endif // EFFECTWIDGET_H

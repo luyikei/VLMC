@@ -24,10 +24,14 @@
 #define GRAPHICSEFFECTITEM_H
 
 #include "AbstractGraphicsItem.h"
-#include "EffectsEngine/EffectsEngine.h"
 
-class   EffectUser;
+class   EffectHelper;
 class   AbstractGraphicsMediaItem;
+
+namespace Backend
+{
+class IFilterInfo;
+}
 
 class GraphicsEffectItem : public AbstractGraphicsItem
 {
@@ -35,8 +39,9 @@ class GraphicsEffectItem : public AbstractGraphicsItem
 
     public:
         enum { Type = UserType + 3 };
-        GraphicsEffectItem( Effect *effect );
         GraphicsEffectItem( EffectHelper *helper );
+
+        virtual ~GraphicsEffectItem();
 
         virtual const QUuid&        uuid() const;
         virtual int                 type() const;
@@ -51,8 +56,9 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual qint64              maxBegin() const;
         virtual qint64              maxEnd() const;
         virtual Workflow::Helper    *helper();
-        virtual void                triggerMove( EffectUser *target, qint64 startPos );
-        virtual void                triggerResize( EffectUser *tw, Workflow::Helper *helper,
+        virtual void                triggerMove( TrackWorkflow* target, qint64 startPos );
+        virtual void                triggerMove( Backend::IService* target, qint64 startPos );
+        virtual void                triggerResize( TrackWorkflow* target, Workflow::Helper *helper,
                                            qint64 newBegin, qint64 newEnd, qint64 pos );
         virtual qint64              itemHeight() const;
         virtual qint32              zSelected() const;
@@ -80,7 +86,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         void                containerMoved( qint64 pos );
 
     private:
-        Effect                      *m_effect;
+        Backend::IFilterInfo        *m_effect;
         EffectHelper                *m_effectHelper;
         AbstractGraphicsMediaItem   *m_container;
 };

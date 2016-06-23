@@ -24,13 +24,17 @@
 #define EFFECTINSTANCEWIDGET_H
 
 #include <QWidget>
+#include <memory>
 
-class   EffectInstance;
-class   EffectSettingValue;
-
-#include "EffectsEngine/Effect.h"
+#include "EffectsEngine/EffectHelper.h"
 #include "ui_EffectInstanceWidget.h"
 
+namespace Backend
+{
+class IFilter;
+}
+
+class   EffectHelper;
 class   ISettingsCategoryWidget;
 
 class EffectInstanceWidget : public QWidget
@@ -39,18 +43,18 @@ class EffectInstanceWidget : public QWidget
 
     public:
         explicit EffectInstanceWidget( QWidget *parent = 0);
-        void        setEffectInstance( EffectInstance* effectInstance );
+        void     setEffectHelper( std::unique_ptr<EffectHelper> filter );
     private:
-        ISettingsCategoryWidget             *widgetFactory( EffectSettingValue *s );
+        ISettingsCategoryWidget*            widgetFactory( SettingValue *s );
         void                                clear();
     private:
-        EffectInstance                      *m_effect;
+        std::unique_ptr<EffectHelper>       m_helper;
         QList<ISettingsCategoryWidget*>     m_settings;
         QList<QWidget*>                     m_widgets;
         Ui::EffectSettingWidget             *m_ui;
 
     public slots:
         void                                save();
-    };
+};
 
 #endif // EFFECTINSTANCEWIDGET_H

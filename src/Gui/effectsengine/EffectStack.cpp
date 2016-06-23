@@ -23,23 +23,25 @@
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
 
+#include "Backend/IService.h"
+#include "Backend/IBackend.h"
+#include "Backend/IFilter.h"
 #include "Main/Core.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "EffectsEngine/EffectInstance.h"
-#include "EffectsEngine/EffectUser.h"
 #include "EffectInstanceWidget.h"
 #include "EffectInstanceListModel.h"
 
 #include <QStackedLayout>
+#include <QMessageBox>
 
-EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
+EffectStack::EffectStack( Backend::IService *service, QWidget *parent ):
     QDialog( parent ),
     m_ui( new Ui::EffectStack ),
-    m_user( user )
+    m_service( service )
 {
     m_ui->setupUi( this );
 
-    m_model = new EffectInstanceListModel( user );
+    m_model = new EffectInstanceListModel( service );
     m_ui->list->setModel( m_model );
     connect( m_ui->list, SIGNAL( clicked( QModelIndex ) ),
              this, SLOT( selectedChanged( QModelIndex ) ) );
@@ -48,14 +50,16 @@ EffectStack::EffectStack( EffectUser *user, QWidget *parent ):
     connect( m_ui->removeButton, SIGNAL( clicked() ), this, SLOT( remove() ) );
     connect( m_ui->addButton, SIGNAL( clicked() ), this, SLOT( add() ) );
 
-    m_ui->addComboBox->addItems( Core::instance()->effectsEngine()->effects( Effect::Filter ) );
+    for ( auto filter : Backend::instance()->availableFilters() )
+        m_ui->addComboBox->addItem( QString::fromStdString( filter.second->identifier() ) );
+
     m_stackedLayout = new QStackedLayout;
     m_ui->horizontalLayout->addLayout( m_stackedLayout );
     //Add an empty instance widget.
     m_stackedLayout->addWidget( new EffectInstanceWidget( this ) );
     //Create instance widgets for already inserted effects
-    foreach ( EffectHelper *helper, user->effects( Effect::Filter ) )
-        addInstanceWidget( helper->effectInstance() );
+    for ( int i = 0; i < m_service->filterCount(); ++i )
+        addEffectHelper( new EffectHelper( m_service->filter( i ) ) );
 }
 
 EffectStack::~EffectStack()
@@ -65,19 +69,19 @@ EffectStack::~EffectStack()
 }
 
 void
-EffectStack::addInstanceWidget( EffectInstance *instance )
+EffectStack::addEffectHelper( EffectHelper* helper )
 {
     EffectInstanceWidget    *w = new EffectInstanceWidget( this );
-    w->setEffectInstance( instance );
+    w->setEffectHelper( std::unique_ptr<EffectHelper>( helper ) );
     m_stackedLayout->addWidget( w );
-    m_instanceWidgets[instance->effect()->name()] = w;
+    m_instanceWidgets[helper->identifier()] = w;
 }
 
 void
 EffectStack::selectedChanged( const QModelIndex &index )
 {
-    EffectInstance  *inst = m_model->data( index, Qt::EditRole ).value<EffectHelper*>()->effectInstance();
-    m_stackedLayout->setCurrentWidget( m_instanceWidgets[inst->effect()->name()] );
+    auto filter = m_model->data( index, Qt::EditRole ).value<Backend::IFilter*>();
+    m_stackedLayout->setCurrentWidget( m_instanceWidgets[QString::fromStdString( filter->identifier() )] );
 }
 
 void
@@ -110,6 +114,9 @@ void
 EffectStack::add()
 {
     EffectHelper *helper = m_model->add( m_ui->addComboBox->currentText() );
-    if( helper != nullptr )
-        addInstanceWidget( helper->effectInstance() );
+    if( helper == nullptr )
+        QMessageBox::warning( this, tr( "An unexpected error has occurred" ),
+                              tr( "We couldn't create an instance of '%1'.").arg( m_ui->addComboBox->currentText() ) );
+    else
+        addEffectHelper( helper );
 }

@@ -24,38 +24,44 @@
 
 #include "Main/Core.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "EffectsEngine/EffectInstance.h"
-#include "EffectsEngine/EffectUser.h"
+
+#include "Backend/MLT/MLTFilter.h"
+#include "Backend/IService.h"
+#include "Backend/IBackend.h"
 
 #include <QApplication>
 #include <QFontMetrics>
 
-EffectInstanceListModel::EffectInstanceListModel( EffectUser *user ) :
-        m_user( user )
+EffectInstanceListModel::EffectInstanceListModel( Backend::IService* service ) :
+        m_service( service )
 {
 }
 
 qint32
 EffectInstanceListModel::rowCount( const QModelIndex& ) const
 {
-    return m_user->effects( Effect::Filter ).size();
+    return m_service->filterCount();
 }
 
 QVariant
 EffectInstanceListModel::data( const QModelIndex &index, int role ) const
 {
+    auto filter         = m_service->filter( index.row() );
+    auto id             = QString::fromStdString( filter->identifier() );
+    auto info           = Backend::instance()->filterInfo( filter->identifier() );
+
     switch ( role )
     {
     case Qt::DisplayRole:
-        return m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->name();
+        return QString::fromStdString( info->name() );
     case Qt::ToolTipRole:
-        return m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->description();
+        return QString::fromStdString( info->description() );
     case Qt::EditRole:
-        return QVariant::fromValue( m_user->effects( Effect::Filter ).at( index.row() ) );
+        return QVariant::fromValue( filter );
     case Qt::SizeHintRole:
         {
             const QFontMetrics  &fm = QApplication::fontMetrics();
-            QSize               size( fm.width( m_user->effects( Effect::Filter ).at( index.row() )->effectInstance()->effect()->name() ), fm.height() );
+            QSize               size( fm.width( QString::fromStdString( info->name() ) ), fm.height() );
             return size;
         }
     default:
@@ -66,10 +72,10 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
 bool
 EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& index /*= QModelIndex()*/ )
 {
-    if ( count != 1 || row < 0 )
+    if ( count != 1 || row < 0 || row >= m_service->filterCount() )
         return false;
     beginRemoveRows( index, row, row );
-    m_user->removeEffect( Effect::Filter, row );
+    m_service->detach( row );
     endRemoveRows();
     return true;
 }
@@ -77,20 +83,20 @@ EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& inde
 void
 EffectInstanceListModel::moveUp( const QModelIndex &index )
 {
-    if ( index.row() <= 0 || index.row() >= m_user->count( Effect::Filter ) )
+    if ( index.row() <= 0 || index.row() >= m_service->filterCount() )
         return ;
     emit layoutAboutToBeChanged();
-    m_user->swapFilters( index.row(), index.row() - 1 );
+    m_service->moveFilter( index.row(), index.row() - 1 );
     emit layoutChanged();
 }
 
 void
 EffectInstanceListModel::moveDown( const QModelIndex &index )
 {
-    if ( index.row() >= m_user->count( Effect::Filter ) - 1 )
+    if ( index.row() >= m_service->filterCount() )
         return ;
     emit layoutAboutToBeChanged();
-    m_user->swapFilters( index.row(), index.row() + 1 );
+    m_service->moveFilter( index.row(), index.row() + 1 );
     emit layoutChanged();
 }
 
@@ -99,11 +105,15 @@ EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
         return nullptr;
-    Effect  *effect = Core::instance()->effectsEngine()->effect( effectName );
-    if ( effect == nullptr )
+    beginInsertRows( QModelIndex(), m_service->filterCount(), m_service->filterCount() );
+    auto helper = new EffectHelper( effectName );
+    if ( helper->filter()->isValid() == false )
+    {
+        delete helper;
         return nullptr;
-    beginInsertRows( QModelIndex(), m_user->count( Effect::Filter ), m_user->count( Effect::Filter ) );
-    EffectHelper        *helper = m_user->addEffect( effect );
+    }
+    m_service->attach( *helper->filter() );
+    helper->filter()->connect( *m_service );
     endInsertRows();
     return helper;
 }

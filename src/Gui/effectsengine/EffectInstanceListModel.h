@@ -23,15 +23,19 @@
 #ifndef EFFECTINSTANCELISTMODEL_H
 #define EFFECTINSTANCELISTMODEL_H
 
-#include "EffectsEngine/EffectsEngine.h"
-class   EffectUser;
+namespace Backend
+{
+class   IService;
+}
 
 #include <QAbstractListModel>
+
+class EffectHelper;
 
 class EffectInstanceListModel : public QAbstractListModel
 {
     public:
-        EffectInstanceListModel( EffectUser *user );
+        EffectInstanceListModel( Backend::IService *service );
         virtual qint32      rowCount( const QModelIndex &parent ) const;
         virtual QVariant    data( const QModelIndex &index, int role ) const;
         virtual bool        removeRows( int row, int count, const QModelIndex &parent = QModelIndex() );
@@ -40,7 +44,7 @@ class EffectInstanceListModel : public QAbstractListModel
         EffectHelper*       add( const QString &effectName );
 
     private:
-        EffectUser          *m_user;
+        Backend::IService*  m_service;
 };
 
 #endif // EFFECTINSTANCELISTMODEL_H
