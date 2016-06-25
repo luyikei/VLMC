@@ -30,7 +30,8 @@
 #include <QMap>
 #include <QXmlStreamWriter>
 
-class   Clip;
+#include "Media/Clip.h"
+
 class   MainWorkflow;
 
 class   EffectHelper;
@@ -58,6 +59,8 @@ class   TrackWorkflow : public QObject
     public:
         TrackWorkflow( quint32 trackId, Backend::ITractor* tractor );
         ~TrackWorkflow();
+
+        Backend::ITrack*                        trackFromFormats( Clip::Formats formats );
 
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         void                                    resizeClip( const QUuid& id, qint64 begin, qint64 end );

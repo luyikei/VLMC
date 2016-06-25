@@ -69,13 +69,20 @@ TrackWorkflow::~TrackWorkflow()
     delete m_clipsLock;
 }
 
+Backend::ITrack*
+TrackWorkflow::trackFromFormats( Clip::Formats formats )
+{
+    if ( formats.testFlag( Clip::Audio ) )
+        return m_audioTrack;
+    else if ( formats.testFlag( Clip::Video ) )
+        return m_videoTrack;
+    return nullptr;
+}
+
 void
 TrackWorkflow::addClip( Clip* clip, qint64 start )
 {
-    if ( clip->formats().testFlag( Clip::Audio ) )
-        m_audioTrack->insertAt( *clip->producer(), start );
-    else if ( clip->formats().testFlag( Clip::Video ) )
-        m_videoTrack->insertAt( *clip->producer(), start );
+    trackFromFormats( clip->formats() )->insertAt( *clip->producer(), start );
     m_clips.insertMulti( start, clip );
     emit clipAdded( this, clip, start );
 }
@@ -123,7 +130,7 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         if ( it.value()->uuid() == id )
         {
             auto clip = it.value();
-            auto track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            auto track = trackFromFormats( it.value()->formats() );
             auto producer = track->clipAt( it.key() );
             track->remove( track->clipIndexAt( it.key() ) );
             track->insertAt( *producer, startingFrame );
@@ -148,7 +155,7 @@ TrackWorkflow::resizeClip( const QUuid &id, qint64 begin, qint64 end )
         auto clip = it.value();
         if ( clip->uuid() == id )
         {
-            auto track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            auto track = trackFromFormats( clip->formats() );
             track->resizeClip( track->clipIndexAt( it.key() ), begin, end );
         }
     }
@@ -189,7 +196,7 @@ TrackWorkflow::removeClip( const QUuid& id )
         if ( it.value()->uuid() == id )
         {
             auto    clip = it.value();
-            auto    track = ( clip->formats().testFlag( Clip::Audio ) ) ? m_audioTrack : m_videoTrack;
+            auto    track = trackFromFormats( clip->formats() );
             track->remove( track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
             clip->disconnect( this );
