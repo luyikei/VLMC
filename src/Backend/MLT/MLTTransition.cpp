@@ -32,6 +32,8 @@ MLTTransition::MLTTransition( Backend::IProfile& profile, const char *id )
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_transition = new Mlt::Transition( *mltProfile.m_profile, id );
     m_service = m_transition;
+    if ( isValid() == false )
+        throw InvalidServiceException();
 }
 
 MLTTransition::~MLTTransition()

@@ -25,11 +25,22 @@
 #define ISERVICE_H
 
 #include <string>
+#include <exception>
 
 namespace Backend
 {
     class IProfile;
     class IFilter;
+
+    class InvalidServiceException : public std::exception
+    {
+    public:
+        virtual const char* what() const throw() override
+        {
+            return "We couldn't create a service.";
+        }
+    };
+
     class IService
     {
     public:

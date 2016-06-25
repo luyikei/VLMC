@@ -64,6 +64,8 @@ class   EffectHelper : public Workflow::Helper
         virtual qint64  length() const override;
         virtual void    setBoundaries( qint64 begin, qint64 end ) override;
 
+        bool    isValid() const;
+
         void                setTarget( Backend::IService* service );
         Backend::IService*  target();
 

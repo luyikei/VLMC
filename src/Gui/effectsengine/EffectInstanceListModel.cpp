@@ -106,10 +106,13 @@ EffectInstanceListModel::add( const QString &effectName )
     if ( effectName.isEmpty() == true )
         return nullptr;
     beginInsertRows( QModelIndex(), m_service->filterCount(), m_service->filterCount() );
-    auto helper = new EffectHelper( effectName );
-    if ( helper->filter()->isValid() == false )
+    EffectHelper* helper = nullptr;
+    try
     {
-        delete helper;
+        helper = new EffectHelper( effectName  );
+    }
+    catch( Backend::InvalidServiceException& e )
+    {
         return nullptr;
     }
     m_service->attach( *helper->filter() );

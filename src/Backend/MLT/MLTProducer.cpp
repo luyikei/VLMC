@@ -67,6 +67,8 @@ MLTProducer::MLTProducer( Mlt::Producer* producer, IProducerEventCb* callback )
     m_service  = producer;
     setCallback( callback );
     calcTracks();
+    if ( isValid() == false )
+        throw InvalidServiceException();
 }
 
 MLTProducer::MLTProducer( IProfile& profile, const char* path, IProducerEventCb* callback )
@@ -78,6 +80,8 @@ MLTProducer::MLTProducer( IProfile& profile, const char* path, IProducerEventCb*
     m_service  = m_producer;
     setCallback( callback );
     calcTracks();
+    if ( isValid() == false )
+        throw InvalidServiceException();
 }
 
 MLTProducer::MLTProducer( const char* path, IProducerEventCb* callback )

@@ -26,6 +26,7 @@
 #include "Project/Project.h"
 #include "Workflow/MainWorkflow.h"
 #include "Backend/MLT/MLTFilter.h"
+#include "Backend/IService.h"
 #include "Backend/IBackend.h"
 #include <mlt++/MltProperties.h>
 
@@ -46,12 +47,19 @@ conv( std::string str, SettingValue::Type type )
 EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
                             const QString &uuid ) :
     Helper( uuid ),
-    m_filter( new Backend::MLT::MLTFilter( id ) ),
     m_service( nullptr ),
     m_filterInfo( nullptr )
 {
-    if ( m_filter->isValid() == false )
-        return;
+    try
+    {
+        m_filter = new Backend::MLT::MLTFilter( id );
+    }
+    catch ( Backend::InvalidServiceException& e )
+    {
+        m_filter = nullptr;
+        throw e;
+    }
+
     m_filter->setBoundaries( begin, end );
     initParams();
 }
@@ -251,6 +259,12 @@ void
 EffectHelper::setBoundaries( qint64 begin, qint64 end )
 {
     m_filter->setBoundaries( begin, end );
+}
+
+bool
+EffectHelper::isValid() const
+{
+    return m_filter != nullptr && m_filter->isValid();
 }
 
 void

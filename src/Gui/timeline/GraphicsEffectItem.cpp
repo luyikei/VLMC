@@ -45,7 +45,7 @@ GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
         m_effectHelper( helper ),
         m_container( nullptr )
 {
-    if ( m_effectHelper->filter()->isValid() == false )
+    if ( m_effectHelper->isValid() == false )
         return;
     setWidth( m_effectHelper->length() );
     m_effect = helper->filterInfo();

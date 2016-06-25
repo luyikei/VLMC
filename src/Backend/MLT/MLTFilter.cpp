@@ -157,6 +157,8 @@ MLTFilter::MLTFilter( Backend::IProfile& profile, const char* id )
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_filter = new Mlt::Filter( *mltProfile.m_profile, id );
     m_service = m_filter;
+    if ( isValid() == false )
+        throw InvalidServiceException();
 }
 
 MLTFilter::MLTFilter( const char *id )

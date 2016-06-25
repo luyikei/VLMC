@@ -46,6 +46,8 @@ MLTConsumer::MLTConsumer( Backend::IProfile& profile, const char *id, Backend::I
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_consumer = new Mlt::Consumer( *mltProfile.m_profile, id );
     m_service = m_consumer;
+    if ( isValid() == false )
+        throw InvalidServiceException();
 }
 
 MLTConsumer::~MLTConsumer()

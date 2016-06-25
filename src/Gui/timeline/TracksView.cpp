@@ -357,8 +357,17 @@ TracksView::dragEnterEvent( QDragEnterEvent *event )
 void
 TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
-    m_dragEffectItem = new GraphicsEffectItem( new EffectHelper( qPrintable( event->mimeData()->data( "vlmc/effect_name") ) ) );
-    if ( m_dragEffectItem->effectHelper()->filter()->isValid() == true )
+    try
+    {
+        m_dragEffectItem = new GraphicsEffectItem( new EffectHelper( qPrintable( event->mimeData()->data( "vlmc/effect_name") ) ) );
+    }
+    catch( Backend::InvalidServiceException& e )
+    {
+        delete m_dragEffectItem;
+        m_dragEffectItem = nullptr;
+    }
+
+    if ( m_dragEffectItem != nullptr )
     {
         m_dragEffectItem->setHeight( m_dragEffectItem->itemHeight() );
         m_dragEffectItem->m_tracksView = this;
