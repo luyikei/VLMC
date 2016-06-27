@@ -44,11 +44,6 @@ namespace Backend
     class IProducer : virtual public IService
     {
     public:
-        enum EndType
-        {
-            EndOfMedia = -1,
-            EndOfParent = -2
-        };
 
         virtual ~IProducer() = default;
         virtual void            setCallback( IProducerEventCb* callback ) = 0;

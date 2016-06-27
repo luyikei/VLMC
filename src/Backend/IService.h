@@ -45,6 +45,12 @@ namespace Backend
     class IService
     {
     public:
+        enum EndType
+        {
+            EndOfMedia = -1,
+            EndOfParent = -2
+        };
+
         virtual ~IService() = default;
 
         virtual std::string     identifier() const = 0;
