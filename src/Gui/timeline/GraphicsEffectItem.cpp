@@ -41,22 +41,20 @@
 #include <QMenu>
 #include <QPainter>
 
-GraphicsEffectItem::GraphicsEffectItem( EffectHelper *helper ) :
+GraphicsEffectItem::GraphicsEffectItem( std::shared_ptr<EffectHelper> const& helper ) :
         m_effectHelper( helper ),
         m_container( nullptr )
 {
     if ( m_effectHelper->isValid() == false )
         return;
     setWidth( m_effectHelper->length() );
-    m_effect = helper->filterInfo();
-    connect( helper, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( m_effectHelper.get(), SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
     setOpacity( 0.8 );
     m_itemColor = Qt::blue;
 }
 
 GraphicsEffectItem::~GraphicsEffectItem()
 {
-    delete m_effectHelper;
 }
 
 const QUuid&
@@ -201,7 +199,6 @@ GraphicsEffectItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsIte
 
     // Initiate the font metrics calculation
     QFontMetrics fm( painter->font() );
-    QString text = QString::fromStdString( m_effect->name() );
 
     // Get the transformations required to map the text on the viewport
     QTransform viewPortTransform = Timeline::instance()->tracksView()->viewportTransform();
@@ -211,10 +208,11 @@ GraphicsEffectItem::paintTitle( QPainter* painter, const QStyleOptionGraphicsIte
     mapped.adjust( 2, 2, -2, -2 );
 
     painter->setPen( Qt::white );
-    painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( text, Qt::ElideRight, mapped.width() ) );
+    painter->drawText( mapped, Qt::AlignVCenter, fm.elidedText( QString::fromStdString( m_effectHelper->filterInfo()->name() ),
+                                                                Qt::ElideRight, mapped.width() ) );
 }
 
-EffectHelper*
+std::shared_ptr<EffectHelper>
 GraphicsEffectItem::effectHelper()
 {
     return m_effectHelper;
@@ -246,7 +244,7 @@ GraphicsEffectItem::maxEnd() const
     return m_effectHelper->filter()->length();
 }
 
-Workflow::Helper*
+std::shared_ptr<Workflow::Helper>
 GraphicsEffectItem::helper()
 {
     return m_effectHelper;
@@ -271,10 +269,10 @@ GraphicsEffectItem::triggerResize( TrackWorkflow* target, Workflow::Helper* help
                                    qint64 newBegin, qint64 newEnd, qint64 )
 {
     Q_UNUSED( target )
-    EffectHelper    *eh = qobject_cast<EffectHelper*>( helper );
-    if ( eh == nullptr )
+    Q_UNUSED( helper )
+    if ( m_effectHelper.get() == nullptr )
         return ;
-    Commands::trigger( new Commands::Effect::Resize( eh, newBegin, newEnd ) );
+    Commands::trigger( new Commands::Effect::Resize( m_effectHelper, newBegin, newEnd ) );
 }
 
 qint32
@@ -353,7 +351,7 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
     else if ( selectedAction == changeEffectProperties )
     {
         EffectInstanceWidget *effectProperties = new EffectInstanceWidget();
-        effectProperties->setEffectHelper( std::unique_ptr<EffectHelper>( new EffectHelper( m_effectHelper->filter() ) ) );
+        effectProperties->setEffectHelper( m_effectHelper );
         effectProperties->show();
     }
 }

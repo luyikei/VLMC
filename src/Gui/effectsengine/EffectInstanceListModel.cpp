@@ -57,7 +57,7 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
     case Qt::ToolTipRole:
         return QString::fromStdString( info->description() );
     case Qt::EditRole:
-        return QVariant::fromValue( filter );
+        return id;
     case Qt::SizeHintRole:
         {
             const QFontMetrics  &fm = QApplication::fontMetrics();

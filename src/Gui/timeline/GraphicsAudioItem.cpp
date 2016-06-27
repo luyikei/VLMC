@@ -33,13 +33,13 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneHoverEvent>
 
-GraphicsAudioItem::GraphicsAudioItem( Clip* clip ) :
+GraphicsAudioItem::GraphicsAudioItem( std::shared_ptr<Clip> const& clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    QTime length = QTime().addMSecs( clip->media()->producer()->length() );
+    QTime length = QTime().addMSecs( m_clip->media()->producer()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
-                     .arg( clip->media()->fileName() )
+                     .arg( m_clip->media()->fileName() )
                      .arg( length.toString("hh:mm:ss.zzz") ) );
     setToolTip( tooltip );
 }

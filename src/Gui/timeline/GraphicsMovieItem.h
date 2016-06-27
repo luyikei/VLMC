@@ -39,7 +39,7 @@ public:
      * \brief See http://doc.trolltech.com/4.5/qgraphicsitem.html#type
      */
     enum { Type = UserType + 1 };
-    GraphicsMovieItem( Clip* clip );
+    GraphicsMovieItem( std::shared_ptr<Clip> const& clip );
     virtual ~GraphicsMovieItem();
 
     virtual int type() const { return Type; }

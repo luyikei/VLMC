@@ -192,11 +192,6 @@ public:
      * \return A pointer to the current WorkflowRenderer.
      */
     WorkflowRenderer        *getRenderer() { return m_renderer; }
-    /**
-     * \brief Remove a Clip from the timeline (and from the backend).
-     * \param uuid The unique identifier of the Media.
-     */
-    void                    removeClip( const QUuid& uuid );
 
     /**
      *  \returns            The AbstractGraphicsMediaItem identified by the given uuid.
@@ -217,7 +212,7 @@ public slots:
      * \param helper    The helper's item.
      * \param start     The position in frames.
      */
-    void                    addItem( TrackWorkflow* tw, Workflow::Helper *helper, qint64 start );
+    void                    addItem( TrackWorkflow* tw, std::shared_ptr<Workflow::Helper> const& clip, qint64 start );
     /**
      * \brief Move an item in the timeline.
      * \param tw    The TrackWorkflow in which the track was moved
@@ -330,7 +325,7 @@ private:
 
     ItemPosition            findPosition( AbstractGraphicsItem *item, qint32 track, qint64 time );
 
-    void                    addEffectItem(EffectHelper *effectHelper, Workflow::TrackType trackType,
+    void                    addEffectItem( std::shared_ptr<EffectHelper> const& effectHelper, Workflow::TrackType trackType,
                                           qint32 trackId, qint64 start );
 
     /**

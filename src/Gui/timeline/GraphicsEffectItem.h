@@ -23,6 +23,8 @@
 #ifndef GRAPHICSEFFECTITEM_H
 #define GRAPHICSEFFECTITEM_H
 
+#include <memory>
+
 #include "AbstractGraphicsItem.h"
 
 class   EffectHelper;
@@ -39,7 +41,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
 
     public:
         enum { Type = UserType + 3 };
-        GraphicsEffectItem( EffectHelper *helper );
+        GraphicsEffectItem( std::shared_ptr<EffectHelper> const& helper );
 
         virtual ~GraphicsEffectItem();
 
@@ -50,12 +52,12 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual void                paint( QPainter *painter, const QStyleOptionGraphicsItem *option,
                                            QWidget *widget );
         virtual Workflow::TrackType trackType() const;
-        EffectHelper*               effectHelper();
+        std::shared_ptr<EffectHelper>               effectHelper();
         virtual qint64              begin() const;
         virtual qint64              end() const;
         virtual qint64              maxBegin() const;
         virtual qint64              maxEnd() const;
-        virtual Workflow::Helper    *helper();
+        virtual std::shared_ptr<Workflow::Helper>   helper();
         virtual void                triggerMove( TrackWorkflow* target, qint64 startPos );
         virtual void                triggerMove( Backend::IService* target, qint64 startPos );
         virtual void                triggerResize( TrackWorkflow* target, Workflow::Helper *helper,
@@ -86,8 +88,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         void                containerMoved( qint64 pos );
 
     private:
-        Backend::IFilterInfo        *m_effect;
-        EffectHelper                *m_effectHelper;
+        std::shared_ptr<EffectHelper>               m_effectHelper;
         AbstractGraphicsMediaItem   *m_container;
 };
 

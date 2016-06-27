@@ -39,7 +39,8 @@
 
 EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
     QWidget( parent ),
-    m_ui( new Ui::EffectSettingWidget )
+    m_ui( new Ui::EffectSettingWidget ),
+    m_helper( nullptr )
 {
     m_ui->setupUi( this );
     clear();
@@ -48,15 +49,15 @@ EffectInstanceWidget::EffectInstanceWidget( QWidget *parent ) :
 }
 
 void
-EffectInstanceWidget::setEffectHelper( std::unique_ptr<EffectHelper> helper )
+EffectInstanceWidget::setEffectHelper( std::shared_ptr<EffectHelper> const& helper )
 {
     clear();
-    m_helper = std::move( helper );
-    m_ui->effectWidget->setFilterInfo( m_helper->filterInfo() );
+    m_helper = helper;
+    m_ui->effectWidget->setFilterInfo( helper->filterInfo() );
 
-    for ( auto param : m_helper->filterInfo()->paramInfos() )
+    for ( auto param : helper->filterInfo()->paramInfos() )
     {
-        SettingValue*               s = m_helper->value( QString::fromStdString( param->identifier() ) );
+        SettingValue*               s = helper->value( QString::fromStdString( param->identifier() ) );
         ISettingsCategoryWidget*    widget = widgetFactory( s );
         QLabel*                     label = new QLabel( tr( s->name() ), this );
         m_widgets.push_back( label );

@@ -33,6 +33,8 @@
 
 #include "Workflow/MainWorkflow.h"
 
+#include <memory>
+
 class   Clip;
 
 namespace Backend
@@ -81,13 +83,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Add( ::Clip* clip, TrackWorkflow* tw, qint64 pos );
+                Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos );
                 virtual ~Add();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                ::Clip                      *m_clip;
+                std::shared_ptr<::Clip>     m_clip;
                 TrackWorkflow               *m_trackWorkflow;
                 qint64                      m_pos;
         };
@@ -98,7 +100,7 @@ namespace Commands
 
             public:
                 Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                        ::Clip *clip, qint64 newPos );
+                      std::shared_ptr<::Clip> const& clip, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
@@ -106,7 +108,7 @@ namespace Commands
             private:
                 TrackWorkflow   *m_oldTrack;
                 TrackWorkflow   *m_newTrack;
-                ::Clip          *m_clip;
+                std::shared_ptr<::Clip>     m_clip;
                 qint64          m_newPos;
                 qint64          m_oldPos;
         };
@@ -116,13 +118,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( ::Clip* clip, TrackWorkflow* tw );
+                Remove( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw );
                 virtual void internalRedo();
                 virtual void internalUndo();
                 virtual void    retranslate();
 
             private:
-                ::Clip                      *m_clip;
+                std::shared_ptr<::Clip>     m_clip;
                 TrackWorkflow               *m_trackWorkflow;
                 qint64                      m_pos;
         };
@@ -161,7 +163,7 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Split( TrackWorkflow *tw, ::Clip* toSplit, qint64 newClipPos,
+                Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
                 ~Split();
                 virtual void    internalRedo();
@@ -169,8 +171,8 @@ namespace Commands
                 virtual void    retranslate();
             private:
                 TrackWorkflow               *m_trackWorkflow;
-                ::Clip*                     m_toSplit;
-                ::Clip*                     m_newClip;
+                std::shared_ptr<::Clip>                     m_toSplit;
+                std::shared_ptr<::Clip>                     m_newClip;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;
@@ -183,12 +185,12 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Add( EffectHelper *helper, Backend::IService* target );
+                Add( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                EffectHelper    *m_helper;
+                std::shared_ptr<EffectHelper>   m_helper;
                 Backend::IService*      m_target;
         };
 
@@ -197,12 +199,12 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Move( EffectHelper* helper, Backend::IService* from, Backend::IService* to, qint64 pos );
+                Move( std::shared_ptr<EffectHelper> const& helper, Backend::IService* from, Backend::IService* to, qint64 pos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                EffectHelper    *m_helper;
+                std::shared_ptr<EffectHelper>   m_helper;
                 Backend::IService      *m_from;
                 Backend::IService      *m_to;
                 qint64          m_oldPos;
@@ -216,12 +218,12 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Resize( EffectHelper* helper, qint64 newBegin, qint64 newEnd );
+                Resize( std::shared_ptr<EffectHelper> const& helper, qint64 newBegin, qint64 newEnd );
                 virtual void        internalRedo();
                 virtual void        internalUndo();
                 virtual void        retranslate();
             private:
-                EffectHelper*       m_helper;
+                std::shared_ptr<EffectHelper>       m_helper;
                 qint64              m_newBegin;
                 qint64              m_newEnd;
                 qint64              m_oldBegin;
@@ -233,12 +235,12 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( EffectHelper *helper, Backend::IService* target );
+                Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                EffectHelper*       m_helper;
+                std::shared_ptr<EffectHelper>       m_helper;
                 Backend::IService* m_target;
         };
     }

@@ -30,6 +30,8 @@
 #include <QMap>
 #include <QXmlStreamWriter>
 
+#include <memory>
+
 #include "Media/Clip.h"
 
 class   MainWorkflow;
@@ -64,10 +66,10 @@ class   TrackWorkflow : public QObject
 
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         void                                    resizeClip( const QUuid& id, qint64 begin, qint64 end );
-        Clip*                                   removeClip( const QUuid& id );
-        void                                    addClip( Clip*, qint64 start );
+        std::shared_ptr<Clip>                   removeClip( const QUuid& id );
+        void                                    addClip( std::shared_ptr<Clip> const& clip, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
-        Clip                                    *clip( const QUuid& uuid );
+        std::shared_ptr<Clip>                   clip( const QUuid& uuid );
 
         virtual QVariant                        toVariant() const;
         void                                    loadFromVariant( const QVariant& variant );
@@ -93,7 +95,7 @@ class   TrackWorkflow : public QObject
         Backend::ITrack*                        m_audioTrack;
         Backend::ITrack*                        m_videoTrack;
 
-        QMap<qint64, Clip*>                     m_clips;
+        QMap<qint64, std::shared_ptr<Clip>>                     m_clips;
 
         QReadWriteLock*                         m_clipsLock;
         const quint32                           m_trackId;
@@ -103,13 +105,13 @@ class   TrackWorkflow : public QObject
 
     signals:
         void                lengthChanged( qint64 newLength );
-        void                clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
+        void                clipAdded( TrackWorkflow*, std::shared_ptr<Clip> const& clip, qint64 );
         void                clipRemoved( TrackWorkflow*, const QUuid& );
         void                clipMoved( TrackWorkflow*, const QUuid&, qint64 );
 
         //these signals are here to ease connection with tracksview, as it only
         //monitors tracks
-        void                effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 );
+        void                effectAdded( TrackWorkflow*, std::shared_ptr<EffectHelper> const& helper, qint64 );
         void                effectRemoved( TrackWorkflow*, const QUuid& );
         void                effectMoved( TrackWorkflow*, const QUuid&, qint64 );
 

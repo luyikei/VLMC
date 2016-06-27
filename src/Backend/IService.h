@@ -26,6 +26,7 @@
 
 #include <string>
 #include <exception>
+#include <memory>
 
 namespace Backend
 {
@@ -56,7 +57,7 @@ namespace Backend
         virtual int       filterCount() const = 0;
         // Indexes
         virtual bool      moveFilter( int from, int to ) = 0;
-        virtual IFilter*  filter( int index ) const = 0;
+        virtual std::shared_ptr<IFilter>  filter( int index ) const = 0;
         virtual void      setProfile( IProfile& profile ) = 0;
         virtual bool      isValid() const = 0;
     };

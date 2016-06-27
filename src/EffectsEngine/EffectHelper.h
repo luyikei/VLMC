@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QMetaType>
+#include <memory>
 
 #include "Settings/Settings.h"
 #include "Backend/IFilter.h"
@@ -52,7 +53,7 @@ class   EffectHelper : public Workflow::Helper
                       const QString& uuid = QString() );
         EffectHelper( const QString& id, qint64 begin = 0, qint64 end = -1,
                       const QString& uuid = QString() );
-        EffectHelper( Backend::IFilter* filter,
+        EffectHelper( std::shared_ptr<Backend::IFilter> filter,
                       const QString& uuid = QString() );
         EffectHelper( const QVariant& variant );
         ~EffectHelper();
@@ -73,8 +74,8 @@ class   EffectHelper : public Workflow::Helper
 
         QString                         identifier();
 
-        Backend::IFilter*               filter();
-        const Backend::IFilter*         filter() const;
+        std::shared_ptr<Backend::IFilter>               filter();
+        const std::shared_ptr<Backend::IFilter>         filter() const;
 
         SettingValue*                   value( const QString& key );
 
@@ -87,7 +88,7 @@ class   EffectHelper : public Workflow::Helper
         static void                     loadFromVariant( const QVariant& variant, Backend::IService* service );
 
     private:
-        Backend::MLT::MLTFilter*    m_filter;
+        std::shared_ptr<Backend::MLT::MLTFilter>    m_filter;
         Backend::IService*          m_service;
         Backend::IFilterInfo*       m_filterInfo;
 

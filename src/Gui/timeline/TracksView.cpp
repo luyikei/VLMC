@@ -93,15 +93,15 @@ TracksView::TracksView( QGraphicsScene *scene, MainWorkflow *mainWorkflow,
     {
         TrackWorkflow   *tw = m_mainWorkflow->track( i );
         //Clips part:
-        connect( tw, SIGNAL( clipAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-                 this, SLOT( addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ) );
+        connect( tw, &TrackWorkflow::clipAdded,
+                 this, &TracksView::addItem );
         connect( tw, SIGNAL( clipRemoved( TrackWorkflow*, const QUuid& ) ),
                  this, SLOT( removeItem( TrackWorkflow*, const QUuid& ) ) );
         connect( tw, SIGNAL( clipMoved( TrackWorkflow*, const QUuid&, qint64 ) ),
                  this, SLOT( moveItem( TrackWorkflow*, const QUuid&, qint64 ) ) );
         //Effect part:
-        connect( tw, SIGNAL( effectAdded( TrackWorkflow*, Workflow::Helper*, qint64 ) ),
-                 this, SLOT(addItem( TrackWorkflow*, Workflow::Helper*, qint64 ) ), Qt::QueuedConnection );
+        connect( tw, &TrackWorkflow::effectAdded,
+                 this, &TracksView::addItem );
         connect( tw, SIGNAL( effectRemoved( TrackWorkflow*, QUuid ) ),
                  this, SLOT( removeItem( TrackWorkflow*, QUuid ) ), Qt::QueuedConnection );
         connect( tw, SIGNAL( effectMoved( TrackWorkflow*, QUuid, qint64 ) ),
@@ -217,28 +217,7 @@ TracksView::clear()
 }
 
 void
-TracksView::removeClip( const QUuid& uuid  )
-{
-    // Get the list of all items in the timeline
-    QList<AbstractGraphicsItem*> items = timelineItems();
-
-    // Iterate over each item to check if their parent's uuid
-    // is the one we would like to remove.
-    foreach( AbstractGraphicsItem *item, items )
-    {
-        if ( item->uuid() == uuid )
-        {
-            // Remove the item from the timeline
-            removeItem( item->track()->trackWorkflow(), item->uuid() );
-
-            // Removing the item from the backend.
-            item->track()->trackWorkflow()->removeClip( item->uuid() );
-        }
-    }
-}
-
-void
-TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
+TracksView::addItem( TrackWorkflow *tw, std::shared_ptr<Workflow::Helper> const& helper, qint64 start )
 {
     Q_ASSERT( helper );
 
@@ -250,8 +229,8 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
     qint32                  track = tw->trackId();
 
     AbstractGraphicsItem        *item = nullptr;
-    Clip                  *clip = qobject_cast<Clip*>( helper );
-    if ( clip != nullptr )
+    auto    clip = std::dynamic_pointer_cast<Clip>( helper );
+    if ( clip.get() != nullptr )
     {
         AbstractGraphicsMediaItem   *mediaItem = nullptr;
 
@@ -299,22 +278,22 @@ TracksView::addItem( TrackWorkflow *tw, Workflow::Helper *helper, qint64 start )
 
         for ( int i = 0; i < clip->producer()->filterCount(); ++i )
         {
-            addEffectItem( new EffectHelper( clip->producer()->filter( i ) ), Workflow::VideoTrack, track, start );
+            addEffectItem( std::make_shared<EffectHelper>( clip->producer()->filter( i ) ), Workflow::VideoTrack, track, start );
         }
     }
     else
     {
-        EffectHelper    *effectHelper = qobject_cast<EffectHelper*>( helper );
+        auto effectHelper = std::dynamic_pointer_cast<EffectHelper>( helper );
         addEffectItem( effectHelper, Workflow::VideoTrack, track, start );
     }
     updateDuration();
 }
 
 void
-TracksView::addEffectItem( EffectHelper *effectHelper, Workflow::TrackType trackType,
+TracksView::addEffectItem( std::shared_ptr<EffectHelper> const& effectHelper, Workflow::TrackType trackType,
                            qint32 trackId, qint64 start )
 {
-    Q_ASSERT( effectHelper != nullptr );
+    Q_ASSERT( effectHelper.get() != nullptr );
     GraphicsEffectItem *item = new GraphicsEffectItem( effectHelper );
     m_itemsLoaded.insert( effectHelper->uuid() );
     item->m_tracksView = this;
@@ -359,7 +338,9 @@ TracksView::effectDragEnterEvent( QDragEnterEvent *event )
 {
     try
     {
-        m_dragEffectItem = new GraphicsEffectItem( new EffectHelper( qPrintable( event->mimeData()->data( "vlmc/effect_name") ) ) );
+        m_dragEffectItem = new GraphicsEffectItem( std::unique_ptr<EffectHelper>(
+                                                       new EffectHelper( qPrintable( event->mimeData()->data( "vlmc/effect_name") ) )
+                                                       ) );
     }
     catch( Backend::InvalidServiceException& e )
     {
@@ -438,8 +419,8 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
         if ( itemList.size() > 0 )
         {
             AbstractGraphicsMediaItem   *item = itemList.first();
-            Clip                  *clip = qobject_cast<Clip*>( item->helper() );
-            Q_ASSERT( clip != nullptr );
+            auto                  clip = std::dynamic_pointer_cast<Clip>( item->helper() );
+            Q_ASSERT( clip.get() != nullptr );
 
             m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
@@ -791,11 +772,6 @@ TracksView::dragLeaveEvent( QDragLeaveEvent *event )
     if ( m_dragAudioItem || m_dragVideoItem )
         updateDurationNeeded = true;
 
-    if ( m_dragAudioItem != nullptr )
-        Core::instance()->workflow()->deleteClip( m_dragAudioItem->clip()->uuid() );
-    if ( m_dragVideoItem != nullptr )
-        Core::instance()->workflow()->deleteClip( m_dragVideoItem->clip()->uuid() );
-
     delete m_dragAudioItem;
     delete m_dragVideoItem;
     delete m_dragEffectItem;
@@ -995,8 +971,8 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                 AbstractGraphicsMediaItem   *mediaItem = dynamic_cast<AbstractGraphicsMediaItem*>( collidingItem );
                 if ( mediaItem != nullptr )
                 {
-                    Clip  *clip = qobject_cast<Clip*>( mediaItem->helper() );
-                    Q_ASSERT( clip != nullptr );
+                    auto    clip = std::dynamic_pointer_cast<Clip>( mediaItem->helper() );
+                    Q_ASSERT( clip.get() != nullptr );
                     m_effectTarget = mediaItem;
                     effectItem->effectHelper()->setTarget( clip->producer() );
                     break ;
@@ -1242,13 +1218,13 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         if ( effectItem != nullptr && m_effectTarget != nullptr )
         {
-            effectItem->triggerResize( nullptr, m_actionItem->helper(),
+            effectItem->triggerResize( nullptr, nullptr,
                                        newBegin, newEnd, m_actionItem->pos().x() );
         }
         else
         {
             auto    target = m_actionItem->track()->trackWorkflow();
-            m_actionItem->triggerResize( target, m_actionItem->helper(),
+            m_actionItem->triggerResize( target, nullptr,
                                          newBegin, newEnd, m_actionItem->pos().x() );
         }
         updateDuration();

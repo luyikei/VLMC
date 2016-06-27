@@ -26,7 +26,6 @@
 #include <QWidget>
 #include <memory>
 
-#include "EffectsEngine/EffectHelper.h"
 #include "ui_EffectInstanceWidget.h"
 
 namespace Backend
@@ -34,6 +33,7 @@ namespace Backend
 class IFilter;
 }
 
+class   SettingValue;
 class   EffectHelper;
 class   ISettingsCategoryWidget;
 
@@ -43,15 +43,15 @@ class EffectInstanceWidget : public QWidget
 
     public:
         explicit EffectInstanceWidget( QWidget *parent = 0);
-        void     setEffectHelper( std::unique_ptr<EffectHelper> filter );
+        void     setEffectHelper( std::shared_ptr<EffectHelper> const& filter );
     private:
         ISettingsCategoryWidget*            widgetFactory( SettingValue *s );
         void                                clear();
     private:
-        std::unique_ptr<EffectHelper>       m_helper;
         QList<ISettingsCategoryWidget*>     m_settings;
         QList<QWidget*>                     m_widgets;
         Ui::EffectSettingWidget             *m_ui;
+        std::shared_ptr<EffectHelper>       m_helper;
 
     public slots:
         void                                save();

@@ -46,7 +46,6 @@
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
-        m_mediaContainer( new MediaContainer ),
         m_trackCount( trackCount ),
         m_settings( new Settings ),
         m_renderer( new AbstractRenderer ),
@@ -78,7 +77,6 @@ MainWorkflow::~MainWorkflow()
     delete m_tractor;
     delete m_renderer;
     delete m_settings;
-    delete m_mediaContainer;
 }
 
 qint64
@@ -116,7 +114,7 @@ MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId )
     m_tracks[trackId]->unmuteClip( uuid );
 }
 
-Clip*
+std::shared_ptr<Clip>
 MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
 {
     Q_ASSERT( trackId < m_trackCount );
@@ -158,7 +156,7 @@ MainWorkflow::trackCount() const
     return m_trackCount;
 }
 
-Clip*
+std::shared_ptr<Clip>
 MainWorkflow::createClip( const QUuid& uuid )
 {
     Clip* clip = Core::instance()->library()->clip( uuid );
@@ -167,15 +165,7 @@ MainWorkflow::createClip( const QUuid& uuid )
         vlmcCritical() << "Couldn't find an acceptable parent to be added.";
         return nullptr;
     }
-    auto newClip = new Clip( clip );
-    m_mediaContainer->addClip( newClip );
-    return newClip;
-}
-
-void
-MainWorkflow::deleteClip( const QUuid& uuid )
-{
-    m_mediaContainer->deleteClip( uuid );
+    return std::make_shared<Clip>( clip );
 }
 
 bool

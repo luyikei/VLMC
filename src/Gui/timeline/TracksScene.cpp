@@ -105,7 +105,7 @@ TracksScene::askRemoveSelectedItems()
         }
     }
 
-    Core::instance()->undoStack()->beginMacro( "Remove clip(s)" );
+    Core::instance()->undoStack()->beginMacro( "Remove clip or effect(s)" );
 
     QList<QGraphicsItem*> items = selectedItems();
     for (int i = 0; i < items.size(); ++i )
@@ -119,16 +119,16 @@ TracksScene::askRemoveSelectedItems()
         if (linked_item != nullptr)
             items.append(linked_item);
 
-        Clip  *clip = qobject_cast<Clip*>( item->helper() );
+        auto clip = std::dynamic_pointer_cast<Clip>( item->helper() );
         if ( clip != nullptr )
         {
             Commands::trigger( new Commands::Clip::Remove( clip, item->track()->trackWorkflow() ) );
         }
         else
         {
-            EffectHelper    *eh = qobject_cast<EffectHelper*>( item->helper() );
-            Q_ASSERT( eh != nullptr );
-            Commands::trigger( new Commands::Effect::Remove( eh, eh->target() ) );
+            auto helper = std::static_pointer_cast<EffectHelper>( item->helper() );
+            Q_ASSERT( helper.get() != nullptr );
+            Commands::trigger( new Commands::Effect::Remove( helper, helper->target() ) );
         }
     }
 

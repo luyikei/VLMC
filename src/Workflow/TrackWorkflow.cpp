@@ -80,7 +80,7 @@ TrackWorkflow::trackFromFormats( Clip::Formats formats )
 }
 
 void
-TrackWorkflow::addClip( Clip* clip, qint64 start )
+TrackWorkflow::addClip( std::shared_ptr<Clip> const& clip, qint64 start )
 {
     trackFromFormats( clip->formats() )->insertAt( *clip->producer(), start );
     m_clips.insertMulti( start, clip );
@@ -102,7 +102,7 @@ TrackWorkflow::getClipPosition( const QUuid& uuid ) const
     return -1;
 }
 
-Clip*
+std::shared_ptr<Clip>
 TrackWorkflow::clip( const QUuid& uuid )
 {
     auto     it = m_clips.begin();
@@ -183,7 +183,7 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
     }
 }
 
-Clip*
+std::shared_ptr<Clip>
 TrackWorkflow::removeClip( const QUuid& id )
 {
     QWriteLocker    lock( m_clipsLock );
@@ -234,7 +234,7 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
     for ( auto& var : variant.toMap()[ "clips" ].toList() )
     {
         auto m = var.toMap();
-        auto c = Core::instance()->workflow()->createClip( m["parent"].toString() );
+        auto c = std::shared_ptr<Clip>( Core::instance()->workflow()->createClip( m["parent"].toString() ) );
         c->setBoundaries( m["begin"].toULongLong(),
                           m["end"].toULongLong()
                          );

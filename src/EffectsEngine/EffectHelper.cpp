@@ -52,11 +52,10 @@ EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
 {
     try
     {
-        m_filter = new Backend::MLT::MLTFilter( id );
+        m_filter.reset( new Backend::MLT::MLTFilter( id) );
     }
     catch ( Backend::InvalidServiceException& e )
     {
-        m_filter = nullptr;
         throw e;
     }
 
@@ -70,9 +69,9 @@ EffectHelper::EffectHelper( const QString& id, qint64 begin, qint64 end, const Q
 
 }
 
-EffectHelper::EffectHelper( Backend::IFilter *filter, const QString& uuid )
+EffectHelper::EffectHelper( std::shared_ptr<Backend::IFilter> filter, const QString& uuid )
     : Helper( uuid )
-    , m_filter( dynamic_cast<Backend::MLT::MLTFilter*>( filter ) )
+    , m_filter( std::dynamic_pointer_cast<Backend::MLT::MLTFilter>( filter ) )
     , m_service( nullptr )
     , m_filterInfo( nullptr )
 {
@@ -89,7 +88,6 @@ EffectHelper::EffectHelper( const QVariant& variant )
 
 EffectHelper::~EffectHelper()
 {
-    delete m_filter;
 }
 
 void
@@ -126,13 +124,13 @@ EffectHelper::initParams()
     }
 }
 
-Backend::IFilter*
+std::shared_ptr<Backend::IFilter>
 EffectHelper::filter()
 {
     return m_filter;
 }
 
-const Backend::IFilter*
+const std::shared_ptr<Backend::IFilter>
 EffectHelper::filter() const
 {
     return m_filter;

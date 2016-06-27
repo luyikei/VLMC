@@ -41,20 +41,20 @@ class AbstractGraphicsMediaItem : public AbstractGraphicsItem
     Q_OBJECT
 
 public:
-    AbstractGraphicsMediaItem( Clip* clip );
+    AbstractGraphicsMediaItem( std::shared_ptr<Clip> const& clip );
     virtual ~AbstractGraphicsMediaItem();
 
     /// Should return the unique uid of the contained media.
     virtual const QUuid& uuid() const;
 
-    Clip  *clip();
-    const Clip*   clip() const;
+    std::shared_ptr<Clip>           clip();
+    const std::shared_ptr<Clip>     clip() const;
 
     virtual void        setEmphasized( bool value );
     virtual qint64      begin() const;
     virtual qint64      end() const;
 
-    virtual Workflow::Helper    *helper();
+    virtual std::shared_ptr<Workflow::Helper> helper();
     virtual void        triggerMove( TrackWorkflow* target, qint64 startPos );
     virtual void        triggerResize( TrackWorkflow* target, Workflow::Helper *helper,
                                        qint64 newBegin, qint64 newEnd, qint64 pos );
@@ -72,10 +72,7 @@ protected:
     virtual qint64      maxEnd() const;
 
 protected:
-    Clip*               m_clip;
-
-private slots:
-    void    clipDestroyed( Clip* clip );
+    std::shared_ptr<Clip>               m_clip;
 
 private:
     bool    m_muted;

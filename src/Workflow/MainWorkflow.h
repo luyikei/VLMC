@@ -28,6 +28,8 @@
 #include "Types.h"
 #include "Tools/Toggleable.hpp"
 
+#include <memory>
+
 class   Clip;
 class   EffectsEngine;
 class   Effect;
@@ -134,12 +136,7 @@ class   MainWorkflow : public QObject
          * The clip will be added to this MediaContainer, not to the Library.
          * The parent clip should be in the Library.
          */
-        Clip*                   createClip( const QUuid& uuid );
-
-        /**
-         * \brief       Delete a clip.
-         */
-        void                    deleteClip( const QUuid& uuid );
+        std::shared_ptr<Clip>   createClip( const QUuid& uuid );
 
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
@@ -157,13 +154,12 @@ class   MainWorkflow : public QObject
          *  \param      trackType : the track type (audio or video)
          *  \returns    The clip that matches the given UUID, or nullptr.
          */
-        Clip*                   clip( const QUuid& uuid, unsigned int trackId );
+        std::shared_ptr<Clip>                   clip( const QUuid& uuid, unsigned int trackId );
 
         void                    preSave();
         void                    postLoad();
 
     private:
-        MediaContainer*                 m_mediaContainer;
         QList<Toggleable<TrackWorkflow*>>     m_tracks;
         const quint32                   m_trackCount;
 

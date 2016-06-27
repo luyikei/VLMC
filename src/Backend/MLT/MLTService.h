@@ -51,7 +51,7 @@ namespace MLT
         virtual bool      detach( int index ) override;
         virtual int       filterCount() const override;
         virtual bool      moveFilter( int from, int to ) override;
-        virtual IFilter*  filter( int index ) const override;
+        virtual std::shared_ptr<IFilter>  filter( int index ) const override;
         virtual void      setProfile( IProfile& profile ) override;
         virtual bool      isValid() const override;
 

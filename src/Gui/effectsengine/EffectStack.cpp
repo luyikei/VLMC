@@ -80,8 +80,8 @@ EffectStack::addEffectHelper( EffectHelper* helper )
 void
 EffectStack::selectedChanged( const QModelIndex &index )
 {
-    auto filter = m_model->data( index, Qt::EditRole ).value<Backend::IFilter*>();
-    m_stackedLayout->setCurrentWidget( m_instanceWidgets[QString::fromStdString( filter->identifier() )] );
+    auto id = m_model->data( index, Qt::EditRole ).toString();
+    m_stackedLayout->setCurrentWidget( m_instanceWidgets[id] );
 }
 
 void

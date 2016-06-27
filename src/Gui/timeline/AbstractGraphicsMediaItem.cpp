@@ -36,15 +36,15 @@
 
 #include <QCoreApplication>
 
-AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( Clip* clip ) :
+AbstractGraphicsMediaItem::AbstractGraphicsMediaItem( std::shared_ptr<Clip> const& clip ) :
         m_clip( clip ),
         m_muted( false )
 {
     // Adjust the width
-    setWidth( clip->length() );
+    setWidth( m_clip->length() );
     // Automatically adjust future changes
-    connect( m_clip, SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
-    connect( clip, SIGNAL( unloaded( Clip* ) ),
+    connect( m_clip.get(), SIGNAL( lengthUpdated() ), this, SLOT( adjustLength() ) );
+    connect( m_clip.get(), SIGNAL( unloaded( Clip* ) ),
              this, SLOT( clipDestroyed( Clip* ) ), Qt::DirectConnection );
 }
 
@@ -149,20 +149,13 @@ AbstractGraphicsMediaItem::contextMenuEvent( QGraphicsSceneContextMenuEvent* eve
 
 }
 
-void
-AbstractGraphicsMediaItem::clipDestroyed( Clip* clip )
-{
-    if ( m_tracksView != nullptr )
-        m_tracksView->removeClip( clip->uuid() );
-}
-
-Clip*
+std::shared_ptr<Clip>
 AbstractGraphicsMediaItem::clip()
 {
     return m_clip;
 }
 
-const Clip*
+const std::shared_ptr<Clip>
 AbstractGraphicsMediaItem::clip() const
 {
     return m_clip;
@@ -260,7 +253,7 @@ AbstractGraphicsMediaItem::triggerMove( TrackWorkflow* target, qint64 startPos )
     Commands::trigger( new Commands::Clip::Move( m_oldTrack, target, m_clip, startPos ) );
 }
 
-Workflow::Helper*
+std::shared_ptr<Workflow::Helper>
 AbstractGraphicsMediaItem::helper()
 {
     return m_clip;

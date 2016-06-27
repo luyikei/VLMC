@@ -109,10 +109,10 @@ MLTService::moveFilter( int from, int to )
     return m_service->move_filter( from, to );
 }
 
-Backend::IFilter*
+std::shared_ptr<Backend::IFilter>
 MLTService::filter( int index ) const
 {
-    return new MLTFilter( m_service->filter( index ) );
+    return std::shared_ptr<Backend::IFilter>( new MLTFilter( m_service->filter( index ) ) );
 }
 
 void

@@ -93,12 +93,12 @@ Commands::Generic::undo()
         internalUndo();
 }
 
-Commands::Clip::Add::Add( ::Clip* clip, TrackWorkflow* tw, qint64 pos ) :
+Commands::Clip::Add::Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos ) :
         m_clip( clip ),
         m_trackWorkflow( tw ),
         m_pos( pos )
 {
-    connect( clip, &::Clip::destroyed, this, &Add::invalidate );
+    connect( clip.get(), &::Clip::destroyed, this, &Add::invalidate );
     retranslate();
 }
 
@@ -125,15 +125,15 @@ Commands::Clip::Add::retranslate()
 }
 
 Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                                            ::Clip *clip, qint64 newPos ) :
+                            std::shared_ptr<::Clip> const& clip, qint64 newPos ) :
     m_oldTrack( oldTrack ),
     m_newTrack( newTrack ),
     m_clip( clip ),
     m_newPos( newPos )
 
 {
-    m_oldPos = oldTrack->getClipPosition( clip->uuid() );
-    connect( clip, SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
+    m_oldPos = oldTrack->getClipPosition( m_clip->uuid() );
+    connect( m_clip.get(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     retranslate();
 }
 
@@ -152,8 +152,9 @@ Commands::Clip::Move::internalRedo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        auto    c = m_oldTrack->removeClip( m_clip->uuid() );
-        m_newTrack->addClip( c, m_newPos );
+        m_clip = m_oldTrack->removeClip( m_clip->uuid() );
+        m_newTrack->addClip( m_clip, m_newPos );
+        std::swap( m_oldTrack, m_newTrack );
     }
     else
         m_oldTrack->moveClip( m_clip->uuid(), m_newPos );
@@ -164,17 +165,18 @@ Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        auto    c = m_oldTrack->removeClip( m_clip->uuid() );
-        m_newTrack->addClip( c, m_newPos );
+        m_clip = m_oldTrack->removeClip( m_clip->uuid() );
+        m_newTrack->addClip( m_clip, m_newPos );
+        std::swap( m_oldTrack, m_newTrack );
     }
     else
         m_newTrack->moveClip( m_clip->uuid(), m_oldPos );
 }
 
-Commands::Clip::Remove::Remove( ::Clip* clip, TrackWorkflow* tw ) :
+Commands::Clip::Remove::Remove( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw ) :
         m_clip( clip ), m_trackWorkflow( tw )
 {
-    connect( clip, &::Clip::destroyed, this, &Remove::invalidate );
+    connect( clip.get(), &::Clip::destroyed, this, &Remove::invalidate );
     retranslate();
     m_pos = tw->getClipPosition( clip->uuid() );
 }
@@ -230,7 +232,7 @@ Commands::Clip::Resize::internalUndo()
     m_trackWorkflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd );
 }
 
-Commands::Clip::Split::Split( TrackWorkflow *tw, ::Clip *toSplit,
+Commands::Clip::Split::Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit,
                                              qint64 newClipPos, qint64 newClipBegin ) :
     m_trackWorkflow( tw ),
     m_toSplit( toSplit ),
@@ -238,15 +240,14 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, ::Clip *toSplit,
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {
-    connect( toSplit, &::Clip::destroyed, this, &Split::invalidate );
-    m_newClip = new ::Clip( toSplit, newClipBegin, toSplit->end() );
+    connect( toSplit.get(), &::Clip::destroyed, this, &Split::invalidate );
+    m_newClip = std::make_shared<::Clip>( toSplit.get(), newClipBegin, toSplit->end() );
     m_oldEnd = toSplit->end();
     retranslate();
 }
 
 Commands::Clip::Split::~Split()
 {
-    delete m_newClip;
 }
 
 void
@@ -271,7 +272,7 @@ Commands::Clip::Split::internalUndo()
     m_toSplit->setEnd( m_oldEnd );
 }
 
-Commands::Effect::Add::Add( EffectHelper* helper, Backend::IService* target )
+Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target )
     : m_helper( helper )
     , m_target( target )
 {
@@ -297,7 +298,7 @@ Commands::Effect::Add::internalUndo()
     m_target->detach( *m_helper->filter() );
 }
 
-Commands::Effect::Move::Move( EffectHelper* helper, Backend::IService* from, Backend::IService* to,
+Commands::Effect::Move::Move( std::shared_ptr<EffectHelper> const& helper, Backend::IService* from, Backend::IService* to,
                               qint64 pos)
     : m_helper( helper )
     , m_from( from )
@@ -344,7 +345,7 @@ Commands::Effect::Move::internalUndo()
         m_helper->setBoundaries( m_oldPos, m_oldEnd );
 }
 
-Commands::Effect::Resize::Resize( EffectHelper* helper, qint64 newBegin, qint64 newEnd )
+Commands::Effect::Resize::Resize( std::shared_ptr<EffectHelper> const& helper, qint64 newBegin, qint64 newEnd )
     : m_helper( helper )
     , m_newBegin( newBegin )
     , m_newEnd( newEnd )
@@ -372,7 +373,7 @@ Commands::Effect::Resize::internalUndo()
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::Effect::Remove::Remove( EffectHelper* helper, Backend::IService* target )
+Commands::Effect::Remove::Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target )
     : m_helper( helper )
     , m_target( target )
 {
@@ -394,6 +395,5 @@ Commands::Effect::Remove::internalRedo()
 void
 Commands::Effect::Remove::internalUndo()
 {
-    m_target->attach( *m_helper->filter() );
-    m_helper->filter()->connect( *m_target );
+    m_helper->setTarget( m_target );
 }
