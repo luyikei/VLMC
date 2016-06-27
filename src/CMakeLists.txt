@@ -92,7 +92,6 @@ SET(VLMC_SRCS
     Settings/Settings.cpp
     Settings/SettingValue.cpp
     Tools/ErrorHandler.cpp
-    Tools/MemoryPool.hpp
     Tools/RendererEventWatcher.cpp
     Tools/OutputEventWatcher.cpp
     Tools/Singleton.hpp
