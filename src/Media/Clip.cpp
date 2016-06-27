@@ -37,7 +37,7 @@
 Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IProducer::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
         Workflow::Helper( uuid ),
         m_media( media ),
-        m_producer( m_media->producer()->cut( begin, end ) ),
+        m_producer( std::move( m_media->producer()->cut( begin, end ) ) ),
         m_parent( media->baseClip() ),
         m_clipWorkflow( nullptr )
 {
@@ -69,7 +69,6 @@ Clip::~Clip()
 {
     emit unloaded( this );
     delete m_childs;
-    delete m_producer;
     if ( isRootClip() == true )
         delete m_media;
 }
@@ -261,7 +260,7 @@ Clip::toVariant() const
         h.insert( "begin", begin() );
         h.insert( "end", end() );
     }
-    h.insert( "filters", EffectHelper::toVariant( m_producer ) );
+    h.insert( "filters", EffectHelper::toVariant( m_producer.get() ) );
     return QVariant( h );
 
 }
@@ -297,7 +296,7 @@ Clip::setFormats( Formats formats )
 Backend::IProducer*
 Clip::producer()
 {
-    return m_producer;
+    return m_producer.get();
 }
 
 void

@@ -35,6 +35,8 @@
 #include <QXmlStreamWriter>
 #include "Backend/IProducer.h"
 
+#include <memory>
+
 class   MediaContainer;
 class   Media;
 class   ClipWorkflow;
@@ -139,7 +141,7 @@ class   Clip : public Workflow::Helper
 
     private:
         Media*              m_media;
-        Backend::IProducer* m_producer;
+        std::unique_ptr<Backend::IProducer> m_producer;
 
         QStringList         m_metaTags;
         QString             m_notes;

@@ -57,7 +57,7 @@ class MLTProducer : virtual public IProducer, public MLTService
         virtual void            setEnd( int64_t end ) override;
         virtual void            setBoundaries( int64_t begin, int64_t end ) override;
 
-        virtual IProducer*      cut( int64_t begin = 0, int64_t end = EndOfMedia ) override;
+        virtual std::unique_ptr<IProducer>      cut( int64_t begin = 0, int64_t end = EndOfMedia ) override;
         virtual bool            isCut() const override;
 
         virtual bool            sameClip( IProducer& that ) const override;

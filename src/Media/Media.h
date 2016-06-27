@@ -31,6 +31,9 @@
 #define MEDIA_H__
 
 #include "config.h"
+
+#include <memory>
+
 #include <QString>
 #include <QObject>
 #include <QFileInfo>
@@ -110,7 +113,7 @@ public:
     QPixmap&                    snapshot();
 #endif
 protected:
-    Backend::IProducer*         m_producer;
+    std::unique_ptr<Backend::IProducer>         m_producer;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
     FileType                    m_fileType;

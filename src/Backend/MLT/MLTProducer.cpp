@@ -161,10 +161,10 @@ MLTProducer::setBoundaries( int64_t begin, int64_t end )
     m_producer->set_in_and_out( begin, end );
 }
 
-Backend::IProducer*
+std::unique_ptr<Backend::IProducer>
 MLTProducer::cut( int64_t begin, int64_t end )
 {
-    return new MLTProducer( m_producer->cut( begin, end ) );
+    return std::unique_ptr<IProducer>( new MLTProducer( m_producer->cut( begin, end ) ) );
 }
 
 bool

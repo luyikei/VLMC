@@ -71,7 +71,6 @@ Media::Media(const QString &path )
 
 Media::~Media()
 {
-    delete m_producer;
     delete m_fileInfo;
 }
 
@@ -120,13 +119,13 @@ Media::toVariant() const
 Backend::IProducer*
 Media::producer()
 {
-    return m_producer;
+    return m_producer.get();
 }
 
 const Backend::IProducer*
 Media::producer() const
 {
-    return m_producer;
+    return m_producer.get();
 }
 
 void
@@ -138,8 +137,7 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
 
-    delete m_producer;
-    m_producer = new Backend::MLT::MLTProducer( qPrintable( filePath ) );
+    m_producer.reset( new Backend::MLT::MLTProducer( qPrintable( filePath ) ) );
 }
 
 #ifdef WITH_GUI

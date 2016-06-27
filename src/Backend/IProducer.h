@@ -24,6 +24,8 @@
 #define IPRODUCER_H
 
 #include <cstdint>
+#include <memory>
+
 #include "Backend/IService.h"
 
 namespace Backend
@@ -59,7 +61,7 @@ namespace Backend
         virtual void            setBoundaries( int64_t begin, int64_t end ) = 0;
 
         // Absolute position in frames
-        virtual IProducer*      cut( int64_t begin  = 0, int64_t end  = EndOfMedia ) = 0;
+        virtual std::unique_ptr<IProducer>      cut( int64_t begin  = 0, int64_t end  = EndOfMedia ) = 0;
         virtual bool            isCut( ) const = 0 ;
 
         virtual bool            sameClip( IProducer& that ) const = 0;
