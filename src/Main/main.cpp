@@ -34,6 +34,7 @@
 #include "Project/Project.h"
 #include "Backend/IBackend.h"
 #include "Main/Core.h"
+#include "Settings/Settings.h"
 #ifdef WITH_GUI
 #include "Gui/MainWindow.h"
 #include "Gui/IntroDialog.h"
@@ -170,7 +171,9 @@ VLMCGuimain( int argc, char **argv )
 
     /* Main Window display */
     w.show();
-    return app.exec();
+    auto res = app.exec();
+    Core::instance()->settings()->save();
+    return res;
 }
 #endif
 /**
@@ -204,7 +207,9 @@ VLMCCoremain( int argc, char **argv )
     QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
     p->load( app.arguments()[1] );
 #endif
-    return app.exec();
+    auto res = app.exec();
+    Core::instance()->settings()->save();
+    return res;
 }
 
 int

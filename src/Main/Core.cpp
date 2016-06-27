@@ -64,7 +64,6 @@ Core::Core()
 
 Core::~Core()
 {
-    m_settings->save();
     delete m_library;
     delete m_undoStack;
     delete m_workflow;
