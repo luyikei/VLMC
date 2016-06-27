@@ -48,7 +48,8 @@ namespace Backend
         enum EndType
         {
             EndOfMedia = -1,
-            EndOfParent = -2
+            EndOfParent = -2,
+            Unlimited = -3
         };
 
         virtual ~IService() = default;
