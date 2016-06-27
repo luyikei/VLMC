@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ConsumerEventWatcher.h: Watches events from a IConsumer and convert them to SIGNAL
+ * OutputEventWatcher.h: Watches events from a IOutput and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,27 +20,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "Tools/ConsumerEventWatcher.h"
+#ifndef OUTPUTEVENTWATCHER_H
+#define OUTPUTEVENTWATCHER_H
 
-ConsumerEventWatcher::ConsumerEventWatcher( QObject* parent ) :
-    QObject( parent )
-{
-}
 
-void
-ConsumerEventWatcher::onPlaying()
-{
-    emit playing();
-}
+#include <QObject>
+#include "Backend/IOutput.h"
 
-void
-ConsumerEventWatcher::onStopped()
+class OutputEventWatcher : public QObject, public Backend::IOutputEventCb
 {
-    emit stopped();
-}
+    Q_OBJECT
+public:
+    explicit OutputEventWatcher( QObject* parent = 0 );
 
-void
-ConsumerEventWatcher::onVolumeChanged()
-{
-    emit volumeChanged();
-}
+private:
+    virtual void    onPlaying();
+    virtual void    onStopped();
+    virtual void    onVolumeChanged();
+
+signals:
+    void            playing();
+    void            stopped();
+    void            volumeChanged();
+};
+
+#endif // OUTPUTEVENTWATCHER_H

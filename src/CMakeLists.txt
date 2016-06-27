@@ -59,7 +59,7 @@ SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
     Backend/IService.h
-    Backend/IConsumer.h
+    Backend/IOutput.h
     Backend/IProducer.h
     Backend/ITrack.h
     Backend/IProfile.h
@@ -67,7 +67,7 @@ SET(VLMC_SRCS
     Backend/ITransition.h
     Backend/IFilter.h
     Backend/MLT/MLTBackend.cpp
-    Backend/MLT/MLTConsumer.cpp
+    Backend/MLT/MLTOutput.cpp
     Backend/MLT/MLTProducer.cpp
     Backend/MLT/MLTTrack.cpp
     Backend/MLT/MLTService.cpp
@@ -94,7 +94,7 @@ SET(VLMC_SRCS
     Tools/ErrorHandler.cpp
     Tools/MemoryPool.hpp
     Tools/RendererEventWatcher.cpp
-    Tools/ConsumerEventWatcher.cpp
+    Tools/OutputEventWatcher.cpp
     Tools/Singleton.hpp
     Tools/Toggleable.hpp
     Tools/VlmcDebug.h

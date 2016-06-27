@@ -28,7 +28,7 @@
 #include "Media/Clip.h"
 #include "ClipRenderer.h"
 #include "Backend/IBackend.h"
-#include "Backend/MLT/MLTConsumer.h"
+#include "Backend/MLT/MLTOutput.h"
 #include "Backend/MLT/MLTProducer.h"
 #include "Tools/RendererEventWatcher.h"
 #include "Library/Library.h"
@@ -74,7 +74,7 @@ ClipRenderer::setClip( Clip* clip )
 void
 ClipRenderer::updateInfos( Clip* clip )
 {
-    if ( m_consumer->isStopped() == true )
+    if ( m_output->isStopped() == true )
         m_clipLoaded = false;
     else
         m_mediaChanged = true;
@@ -88,7 +88,7 @@ ClipRenderer::startPreview()
     updateInfos( m_selectedClip );
     setProducer( m_selectedClip->producer() );
 
-    m_consumer->start();
+    m_output->start();
     m_producer->setPosition( 0 );
 
     m_clipLoaded = true;
@@ -100,7 +100,7 @@ ClipRenderer::stop()
 {
     if ( m_clipLoaded == true && isRendering() == true )
     {
-        m_consumer->stop();
+        m_output->stop();
         if ( m_mediaChanged == true )
             m_clipLoaded = false;
     }
@@ -117,9 +117,9 @@ ClipRenderer::togglePlayPause()
         startPreview();
         return ;
     }
-    if ( m_consumer->isStopped() )
+    if ( m_output->isStopped() )
     {
-        m_consumer->start();
+        m_output->start();
         m_producer->setPause( false );
     }
     else

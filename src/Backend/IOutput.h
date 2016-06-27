@@ -1,5 +1,5 @@
 /*****************************************************************************
- * IConsumer: Defines an interface to control a player
+ * IOutput: Defines an interface to control a player
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef IRENDERER_H
-#define IRENDERER_H
+#ifndef IOUTPUT_H
+#define IOUTPUT_H
 
 #include <string>
 #include <cstdint>
@@ -33,22 +33,22 @@ namespace Backend
 {
     class IProducer;
 
-    class IConsumerEventCb
+    class IOutputEventCb
     {
     public:
-        virtual ~IConsumerEventCb() = default;
+        virtual ~IOutputEventCb() = default;
         virtual void    onPlaying() = 0;
         virtual void    onStopped() = 0;
         virtual void    onVolumeChanged() = 0;
     };
 
-    class IConsumer : virtual public IService
+    class IOutput : virtual public IService
     {
     public:
-        virtual ~IConsumer() = default;
+        virtual ~IOutput() = default;
 
         virtual void    setName( const char* name ) = 0;
-        virtual void    setCallback( IConsumerEventCb* callback ) = 0;
+        virtual void    setCallback( IOutputEventCb* callback ) = 0;
         /**
          * @brief start Initializes and launches playback.
          */
@@ -64,4 +64,4 @@ namespace Backend
     };
 }
 
-#endif // IRENDERER_H
+#endif // IOUTPUT_H

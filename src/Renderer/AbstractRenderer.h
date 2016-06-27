@@ -29,7 +29,7 @@
 #include <QObject>
 
 #include "Workflow/Types.h"
-#include "Backend/IConsumer.h"
+#include "Backend/IOutput.h"
 
 class   Clip;
 class   Media;
@@ -38,7 +38,7 @@ class RendererEventWatcher;
 
 namespace Backend
 {
-class IConsumer;
+class IOutput;
 class IProducer;
 }
 
@@ -145,11 +145,11 @@ public:
     virtual bool                    isRendering() const;
 
     virtual void                    setProducer( Backend::IProducer* producer );
-    virtual void                    setConsumer( std::unique_ptr<Backend::IConsumer> consuemr );
+    virtual void                    setOutput( std::unique_ptr<Backend::IOutput> consuemr );
 
     RendererEventWatcher*           eventWatcher();
 protected:
-    std::unique_ptr<Backend::IConsumer>             m_consumer;
+    std::unique_ptr<Backend::IOutput>             m_output;
 
     Backend::IProducer*                             m_producer;
     RendererEventWatcher*                           m_eventWatcher;

@@ -104,7 +104,7 @@ class MLTProducer : virtual public IProducer, public MLTService
         int                     m_nbVideoTracks;
         int                     m_nbAudioTracks;
 
-    friend class MLTConsumer;
+    friend class MLTOutput;
     friend class MLTTrack;
     friend class MLTTractor;
 };

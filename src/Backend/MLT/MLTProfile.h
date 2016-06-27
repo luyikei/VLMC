@@ -29,7 +29,7 @@ namespace Mlt
 {
 class Repository;
 class Profile;
-class Consumer;
+class Output;
 }
 
 namespace Backend
@@ -62,7 +62,7 @@ class MLTProfile : public IProfile
         Mlt::Profile*   m_profile;
 
     // To access Mlt::Profile
-    friend class MLTConsumer;
+    friend class MLTOutput;
     friend class MLTProducer;
     friend class MLTBackend;
     friend class MLTTrack;

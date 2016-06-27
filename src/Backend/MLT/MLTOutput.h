@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTConsumer.h:  Wrapper of Mlt::Consumer
+ * MLTOutput.h:  Wrapper of Mlt::Output
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,11 +20,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef MLTCONSUMER_H
-#define MLTCONSUMER_H
+#ifndef MLTOUTPUT_H
+#define MLTOUTPUT_H
 
 #include "MLTService.h"
-#include "Backend/IConsumer.h"
+#include "Backend/IOutput.h"
 #include "Backend/IBackend.h"
 #include "Backend/IProfile.h"
 
@@ -41,18 +41,18 @@ namespace MLT
 {
 class MLTProducer;
 
-class MLTConsumer : public IConsumer, public MLTService
+class MLTOutput : public IOutput, public MLTService
 {
     public:
-        MLTConsumer();
-        MLTConsumer( IProfile& profile, const char *id, IConsumerEventCb* callback = nullptr );
-        virtual ~MLTConsumer();
+        MLTOutput();
+        MLTOutput( IProfile& profile, const char *id, IOutputEventCb* callback = nullptr );
+        virtual ~MLTOutput();
 
-        static void     onConsumerStarted( void* owner, MLTConsumer* self );
-        static void     onConsumerStopped( void* owner, MLTConsumer* self );
+        static void     onOutputStarted( void* owner, MLTOutput* self );
+        static void     onOutputStopped( void* owner, MLTOutput* self );
 
         virtual void    setName( const char* name ) override;
-        virtual void    setCallback( IConsumerEventCb* callback ) override;
+        virtual void    setCallback( IOutputEventCb* callback ) override;
 
         virtual void    start() override;
         virtual void    stop() override;
@@ -66,25 +66,25 @@ class MLTConsumer : public IConsumer, public MLTService
 
     protected:
         Mlt::Consumer*      m_consumer;
-        IConsumerEventCb*   m_callback;
+        IOutputEventCb*   m_callback;
         MLTProducer*        m_producer;
         std::string         m_name;
 };
 
-class MLTSdlConsumer : public MLTConsumer
+class MLTSdlOutput : public MLTOutput
 {
     public:
-        MLTSdlConsumer()
-            : MLTConsumer( Backend::instance()->profile(), "sdl" ) { }
+        MLTSdlOutput()
+            : MLTOutput( Backend::instance()->profile(), "sdl" ) { }
 
         void setWindowId( intptr_t id );
 };
 
-class MLTFFmpegConsumer : public MLTConsumer
+class MLTFFmpegOutput : public MLTOutput
 {
     public:
-        MLTFFmpegConsumer()
-            : MLTConsumer( Backend::instance()->profile(), "avformat" ) { }
+        MLTFFmpegOutput()
+            : MLTOutput( Backend::instance()->profile(), "avformat" ) { }
 
         void    setTarget( const char* path );
         void    setWidth( int width );
@@ -101,4 +101,4 @@ class MLTFFmpegConsumer : public MLTConsumer
 }
 }
 
-#endif // MLTCONSUMER_H
+#endif // MLTOUTPUT_H

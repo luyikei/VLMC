@@ -33,12 +33,12 @@ namespace Mlt
 {
 class Repository;
 class Profile;
-class Consumer;
+class Output;
 }
 
 namespace Backend
 {
-class IConsumer;
+class IOutput;
 class IProducer;
 class IProfile;
 class IClip;

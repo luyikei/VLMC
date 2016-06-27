@@ -25,7 +25,7 @@
 #include "AbstractRenderer.h"
 
 #include "Tools/RendererEventWatcher.h"
-#include "Backend/MLT/MLTConsumer.h"
+#include "Backend/MLT/MLTOutput.h"
 
 #include <QtGlobal>
 
@@ -56,7 +56,7 @@ AbstractRenderer::eventWatcher()
 void
 AbstractRenderer::stop()
 {
-    m_consumer->stop();
+    m_output->stop();
 }
 
 void
@@ -69,12 +69,12 @@ AbstractRenderer::setPosition( qint64 pos )
 void
 AbstractRenderer::togglePlayPause()
 {
-    if ( m_producer == nullptr || m_consumer.get() == nullptr )
+    if ( m_producer == nullptr || m_output.get() == nullptr )
         return;
 
-    if ( m_consumer->isStopped() )
+    if ( m_output->isStopped() )
     {
-        m_consumer->start();
+        m_output->start();
         m_producer->setPause( false );
     }
     else
@@ -84,13 +84,13 @@ AbstractRenderer::togglePlayPause()
 int
 AbstractRenderer::getVolume() const
 {
-    return m_consumer->volume();
+    return m_output->volume();
 }
 
 void
 AbstractRenderer::setVolume( int volume )
 {
-    m_consumer->setVolume( volume );
+    m_output->setVolume( volume );
 }
 
 void
@@ -150,7 +150,7 @@ AbstractRenderer::isPaused() const
 bool
 AbstractRenderer::isRendering() const
 {
-    return !m_consumer->isStopped();
+    return !m_output->isStopped();
 }
 
 void
@@ -166,18 +166,18 @@ AbstractRenderer::setProducer( Backend::IProducer* producer )
     else
         emit lengthChanged( 0 );
 
-    if ( m_consumer.get() != nullptr )
-        m_consumer->connect( *m_producer );
+    if ( m_output.get() != nullptr )
+        m_output->connect( *m_producer );
 }
 
 void
-AbstractRenderer::setConsumer( std::unique_ptr<Backend::IConsumer> consuemr )
+AbstractRenderer::setOutput( std::unique_ptr<Backend::IOutput> consuemr )
 {
-    m_consumer = std::move( consuemr );
-    m_consumer->setCallback( m_eventWatcher );
+    m_output = std::move( consuemr );
+    m_output->setCallback( m_eventWatcher );
 
     if ( m_producer != nullptr )
-        m_consumer->connect( *m_producer );
+        m_output->connect( *m_producer );
 }
 
 void

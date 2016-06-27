@@ -24,7 +24,7 @@
 
 
 #include "vlmc.h"
-#include "Backend/MLT/MLTConsumer.h"
+#include "Backend/MLT/MLTOutput.h"
 #include "Backend/MLT/MLTTractor.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Renderer/AbstractRenderer.h"
@@ -40,7 +40,7 @@
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/RendererEventWatcher.h"
-#include "Tools/ConsumerEventWatcher.h"
+#include "Tools/OutputEventWatcher.h"
 #include "Workflow/Types.h"
 
 #include <QMutex>
@@ -178,40 +178,40 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     if ( m_tractor->playableLength() == 0 )
         return false;
 
-    Backend::MLT::MLTFFmpegConsumer consumer;
-    ConsumerEventWatcher            cEventWatcher;
-    consumer.setCallback( &cEventWatcher );
-    consumer.setTarget( qPrintable( outputFileName ) );
-    consumer.setWidth( width );
-    consumer.setHeight( height );
-    consumer.setFrameRate( fps * 100, 100 );
+    Backend::MLT::MLTFFmpegOutput output;
+    OutputEventWatcher            cEventWatcher;
+    output.setCallback( &cEventWatcher );
+    output.setTarget( qPrintable( outputFileName ) );
+    output.setWidth( width );
+    output.setHeight( height );
+    output.setFrameRate( fps * 100, 100 );
     auto temp = ar.split( "/" );
-    consumer.setAspectRatio( temp[0].toInt(), temp[1].toInt() );
-    consumer.setVideoBitrate( vbitrate );
-    consumer.setAudioBitrate( abitrate );
-    consumer.setChannels( nbChannels );
-    consumer.setAudioSampleRate( sampleRate );
-    consumer.connect( *m_tractor );
+    output.setAspectRatio( temp[0].toInt(), temp[1].toInt() );
+    output.setVideoBitrate( vbitrate );
+    output.setAudioBitrate( abitrate );
+    output.setChannels( nbChannels );
+    output.setAudioSampleRate( sampleRate );
+    output.connect( *m_tractor );
 
 #ifdef WITH_GUI
     WorkflowFileRendererDialog  dialog( width, height, m_tractor->playableLength(), m_renderer->eventWatcher() );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
-    connect( &cEventWatcher, &ConsumerEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
-    connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&consumer]{ consumer.stop(); } );
+    connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
+    connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
 #endif
 
-    connect( &cEventWatcher, &ConsumerEventWatcher::stopped, this, [&consumer]{ consumer.stop(); } );
-    connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&consumer]{ consumer.stop(); } );
+    connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
+    connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&output]{ output.stop(); } );
 
     m_tractor->setPosition( 0 );
-    consumer.start();
+    output.start();
 
 #ifdef WITH_GUI
     if ( dialog.exec() == QDialog::Rejected )
         return false;
 #else
-    while ( consumer.isStopped() == false )
+    while ( output.isStopped() == false )
         SleepS( 1 );
 #endif
     return true;

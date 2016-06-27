@@ -32,7 +32,7 @@
 namespace Backend
 {
 
-class IConsumer;
+class IOutput;
 class IProfile;
 class IFilterInfo;
 
