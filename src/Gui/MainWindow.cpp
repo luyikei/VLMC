@@ -136,6 +136,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
 MainWindow::~MainWindow()
 {
+    m_projectPreview->stop();
+    m_clipPreview->stop();
     delete m_importController;
 }
 
