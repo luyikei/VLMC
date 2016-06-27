@@ -53,13 +53,6 @@
    <item>
     <widget class="QWidget" name="mediaListContainer" native="true"/>
    </item>
-   <item>
-    <widget class="QPushButton" name="importButton">
-     <property name="text">
-      <string>Import</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>

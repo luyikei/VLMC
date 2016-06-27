@@ -77,7 +77,6 @@ class MediaLibraryView : public QWidget
         void                filterTypeChanged();
 
     signals:
-        void                importRequired();
         void                clipSelected( Clip* );
 };
 

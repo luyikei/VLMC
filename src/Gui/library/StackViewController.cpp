@@ -25,7 +25,6 @@
 #endif
 
 #include "StackViewController.h"
-#include "import/ImportController.h"
 
 StackViewController::StackViewController( QWidget* parent ) :
         QWidget( parent ), m_current( 0 )

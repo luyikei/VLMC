@@ -36,7 +36,6 @@ class QUndoView;
 #include "ui/MainWindow.h"
 
 class   EffectsListView;
-class   ImportController;
 class   MediaLibraryView;
 class   PreviewWidget;
 class   Project;
@@ -129,7 +128,6 @@ private:
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;
     ProjectWizard*          m_wizard;
-    ImportController*       m_importController;
     MediaLibraryView            *m_mediaLibrary;
     EffectsListView*        m_effectsList;
     QUndoView*              m_undoView;
@@ -155,7 +153,6 @@ private slots:
     void                    on_actionUndo_triggered();
     void                    on_actionRedo_triggered();
     void                    on_actionCrash_triggered();
-    void                    on_actionImport_triggered();
     void                    toolButtonClicked( QAction *action );
     void                    updateRecentProjects();
     void                    projectNameChanged(const QString& projectName);

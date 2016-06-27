@@ -188,7 +188,6 @@ vlmc_SOURCES += \
 	src/Gui/effectsengine/EffectWidget.cpp \
 	src/Gui/export/RendererSettings.cpp \
 	src/Gui/export/ShareOnInternet.cpp \
-	src/Gui/import/ImportController.cpp \
 	src/Gui/import/TagWidget.cpp \
 	src/Gui/library/ListViewController.cpp \
 	src/Gui/library/MediaCellView.cpp \
@@ -288,7 +287,6 @@ vlmc_SOURCES += \
 	src/Gui/settings/Panel.h \
 	src/Gui/settings/PreferenceWidget.h \
 	src/Gui/settings/FolderListWidget.h \
-	src/Gui/import/ImportController.h \
 	src/Gui/import/TagWidget.h \
 	src/Gui/effectsengine/EffectStack.h \
 	src/Gui/effectsengine/EffectWidget.h \
@@ -308,7 +306,6 @@ nodist_vlmc_SOURCES += \
 	src/Gui/widgets/FramelessButton.moc.cpp \
 	src/Gui/wizard/OpenPage.moc.cpp \
 	src/Gui/settings/ColorWidget.moc.cpp \
-	src/Gui/import/ImportController.moc.cpp \
 	src/Gui/library/StackViewController.moc.cpp \
 	src/Gui/library/MediaLibraryView.moc.cpp \
 	src/Gui/wizard/firstlaunch/FirstLaunchPage.moc.cpp \
@@ -364,7 +361,6 @@ vlmc_UI = \
 	src/Gui/ui/EffectWidget.ui \
 	src/Gui/ui/RendererSettings.ui \
 	src/Gui/ui/ShareOnInternet.ui \
-	src/Gui/ui/ImportController.ui \
 	src/Gui/ui/TagWidget.ui \
 	src/Gui/ui/MediaCellView.ui \
 	src/Gui/ui/MediaLibraryView.ui \

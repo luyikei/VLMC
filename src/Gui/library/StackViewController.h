@@ -32,8 +32,6 @@
 #include "StackViewNavController.h"
 #include "ViewController.h"
 
-class ImportController;
-
 class StackViewController : public QWidget
 {
     Q_OBJECT

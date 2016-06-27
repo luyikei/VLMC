@@ -50,8 +50,6 @@ MediaLibraryView::MediaLibraryView(QWidget *parent) : QWidget(parent),
     m_mediaListView = new MediaListView( nav );
     nav->pushViewController( m_mediaListView );
 
-    connect( m_ui->importButton, SIGNAL( clicked() ),
-             this, SIGNAL( importRequired() ) );
     connect( m_mediaListView, SIGNAL( clipSelected( Clip* ) ),
              this, SIGNAL( clipSelected( Clip* ) ) );
     connect( m_ui->filterInput, SIGNAL( textChanged( const QString& ) ),
