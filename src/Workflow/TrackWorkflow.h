@@ -42,7 +42,7 @@ namespace   Backend
 {
 class ITrack;
 class ITractor;
-class IProducer;
+class IInput;
 }
 
 namespace   Workflow
@@ -88,7 +88,7 @@ class   TrackWorkflow : public QObject
 
         quint32                                 trackId() const;
 
-        Backend::IProducer*                     producer();
+        Backend::IInput*                        input();
 
     private:
         Backend::ITractor*                      m_tractor;

@@ -253,14 +253,14 @@ GraphicsEffectItem::helper()
 void
 GraphicsEffectItem::triggerMove( TrackWorkflow* target, qint64 startPos )
 {
-    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->producer(),
-                                                   target->producer(), startPos ) );
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->input(),
+                                                   target->input(), startPos ) );
 }
 
 void
 GraphicsEffectItem::triggerMove( Backend::IService* target, qint64 startPos )
 {
-    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->producer(),
+    Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->input(),
                                                    target, startPos ) );
 }
 

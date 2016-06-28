@@ -39,7 +39,7 @@ class Output;
 namespace Backend
 {
 class IOutput;
-class IProducer;
+class IInput;
 class IProfile;
 class IClip;
 class IFilterInfo;

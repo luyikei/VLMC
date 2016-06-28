@@ -29,7 +29,7 @@
 #include "ClipRenderer.h"
 #include "Backend/IBackend.h"
 #include "Backend/MLT/MLTOutput.h"
-#include "Backend/MLT/MLTProducer.h"
+#include "Backend/MLT/MLTInput.h"
 #include "Tools/RendererEventWatcher.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
@@ -62,7 +62,7 @@ ClipRenderer::setClip( Clip* clip )
     {
         m_selectedClip = nullptr;
         m_clipLoaded = false;
-        m_producer = nullptr;
+        m_input = nullptr;
         return ;
     }
     m_selectedClip = clip;
@@ -86,10 +86,10 @@ ClipRenderer::startPreview()
     if ( m_selectedClip == nullptr || m_selectedClip->length() == 0 )
         return ;
     updateInfos( m_selectedClip );
-    setProducer( m_selectedClip->producer() );
+    setInput( m_selectedClip->input() );
 
     m_output->start();
-    m_producer->setPosition( 0 );
+    m_input->setPosition( 0 );
 
     m_clipLoaded = true;
     m_mediaChanged = false;
@@ -104,8 +104,8 @@ ClipRenderer::stop()
         if ( m_mediaChanged == true )
             m_clipLoaded = false;
     }
-    if ( m_producer )
-        m_producer->setPosition( 0 );
+    if ( m_input )
+        m_input->setPosition( 0 );
 }
 
 void
@@ -120,10 +120,10 @@ ClipRenderer::togglePlayPause()
     if ( m_output->isStopped() )
     {
         m_output->start();
-        m_producer->setPause( false );
+        m_input->setPause( false );
     }
     else
-        m_producer->playPause();
+        m_input->playPause();
 }
 
 qint64
@@ -137,8 +137,8 @@ ClipRenderer::length() const
 qint64
 ClipRenderer::getLengthMs() const
 {
-    if ( m_producer )
-        return m_producer->length() / m_producer->fps();
+    if ( m_input )
+        return m_input->length() / m_input->fps();
     return 0;
 }
 

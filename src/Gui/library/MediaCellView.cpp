@@ -91,7 +91,7 @@ MediaCellView::metadataComputingStarted( const Media *media )
 void
 MediaCellView::metadataUpdated()
 {
-    setLength( m_clip->media()->producer()->length() );
+    setLength( m_clip->media()->input()->length() );
     m_ui->thumbnail->setEnabled( true );
     //If the media is a Video or an Image, we must wait for the snapshot to be computer
     //before allowing deletion.

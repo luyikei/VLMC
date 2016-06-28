@@ -27,17 +27,17 @@
 
 #include "Clip.h"
 #include "Main/Core.h"
-#include "Backend/MLT/MLTProducer.h"
+#include "Backend/MLT/MLTInput.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Project/Workspace.h"
 #include "EffectsEngine/EffectHelper.h"
 #include <QVariant>
 
-Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IProducer::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
+Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
         Workflow::Helper( uuid ),
         m_media( media ),
-        m_producer( std::move( m_media->producer()->cut( begin, end ) ) ),
+        m_input( std::move( m_media->input()->cut( begin, end ) ) ),
         m_parent( media->baseClip() ),
         m_clipWorkflow( nullptr )
 {
@@ -58,11 +58,11 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
     else
         begin = parent->begin() + begin;
 
-    if ( end == Backend::IProducer::EndOfParent )
+    if ( end == Backend::IInput::EndOfParent )
         end = parent->end();
     else
         end = parent->begin() + end;
-    m_producer = parent->producer()->cut( begin, end );
+    m_input = parent->input()->cut( begin, end );
 }
 
 Clip::~Clip()
@@ -88,7 +88,7 @@ Clip::media() const
 qint64
 Clip::lengthSecond() const
 {
-    return qRound64( m_producer->playableLength() / m_producer->fps() );
+    return qRound64( m_input->playableLength() / m_input->fps() );
 }
 
 const QStringList&
@@ -147,37 +147,37 @@ Clip::setUuid( const QUuid &uuid )
 qint64
 Clip::begin() const
 {
-    return m_producer->begin();
+    return m_input->begin();
 }
 
 qint64
 Clip::end() const
 {
-    return m_producer->end();
+    return m_input->end();
 }
 
 void
 Clip::setBegin( qint64 begin )
 {
-    m_producer->setBegin( begin );
+    m_input->setBegin( begin );
 }
 
 void
 Clip::setEnd( qint64 end )
 {
-    m_producer->setEnd( end );
+    m_input->setEnd( end );
 }
 
 qint64
 Clip::length() const
 {
-    return m_producer->playableLength();
+    return m_input->playableLength();
 }
 
 void
 Clip::setBoundaries( qint64 begin, qint64 end )
 {
-    m_producer->setBoundaries( begin, end );
+    m_input->setBoundaries( begin, end );
 }
 
 Clip*
@@ -260,7 +260,7 @@ Clip::toVariant() const
         h.insert( "begin", begin() );
         h.insert( "end", end() );
     }
-    h.insert( "filters", EffectHelper::toVariant( m_producer.get() ) );
+    h.insert( "filters", EffectHelper::toVariant( m_input.get() ) );
     return QVariant( h );
 
 }
@@ -293,10 +293,10 @@ Clip::setFormats( Formats formats )
     m_formats = formats;
 }
 
-Backend::IProducer*
-Clip::producer()
+Backend::IInput*
+Clip::input()
 {
-    return m_producer.get();
+    return m_input.get();
 }
 
 void

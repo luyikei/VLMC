@@ -51,7 +51,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_renderer( new AbstractRenderer ),
         m_tractor( new Backend::MLT::MLTTractor )
 {
-    m_renderer->setProducer( m_tractor );
+    m_renderer->setInput( m_tractor );
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );

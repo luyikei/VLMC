@@ -82,7 +82,7 @@ TrackWorkflow::trackFromFormats( Clip::Formats formats )
 void
 TrackWorkflow::addClip( std::shared_ptr<Clip> const& clip, qint64 start )
 {
-    trackFromFormats( clip->formats() )->insertAt( *clip->producer(), start );
+    trackFromFormats( clip->formats() )->insertAt( *clip->input(), start );
     m_clips.insertMulti( start, clip );
     emit clipAdded( this, clip, start );
 }
@@ -131,10 +131,10 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         {
             auto clip = it.value();
             auto track = trackFromFormats( it.value()->formats() );
-            auto producer = track->clipAt( it.key() );
+            auto input = track->clipAt( it.key() );
             track->remove( track->clipIndexAt( it.key() ) );
-            track->insertAt( *producer, startingFrame );
-            delete producer;
+            track->insertAt( *input, startingFrame );
+            delete input;
 
             m_clips.erase( it );
             m_clips.insertMulti( startingFrame, clip );
@@ -220,7 +220,7 @@ TrackWorkflow::toVariant() const
         h.insert( "begin", clip->begin() );
         h.insert( "end", clip->end() );
         h.insert( "formats", (int)clip->formats() );
-        h.insert( "filters", EffectHelper::toVariant( clip->producer() ) );
+        h.insert( "filters", EffectHelper::toVariant( clip->input() ) );
         h.insert( "startFrame", it.key() );
         l << h;
     }
@@ -239,7 +239,7 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
                           m["end"].toULongLong()
                          );
         c->setFormats( (Clip::Formats)m["formats"].toInt() );
-        EffectHelper::loadFromVariant( m["filters"], c->producer() );
+        EffectHelper::loadFromVariant( m["filters"], c->input() );
         addClip( c, m["startFrame"].toLongLong() );
     }
     EffectHelper::loadFromVariant( variant.toMap()["filters"], m_tractor );
@@ -320,8 +320,8 @@ TrackWorkflow::trackId() const
     return m_trackId;
 }
 
-Backend::IProducer*
-TrackWorkflow::producer()
+Backend::IInput*
+TrackWorkflow::input()
 {
     return m_tractor;
 }

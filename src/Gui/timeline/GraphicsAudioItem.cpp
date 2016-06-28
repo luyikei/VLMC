@@ -36,7 +36,7 @@
 GraphicsAudioItem::GraphicsAudioItem( std::shared_ptr<Clip> const& clip ) :
         AbstractGraphicsMediaItem( clip )
 {
-    QTime length = QTime().addMSecs( m_clip->media()->producer()->length() );
+    QTime length = QTime().addMSecs( m_clip->media()->input()->length() );
     QString tooltip( tr( "<p style='white-space:pre'><b>Name:</b> %1"
                      "<br><b>Length:</b> %2" )
                      .arg( m_clip->media()->fileName() )

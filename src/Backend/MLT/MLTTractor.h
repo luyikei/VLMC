@@ -24,7 +24,7 @@
 #define MLTTRACTOR_H
 
 #include "Backend/ITractor.h"
-#include "MLTProducer.h"
+#include "MLTInput.h"
 
 namespace Mlt
 {
@@ -36,7 +36,7 @@ namespace Backend
 class IProfile;
 namespace MLT
 {
-    class MLTTractor : public ITractor, public MLTProducer
+    class MLTTractor : public ITractor, public MLTInput
     {
     public:
         MLTTractor();
@@ -44,14 +44,14 @@ namespace MLT
         virtual     ~MLTTractor() override;
 
         virtual void        refresh() override;
-        virtual bool        setTrack( IProducer& producer, int index ) override;
-        virtual bool        insertTrack( IProducer& producer, int index ) override;
+        virtual bool        setTrack( IInput& input, int index ) override;
+        virtual bool        insertTrack( IInput& input, int index ) override;
         virtual bool        removeTrack( int index ) override;
-        virtual IProducer*  track( int index ) const override;
+        virtual IInput*     track( int index ) const override;
         virtual int         count() const override;
         virtual void        addTransition( ITransition& transition, int aTrack, int bTrack ) override;
         virtual void        addFilter( IFilter& filter, int track ) override;
-        virtual bool        connect( IProducer& producer ) override;
+        virtual bool        connect( IInput& input ) override;
 
     private:
         Mlt::Tractor*      m_tractor;

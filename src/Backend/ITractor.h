@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ITractor.h: Defines an interface of a multitrack producer
+ * ITractor.h: Defines an interface of a multitrack input
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -23,27 +23,27 @@
 #ifndef ITRACTOR_H
 #define ITRACTOR_H
 
-#include "IProducer.h"
+#include "IInput.h"
 
 namespace Backend
 {
-    class IProducer;
+    class IInput;
     class ITransition;
     class IFilter;
-    class ITractor : virtual public IProducer
+    class ITractor : virtual public IInput
     {
     public:
         virtual     ~ITractor() = default;
 
         virtual void        refresh() = 0;
-        virtual bool        setTrack( IProducer& producer, int index ) = 0;
-        virtual bool        insertTrack( IProducer& producer, int index ) = 0;
+        virtual bool        setTrack( IInput& input, int index ) = 0;
+        virtual bool        insertTrack( IInput& input, int index ) = 0;
         virtual bool        removeTrack( int index ) = 0;
-        virtual IProducer*  track( int index ) const = 0;
+        virtual IInput*     track( int index ) const = 0;
         virtual int         count() const = 0;
         virtual void        addTransition( ITransition& transition, int aTrack = 0, int bTrack = 1 ) = 0;
         virtual void        addFilter( IFilter& filter, int track = 0 ) = 0;
-        virtual bool        connect( IProducer& producer ) = 0;
+        virtual bool        connect( IInput& input ) = 0;
     };
 }
 

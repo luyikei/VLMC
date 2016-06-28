@@ -63,7 +63,7 @@ class MLTProfile : public IProfile
 
     // To access Mlt::Profile
     friend class MLTOutput;
-    friend class MLTProducer;
+    friend class MLTInput;
     friend class MLTBackend;
     friend class MLTTrack;
     friend class MLTTractor;

@@ -60,7 +60,7 @@ SET(VLMC_SRCS
     Backend/IBackend.h
     Backend/IService.h
     Backend/IOutput.h
-    Backend/IProducer.h
+    Backend/IInput.h
     Backend/ITrack.h
     Backend/IProfile.h
     Backend/ITractor.h
@@ -68,7 +68,7 @@ SET(VLMC_SRCS
     Backend/IFilter.h
     Backend/MLT/MLTBackend.cpp
     Backend/MLT/MLTOutput.cpp
-    Backend/MLT/MLTProducer.cpp
+    Backend/MLT/MLTInput.cpp
     Backend/MLT/MLTTrack.cpp
     Backend/MLT/MLTService.cpp
     Backend/MLT/MLTProfile.cpp

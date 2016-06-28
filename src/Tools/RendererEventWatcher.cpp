@@ -1,5 +1,5 @@
 /*****************************************************************************
- * RendererEventWatcher.cpp: Watches events from a IOutput and IProducer
+ * RendererEventWatcher.cpp: Watches events from a IOutput and IInput
  *                           and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN

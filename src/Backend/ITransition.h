@@ -29,7 +29,7 @@
 
 namespace Backend
 {
-    class IProducer;
+    class IInput;
     class ITransition : virtual public IService
     {
     public:

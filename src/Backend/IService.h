@@ -1,6 +1,6 @@
 /*****************************************************************************
  * IService.h: Defines an interface of a common base of
- *             consumer and producer.
+ *             output and input.
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -55,8 +55,8 @@ namespace Backend
         virtual ~IService() = default;
 
         virtual std::string     identifier() const = 0;
-        virtual IService* consumer() const = 0;
-        virtual IService* producer() const = 0;
+        virtual IService* output() const = 0;
+        virtual IService* input() const = 0;
         virtual IProfile* profile() const = 0;
         virtual bool      attach( IFilter& filter ) = 0;
         virtual bool      detach( IFilter& filter ) = 0;

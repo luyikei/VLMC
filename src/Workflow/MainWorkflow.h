@@ -39,7 +39,7 @@ class   AbstractRenderer;
 namespace Backend
 {
 class ITractor;
-class IProducer;
+class IInput;
 }
 
 class   Settings;

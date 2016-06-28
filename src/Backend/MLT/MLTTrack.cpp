@@ -45,7 +45,7 @@ MLTTrack::MLTTrack()
 }
 
 MLTTrack::MLTTrack( IProfile &profile )
-    : MLTProducer()
+    : MLTInput()
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_playlist = new Mlt::Playlist( *mltProfile.m_profile );
@@ -60,19 +60,19 @@ MLTTrack::~MLTTrack()
 }
 
 bool
-MLTTrack::insertAt( Backend::IProducer& producer, int64_t startFrame )
+MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
 {
-    auto mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    return m_playlist->insert_at( (int)startFrame, mltProducer->m_producer, 1 );
+    auto mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    return m_playlist->insert_at( (int)startFrame, mltInput->m_producer, 1 );
 }
 
 bool
-MLTTrack::append( Backend::IProducer& producer )
+MLTTrack::append( Backend::IInput& input )
 {
-    auto mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    return m_playlist->append( *mltProducer->m_producer );
+    auto mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    return m_playlist->append( *mltInput->m_producer );
 }
 
 bool
@@ -98,16 +98,16 @@ MLTTrack::move( int src, int dist )
     return m_playlist->move( src, dist );
 }
 
-Backend::IProducer*
+Backend::IInput*
 MLTTrack::clip( int index ) const
 {
-    return new MLTProducer( m_playlist->get_clip( index ) );
+    return new MLTInput( m_playlist->get_clip( index ) );
 }
 
-Backend::IProducer*
+Backend::IInput*
 MLTTrack::clipAt( int64_t position ) const
 {
-    return new MLTProducer( m_playlist->get_clip_at( (int)position ) );
+    return new MLTInput( m_playlist->get_clip_at( (int)position ) );
 }
 
 bool

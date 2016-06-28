@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTOutput.cpp:  Wrapper of Mlt::Output
+ * MLTOutput.cpp:  Wrapper of Mlt::Consumer
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "MLTOutput.h"
-#include "MLTProducer.h"
+#include "MLTInput.h"
 #include "MLTProfile.h"
 #include "MLTBackend.h"
 
@@ -41,7 +41,7 @@ MLTOutput::MLTOutput()
 
 MLTOutput::MLTOutput( Backend::IProfile& profile, const char *id, Backend::IOutputEventCb* callback )
     : m_callback( callback )
-    , m_producer( nullptr )
+    , m_input( nullptr )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_consumer = new Mlt::Consumer( *mltProfile.m_profile, id );
@@ -119,18 +119,18 @@ MLTOutput::setVolume( int volume )
 }
 
 bool
-MLTOutput::connect( Backend::IProducer& producer )
+MLTOutput::connect( Backend::IInput& input )
 {
-    MLTProducer* mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    m_producer = mltProducer;
-    return m_consumer->connect( *(mltProducer->m_producer) );
+    MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    m_input = mltInput;
+    return m_consumer->connect( *(mltInput->m_producer) );
 }
 
 bool
 MLTOutput::isConnected() const
 {
-    return m_producer != nullptr;
+    return m_input != nullptr;
 }
 
 void

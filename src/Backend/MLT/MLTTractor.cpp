@@ -39,7 +39,7 @@ MLTTractor::MLTTractor()
 }
 
 MLTTractor::MLTTractor( Backend::IProfile& profile )
-    : MLTProducer()
+    : MLTInput()
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_tractor  = new Mlt::Tractor( *mltProfile.m_profile );
@@ -60,19 +60,19 @@ MLTTractor::refresh()
 }
 
 bool
-MLTTractor::setTrack( Backend::IProducer& producer, int index )
+MLTTractor::setTrack( Backend::IInput& input, int index )
 {
-    MLTProducer* mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    return m_tractor->set_track( *mltProducer->m_producer, index );
+    MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    return m_tractor->set_track( *mltInput->m_producer, index );
 }
 
 bool
-MLTTractor::insertTrack( Backend::IProducer& producer, int index )
+MLTTractor::insertTrack( Backend::IInput& input, int index )
 {
-    MLTProducer* mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    return m_tractor->insert_track( *mltProducer->m_producer, index );
+    MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    return m_tractor->insert_track( *mltInput->m_producer, index );
 }
 
 bool
@@ -81,10 +81,10 @@ MLTTractor::removeTrack( int index )
     return m_tractor->remove_track( index );
 }
 
-Backend::IProducer*
+Backend::IInput*
 MLTTractor::track( int index ) const
 {
-    return new MLTProducer( m_tractor->track( index ), nullptr );
+    return new MLTInput( m_tractor->track( index ), nullptr );
 }
 
 int
@@ -108,9 +108,9 @@ MLTTractor::addFilter( Backend::IFilter& filter, int track )
 }
 
 bool
-MLTTractor::connect( Backend::IProducer& producer )
+MLTTractor::connect( Backend::IInput& input )
 {
-    MLTProducer* mltProducer = dynamic_cast<MLTProducer*>( &producer );
-    assert( mltProducer );
-    return m_tractor->connect( *mltProducer->m_producer );
+    MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
+    assert( mltInput );
+    return m_tractor->connect( *mltInput->m_producer );
 }

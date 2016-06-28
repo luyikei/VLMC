@@ -28,7 +28,7 @@
 #include "vlmc.h"
 #include "Workflow/MainWorkflow.h"
 #include "Tools/RendererEventWatcher.h"
-#include "Backend/IProducer.h"
+#include "Backend/IInput.h"
 
 WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height,
                                                         qint64 totalFrames, RendererEventWatcher* eventWatcher ) :

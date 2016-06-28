@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTOutput.h:  Wrapper of Mlt::Output
+ * MLTOutput.h:  Wrapper of Mlt::Consumer
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -39,7 +39,7 @@ namespace Backend
 {
 namespace MLT
 {
-class MLTProducer;
+class MLTInput;
 
 class MLTOutput : public IOutput, public MLTService
 {
@@ -61,13 +61,13 @@ class MLTOutput : public IOutput, public MLTService
         virtual int     volume() const override;
         virtual void    setVolume( int volume ) override;
 
-        virtual bool    connect( IProducer& producer ) override;
+        virtual bool    connect( IInput& input ) override;
         virtual bool    isConnected() const override;
 
     protected:
         Mlt::Consumer*      m_consumer;
-        IOutputEventCb*   m_callback;
-        MLTProducer*        m_producer;
+        IOutputEventCb*     m_callback;
+        MLTInput*           m_input;
         std::string         m_name;
 };
 

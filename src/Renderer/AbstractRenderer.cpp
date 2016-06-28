@@ -30,7 +30,7 @@
 #include <QtGlobal>
 
 AbstractRenderer::AbstractRenderer()
-    : m_producer( nullptr )
+    : m_input( nullptr )
 {
     m_eventWatcher = new RendererEventWatcher;
     connect( m_eventWatcher, &RendererEventWatcher::stopped, this, &AbstractRenderer::stop );
@@ -62,23 +62,23 @@ AbstractRenderer::stop()
 void
 AbstractRenderer::setPosition( qint64 pos )
 {
-    if ( m_producer )
-        m_producer->setPosition( pos );
+    if ( m_input )
+        m_input->setPosition( pos );
 }
 
 void
 AbstractRenderer::togglePlayPause()
 {
-    if ( m_producer == nullptr || m_output.get() == nullptr )
+    if ( m_input == nullptr || m_output.get() == nullptr )
         return;
 
     if ( m_output->isStopped() )
     {
         m_output->start();
-        m_producer->setPause( false );
+        m_input->setPause( false );
     }
     else
-        m_producer->playPause();
+        m_input->playPause();
 }
 
 int
@@ -96,54 +96,54 @@ AbstractRenderer::setVolume( int volume )
 void
 AbstractRenderer::nextFrame()
 {
-    if ( isRendering() && m_producer )
-        m_producer->nextFrame();
+    if ( isRendering() && m_input )
+        m_input->nextFrame();
 }
 
 void
 AbstractRenderer::previousFrame()
 {
-    if ( isRendering() && m_producer )
-        m_producer->previousFrame();
+    if ( isRendering() && m_input )
+        m_input->previousFrame();
 }
 
 qint64
 AbstractRenderer::length() const
 {
-    if ( m_producer )
-        return m_producer->playableLength();
+    if ( m_input )
+        return m_input->playableLength();
     return 0;
 }
 
 qint64
 AbstractRenderer::getLengthMs() const
 {
-    if ( m_producer )
-        return ( qRound64( (qreal)( m_producer->playableLength() ) / m_producer->fps() * 1000.0 ) );
+    if ( m_input )
+        return ( qRound64( (qreal)( m_input->playableLength() ) / m_input->fps() * 1000.0 ) );
     return 0;
 }
 
 qint64
 AbstractRenderer::getCurrentFrame() const
 {
-    if ( m_producer )
-        return m_producer->position();
+    if ( m_input )
+        return m_input->position();
     return 0;
 }
 
 float
 AbstractRenderer::getFps() const
 {
-    if ( m_producer )
-        return m_producer->fps();
+    if ( m_input )
+        return m_input->fps();
     return 0.0f;
 }
 
 bool
 AbstractRenderer::isPaused() const
 {
-    if ( m_producer )
-        return m_producer->isPaused();
+    if ( m_input )
+        return m_input->isPaused();
     return false;
 }
 
@@ -154,20 +154,20 @@ AbstractRenderer::isRendering() const
 }
 
 void
-AbstractRenderer::setProducer( Backend::IProducer* producer )
+AbstractRenderer::setInput( Backend::IInput* input )
 {
-    m_producer = producer;
+    m_input = input;
 
-    if ( m_producer )
+    if ( m_input )
     {
-        m_producer->setCallback( m_eventWatcher );
-        emit lengthChanged( m_producer->playableLength() );
+        m_input->setCallback( m_eventWatcher );
+        emit lengthChanged( m_input->playableLength() );
     }
     else
         emit lengthChanged( 0 );
 
     if ( m_output.get() != nullptr )
-        m_output->connect( *m_producer );
+        m_output->connect( *m_input );
 }
 
 void
@@ -176,8 +176,8 @@ AbstractRenderer::setOutput( std::unique_ptr<Backend::IOutput> consuemr )
     m_output = std::move( consuemr );
     m_output->setCallback( m_eventWatcher );
 
-    if ( m_producer != nullptr )
-        m_output->connect( *m_producer );
+    if ( m_input != nullptr )
+        m_output->connect( *m_input );
 }
 
 void
@@ -185,6 +185,6 @@ AbstractRenderer::previewWidgetCursorChanged( qint64 newFrame )
 {
     if ( isRendering() == true )
     {
-        m_producer->setPosition( newFrame );
+        m_input->setPosition( newFrame );
     }
 }

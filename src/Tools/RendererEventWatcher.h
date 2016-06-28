@@ -1,5 +1,5 @@
 /*****************************************************************************
- * RendererEventWatcher.h: Watches events from a IOutput and IProducer
+ * RendererEventWatcher.h: Watches events from a IOutput and IInput
  *                         and convert them to SIGNAL
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
@@ -27,9 +27,9 @@
 #include <QObject>
 
 #include "Backend/IOutput.h"
-#include "Backend/IProducer.h"
+#include "Backend/IInput.h"
 
-class RendererEventWatcher : public QObject, public Backend::IOutputEventCb, public Backend::IProducerEventCb
+class RendererEventWatcher : public QObject, public Backend::IOutputEventCb, public Backend::IInputEventCb
 {
     Q_OBJECT
 public:

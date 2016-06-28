@@ -276,9 +276,9 @@ TracksView::addItem( TrackWorkflow *tw, std::shared_ptr<Workflow::Helper> const&
         item->m_oldTrack = tw;
         moveItem( item, track, start );
 
-        for ( int i = 0; i < clip->producer()->filterCount(); ++i )
+        for ( int i = 0; i < clip->input()->filterCount(); ++i )
         {
-            addEffectItem( std::make_shared<EffectHelper>( clip->producer()->filter( i ) ), Workflow::VideoTrack, track, start );
+            addEffectItem( std::make_shared<EffectHelper>( clip->input()->filter( i ) ), Workflow::VideoTrack, track, start );
         }
     }
     else
@@ -369,8 +369,8 @@ TracksView::clipDragEnterEvent( QDragEnterEvent *event )
     Clip *clip = Core::instance()->library()->clip( fullId );
     if ( clip == nullptr )
         return;
-    bool hasVideo = clip->media()->producer()->hasVideo();
-    bool hasAudio = clip->media()->producer()->hasAudio();
+    bool hasVideo = clip->media()->input()->hasVideo();
+    bool hasAudio = clip->media()->input()->hasAudio();
     if ( hasAudio == false && hasVideo == false )
         return ;
 
@@ -425,7 +425,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
-            m_dragEffectItem->effectHelper()->setTarget( clip->producer() );
+            m_dragEffectItem->effectHelper()->setTarget( clip->input() );
         }
         else
         {
@@ -438,7 +438,7 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                     m_dragEffectItem->setWidth( m_dragEffectItem->helper()->length() );
                     m_dragEffectItem->setStartPos( 0 );
                     m_dragEffectItem->setTrack( track );
-                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow()->producer() );
+                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow()->input() );
                     break ;
                 }
             }
@@ -843,7 +843,7 @@ TracksView::dropEvent( QDropEvent *event )
             AbstractGraphicsMediaItem   *item = clips.first();
 
             Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                          item->clip()->producer() ) );
+                                                          item->clip()->input() ) );
 
             m_dragEffectItem->m_oldTrack = item->track()->trackWorkflow();
             event->acceptProposedAction();
@@ -863,7 +863,7 @@ TracksView::dropEvent( QDropEvent *event )
                         addTrack( Workflow::VideoTrack );
                     m_dragEffectItem->m_oldTrack = track->trackWorkflow();
                     Commands::trigger( new Commands::Effect::Add( m_dragEffectItem->effectHelper(),
-                                                                  track->trackWorkflow()->producer() ) );
+                                                                  track->trackWorkflow()->input() ) );
 
                     event->acceptProposedAction();
                     m_dragEffectItem->setContainer( nullptr );
@@ -974,14 +974,14 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                     auto    clip = std::dynamic_pointer_cast<Clip>( mediaItem->helper() );
                     Q_ASSERT( clip.get() != nullptr );
                     m_effectTarget = mediaItem;
-                    effectItem->effectHelper()->setTarget( clip->producer() );
+                    effectItem->effectHelper()->setTarget( clip->input() );
                     break ;
                 }
             }
             if ( m_effectTarget == nullptr ) //Avoid doing this all the time.
             {
                 GraphicsTrack *track = getTrack( m_actionItem->trackType(), m_actionItem->trackNumber() );
-                effectItem->effectHelper()->setTarget( track->trackWorkflow()->producer() );
+                effectItem->effectHelper()->setTarget( track->trackWorkflow()->input() );
             }
         }
     }

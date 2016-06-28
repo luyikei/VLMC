@@ -24,7 +24,7 @@
 #define MLTTRACK_H
 
 
-#include "MLTProducer.h"
+#include "MLTInput.h"
 #include "Backend/ITrack.h"
 
 namespace Mlt
@@ -38,19 +38,19 @@ class IProfile;
 namespace MLT
 {
 
-class MLTTrack : public ITrack, public MLTProducer
+class MLTTrack : public ITrack, public MLTInput
 {
     public:
         MLTTrack();
         MLTTrack( IProfile& profile );
         virtual ~MLTTrack();
 
-        virtual bool        insertAt( IProducer& producer, int64_t startFrame ) override;
-        virtual bool        append( IProducer& producer ) override;
+        virtual bool        insertAt( IInput& input, int64_t startFrame ) override;
+        virtual bool        append( IInput& input ) override;
         virtual bool        remove( int index ) override;
         virtual bool        move( int src, int dist ) override;
-        virtual IProducer*  clip( int index ) const override;
-        virtual IProducer*  clipAt( int64_t position ) const override;
+        virtual IInput*  clip( int index ) const override;
+        virtual IInput*  clipAt( int64_t position ) const override;
         virtual bool        resizeClip( int clip, int64_t begin, int64_t end ) override;
         virtual int         clipIndexAt( int64_t position ) override;
         virtual int         count() const override;

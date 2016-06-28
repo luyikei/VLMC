@@ -46,20 +46,20 @@ ClipMetadataDisplayer::metadataUpdated()
     QTime   duration;
     duration = duration.addSecs( m_watchedClip->lengthSecond() );
 
-    const auto* producer = m_watchedMedia->producer();
+    const auto* input = m_watchedMedia->input();
     updateInterface();
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
     m_ui->nameValueLabel->setText( m_watchedMedia->fileInfo()->fileName() );
     //Resolution
-    m_ui->resolutionValueLabel->setText( QString::number( producer->width() )
-                                       + " x " + QString::number( producer->height() ) );
+    m_ui->resolutionValueLabel->setText( QString::number( input->width() )
+                                       + " x " + QString::number( input->height() ) );
     //FPS
-    m_ui->fpsValueLabel->setText( QString::number( producer->fps() ) );
+    m_ui->fpsValueLabel->setText( QString::number( input->fps() ) );
     //nb tracks :
-    m_ui->nbVideoTracksValueLabel->setText( QString::number( producer->nbVideoTracks() ) );
-    m_ui->nbAudioTracksValueLabel->setText( QString::number( producer->nbAudioTracks() ) );
+    m_ui->nbVideoTracksValueLabel->setText( QString::number( input->nbVideoTracks() ) );
+    m_ui->nbAudioTracksValueLabel->setText( QString::number( input->nbAudioTracks() ) );
     //Path:
     m_ui->pathValueLabel->setText( m_watchedMedia->fileInfo()->absoluteFilePath() );
 }
@@ -105,7 +105,7 @@ ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
 void
 ClipMetadataDisplayer::updateInterface()
 {
-    bool visible = m_watchedMedia->producer()->hasVideo();
+    bool visible = m_watchedMedia->input()->hasVideo();
     m_ui->fpsLabel->setVisible( visible );
     m_ui->fpsValueLabel->setVisible( visible );
     m_ui->resolutionLabel->setVisible( visible );

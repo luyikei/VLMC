@@ -29,7 +29,7 @@
 #include "Project/Project.h"
 #include "Media/Clip.h"
 #include "Renderer/ClipRenderer.h"
-#include "Backend/IProducer.h"
+#include "Backend/IInput.h"
 #include "Library/Library.h"
 #include "Media/Media.h"
 #include "Settings/Settings.h"
@@ -232,7 +232,7 @@ ImportController::accept()
     collapseAllButCurrentPath();
     foreach ( Clip* clip, m_temporaryMedias->clips().values() )
     {
-        if ( clip->media()->producer()->length() == 0 )
+        if ( clip->media()->input()->length() == 0 )
             invalidMedias = true;
         Core::instance()->library()->addClip( clip );
     }
@@ -254,7 +254,7 @@ ImportController::handleInvalidMedias()
     {
         foreach ( Clip* clip, m_temporaryMedias->clips().values() )
         {
-            if ( clip->media()->producer()->length() == 0 )
+            if ( clip->media()->input()->length() == 0 )
             {/* TODO
                 Transcoder  *transcoder = new Transcoder( clip->media() );
                 connect( transcoder, SIGNAL( done() ), transcoder, SLOT( deleteLater() ) );

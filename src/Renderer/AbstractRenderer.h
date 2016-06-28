@@ -39,7 +39,7 @@ class RendererEventWatcher;
 namespace Backend
 {
 class IOutput;
-class IProducer;
+class IInput;
 }
 
 /**
@@ -144,14 +144,14 @@ public:
      */
     virtual bool                    isRendering() const;
 
-    virtual void                    setProducer( Backend::IProducer* producer );
+    virtual void                    setInput( Backend::IInput* input );
     virtual void                    setOutput( std::unique_ptr<Backend::IOutput> consuemr );
 
     RendererEventWatcher*           eventWatcher();
 protected:
     std::unique_ptr<Backend::IOutput>             m_output;
 
-    Backend::IProducer*                             m_producer;
+    Backend::IInput*                             m_input;
     RendererEventWatcher*                           m_eventWatcher;
 
 

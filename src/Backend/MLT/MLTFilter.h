@@ -30,7 +30,7 @@ namespace Mlt
 {
 class Filter;
 class Properties;
-class Producer;
+class Input;
 }
 
 namespace Backend

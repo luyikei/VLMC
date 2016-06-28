@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTProducer.h:  Wrapper of Mlt::Producer
+ * MLTInput.h:  Wrapper of Mlt::Producer
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef MLTPRODUCER_H
-#define MLTPRODUCER_H
+#ifndef MLTINPUT_H
+#define MLTINPUT_H
 
-#include "Backend/IProducer.h"
+#include "Backend/IInput.h"
 #include "Backend/IProfile.h"
 #include "MLTService.h"
 
@@ -37,18 +37,18 @@ namespace Backend
 namespace MLT
 {
 
-class MLTProducer : virtual public IProducer, public MLTService
+class MLTInput : virtual public IInput, public MLTService
 {
     public:
 
-        MLTProducer( Mlt::Producer* producer, IProducerEventCb* callback = nullptr );
-        MLTProducer( const char* path, IProducerEventCb* callback = nullptr );
-        MLTProducer( IProfile& profile, const char* path, IProducerEventCb* callback = nullptr );
-        ~MLTProducer();
+        MLTInput( Mlt::Producer* input, IInputEventCb* callback = nullptr );
+        MLTInput( const char* path, IInputEventCb* callback = nullptr );
+        MLTInput( IProfile& profile, const char* path, IInputEventCb* callback = nullptr );
+        ~MLTInput();
 
-        static void             onPropertyChanged( void* owner, MLTProducer* self, const char* id );
+        static void             onPropertyChanged( void* owner, MLTInput* self, const char* id );
 
-        virtual void            setCallback( IProducerEventCb* callback );
+        virtual void            setCallback( IInputEventCb* callback );
 
         virtual const char*     path() const override;
         virtual int64_t         begin() const override;
@@ -57,16 +57,16 @@ class MLTProducer : virtual public IProducer, public MLTService
         virtual void            setEnd( int64_t end ) override;
         virtual void            setBoundaries( int64_t begin, int64_t end ) override;
 
-        virtual std::unique_ptr<IProducer>      cut( int64_t begin = 0, int64_t end = EndOfMedia ) override;
+        virtual std::unique_ptr<IInput>      cut( int64_t begin = 0, int64_t end = EndOfMedia ) override;
         virtual bool            isCut() const override;
 
-        virtual bool            sameClip( IProducer& that ) const override;
-        virtual bool            runsInto( IProducer& that ) const override;
+        virtual bool            sameClip( IInput& that ) const override;
+        virtual bool            runsInto( IInput& that ) const override;
 
         // The playable (based on begin and end points) duration
         virtual int64_t         playableLength() const override;
 
-        // The duration of the producer regardless of begin and end points.
+        // The duration of the input regardless of begin and end points.
         virtual int64_t         length() const override;
         virtual const char*     lengthTime() const override;
 
@@ -93,12 +93,12 @@ class MLTProducer : virtual public IProducer, public MLTService
 
         virtual bool            isBlank() const override;
     protected:
-        MLTProducer();
+        MLTInput();
 
         void                    calcTracks();
 
         Mlt::Producer*          m_producer;
-        IProducerEventCb*       m_callback;
+        IInputEventCb*          m_callback;
         bool                    m_paused;
 
         int                     m_nbVideoTracks;
@@ -112,4 +112,4 @@ class MLTProducer : virtual public IProducer, public MLTService
 }
 }
 
-#endif // MLTPRODUCER_H
+#endif // MLTINPUT_H

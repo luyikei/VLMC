@@ -1,5 +1,5 @@
 /*****************************************************************************
- * IProducer.h: Defines an interface to produce frames
+ * IInput.h: Defines an interface to produce frames
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef IPRODUCER_H
-#define IPRODUCER_H
+#ifndef IINPUT_H
+#define IINPUT_H
 
 #include <cstdint>
 #include <memory>
@@ -30,10 +30,10 @@
 
 namespace Backend
 {
-    class IProducerEventCb
+    class IInputEventCb
     {
     public:
-        virtual ~IProducerEventCb() = default;
+        virtual ~IInputEventCb() = default;
         virtual void    onPaused() = 0;
         virtual void    onPlaying() = 0;
         virtual void    onEndReached() = 0;
@@ -41,12 +41,12 @@ namespace Backend
         virtual void    onLengthChanged( int64_t ) = 0;
     };
 
-    class IProducer : virtual public IService
+    class IInput : virtual public IService
     {
     public:
 
-        virtual ~IProducer() = default;
-        virtual void            setCallback( IProducerEventCb* callback ) = 0;
+        virtual ~IInput() = default;
+        virtual void            setCallback( IInputEventCb* callback ) = 0;
 
         virtual const char*     path() const = 0;
         virtual int64_t         begin() const = 0;
@@ -56,16 +56,16 @@ namespace Backend
         virtual void            setBoundaries( int64_t begin, int64_t end ) = 0;
 
         // Absolute position in frames
-        virtual std::unique_ptr<IProducer>      cut( int64_t begin  = 0, int64_t end  = EndOfMedia ) = 0;
+        virtual std::unique_ptr<IInput>      cut( int64_t begin  = 0, int64_t end  = EndOfMedia ) = 0;
         virtual bool            isCut( ) const = 0 ;
 
-        virtual bool            sameClip( IProducer& that ) const = 0;
-        virtual bool            runsInto( IProducer& that ) const = 0;
+        virtual bool            sameClip( IInput& that ) const = 0;
+        virtual bool            runsInto( IInput& that ) const = 0;
 
         // The playable (based on begin and end points) duration
         virtual int64_t         playableLength() const = 0;
 
-        // The duration of the producer regardless of begin and end points.
+        // The duration of the input regardless of begin and end points.
         virtual int64_t         length() const = 0;
         virtual const char*     lengthTime() const = 0;
 
@@ -94,4 +94,4 @@ namespace Backend
     };
 }
 
-#endif // IPRODUCER_H
+#endif // IINPUT_H

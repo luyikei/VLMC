@@ -24,22 +24,22 @@
 #define ITRACK_H
 
 #include <string>
-#include "IProducer.h"
+#include "IInput.h"
 
 namespace Backend
 {
-    class ITrack : virtual public IProducer
+    class ITrack : virtual public IInput
     {
     public:
         virtual ~ITrack() = default;
 
-        virtual bool        insertAt( IProducer& producer, int64_t startFrame ) = 0;
-        virtual bool        append( IProducer& producer ) = 0;
+        virtual bool        insertAt( IInput& input, int64_t startFrame ) = 0;
+        virtual bool        append( IInput& input ) = 0;
         virtual bool        remove( int index ) = 0;
         // src and dist are indexes.
         virtual bool        move( int src, int dist ) = 0;
-        virtual IProducer*  clip( int index ) const = 0;
-        virtual IProducer*  clipAt( int64_t position ) const = 0 ;
+        virtual IInput*     clip( int index ) const = 0;
+        virtual IInput*     clipAt( int64_t position ) const = 0 ;
         virtual bool        resizeClip( int clip, int64_t begin, int64_t end ) = 0;
         virtual int         clipIndexAt( int64_t position ) = 0;
         virtual int         count() const = 0;

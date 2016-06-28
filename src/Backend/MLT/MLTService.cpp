@@ -55,13 +55,13 @@ MLTService::identifier() const
 }
 
 Backend::IService*
-MLTService::consumer() const
+MLTService::output() const
 {
     return new MLTService( m_service->consumer() );
 }
 
 Backend::IService*
-MLTService::producer() const
+MLTService::input() const
 {
     return new MLTService( m_service->producer() );
 }

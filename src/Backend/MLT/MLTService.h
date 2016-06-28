@@ -43,8 +43,8 @@ namespace MLT
         virtual ~MLTService();
 
         virtual std::string      identifier() const override;
-        virtual IService* consumer() const override;
-        virtual IService* producer() const override;
+        virtual IService* output() const override;
+        virtual IService* input() const override;
         virtual IProfile* profile() const override;
         virtual bool      attach( IFilter& filter ) override;
         virtual bool      detach( IFilter& filter ) override;

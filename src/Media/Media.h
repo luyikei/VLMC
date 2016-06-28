@@ -46,7 +46,7 @@
 
 namespace Backend
 {
-class   IProducer;
+class   IInput;
 namespace VLC
 {
     class   VLCSource;
@@ -105,15 +105,15 @@ public:
 
     QVariant                    toVariant() const;
 
-    Backend::IProducer*         producer();
-    const Backend::IProducer*   producer() const;
+    Backend::IInput*         input();
+    const Backend::IInput*   input() const;
 
 #ifdef WITH_GUI
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 #endif
 protected:
-    std::unique_ptr<Backend::IProducer>         m_producer;
+    std::unique_ptr<Backend::IInput>         m_input;
     QString                     m_mrl;
     QFileInfo*                  m_fileInfo;
     FileType                    m_fileType;

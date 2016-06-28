@@ -215,7 +215,7 @@ MediaContainer::createClipFromVariant( const QVariant &var, Clip* parent )
 
     if ( h.contains( "filters" ) )
         for ( auto& var : h["filters"].toList() )
-            EffectHelper::loadFromVariant( var, c->producer() );
+            EffectHelper::loadFromVariant( var, c->input() );
 
     return c;
 }

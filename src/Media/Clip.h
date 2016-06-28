@@ -33,7 +33,7 @@
 #include <QStringList>
 #include <QUuid>
 #include <QXmlStreamWriter>
-#include "Backend/IProducer.h"
+#include "Backend/IInput.h"
 
 #include <memory>
 
@@ -64,7 +64,7 @@ class   Clip : public Workflow::Helper
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IProducer::EndOfMedia, const QString &uuid = QString() );
+        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QString() );
         /**
          *  \brief  Clones a Clip, potentially with a new begin and end.
          *
@@ -74,7 +74,7 @@ class   Clip : public Workflow::Helper
          *  \param  end     The end, in frames, from the parent's beginning. If not given,
          *                  the end of the parent will be used.
          */
-        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IProducer::EndOfParent, const QString& uuid = QString() );
+        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IInput::EndOfParent, const QString& uuid = QString() );
         virtual ~Clip();
 
         /**
@@ -137,11 +137,11 @@ class   Clip : public Workflow::Helper
         Formats             formats() const;
         void                setFormats( Formats formats );
 
-        Backend::IProducer* producer();
+        Backend::IInput* input();
 
     private:
         Media*              m_media;
-        std::unique_ptr<Backend::IProducer> m_producer;
+        std::unique_ptr<Backend::IInput> m_input;
 
         QStringList         m_metaTags;
         QString             m_notes;

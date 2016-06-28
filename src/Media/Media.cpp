@@ -36,7 +36,7 @@
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
-#include "Backend/MLT/MLTProducer.h"
+#include "Backend/MLT/MLTInput.h"
 
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "
@@ -59,7 +59,7 @@ QPixmap*        Media::defaultSnapshot = nullptr;
 #endif
 
 Media::Media(const QString &path )
-    : m_producer( nullptr )
+    : m_input( nullptr )
     , m_fileInfo( nullptr )
     , m_baseClip( nullptr )
 #ifdef WITH_GUI
@@ -116,16 +116,16 @@ Media::toVariant() const
     return QVariant( m_fileInfo->absoluteFilePath() );
 }
 
-Backend::IProducer*
-Media::producer()
+Backend::IInput*
+Media::input()
 {
-    return m_producer.get();
+    return m_input.get();
 }
 
-const Backend::IProducer*
-Media::producer() const
+const Backend::IInput*
+Media::input() const
 {
-    return m_producer.get();
+    return m_input.get();
 }
 
 void
@@ -137,7 +137,7 @@ Media::setFilePath( const QString &filePath )
     m_fileName = m_fileInfo->fileName();
     m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
 
-    m_producer.reset( new Backend::MLT::MLTProducer( qPrintable( filePath ) ) );
+    m_input.reset( new Backend::MLT::MLTInput( qPrintable( filePath ) ) );
 }
 
 #ifdef WITH_GUI

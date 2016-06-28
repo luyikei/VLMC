@@ -31,7 +31,7 @@
 
 namespace Backend
 {
-    class IProducer;
+    class IInput;
 
     class IOutputEventCb
     {
@@ -59,7 +59,7 @@ namespace Backend
         virtual int     volume() const = 0;
         virtual void    setVolume( int volume ) = 0;
 
-        virtual bool    connect( IProducer& provider ) = 0;
+        virtual bool    connect( IInput& input ) = 0;
         virtual bool    isConnected() const = 0;
     };
 }
