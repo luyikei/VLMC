@@ -56,7 +56,7 @@ public:
 
     virtual std::shared_ptr<Workflow::Helper> helper();
     virtual void        triggerMove( TrackWorkflow* target, qint64 startPos );
-    virtual void        triggerResize( TrackWorkflow* target, Workflow::Helper *helper,
+    virtual void        triggerResize( TrackWorkflow* target,
                                        qint64 newBegin, qint64 newEnd, qint64 pos );
     virtual qint64              itemHeight() const;
     virtual qint32      zSelected() const;

@@ -265,11 +265,10 @@ GraphicsEffectItem::triggerMove( Backend::IService* target, qint64 startPos )
 }
 
 void
-GraphicsEffectItem::triggerResize( TrackWorkflow* target, Workflow::Helper* helper,
+GraphicsEffectItem::triggerResize( TrackWorkflow* target,
                                    qint64 newBegin, qint64 newEnd, qint64 )
 {
     Q_UNUSED( target )
-    Q_UNUSED( helper )
     if ( m_effectHelper.get() == nullptr )
         return ;
     Commands::trigger( new Commands::Effect::Resize( m_effectHelper, newBegin, newEnd ) );

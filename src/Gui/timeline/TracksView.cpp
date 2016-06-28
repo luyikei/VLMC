@@ -1218,13 +1218,13 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
         GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
         if ( effectItem != nullptr && m_effectTarget != nullptr )
         {
-            effectItem->triggerResize( nullptr, nullptr,
+            effectItem->triggerResize( nullptr,
                                        newBegin, newEnd, m_actionItem->pos().x() );
         }
         else
         {
             auto    target = m_actionItem->track()->trackWorkflow();
-            m_actionItem->triggerResize( target, nullptr,
+            m_actionItem->triggerResize( target,
                                          newBegin, newEnd, m_actionItem->pos().x() );
         }
         updateDuration();
