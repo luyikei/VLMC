@@ -265,7 +265,7 @@ AbstractGraphicsMediaItem::triggerResize( TrackWorkflow* target,
 {
     if ( target == nullptr )
         return ;
-    Commands::trigger( new Commands::Clip::Resize( target, m_clip.get(), newBegin,
+    Commands::trigger( new Commands::Clip::Resize( target, m_clip, newBegin,
                                                                newEnd, pos ) );
     emit lengthChanged( newEnd - newBegin + 1 );
 }

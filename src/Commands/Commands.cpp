@@ -199,7 +199,7 @@ Commands::Clip::Remove::internalUndo()
     m_trackWorkflow->addClip( m_clip, m_pos );
 }
 
-Commands::Clip::Resize::Resize( TrackWorkflow* tw, ::Clip* clip, qint64 newBegin,
+Commands::Clip::Resize::Resize( TrackWorkflow* tw, std::shared_ptr<::Clip> const& clip, qint64 newBegin,
                                 qint64 newEnd, qint64 newPos ) :
     m_trackWorkflow( tw ),
     m_clip( clip ),
@@ -207,7 +207,7 @@ Commands::Clip::Resize::Resize( TrackWorkflow* tw, ::Clip* clip, qint64 newBegin
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
-    connect( clip, &::Clip::destroyed, this, &Resize::invalidate );
+    connect( clip.get(), &::Clip::destroyed, this, &Resize::invalidate );
     m_oldBegin = clip->begin();
     m_oldEnd = clip->end();
     m_oldPos = tw->getClipPosition( clip->uuid() );

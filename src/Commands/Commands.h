@@ -141,7 +141,7 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Resize( TrackWorkflow* tw, ::Clip* clip,
+                Resize( TrackWorkflow* tw, std::shared_ptr<::Clip> const& clip,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
@@ -149,7 +149,7 @@ namespace Commands
 
             private:
                 TrackWorkflow*              m_trackWorkflow;
-                ::Clip*                     m_clip;
+                std::shared_ptr<::Clip>     m_clip;
                 qint64                      m_newBegin;
                 qint64                      m_newEnd;
                 qint64                      m_oldBegin;
