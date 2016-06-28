@@ -189,12 +189,7 @@ vlmc_SOURCES += \
 	src/Gui/export/RendererSettings.cpp \
 	src/Gui/export/ShareOnInternet.cpp \
 	src/Gui/import/TagWidget.cpp \
-	src/Gui/library/ListViewController.cpp \
-	src/Gui/library/MediaCellView.cpp \
 	src/Gui/library/MediaLibraryView.cpp \
-	src/Gui/library/MediaListView.cpp \
-	src/Gui/library/StackViewController.cpp \
-	src/Gui/library/StackViewNavController.cpp \
 	src/Gui/media/ClipMetadataDisplayer.cpp \
 	src/Gui/preview/LCDTimecode.cpp \
 	src/Gui/preview/PreviewRuler.cpp \
@@ -260,12 +255,7 @@ vlmc_SOURCES += \
 	src/Gui/timeline/ThumbnailImageProvider.h \
 	src/Gui/About.h \
 	src/Gui/LanguageHelper.h \
-	src/Gui/library/ListViewController.h \
-	src/Gui/library/StackViewController.h \
-	src/Gui/library/MediaListView.h \
 	src/Gui/library/MediaLibraryView.h \
-	src/Gui/library/MediaCellView.h \
-	src/Gui/library/StackViewNavController.h \
 	src/Gui/library/ViewController.h \
 	src/Gui/media/ClipMetadataDisplayer.h \
 	src/Gui/preview/RenderWidget.h \
@@ -300,25 +290,21 @@ vlmc_SOURCES += \
 
 nodist_vlmc_SOURCES += \
 	src/Gui/wizard/WelcomePage.moc.cpp \
-	src/Gui/library/ListViewController.moc.cpp \
 	src/Gui/settings/SettingsDialog.moc.cpp \
 	src/Gui/export/ShareOnInternet.moc.cpp \
 	src/Gui/widgets/FramelessButton.moc.cpp \
 	src/Gui/wizard/OpenPage.moc.cpp \
 	src/Gui/settings/ColorWidget.moc.cpp \
-	src/Gui/library/StackViewController.moc.cpp \
 	src/Gui/library/MediaLibraryView.moc.cpp \
 	src/Gui/wizard/firstlaunch/FirstLaunchPage.moc.cpp \
 	src/Gui/settings/Panel.moc.cpp \
 	src/Gui/preview/RenderWidget.moc.cpp \
 	src/Gui/settings/BoolWidget.moc.cpp \
 	src/Gui/WorkflowFileRendererDialog.moc.cpp \
-	src/Gui/library/MediaListView.moc.cpp \
 	src/Gui/wizard/firstlaunch/Done.moc.cpp \
 	src/Gui/wizard/VideoPage.moc.cpp \
 	src/Gui/settings/ISettingsCategoryWidget.moc.cpp \
 	src/Gui/wizard/GeneralPage.moc.cpp \
-	src/Gui/library/MediaCellView.moc.cpp \
 	src/Gui/MainWindow.moc.cpp \
 	src/Gui/settings/KeyboardShortcut.moc.cpp \
 	src/Gui/preview/PreviewWidget.moc.cpp \
@@ -347,7 +333,6 @@ nodist_vlmc_SOURCES += \
 	src/Gui/IntroDialog.moc.cpp \
 	src/Gui/settings/KeyboardShortcutInput.moc.cpp \
 	src/Gui/widgets/SearchLineEdit.moc.cpp \
-	src/Gui/library/StackViewNavController.moc.cpp \
 	src/Gui/settings/PathWidget.moc.cpp \
 	src/Gui/settings/IntWidget.moc.cpp \
 	src/Gui/settings/StringWidget.moc.cpp \
@@ -362,10 +347,8 @@ vlmc_UI = \
 	src/Gui/ui/RendererSettings.ui \
 	src/Gui/ui/ShareOnInternet.ui \
 	src/Gui/ui/TagWidget.ui \
-	src/Gui/ui/MediaCellView.ui \
 	src/Gui/ui/MediaLibraryView.ui \
 	src/Gui/ui/FolderListWidget.ui \
-	src/Gui/ui/StackViewNavController.ui \
 	src/Gui/ui/ClipMetadataDisplayer.ui \
 	src/Gui/ui/PreviewWidget.ui \
 	src/Gui/ui/About.ui \

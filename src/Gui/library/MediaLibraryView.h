@@ -28,9 +28,6 @@
 #include "ui/MediaLibraryView.h"
 
 class   Clip;
-class   MediaListView;
-class   MediaContainer;
-class   ViewController;
 
 class MediaLibraryView : public QWidget
 {
@@ -43,41 +40,10 @@ class MediaLibraryView : public QWidget
         virtual ~MediaLibraryView();
 
     protected:
-        void        dragEnterEvent( QDragEnterEvent *event );
-        void        dragMoveEvent( QDragMoveEvent *event );
-        void        dragLeaveEvent( QDragLeaveEvent *event );
-        void        dropEvent( QDropEvent *event );
         void        changeEvent( QEvent *e );
 
     private:
-        /**
-         *  \return     The appropriate filter function
-         *
-         *  This will evaluate the currently selected filter, and return the appropriate
-         *  function.
-         */
-        Filter              currentFilter();
-
-    //Filters list :
-        static bool         filterByName( const Clip *clip, const QString &filter );
-        static bool         filterByTags( const Clip *clip, const QString &filter );
-
-    private:
         Ui::MediaLibraryView *m_ui;
-        MediaListView        *m_mediaListView;
-
-    private slots:
-        void                filterUpdated( const QString &filter );
-        /**
-         *  \brief          Used to update the filters when the view is changed.
-         *
-         *  A view is changed when the user goes through the clips hierarchy.
-         */
-        void                viewChanged( ViewController* view );
-        void                filterTypeChanged();
-
-    signals:
-        void                clipSelected( Clip* );
 };
 
 #endif // MEDIALIBRARYVIEW_H
