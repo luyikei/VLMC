@@ -106,7 +106,7 @@ namespace MLT
         Mlt::Filter*        m_filter;
         Mlt::Service*       m_connectedService;
 
-    friend class MLTTractor;
+    friend class MLTMultiTrack;
     friend class MLTService;
     };
 }

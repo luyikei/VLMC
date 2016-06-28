@@ -41,7 +41,7 @@ class   EffectHelper;
 namespace   Backend
 {
 class ITrack;
-class ITractor;
+class IMultiTrack;
 class IInput;
 }
 
@@ -59,7 +59,7 @@ class   TrackWorkflow : public QObject
     Q_OBJECT
 
     public:
-        TrackWorkflow( quint32 trackId, Backend::ITractor* tractor );
+        TrackWorkflow( quint32 trackId, Backend::IMultiTrack* multitrack );
         ~TrackWorkflow();
 
         Backend::ITrack*                        trackFromFormats( Clip::Formats formats );
@@ -91,7 +91,7 @@ class   TrackWorkflow : public QObject
         Backend::IInput*                        input();
 
     private:
-        Backend::ITractor*                      m_tractor;
+        Backend::IMultiTrack*                      m_multitrack;
         Backend::ITrack*                        m_audioTrack;
         Backend::ITrack*                        m_videoTrack;
 

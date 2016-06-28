@@ -28,7 +28,7 @@
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Backend/MLT/MLTTrack.h"
-#include "Backend/MLT/MLTTractor.h"
+#include "Backend/MLT/MLTMultiTrack.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
@@ -41,7 +41,7 @@
 #include <QReadLocker>
 #include <QMutex>
 
-TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
+TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::IMultiTrack* multitrack ) :
         m_trackId( trackId )
 {
     m_clipsLock = new QReadWriteLock;
@@ -54,18 +54,18 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::ITractor* tractor ) :
     videoTrack->setAudioOutput( false );
     m_videoTrack = videoTrack;
 
-    m_tractor = new Backend::MLT::MLTTractor;
-    m_tractor->setTrack( *m_videoTrack, 0 );
-    m_tractor->setTrack( *m_audioTrack, 1 );
+    m_multitrack = new Backend::MLT::MLTMultiTrack;
+    m_multitrack->setTrack( *m_videoTrack, 0 );
+    m_multitrack->setTrack( *m_audioTrack, 1 );
 
-    tractor->setTrack( *m_tractor, trackId );
+    multitrack->setTrack( *m_multitrack, trackId );
 }
 
 TrackWorkflow::~TrackWorkflow()
 {
     delete m_audioTrack;
     delete m_videoTrack;
-    delete m_tractor;
+    delete m_multitrack;
     delete m_clipsLock;
 }
 
@@ -224,7 +224,7 @@ TrackWorkflow::toVariant() const
         h.insert( "startFrame", it.key() );
         l << h;
     }
-    QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_tractor ) } };
+    QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_multitrack ) } };
     return QVariant( h );
 }
 
@@ -242,7 +242,7 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
         EffectHelper::loadFromVariant( m["filters"], c->input() );
         addClip( c, m["startFrame"].toLongLong() );
     }
-    EffectHelper::loadFromVariant( variant.toMap()["filters"], m_tractor );
+    EffectHelper::loadFromVariant( variant.toMap()["filters"], m_multitrack );
 }
 
 void
@@ -323,5 +323,5 @@ TrackWorkflow::trackId() const
 Backend::IInput*
 TrackWorkflow::input()
 {
-    return m_tractor;
+    return m_multitrack;
 }

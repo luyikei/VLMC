@@ -25,7 +25,7 @@
 
 #include "vlmc.h"
 #include "Backend/MLT/MLTOutput.h"
-#include "Backend/MLT/MLTTractor.h"
+#include "Backend/MLT/MLTMultiTrack.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Renderer/AbstractRenderer.h"
 #ifdef WITH_GUI
@@ -49,9 +49,9 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_trackCount( trackCount ),
         m_settings( new Settings ),
         m_renderer( new AbstractRenderer ),
-        m_tractor( new Backend::MLT::MLTTractor )
+        m_multitrack( new Backend::MLT::MLTMultiTrack )
 {
-    m_renderer->setInput( m_tractor );
+    m_renderer->setInput( m_multitrack );
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
@@ -60,7 +60,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     {
         Toggleable<TrackWorkflow*> track;
         m_tracks << track;
-        m_tracks[i].setPtr( new TrackWorkflow( i, m_tractor ) );
+        m_tracks[i].setPtr( new TrackWorkflow( i, m_multitrack ) );
     }
 
     m_settings->createVar( SettingValue::List, "tracks", QVariantList(), "", "", SettingValue::Nothing );
@@ -74,7 +74,7 @@ MainWorkflow::~MainWorkflow()
     for ( auto track : m_tracks )
         delete track;
     m_tracks.clear();
-    delete m_tractor;
+    delete m_multitrack;
     delete m_renderer;
     delete m_settings;
 }
@@ -175,7 +175,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
 {
     m_renderer->stop();
 
-    if ( m_tractor->playableLength() == 0 )
+    if ( m_multitrack->playableLength() == 0 )
         return false;
 
     Backend::MLT::MLTFFmpegOutput output;
@@ -191,10 +191,10 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     output.setAudioBitrate( abitrate );
     output.setChannels( nbChannels );
     output.setAudioSampleRate( sampleRate );
-    output.connect( *m_tractor );
+    output.connect( *m_multitrack );
 
 #ifdef WITH_GUI
-    WorkflowFileRendererDialog  dialog( width, height, m_tractor->playableLength(), m_renderer->eventWatcher() );
+    WorkflowFileRendererDialog  dialog( width, height, m_multitrack->playableLength(), m_renderer->eventWatcher() );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
     connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
@@ -204,7 +204,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
     connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&output]{ output.stop(); } );
 
-    m_tractor->setPosition( 0 );
+    m_multitrack->setPosition( 0 );
     output.start();
 
 #ifdef WITH_GUI
@@ -220,7 +220,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
 bool
 MainWorkflow::canRender()
 {
-    return m_tractor->playableLength() > 0;
+    return m_multitrack->playableLength() > 0;
 }
 
 void

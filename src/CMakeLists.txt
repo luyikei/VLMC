@@ -63,7 +63,7 @@ SET(VLMC_SRCS
     Backend/IInput.h
     Backend/ITrack.h
     Backend/IProfile.h
-    Backend/ITractor.h
+    Backend/IMultiTrack.h
     Backend/ITransition.h
     Backend/IFilter.h
     Backend/MLT/MLTBackend.cpp
@@ -74,7 +74,7 @@ SET(VLMC_SRCS
     Backend/MLT/MLTProfile.cpp
     Backend/MLT/MLTFilter.cpp
     Backend/MLT/MLTTransition.cpp
-    Backend/MLT/MLTTractor.cpp
+    Backend/MLT/MLTMultiTrack.cpp
     EffectsEngine/EffectHelper.cpp
     Library/Library.cpp
     Library/MediaContainer.cpp

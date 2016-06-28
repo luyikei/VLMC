@@ -106,7 +106,7 @@ class MLTInput : virtual public IInput, public MLTService
 
     friend class MLTOutput;
     friend class MLTTrack;
-    friend class MLTTractor;
+    friend class MLTMultiTrack;
 };
 
 }

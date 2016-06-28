@@ -66,7 +66,7 @@ class MLTProfile : public IProfile
     friend class MLTInput;
     friend class MLTBackend;
     friend class MLTTrack;
-    friend class MLTTractor;
+    friend class MLTMultiTrack;
     friend class MLTService;
     friend class MLTFilter;
     friend class MLTTransition;

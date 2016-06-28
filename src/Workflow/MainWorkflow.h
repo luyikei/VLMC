@@ -38,7 +38,7 @@ class   AbstractRenderer;
 
 namespace Backend
 {
-class ITractor;
+class IMultiTrack;
 class IInput;
 }
 
@@ -166,7 +166,7 @@ class   MainWorkflow : public QObject
         Settings*                       m_settings;
 
         AbstractRenderer*               m_renderer;
-        Backend::ITractor*              m_tractor;
+        Backend::IMultiTrack*           m_multitrack;
 
     public slots:
         /**

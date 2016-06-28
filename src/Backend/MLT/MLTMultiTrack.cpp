@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTTractor.cpp:  Wrapper of Mlt::Tractor
+ * MLTMultiTrack.cpp:  Wrapper of Mlt::Tractor
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "MLTTractor.h"
+#include "MLTMultiTrack.h"
 
 #include <mlt++/MltTractor.h>
 #include "MLTProfile.h"
@@ -33,12 +33,12 @@
 
 using namespace Backend::MLT;
 
-MLTTractor::MLTTractor()
-    : MLTTractor( Backend::instance()->profile() )
+MLTMultiTrack::MLTMultiTrack()
+    : MLTMultiTrack( Backend::instance()->profile() )
 {
 }
 
-MLTTractor::MLTTractor( Backend::IProfile& profile )
+MLTMultiTrack::MLTMultiTrack( Backend::IProfile& profile )
     : MLTInput()
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
@@ -47,20 +47,20 @@ MLTTractor::MLTTractor( Backend::IProfile& profile )
     m_service  = m_tractor;
 }
 
-MLTTractor::~MLTTractor()
+MLTMultiTrack::~MLTMultiTrack()
 {
     m_producer = nullptr;
     delete m_tractor;
 }
 
 void
-MLTTractor::refresh()
+MLTMultiTrack::refresh()
 {
     m_tractor->refresh();
 }
 
 bool
-MLTTractor::setTrack( Backend::IInput& input, int index )
+MLTMultiTrack::setTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
@@ -68,7 +68,7 @@ MLTTractor::setTrack( Backend::IInput& input, int index )
 }
 
 bool
-MLTTractor::insertTrack( Backend::IInput& input, int index )
+MLTMultiTrack::insertTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
@@ -76,39 +76,39 @@ MLTTractor::insertTrack( Backend::IInput& input, int index )
 }
 
 bool
-MLTTractor::removeTrack( int index )
+MLTMultiTrack::removeTrack( int index )
 {
     return m_tractor->remove_track( index );
 }
 
 Backend::IInput*
-MLTTractor::track( int index ) const
+MLTMultiTrack::track( int index ) const
 {
     return new MLTInput( m_tractor->track( index ), nullptr );
 }
 
 int
-MLTTractor::count() const
+MLTMultiTrack::count() const
 {
     return m_tractor->count();
 }
 
 void
-MLTTractor::addTransition( Backend::ITransition& transition, int aTrack, int bTrack )
+MLTMultiTrack::addTransition( Backend::ITransition& transition, int aTrack, int bTrack )
 {
     MLTTransition* mltTransition = dynamic_cast<MLTTransition*>( &transition );
     m_tractor->plant_transition( mltTransition->m_transition, aTrack, bTrack );
 }
 
 void
-MLTTractor::addFilter( Backend::IFilter& filter, int track )
+MLTMultiTrack::addFilter( Backend::IFilter& filter, int track )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
     m_tractor->plant_filter( mltFilter->m_filter, track );
 }
 
 bool
-MLTTractor::connect( Backend::IInput& input )
+MLTMultiTrack::connect( Backend::IInput& input )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );

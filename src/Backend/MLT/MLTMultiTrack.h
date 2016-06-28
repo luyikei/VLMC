@@ -1,5 +1,5 @@
 /*****************************************************************************
- * MLTTractor.h:  Wrapper of Mlt::Tractor
+ * MLTMultiTrack.h:  Wrapper of Mlt::Tractor
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,10 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef MLTTRACTOR_H
-#define MLTTRACTOR_H
+#ifndef MLTMULTITRACK_H
+#define MLTMULTITRACK_H
 
-#include "Backend/ITractor.h"
+#include "Backend/IMultiTrack.h"
 #include "MLTInput.h"
 
 namespace Mlt
@@ -36,12 +36,12 @@ namespace Backend
 class IProfile;
 namespace MLT
 {
-    class MLTTractor : public ITractor, public MLTInput
+    class MLTMultiTrack : public IMultiTrack, public MLTInput
     {
     public:
-        MLTTractor();
-        MLTTractor( IProfile& profile );
-        virtual     ~MLTTractor() override;
+        MLTMultiTrack();
+        MLTMultiTrack( IProfile& profile );
+        virtual     ~MLTMultiTrack() override;
 
         virtual void        refresh() override;
         virtual bool        setTrack( IInput& input, int index ) override;
@@ -59,4 +59,4 @@ namespace MLT
 }
 }
 
-#endif // MLTTRACTOR_H
+#endif // MLTMULTITRACK_H

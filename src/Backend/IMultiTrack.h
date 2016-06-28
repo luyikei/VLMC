@@ -1,5 +1,5 @@
 /*****************************************************************************
- * ITractor.h: Defines an interface of a multitrack input
+ * IMultiTrack.h: Defines an interface of a multitrack input
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
@@ -20,8 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef ITRACTOR_H
-#define ITRACTOR_H
+#ifndef IMULTITRACK_H
+#define IMULTITRACK_H
 
 #include "IInput.h"
 
@@ -30,10 +30,10 @@ namespace Backend
     class IInput;
     class ITransition;
     class IFilter;
-    class ITractor : virtual public IInput
+    class IMultiTrack : virtual public IInput
     {
     public:
-        virtual     ~ITractor() = default;
+        virtual     ~IMultiTrack() = default;
 
         virtual void        refresh() = 0;
         virtual bool        setTrack( IInput& input, int index ) = 0;
@@ -47,4 +47,4 @@ namespace Backend
     };
 }
 
-#endif // ITRACTOR_H
+#endif // IMULTITRACK_H

@@ -50,7 +50,7 @@ namespace MLT
     private:
         Mlt::Transition*      m_transition;
 
-    friend class MLTTractor;
+    friend class MLTMultiTrack;
     };
 }
 }
