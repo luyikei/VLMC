@@ -30,6 +30,7 @@ namespace Mlt
 {
 class Filter;
 class Properties;
+class Producer;
 }
 
 namespace Backend
@@ -90,7 +91,7 @@ namespace MLT
     public:
         MLTFilter( IProfile& profile, const char* id );
         MLTFilter( const char* id );
-        MLTFilter( Mlt::Filter* filter );
+        MLTFilter( Mlt::Filter* filter, Mlt::Service* connectedService );
         virtual ~MLTFilter() override;
 
         virtual bool    connect( IService& service, int index = 0 ) override;
@@ -103,6 +104,7 @@ namespace MLT
 
     private:
         Mlt::Filter*        m_filter;
+        Mlt::Service*       m_connectedService;
 
     friend class MLTTractor;
     friend class MLTService;

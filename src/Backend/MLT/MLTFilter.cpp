@@ -22,6 +22,7 @@
 
 #include "MLTFilter.h"
 #include <mlt++/MltFilter.h>
+#include <mlt++/MltProducer.h>
 
 #include <cstring>
 #include "Backend/IBackend.h"
@@ -153,6 +154,7 @@ MLTFilterInfo::setProperties( Mlt::Properties* properties )
 }
 
 MLTFilter::MLTFilter( Backend::IProfile& profile, const char* id )
+    : m_connectedService( nullptr )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_filter = new Mlt::Filter( *mltProfile.m_profile, id );
@@ -167,9 +169,10 @@ MLTFilter::MLTFilter( const char *id )
 
 }
 
-MLTFilter::MLTFilter( Mlt::Filter* filter )
+MLTFilter::MLTFilter( Mlt::Filter* filter, Mlt::Service* connectedService )
 {
     m_filter = filter;
+    m_connectedService = connectedService;
     m_service = filter;
 }
 
@@ -185,6 +188,8 @@ MLTFilter::connect( Backend::IService& service, int index )
 
     if ( mltService == nullptr )
         return true;
+
+    m_connectedService = mltService->m_service;
 
     return m_filter->connect( *mltService->m_service, index );
 }
@@ -210,7 +215,16 @@ MLTFilter::end() const
 int64_t
 MLTFilter::length() const
 {
-    return m_filter->get_length();
+    auto length = m_filter->get_length();
+
+    if ( length == 0 )
+    {
+        auto producer = dynamic_cast<Mlt::Producer*>( m_connectedService );
+        if ( producer != nullptr )
+            length = producer->get_playtime();
+    }
+
+    return length ? length : Unlimited;
 }
 
 const Backend::IFilterInfo&
