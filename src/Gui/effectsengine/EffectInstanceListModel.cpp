@@ -116,7 +116,6 @@ EffectInstanceListModel::add( const QString &effectName )
         return nullptr;
     }
     m_service->attach( *helper->filter() );
-    helper->filter()->connect( *m_service );
     endInsertRows();
     return helper;
 }

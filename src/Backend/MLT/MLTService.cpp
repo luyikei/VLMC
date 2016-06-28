@@ -77,7 +77,9 @@ MLTService::attach( Backend::IFilter& filter )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
     assert( mltFilter );
-    return m_service->attach( *mltFilter->m_filter );
+    auto ret = m_service->attach( *mltFilter->m_filter );
+    mltFilter->connect( *this );
+    return ret;
 }
 
 bool

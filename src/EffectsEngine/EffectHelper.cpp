@@ -219,7 +219,6 @@ EffectHelper::loadFromVariant( const QVariant& variant, Backend::IService* servi
     {
         EffectHelper helper( var );
         service->attach( *helper.filter() );
-        helper.filter()->connect( *helper.filter() );
     }
 }
 
@@ -272,7 +271,6 @@ EffectHelper::setTarget( Backend::IService* service )
         m_service->detach( *m_filter );
     m_service = service;
     m_service->attach( *m_filter );
-    m_filter->connect( *m_service );
 }
 
 Backend::IService*

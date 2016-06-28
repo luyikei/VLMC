@@ -289,7 +289,6 @@ void
 Commands::Effect::Add::internalRedo()
 {
     m_target->attach( *m_helper->filter() );
-    m_helper->filter()->connect( *m_target );
 }
 
 void
