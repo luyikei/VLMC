@@ -267,6 +267,7 @@ AbstractGraphicsMediaItem::triggerResize( TrackWorkflow* target,
         return ;
     Commands::trigger( new Commands::Clip::Resize( target, m_clip.get(), newBegin,
                                                                newEnd, pos ) );
+    emit lengthChanged( newEnd - newBegin + 1 );
 }
 
 qint64

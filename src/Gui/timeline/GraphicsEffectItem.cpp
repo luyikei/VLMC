@@ -304,6 +304,7 @@ GraphicsEffectItem::setContainer( AbstractGraphicsMediaItem *item )
         connect( item, SIGNAL( trackChanged( GraphicsTrack* ) ),
                  this, SLOT( setTrack( GraphicsTrack* ) ) );
         connect( item, SIGNAL( destroyed() ), this, SLOT( deleteLater() ) );
+        connect( item, &AbstractGraphicsMediaItem::lengthChanged, this, &GraphicsEffectItem::adjustLength );
         if ( m_effectHelper->length() > item->helper()->length() )
             m_effectHelper->setBoundaries( 0, item->helper()->length() );
         if ( startPos() < item->pos().x() )

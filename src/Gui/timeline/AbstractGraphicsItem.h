@@ -194,6 +194,7 @@ class AbstractGraphicsItem : public QObject, public QGraphicsItem
     signals:
         void                moved( qint64 pos );
         void                trackChanged( GraphicsTrack *tracks );
+        void                lengthChanged( qint64 length );
 
         friend class        TracksView;
 

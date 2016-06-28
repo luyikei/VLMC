@@ -1050,7 +1050,6 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
             }
         }
     }
-
     QGraphicsView::mouseMoveEvent( event );
 }
 
