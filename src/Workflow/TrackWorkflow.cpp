@@ -69,7 +69,7 @@ TrackWorkflow::~TrackWorkflow()
     delete m_clipsLock;
 }
 
-Backend::ITrack*
+inline Backend::ITrack*
 TrackWorkflow::trackFromFormats( Clip::Formats formats )
 {
     if ( formats.testFlag( Clip::Audio ) )

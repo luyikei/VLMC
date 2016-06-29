@@ -62,7 +62,7 @@ class   TrackWorkflow : public QObject
         TrackWorkflow( quint32 trackId, Backend::IMultiTrack* multitrack );
         ~TrackWorkflow();
 
-        Backend::ITrack*                        trackFromFormats( Clip::Formats formats );
+        inline Backend::ITrack*                 trackFromFormats( Clip::Formats formats );
 
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
         void                                    resizeClip( const QUuid& id, qint64 begin, qint64 end );
