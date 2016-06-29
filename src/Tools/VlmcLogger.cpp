@@ -38,6 +38,7 @@ VlmcLogger::VlmcLogger()
 
 VlmcLogger::~VlmcLogger()
 {
+    qInstallMessageHandler( 0 );
     if ( m_logFile )
         fclose( m_logFile );
 }
@@ -133,8 +134,6 @@ VlmcLogger::vlmcMessageHandler( QtMsgType type, const QMessageLogContext&, const
 {
     const QByteArray byteArray = str.toLocal8Bit();
     const char* msg = byteArray.constData();
-    //FIXME: This is ok as long as we guarantee no log message will arrive after
-    // we uninstall the hook
 
     VlmcLogger* self = Core::instance()->logger();
     if ( self->m_logFile != nullptr )
