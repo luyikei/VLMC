@@ -155,7 +155,6 @@ MLTFilterInfo::setProperties( Mlt::Properties* properties )
 }
 
 MLTFilter::MLTFilter( Backend::IProfile& profile, const char* id )
-    : m_connectedProducer( nullptr )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_filter = new Mlt::Filter( *mltProfile.m_profile, id );
@@ -173,7 +172,7 @@ MLTFilter::MLTFilter( const char *id )
 MLTFilter::MLTFilter( Mlt::Filter* filter, Mlt::Producer* connectedProducer )
 {
     m_filter = filter;
-    m_connectedProducer = connectedProducer;
+    m_connectedProducer.reset( new Mlt::Producer( connectedProducer->get_producer() ) );
     m_service = filter;
 }
 
@@ -196,7 +195,7 @@ MLTFilter::connect( Backend::IInput& input, int index )
     if ( mltInput == nullptr )
         return true;
 
-    m_connectedProducer = mltInput->m_producer;
+    m_connectedProducer.reset( new Mlt::Producer( mltInput->m_producer->get_producer() ) );
 
     return m_filter->connect( *mltInput->m_producer, index );
 }
@@ -233,7 +232,7 @@ MLTFilter::length() const
 std::shared_ptr<Backend::IInput>
 MLTFilter::input() const
 {
-    return std::make_shared<MLTInput>( m_connectedProducer );
+    return std::make_shared<MLTInput>( new Mlt::Producer( m_connectedProducer->get_producer() ) );
 }
 
 const Backend::IFilterInfo&

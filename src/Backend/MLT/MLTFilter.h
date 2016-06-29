@@ -108,7 +108,7 @@ namespace MLT
 
     private:
         Mlt::Filter*        m_filter;
-        Mlt::Producer*      m_connectedProducer;
+        std::unique_ptr<Mlt::Producer>      m_connectedProducer;
 
     friend class MLTMultiTrack;
     friend class MLTInput;
