@@ -48,6 +48,12 @@ class MLTOutput : public IOutput, public MLTService
         MLTOutput( IProfile& profile, const char *id, IOutputEventCb* callback = nullptr );
         virtual ~MLTOutput();
 
+        virtual Mlt::Consumer*  consumer();
+        virtual Mlt::Consumer*  consumer() const;
+
+        virtual Mlt::Service*   service() override;
+        virtual Mlt::Service*   service() const override;
+
         static void     onOutputStarted( void* owner, MLTOutput* self );
         static void     onOutputStopped( void* owner, MLTOutput* self );
 
@@ -64,7 +70,7 @@ class MLTOutput : public IOutput, public MLTService
         virtual bool    connect( IInput& input ) override;
         virtual bool    isConnected() const override;
 
-    protected:
+    private:
         Mlt::Consumer*      m_consumer;
         IOutputEventCb*     m_callback;
         MLTInput*           m_input;

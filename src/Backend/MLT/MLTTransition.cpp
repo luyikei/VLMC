@@ -31,7 +31,6 @@ MLTTransition::MLTTransition( Backend::IProfile& profile, const char *id )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_transition = new Mlt::Transition( *mltProfile.m_profile, id );
-    m_service = m_transition;
     if ( isValid() == false )
         throw InvalidServiceException();
 }
@@ -41,26 +40,50 @@ MLTTransition::~MLTTransition()
     delete m_transition;
 }
 
+Mlt::Transition*
+MLTTransition::transition()
+{
+    return m_transition;
+}
+
+Mlt::Transition*
+MLTTransition::transition() const
+{
+    return m_transition;
+}
+
+Mlt::Service*
+MLTTransition::service()
+{
+    return transition();
+}
+
+Mlt::Service*
+MLTTransition::service() const
+{
+    return transition();
+}
+
 void
 MLTTransition::setBoundaries( int64_t begin, int64_t end )
 {
-    m_transition->set_in_and_out( (int)begin, (int)end );
+    transition()->set_in_and_out( (int)begin, (int)end );
 }
 
 int64_t
 MLTTransition::begin() const
 {
-    return m_transition->get_in();
+    return transition()->get_in();
 }
 
 int64_t
 MLTTransition::end() const
 {
-    return m_transition->get_out();
+    return transition()->get_out();
 }
 
 int64_t
 MLTTransition::length() const
 {
-    return m_transition->get_length();
+    return transition()->get_length();
 }

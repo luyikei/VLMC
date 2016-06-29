@@ -53,18 +53,15 @@ namespace MLT
     public:
         virtual ~MLTService();
 
+        virtual Mlt::Service*   service();
+        virtual Mlt::Service*   service() const;
+
         virtual std::string     identifier() const;
         bool                    isValid() const;
         Mlt::Properties*        properties();
-    protected:
-        // Not intended to be created.
-        MLTService();
-        MLTService( Mlt::Service* service );
 
-
+    private:
         Mlt::Service*     m_service;
-
-    friend class MLTFilter;
     };
 }
 }

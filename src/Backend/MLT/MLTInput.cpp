@@ -46,11 +46,11 @@ void
 MLTInput::calcTracks()
 {
     char s[70];
-    int  nbStreams = m_producer->get_int( "meta.media.nb_streams" );
+    int  nbStreams = producer()->get_int( "meta.media.nb_streams" );
     for ( int i = 0; i < nbStreams; ++i )
     {
         sprintf( s, "meta.media.%d.stream.type", i );
-        auto type = m_producer->get( s );
+        auto type = producer()->get( s );
 
         if ( type == nullptr )
             continue;
@@ -66,7 +66,6 @@ MLTInput::MLTInput( Mlt::Producer* producer, IInputEventCb* callback )
     : MLTInput()
 {
     m_producer = producer;
-    m_service  = producer;
     setCallback( callback );
     calcTracks();
     if ( isValid() == false )
@@ -79,7 +78,6 @@ MLTInput::MLTInput( IProfile& profile, const char* path, IInputEventCb* callback
     std::string temp = std::string( "avformat:" ) + path;
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_producer = new Mlt::Producer( *mltProfile.m_profile, "loader", temp.c_str() );
-    m_service  = m_producer;
     setCallback( callback );
     calcTracks();
     if ( isValid() == false )
@@ -95,6 +93,30 @@ MLTInput::MLTInput( const char* path, IInputEventCb* callback )
 MLTInput::~MLTInput()
 {
     delete m_producer;
+}
+
+Mlt::Producer*
+MLTInput::producer()
+{
+    return m_producer;
+}
+
+Mlt::Producer*
+MLTInput::producer() const
+{
+    return m_producer;
+}
+
+Mlt::Service*
+MLTInput::service()
+{
+    return producer();
+}
+
+Mlt::Service*
+MLTInput::service() const
+{
+    return producer();
 }
 
 void
@@ -121,130 +143,130 @@ MLTInput::setCallback( Backend::IInputEventCb* callback )
         return;
 
     m_callback = callback;
-    m_producer->listen( "property-changed", this, (mlt_listener)MLTInput::onPropertyChanged );
+    producer()->listen( "property-changed", this, (mlt_listener)MLTInput::onPropertyChanged );
 }
 
 const char*
 MLTInput::path() const
 {
-    return m_producer->get( "resource" );
+    return producer()->get( "resource" );
 }
 
 int64_t
 MLTInput::begin() const
 {
-    return m_producer->get_in();
+    return producer()->get_in();
 }
 
 int64_t
 MLTInput::end() const
 {
-    return m_producer->get_out();
+    return producer()->get_out();
 }
 
 void
 MLTInput::setBegin( int64_t begin )
 {
-    m_producer->set( "in", (int)begin );
+    producer()->set( "in", (int)begin );
 }
 
 void
 MLTInput::setEnd( int64_t end )
 {
-    m_producer->set( "out", (int)end );
+    producer()->set( "out", (int)end );
 }
 
 void
 MLTInput::setBoundaries( int64_t begin, int64_t end )
 {
     if ( end == EndOfParent )
-        // parent() will be m_producer itself if it has no parent
-        end = m_producer->parent().get_out();
-    m_producer->set_in_and_out( begin, end );
+        // parent() will be producer() itself if it has no parent
+        end = producer()->parent().get_out();
+    producer()->set_in_and_out( begin, end );
 }
 
 std::unique_ptr<Backend::IInput>
 MLTInput::cut( int64_t begin, int64_t end )
 {
-    return std::unique_ptr<IInput>( new MLTInput( m_producer->cut( begin, end ) ) );
+    return std::unique_ptr<IInput>( new MLTInput( producer()->cut( begin, end ) ) );
 }
 
 bool
 MLTInput::isCut() const
 {
-    return m_producer->is_cut();
+    return producer()->is_cut();
 }
 
 bool
 MLTInput::sameClip( Backend::IInput& that ) const
 {
-    MLTInput* producer = dynamic_cast<MLTInput*>( &that );
-    assert( producer );
+    MLTInput* input = dynamic_cast<MLTInput*>( &that );
+    assert( input );
 
-    return m_producer->same_clip( *producer->m_producer );
+    return producer()->same_clip( *input->producer() );
 }
 
 bool
 MLTInput::runsInto( Backend::IInput& that ) const
 {
-    MLTInput* producer = dynamic_cast<MLTInput*>( &that );
-    assert( producer );
+    MLTInput* input = dynamic_cast<MLTInput*>( &that );
+    assert( input );
 
-    return m_producer->runs_into( *producer->m_producer );
+    return producer()->runs_into( *input->producer() );
 }
 
 int64_t
 MLTInput::playableLength() const
 {
-    return m_producer->get_playtime();
+    return producer()->get_playtime();
 }
 
 int64_t
 MLTInput::length() const
 {
-    return m_producer->get_length();
+    return producer()->get_length();
 }
 
 const char*
 MLTInput::lengthTime() const
 {
-    return m_producer->get_length_time( mlt_time_clock );
+    return producer()->get_length_time( mlt_time_clock );
 }
 
 int64_t
 MLTInput::position() const
 {
-    return m_producer->position();
+    return producer()->position();
 }
 
 void
 MLTInput::setPosition( int64_t position )
 {
-    m_producer->seek( position );
+    producer()->seek( position );
 }
 
 int64_t
 MLTInput::frame() const
 {
-    return m_producer->frame();
+    return producer()->frame();
 }
 
 double
 MLTInput::fps() const
 {
-    return m_producer->get_fps();
+    return producer()->get_fps();
 }
 
 int
 MLTInput::width() const
 {
-    return m_producer->get_int( "width" );
+    return producer()->get_int( "width" );
 }
 
 int
 MLTInput::height() const
 {
-    return m_producer->get_int( "height" );
+    return producer()->get_int( "height" );
 }
 
 bool
@@ -275,9 +297,9 @@ void
 MLTInput::playPause()
 {
     if ( m_paused )
-        m_producer->set_speed( 1.0 );
+        producer()->set_speed( 1.0 );
     else
-        m_producer->set_speed( 0.0 );
+        producer()->set_speed( 0.0 );
     m_paused = !m_paused;
 
     if ( m_callback )
@@ -306,29 +328,29 @@ MLTInput::setPause( bool isPaused )
 void
 MLTInput::nextFrame()
 {
-    if ( m_producer->position() < m_producer->get_out() )
+    if ( producer()->position() < producer()->get_out() )
     {
         if ( isPaused() == false )
             playPause();
-        m_producer->seek( m_producer->position() + 1 );
+        producer()->seek( producer()->position() + 1 );
     }
 }
 
 void
 MLTInput::previousFrame()
 {
-    if ( m_producer->get_in() < m_producer->position() )
+    if ( producer()->get_in() < producer()->position() )
     {
         if ( isPaused() == false )
             playPause();
-        m_producer->seek( m_producer->position() - 1 );
+        producer()->seek( producer()->position() - 1 );
     }
 }
 
 bool
 MLTInput::isBlank() const
 {
-    return m_producer->is_blank();
+    return producer()->is_blank();
 }
 
 
@@ -337,7 +359,7 @@ MLTInput::attach( Backend::IFilter& filter )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
     assert( mltFilter );
-    auto ret = m_producer->attach( *mltFilter->m_filter );
+    auto ret = producer()->attach( *mltFilter->filter() );
     mltFilter->connect( *this );
     return ret;
 }
@@ -347,14 +369,14 @@ MLTInput::detach( Backend::IFilter& filter )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
     assert( mltFilter );
-    return m_producer->detach( *mltFilter->m_filter );
+    return producer()->detach( *mltFilter->filter() );
 }
 
 bool
 MLTInput::detach( int index )
 {
-    auto filter = m_producer->filter( index );
-    auto ret = m_producer->detach( *filter );
+    auto filter = producer()->filter( index );
+    auto ret = producer()->detach( *filter );
     delete filter;
     return ret;
 }
@@ -362,17 +384,17 @@ MLTInput::detach( int index )
 int
 MLTInput::filterCount() const
 {
-    return m_producer->filter_count();
+    return producer()->filter_count();
 }
 
 bool
 MLTInput::moveFilter( int from, int to )
 {
-    return m_producer->move_filter( from, to );
+    return producer()->move_filter( from, to );
 }
 
 std::shared_ptr<Backend::IFilter>
 MLTInput::filter( int index ) const
 {
-    return std::shared_ptr<Backend::IFilter>( new MLTFilter( m_producer->filter( index ), m_producer ) );
+    return std::shared_ptr<Backend::IFilter>( new MLTFilter( producer()->filter( index ), producer() ) );
 }

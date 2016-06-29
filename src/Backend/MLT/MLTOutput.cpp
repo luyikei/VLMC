@@ -45,7 +45,6 @@ MLTOutput::MLTOutput( Backend::IProfile& profile, const char *id, Backend::IOutp
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_consumer = new Mlt::Consumer( *mltProfile.m_profile, id );
-    m_service = m_consumer;
     if ( isValid() == false )
         throw InvalidServiceException();
 }
@@ -54,6 +53,30 @@ MLTOutput::~MLTOutput()
 {
     stop();
     delete m_consumer;
+}
+
+Mlt::Consumer*
+MLTOutput::consumer()
+{
+    return m_consumer;
+}
+
+Mlt::Consumer*
+MLTOutput::consumer() const
+{
+    return m_consumer;
+}
+
+Mlt::Service*
+MLTOutput::service()
+{
+    return consumer();
+}
+
+Mlt::Service*
+MLTOutput::service() const
+{
+    return consumer();
 }
 
 void
@@ -84,38 +107,38 @@ MLTOutput::setCallback(Backend::IOutputEventCb *callback)
     if ( callback == nullptr )
         return;
     m_callback = callback;
-    m_consumer->listen( "consumer-thread-started", this, (mlt_listener)MLTOutput::onOutputStarted );
-    m_consumer->listen( "consumer-stopped", this, (mlt_listener)MLTOutput::onOutputStopped );
+    consumer()->listen( "consumer-thread-started", this, (mlt_listener)MLTOutput::onOutputStarted );
+    consumer()->listen( "consumer-stopped", this, (mlt_listener)MLTOutput::onOutputStopped );
 }
 
 void
 MLTOutput::start()
 {
-    m_consumer->start();
+    consumer()->start();
 }
 
 void
 MLTOutput::stop()
 {
-    m_consumer->stop();
+    consumer()->stop();
 }
 
 bool
 MLTOutput::isStopped() const
 {
-    return m_consumer->is_stopped();
+    return consumer()->is_stopped();
 }
 
 int
 MLTOutput::volume() const
 {
-    return m_consumer->get_double( "volume" ) * 100;
+    return consumer()->get_double( "volume" ) * 100;
 }
 
 void
 MLTOutput::setVolume( int volume )
 {
-    m_consumer->set( "volume", volume / 100.f );
+    consumer()->set( "volume", volume / 100.f );
 }
 
 bool
@@ -124,7 +147,7 @@ MLTOutput::connect( Backend::IInput& input )
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
     m_input = mltInput;
-    return m_consumer->connect( *(mltInput->m_producer) );
+    return consumer()->connect( *(mltInput->producer()) );
 }
 
 bool
@@ -136,63 +159,63 @@ MLTOutput::isConnected() const
 void
 MLTSdlOutput::setWindowId( intptr_t id )
 {
-    m_consumer->set( "window_id", std::to_string( id ).c_str() );
+    consumer()->set( "window_id", std::to_string( id ).c_str() );
 }
 
 void
 MLTFFmpegOutput::setTarget( const char* path )
 {
-    m_consumer->set( "target", path );
+    consumer()->set( "target", path );
 }
 
 void
 MLTFFmpegOutput::setWidth( int width )
 {
-    m_consumer->set( "width", width );
+    consumer()->set( "width", width );
 }
 
 void
 MLTFFmpegOutput::setHeight( int height )
 {
-    m_consumer->set( "height", height );
+    consumer()->set( "height", height );
 }
 
 void
 MLTFFmpegOutput::setFrameRate( int num, int den )
 {
-    m_consumer->set( "frame_rate_num", num );
-    m_consumer->set( "frame_rate_den", den );
+    consumer()->set( "frame_rate_num", num );
+    consumer()->set( "frame_rate_den", den );
 }
 
 void
 MLTFFmpegOutput::setAspectRatio( int num, int den )
 {
-    m_consumer->set( "display_aspect_num", num );
-    m_consumer->set( "display_aspect_den", den );
+    consumer()->set( "display_aspect_num", num );
+    consumer()->set( "display_aspect_den", den );
 }
 
 void
 MLTFFmpegOutput::setVideoBitrate( int kbps )
 {
     std::string str = std::to_string( kbps ) + "K";
-    m_consumer->set( "vb", str.c_str() );
+    consumer()->set( "vb", str.c_str() );
 }
 
 void
 MLTFFmpegOutput::setAudioBitrate( int kbps )
 {
     std::string str = std::to_string( kbps ) + "K";
-    m_consumer->set( "ab", str.c_str() );
+    consumer()->set( "ab", str.c_str() );
 }
 
 void
 MLTFFmpegOutput::setChannels( int channels )
 {
-    m_consumer->set( "channels", channels );
+    consumer()->set( "channels", channels );
 }
 
 void
 MLTFFmpegOutput::setAudioSampleRate( int rate )
 {
-    m_consumer->set( "frequency", rate );
+    consumer()->set( "frequency", rate );
 }

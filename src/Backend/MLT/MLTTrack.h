@@ -45,6 +45,12 @@ class MLTTrack : public ITrack, public MLTInput
         MLTTrack( IProfile& profile );
         virtual ~MLTTrack();
 
+        virtual Mlt::Playlist*  playlist();
+        virtual Mlt::Playlist*  playlist() const;
+
+        virtual Mlt::Producer*  producer() override;
+        virtual Mlt::Producer*  producer() const override;
+
         virtual bool        insertAt( IInput& input, int64_t startFrame ) override;
         virtual bool        append( IInput& input ) override;
         virtual bool        remove( int index ) override;
@@ -58,6 +64,7 @@ class MLTTrack : public ITrack, public MLTInput
 
         virtual void        setAudioOutput( bool enabled );
         virtual void        setVideoOutput( bool enabled );
+
     private:
         Mlt::Playlist*                  m_playlist;
 };

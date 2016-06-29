@@ -42,6 +42,12 @@ namespace MLT
         MLTTransition( IProfile& profile, const char* id );
         virtual ~MLTTransition() override;
 
+        virtual Mlt::Transition*  transition();
+        virtual Mlt::Transition*  transition() const;
+
+        virtual Mlt::Service*   service() override;
+        virtual Mlt::Service*   service() const override;
+
         virtual void    setBoundaries( int64_t begin, int64_t end ) override;
         virtual int64_t begin() const override;
         virtual int64_t end() const override;
@@ -49,8 +55,6 @@ namespace MLT
 
     private:
         Mlt::Transition*      m_transition;
-
-    friend class MLTMultiTrack;
     };
 }
 }

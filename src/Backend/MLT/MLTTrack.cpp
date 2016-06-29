@@ -49,14 +49,35 @@ MLTTrack::MLTTrack( IProfile &profile )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_playlist = new Mlt::Playlist( *mltProfile.m_profile );
-    m_producer = m_playlist;
-    m_service = m_playlist;
 }
 
 MLTTrack::~MLTTrack()
 {
-    m_producer = nullptr;
     delete m_playlist;
+}
+
+Mlt::Playlist*
+MLTTrack::playlist()
+{
+    return m_playlist;
+}
+
+Mlt::Playlist*
+MLTTrack::playlist() const
+{
+    return m_playlist;
+}
+
+Mlt::Producer*
+MLTTrack::producer()
+{
+    return playlist();
+}
+
+Mlt::Producer*
+MLTTrack::producer() const
+{
+    return playlist();
 }
 
 bool
@@ -64,7 +85,7 @@ MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
 {
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return m_playlist->insert_at( (int)startFrame, mltInput->m_producer, 1 );
+    return playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 );
 }
 
 bool
@@ -72,19 +93,19 @@ MLTTrack::append( Backend::IInput& input )
 {
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return m_playlist->append( *mltInput->m_producer );
+    return playlist()->append( *mltInput->producer() );
 }
 
 bool
 MLTTrack::remove( int index )
 {
-    auto ret = m_playlist->remove( index );
+    auto ret = playlist()->remove( index );
 
     // Remove last blanks.
-    for ( int i = m_playlist->count() - 1; i >= 0; --i )
+    for ( int i = playlist()->count() - 1; i >= 0; --i )
     {
-        if ( strcmp( m_playlist->clip_info( i )->resource, "blank" ) == 0 )
-            m_playlist->remove( i );
+        if ( strcmp( playlist()->clip_info( i )->resource, "blank" ) == 0 )
+            playlist()->remove( i );
         else
             break;
     }
@@ -95,71 +116,71 @@ MLTTrack::remove( int index )
 bool
 MLTTrack::move( int src, int dist )
 {
-    return m_playlist->move( src, dist );
+    return playlist()->move( src, dist );
 }
 
 Backend::IInput*
 MLTTrack::clip( int index ) const
 {
-    return new MLTInput( m_playlist->get_clip( index ) );
+    return new MLTInput( playlist()->get_clip( index ) );
 }
 
 Backend::IInput*
 MLTTrack::clipAt( int64_t position ) const
 {
-    return new MLTInput( m_playlist->get_clip_at( (int)position ) );
+    return new MLTInput( playlist()->get_clip_at( (int)position ) );
 }
 
 bool
 MLTTrack::resizeClip( int clip, int64_t begin, int64_t end )
 {
-    return m_playlist->resize_clip( clip, (int)begin, (int)end );
+    return playlist()->resize_clip( clip, (int)begin, (int)end );
 }
 
 int
 MLTTrack::clipIndexAt( int64_t position )
 {
-    return m_playlist->get_clip_index_at( (int)position );
+    return playlist()->get_clip_index_at( (int)position );
 }
 
 int
 MLTTrack::count() const
 {
-    return m_playlist->count();
+    return playlist()->count();
 }
 
 void
 MLTTrack::clear()
 {
-    m_playlist->clear();
+    playlist()->clear();
 }
 
 void
 MLTTrack::setAudioOutput( bool enabled )
 {
     if ( enabled == true )
-        if ( m_playlist->get_int( "hide" ) == HideType::VideoAndAudio )
-            m_playlist->set( "hide", HideType::Video );
+        if ( playlist()->get_int( "hide" ) == HideType::VideoAndAudio )
+            playlist()->set( "hide", HideType::Video );
         else
-            m_playlist->set( "hide", HideType::None );
+            playlist()->set( "hide", HideType::None );
     else
-        if ( m_playlist->get_int( "hide" ) == HideType::Video )
-            m_playlist->set( "hide", HideType::VideoAndAudio );
+        if ( playlist()->get_int( "hide" ) == HideType::Video )
+            playlist()->set( "hide", HideType::VideoAndAudio );
         else
-            m_playlist->set( "hide", HideType::Audio );
+            playlist()->set( "hide", HideType::Audio );
 }
 
 void
 MLTTrack::setVideoOutput( bool enabled )
 {
     if ( enabled == true )
-        if ( m_playlist->get_int( "hide" ) == HideType::VideoAndAudio )
-            m_playlist->set( "hide", HideType::Audio );
+        if ( playlist()->get_int( "hide" ) == HideType::VideoAndAudio )
+            playlist()->set( "hide", HideType::Audio );
         else
-            m_playlist->set( "hide", HideType::None );
+            playlist()->set( "hide", HideType::None );
     else
-        if ( m_playlist->get_int( "hide" ) == HideType::Audio )
-            m_playlist->set( "hide", HideType::VideoAndAudio );
+        if ( playlist()->get_int( "hide" ) == HideType::Audio )
+            playlist()->set( "hide", HideType::VideoAndAudio );
         else
-            m_playlist->set( "hide", HideType::Video );
+            playlist()->set( "hide", HideType::Video );
 }

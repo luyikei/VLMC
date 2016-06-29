@@ -43,20 +43,41 @@ MLTMultiTrack::MLTMultiTrack( Backend::IProfile& profile )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_tractor  = new Mlt::Tractor( *mltProfile.m_profile );
-    m_producer = m_tractor;
-    m_service  = m_tractor;
 }
 
 MLTMultiTrack::~MLTMultiTrack()
 {
-    m_producer = nullptr;
     delete m_tractor;
+}
+
+Mlt::Tractor*
+MLTMultiTrack::tractor()
+{
+    return m_tractor;
+}
+
+Mlt::Tractor*
+MLTMultiTrack::tractor() const
+{
+    return m_tractor;
+}
+
+Mlt::Producer*
+MLTMultiTrack::producer()
+{
+    return tractor();
+}
+
+Mlt::Producer*
+MLTMultiTrack::producer() const
+{
+    return tractor();
 }
 
 void
 MLTMultiTrack::refresh()
 {
-    m_tractor->refresh();
+    tractor()->refresh();
 }
 
 bool
@@ -64,7 +85,7 @@ MLTMultiTrack::setTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return m_tractor->set_track( *mltInput->m_producer, index );
+    return tractor()->set_track( *mltInput->producer(), index );
 }
 
 bool
@@ -72,39 +93,39 @@ MLTMultiTrack::insertTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return m_tractor->insert_track( *mltInput->m_producer, index );
+    return tractor()->insert_track( *mltInput->producer(), index );
 }
 
 bool
 MLTMultiTrack::removeTrack( int index )
 {
-    return m_tractor->remove_track( index );
+    return tractor()->remove_track( index );
 }
 
 Backend::IInput*
 MLTMultiTrack::track( int index ) const
 {
-    return new MLTInput( m_tractor->track( index ), nullptr );
+    return new MLTInput( tractor()->track( index ), nullptr );
 }
 
 int
 MLTMultiTrack::count() const
 {
-    return m_tractor->count();
+    return tractor()->count();
 }
 
 void
 MLTMultiTrack::addTransition( Backend::ITransition& transition, int aTrack, int bTrack )
 {
     MLTTransition* mltTransition = dynamic_cast<MLTTransition*>( &transition );
-    m_tractor->plant_transition( mltTransition->m_transition, aTrack, bTrack );
+    tractor()->plant_transition( mltTransition->transition(), aTrack, bTrack );
 }
 
 void
 MLTMultiTrack::addFilter( Backend::IFilter& filter, int track )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
-    m_tractor->plant_filter( mltFilter->m_filter, track );
+    tractor()->plant_filter( mltFilter->filter(), track );
 }
 
 bool
@@ -112,5 +133,5 @@ MLTMultiTrack::connect( Backend::IInput& input )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return m_tractor->connect( *mltInput->m_producer );
+    return tractor()->connect( *mltInput->producer() );
 }

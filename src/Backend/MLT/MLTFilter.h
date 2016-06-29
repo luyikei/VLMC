@@ -95,6 +95,12 @@ namespace MLT
         MLTFilter( Mlt::Filter* filter, Mlt::Producer* connectedProducer );
         virtual ~MLTFilter() override;
 
+        virtual Mlt::Filter*    filter();
+        virtual Mlt::Filter*    filter() const;
+
+        virtual Mlt::Service*   service() override;
+        virtual Mlt::Service*   service() const override;
+
         virtual std::string     identifier() const override;
         virtual bool    connect( IInput& input, int index = 0 ) override;
         virtual void    setBoundaries( int64_t begin, int64_t end ) override;
@@ -110,9 +116,6 @@ namespace MLT
     private:
         Mlt::Filter*        m_filter;
         std::unique_ptr<Mlt::Producer>      m_connectedProducer;
-
-    friend class MLTMultiTrack;
-    friend class MLTInput;
     };
 }
 }

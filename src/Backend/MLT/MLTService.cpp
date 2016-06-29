@@ -30,38 +30,37 @@
 
 using namespace Backend::MLT;
 
-MLTService::MLTService()
-    : m_service( nullptr )
-{
-
-}
-
-// Not intended to be created.
-MLTService::MLTService( Mlt::Service* service )
-    : m_service( service )
-{
-
-}
-
 MLTService::~MLTService()
 {
 
 }
 
+Mlt::Service*
+MLTService::service()
+{
+    return m_service;
+}
+
+Mlt::Service*
+MLTService::service() const
+{
+    return m_service;
+}
+
 std::string
 MLTService::identifier() const
 {
-    return m_service->get( "mlt_service" );
+    return service()->get( "mlt_service" );
 }
 
 bool
 MLTService::isValid() const
 {
-    return m_service->is_valid();
+    return service()->is_valid();
 }
 
 Mlt::Properties*
 MLTService::properties()
 {
-    return m_service;
+    return service();
 }

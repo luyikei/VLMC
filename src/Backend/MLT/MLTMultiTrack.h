@@ -43,6 +43,12 @@ namespace MLT
         MLTMultiTrack( IProfile& profile );
         virtual     ~MLTMultiTrack() override;
 
+        virtual Mlt::Tractor*   tractor();
+        virtual Mlt::Tractor*   tractor() const;
+
+        virtual Mlt::Producer*  producer() override;
+        virtual Mlt::Producer*  producer() const override;
+
         virtual void        refresh() override;
         virtual bool        setTrack( IInput& input, int index ) override;
         virtual bool        insertTrack( IInput& input, int index ) override;

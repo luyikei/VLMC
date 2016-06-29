@@ -158,7 +158,6 @@ MLTFilter::MLTFilter( Backend::IProfile& profile, const char* id )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_filter = new Mlt::Filter( *mltProfile.m_profile, id );
-    m_service = m_filter;
     if ( isValid() == false )
         throw InvalidServiceException();
 }
@@ -173,7 +172,6 @@ MLTFilter::MLTFilter( Mlt::Filter* filter, Mlt::Producer* connectedProducer )
 {
     m_filter = filter;
     m_connectedProducer.reset( new Mlt::Producer( connectedProducer->get_producer() ) );
-    m_service = filter;
 }
 
 MLTFilter::~MLTFilter()
@@ -181,10 +179,34 @@ MLTFilter::~MLTFilter()
     delete m_filter;
 }
 
+Mlt::Filter*
+MLTFilter::filter()
+{
+    return m_filter;
+}
+
+Mlt::Filter*
+MLTFilter::filter() const
+{
+    return m_filter;
+}
+
+Mlt::Service*
+MLTFilter::service()
+{
+    return filter();
+}
+
+Mlt::Service*
+MLTFilter::service() const
+{
+    return filter();
+}
+
 std::string
 MLTFilter::identifier() const
 {
-    return m_filter->get( "mlt_service" );
+    return filter()->get( "mlt_service" );
 }
 
 bool
@@ -195,33 +217,33 @@ MLTFilter::connect( Backend::IInput& input, int index )
     if ( mltInput == nullptr )
         return true;
 
-    m_connectedProducer.reset( new Mlt::Producer( mltInput->m_producer->get_producer() ) );
+    m_connectedProducer.reset( new Mlt::Producer( mltInput->producer()->get_producer() ) );
 
-    return m_filter->connect( *mltInput->m_producer, index );
+    return filter()->connect( *mltInput->producer(), index );
 }
 
 void
 MLTFilter::setBoundaries( int64_t begin, int64_t end )
 {
-    m_filter->set_in_and_out( (int)begin, (int)end );
+    filter()->set_in_and_out( (int)begin, (int)end );
 }
 
 int64_t
 MLTFilter::begin() const
 {
-    return m_filter->get_in();
+    return filter()->get_in();
 }
 
 int64_t
 MLTFilter::end() const
 {
-    return m_filter->get_out();
+    return filter()->get_out();
 }
 
 int64_t
 MLTFilter::length() const
 {
-    auto length = m_filter->get_length();
+    auto length = filter()->get_length();
 
     if ( length == 0 && m_connectedProducer )
         length = m_connectedProducer->get_playtime();
@@ -234,7 +256,7 @@ MLTFilter::detach()
 {
     if ( !m_connectedProducer )
         return;
-    m_connectedProducer->detach( *m_filter );
+    m_connectedProducer->detach( *filter() );
     m_connectedProducer.reset( nullptr );
 }
 

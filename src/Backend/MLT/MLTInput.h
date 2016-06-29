@@ -46,6 +46,12 @@ class MLTInput : virtual public IInput, public MLTService
         MLTInput( IProfile& profile, const char* path, IInputEventCb* callback = nullptr );
         ~MLTInput();
 
+        virtual Mlt::Producer*  producer();
+        virtual Mlt::Producer*  producer() const;
+
+        virtual Mlt::Service*   service() override;
+        virtual Mlt::Service*   service() const override;
+
         static void             onPropertyChanged( void* owner, MLTInput* self, const char* id );
 
         virtual void            setCallback( IInputEventCb* callback );
@@ -104,17 +110,13 @@ class MLTInput : virtual public IInput, public MLTService
 
         void                    calcTracks();
 
+    private:
         Mlt::Producer*          m_producer;
         IInputEventCb*          m_callback;
         bool                    m_paused;
 
         int                     m_nbVideoTracks;
         int                     m_nbAudioTracks;
-
-    friend class MLTOutput;
-    friend class MLTTrack;
-    friend class MLTMultiTrack;
-    friend class MLTFilter;
 };
 
 }
