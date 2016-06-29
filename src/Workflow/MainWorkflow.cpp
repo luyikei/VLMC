@@ -87,17 +87,19 @@ MainWorkflow::getClipPosition( const QUuid& uuid, unsigned int trackId ) const
 }
 
 void
-MainWorkflow::muteTrack( unsigned int trackId )
+MainWorkflow::muteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
     Q_ASSERT( trackId < m_trackCount );
     m_tracks[trackId].deactivate();
+    m_tracks[trackId]->mute( true, trackType );
 }
 
 void
-MainWorkflow::unmuteTrack( unsigned int trackId )
+MainWorkflow::unmuteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
     Q_ASSERT( trackId < m_trackCount );
     m_tracks[trackId].activate();
+    m_tracks[trackId]->mute( false, trackType );
 }
 
 void

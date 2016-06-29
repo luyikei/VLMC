@@ -44,6 +44,9 @@ namespace Backend
         virtual int         clipIndexAt( int64_t position ) = 0;
         virtual int         count() const = 0;
         virtual void        clear() = 0;
+
+        virtual void        setMute( bool muted ) = 0;
+        virtual void        setVideoEnabled( bool enabled ) = 0;
     };
 }
 

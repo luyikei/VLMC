@@ -47,11 +47,11 @@ TrackWorkflow::TrackWorkflow( quint32 trackId, Backend::IMultiTrack* multitrack 
     m_clipsLock = new QReadWriteLock;
 
     auto audioTrack = new Backend::MLT::MLTTrack;
-    audioTrack->setVideoOutput( false );
+    audioTrack->setVideoEnabled( false );
     m_audioTrack = audioTrack;
 
     auto videoTrack = new Backend::MLT::MLTTrack;
-    videoTrack->setAudioOutput( false );
+    videoTrack->setMute( true );
     m_videoTrack = videoTrack;
 
     m_multitrack = new Backend::MLT::MLTMultiTrack;
@@ -250,6 +250,15 @@ TrackWorkflow::clear()
 {
     QWriteLocker    lock( m_clipsLock );
     m_clips.clear();
+}
+
+void
+TrackWorkflow::mute( bool muted, Workflow::TrackType trackType )
+{
+    if ( trackType == Workflow::AudioTrack )
+        m_audioTrack->setMute( muted );
+    else
+        m_videoTrack->setVideoEnabled( !muted );
 }
 
 void

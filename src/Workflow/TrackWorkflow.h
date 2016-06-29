@@ -75,6 +75,8 @@ class   TrackWorkflow : public QObject
         void                                    loadFromVariant( const QVariant& variant );
         void                                    clear();
 
+        void                                    mute( bool muted, Workflow::TrackType trackType );
+
         /**
          *  \brief      Mute a clip
          *

@@ -65,9 +65,9 @@ GraphicsTrack::setTrackEnabled( bool enabled )
     m_enabled = enabled;
 
     if( enabled )
-        Core::instance()->workflow()->unmuteTrack( m_trackNumber );
+        Core::instance()->workflow()->unmuteTrack( m_trackNumber, m_type );
     else
-        Core::instance()->workflow()->muteTrack( m_trackNumber );
+        Core::instance()->workflow()->muteTrack( m_trackNumber, m_type );
 }
 
 bool

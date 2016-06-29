@@ -62,8 +62,8 @@ class MLTTrack : public ITrack, public MLTInput
         virtual int         count() const override;
         virtual void        clear();
 
-        virtual void        setAudioOutput( bool enabled );
-        virtual void        setVideoOutput( bool enabled );
+        virtual void        setMute( bool muted ) override;
+        virtual void        setVideoEnabled( bool enabled ) override;
 
     private:
         Mlt::Playlist*                  m_playlist;

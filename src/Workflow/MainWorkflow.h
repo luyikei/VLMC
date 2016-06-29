@@ -79,7 +79,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of the track to mute.
          *  \sa     unmuteTrack( unsigned int, Workflow::TrackType );
          */
-        void                    muteTrack( unsigned int trackId );
+        void                    muteTrack( unsigned int trackId, Workflow::TrackType trackType );
         /**
          *  \brief      Unmute a track.
          *
@@ -87,7 +87,7 @@ class   MainWorkflow : public QObject
          *  \param  trackType   The type of the track to unmute.
          *  \sa     muteTrack( unsigned int, Workflow::TrackType );
          */
-        void                    unmuteTrack( unsigned int trackId );
+        void                    unmuteTrack( unsigned int trackId, Workflow::TrackType trackType );
 
         /**
          *  \brief      Mute a clip.

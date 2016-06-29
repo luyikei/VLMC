@@ -156,9 +156,9 @@ MLTTrack::clear()
 }
 
 void
-MLTTrack::setAudioOutput( bool enabled )
+MLTTrack::setMute( bool muted )
 {
-    if ( enabled == true )
+    if ( muted == false )
         if ( playlist()->get_int( "hide" ) == HideType::VideoAndAudio )
             playlist()->set( "hide", HideType::Video );
         else
@@ -171,7 +171,7 @@ MLTTrack::setAudioOutput( bool enabled )
 }
 
 void
-MLTTrack::setVideoOutput( bool enabled )
+MLTTrack::setVideoEnabled( bool enabled )
 {
     if ( enabled == true )
         if ( playlist()->get_int( "hide" ) == HideType::VideoAndAudio )
