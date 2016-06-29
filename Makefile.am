@@ -18,6 +18,7 @@ vlmc_SOURCES = \
 	src/EffectsEngine/EffectHelper.cpp \
 	src/Library/Library.cpp \
 	src/Library/MediaLibrary.cpp \
+	src/Library/MediaLibraryModel.cpp \
 	src/Library/MediaContainer.cpp \
 	src/Main/Core.cpp \
 	src/Main/main.cpp \
@@ -95,6 +96,7 @@ vlmc_SOURCES += \
 	src/Library/Library.h \
 	src/Library/MediaContainer.h \
 	src/Library/MediaLibrary.h \
+	src/Library/MediaLibraryModel.h \
 	src/Workflow/Helper.h \
 	src/Workflow/Types.h \
 	src/Workflow/MainWorkflow.h \
@@ -129,6 +131,7 @@ nodist_vlmc_SOURCES = \
 	src/Services/UploaderIODevice.moc.cpp \
 	src/Library/Library.moc.cpp \
 	src/Library/MediaLibrary.moc.cpp \
+	src/Library/MediaLibraryModel.moc.cpp \
 	$(NULL)
 
 vlmc_RC = \
