@@ -24,6 +24,7 @@
 
 #include "Main/Core.h"
 #include "Project/Project.h"
+#include "Backend/MLT/MLTFilter.h"
 #include "Backend/IBackend.h"
 #include "Backend/IFilter.h"
 #include "Backend/ITrack.h"

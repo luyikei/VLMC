@@ -36,7 +36,7 @@ class   EffectUser;
 
 namespace   Backend
 {
-class   IService;
+class   IInput;
 }
 
 namespace Workflow

@@ -23,8 +23,8 @@
 #ifndef ITRACK_H
 #define ITRACK_H
 
-#include <string>
 #include "IInput.h"
+#include <string>
 
 namespace Backend
 {

@@ -23,7 +23,9 @@
 #include "MLTInput.h"
 #include "MLTProfile.h"
 #include "MLTBackend.h"
+#include "MLTFilter.h"
 
+#include <mlt++/MltFilter.h>
 #include <mlt++/MltProducer.h>
 #include <cstring>
 #include <cassert>
@@ -327,4 +329,50 @@ bool
 MLTInput::isBlank() const
 {
     return m_producer->is_blank();
+}
+
+
+bool
+MLTInput::attach( Backend::IFilter& filter )
+{
+    MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
+    assert( mltFilter );
+    auto ret = m_producer->attach( *mltFilter->m_filter );
+    mltFilter->connect( *this );
+    return ret;
+}
+
+bool
+MLTInput::detach( Backend::IFilter& filter )
+{
+    MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
+    assert( mltFilter );
+    return m_producer->detach( *mltFilter->m_filter );
+}
+
+bool
+MLTInput::detach( int index )
+{
+    auto filter = m_producer->filter( index );
+    auto ret = m_producer->detach( *filter );
+    delete filter;
+    return ret;
+}
+
+int
+MLTInput::filterCount() const
+{
+    return m_producer->filter_count();
+}
+
+bool
+MLTInput::moveFilter( int from, int to )
+{
+    return m_producer->move_filter( from, to );
+}
+
+std::shared_ptr<Backend::IFilter>
+MLTInput::filter( int index ) const
+{
+    return std::shared_ptr<Backend::IFilter>( new MLTFilter( m_producer->filter( index ), m_producer ) );
 }

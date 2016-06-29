@@ -92,6 +92,13 @@ class MLTInput : virtual public IInput, public MLTService
         virtual void            previousFrame() override;
 
         virtual bool            isBlank() const override;
+
+        virtual bool            attach( IFilter& filter ) override;
+        virtual bool            detach( IFilter& filter ) override;
+        virtual bool            detach( int index ) override;
+        virtual int             filterCount() const override;
+        virtual bool            moveFilter( int from, int to ) override;
+        virtual std::shared_ptr<IFilter>  filter( int index ) const override;
     protected:
         MLTInput();
 
@@ -107,6 +114,7 @@ class MLTInput : virtual public IInput, public MLTService
     friend class MLTOutput;
     friend class MLTTrack;
     friend class MLTMultiTrack;
+    friend class MLTFilter;
 };
 
 }

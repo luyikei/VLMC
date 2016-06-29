@@ -58,7 +58,6 @@ SET(CMAKE_AUTOMOC ON)
 SET(VLMC_SRCS
     Commands/Commands.cpp
     Backend/IBackend.h
-    Backend/IService.h
     Backend/IOutput.h
     Backend/IInput.h
     Backend/ITrack.h

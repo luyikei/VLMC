@@ -39,7 +39,7 @@ namespace MLT
 class MLTFilter;
 }
 class IFilter;
-class IService;
+class IInput;
 }
 
 class Effect;
@@ -67,8 +67,8 @@ class   EffectHelper : public Workflow::Helper
 
         bool    isValid() const;
 
-        void                setTarget( Backend::IService* service );
-        Backend::IService*  target();
+        void                setTarget( Backend::IInput* input );
+        Backend::IInput*    target();
 
         Backend::IFilterInfo*           filterInfo();
 
@@ -83,13 +83,13 @@ class   EffectHelper : public Workflow::Helper
         void                            loadFromVariant( const QVariant& variant );
         QVariant                        toVariant();
 
-        // Handle one service
-        static QVariant                 toVariant( Backend::IService* service );
-        static void                     loadFromVariant( const QVariant& variant, Backend::IService* service );
+        // Handle one input
+        static QVariant                 toVariant( Backend::IInput* input );
+        static void                     loadFromVariant( const QVariant& variant, Backend::IInput* input );
 
     private:
         std::shared_ptr<Backend::MLT::MLTFilter>    m_filter;
-        Backend::IService*          m_service;
+        Backend::IInput*            m_input;
         Backend::IFilterInfo*       m_filterInfo;
 
         Settings                    m_settings;

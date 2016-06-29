@@ -23,14 +23,12 @@
 #ifndef ITRANSITION_H
 #define ITRANSITION_H
 
-#include "IService.h"
-
 #include <cstdint>
 
 namespace Backend
 {
     class IInput;
-    class ITransition : virtual public IService
+    class ITransition
     {
     public:
         virtual         ~ITransition() = default;

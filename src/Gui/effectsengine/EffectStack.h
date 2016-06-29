@@ -28,7 +28,7 @@
 
 namespace Backend
 {
-class IService;
+class IInput;
 class IFilter;
 }
 
@@ -48,7 +48,7 @@ class EffectStack : public QDialog
     Q_OBJECT
 
     public:
-        explicit EffectStack( Backend::IService* service, QWidget *parent = 0 );
+        explicit EffectStack( Backend::IInput* input, QWidget *parent = 0 );
         ~EffectStack();
 
     private:
@@ -64,7 +64,7 @@ class EffectStack : public QDialog
     private:
         Ui::EffectStack                 *m_ui;
         EffectInstanceListModel         *m_model;
-        Backend::IService               *m_service;
+        Backend::IInput                 *m_input;
         QStackedLayout                  *m_stackedLayout;
         QHash<QString, EffectInstanceWidget*>   m_instanceWidgets;
 };

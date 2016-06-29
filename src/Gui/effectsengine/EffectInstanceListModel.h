@@ -25,7 +25,7 @@
 
 namespace Backend
 {
-class   IService;
+class   IInput;
 }
 
 #include <QAbstractListModel>
@@ -35,7 +35,7 @@ class EffectHelper;
 class EffectInstanceListModel : public QAbstractListModel
 {
     public:
-        EffectInstanceListModel( Backend::IService *service );
+        EffectInstanceListModel( Backend::IInput *input );
         virtual qint32      rowCount( const QModelIndex &parent ) const;
         virtual QVariant    data( const QModelIndex &index, int role ) const;
         virtual bool        removeRows( int row, int count, const QModelIndex &parent = QModelIndex() );
@@ -44,7 +44,7 @@ class EffectInstanceListModel : public QAbstractListModel
         EffectHelper*       add( const QString &effectName );
 
     private:
-        Backend::IService*  m_service;
+        Backend::IInput*  m_input;
 };
 
 #endif // EFFECTINSTANCELISTMODEL_H

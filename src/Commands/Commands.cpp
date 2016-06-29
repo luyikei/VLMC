@@ -30,7 +30,6 @@
 #include "EffectsEngine/EffectHelper.h"
 #include "Workflow/TrackWorkflow.h"
 #include "AbstractUndoStack.h"
-#include "Backend/IService.h"
 #include "Backend/IFilter.h"
 
 void
@@ -272,7 +271,7 @@ Commands::Clip::Split::internalUndo()
     m_toSplit->setEnd( m_oldEnd );
 }
 
-Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target )
+Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )
     : m_helper( helper )
     , m_target( target )
 {
@@ -297,7 +296,7 @@ Commands::Effect::Add::internalUndo()
     m_target->detach( *m_helper->filter() );
 }
 
-Commands::Effect::Move::Move( std::shared_ptr<EffectHelper> const& helper, Backend::IService* from, Backend::IService* to,
+Commands::Effect::Move::Move( std::shared_ptr<EffectHelper> const& helper, std::shared_ptr<Backend::IInput> const& from, Backend::IInput* to,
                               qint64 pos)
     : m_helper( helper )
     , m_from( from )
@@ -319,11 +318,11 @@ Commands::Effect::Move::retranslate()
 void
 Commands::Effect::Move::internalRedo()
 {
-    if ( m_from != m_to )
+    if ( m_from->sameClip( *m_to ) == false )
     {
         m_from->detach( *m_helper->filter() );
-        m_helper->setBoundaries( m_newPos, m_newEnd );
         m_to->attach( *m_helper->filter() );
+        m_helper->setBoundaries( m_newPos, m_newEnd );
 
     }
     else
@@ -333,12 +332,11 @@ Commands::Effect::Move::internalRedo()
 void
 Commands::Effect::Move::internalUndo()
 {
-    if ( m_from != m_to )
+    if ( m_from->sameClip( *m_to ) == false )
     {
         m_to->detach( *m_helper->filter() );
-        m_helper->setBoundaries( m_oldPos, m_oldEnd );
-        //This must be called after setting boundaries, as the effect's begin is its begin boundary
         m_from->attach( *m_helper->filter() );
+        m_helper->setBoundaries( m_oldPos, m_oldEnd );
     }
     else
         m_helper->setBoundaries( m_oldPos, m_oldEnd );
@@ -372,7 +370,7 @@ Commands::Effect::Resize::internalUndo()
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::Effect::Remove::Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target )
+Commands::Effect::Remove::Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )
     : m_helper( helper )
     , m_target( target )
 {

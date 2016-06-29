@@ -26,7 +26,7 @@
 #include "Project/Project.h"
 #include "Workflow/MainWorkflow.h"
 #include "Backend/MLT/MLTFilter.h"
-#include "Backend/IService.h"
+#include "Backend/IInput.h"
 #include "Backend/IBackend.h"
 #include <mlt++/MltProperties.h>
 
@@ -47,7 +47,7 @@ conv( std::string str, SettingValue::Type type )
 EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
                             const QString &uuid ) :
     Helper( uuid ),
-    m_service( nullptr ),
+    m_input( nullptr ),
     m_filterInfo( nullptr )
 {
     try
@@ -72,7 +72,7 @@ EffectHelper::EffectHelper( const QString& id, qint64 begin, qint64 end, const Q
 EffectHelper::EffectHelper( std::shared_ptr<Backend::IFilter> filter, const QString& uuid )
     : Helper( uuid )
     , m_filter( std::dynamic_pointer_cast<Backend::MLT::MLTFilter>( filter ) )
-    , m_service( nullptr )
+    , m_input( nullptr )
     , m_filterInfo( nullptr )
 {
     if ( m_filter->isValid() == false )
@@ -201,24 +201,24 @@ EffectHelper::toVariant()
 }
 
 QVariant
-EffectHelper::toVariant( Backend::IService* service )
+EffectHelper::toVariant( Backend::IInput* input )
 {
     QVariantList filters;
-    for ( int i = 0; i < service->filterCount(); ++ i )
+    for ( int i = 0; i < input->filterCount(); ++ i )
     {
-        EffectHelper helper( service->filter( i ) );
+        EffectHelper helper( input->filter( i ) );
         filters << helper.toVariant();
     }
     return filters;
 }
 
 void
-EffectHelper::loadFromVariant( const QVariant& variant, Backend::IService* service )
+EffectHelper::loadFromVariant( const QVariant& variant, Backend::IInput* input )
 {
     for ( auto& var : variant.toList() )
     {
         EffectHelper helper( var );
-        service->attach( *helper.filter() );
+        input->attach( *helper.filter() );
     }
 }
 
@@ -265,18 +265,18 @@ EffectHelper::isValid() const
 }
 
 void
-EffectHelper::setTarget( Backend::IService* service )
+EffectHelper::setTarget( Backend::IInput* input )
 {
-    if ( m_service )
-        m_service->detach( *m_filter );
-    m_service = service;
-    m_service->attach( *m_filter );
+    if ( m_input )
+        m_input->detach( *m_filter );
+    m_input = input;
+    m_input->attach( *m_filter );
 }
 
-Backend::IService*
+Backend::IInput*
 EffectHelper::target()
 {
-    return m_service;
+    return m_input;
 }
 
 Backend::IFilterInfo*

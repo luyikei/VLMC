@@ -26,10 +26,9 @@
 #include <cstdint>
 #include <memory>
 
-#include "Backend/IService.h"
-
 namespace Backend
 {
+    class IFilter;
     class IInputEventCb
     {
     public:
@@ -41,9 +40,15 @@ namespace Backend
         virtual void    onLengthChanged( int64_t ) = 0;
     };
 
-    class IInput : virtual public IService
+    class IInput
     {
     public:
+        enum EndType
+        {
+            EndOfMedia = -1,
+            EndOfParent = -2,
+            Unlimited = -3
+        };
 
         virtual ~IInput() = default;
         virtual void            setCallback( IInputEventCb* callback ) = 0;
@@ -91,6 +96,13 @@ namespace Backend
         virtual void            previousFrame() = 0;
 
         virtual bool            isBlank() const = 0;
+
+        virtual bool            attach( IFilter& filter ) = 0;
+        virtual bool            detach( IFilter& filter ) = 0;
+        virtual bool            detach( int index ) = 0;
+        virtual int             filterCount() const = 0;
+        virtual bool            moveFilter( int from, int to ) = 0;
+        virtual std::shared_ptr<IFilter>  filter( int index ) const = 0;
     };
 }
 

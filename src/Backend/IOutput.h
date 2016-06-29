@@ -27,8 +27,6 @@
 #include <cstdint>
 #include <cstddef>
 
-#include "IService.h"
-
 namespace Backend
 {
     class IInput;
@@ -42,7 +40,7 @@ namespace Backend
         virtual void    onVolumeChanged() = 0;
     };
 
-    class IOutput : virtual public IService
+    class IOutput
     {
     public:
         virtual ~IOutput() = default;

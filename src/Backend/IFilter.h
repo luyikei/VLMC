@@ -25,11 +25,12 @@
 
 #include <cstdint>
 #include <string>
-#include "Backend/IService.h"
 #include <vector>
+#include <memory>
 
 namespace Backend
 {
+    class IInput;
     class IParameterInfo
     {
     public:
@@ -57,16 +58,20 @@ namespace Backend
         virtual const std::vector<IParameterInfo*>& paramInfos() const = 0;
     };
 
-    class IFilter : virtual public IService
+    class IFilter
     {
     public:
         virtual ~IFilter() = default;
 
-        virtual bool            connect( IService& service, int index = 0 ) = 0;
+
+        virtual std::string     identifier() const = 0;
+        virtual bool            connect( IInput& input, int index = 0 ) = 0;
         virtual void            setBoundaries( int64_t begin, int64_t end ) = 0;
         virtual int64_t         begin() const = 0;
         virtual int64_t         end() const = 0;
         virtual int64_t         length() const = 0;
+
+        virtual std::shared_ptr<IInput> input() const = 0;
 
         virtual const IFilterInfo&  filterInfo() const = 0;
     };

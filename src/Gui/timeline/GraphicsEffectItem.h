@@ -59,7 +59,7 @@ class GraphicsEffectItem : public AbstractGraphicsItem
         virtual qint64              maxEnd() const;
         virtual std::shared_ptr<Workflow::Helper>   helper();
         virtual void                triggerMove( TrackWorkflow* target, qint64 startPos );
-        virtual void                triggerMove( Backend::IService* target, qint64 startPos );
+        virtual void                triggerMove( Backend::IInput* target, qint64 startPos );
         virtual void                triggerResize( TrackWorkflow* target,
                                            qint64 newBegin, qint64 newEnd, qint64 pos );
         virtual qint64              itemHeight() const;

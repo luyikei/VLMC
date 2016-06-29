@@ -26,27 +26,27 @@
 #include "EffectsEngine/EffectHelper.h"
 
 #include "Backend/MLT/MLTFilter.h"
-#include "Backend/IService.h"
+#include "Backend/IInput.h"
 #include "Backend/IBackend.h"
 
 #include <QApplication>
 #include <QFontMetrics>
 
-EffectInstanceListModel::EffectInstanceListModel( Backend::IService* service ) :
-        m_service( service )
+EffectInstanceListModel::EffectInstanceListModel( Backend::IInput* input ) :
+        m_input( input )
 {
 }
 
 qint32
 EffectInstanceListModel::rowCount( const QModelIndex& ) const
 {
-    return m_service->filterCount();
+    return m_input->filterCount();
 }
 
 QVariant
 EffectInstanceListModel::data( const QModelIndex &index, int role ) const
 {
-    auto filter         = m_service->filter( index.row() );
+    auto filter         = m_input->filter( index.row() );
     auto id             = QString::fromStdString( filter->identifier() );
     auto info           = Backend::instance()->filterInfo( filter->identifier() );
 
@@ -72,10 +72,10 @@ EffectInstanceListModel::data( const QModelIndex &index, int role ) const
 bool
 EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& index /*= QModelIndex()*/ )
 {
-    if ( count != 1 || row < 0 || row >= m_service->filterCount() )
+    if ( count != 1 || row < 0 || row >= m_input->filterCount() )
         return false;
     beginRemoveRows( index, row, row );
-    m_service->detach( row );
+    m_input->detach( row );
     endRemoveRows();
     return true;
 }
@@ -83,20 +83,20 @@ EffectInstanceListModel::removeRows( int row, int count, const QModelIndex& inde
 void
 EffectInstanceListModel::moveUp( const QModelIndex &index )
 {
-    if ( index.row() <= 0 || index.row() >= m_service->filterCount() )
+    if ( index.row() <= 0 || index.row() >= m_input->filterCount() )
         return ;
     emit layoutAboutToBeChanged();
-    m_service->moveFilter( index.row(), index.row() - 1 );
+    m_input->moveFilter( index.row(), index.row() - 1 );
     emit layoutChanged();
 }
 
 void
 EffectInstanceListModel::moveDown( const QModelIndex &index )
 {
-    if ( index.row() >= m_service->filterCount() )
+    if ( index.row() >= m_input->filterCount() )
         return ;
     emit layoutAboutToBeChanged();
-    m_service->moveFilter( index.row(), index.row() + 1 );
+    m_input->moveFilter( index.row(), index.row() + 1 );
     emit layoutChanged();
 }
 
@@ -105,7 +105,7 @@ EffectInstanceListModel::add( const QString &effectName )
 {
     if ( effectName.isEmpty() == true )
         return nullptr;
-    beginInsertRows( QModelIndex(), m_service->filterCount(), m_service->filterCount() );
+    beginInsertRows( QModelIndex(), m_input->filterCount(), m_input->filterCount() );
     EffectHelper* helper = nullptr;
     try
     {
@@ -115,7 +115,7 @@ EffectInstanceListModel::add( const QString &effectName )
     {
         return nullptr;
     }
-    m_service->attach( *helper->filter() );
+    m_input->attach( *helper->filter() );
     endInsertRows();
     return helper;
 }

@@ -23,7 +23,7 @@
 #include "EffectStack.h"
 #include "ui_EffectStack.h"
 
-#include "Backend/IService.h"
+#include "Backend/IInput.h"
 #include "Backend/IBackend.h"
 #include "Backend/IFilter.h"
 #include "Main/Core.h"
@@ -34,14 +34,14 @@
 #include <QStackedLayout>
 #include <QMessageBox>
 
-EffectStack::EffectStack( Backend::IService *service, QWidget *parent ):
+EffectStack::EffectStack( Backend::IInput *input, QWidget *parent ):
     QDialog( parent ),
     m_ui( new Ui::EffectStack ),
-    m_service( service )
+    m_input( input )
 {
     m_ui->setupUi( this );
 
-    m_model = new EffectInstanceListModel( service );
+    m_model = new EffectInstanceListModel( input );
     m_ui->list->setModel( m_model );
     connect( m_ui->list, SIGNAL( clicked( QModelIndex ) ),
              this, SLOT( selectedChanged( QModelIndex ) ) );
@@ -58,8 +58,8 @@ EffectStack::EffectStack( Backend::IService *service, QWidget *parent ):
     //Add an empty instance widget.
     m_stackedLayout->addWidget( new EffectInstanceWidget( this ) );
     //Create instance widgets for already inserted effects
-    for ( int i = 0; i < m_service->filterCount(); ++i )
-        addEffectHelper( new EffectHelper( m_service->filter( i ) ) );
+    for ( int i = 0; i < m_input->filterCount(); ++i )
+        addEffectHelper( new EffectHelper( m_input->filter( i ) ) );
 }
 
 EffectStack::~EffectStack()

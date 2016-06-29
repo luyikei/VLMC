@@ -23,7 +23,8 @@
 #ifndef MLTSERVICE_H
 #define MLTSERVICE_H
 
-#include "Backend/IService.h"
+#include <memory>
+#include <exception>
 
 namespace Mlt
 {
@@ -35,27 +36,26 @@ namespace Backend
 {
 class IProfile;
 class IFilter;
+
+class InvalidServiceException : public std::exception
+{
+public:
+    virtual const char* what() const throw() override
+    {
+        return "We couldn't create a service.";
+    }
+};
+
 namespace MLT
 {
-    class MLTService : public virtual IService
+    class MLTService
     {
     public:
         virtual ~MLTService();
 
-        virtual std::string      identifier() const override;
-        virtual IService* output() const override;
-        virtual IService* input() const override;
-        virtual IProfile* profile() const override;
-        virtual bool      attach( IFilter& filter ) override;
-        virtual bool      detach( IFilter& filter ) override;
-        virtual bool      detach( int index ) override;
-        virtual int       filterCount() const override;
-        virtual bool      moveFilter( int from, int to ) override;
-        virtual std::shared_ptr<IFilter>  filter( int index ) const override;
-        virtual void      setProfile( IProfile& profile ) override;
-        virtual bool      isValid() const override;
-
-        Mlt::Properties*  properties();
+        virtual std::string     identifier() const;
+        bool                    isValid() const;
+        Mlt::Properties*        properties();
     protected:
         // Not intended to be created.
         MLTService();

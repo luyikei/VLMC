@@ -39,7 +39,7 @@ class   Clip;
 
 namespace Backend
 {
-class IService;
+class IInput;
 }
 class   EffectHelper;
 
@@ -185,13 +185,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Add( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target );
+                Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
                 std::shared_ptr<EffectHelper>   m_helper;
-                Backend::IService*      m_target;
+                Backend::IInput*      m_target;
         };
 
         class   Move : public Generic
@@ -199,14 +199,14 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Move( std::shared_ptr<EffectHelper> const& helper, Backend::IService* from, Backend::IService* to, qint64 pos );
+                Move( std::shared_ptr<EffectHelper> const& helper, std::shared_ptr<Backend::IInput> const& from, Backend::IInput* to, qint64 pos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                std::shared_ptr<EffectHelper>   m_helper;
-                Backend::IService      *m_from;
-                Backend::IService      *m_to;
+                std::shared_ptr<EffectHelper>       m_helper;
+                std::shared_ptr<Backend::IInput>    m_from;
+                Backend::IInput      *m_to;
                 qint64          m_oldPos;
                 qint64          m_newPos;
                 qint64          m_newEnd;
@@ -235,13 +235,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IService* target );
+                Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
                 std::shared_ptr<EffectHelper>       m_helper;
-                Backend::IService* m_target;
+                Backend::IInput* m_target;
         };
     }
 }

@@ -30,12 +30,13 @@ namespace Mlt
 {
 class Filter;
 class Properties;
-class Input;
+class Producer;
 }
 
 namespace Backend
 {
 class IProfile;
+class IInput;
 namespace MLT
 {
     class MLTParameterInfo : public IParameterInfo
@@ -91,23 +92,26 @@ namespace MLT
     public:
         MLTFilter( IProfile& profile, const char* id );
         MLTFilter( const char* id );
-        MLTFilter( Mlt::Filter* filter, Mlt::Service* connectedService );
+        MLTFilter( Mlt::Filter* filter, Mlt::Producer* connectedProducer );
         virtual ~MLTFilter() override;
 
-        virtual bool    connect( IService& service, int index = 0 ) override;
+        virtual std::string     identifier() const override;
+        virtual bool    connect( IInput& input, int index = 0 ) override;
         virtual void    setBoundaries( int64_t begin, int64_t end ) override;
         virtual int64_t begin() const override;
         virtual int64_t end() const override;
         virtual int64_t length() const override;
 
+        virtual std::shared_ptr<IInput> input() const override;
+
         virtual const IFilterInfo&  filterInfo() const override;
 
     private:
         Mlt::Filter*        m_filter;
-        Mlt::Service*       m_connectedService;
+        Mlt::Producer*      m_connectedProducer;
 
     friend class MLTMultiTrack;
-    friend class MLTService;
+    friend class MLTInput;
     };
 }
 }

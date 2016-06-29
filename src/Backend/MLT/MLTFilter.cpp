@@ -27,6 +27,7 @@
 #include <cstring>
 #include "Backend/IBackend.h"
 #include "MLTProfile.h"
+#include "MLTInput.h"
 
 using namespace Backend::MLT;
 
@@ -154,7 +155,7 @@ MLTFilterInfo::setProperties( Mlt::Properties* properties )
 }
 
 MLTFilter::MLTFilter( Backend::IProfile& profile, const char* id )
-    : m_connectedService( nullptr )
+    : m_connectedProducer( nullptr )
 {
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_filter = new Mlt::Filter( *mltProfile.m_profile, id );
@@ -169,10 +170,10 @@ MLTFilter::MLTFilter( const char *id )
 
 }
 
-MLTFilter::MLTFilter( Mlt::Filter* filter, Mlt::Service* connectedService )
+MLTFilter::MLTFilter( Mlt::Filter* filter, Mlt::Producer* connectedProducer )
 {
     m_filter = filter;
-    m_connectedService = connectedService;
+    m_connectedProducer = connectedProducer;
     m_service = filter;
 }
 
@@ -181,17 +182,23 @@ MLTFilter::~MLTFilter()
     delete m_filter;
 }
 
-bool
-MLTFilter::connect( Backend::IService& service, int index )
+std::string
+MLTFilter::identifier() const
 {
-    MLTService* mltService = dynamic_cast<MLTService*>( &service );
+    return m_filter->get( "mlt_service" );
+}
 
-    if ( mltService == nullptr )
+bool
+MLTFilter::connect( Backend::IInput& input, int index )
+{
+    MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
+
+    if ( mltInput == nullptr )
         return true;
 
-    m_connectedService = mltService->m_service;
+    m_connectedProducer = mltInput->m_producer;
 
-    return m_filter->connect( *mltService->m_service, index );
+    return m_filter->connect( *mltInput->m_producer, index );
 }
 
 void
@@ -219,12 +226,18 @@ MLTFilter::length() const
 
     if ( length == 0 )
     {
-        auto producer = dynamic_cast<Mlt::Producer*>( m_connectedService );
+        auto producer = dynamic_cast<Mlt::Producer*>( m_connectedProducer );
         if ( producer != nullptr )
             length = producer->get_playtime();
     }
 
-    return length ? length : Unlimited;
+    return length ? length : MLTInput::Unlimited;
+}
+
+std::shared_ptr<Backend::IInput>
+MLTFilter::input() const
+{
+    return std::make_shared<MLTInput>( m_connectedProducer );
 }
 
 const Backend::IFilterInfo&

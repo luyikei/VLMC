@@ -258,7 +258,7 @@ GraphicsEffectItem::triggerMove( TrackWorkflow* target, qint64 startPos )
 }
 
 void
-GraphicsEffectItem::triggerMove( Backend::IService* target, qint64 startPos )
+GraphicsEffectItem::triggerMove( Backend::IInput* target, qint64 startPos )
 {
     Commands::trigger( new Commands::Effect::Move( m_effectHelper, m_effectHelper->filter()->input(),
                                                    target, startPos ) );
