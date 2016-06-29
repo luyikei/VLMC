@@ -423,10 +423,10 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
             auto                  clip = std::dynamic_pointer_cast<Clip>( item->helper() );
             Q_ASSERT( clip.get() != nullptr );
 
+            m_dragEffectItem->effectHelper()->setTarget( clip->input() );
             m_dragEffectItem->setWidth( item->clip()->length() );
             m_dragEffectItem->setStartPos( item->startPos() );
             m_dragEffectItem->setTrack( item->track() );
-            m_dragEffectItem->effectHelper()->setTarget( clip->input() );
         }
         else
         {
@@ -436,10 +436,10 @@ TracksView::dragMoveEvent( QDragMoveEvent *event )
                 GraphicsTrack   *track = qgraphicsitem_cast<GraphicsTrack*>( item );
                 if ( track != nullptr && track->mediaType() == Workflow::VideoTrack )
                 {
+                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow()->input() );
                     m_dragEffectItem->setWidth( m_dragEffectItem->helper()->length() );
                     m_dragEffectItem->setStartPos( 0 );
                     m_dragEffectItem->setTrack( track );
-                    m_dragEffectItem->effectHelper()->setTarget( track->trackWorkflow()->input() );
                     break ;
                 }
             }

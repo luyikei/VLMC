@@ -235,13 +235,13 @@ namespace Commands
             Q_OBJECT
 
             public:
-                Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target );
+                Remove( std::shared_ptr<EffectHelper> const& helper );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
                 std::shared_ptr<EffectHelper>       m_helper;
-                Backend::IInput* m_target;
+                std::shared_ptr<Backend::IInput>    m_target;
         };
     }
 }

@@ -370,9 +370,9 @@ Commands::Effect::Resize::internalUndo()
     m_helper->setBoundaries( m_oldBegin, m_oldEnd );
 }
 
-Commands::Effect::Remove::Remove( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )
+Commands::Effect::Remove::Remove( std::shared_ptr<EffectHelper> const& helper )
     : m_helper( helper )
-    , m_target( target )
+    , m_target( helper->filter()->input() )
 {
 
 }
@@ -392,5 +392,5 @@ Commands::Effect::Remove::internalRedo()
 void
 Commands::Effect::Remove::internalUndo()
 {
-    m_helper->setTarget( m_target );
+    m_helper->setTarget( m_target.get() );
 }

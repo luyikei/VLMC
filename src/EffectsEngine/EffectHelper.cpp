@@ -47,7 +47,6 @@ conv( std::string str, SettingValue::Type type )
 EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
                             const QString &uuid ) :
     Helper( uuid ),
-    m_input( nullptr ),
     m_filterInfo( nullptr )
 {
     try
@@ -72,7 +71,6 @@ EffectHelper::EffectHelper( const QString& id, qint64 begin, qint64 end, const Q
 EffectHelper::EffectHelper( std::shared_ptr<Backend::IFilter> filter, const QString& uuid )
     : Helper( uuid )
     , m_filter( std::dynamic_pointer_cast<Backend::MLT::MLTFilter>( filter ) )
-    , m_input( nullptr )
     , m_filterInfo( nullptr )
 {
     if ( m_filter->isValid() == false )
@@ -218,7 +216,7 @@ EffectHelper::loadFromVariant( const QVariant& variant, Backend::IInput* input )
     for ( auto& var : variant.toList() )
     {
         EffectHelper helper( var );
-        input->attach( *helper.filter() );
+        helper.setTarget( input );
     }
 }
 
@@ -267,16 +265,7 @@ EffectHelper::isValid() const
 void
 EffectHelper::setTarget( Backend::IInput* input )
 {
-    if ( m_input )
-        m_input->detach( *m_filter );
-    m_input = input;
-    m_input->attach( *m_filter );
-}
-
-Backend::IInput*
-EffectHelper::target()
-{
-    return m_input;
+    input->attach( *m_filter );
 }
 
 Backend::IFilterInfo*

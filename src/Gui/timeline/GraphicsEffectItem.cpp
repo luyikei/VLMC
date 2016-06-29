@@ -359,9 +359,9 @@ GraphicsEffectItem::contextMenuEvent( QGraphicsSceneContextMenuEvent *event )
 void
 GraphicsEffectItem::setStartPos( qint64 position )
 {
-    if ( m_effectHelper != nullptr && m_effectHelper->target() != nullptr )
+    if ( m_effectHelper != nullptr && m_effectHelper->isValid() )
     {
-        int     nbFilter = m_effectHelper->target()->filterCount() - 1;
+        int     nbFilter = m_effectHelper->filter()->input()->filterCount() - 1;
         QGraphicsItem::setPos( position, nbFilter * itemHeight() );
     }
     else

@@ -68,7 +68,6 @@ class   EffectHelper : public Workflow::Helper
         bool    isValid() const;
 
         void                setTarget( Backend::IInput* input );
-        Backend::IInput*    target();
 
         Backend::IFilterInfo*           filterInfo();
 
@@ -89,7 +88,6 @@ class   EffectHelper : public Workflow::Helper
 
     private:
         std::shared_ptr<Backend::MLT::MLTFilter>    m_filter;
-        Backend::IInput*            m_input;
         Backend::IFilterInfo*       m_filterInfo;
 
         Settings                    m_settings;

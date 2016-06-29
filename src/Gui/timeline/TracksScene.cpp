@@ -128,7 +128,7 @@ TracksScene::askRemoveSelectedItems()
         {
             auto helper = std::static_pointer_cast<EffectHelper>( item->helper() );
             Q_ASSERT( helper.get() != nullptr );
-            Commands::trigger( new Commands::Effect::Remove( helper, helper->target() ) );
+            Commands::trigger( new Commands::Effect::Remove( helper ) );
         }
     }
 
