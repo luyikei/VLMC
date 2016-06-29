@@ -224,12 +224,8 @@ MLTFilter::length() const
 {
     auto length = m_filter->get_length();
 
-    if ( length == 0 )
-    {
-        auto producer = dynamic_cast<Mlt::Producer*>( m_connectedProducer );
-        if ( producer != nullptr )
-            length = producer->get_playtime();
-    }
+    if ( length == 0 && m_connectedProducer != nullptr )
+        length = m_connectedProducer->get_playtime();
 
     return length ? length : MLTInput::Unlimited;
 }
