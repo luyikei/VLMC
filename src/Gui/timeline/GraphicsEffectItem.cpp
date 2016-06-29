@@ -269,7 +269,7 @@ GraphicsEffectItem::triggerResize( TrackWorkflow* target,
                                    qint64 newBegin, qint64 newEnd, qint64 )
 {
     Q_UNUSED( target )
-    if ( m_effectHelper.get() == nullptr )
+    if ( !m_effectHelper )
         return ;
     Commands::trigger( new Commands::Effect::Resize( m_effectHelper, newBegin, newEnd ) );
 }

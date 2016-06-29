@@ -223,7 +223,7 @@ MLTFilter::length() const
 {
     auto length = m_filter->get_length();
 
-    if ( length == 0 && m_connectedProducer != nullptr )
+    if ( length == 0 && m_connectedProducer )
         length = m_connectedProducer->get_playtime();
 
     return length ? length : MLTInput::Unlimited;
@@ -232,7 +232,7 @@ MLTFilter::length() const
 void
 MLTFilter::detach()
 {
-    if ( m_connectedProducer.get() == nullptr )
+    if ( !m_connectedProducer )
         return;
     m_connectedProducer->detach( *m_filter );
     m_connectedProducer.reset( nullptr );

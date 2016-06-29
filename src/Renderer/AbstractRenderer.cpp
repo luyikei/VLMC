@@ -69,7 +69,7 @@ AbstractRenderer::setPosition( qint64 pos )
 void
 AbstractRenderer::togglePlayPause()
 {
-    if ( m_input == nullptr || m_output.get() == nullptr )
+    if ( m_input == nullptr || !m_output )
         return;
 
     if ( m_output->isStopped() )
