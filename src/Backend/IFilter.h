@@ -70,6 +70,7 @@ namespace Backend
         virtual int64_t         begin() const = 0;
         virtual int64_t         end() const = 0;
         virtual int64_t         length() const = 0;
+        virtual void            detach() = 0;
 
         virtual std::shared_ptr<IInput> input() const = 0;
 

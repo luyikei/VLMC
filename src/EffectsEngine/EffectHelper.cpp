@@ -265,6 +265,7 @@ EffectHelper::isValid() const
 void
 EffectHelper::setTarget( Backend::IInput* input )
 {
+    m_filter->detach();
     input->attach( *m_filter );
 }
 

@@ -101,6 +101,7 @@ namespace MLT
         virtual int64_t begin() const override;
         virtual int64_t end() const override;
         virtual int64_t length() const override;
+        virtual void    detach() override;
 
         virtual std::shared_ptr<IInput> input() const override;
 

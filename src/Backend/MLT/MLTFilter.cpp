@@ -229,6 +229,15 @@ MLTFilter::length() const
     return length ? length : MLTInput::Unlimited;
 }
 
+void
+MLTFilter::detach()
+{
+    if ( m_connectedProducer.get() == nullptr )
+        return;
+    m_connectedProducer->detach( *m_filter );
+    m_connectedProducer.reset( nullptr );
+}
+
 std::shared_ptr<Backend::IInput>
 MLTFilter::input() const
 {
