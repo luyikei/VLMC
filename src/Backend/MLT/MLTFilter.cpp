@@ -235,7 +235,12 @@ MLTFilter::begin() const
 int64_t
 MLTFilter::end() const
 {
-    return filter()->get_out();
+    auto end = filter()->get_out();
+
+    if ( end == 0 && m_connectedProducer )
+        end = m_connectedProducer->get_out();
+
+    return end ? end : MLTInput::Unlimited;
 }
 
 int64_t
