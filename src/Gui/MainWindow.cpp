@@ -835,11 +835,20 @@ MainWindow::restoreSession()
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if ( res == QMessageBox::Yes )
         {
-            //FIXME: We need a setting with the latest project file & restore the project.
-            QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
+            auto path = Core::instance()->recentProjects()->mostRecentProjectFile();
+            if ( path.isEmpty() == true )
+            {
+                QMessageBox::warning( this, tr( "Can't restore project" ), tr( "VLMC didn't manage to restore your project. We apology for the inconvenience" ) );
+                ret = false;
+            }
+            else
+            {
+                Core::instance()->project()->load( path );
+                ret = true;
+            }
         }
     }
-    Core::instance()->settings()->setValue( "private/CleanQuit", true );
+    Core::instance()->settings()->setValue( "private/CleanQuit", ret );
     return ret;
 }
 
