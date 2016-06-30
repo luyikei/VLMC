@@ -30,6 +30,15 @@ RecentProjects::RecentProjects( Settings* vlmcSettings, QObject *parent )
                                                 "", "", SettingValue::Private );
 }
 
+QString
+RecentProjects::mostRecentProjectFile()
+{
+    auto l = toVariant().toList();
+    if ( l.size() == 0 )
+        return QStringLiteral( "" );
+    return l[0].toMap()["file"].toString();
+}
+
 const QVariant&
 RecentProjects::toVariant() const
 {
