@@ -1168,6 +1168,11 @@ TracksView::mouseReleaseEvent( QMouseEvent *event )
             {
                 targetPos = m_actionItem->startPos() - m_effectTarget->startPos();
                 effectItem->setContainer( m_effectTarget );
+                effectItem->triggerMove( m_effectTarget->clip()->input(), targetPos );
+            }
+            else
+            {
+                effectItem->triggerMove( m_actionItem->track()->trackWorkflow(), targetPos );
             }
         }
         else
