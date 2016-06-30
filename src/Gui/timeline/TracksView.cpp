@@ -997,24 +997,16 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
         else
             itemNewSize = itemPos + m_actionItem->width() - mapToScene( event->pos() ).x();
 
-        qint32  trackId = m_actionItem->trackNumber();
-        Q_ASSERT( trackId >= 0 );
-
-        //FIXME: BEGIN UGLY
-        GraphicsTrack *track = getTrack( m_actionItem->trackType(), trackId );
-        Q_ASSERT( track );
-
-        QPointF collidePos = track->sceneBoundingRect().topRight();
-        collidePos.setX( itemPos + itemNewSize );
-
-        QList<QGraphicsItem*> gi = scene()->items( collidePos );
-
         bool collide = false;
         if ( m_actionItem->type() != GraphicsEffectItem::Type )
         {
-            for ( int i = 0; i < gi.count(); ++i )
+            auto items = scene()->items(
+                            m_actionItem->mapRectToScene( 0, 0, itemNewSize, m_actionItem->boundingRect().height() )
+                            );
+
+            for ( auto item : items )
             {
-                AbstractGraphicsMediaItem* mi = dynamic_cast<AbstractGraphicsMediaItem*>( gi.at( i ) );
+                AbstractGraphicsMediaItem* mi = dynamic_cast<AbstractGraphicsMediaItem*>( item );
                 if ( mi && mi != m_actionItem )
                 {
                     collide = true;
@@ -1022,7 +1014,6 @@ TracksView::mouseMoveEvent( QMouseEvent *event )
                 }
             }
         }
-        // END UGLY
         if ( !collide )
         {
             GraphicsEffectItem  *effectItem = qgraphicsitem_cast<GraphicsEffectItem*>( m_actionItem );
