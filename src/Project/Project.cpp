@@ -54,15 +54,15 @@ Project::Project( Settings* settings )
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Automatic save interval" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "This is the interval that VLMC will wait "
                                                        "between two automatic save" ), SettingValue::Clamped );
-    automaticBackupInterval->setLimits(1, QVariant(QVariant::Invalid));
+    automaticBackupInterval->setLimits( 1, QVariant( QVariant::Invalid ) );
 
-    connect( m_timer, SIGNAL( timeout() ), this, SLOT(autoSaveRequired() ) );
-    connect( this, SIGNAL( destroyed() ), m_timer, SLOT( stop() ) );
+    connect( m_timer, &QTimer::timeout, this, &Project::autoSaveRequired );
+    connect( this, &Project::destroyed, m_timer, &QTimer::stop );
 
-    connect( automaticBackup, SIGNAL( changed( QVariant ) ),
-             this, SLOT( autoSaveEnabledChanged( QVariant ) ) );
-    connect( automaticBackupInterval, SIGNAL( changed( QVariant ) ), this,
-             SLOT( autoSaveIntervalChanged( QVariant ) ) );
+    connect( automaticBackup, &SettingValue::changed,
+             this, &Project::autoSaveEnabledChanged );
+    connect( automaticBackupInterval, &SettingValue::changed,
+             this, &Project::autoSaveIntervalChanged );
 }
 
 Project::~Project()
@@ -320,7 +320,8 @@ Project::nbChannels() const
     return m_settings->value( "audio/NbChannels" )->get().toUInt();
 }
 
-QFile* Project::emergencyBackupFile()
+QFile*
+Project::emergencyBackupFile()
 {
     const QString lastProject = Core::instance()->settings()->value( "private/EmergencyBackup" )->get().toString();
     if ( lastProject.isEmpty() == true )
@@ -338,7 +339,7 @@ Project::cleanChanged( bool val )
 }
 
 void
-Project::libraryCleanChanged(bool val)
+Project::libraryCleanChanged( bool val )
 {
     Q_ASSERT( m_libraryCleanState != val);
     m_libraryCleanState = val;
@@ -346,7 +347,7 @@ Project::libraryCleanChanged(bool val)
 }
 
 void
-Project::projectNameChanged(const QVariant &projectName)
+Project::projectNameChanged( const QVariant& projectName )
 {
     emit projectNameChanged( projectName.toString() );
 }
@@ -361,7 +362,7 @@ Project::autoSaveRequired()
 
 
 void
-Project::autoSaveEnabledChanged(const QVariant &enabled)
+Project::autoSaveEnabledChanged( const QVariant& enabled )
 {
     if ( enabled.toBool() == true )
     {
@@ -373,7 +374,7 @@ Project::autoSaveEnabledChanged(const QVariant &enabled)
 }
 
 void
-Project::autoSaveIntervalChanged(const QVariant &interval)
+Project::autoSaveIntervalChanged( const QVariant& interval )
 {
     bool enabled = Core::instance()->settings()->value( "vlmc/AutomaticBackup" )->get().toBool();
 

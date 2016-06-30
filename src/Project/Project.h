@@ -51,7 +51,7 @@ class Project : public QObject
         virtual ~Project();
 
         void            save();
-        void            saveAs(const QString& fileName);
+        void            saveAs( const QString& fileName );
         void            newProject( const QString& projectName, const QString& projectFilePath );
         /**
          *  @brief          Check for a project backup file, and load the appropriate file,
@@ -59,7 +59,7 @@ class Project : public QObject
          *  @param fileName The path of the project file to load. This is expected to be
          *                  an absolute file path.
          */
-        bool            load(const QString& path);
+        bool            load( const QString& path );
         void            emergencyBackup();
         bool            isClean() const;
         void            closeProject();
@@ -91,7 +91,7 @@ class Project : public QObject
     public slots:
         void                cleanChanged( bool val );
         void                libraryCleanChanged( bool val );
-        void                projectNameChanged( const QVariant& projectName); // Proxy slot for projectNameChanged(QString)
+        void                projectNameChanged( const QVariant& projectName ); // Proxy slot for projectNameChanged(QString)
         void                autoSaveRequired();
         void                autoSaveEnabledChanged( const QVariant& enabled );
         void                autoSaveIntervalChanged( const QVariant& interval );
