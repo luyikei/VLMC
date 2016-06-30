@@ -347,9 +347,13 @@ MainWindow::on_actionSave_triggered()
 void
 MainWindow::on_actionSave_As_triggered()
 {
-    //FIXME: This lacks the current project file path as a default location.
+    auto path = Core::instance()->recentProjects()->mostRecentProjectFile();
+
+    if ( path.isEmpty() == true )
+        path = VLMC_GET_STRING( "vlmc/WorkspaceLocation" );
+
     QString dest = QFileDialog::getSaveFileName( nullptr, QObject::tr( "Enter the output file name" ),
-                                  QString(), QObject::tr( "VLMC project file(*.vlmc)" ) );
+                                  path, QObject::tr( "VLMC project file(*.vlmc)" ) );
     if ( dest.isEmpty() == true )
         return;
     if ( !dest.endsWith( ".vlmc" ) ) 
