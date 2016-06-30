@@ -160,7 +160,7 @@ class   MainWorkflow : public QObject
         void                    postLoad();
 
     private:
-        QList<Toggleable<TrackWorkflow*>>     m_tracks;
+        QList<TrackWorkflow*>           m_tracks;
         const quint32                   m_trackCount;
 
         Settings*                       m_settings;

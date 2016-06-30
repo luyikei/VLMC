@@ -57,11 +57,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
 
     for ( int i = 0; i < trackCount; ++i )
-    {
-        Toggleable<TrackWorkflow*> track;
-        m_tracks << track;
-        m_tracks[i].setPtr( new TrackWorkflow( i, m_multitrack ) );
-    }
+        m_tracks << new TrackWorkflow( i, m_multitrack );
 
     m_settings->createVar( SettingValue::List, "tracks", QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );
@@ -73,7 +69,6 @@ MainWorkflow::~MainWorkflow()
 {
     for ( auto track : m_tracks )
         delete track;
-    m_tracks.clear();
     delete m_multitrack;
     delete m_renderer;
     delete m_settings;
@@ -90,7 +85,6 @@ void
 MainWorkflow::muteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
     Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId].deactivate();
     m_tracks[trackId]->mute( true, trackType );
 }
 
@@ -98,7 +92,6 @@ void
 MainWorkflow::unmuteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
     Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId].activate();
     m_tracks[trackId]->mute( false, trackType );
 }
 
