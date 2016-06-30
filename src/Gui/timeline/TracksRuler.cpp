@@ -34,9 +34,6 @@ const int TracksRuler::comboScale[] = { 1, 2, 5, 10, 25, 50, 125, 250, 500, 725,
 TracksRuler::TracksRuler( TracksView* tracksView, QWidget* parent )
     : QWidget( parent ), m_tracksView( tracksView ), m_duration ( 0 ), m_offset( 0 )
 {
-
-    //TODO We should really get that from the
-    // workflow and not directly from the settings.
     m_fps = qRound( Core::instance()->project()->fps() );
 
     m_factor = 1;

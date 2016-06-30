@@ -28,6 +28,7 @@
 
 
 #include "Backend/IBackend.h"
+#include "Backend/IProfile.h"
 #include "Project.h"
 #include "RecentProjects.h"
 #include "Settings/Settings.h"
@@ -216,6 +217,9 @@ Project::initSettings()
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                     SettingValue::NotEmpty );
     connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
+    connect( fps, &SettingValue::changed, this,
+             [this]( const QVariant& var ){ Backend::instance()->profile().setFrameRate( var.toDouble() * 100, 100 ); }
+    );
 }
 
 void
