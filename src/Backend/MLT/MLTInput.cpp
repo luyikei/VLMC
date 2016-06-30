@@ -361,7 +361,7 @@ MLTInput::attach( Backend::IFilter& filter )
     assert( mltFilter );
     auto ret = producer()->attach( *mltFilter->filter() );
     mltFilter->connect( *this );
-    return ret;
+    return !ret;
 }
 
 bool
@@ -369,7 +369,7 @@ MLTInput::detach( Backend::IFilter& filter )
 {
     MLTFilter* mltFilter = dynamic_cast<MLTFilter*>( &filter );
     assert( mltFilter );
-    return producer()->detach( *mltFilter->filter() );
+    return !producer()->detach( *mltFilter->filter() );
 }
 
 bool
@@ -378,7 +378,7 @@ MLTInput::detach( int index )
     auto filter = producer()->filter( index );
     auto ret = producer()->detach( *filter );
     delete filter;
-    return ret;
+    return !ret;
 }
 
 int
@@ -390,7 +390,7 @@ MLTInput::filterCount() const
 bool
 MLTInput::moveFilter( int from, int to )
 {
-    return producer()->move_filter( from, to );
+    return !producer()->move_filter( from, to );
 }
 
 std::shared_ptr<Backend::IFilter>

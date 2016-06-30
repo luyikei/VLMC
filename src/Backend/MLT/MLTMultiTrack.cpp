@@ -85,7 +85,7 @@ MLTMultiTrack::setTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return tractor()->set_track( *mltInput->producer(), index );
+    return !tractor()->set_track( *mltInput->producer(), index );
 }
 
 bool
@@ -93,13 +93,13 @@ MLTMultiTrack::insertTrack( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return tractor()->insert_track( *mltInput->producer(), index );
+    return !tractor()->insert_track( *mltInput->producer(), index );
 }
 
 bool
 MLTMultiTrack::removeTrack( int index )
 {
-    return tractor()->remove_track( index );
+    return !tractor()->remove_track( index );
 }
 
 Backend::IInput*
@@ -133,5 +133,5 @@ MLTMultiTrack::connect( Backend::IInput& input )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return tractor()->connect( *mltInput->producer() );
+    return !tractor()->connect( *mltInput->producer() );
 }

@@ -85,7 +85,7 @@ MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
 {
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 );
+    return !playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 );
 }
 
 bool
@@ -93,7 +93,7 @@ MLTTrack::append( Backend::IInput& input )
 {
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return playlist()->append( *mltInput->producer() );
+    return !playlist()->append( *mltInput->producer() );
 }
 
 bool
@@ -110,13 +110,13 @@ MLTTrack::remove( int index )
             break;
     }
 
-    return ret;
+    return !ret;
 }
 
 bool
 MLTTrack::move( int src, int dist )
 {
-    return playlist()->move( src, dist );
+    return !playlist()->move( src, dist );
 }
 
 Backend::IInput*
@@ -134,7 +134,7 @@ MLTTrack::clipAt( int64_t position ) const
 bool
 MLTTrack::resizeClip( int clip, int64_t begin, int64_t end )
 {
-    return playlist()->resize_clip( clip, (int)begin, (int)end );
+    return !playlist()->resize_clip( clip, (int)begin, (int)end );
 }
 
 int

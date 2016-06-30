@@ -147,7 +147,7 @@ MLTOutput::connect( Backend::IInput& input )
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
     m_input = mltInput;
-    return consumer()->connect( *(mltInput->producer()) );
+    return !consumer()->connect( *(mltInput->producer()) );
 }
 
 bool

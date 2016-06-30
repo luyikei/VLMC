@@ -24,6 +24,7 @@
 #include <mlt++/MltFilter.h>
 #include <mlt++/MltProducer.h>
 
+#include <cassert>
 #include <cstring>
 #include "Backend/IBackend.h"
 #include "MLTProfile.h"
@@ -213,13 +214,10 @@ bool
 MLTFilter::connect( Backend::IInput& input, int index )
 {
     MLTInput* mltInput = dynamic_cast<MLTInput*>( &input );
-
-    if ( mltInput == nullptr )
-        return true;
-
+    assert( mltInput );
     m_connectedProducer.reset( new Mlt::Producer( mltInput->producer()->get_producer() ) );
 
-    return filter()->connect( *mltInput->producer(), index );
+    return !filter()->connect( *mltInput->producer(), index );
 }
 
 void
