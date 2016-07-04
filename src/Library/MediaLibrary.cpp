@@ -22,9 +22,11 @@
 
 #include "MediaLibrary.h"
 #include "Settings/Settings.h"
+#include "MediaLibraryModel.h"
 
 MediaLibrary::MediaLibrary( Settings* settings )
-    : m_initialized( false )
+    : m_videoModel( nullptr )
+    , m_initialized( false )
 {
     m_ml.reset( NewMediaLibrary() );
     auto s = settings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
@@ -33,6 +35,18 @@ MediaLibrary::MediaLibrary( Settings* settings )
     connect( s, &SettingValue::changed, this, &MediaLibrary::mlDirsChanged );
     auto ws = settings->value( "vlmc/WorkspaceLocation" );
     connect( ws, &SettingValue::changed, this, &MediaLibrary::workspaceChanged );
+}
+
+MediaLibraryModel* MediaLibrary::model( MediaLibrary::MediaType type ) const
+{
+    switch ( type )
+    {
+        case MediaType::Video:
+            return m_videoModel;
+        case MediaType::Audio:
+            return nullptr;
+    }
+    Q_UNREACHABLE();
 }
 
 void
@@ -59,13 +73,18 @@ MediaLibrary::workspaceChanged( const QVariant& workspace )
         auto w = workspace.toString().toStdString();
         Q_ASSERT( w.empty() == false );
         m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
+        //FIXME: Race condition, this could trigger onMediaAdded before m_videoModel has been created.
+        //However, we need the model to be created AFTER the ML gets initialized
+        m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
         m_initialized = true;
     }
     //else FIXME, and relocate the media library
 }
 
-void MediaLibrary::onMediaAdded( std::vector<medialibrary::MediaPtr> )
+void MediaLibrary::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
 {
+    for ( auto m : mediaList )
+        m_videoModel->addMedia( m );
 }
 
 void MediaLibrary::onMediaUpdated( std::vector<medialibrary::MediaPtr> )

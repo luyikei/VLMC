@@ -30,6 +30,7 @@
 #include <memory>
 
 class Settings;
+class MediaLibraryModel;
 
 class MediaLibrary : public QObject, private medialibrary::IMediaLibraryCb
 {
@@ -37,7 +38,14 @@ class MediaLibrary : public QObject, private medialibrary::IMediaLibraryCb
     Q_DISABLE_COPY( MediaLibrary )
 
 public:
+    enum class MediaType
+    {
+        Video,
+        Audio
+    };
+
     explicit MediaLibrary( Settings* settings );
+    MediaLibraryModel* model( MediaType type ) const;
 
 signals:
     void    progressUpdated( int percent );
@@ -71,6 +79,7 @@ private:
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary> m_ml;
+    MediaLibraryModel* m_videoModel;
     bool m_initialized;
 };
 
