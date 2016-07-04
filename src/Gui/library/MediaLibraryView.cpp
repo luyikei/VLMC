@@ -26,40 +26,31 @@
 
 #include "MediaLibraryView.h"
 
-#include "Project/Project.h"
-#include "Media/Clip.h"
-#include "Library/Library.h"
+#include "Library/MediaLibrary.h"
+#include "Library/MediaLibraryModel.h"
 #include "Main/Core.h"
-#include "Media/Media.h"
-#include "MediaCellView.h"
-#include "ViewController.h"
-#include "Tools/VlmcDebug.h"
 
+#include <QBoxLayout>
 #include <QListView>
+#include <QtQuick/QQuickView>
+#include <QQmlContext>
 #include <QUrl>
-#include <QMimeData>
 
-MediaLibraryView::MediaLibraryView(QWidget *parent) : QWidget(parent),
-    m_ui( new Ui::MediaLibraryView() )
+MediaLibraryView::MediaLibraryView(QWidget *parent)
+    : QWidget(parent)
 {
-    m_ui->setupUi( this );
+    setObjectName( QStringLiteral( "medialibrary" ) );
+    auto view = new QQuickView;
+    auto container = QWidget::createWindowContainer( view, this );
+    auto layout = new QBoxLayout( QBoxLayout::TopToBottom, this );
+    layout->addWidget( container );
+
+    view->setSource( QUrl( "qrc:/qml/MediaLibraryView" ) );
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    auto ctx = view->rootContext();
+    ctx->setContextProperty( "mlModel", Core::instance()->mediaLibrary()->model( MediaLibrary::MediaType::Video ) );
 }
 
 MediaLibraryView::~MediaLibraryView()
 {
-    delete m_ui;
-}
-
-void
-MediaLibraryView::changeEvent( QEvent *e )
-{
-    QWidget::changeEvent( e );
-    switch ( e->type() )
-    {
-        case QEvent::LanguageChange:
-            m_ui->retranslateUi( this );
-            break;
-        default:
-            break;
-    }
 }

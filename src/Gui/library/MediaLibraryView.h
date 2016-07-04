@@ -25,25 +25,13 @@
 
 #include <QWidget>
 
-#include "ui/MediaLibraryView.h"
-
-class   Clip;
-
 class MediaLibraryView : public QWidget
 {
-    Q_OBJECT
     Q_DISABLE_COPY( MediaLibraryView )
 
     public:
-        typedef bool    (*Filter)( const Clip*, const QString& filter );
         explicit MediaLibraryView( QWidget *parent = 0);
         virtual ~MediaLibraryView();
-
-    protected:
-        void        changeEvent( QEvent *e );
-
-    private:
-        Ui::MediaLibraryView *m_ui;
 };
 
 #endif // MEDIALIBRARYVIEW_H

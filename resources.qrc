@@ -57,4 +57,7 @@
         <file>THANKS</file>
         <file>TRANSLATORS</file>
     </qresource>
+    <qresource prefix="/qml">
+        <file alias="MediaLibraryView">src/Gui/library/ui/MediaLibraryView.qml</file>
+    </qresource>
 </RCC>

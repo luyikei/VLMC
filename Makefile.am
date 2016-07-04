@@ -298,7 +298,6 @@ nodist_vlmc_SOURCES += \
 	src/Gui/widgets/FramelessButton.moc.cpp \
 	src/Gui/wizard/OpenPage.moc.cpp \
 	src/Gui/settings/ColorWidget.moc.cpp \
-	src/Gui/library/MediaLibraryView.moc.cpp \
 	src/Gui/wizard/firstlaunch/FirstLaunchPage.moc.cpp \
 	src/Gui/settings/Panel.moc.cpp \
 	src/Gui/preview/RenderWidget.moc.cpp \
@@ -350,7 +349,6 @@ vlmc_UI = \
 	src/Gui/ui/RendererSettings.ui \
 	src/Gui/ui/ShareOnInternet.ui \
 	src/Gui/ui/TagWidget.ui \
-	src/Gui/ui/MediaLibraryView.ui \
 	src/Gui/ui/FolderListWidget.ui \
 	src/Gui/ui/ClipMetadataDisplayer.ui \
 	src/Gui/ui/PreviewWidget.ui \
