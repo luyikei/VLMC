@@ -67,6 +67,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
 
 MainWorkflow::~MainWorkflow()
 {
+    m_clips.clear();
     for ( auto track : m_tracks )
         delete track;
     delete m_multitrack;
@@ -160,7 +161,29 @@ MainWorkflow::createClip( const QUuid& uuid )
         vlmcCritical() << "Couldn't find an acceptable parent to be added.";
         return nullptr;
     }
-    return std::make_shared<Clip>( clip );
+    auto newClip = std::make_shared<Clip>( clip );
+    m_clips << newClip;
+    return newClip;
+}
+
+QString
+MainWorkflow::createClip( const QString& uuid )
+{
+    auto newClip = createClip( QUuid( uuid ) );
+    return newClip->uuid().toString();
+}
+
+QJsonObject
+MainWorkflow::clipInfo( const QString& uuid )
+{
+    for ( auto clip : m_clips )
+    {
+        if ( clip->uuid().toString() == uuid )
+        {
+            return QJsonObject::fromVariantHash( clip->toVariant().toHash() );
+        }
+    }
+    return QJsonObject();
 }
 
 bool

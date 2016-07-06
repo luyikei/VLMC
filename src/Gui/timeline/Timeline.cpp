@@ -22,7 +22,10 @@
 
 #include "Timeline.h"
 
+#include "Main/Core.h"
+#include "Workflow/MainWorkflow.h"
 #include <QtQuick/QQuickView>
+#include <QtQml/QQmlContext>
 #include <QUrl>
 
 Timeline*   Timeline::m_instance = nullptr;
@@ -35,6 +38,7 @@ Timeline::Timeline( QWidget *parent )
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
+    m_view->rootContext()->setContextProperty( "workflow", Core::instance()->workflow() );
 }
 
 Timeline::~Timeline()

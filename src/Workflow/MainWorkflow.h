@@ -138,6 +138,14 @@ class   MainWorkflow : public QObject
          */
         std::shared_ptr<Clip>   createClip( const QUuid& uuid );
 
+
+
+        Q_INVOKABLE
+        QString                 createClip( const QString& uuid );
+
+        Q_INVOKABLE
+        QJsonObject             clipInfo( const QString& uuid );
+
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
                                                    quint32 nbChannels, quint32 sampleRate );
@@ -161,6 +169,7 @@ class   MainWorkflow : public QObject
 
     private:
         QList<TrackWorkflow*>           m_tracks;
+        QList<std::shared_ptr<Clip>>           m_clips;
         const quint32                   m_trackCount;
 
         Settings*                       m_settings;
