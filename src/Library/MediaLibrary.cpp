@@ -118,8 +118,16 @@ void MediaLibrary::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList
     }
 }
 
-void MediaLibrary::onMediaDeleted( std::vector<int64_t> )
+void MediaLibrary::onMediaDeleted( std::vector<int64_t> mediaList )
 {
+    for ( auto id : mediaList )
+    {
+        // We can't know the media type, however ID are unique regardless of the type
+        // so we are sure that we will remove the correct media.
+        if ( m_videoModel->removeMedia( id ) == true )
+            continue;
+        m_audioModel->removeMedia( id );
+    }
 }
 
 void MediaLibrary::onArtistsAdded( std::vector<medialibrary::ArtistPtr> )

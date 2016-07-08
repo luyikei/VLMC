@@ -71,22 +71,21 @@ void MediaLibraryModel::updateMedia( medialibrary::MediaPtr media )
     emit dataChanged( m, m );
 }
 
-void MediaLibraryModel::removeMedia( medialibrary::MediaPtr media )
+bool MediaLibraryModel::removeMedia( int64_t mediaId )
 {
-    if ( media->type() != m_mediaType )
-        return;
     std::lock_guard<std::mutex> lock( m_mediaMutex );
-    auto it = std::find_if( begin( m_media ), end( m_media ), [media](medialibrary::MediaPtr m) {
-        return m->id() == media->id();
+    auto it = std::find_if( begin( m_media ), end( m_media ), [mediaId](medialibrary::MediaPtr m) {
+        return m->id() == mediaId;
     });
     if ( it == end( m_media ) )
-        return;
+        return false;
     auto idx = it - begin( m_media );
     beginRemoveRows(QModelIndex(), idx, idx );
     m_media.erase( it );
     m_rowCount.fetch_sub( 1, std::memory_order_relaxed );
     removeRow( idx );
     endRemoveRows();
+    return true;
 }
 
 int MediaLibraryModel::rowCount( const QModelIndex& ) const
