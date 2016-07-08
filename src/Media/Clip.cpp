@@ -43,6 +43,12 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::
 {
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
+    Formats f;
+    if ( media->input()->hasAudio() == true )
+        f |= Clip::Audio;
+    if ( media->input()->hasVideo() == true )
+        f |= Clip::Video;
+    setFormats( f );
 }
 
 Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
@@ -63,6 +69,7 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
     else
         end = parent->begin() + end;
     m_input = parent->input()->cut( begin, end );
+    setFormats( parent->formats() );
 }
 
 Clip::~Clip()
@@ -250,7 +257,8 @@ Clip::toVariant() const
     QVariantHash h = {
         { "uuid", m_uuid.toString() },
         { "metatags", m_metaTags },
-        { "notes", m_notes }
+        { "notes", m_notes },
+        { "formats", (int)formats() }
     };
     if ( isRootClip() )
         h.insert( "media", m_media->toVariant() );
