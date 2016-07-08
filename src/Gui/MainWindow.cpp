@@ -114,10 +114,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
          [](const QString& folder) {
             NotificationZone::instance()->notify( "Discovering " + folder + "..." );
     });
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::reloadStarted,
-        [](const QString& folder) {
-            NotificationZone::instance()->notify( "Reloading medialibrary (" + folder + ")..." );
-    });
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );

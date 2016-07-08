@@ -51,9 +51,6 @@ signals:
     void    progressUpdated( int percent );
     void    discoveryStarted( QString );
     void    discoveryCompleted( QString );
-    void    reloadStarted( QString );
-    void    reloadCompleted( QString );
-
 
 private:
     void mlDirsChanged( const QVariant& value );
@@ -73,8 +70,6 @@ private:
     virtual void onTracksDeleted( std::vector<int64_t> trackIds ) override;
     virtual void onDiscoveryStarted( const std::string& entryPoint ) override;
     virtual void onDiscoveryCompleted( const std::string& entryPoint ) override;
-    virtual void onReloadStarted( const std::string& entryPoint ) override;
-    virtual void onReloadCompleted( const std::string& entryPoint ) override;
     virtual void onParsingStatsUpdated( uint32_t percent ) override;
 
 private:

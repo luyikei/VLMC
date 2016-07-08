@@ -172,16 +172,6 @@ void MediaLibrary::onDiscoveryCompleted( const std::string& entryPoint )
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
 
-void MediaLibrary::onReloadStarted( const std::string& entryPoint )
-{
-    emit reloadStarted( QString::fromStdString( entryPoint ) );
-}
-
-void MediaLibrary::onReloadCompleted( const std::string& entryPoint )
-{
-    emit reloadCompleted( QString::fromStdString( entryPoint ) );
-}
-
 void MediaLibrary::onParsingStatsUpdated( uint32_t percent )
 {
     emit progressUpdated( static_cast<int>( percent ) );
