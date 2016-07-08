@@ -72,9 +72,9 @@ MediaLibrary::workspaceChanged( const QVariant& workspace )
     {
         auto w = workspace.toString().toStdString();
         Q_ASSERT( w.empty() == false );
+        // Initializing the medialibrary doesn't start new folders discovery.
+        // This will happen after the first call to IMediaLibrary::discover()
         m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
-        //FIXME: Race condition, this could trigger onMediaAdded before m_videoModel has been created.
-        //However, we need the model to be created AFTER the ML gets initialized
         m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
         m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
         m_initialized = true;
