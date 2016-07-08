@@ -235,7 +235,7 @@ PreviewRuler::updateTimecode( qint64 frames /*= -1*/ )
     setFrame( frames );
     if ( m_renderer->length() > 0 )
     {
-        int fps = (int)m_renderer->getFps();
+        float fps = m_renderer->getFps();
 
         if ( fps > 0 )
         {
