@@ -33,6 +33,8 @@
 
 class MediaLibraryModel : public QAbstractListModel
 {
+    Q_OBJECT
+
 public:
     enum Roles
     {
@@ -45,6 +47,7 @@ public:
                                 QObject *parent = 0 );
 
     void addMedia( medialibrary::MediaPtr media );
+    void updateMedia( medialibrary::MediaPtr media );
     void removeMedia( medialibrary::MediaPtr media );
     int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
     QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;

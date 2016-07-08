@@ -65,6 +65,12 @@ void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
     endInsertRows();
 }
 
+void MediaLibraryModel::updateMedia( medialibrary::MediaPtr media )
+{
+    auto m = createIndex( media->id(), 0 );
+    emit dataChanged( m, m );
+}
+
 void MediaLibraryModel::removeMedia( medialibrary::MediaPtr media )
 {
     if ( media->type() != m_mediaType )

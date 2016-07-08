@@ -100,8 +100,22 @@ void MediaLibrary::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
     }
 }
 
-void MediaLibrary::onMediaUpdated( std::vector<medialibrary::MediaPtr> )
+void MediaLibrary::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList )
 {
+    for ( auto m : mediaList )
+    {
+        switch ( m->type() )
+        {
+        case medialibrary::IMedia::Type::VideoType:
+            m_videoModel->updateMedia( m );
+            break;
+        case medialibrary::IMedia::Type::AudioType:
+            m_audioModel->updateMedia( m );
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+    }
 }
 
 void MediaLibrary::onMediaDeleted( std::vector<int64_t> )
