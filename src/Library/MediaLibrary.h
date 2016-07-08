@@ -80,6 +80,7 @@ private:
 private:
     std::unique_ptr<medialibrary::IMediaLibrary> m_ml;
     MediaLibraryModel* m_videoModel;
+    MediaLibraryModel* m_audioModel;
     bool m_initialized;
 };
 

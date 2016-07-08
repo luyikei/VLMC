@@ -44,7 +44,7 @@ MediaLibraryModel* MediaLibrary::model( MediaLibrary::MediaType type ) const
         case MediaType::Video:
             return m_videoModel;
         case MediaType::Audio:
-            return nullptr;
+            return m_audioModel;
     }
     Q_UNREACHABLE();
 }
@@ -76,6 +76,7 @@ MediaLibrary::workspaceChanged( const QVariant& workspace )
         //FIXME: Race condition, this could trigger onMediaAdded before m_videoModel has been created.
         //However, we need the model to be created AFTER the ML gets initialized
         m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
+        m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
         m_initialized = true;
     }
     //else FIXME, and relocate the media library
@@ -84,7 +85,19 @@ MediaLibrary::workspaceChanged( const QVariant& workspace )
 void MediaLibrary::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
 {
     for ( auto m : mediaList )
-        m_videoModel->addMedia( m );
+    {
+        switch ( m->type() )
+        {
+        case medialibrary::IMedia::Type::VideoType:
+            m_videoModel->addMedia( m );
+            break;
+        case medialibrary::IMedia::Type::AudioType:
+            m_audioModel->addMedia( m );
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+    }
 }
 
 void MediaLibrary::onMediaUpdated( std::vector<medialibrary::MediaPtr> )
