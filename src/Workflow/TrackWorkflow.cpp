@@ -234,7 +234,7 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
     for ( auto& var : variant.toMap()[ "clips" ].toList() )
     {
         auto m = var.toMap();
-        auto c = std::shared_ptr<Clip>( Core::instance()->workflow()->createClip( QUuid( m["parent"].toString() ) ) );
+        auto c = std::shared_ptr<Clip>( Core::instance()->workflow()->createClip( m["parent"].toString(), trackId() ) );
         c->setBoundaries( m["begin"].toULongLong(),
                           m["end"].toULongLong()
                          );

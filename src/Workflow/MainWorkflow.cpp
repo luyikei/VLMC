@@ -24,6 +24,8 @@
 
 
 #include "vlmc.h"
+#include "Commands/Commands.h"
+#include "Commands/AbstractUndoStack.h"
 #include "Backend/MLT/MLTOutput.h"
 #include "Backend/MLT/MLTMultiTrack.h"
 #include "Backend/MLT/MLTTrack.h"
@@ -33,6 +35,7 @@
 #endif
 #include "Project/Project.h"
 #include "Media/Clip.h"
+#include "Media/Media.h"
 #include "Library/Library.h"
 #include "MainWorkflow.h"
 #include "Project/Project.h"
@@ -55,6 +58,10 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
+    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, this, [this]( qint64 pos )
+    {
+        emit frameChanged( pos, Vlmc::Renderer );
+    } );
 
     for ( int i = 0; i < trackCount; ++i )
         m_tracks << new TrackWorkflow( i, m_multitrack );
@@ -125,6 +132,12 @@ MainWorkflow::clear()
     emit cleared();
 }
 
+void
+MainWorkflow::setPosition( qint64 newFrame )
+{
+    m_renderer->setPosition( newFrame );
+}
+
 AbstractRenderer*
 MainWorkflow::renderer()
 {
@@ -153,7 +166,7 @@ MainWorkflow::trackCount() const
 }
 
 std::shared_ptr<Clip>
-MainWorkflow::createClip( const QUuid& uuid )
+MainWorkflow::createClip( const QUuid& uuid, quint32 trackId )
 {
     Clip* clip = Core::instance()->library()->clip( uuid );
     if ( clip == nullptr )
@@ -162,28 +175,80 @@ MainWorkflow::createClip( const QUuid& uuid )
         return nullptr;
     }
     auto newClip = std::make_shared<Clip>( clip );
-    m_clips << newClip;
+    m_clips.insertMulti( trackId, newClip );
     return newClip;
 }
 
 QString
-MainWorkflow::createClip( const QString& uuid )
+MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool isAudioClip  )
 {
-    auto newClip = createClip( QUuid( uuid ) );
+    auto newClip = createClip( uuid, trackId );
+
+    if ( isAudioClip == true )
+        newClip->setFormats( Clip::Audio );
+    else
+        newClip->setFormats( Clip::Video );
+
+    Commands::trigger( new Commands::Clip::Add( newClip, track( trackId ), pos ) );
+
     return newClip->uuid().toString();
 }
 
 QJsonObject
 MainWorkflow::clipInfo( const QString& uuid )
 {
-    for ( auto clip : m_clips )
+    auto lClip = Core::instance()->library()->clip( uuid );
+    if ( lClip != nullptr )
     {
-        if ( clip->uuid().toString() == uuid )
+        auto h = lClip->toVariant().toHash();
+        h["length"] = lClip->length();
+        h["name"] = lClip->media()->fileName();
+        h["audio"] = lClip->formats().testFlag( Clip::Audio );
+        h["video"] = lClip->formats().testFlag( Clip::Video );
+        if ( lClip->isRootClip() == true )
         {
-            return QJsonObject::fromVariantHash( clip->toVariant().toHash() );
+            h["begin"] = lClip->begin();
+            h["end"] = lClip->end();
+        }
+        return QJsonObject::fromVariantHash( h );
+    }
+
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+    {
+        if ( it.value()->uuid().toString() == uuid )
+        {
+            auto clip = it.value();
+            auto h = clip->toVariant().toHash();
+            h["length"] = clip->length();
+            h["name"] = clip->media()->fileName();
+            h["audio"] = clip->formats().testFlag( Clip::Audio );
+            h["video"] = clip->formats().testFlag( Clip::Video );
+            h["position"] = track( it.key() )->getClipPosition( uuid );
+            return QJsonObject::fromVariantHash( h );
         }
     }
     return QJsonObject();
+}
+
+void
+MainWorkflow::moveClip( quint32 trackId, const QString& uuid, qint64 startFrame )
+{
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+    {
+        if ( it.value()->uuid().toString() == uuid )
+        {
+            auto oldTrackId = it.key();
+            auto clip = it.value();
+
+            if ( startFrame == getClipPosition( uuid, oldTrackId ) )
+                return;
+
+            Commands::trigger( new Commands::Clip::Move( track( oldTrackId ), track( trackId ), clip, startFrame ) );
+
+            m_clips.erase( it );
+            m_clips.insertMulti( trackId, clip );
+        }
+    }
 }
 
 bool

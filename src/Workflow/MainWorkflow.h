@@ -47,6 +47,7 @@ class   MediaContainer;
 
 #include <QObject>
 #include <QUuid>
+#include <QMap>
 
 /**
  *  \class  Represent the Timeline backend.
@@ -136,15 +137,18 @@ class   MainWorkflow : public QObject
          * The clip will be added to this MediaContainer, not to the Library.
          * The parent clip should be in the Library.
          */
-        std::shared_ptr<Clip>   createClip( const QUuid& uuid );
+        std::shared_ptr<Clip>   createClip( const QUuid& uuid, quint32 trackId );
 
 
 
         Q_INVOKABLE
-        QString                 createClip( const QString& uuid );
+        QString                 addClip( const QString& uuid, quint32 trackId, qint32 pos, bool isAudioClip );
 
         Q_INVOKABLE
         QJsonObject             clipInfo( const QString& uuid );
+
+        Q_INVOKABLE
+        void                    moveClip( quint32 trackId, const QString& uuid, qint64 startFrame );
 
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
@@ -169,7 +173,7 @@ class   MainWorkflow : public QObject
 
     private:
         QList<TrackWorkflow*>           m_tracks;
-        QList<std::shared_ptr<Clip>>           m_clips;
+        QMap<qint32, std::shared_ptr<Clip>>           m_clips;
         const quint32                   m_trackCount;
 
         Settings*                       m_settings;
@@ -188,6 +192,8 @@ class   MainWorkflow : public QObject
          *  \sa     cleared()
          */
         void                            clear();
+
+        void                            setPosition( qint64 newFrame );
 
     signals:
         /**
