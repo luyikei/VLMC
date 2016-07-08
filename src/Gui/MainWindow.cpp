@@ -36,6 +36,7 @@
 #include <QNetworkProxy>
 #include <QSysInfo>
 #include <QScrollArea>
+#include <QProgressBar>
 #include "Main/Core.h"
 #include "Project/Project.h"
 #include "Library/Library.h"
@@ -57,7 +58,6 @@
 /* Widgets */
 #include "effectsengine/EffectsListView.h"
 #include "library/MediaLibraryView.h"
-#include "widgets/NotificationZone.h"
 #include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
 
@@ -106,12 +106,27 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, &MainWindow::cleanStateChanged );
     connect( Core::instance()->recentProjects(), &RecentProjects::updated,
              this, &MainWindow::updateRecentProjects );
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::progressUpdated,
-             NotificationZone::instance(), &NotificationZone::progressUpdated );
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryStarted,
-         [](const QString& folder) {
-            NotificationZone::instance()->notify( "Discovering " + folder + "..." );
+
+    // Connect the medialibrary before it starts discovering/reloading
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::progressUpdated, this,
+             [this]( int percent ) {
+        if ( percent < 100 )
+            m_progressBar->setValue( percent );
+        else
+        {
+            m_progressBar->hide();
+            m_ui.statusbar->clearMessage();
+        }
     });
+
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryStarted, this,
+        [this](const QString& folder) {
+            m_ui.statusbar->showMessage( "Discovering " + folder + "...", 2500 );
+    }, Qt::QueuedConnection );
+    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryCompleted, this,
+        [this]( const QString& ) {
+            m_ui.statusbar->showMessage( "Analyzing media" );
+    }, Qt::QueuedConnection );
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
@@ -407,20 +422,11 @@ MainWindow::on_actionLoad_Project_triggered()
 }
 
 void
-MainWindow::createNotificationZone()
-{
-    QWidget *notifSpacer = new QWidget( this );
-    notifSpacer->setFixedWidth( 75 );
-    m_ui.statusbar->addPermanentWidget( notifSpacer );
-
-    m_ui.statusbar->addPermanentWidget( NotificationZone::instance() );
-}
-
-void
 MainWindow::createStatusBar()
 {
-    //Notifications:
-    createNotificationZone();
+    m_progressBar = new QProgressBar( this );
+    m_ui.statusbar->addPermanentWidget( m_progressBar );
+    m_progressBar->show();
 
     // Spacer
     QWidget* spacer = new QWidget( this );

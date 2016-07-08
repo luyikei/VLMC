@@ -24,6 +24,7 @@
 #define MAINWINDOW_H
 
 class QUndoView;
+class QProgressBar;
 
 #include <QApplication>
 #include <QSlider>
@@ -75,7 +76,6 @@ private:
     void        initializeDockWidgets();
     void        checkFolders();
     void        createStatusBar();
-    void        createNotificationZone();
     void        createGlobalPreferences();
     void        createProjectPreferences();
     void        clearTemporaryFiles();
@@ -136,6 +136,7 @@ private:
     QDockWidget*            m_dockedLibrary;
     QDockWidget*            m_dockedClipPreview;
     QDockWidget*            m_dockedProjectPreview;
+    QProgressBar*           m_progressBar;
 
 private slots:
     void                    on_actionFullscreen_triggered( bool checked );

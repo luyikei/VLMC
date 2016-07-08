@@ -38,7 +38,6 @@
 #include <QMutex>
 
 #ifdef HAVE_GUI
-# include "Gui/widgets/NotificationZone.h"
 # include <QMessageBox>
 #endif
 
@@ -53,10 +52,6 @@ Workspace::Workspace(Settings *settings)
             this, SLOT( workspaceChanged( QVariant ) ) );
     // Wait for the SettingValue to be loaded.
     m_mediasToCopyMutex = new QMutex;
-#ifdef HAVE_GUI
-    connect( this, SIGNAL( notify( QString ) ),
-             NotificationZone::instance(), SLOT( notify( QString ) ) );
-#endif
 }
 
 Workspace::~Workspace()

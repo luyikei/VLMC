@@ -215,7 +215,6 @@ vlmc_SOURCES += \
 	src/Gui/timeline/ThumbnailImageProvider.cpp \
 	src/Gui/widgets/ExtendedLabel.cpp \
 	src/Gui/widgets/FramelessButton.cpp \
-	src/Gui/widgets/NotificationZone.cpp \
 	src/Gui/widgets/SearchLineEdit.cpp \
 	src/Gui/wizard/GeneralPage.cpp \
 	src/Gui/wizard/OpenPage.cpp \
@@ -241,7 +240,6 @@ vlmc_SOURCES += \
 	src/Gui/widgets/ExtendedLabel.h \
 	src/Gui/widgets/SearchLineEdit.h \
 	src/Gui/widgets/CrashHandler.h \
-	src/Gui/widgets/NotificationZone.h \
 	src/Gui/MainWindow.h \
 	src/Gui/wizard/ProjectWizard.h \
 	src/Gui/wizard/GeneralPage.h \
@@ -316,7 +314,6 @@ nodist_vlmc_SOURCES += \
 	src/Gui/timeline/ThumbnailImageProvider.moc.cpp \
 	src/Gui/settings/LanguageWidget.moc.cpp \
 	src/Gui/import/TagWidget.moc.cpp \
-	src/Gui/widgets/NotificationZone.moc.cpp \
 	src/Gui/settings/DoubleSliderWidget.moc.cpp \
 	src/Gui/widgets/ExtendedLabel.moc.cpp \
 	src/Gui/About.moc.cpp \
@@ -358,7 +355,6 @@ vlmc_UI = \
 	src/Gui/ui/MainWindow.ui \
 	src/Gui/ui/Timeline.ui \
 	src/Gui/ui/WorkflowFileRendererDialog.ui \
-	src/Gui/ui/NotificationZone.ui \
 	src/Gui/ui/GeneralPage.ui \
 	src/Gui/ui/OpenPage.ui \
 	src/Gui/ui/VideoPage.ui \
