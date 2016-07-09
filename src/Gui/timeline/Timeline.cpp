@@ -37,8 +37,8 @@ Timeline::Timeline( QWidget *parent )
 {
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
-    m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
     m_view->rootContext()->setContextProperty( "workflow", Core::instance()->workflow() );
+    m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
 }
 
 Timeline::~Timeline()
