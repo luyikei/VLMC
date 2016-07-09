@@ -45,51 +45,31 @@ class Timeline : public QWidget
 public:
     explicit Timeline( QWidget *parent = 0 );
     virtual ~Timeline();
-    /// Return a pointer to the TracksView instance.
-    TracksView*         tracksView() { return m_tracksView; }
-    /// Returns a const pointer to the TracksView instance
-    const TracksView*   tracksView() const { return m_tracksView; }
-    /// Return a pointer to the TracksScene instance.
-    TracksScene*        tracksScene() { return m_tracksScene; }
-    /// Return a pointer to the TracksRuler instance.
-    TracksRuler*        tracksRuler() { return m_tracksRuler; }
-    /// Return a pointer to the Timeline instance (singleton).
-    static Timeline*    instance() { return m_instance; }
 
 public slots:
     /**
      * \brief Asks the workflow to clear itself.
      */
-    void clear();
+    void clear() {}
     /**
      * \brief Change the zoom level for all widgets of the timeline.
      * \param factor The zoom factor.
      */
-    void changeZoom( int factor );
+    void changeZoom( int factor ) {}
     /**
      * \brief Change the duration of the project.
      * \param duration Duration in frames.
      */
-    void setDuration( int duration );
+    void setDuration( int duration ) {}
     /**
      * \brief Change the currently selected tool.
      */
-    void setTool( ToolButtons button );
+    void setTool( ToolButtons button ) {}
 
 protected:
-    virtual void changeEvent( QEvent *e );
+    virtual void changeEvent( QEvent *e ) {}
 
 private:
-    void                initialize();
-
-private:
-    Ui::Timeline        m_ui;
-    TracksView*         m_tracksView;
-    TracksScene*        m_tracksScene;
-    TracksRuler*        m_tracksRuler;
-    TracksControls*     m_tracksControls;
-    double              m_scale;
-    MainWorkflow*       m_mainWorkflow;
     static Timeline*    m_instance;
 };
 

@@ -181,23 +181,11 @@ ELSE(NOT WITH_GUI)
         Gui/settings/PreferenceWidget.cpp
         Gui/settings/SettingsDialog.cpp
         Gui/settings/StringWidget.cpp
-        Gui/timeline/AbstractGraphicsItem.cpp
-        Gui/timeline/AbstractGraphicsMediaItem.cpp
-        Gui/timeline/GraphicsAudioItem.cpp
-        Gui/timeline/GraphicsCursorItem.cpp
-        Gui/timeline/GraphicsEffectItem.cpp
-        Gui/timeline/GraphicsMovieItem.cpp
-        Gui/timeline/GraphicsTrack.cpp
         Gui/timeline/Timeline.cpp
-        Gui/timeline/TracksControls.cpp
-        Gui/timeline/TracksRuler.cpp
-        Gui/timeline/TracksScene.cpp
-        Gui/timeline/TracksView.cpp
         Gui/widgets/ExtendedLabel.cpp
         Gui/widgets/FramelessButton.cpp
         Gui/widgets/NotificationZone.cpp
         Gui/widgets/SearchLineEdit.cpp
-        Gui/widgets/TrackControls.cpp
         Gui/wizard/GeneralPage.cpp
         Gui/wizard/OpenPage.cpp
         Gui/wizard/ProjectWizard.cpp
@@ -228,7 +216,6 @@ ELSE(NOT WITH_GUI)
         Gui/ui/MainWindow.ui
         Gui/ui/Timeline.ui
         Gui/ui/WorkflowFileRendererDialog.ui
-        Gui/widgets/ui/TrackControls.ui
         Gui/widgets/ui/NotificationZone.ui
         Gui/wizard/ui/GeneralPage.ui
         Gui/wizard/ui/OpenPage.ui

@@ -58,7 +58,6 @@
 #include "widgets/NotificationZone.h"
 #include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
-#include "timeline/TracksView.h"
 
 /* Settings / Preferences */
 #include "Project/RecentProjects.h"
@@ -93,16 +92,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
 #endif
-
-    // Zoom
-    connect( m_zoomSlider, SIGNAL( valueChanged( int ) ),
-             m_timeline, SLOT( changeZoom( int ) ) );
-    connect( m_timeline->tracksView(), SIGNAL( zoomIn() ),
-             this, SLOT( zoomIn() ) );
-    connect( m_timeline->tracksView(), SIGNAL( zoomOut() ),
-             this, SLOT( zoomOut() ) );
-    connect( this, SIGNAL( toolChanged( ToolButtons ) ),
-             m_timeline, SLOT( setTool( ToolButtons ) ) );
 
     connect( Core::instance()->project(), SIGNAL( projectNameChanged(QString) ),
              this, SLOT( projectNameChanged( QString ) ) );
