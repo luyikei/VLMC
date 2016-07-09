@@ -33,6 +33,7 @@
 #include <QUrl>
 #include <QNetworkProxy>
 #include <QSysInfo>
+#include <QScrollArea>
 #include "Main/Core.h"
 #include "Project/Project.h"
 #include "Library/Library.h"
@@ -415,10 +416,8 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_timeline = new Timeline;
-    m_timeline->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    m_timeline->show();
-    setCentralWidget( m_timeline );
+    m_timeline = new Timeline( this );
+    setCentralWidget( m_timeline->container() );
 
     m_importController = new ImportController();
 

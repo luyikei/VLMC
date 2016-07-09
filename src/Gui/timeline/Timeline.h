@@ -28,23 +28,20 @@
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"
 
-class   MainWorkflow;
-class   Project;
-class   TracksScene;
-class   TracksView;
-class   TracksControls;
-class   TracksRuler;
+class QQuickView;
 
 /**
  * \brief Entry point of the timeline widget.
  */
-class Timeline : public QWidget
+class Timeline : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY( Timeline )
 public:
     explicit Timeline( QWidget *parent = 0 );
     virtual ~Timeline();
+
+    QWidget*            container();
 
 public slots:
     /**
@@ -55,22 +52,24 @@ public slots:
      * \brief Change the zoom level for all widgets of the timeline.
      * \param factor The zoom factor.
      */
-    void changeZoom( int factor ) {}
+    void changeZoom( int factor ) { Q_UNUSED( factor ) }
     /**
      * \brief Change the duration of the project.
      * \param duration Duration in frames.
      */
-    void setDuration( int duration ) {}
+    void setDuration( int duration ) { Q_UNUSED( duration ) }
     /**
      * \brief Change the currently selected tool.
      */
-    void setTool( ToolButtons button ) {}
+    void setTool( ToolButtons button ) { Q_UNUSED( button ) }
 
 protected:
-    virtual void changeEvent( QEvent *e ) {}
+    virtual void changeEvent( QEvent *e ) { Q_UNUSED( e ) }
 
 private:
     static Timeline*    m_instance;
+    QQuickView*         m_view;
+    QWidget*            m_container;
 };
 
 #endif // TIMELINE_H

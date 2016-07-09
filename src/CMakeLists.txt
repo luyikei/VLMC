@@ -17,7 +17,7 @@ find_package(Qt5Core QUIET)
 if (Qt5Core_FOUND)
     # go on with other packages
     if(WITH_GUI)
-        find_package(Qt5 COMPONENTS Widgets Gui Network)
+        find_package(Qt5 COMPONENTS Widgets Gui Network Qml Quick)
     else()
         find_package(Qt5 COMPONENTS Network)
     endif()
@@ -109,7 +109,10 @@ ELSE (WIN32)
     LIST( APPEND VLMC_SRCS Main/vlmc.cpp )
 ENDIF(WIN32)
 
-SET(VLMC_RCC ../resources.qrc)
+SET(VLMC_RCC
+    ../resources.qrc
+    ../src/Gui/timeline/resources-timeline.qrc
+  )
 
 IF (WIN32)
     LIST( APPEND VLMC_RCC ../resources/styles.qrc )
@@ -275,7 +278,7 @@ ELSE(NOT WITH_GUI)
     ADD_EXECUTABLE( vlmc ${GUI_TYPE} ${VLMC_SRCS} ${VLMC_MOC_SRCS} ${VLMC_UIS_H} ${VLMC_RCC_SRCS} )
     TARGET_LINK_LIBRARIES( vlmc ${VLMC_LIBS} )
     if (NOT Qt4_FOUND)
-        qt5_use_modules(vlmc Core Gui Widgets Network)
+        qt5_use_modules(vlmc Core Gui Widgets Network Qml Quick)
     else()
         # We need to know the target for this one, which is not the case when doing most of the QT4/5 specific stuff.
         # We could hide this command in qt_use_modules macro, but this would be some kind of black magic uglyness

@@ -22,23 +22,28 @@
 
 #include "Timeline.h"
 
-#include "Project/Project.h"
-#include "Main/Core.h"
-#include "Media/Clip.h"
-#include "Workflow/MainWorkflow.h"
-#include "Tools/VlmcDebug.h"
-#include "Renderer/AbstractRenderer.h"
-
-#include <QHBoxLayout>
-#include <QScrollBar>
+#include <QtQuick/QQuickView>
+#include <QUrl>
 
 Timeline*   Timeline::m_instance = nullptr;
 
 Timeline::Timeline( QWidget *parent )
-    : QWidget( parent )
+    : QObject( parent )
+    , m_view( new QQuickView )
+    , m_container( QWidget::createWindowContainer( m_view, parent ) )
 {
+    m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    m_container->setFocusPolicy( Qt::TabFocus );
+    m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
 }
 
 Timeline::~Timeline()
 {
+    delete m_view;
+}
+
+QWidget*
+Timeline::container()
+{
+    return m_container;
 }
