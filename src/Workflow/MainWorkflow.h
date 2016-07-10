@@ -226,7 +226,7 @@ class   MainWorkflow : public QObject
          *
          *  \param  newLength   The new length, in frames
          */
-        void                    lengthChanged( qint64 );
+        void                    lengthChanged( qint64 length );
 };
 
 #endif // MAINWORKFLOW_H
