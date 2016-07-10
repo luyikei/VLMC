@@ -46,8 +46,8 @@ Commands::Generic::Generic() :
 
     //FIXME: there is no signal retranslateRequired in QUndoStack class
     //       <3 qt4 connects
-    connect( Core::instance()->undoStack(), SIGNAL( retranslateRequired() ),
-             this, SLOT( retranslate() ), Qt::DirectConnection );
+    // connect( Core::instance()->undoStack(), SIGNAL( retranslateRequired() ),
+    //          this, SLOT( retranslate() ), Qt::DirectConnection );
 }
 
 void
