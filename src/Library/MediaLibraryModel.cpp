@@ -32,24 +32,8 @@ MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, medialibr
     : QAbstractListModel(parent)
     , m_ml( ml )
     , m_mediaType( type )
+    , m_rowCount( 0 )
 {
-    switch (type)
-    {
-    case medialibrary::IMedia::Type::AudioType:
-        m_media = m_ml.audioFiles();
-        break;
-    case medialibrary::IMedia::Type::VideoType:
-        m_media = m_ml.videoFiles();
-        break;
-    default:
-        Q_UNREACHABLE();
-    }
-    if ( m_media.size() == 0 )
-        return;
-    beginInsertRows( QModelIndex(), 0, m_media.size() );
-    m_rowCount = m_media.size();
-    insertRows( 0, m_media.size() );
-    endInsertRows();
 }
 
 void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
@@ -133,4 +117,25 @@ MediaLibraryModel::roleNames() const
         { Roles::ThumbnailPath, "thumbnailPath" },
         { Roles::Duration, "duration" }
     };
+}
+
+void MediaLibraryModel::refresh()
+{
+    std::lock_guard<std::mutex> lock( m_mediaMutex );
+
+    beginResetModel();
+
+    switch ( m_mediaType )
+    {
+    case medialibrary::IMedia::Type::AudioType:
+        m_media = m_ml.audioFiles();
+        break;
+    case medialibrary::IMedia::Type::VideoType:
+        m_media = m_ml.videoFiles();
+        break;
+    default:
+        Q_UNREACHABLE();
+    }
+    m_rowCount = m_media.size();
+    endResetModel();
 }

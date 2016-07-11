@@ -25,10 +25,11 @@
 #include "MediaLibraryModel.h"
 
 MediaLibrary::MediaLibrary( Settings* settings )
-    : m_videoModel( nullptr )
-    , m_initialized( false )
+    : m_initialized( false )
 {
     m_ml.reset( NewMediaLibrary() );
+    m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
+    m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
     auto s = settings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
                         "Media Library folders", "List of folders VLMC will search for media files",
                          SettingValue::Folders );
@@ -75,8 +76,6 @@ MediaLibrary::workspaceChanged( const QVariant& workspace )
         // Initializing the medialibrary doesn't start new folders discovery.
         // This will happen after the first call to IMediaLibrary::discover()
         m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
-        m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
-        m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
         m_initialized = true;
     }
     //else FIXME, and relocate the media library
@@ -169,6 +168,11 @@ void MediaLibrary::onDiscoveryStarted( const std::string& entryPoint )
 
 void MediaLibrary::onDiscoveryCompleted( const std::string& entryPoint )
 {
+    if ( entryPoint.empty() == true )
+    {
+        m_videoModel->refresh();
+        m_audioModel->refresh();
+    }
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
 
