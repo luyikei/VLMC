@@ -81,13 +81,12 @@ int MediaLibraryModel::rowCount( const QModelIndex& index ) const
 
 QVariant MediaLibraryModel::data( const QModelIndex &index, int role ) const
 {
+    if ( !index.isValid() || index.row() < 0 || index.row() >= m_rowCount )
+        return QVariant();
+
     medialibrary::MediaPtr m;
     {
         std::lock_guard<std::mutex> lock( m_mediaMutex );
-
-        if ( !index.isValid() || index.row() < 0 ||
-             static_cast<size_t>( index.row() ) >= m_media.size() )
-            return QVariant();
         m = m_media.at( static_cast<size_t>( index.row() ) );
     }
 
