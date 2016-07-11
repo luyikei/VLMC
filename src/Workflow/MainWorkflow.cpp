@@ -251,6 +251,21 @@ MainWorkflow::moveClip( quint32 trackId, const QString& uuid, qint64 startFrame 
     }
 }
 
+void
+MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos )
+{
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+    {
+        if ( it.value()->uuid().toString() == uuid )
+        {
+            auto trackId = it.key();
+            auto clip = it.value();
+
+            Commands::trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
+        }
+    }
+}
+
 bool
 MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, quint32 height,
                                  double fps, const QString &ar, quint32 vbitrate, quint32 abitrate,

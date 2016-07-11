@@ -150,6 +150,10 @@ class   MainWorkflow : public QObject
         Q_INVOKABLE
         void                    moveClip( quint32 trackId, const QString& uuid, qint64 startFrame );
 
+        Q_INVOKABLE
+        void                    resizeClip( const QString& uuid, qint64 newBegin,
+                                            qint64 newEnd, qint64 newPos );
+
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
                                                    quint32 nbChannels, quint32 sampleRate );
