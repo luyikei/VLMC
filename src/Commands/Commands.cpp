@@ -222,13 +222,13 @@ Commands::Clip::Resize::retranslate()
 void
 Commands::Clip::Resize::internalRedo()
 {
-    m_trackWorkflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd );
+    m_trackWorkflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd, m_newPos );
 }
 
 void
 Commands::Clip::Resize::internalUndo()
 {
-    m_trackWorkflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd );
+    m_trackWorkflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd, m_oldPos );
 }
 
 Commands::Clip::Split::Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit,

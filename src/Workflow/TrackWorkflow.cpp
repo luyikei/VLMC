@@ -146,19 +146,22 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 }
 
 void
-TrackWorkflow::resizeClip( const QUuid &id, qint64 begin, qint64 end )
+TrackWorkflow::resizeClip( const QUuid &id, qint64 begin, qint64 end, qint64 pos )
 {
-    QWriteLocker    lock( m_clipsLock );
-
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
     {
-        auto clip = it.value();
-        if ( clip->uuid() == id )
+        QWriteLocker    lock( m_clipsLock );
+
+        for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
         {
-            auto track = trackFromFormats( clip->formats() );
-            track->resizeClip( track->clipIndexAt( it.key() ), begin, end );
+            auto clip = it.value();
+            if ( clip->uuid() == id )
+            {
+                auto track = trackFromFormats( clip->formats() );
+                track->resizeClip( track->clipIndexAt( it.key() ), begin, end );
+            }
         }
     }
+    moveClip( id, pos );
 }
 
 void

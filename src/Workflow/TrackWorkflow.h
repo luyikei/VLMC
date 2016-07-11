@@ -65,7 +65,7 @@ class   TrackWorkflow : public QObject
         inline Backend::ITrack*                 trackFromFormats( Clip::Formats formats );
 
         void                                    moveClip( const QUuid& id, qint64 startingFrame );
-        void                                    resizeClip( const QUuid& id, qint64 begin, qint64 end );
+        void                                    resizeClip( const QUuid& id, qint64 begin, qint64 end, qint64 pos );
         std::shared_ptr<Clip>                   removeClip( const QUuid& id );
         void                                    addClip( std::shared_ptr<Clip> const& clip, qint64 start );
         qint64                                  getClipPosition( const QUuid& uuid ) const;
