@@ -194,8 +194,10 @@ Rectangle {
         }
         else {
             for ( var i = 0; i < selectedClips.length; ++i )
-                if ( !selectedClips[i]["item"] || selectedClips[i]["item"] === clip )
+                if ( !selectedClips[i]["item"] || selectedClips[i]["item"] === clip ) {
                     selectedClips.splice( i, 1 );
+                    --i;
+                }
         }
     }
 
