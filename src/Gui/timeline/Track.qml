@@ -135,6 +135,10 @@ Item {
                 }
 
                 onPositionChanged: {
+                    // If resizing, ignore
+                    if ( drag.source.resizing === true )
+                        return;
+
                     // Find the previous X of the clip
                     var newX = drag.x;
                     for ( var i = 0; i < selectedClips.length; ++i ) {

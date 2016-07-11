@@ -51,6 +51,11 @@ Rectangle {
             workflow.moveClip( trackId, uuid, clipInfo["position"] )
     }
 
+    function resize() {
+        // This function updates Backend
+        workflow.resizeClip( uuid, clipInfo["begin"], clipInfo["end"], clipInfo["position"] )
+    }
+
     Component.onCompleted: {
 
         clipInfo["item"] = clip;
@@ -78,9 +83,47 @@ Rectangle {
     MouseArea {
         id: dragArea
         anchors.fill: parent
-        drag.target: parent
+        drag.target: resizing ? null : parent
         drag.minimumX: 0
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
+        cursorShape: Qt.OpenHandCursor
+
+        property bool resizing: false
+
+        onPositionChanged: {
+           // If it's too short, don't resize.
+            if ( width < 6 ) {
+                resizing = false;
+                return;
+            }
+
+            if ( dragArea.pressed === true ) {
+                // Handle resizing
+                if ( resizing === true ) {
+                    if ( mouseX < width / 2 ) {
+                        var newPos = ptof( clip.x + mouseX );
+                        var newBegin = clipInfo["begin"] + ( newPos - clipInfo["position"] );
+                        if ( newBegin < 0 || newPos < 0 || newBegin >= clipInfo["end"] )
+                            return;
+                        clipInfo["begin"] = newBegin;
+                        clipInfo["position"] = newPos;
+                    }
+                    else {
+                        var newEnd = ptof( mouseX + ftop( clipInfo["begin"] ) );
+                        if ( newEnd <= clipInfo["begin"] || newEnd + 1 > clipInfo["length"] )
+                            return;
+                        clipInfo["end"] = newEnd;
+                    }
+                }
+            }
+            else {
+                if ( mouseX < 3 || ( clip.width - mouseX ) < 3 )
+                    resizing = true;
+                else
+                    resizing = false;
+            }
+        }
 
         onPressed: {
             if ( selected === true )
@@ -102,9 +145,31 @@ Rectangle {
 
         onReleased: {
             for ( var i = 0; i < selectedClips.length; ++i )
-                if ( selectedClips[i]["item"] )
-                    selectedClips[i]["item"].move();
+                if ( selectedClips[i]["item"] ) {
+                    if ( resizing === true )
+                        selectedClips[i]["item"].resize();
+                    else
+                        selectedClips[i]["item"].move();
+                }
         }
+
+        states: [
+            State {
+                name: "Normal"
+                when: !dragArea.pressed && !dragArea.resizing
+                PropertyChanges { target: dragArea; cursorShape: Qt.OpenHandCursor }
+            },
+            State {
+                name: "Resizing"
+                when: dragArea.resizing
+                PropertyChanges { target: dragArea; cursorShape: Qt.SizeHorCursor }
+            },
+            State {
+                name: "Dragging"
+                when: dragArea.pressed && !dragArea.resizing
+                PropertyChanges { target: dragArea; cursorShape: Qt.ClosedHandCursor }
+            }
+        ]
     }
 
     onXChanged: {
