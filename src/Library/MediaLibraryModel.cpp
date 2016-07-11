@@ -61,7 +61,6 @@ void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
     beginInsertRows( QModelIndex(), size, size );
     m_media.push_back( media );
     m_rowCount.fetch_add( 1, std::memory_order_relaxed );
-    insertRow( size );
     endInsertRows();
 }
 
@@ -83,7 +82,6 @@ bool MediaLibraryModel::removeMedia( int64_t mediaId )
     beginRemoveRows(QModelIndex(), idx, idx );
     m_media.erase( it );
     m_rowCount.fetch_sub( 1, std::memory_order_relaxed );
-    removeRow( idx );
     endRemoveRows();
     return true;
 }
