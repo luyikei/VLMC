@@ -102,8 +102,7 @@ Rectangle {
 
     function removeClipFromTrackContainer( trackType, uuid )
     {
-        var tracks = trackContainer( trackType )["tracks"];
-        for ( var i = 0; i < tracks.count; i++  )
+        for ( var i = 0; i < trackContainer( trackType )["tracks"].count; i++  )
             removeClipFromTrack( trackType, i, uuid );
     }
 
