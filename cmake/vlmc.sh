@@ -4,5 +4,5 @@ BIN="bin/vlmc"
 if [ -f $BIN ]; then
     exec $BIN "$@"
 else
-    echo "VLMC not build, read INSTALL first"
+    echo "VLMC not built, read INSTALL first"
 fi
