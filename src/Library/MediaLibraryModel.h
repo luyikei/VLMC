@@ -49,10 +49,11 @@ public:
     void addMedia( medialibrary::MediaPtr media );
     void updateMedia( medialibrary::MediaPtr media );
     bool removeMedia( int64_t media );
-    int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
-    QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
-    QHash<int, QByteArray> roleNames() const;
     void refresh();
+
+    virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
+    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+    virtual QHash<int, QByteArray> roleNames() const override;
 
 private:
     medialibrary::IMediaLibrary& m_ml;
