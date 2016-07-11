@@ -70,8 +70,12 @@ bool MediaLibraryModel::removeMedia( int64_t mediaId )
     return true;
 }
 
-int MediaLibraryModel::rowCount( const QModelIndex& ) const
+int MediaLibraryModel::rowCount( const QModelIndex& index ) const
 {
+    // A valid index is any row, which doesn't have child
+    // An invalid index is the root node, which does have children
+    if ( index.isValid() == true )
+        return 0;
     return m_rowCount.load( std::memory_order_relaxed );
 }
 
