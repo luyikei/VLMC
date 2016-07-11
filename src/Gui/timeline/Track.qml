@@ -107,7 +107,7 @@ Item {
 
                 onEntered: {
                     if ( drag.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
-                        if ( currentUuid ) {
+                        if ( currentUuid === drag.getDataAsString( "vlmc/uuid" ) ) {
                             if ( aClipInfo )
                             {
                                 aClipInfo["position"] = ptof( drag.x );
