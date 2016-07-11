@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     id: page
     anchors.fill: parent
     color: "#777777"
     border.width: 0
+    focus: true
 
     property int initPosOfCursor: 100
     property int ppu: 10 // Pixels Per minimum Unit
@@ -265,6 +267,27 @@ Rectangle {
         visible: false
         color: "#999999cc"
         property point initPos
+    }
+
+    MessageDialog {
+        id: removeClipDialog
+        title: "VLMC"
+        text: qsTr( "Do you really want to remove selected clips?" )
+        icon: StandardIcon.Question
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            while ( selectedClips.length ) {
+                workflow.removeClip( selectedClips[0]["uuid"] );
+                removeClipFromTrackContainer( selectedClips[0]["item"].type, selectedClips[0]["uuid"] );
+            }
+        }
+    }
+
+    Keys.onPressed: {
+        if ( event.key === Qt.Key_Delete ) {
+            removeClipDialog.visible = true;
+            event.accepted = true;
+        }
     }
 
     Connections {
