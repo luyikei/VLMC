@@ -266,6 +266,21 @@ MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, q
     }
 }
 
+void
+MainWorkflow::removeClip( const QString& uuid )
+{
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+    {
+        if ( it.value()->uuid().toString() == uuid )
+        {
+            auto trackId = it.key();
+            auto clip = it.value();
+
+            Commands::trigger( new Commands::Clip::Remove( clip, track( trackId) ) );
+        }
+    }
+}
+
 bool
 MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, quint32 height,
                                  double fps, const QString &ar, quint32 vbitrate, quint32 abitrate,
