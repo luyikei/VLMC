@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     id: clip
     // NEVER SET X DIRECTLY. BINDING WILL BE REMOVED.
-    x: clipInfo ? ftop( clipInfo["begin"] + clipInfo["position"] ) : 0
+    x: clipInfo ? ftop( clipInfo["position"] ) : 0
     width: clipInfo ? ftop( clipInfo["end"] - clipInfo["begin"] + 1 ) : 0
     z: 10001
     gradient: Gradient {
@@ -34,12 +34,13 @@ Rectangle {
 
     function setPixelPosition( pixels )
     {
-        clipInfo["position"] = ptof( pixels ) - clipInfo["begin"];
+        if ( pixels >= 0 )
+            clipInfo["position"] = ptof( pixels );
     }
 
-    function pixelPosition( pixels )
+    function pixelPosition()
     {
-        return ftop( clipInfo["begin"] + clipInfo["position"] );
+        return ftop( clipInfo["position"] );
     }
 
     function move() {

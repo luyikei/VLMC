@@ -110,19 +110,19 @@ Item {
                         if ( currentUuid ) {
                             if ( aClipInfo )
                             {
-                                aClipInfo["position"] = ptof( drag.x - ftop( aClipInfo["begin"] ) );
+                                aClipInfo["position"] = ptof( drag.x );
                                 aClipInfo = addClip( "Audio", trackId, aClipInfo );
                             }
                             if ( vClipInfo )
                             {
-                                vClipInfo["position"] = ptof( drag.x - ftop( vClipInfo["begin"] ) );
+                                vClipInfo["position"] = ptof( drag.x );
                                 vClipInfo = addClip( "Video", trackId, vClipInfo );
                             }
                         }
                         else {
                             var newClipInfo = workflow.clipInfo( drag.getDataAsString( "vlmc/uuid" ) );
                             currentUuid = "" + newClipInfo["uuid"];
-                            newClipInfo["position"] = ptof( drag.x - ftop( newClipInfo["begin"] ) );
+                            newClipInfo["position"] = ptof( drag.x );
                             newClipInfo["uuid"] = "tempUuid";
 
                             clearSelectedClips();
