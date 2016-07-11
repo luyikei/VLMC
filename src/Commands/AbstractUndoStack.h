@@ -42,25 +42,26 @@ namespace Commands
     class AbstractUndoStack : public QObject
     {
         Q_OBJECT
-    public:
-        explicit AbstractUndoStack( QObject* parent = 0 );
 
-    signals:
-        void cleanChanged( bool val );
+        public:
+            explicit AbstractUndoStack( QObject* parent = 0 );
 
-    public slots:
-        void redo();
-        void undo();
-        void push( Generic* command );
-        void setClean();
+        signals:
+            void cleanChanged( bool val );
 
-    private:
-        // Avoid overloading setClean
-        void _setClean( bool val );
+        public slots:
+            void redo();
+            void undo();
+            void push( Generic* command );
+            void setClean();
 
-        bool         m_isClean;
-        QStack<Generic*>       m_stack;
-        int          m_index;
+        private:
+            // Avoid overloading setClean
+            void _setClean( bool val );
+
+            bool         m_isClean;
+            QStack<Generic*>       m_stack;
+            int          m_index;
 #endif
     };
 }
