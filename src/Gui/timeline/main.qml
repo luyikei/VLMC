@@ -20,9 +20,9 @@ Rectangle {
 
     function clearSelectedClips() {
         while ( selectedClips.length ) {
-            var clipInfo = selectedClips.pop();
-            if ( clipInfo["item"] )
-                clipInfo["item"].selected = false;
+            var clip = selectedClips.pop();
+            if ( clip )
+                clip.selected = false;
         }
     }
 
@@ -72,9 +72,6 @@ Rectangle {
         if ( clipDict["uuid"] === "tempUuid" )
             return newDict;
 
-        while ( tracks.count < trackId + 2 ) {
-            addTrack( trackType );
-        }
         return newDict;
     }
 
@@ -83,6 +80,7 @@ Rectangle {
         var ret = false;
         var tracks = trackContainer( trackType )["tracks"];
         var clips = tracks.get( trackId )["clips"];
+
         for ( var j = 0; j < clips.count; j++ ) {
             var clip = clips.get( j );
             if ( clip.uuid === uuid ) {
@@ -93,9 +91,6 @@ Rectangle {
         }
         if ( uuid === "tempUuid" )
             return ret;
-
-        while ( tracks.count > 1 && tracks.get( tracks.count - 2 )["clips"].count === 0 )
-            removeTrack( trackType );
 
         return ret;
     }
@@ -147,6 +142,29 @@ Rectangle {
         workflow.moveClip( trackId, uuid, clip["position"] );
         addClip( trackType, trackId, clip );
         removeClipFromTrack( trackType, oldId, uuid );
+    }
+
+    function adjustTracks( trackType ) {
+        var tracks = trackContainer( trackType )["tracks"];
+
+        while ( tracks.count > 1 && tracks.get( tracks.count - 1 )["clips"].count === 0 &&
+               tracks.get( tracks.count - 2 )["clips"].count === 0 )
+            removeTrack( trackType );
+
+        if ( tracks.get( tracks.count - 1 )["clips"].count > 0 )
+            addTrack( trackType );
+
+    }
+
+    function dragFinished() {
+        var length = selectedClips.length;
+        for ( var i = length - 1; i >= 0; --i ) {
+            if ( selectedClips[i] ) {
+                selectedClips[i].move();
+            }
+        }
+        adjustTracks( "Audio" );
+        adjustTracks( "Video" );
     }
 
     ListModel {
@@ -276,8 +294,8 @@ Rectangle {
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
             while ( selectedClips.length ) {
-                workflow.removeClip( selectedClips[0]["uuid"] );
-                removeClipFromTrackContainer( selectedClips[0]["item"].type, selectedClips[0]["uuid"] );
+                workflow.removeClip( selectedClips[0] );
+                removeClipFromTrackContainer( selectedClips[0].type, selectedClips[0].uuid );
             }
         }
     }

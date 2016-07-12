@@ -11,8 +11,8 @@ Item {
     property ListModel clips
 
     Row {
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
+
         Rectangle {
             id: trackInfo
             width: initPosOfCursor
@@ -70,6 +70,7 @@ Item {
             }
 
             DropArea {
+                id: dropArea
                 anchors.fill: parent
                 keys: ["Clip", "vlmc/uuid"]
 
@@ -95,11 +96,13 @@ Item {
                         aClipInfo = null;
                         vClipInfo = null;
                         clearSelectedClips();
+                        adjustTracks( "Audio" );
+                        adjustTracks( "Video" );
                     }
                 }
 
                 onExited: {
-                    if ( currentUuid ) {
+                    if ( currentUuid !== "" ) {
                         removeClipFromTrack( "Audio", trackId, "tempUuid" );
                         removeClipFromTrack( "Video", trackId, "tempUuid" );
                     }
@@ -107,6 +110,7 @@ Item {
 
                 onEntered: {
                     if ( drag.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
+                        clearSelectedClips();
                         if ( currentUuid === drag.getDataAsString( "vlmc/uuid" ) ) {
                             if ( aClipInfo )
                             {
@@ -124,8 +128,6 @@ Item {
                             currentUuid = "" + newClipInfo["uuid"];
                             newClipInfo["position"] = ptof( drag.x );
                             newClipInfo["uuid"] = "tempUuid";
-
-                            clearSelectedClips();
                             if ( newClipInfo["audio"] )
                                 aClipInfo = addClip( "Audio", trackId, newClipInfo );
                             if ( newClipInfo["video"] )
@@ -139,36 +141,43 @@ Item {
                     if ( drag.source.resizing === true )
                         return;
 
-                    // Find the previous X of the clip
-                    var newX = drag.x;
+                    if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
+                        var newX = drag.source.mapToItem( clipArea, 0, 0 ).x; // FIXME: Mysterious QML Bug, you can't use drag.x
+                        drag.source.y = drag.source.y - drag.y + track.height / 2 - 1;
+                    }
+                    else
+                        newX = Math.max( drag.x, 0 );
+
                     for ( var i = 0; i < selectedClips.length; ++i ) {
-                        var target = selectedClips[i]["item"];
-
-                        if ( !target )
-                        {
-                            selectedClips.splice( i, 1 );
-                            --i;
-                            continue;
-                        }
-
-                        if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 )
-                            newX = drag.source.x; // FIXME: Mysterious QML Bug, you can't use drag.x
+                        var target = selectedClips[i];
 
                         var oldx = target.pixelPosition();
-                        newX = Math.max( newX, 0 );
+
+                        if ( drag.source === target ) {
+                            var oldTrackId = target.newTrackId;
+                            target.newTrackId = trackId;
+                            for ( var j = 0; j < selectedClips.length; ++j ) {
+                                if ( drag.source !== selectedClips[j] )
+                                    selectedClips[j].newTrackId = trackId - oldTrackId + selectedClips[j].trackId;
+                            }
+                        }
 
                         // Collision detection
                         var isCollided = true;
-                        var clips = trackContainer( target.type )["tracks"].get( trackId )["clips"];
-                        for ( var j = 0; j < clips.count + 2 && isCollided; ++j ) {
+                        var currentTrack = trackContainer( target.type )["tracks"].get( target.newTrackId );
+                        if ( currentTrack )
+                            var clips = currentTrack["clips"];
+                        else
+                            clips = [];
+                        for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
                             isCollided = false;
                             for ( var k = 0; k < clips.count; ++k ) {
                                 var clip = clips.get( k );
                                 if ( clip.uuid === target.uuid )
                                     continue;
                                 var sw = target.width; // Width of the source clip
-                                var cx = clip["item"].x;
-                                var cw = clip["item"].width;
+                                var cx = ftop( clip["position"] );
+                                var cw = ftop( clip["end"] - clip["begin"] + 1);
                                 // Set a right position
                                 if ( cx  + cw > newX && newX + sw > cx ) {
                                     isCollided = true;
@@ -191,28 +200,21 @@ Item {
                         if ( isCollided ) {
                             for ( k = 0; k < clips.count; ++k ) {
                                 clip = clips.get( k );
-                                if ( clip["item"].x + clip["item"].width > target.pixelPosition() )
-                                    target.setPixelPosition( clip["item"].x + clip["item"].width );
+                                cx = ftop( clip["position"] );
+                                cw = ftop( clip["end"] - clip["begin"] + 1);
+                                if ( cx + cw > target.pixelPosition() )
+                                    target.setPixelPosition( cx + cw );
                             }
                         }
 
                         if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
-
-                            if ( target.trackId !== trackId )
-                                target.newTrackId = trackId ;
-                            else
-                                target.newTrackId = -1;
-
-                            if ( drag.source.uuid !== target.uuid ) {
-                                if ( target.newTrackId !== -1 ) {
+                            if ( target.newTrackId !== target.trackId ) {
+                                drag.source.parent.parent.parent.z = ++maxZ;
+                                if ( drag.source.uuid !== target.uuid ) {
                                     addClip( target.type, target.newTrackId, target.clipInfo );
                                     removeClipFromTrack( target.type, target.trackId, target.uuid );
                                     --i;
                                 }
-                            }
-                            else {
-                                target.y = target.y - drag.y + track.height / 2 - 1;
-                                target.parent.parent.parent.z = maxZ++; // FIXME: Ugly workaround for z-index
                             }
                         }
                     }
@@ -228,7 +230,10 @@ Item {
                     trackId: model.trackId
                     type: track.type
                     uuid: model.uuid
-                    clipInfo: findClipFromTrack( track.type, model.trackId, model.uuid );
+                    position: model.position
+                    begin: model.begin
+                    end: model.end
+                    clipInfo: model
                 }
             }
         }

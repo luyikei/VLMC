@@ -3,9 +3,8 @@ import QtQuick 2.0
 Rectangle {
     id: clip
     // NEVER SET X DIRECTLY. BINDING WILL BE REMOVED.
-    x: clipInfo ? ftop( clipInfo["position"] ) : 0
-    width: clipInfo ? ftop( clipInfo["end"] - clipInfo["begin"] + 1 ) : 0
-    z: 10001
+    x: ftop( position )
+    width: ftop( end - begin + 1 )
     gradient: Gradient {
         GradientStop {
             id: gStop1
@@ -25,46 +24,70 @@ Rectangle {
     property alias name: text.text
     property int trackId
     // Usualy it is set -1. If not, the clip will be moved to the new track immediately.
-    property int newTrackId: -1
+    property int newTrackId
+    property int position
+    property int begin
+    property int end
     property string uuid
     property string type
     property bool selected: false
 
     property var clipInfo
 
+    onClipInfoChanged: {
+        if ( !clipInfo )
+            return;
+
+        position = clipInfo["position"];
+        begin = clipInfo["begin"];
+        end = clipInfo["end"];
+    }
+
+    onPositionChanged: {
+        clipInfo["position"] = position;
+    }
+
+    onBeginChanged: {
+        clipInfo["begin"] = begin;
+    }
+
+    onEndChanged: {
+        clipInfo["end"] = end;
+    }
+
     function setPixelPosition( pixels )
     {
         if ( pixels >= 0 )
-            clipInfo["position"] = ptof( pixels );
+            position = ptof( pixels );
+        // FIXME: Qt bug. Sometimes binding is lost.
+        x = Qt.binding( function() { return ftop( position ); } );
     }
 
     function pixelPosition()
     {
-        return ftop( clipInfo["position"] );
+        return ftop( position );
     }
 
     function move() {
         // This function updates Backend
-        if ( newTrackId > -1 )
+        if ( newTrackId !== trackId )
             moveClipTo( track.type, uuid, newTrackId );
         else
-            workflow.moveClip( trackId, uuid, clipInfo["position"] )
+            workflow.moveClip( trackId, uuid, position )
     }
 
     function resize() {
         // This function updates Backend
-        workflow.resizeClip( uuid, clipInfo["begin"], clipInfo["end"], clipInfo["position"] )
+        workflow.resizeClip( uuid, begin, end, position )
     }
 
     Component.onCompleted: {
-
-        clipInfo["item"] = clip;
-        clipInfo["track"] = track;
-
         selected = true;
+        newTrackId = trackId;
     }
 
     Component.onDestruction: {
+        Drag.drop();
         selected = false;
     }
 
@@ -77,9 +100,10 @@ Rectangle {
         font.pointSize: trackHeight / 4
     }
 
+    Drag.keys: ["Clip"]
     Drag.active: dragArea.drag.active
-    Drag.hotSpot: Qt.point( width / 2 , height / 2 )
-    Drag.keys: "Clip"
+    Drag.hotSpot: Qt.point( width / 2, height / 2 )
+
     MouseArea {
         id: dragArea
         anchors.fill: parent
@@ -92,7 +116,7 @@ Rectangle {
         property bool resizing: false
 
         onPositionChanged: {
-           // If it's too short, don't resize.
+            // If it's too short, don't resize.
             if ( width < 6 ) {
                 resizing = false;
                 return;
@@ -103,17 +127,17 @@ Rectangle {
                 if ( resizing === true ) {
                     if ( mouseX < width / 2 ) {
                         var newPos = ptof( clip.x + mouseX );
-                        var newBegin = clipInfo["begin"] + ( newPos - clipInfo["position"] );
-                        if ( newBegin < 0 || newPos < 0 || newBegin >= clipInfo["end"] )
+                        var newBegin = begin + ( newPos - position );
+                        if ( newBegin < 0 || newPos < 0 || newBegin >= end )
                             return;
-                        clipInfo["begin"] = newBegin;
-                        clipInfo["position"] = newPos;
+                        begin = newBegin;
+                        position = newPos;
                     }
                     else {
-                        var newEnd = ptof( mouseX + ftop( clipInfo["begin"] ) );
-                        if ( newEnd <= clipInfo["begin"] || newEnd + 1 > clipInfo["length"] )
+                        var newEnd = ptof( mouseX + ftop( begin ) );
+                        if ( newEnd <= begin || newEnd + 1 > clipInfo["length"] )
                             return;
-                        clipInfo["end"] = newEnd;
+                        end = newEnd;
                     }
                 }
             }
@@ -144,13 +168,10 @@ Rectangle {
         }
 
         onReleased: {
-            for ( var i = 0; i < selectedClips.length; ++i )
-                if ( selectedClips[i]["item"] ) {
-                    if ( resizing === true )
-                        selectedClips[i]["item"].resize();
-                    else
-                        selectedClips[i]["item"].move();
-                }
+            if ( resizing === true )
+                resize();
+            else
+                dragFinished();
         }
 
         states: [
@@ -172,11 +193,6 @@ Rectangle {
         ]
     }
 
-    onXChanged: {
-        if ( x < 0 )
-            setPixelPosition( 0 );
-    }
-
     onYChanged: {
         // Don't move outside its TrackContainer
         // For Top
@@ -190,11 +206,11 @@ Rectangle {
 
     onSelectedChanged: {
         if ( selected === true ) {
-            selectedClips.push( clipInfo );
+            selectedClips.push( clip );
         }
         else {
             for ( var i = 0; i < selectedClips.length; ++i )
-                if ( !selectedClips[i]["item"] || selectedClips[i]["item"] === clip ) {
+                if ( !selectedClips[i] || selectedClips[i] === clip ) {
                     selectedClips.splice( i, 1 );
                     --i;
                 }
