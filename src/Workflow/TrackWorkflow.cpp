@@ -158,6 +158,7 @@ TrackWorkflow::resizeClip( const QUuid &id, qint64 begin, qint64 end, qint64 pos
             {
                 auto track = trackFromFormats( clip->formats() );
                 track->resizeClip( track->clipIndexAt( it.key() ), begin, end );
+                break;
             }
         }
     }

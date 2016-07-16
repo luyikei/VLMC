@@ -247,6 +247,7 @@ MainWorkflow::moveClip( quint32 trackId, const QString& uuid, qint64 startFrame 
 
             m_clips.erase( it );
             m_clips.insertMulti( trackId, clip );
+            return;
         }
     }
 }
@@ -262,6 +263,7 @@ MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, q
             auto clip = it.value();
 
             Commands::trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
+            return;
         }
     }
 }
@@ -277,6 +279,7 @@ MainWorkflow::removeClip( const QString& uuid )
             auto clip = it.value();
 
             Commands::trigger( new Commands::Clip::Remove( clip, track( trackId) ) );
+            return;
         }
     }
 }
