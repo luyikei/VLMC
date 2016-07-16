@@ -7,27 +7,6 @@ Rectangle {
     x: initPosOfCursor
     color: "#333333"
 
-    MouseArea {
-        anchors.fill: parent
-
-        onPressed: {
-            cursor.x = mouseX + initPosOfCursor;
-        }
-
-        onReleased: {
-            workflow.setPosition( ptof( mouseX ) );
-        }
-
-        onClicked: {
-            workflow.setPosition( ptof( mouseX ) );
-        }
-
-        onPositionChanged: {
-            cursor.x = mouseX + initPosOfCursor;
-            workflow.setPosition( ptof( mouseX ) );
-        }
-    }
-
     Column {
         Rectangle {
             id: curveBorder
@@ -49,58 +28,65 @@ Rectangle {
             }
         }
 
-        Row {
-            id: rootRow
+        ListView {
+            model: ruler.width / ppu // pixels per minimum unit
             height: 35
-            Repeater {
-                model: ruler.width / ppu // pixels per minimum unit
-                Item {
-                    width: ppu
-                    height: rootRow.height
-                    Rectangle {
-                        id: scale
-                        width: 1
-                        height: ruler.height / 2
-                        anchors.bottom: parent.bottom
-                        gradient: Gradient {
-                            GradientStop {
-                                position: 0.00;
-                                color: "#00000088";
-                            }
-                            GradientStop {
-                                position: 1.00;
-                                color: "#c2c2c2";
-                            }
+            width: parent.width
+            orientation: Qt.Horizontal
+            layoutDirection: Qt.LeftToRight
+            delegate: Item {
+                width: ppu
+                height: 35
+                Rectangle {
+                    id: scale
+                    width: 1
+                    height: ruler.height / 2
+                    anchors.bottom: parent.bottom
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0.00;
+                            color: "#00000088";
+                        }
+                        GradientStop {
+                            position: 1.00;
+                            color: "#c2c2c2";
                         }
                     }
+                }
 
-                    function zerofill( number, width ) {
-                        var str = "" + number;
-                        while ( str.length < width ) {
-                            str = "0" + str;
-                        }
-                        return str;
+                function zerofill( number, width ) {
+                    var str = "" + number;
+                    while ( str.length < width ) {
+                        str = "0" + str;
                     }
+                    return str;
+                }
 
-                    Component.onCompleted: {
-                        if ( index % 20 == 0 ) {
-                            var seconds = parseInt( index * unit / 1000 );
-                            var minutes = parseInt( seconds / 60 );
-                            var hours = parseInt( minutes / 60 );
-                            // Text
-                            Qt.createQmlObject('import QtQuick 2.0; Text {text:"' +
-                                                   zerofill( hours, 3 ) + ':' +
-                                                   zerofill( minutes % 60, 2 ) + ':' +
-                                                   zerofill( seconds % 60, 2 ) + '";' +
-                                                   'color: "white";' +
-                                                   'font.pointSize: ruler.height / 5' +
-                                                   '}',
-                                                   this
-                                                   );
-                            scale.color = "#AA7777";
-                            scale.width = 2;
-                            scale.gradient = undefined;
-                        }
+                Component.onCompleted: {
+                    if ( index % 10 == 0 ) {
+                        // Text
+                        var obj = Qt.createQmlObject('import QtQuick 2.0; Text {'+
+                                               'color: "white";' +
+                                               'font.pointSize: ruler.height / 6' +
+                                               '}',
+                                               this
+                                               );
+                        obj.text = Qt.binding( function()
+                        {
+                            var seconds = Math.floor( index * unit / 1000 );
+                            var minutes = Math.floor( seconds / 60 );
+                            var hours = Math.floor( minutes / 60 );
+
+                            return zerofill( hours, 3 ) + ':' + // hours
+                                    zerofill( minutes % 60, 2 ) + ':' + // minutes
+                                    zerofill( seconds % 60, 2 ) + ':' + // seconds
+                                    // The second Math.round prevents the first value from exceeding fps.
+                                    // e.g. 30 % Math.round( 29.97 ) = 0
+                                    zerofill( Math.round( ptof( index * ppu ) % fps ) % Math.round( fps ), 2 ); // frames in a minute
+                        } );
+                        scale.color = "#AA7777";
+                        scale.width = 2;
+                        scale.gradient = undefined;
                     }
                 }
             }
@@ -126,6 +112,27 @@ Rectangle {
             height: 9
             width: ruler.width
             color: "#666666"
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        onPressed: {
+            cursor.x = mouseX + initPosOfCursor;
+        }
+
+        onReleased: {
+            workflow.setPosition( ptof( mouseX ) );
+        }
+
+        onClicked: {
+            workflow.setPosition( ptof( mouseX ) );
+        }
+
+        onPositionChanged: {
+            cursor.x = mouseX + initPosOfCursor;
+            workflow.setPosition( ptof( mouseX ) );
         }
     }
 
