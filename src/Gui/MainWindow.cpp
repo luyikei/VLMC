@@ -411,6 +411,10 @@ MainWindow::createStatusBar()
     m_ui.statusbar->addPermanentWidget( zoomInButton );
     connect( zoomInButton, SIGNAL( clicked() ),
              this, SLOT( zoomIn() ) );
+    connect( m_zoomSlider, &QSlider::valueChanged, this, [this]( int val )
+    {
+        emit scaleChanged( ( val + 1 ) / (double)( m_zoomSlider->maximum() + 1 ) );
+    } );
 }
 
 void
