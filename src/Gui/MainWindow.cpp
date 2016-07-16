@@ -398,8 +398,8 @@ MainWindow::createStatusBar()
     m_zoomSlider->setSingleStep( 1 );
     m_zoomSlider->setPageStep( 1 );
     m_zoomSlider->setMinimum( 0 );
-    m_zoomSlider->setMaximum( 13 );
-    m_zoomSlider->setValue( 10 );
+    m_zoomSlider->setMaximum( 9 );
+    m_zoomSlider->setValue( 9 );
     m_zoomSlider->setFixedWidth( 80 );
     m_zoomSlider->setInvertedAppearance( true );
     m_ui.statusbar->addPermanentWidget( m_zoomSlider );
