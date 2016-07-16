@@ -9,11 +9,13 @@ Rectangle {
     border.width: 0
     focus: true
 
+    property int length // in frames
     property int initPosOfCursor: 100
-    property int ppu: 10 // Pixels Per minimum Unit
-    property int unit: 3000 // In milliseconds so ppu / unit = Pixels Per milliseconds
+    property double ppu: 10 // Pixels Per minimum Unit
+    property double unit: 3000 // In milliseconds therefore ppu / unit = Pixels Per milliseconds
     property double fps: 29.97
     property int maxZ: 100
+    property int scale: 10
     property var selectedClips: []
 
     property int trackHeight: 30
@@ -156,6 +158,53 @@ Rectangle {
 
     }
 
+    function zoomIn( ratio ) {
+        var newPpu = ppu;
+        var newUnit = unit;
+        newPpu *= ratio;
+
+        // Don't be too narrow.
+        while ( newPpu < 10 ) {
+            newPpu *= 2;
+            newUnit *= 2;
+        }
+
+        // Don't be too distant.
+        while ( newPpu > 20 ) {
+            newPpu /= 2;
+            newUnit /= 2;
+        }
+
+        // Can't be more precise than 1000msec / fps.
+        var mUnit = 1000 / fps;
+
+        if ( newUnit < mUnit ) {
+            newPpu /= ratio; // Restore the original scale.
+            newPpu *= mUnit / newPpu;
+            newUnit = mUnit;
+        }
+
+        // Make unit a multiple of fps. This can change the scale but let's ignore it.
+        newUnit -= newUnit % mUnit;
+
+        var cursorPos = cursor.position();
+
+        // If "almost" the same value, don't bother redrawing the ruler.
+        if ( Math.abs( unit - newUnit ) > 0.01 )
+            unit = newUnit;
+
+        if ( Math.abs( ppu - newPpu ) > 0.0001 )
+            ppu = newPpu;
+
+        cursor.x = ftop( cursorPos ) + initPosOfCursor;
+
+        // Let's scroll to the cursor position!
+        var newContentX = cursor.x - sView.width / 2;
+        // Never show the background behind the timeline
+        if ( newContentX >= 0 && sView.flickableItem.contentWidth - newContentX > sView.width  )
+            sView.flickableItem.contentX = newContentX;
+    }
+
     function dragFinished() {
         var length = selectedClips.length;
         for ( var i = length - 1; i >= 0; --i ) {
@@ -214,67 +263,70 @@ Rectangle {
         }
     }
 
-    Ruler {
-        id: ruler
-        z: 1000
-    }
-
-    Cursor {
-        id: cursor
-        z: 2000
-        height: page.height
-        x: initPosOfCursor
-    }
-
-    Rectangle {
-        id: borderBottomOfRuler
-        width: page.width
-        height: 1
-        color: "#111111"
-        anchors.top: ruler.bottom
-    }
-
     ScrollView {
         id: sView
-        anchors.top: borderBottomOfRuler.bottom
-        anchors.bottom: page.bottom
-        anchors.right: page.right
-        anchors.left: page.left
+        height: page.height
+        width: page.width
+        flickableItem.contentWidth: Math.max( page.width, ftop( length ) + initPosOfCursor + 100 )
 
-        Column {
-            TrackContainer {
-                id: videoTrackContainer
-                type: "Video"
-                isUpward: true
-                tracks: trackContainers.get( 0 )["tracks"]
-            }
+        Flickable {
 
-            Rectangle {
-                height: 20
-                width: page.width
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: "#797979"
+            Column {
+                width: parent.width
+
+                Ruler {
+                    id: ruler
+                    z: 1000
+                }
+
+                Rectangle {
+                    id: borderBottomOfRuler
+                    width: parent.width
+                    height: 1
+                    color: "#111111"
+                }
+
+                TrackContainer {
+                    id: videoTrackContainer
+                    type: "Video"
+                    isUpward: true
+                    tracks: trackContainers.get( 0 )["tracks"]
+                }
+
+                Rectangle {
+                    height: 20
+                    width: parent.width
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0.00;
+                            color: "#797979"
+                        }
+
+                        GradientStop {
+                            position: 0.748
+                            color: "#959697"
+                        }
+
+                        GradientStop {
+                            position: 0.986
+                            color: "#858f99"
+                        }
                     }
+                }
 
-                    GradientStop {
-                        position: 0.748
-                        color: "#959697"
-                    }
-
-                    GradientStop {
-                        position: 0.986
-                        color: "#858f99"
-                    }
+                TrackContainer {
+                    id: audioTrackContainer
+                    type: "Audio"
+                    isUpward: false
+                    tracks: trackContainers.get( 1 )["tracks"]
                 }
             }
 
-            TrackContainer {
-                id: audioTrackContainer
-                type: "Audio"
-                isUpward: false
-                tracks: trackContainers.get( 1 )["tracks"]
+            Cursor {
+                id: cursor
+                z: 2000
+                height: page.height
+                x: initPosOfCursor
             }
         }
     }
@@ -303,24 +355,35 @@ Rectangle {
     Keys.onPressed: {
         if ( event.key === Qt.Key_Delete ) {
             removeClipDialog.visible = true;
-            event.accepted = true;
         }
+        else if ( event.key === Qt.Key_Plus && event.modifiers & Qt.ControlModifier )
+        {
+            zoomIn( 2 );
+        }
+        else if ( event.key === Qt.Key_Minus && event.modifiers & Qt.ControlModifier )
+        {
+            zoomIn( 0.5 );
+        }
+        event.accepted = true;
     }
 
     Connections {
         target: workflow
         onLengthChanged: {
-            if ( ruler.width < ftop( length ) + 100 ) {
-                var newPpu = ppu;
-                var newUnit = unit;
-                newPpu *= width / ( ftop( length ) + 100 )
-                while ( newPpu < 5 ) {
-                    newPpu *= 2;
-                    newUnit *= 2;
-                }
-                unit = newUnit;
-                ppu = newPpu;
-            }
+            page.length = length;
+            zoomIn( sView.width / ( ftop( length ) + initPosOfCursor + 100 ) );
+        }
+    }
+
+    Connections {
+        target: mainwindow
+        onScaleChanged: {
+            // 10 levels
+            if ( scale < scaleLevel * 10 )
+                zoomIn( 0.5 );
+            else if ( scale > scaleLevel * 10 )
+                zoomIn( 2 );
+            scale = scaleLevel * 10;
         }
     }
 }

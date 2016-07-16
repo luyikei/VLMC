@@ -7,7 +7,7 @@ ListView {
     property string type
     property ListModel tracks
 
-    width: page.width
+    width: parent.width
     height: tracks.count * trackHeight
     verticalLayoutDirection: isUpward ? ListView.BottomToTop  : ListView.TopToBottom
 

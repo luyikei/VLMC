@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: track
-    width: page.width
+    width: parent.width
     height: trackHeight
     z: 10
 

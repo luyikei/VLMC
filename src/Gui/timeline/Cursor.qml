@@ -7,5 +7,9 @@ Rectangle {
     onXChanged: {
          x = x > initPosOfCursor ? x : initPosOfCursor;
     }
+
+    function position() {
+        return ptof( x - initPosOfCursor );
+    }
 }
 
