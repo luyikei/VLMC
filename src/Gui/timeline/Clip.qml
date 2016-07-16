@@ -102,7 +102,7 @@ Rectangle {
 
     Drag.keys: ["Clip"]
     Drag.active: dragArea.drag.active
-    Drag.hotSpot: Qt.point( width / 2, height / 2 )
+    Drag.hotSpot: Qt.point( 0, height / 2 )
 
     MouseArea {
         id: dragArea
