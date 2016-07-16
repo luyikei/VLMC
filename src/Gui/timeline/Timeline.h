@@ -28,6 +28,7 @@
 #include "ui_Timeline.h"
 #include "Workflow/Types.h"
 
+class MainWindow;
 class QQuickView;
 
 /**
@@ -38,7 +39,7 @@ class Timeline : public QObject
     Q_OBJECT
     Q_DISABLE_COPY( Timeline )
 public:
-    explicit Timeline( QWidget *parent = 0 );
+    explicit Timeline( MainWindow* parent = 0 );
     virtual ~Timeline();
 
     QWidget*            container();

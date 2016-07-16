@@ -24,19 +24,21 @@
 
 #include "Main/Core.h"
 #include "Workflow/MainWorkflow.h"
+#include "Gui/MainWindow.h"
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlContext>
 #include <QUrl>
 
 Timeline*   Timeline::m_instance = nullptr;
 
-Timeline::Timeline( QWidget *parent )
+Timeline::Timeline( MainWindow* parent )
     : QObject( parent )
     , m_view( new QQuickView )
     , m_container( QWidget::createWindowContainer( m_view, parent ) )
 {
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
+    m_view->rootContext()->setContextProperty( "mainwindow", parent );
     m_view->rootContext()->setContextProperty( "workflow", Core::instance()->workflow() );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
 }
