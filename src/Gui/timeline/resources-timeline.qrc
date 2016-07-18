@@ -7,5 +7,6 @@
         <file>Cursor.qml</file>
         <file>Clip.qml</file>
         <file>ClipContextMenu.qml</file>
+        <file>PropertyButton.qml</file>
     </qresource>
 </RCC>
