@@ -447,8 +447,10 @@ Rectangle {
     Connections {
         target: workflow
         onLengthChanged: {
-            page.length = length;
-            zoomIn( sView.width / ( ftop( length ) + initPosOfCursor + 100 ) );
+            if ( page.length < length ) {
+                page.length = length;
+                zoomIn( sView.width / ( ftop( length ) + initPosOfCursor + 100 ) );
+            }
         }
     }
 
