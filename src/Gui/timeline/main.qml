@@ -29,6 +29,27 @@ Rectangle {
         }
     }
 
+    function zerofill( number, width ) {
+        var str = "" + number;
+        while ( str.length < width ) {
+            str = "0" + str;
+        }
+        return str;
+    }
+
+    function timecodeFromFrames( frames ) {
+        var seconds = Math.floor( frames / Math.round( fps )  );
+        var minutes = Math.floor( seconds / 60 );
+        var hours = Math.floor( minutes / 60 );
+
+        return zerofill( hours, 3 ) + ':' + // hours
+                zerofill( minutes % 60, 2 ) + ':' + // minutes
+                zerofill( seconds % 60, 2 ) + ':' + // seconds
+                // The second Math.round prevents the first value from exceeding fps.
+                // e.g. 30 % Math.round( 29.97 ) = 0
+                zerofill( Math.floor( frames % Math.round( fps ) ), 2 ); // frames in a minute
+    }
+
     // Convert length in frames to pixels
     function ftop( frames )
     {

@@ -60,14 +60,6 @@ Rectangle {
                     }
                 }
 
-                function zerofill( number, width ) {
-                    var str = "" + number;
-                    while ( str.length < width ) {
-                        str = "0" + str;
-                    }
-                    return str;
-                }
-
                 Component.onCompleted: {
                     if ( index % 10 == 0 ) {
                         // Text
@@ -79,16 +71,7 @@ Rectangle {
                                                );
                         obj.text = Qt.binding( function()
                         {
-                            var seconds = Math.floor( index * unit / 1000 );
-                            var minutes = Math.floor( seconds / 60 );
-                            var hours = Math.floor( minutes / 60 );
-
-                            return zerofill( hours, 3 ) + ':' + // hours
-                                    zerofill( minutes % 60, 2 ) + ':' + // minutes
-                                    zerofill( seconds % 60, 2 ) + ':' + // seconds
-                                    // The second Math.round prevents the first value from exceeding fps.
-                                    // e.g. 30 % Math.round( 29.97 ) = 0
-                                    zerofill( Math.round( ptof( index * ppu ) % fps ) % Math.round( fps ), 2 ); // frames in a minute
+                            return timecodeFromFrames( ptof( x ) );
                         } );
                         scale.color = "#AA7777";
                         scale.width = 2;
