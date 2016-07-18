@@ -119,27 +119,28 @@ Rectangle {
         anchors.fill: parent
 
         onPressed: {
-            cursor.x = mouseX + initPosOfCursor;
+            cursorPosition = ptof( mouseX );
         }
 
         onReleased: {
-            workflow.setPosition( ptof( mouseX ) );
+            workflow.setPosition( cursorPosition );
         }
 
         onClicked: {
-            workflow.setPosition( ptof( mouseX ) );
+            cursorPosition = ptof( mouseX );
+            workflow.setPosition( cursorPosition );
         }
 
         onPositionChanged: {
-            cursor.x = mouseX + initPosOfCursor;
-            workflow.setPosition( ptof( mouseX ) );
+            cursorPosition = ptof( mouseX );
+            workflow.setPosition( cursorPosition );
         }
     }
 
     Connections {
         target: workflow
         onFrameChanged: {
-            cursor.x = ftop( newFrame ) + initPosOfCursor;
+            cursorPosition = newFrame;
         }
     }
 }

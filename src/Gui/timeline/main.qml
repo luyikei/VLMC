@@ -10,6 +10,7 @@ Rectangle {
     focus: true
 
     property int length // in frames
+    property int cursorPosition: 0 // in frames
     property int initPosOfCursor: 100
     property double ppu: 10 // Pixels Per minimum Unit
     property double unit: 3000 // In milliseconds therefore ppu / unit = Pixels Per milliseconds
@@ -187,16 +188,12 @@ Rectangle {
         // Make unit a multiple of fps. This can change the scale but let's ignore it.
         newUnit -= newUnit % mUnit;
 
-        var cursorPos = cursor.position();
-
         // If "almost" the same value, don't bother redrawing the ruler.
         if ( Math.abs( unit - newUnit ) > 0.01 )
             unit = newUnit;
 
         if ( Math.abs( ppu - newPpu ) > 0.0001 )
             ppu = newPpu;
-
-        cursor.x = ftop( cursorPos ) + initPosOfCursor;
 
         // Let's scroll to the cursor position!
         var newContentX = cursor.x - sView.width / 2;
