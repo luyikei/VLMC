@@ -321,6 +321,7 @@ Rectangle {
 
             Cursor {
                 id: cursor
+                y: ruler.height
                 z: 2000
                 height: page.height
                 x: initPosOfCursor
