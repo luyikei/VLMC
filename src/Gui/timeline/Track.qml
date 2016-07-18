@@ -234,6 +234,15 @@ Item {
                             }
                         }
 
+                        // Scroll if needed
+                        if ( length < ptof( newX + target.width ) ) {
+                            length = ptof( newX + target.width );
+                            // Never show the background behind the timeline
+                            var newContentX = sView.flickableItem.contentWidth - sView.width;
+                            if ( newContentX >= 0 )
+                                sView.flickableItem.contentX = newContentX;
+                        }
+
                         target.setPixelPosition( newX );
 
                         if ( isCollided ) {
