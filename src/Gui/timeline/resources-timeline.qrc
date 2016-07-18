@@ -4,6 +4,7 @@
         <file>Ruler.qml</file>
         <file>Track.qml</file>
         <file>TrackContainer.qml</file>
+        <file>Marker.qml</file>
         <file>Cursor.qml</file>
         <file>Clip.qml</file>
         <file>ClipContextMenu.qml</file>
