@@ -178,7 +178,13 @@ Rectangle {
 
         if ( tracks.get( tracks.count - 1 )["clips"].count > 0 )
             addTrack( trackType );
+    }
 
+    function addMarker( pos )
+    {
+        markers.append( {
+                           "position": pos
+                       } );
     }
 
     function zoomIn( ratio ) {
@@ -252,6 +258,10 @@ Rectangle {
             addTrack( "Video" );
             addTrack( "Audio" );
         }
+    }
+
+    ListModel {
+        id: markers
     }
 
     MouseArea {
@@ -386,6 +396,14 @@ Rectangle {
                 z: 2000
                 height: page.height
                 x: initPosOfCursor
+            }
+
+            Repeater {
+                model: markers
+                delegate: Marker {
+                    position: model.position
+                    markerModel: model
+                }
             }
         }
     }

@@ -4,11 +4,11 @@ Rectangle {
     id: ruler
     height: 52
     width: parent.width - initPosOfCursor
-    x: initPosOfCursor
     color: "#333333"
 
     Column {
         Rectangle {
+            id: markersArea
             height: 9
             width: ruler.width
             color: "#666666"
@@ -117,6 +117,27 @@ Rectangle {
         onPositionChanged: {
             cursorPosition = ptof( mouseX );
             workflow.setPosition( cursorPosition );
+        }
+    }
+
+    DropArea {
+        id: markersDropArea
+        width: parent.width
+        height: markersArea.height
+        keys: ["Marker"]
+
+        onPositionChanged: {
+            drag.source.position = ptof( drag.x );
+        }
+    }
+
+    MouseArea {
+        id: markersMouseArea
+        width: parent.width
+        height: markersArea.height
+
+        onClicked: {
+            addMarker( ptof( mouseX ) );
         }
     }
 
