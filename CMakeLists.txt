@@ -120,7 +120,6 @@ IF (UNIX)
 ENDIF (UNIX)
 
 include(ts/translations.cmake)
-subdirs(contribs)
 SUBDIRS(src)
 SUBDIRS(nsis)
 SUBDIRS(effects)

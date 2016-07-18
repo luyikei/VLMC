@@ -286,7 +286,6 @@ ELSE(NOT WITH_GUI)
     endif()
 ENDIF( NOT WITH_GUI )
 
-add_dependencies(vlmc libvlcpp)
 message(STATUS "Contribs prefix: ${CONTRIBS_DIR}")
 include_directories( ${CONTRIBS_DIR}/include )
 
