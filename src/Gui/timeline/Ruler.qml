@@ -9,6 +9,12 @@ Rectangle {
 
     Column {
         Rectangle {
+            height: 9
+            width: ruler.width
+            color: "#666666"
+        }
+
+        Rectangle {
             id: curveBorder
             height: 7
             width: parent.width
@@ -106,12 +112,6 @@ Rectangle {
                     color: "#7a0000";
                 }
             }
-        }
-
-        Rectangle {
-            height: 9
-            width: ruler.width
-            color: "#666666"
         }
     }
 
