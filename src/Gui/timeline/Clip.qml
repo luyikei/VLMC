@@ -95,9 +95,12 @@ Rectangle {
         id: text
         color: "white"
         width: parent.width - 4
+        height: trackHeight
         x: 4
         y: 4 - font.pointSize / 2
         font.pointSize: trackHeight / 4
+        elide: Text.ElideRight
+        wrapMode: Text.Wrap
     }
 
     Drag.keys: ["Clip"]
