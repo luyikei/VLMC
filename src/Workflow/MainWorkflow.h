@@ -27,6 +27,7 @@
 
 #include "Types.h"
 #include "Tools/Toggleable.hpp"
+#include <QJsonObject>
 
 #include <memory>
 
