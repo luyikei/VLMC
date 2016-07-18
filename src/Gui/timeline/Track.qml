@@ -162,6 +162,24 @@ Item {
                             }
                         }
 
+                        if ( isMagneticMode === true ) {
+                            var leastDestance = 25;
+                            // Check two times
+                            for ( var k = 0; k < 2; ++k ) {
+                                for ( j = 0; j < markers.count; ++j ) {
+                                    var mx = ftop( markers.get( j ).position );
+                                    if ( Math.abs( newX - mx ) < leastDestance ) {
+                                        leastDestance = Math.abs( newX - mx );
+                                        newX = mx;
+                                    }
+                                    else if ( Math.abs( newX + target.width - mx ) < leastDestance ) {
+                                        leastDestance = Math.abs( newX + target.width - mx );
+                                        newX = mx - target.width;
+                                    }
+                                }
+                            }
+                        }
+
                         // Collision detection
                         var isCollided = true;
                         var currentTrack = trackContainer( target.type )["tracks"].get( target.newTrackId );
@@ -171,7 +189,7 @@ Item {
                             clips = [];
                         for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
                             isCollided = false;
-                            for ( var k = 0; k < clips.count; ++k ) {
+                            for ( k = 0; k < clips.count; ++k ) {
                                 var clip = clips.get( k );
                                 if ( clip.uuid === target.uuid )
                                     continue;
@@ -179,15 +197,36 @@ Item {
                                 var cx = ftop( clip["position"] );
                                 var cw = ftop( clip["end"] - clip["begin"] + 1);
                                 // Set a right position
-                                if ( cx  + cw > newX && newX + sw > cx ) {
-                                    isCollided = true;
-                                    if ( cx > newX ) {
-                                        if ( cx - sw > 0 )
-                                            newX = cx - sw;
-                                        else
-                                            newX = oldx;
-                                    } else {
-                                        newX = cx + cw;
+                                //
+                                // HACK: If magnetic mode, consider clips bigger.
+                                if ( isMagneticMode === true ) {
+                                    if ( cx  + cw > newX && newX + sw > cx )
+                                        isCollided = true;
+
+                                    cw += 50
+                                    cx -= 25
+                                    if ( cx + cw > newX && newX + sw > cx ) {
+                                        if ( cx > newX ) {
+                                            if ( cx - sw > 0 )
+                                                newX = cx - sw + 25;
+                                            else
+                                                newX = oldx;
+                                        } else {
+                                            newX = cx + cw - 25;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if ( cx  + cw > newX && newX + sw > cx ) {
+                                        isCollided = true;
+                                        if ( cx > newX ) {
+                                            if ( cx - sw > 0 )
+                                                newX = cx - sw;
+                                            else
+                                                newX = oldx;
+                                        } else {
+                                            newX = cx + cw;
+                                        }
                                     }
                                 }
                                 if ( isCollided )
