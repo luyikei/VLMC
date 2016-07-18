@@ -234,24 +234,27 @@ Rectangle {
 
     MouseArea {
         id: selectionArea
-        anchors.fill: page
+        width: parent.width - initPosOfCursor
+        height: audioTrackContainer.y + audioTrackContainer.height - videoTrackContainer.y
+        y: videoTrackContainer.y
+        x: initPosOfCursor
 
         onPressed: {
             clearSelectedClips();
             selectionRect.visible = true;
-            selectionRect.x = mouseX;
-            selectionRect.y = mouseY;
+            selectionRect.x = mouseX + x;
+            selectionRect.y = mouseY + y;
             selectionRect.width = 0;
             selectionRect.height = 0;
-            selectionRect.initPos = Qt.point( mouseX, mouseY );
+            selectionRect.initPos = Qt.point( mouseX + x, mouseY + y );
         }
 
         onPositionChanged: {
             if ( selectionRect.visible === true ) {
-                selectionRect.x = Math.min( mouseX, selectionRect.initPos.x );
-                selectionRect.y = Math.min( mouseY, selectionRect.initPos.y );
-                selectionRect.width = Math.abs( mouseX - selectionRect.initPos.x );
-                selectionRect.height = Math.abs( mouseY - selectionRect.initPos.y );
+                selectionRect.x = Math.min( mouseX + x, selectionRect.initPos.x );
+                selectionRect.y = Math.min( mouseY + y, selectionRect.initPos.y );
+                selectionRect.width = Math.abs( mouseX + x - selectionRect.initPos.x );
+                selectionRect.height = Math.abs( mouseY + y - selectionRect.initPos.y );
             }
         }
 
