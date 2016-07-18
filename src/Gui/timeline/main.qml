@@ -18,6 +18,7 @@ Rectangle {
     property int maxZ: 100
     property int scale: 10
     property var selectedClips: []
+    property alias isMagneticMode: magneticModeButton.selected
 
     property int trackHeight: 30
 
@@ -295,16 +296,52 @@ Rectangle {
             Column {
                 width: parent.width
 
-                Ruler {
-                    id: ruler
-                    z: 1000
-                }
-
-                Rectangle {
-                    id: borderBottomOfRuler
+                Row {
                     width: parent.width
-                    height: 1
-                    color: "#111111"
+                    Rectangle {
+                        id: topLeftArea
+                        width: initPosOfCursor
+                        height: 52
+                        color: "#333333"
+                        border.width: 1
+                        border.color: "#111111"
+
+                        Text {
+                            id: cursorTimecode
+                            x: 5
+                            y: 2
+
+                            text: timecodeFromFrames( cursorPosition )
+                            color: "#EEEEEE"
+                            font.pixelSize: parent.height / 4
+                        }
+
+                        Item {
+                            id: properties
+                            x: 5
+                            y: parent.height / 2
+                            width: parent.width - x * 2
+                            height: parent.height / 2
+
+                            PropertyButton {
+                                id: magneticModeButton
+                                text: "M"
+                                selected: true
+                            }
+                        }
+                    }
+
+                    Ruler {
+                        id: ruler
+                        z: 1000
+
+                        Rectangle {
+                            id: borderBottomOfRuler
+                            width: parent.width
+                            height: 1
+                            color: "#111111"
+                        }
+                    }
                 }
 
                 TrackContainer {
