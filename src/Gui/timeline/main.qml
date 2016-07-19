@@ -17,7 +17,9 @@ Rectangle {
     property double fps: 29.97
     property int maxZ: 100
     property int scale: 10
-    property var selectedClips: []
+    property var allClips: [] // Actual clip item objects
+    property var selectedClips: [] // Actual clip item objects
+    property var groups: [] // list of lists of clip uuids
     property alias isMagneticMode: magneticModeButton.selected
 
     property int trackHeight: 30
@@ -182,11 +184,37 @@ Rectangle {
             addTrack( trackType );
     }
 
-    function addMarker( pos )
-    {
+    function addMarker( pos ) {
         markers.append( {
                            "position": pos
                        } );
+    }
+
+    function addGroup( clips ) {
+        groups.push( clips );
+    }
+
+    function findGroup( uuid ) {
+        for ( var i = 0; i < groups.length; ++i ) {
+            var group = groups[i];
+            for ( var j = 0; j < group.length; ++j ) {
+                if ( group[j] === uuid )
+                    return group;
+            }
+        }
+        return null;
+    }
+
+    function removeGroup( uuid ) {
+        for ( var i = 0; i < groups.length; ++i ) {
+            var group = groups[i];
+            for ( var j = 0; j < group.length; ++j ) {
+                if ( group[j] === uuid ) {
+                    groups.splice( i, 1 );
+                    return;
+                }
+            }
+        }
     }
 
     function zoomIn( ratio ) {

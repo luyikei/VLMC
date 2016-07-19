@@ -5,28 +5,28 @@ Menu {
     id: clipContextMenu
     title: "Edit"
 
-    MenuItem {
-        text: "Cut"
-        shortcut: "Ctrl+X"
-    }
+    property string uuid
 
     MenuItem {
-        text: "Copy"
-        shortcut: "Ctrl+C"
-    }
+        text: isGrouped ? "Ungroup" : "Group"
 
-    MenuItem {
-        text: "Paste"
-        shortcut: "Ctrl+V"
-    }
+        property bool isGrouped: findGroup( uuid )
 
-    MenuSeparator { }
+        onTriggered: {
+            if ( selectedClips.length <= 1 )
+                return;
 
-    Menu {
-        title: "More Stuff"
-
-        MenuItem {
-            text: "Do Nothing"
+            if ( isGrouped ) {
+                removeGroup( uuid );
+            }
+            else {
+                var l = [];
+                for ( var i = 0; i < selectedClips.length; ++i ) {
+                    l.push( "" + selectedClips[i].uuid );
+                }
+                addGroup( l );
+            }
+            isGrouped = Qt.binding( function(){ return findGroup( uuid ); } );
         }
     }
 }

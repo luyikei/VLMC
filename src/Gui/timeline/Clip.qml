@@ -84,11 +84,19 @@ Rectangle {
     Component.onCompleted: {
         selected = true;
         newTrackId = trackId;
+        allClips.push( clip );
     }
 
     Component.onDestruction: {
         Drag.drop();
         selected = false;
+
+        for ( var i = 0; i < allClips.length; ++i ) {
+            if ( allClips[i] === clip ) {
+                allClips.splice( i, 1 );
+                return;
+            }
+        }
     }
 
     Text {
@@ -165,8 +173,7 @@ Rectangle {
 
         onClicked: {
             if ( mouse.button & Qt.RightButton ) {
-                var menu = Qt.createComponent( "ClipContextMenu.qml" ).createObject( parent );
-                menu.popup();
+                clipContextMenu.popup();
             }
         }
 
@@ -196,6 +203,11 @@ Rectangle {
         ]
     }
 
+    ClipContextMenu {
+        id: clipContextMenu
+        uuid: clip.uuid
+    }
+
     onYChanged: {
         // Don't move outside its TrackContainer
         // For Top
@@ -210,9 +222,17 @@ Rectangle {
     onSelectedChanged: {
         if ( selected === true ) {
             selectedClips.push( clip );
+
+            var group = findGroup( uuid );
+            for ( var i = 0; i < ( group ? group.length : 0 ); ++i ) {
+                for ( var j = 0; j < allClips.length; ++j ) {
+                    if ( group[i] === allClips[j].uuid )
+                        allClips[j].selected = true;
+                }
+            }
         }
         else {
-            for ( var i = 0; i < selectedClips.length; ++i )
+            for ( i = 0; i < selectedClips.length; ++i )
                 if ( !selectedClips[i] || selectedClips[i] === clip ) {
                     selectedClips.splice( i, 1 );
                     --i;
