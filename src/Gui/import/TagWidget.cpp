@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 #include "TagWidget.h"
-#include "ui_TagWidget.h"
+#include "ui/TagWidget.h"
 
 #include "Media/Media.h"
 #include "Media/Clip.h"

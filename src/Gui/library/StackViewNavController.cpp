@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "StackViewNavController.h"
-#include "ui_StackViewNavController.h"
+#include "ui/StackViewNavController.h"
 
 StackViewNavController::StackViewNavController( QWidget *parent ) :
         QWidget( parent ),

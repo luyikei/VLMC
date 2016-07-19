@@ -22,7 +22,7 @@
 
 #include "Backend/IFilter.h"
 #include "EffectWidget.h"
-#include "ui_EffectWidget.h"
+#include "ui/EffectWidget.h"
 
 EffectWidget::EffectWidget(QWidget *parent) :
     QWidget( parent ),

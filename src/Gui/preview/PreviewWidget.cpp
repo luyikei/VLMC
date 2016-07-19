@@ -30,7 +30,7 @@
 #include "PreviewRuler.h"
 #include "RenderWidget.h"
 #include "Tools/RendererEventWatcher.h"
-#include "ui_PreviewWidget.h"
+#include "ui/PreviewWidget.h"
 
 #include <QMessageBox>
 #include <QLayout>

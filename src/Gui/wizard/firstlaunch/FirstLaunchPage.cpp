@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "FirstLaunchPage.h"
-#include "ui_FirstLaunchPage.h"
+#include "ui/FirstLaunchPage.h"
 
 FirstLaunchPage::FirstLaunchPage( QWidget *parent )
     : QWizardPage( parent )

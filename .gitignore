@@ -3,7 +3,6 @@
 /debug
 /patches
 /qtc-gdbmacros
-Makefile*
 /include
 /win32
 

@@ -39,7 +39,7 @@ int VLMCmain( int , char** );
 
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     #ifdef WITH_CRASHHANDLER_GUI
         #include "Gui/widgets/CrashHandler.h"
     #endif
@@ -70,7 +70,7 @@ void
 version( void )
 {
     QTextStream out( stdout );
-    out << "VLMC-" << PROJECT_VERSION << " '" << CODENAME << "'\n"
+    out << "VLMC-" << PACKAGE_VERSION << " '" << CODENAME << "'\n"
         << "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
         << "video editing software.\n"
         << "Copyright (C) 2008-10 VideoLAN\n"

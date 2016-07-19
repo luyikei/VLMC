@@ -24,7 +24,7 @@
 #define WORKFLOWFILERENDERERDIALOG_H
 
 #include <QDialog>
-#include "ui_WorkflowFileRendererDialog.h"
+#include "ui/WorkflowFileRendererDialog.h"
 
 class   RendererEventWatcher;
 

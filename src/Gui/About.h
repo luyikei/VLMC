@@ -24,7 +24,7 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
-#include "ui_About.h"
+#include "ui/About.h"
 
 #include <QDialog>
 

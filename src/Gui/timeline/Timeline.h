@@ -25,7 +25,7 @@
 
 #include "Media/Clip.h"
 #include "vlmc.h"
-#include "ui_Timeline.h"
+#include "ui/Timeline.h"
 #include "Workflow/Types.h"
 
 class MainWindow;

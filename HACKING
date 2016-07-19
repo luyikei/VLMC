@@ -280,7 +280,7 @@ Use simple aggregation to embed a Qt UI into your class.
 
 Example:
 
- | #include "ui_MyWidget.h"
+ | #include "ui/MyWidget.h"
  |
  | class MyWidget : public QFrame
  | {

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "ClipProperty.h"
-#include "ui_ClipProperty.h"
+#include "ui/ClipProperty.h"
 
 #include "Media/Clip.h"
 #include "Media/Media.h"

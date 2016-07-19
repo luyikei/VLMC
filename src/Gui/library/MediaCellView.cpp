@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 #include "MediaCellView.h"
-#include "ui_MediaCellView.h"
+#include "ui/MediaCellView.h"
 
 #include "Project/Project.h"
 #include "Main/Core.h"

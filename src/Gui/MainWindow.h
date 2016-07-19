@@ -33,7 +33,7 @@ class QUndoView;
 
 #include "vlmc.h"
 #include "config.h"
-#include "ui_MainWindow.h"
+#include "ui/MainWindow.h"
 
 class   EffectsListView;
 class   ImportController;

@@ -25,7 +25,7 @@
 
 #include "Tools/BacktraceGenerator.h"
 #include "CrashHandler.h"
-#include "ui_CrashHandler.h"
+#include "ui/CrashHandler.h"
 
 CrashHandler::CrashHandler( int sig, QWidget *parent ) :
         QDialog( parent ),

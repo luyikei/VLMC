@@ -29,7 +29,7 @@ class   QTimer;
 
 #include <QWidget>
 
-#include "ui_NotificationZone.h"
+#include "ui/NotificationZone.h"
 
 class NotificationZone : public QWidget, public Singleton<NotificationZone>
 {

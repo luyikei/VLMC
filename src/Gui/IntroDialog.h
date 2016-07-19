@@ -23,7 +23,7 @@
 #ifndef INTRODIALOG_H
 #define INTRODIALOG_H
 
-#include "ui_IntroDialog.h"
+#include "ui/IntroDialog.h"
 
 class IntroDialog : public QDialog
 {

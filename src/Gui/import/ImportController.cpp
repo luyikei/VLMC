@@ -23,7 +23,7 @@
  *****************************************************************************/
 
 #include "ImportController.h"
-#include "ui_ImportController.h"
+#include "ui/ImportController.h"
 
 #include "Main/Core.h"
 #include "Project/Project.h"

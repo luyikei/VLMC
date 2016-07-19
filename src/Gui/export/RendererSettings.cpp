@@ -23,7 +23,6 @@
 #include "Media/Media.h"
 #include "RendererSettings.h"
 #include "Settings/Settings.h"
-#include "ui_RendererSettings.h"
 
 #include <QCompleter>
 #include <QDirModel>

@@ -23,7 +23,7 @@
 #ifndef OPENPAGE_H
 #define OPENPAGE_H
 
-#include "ui_OpenPage.h"
+#include "ui/OpenPage.h"
 
 class OpenPage : public QWizardPage
 {

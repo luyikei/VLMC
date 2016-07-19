@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "WorkspaceLocation.h"
-#include "ui_WorkspaceLocation.h"
+#include "ui/WorkspaceLocation.h"
 
 #include <QFileDialog>
 

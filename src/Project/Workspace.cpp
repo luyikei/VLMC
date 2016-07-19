@@ -33,7 +33,7 @@
 
 #include <QMutex>
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 # include "Gui/widgets/NotificationZone.h"
 # include <QMessageBox>
 #endif
@@ -49,7 +49,7 @@ Workspace::Workspace(Settings *settings)
             this, SLOT( workspaceChanged( QVariant ) ) );
     // Wait for the SettingValue to be loaded.
     m_mediasToCopyMutex = new QMutex;
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     connect( this, SIGNAL( notify( QString ) ),
              NotificationZone::instance(), SLOT( notify( QString ) ) );
 #endif
@@ -91,7 +91,7 @@ Workspace::startCopyWorker( Media *media )
 
     if ( QFile::exists( dest ) == true )
     {
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
         QMessageBox::StandardButton b =
                 QMessageBox::question( nullptr, tr( "File already exists!" ),
                                        tr( "A file with the same name already exists, do you want to "

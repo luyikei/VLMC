@@ -45,7 +45,7 @@ AbstractRenderer::~AbstractRenderer()
     delete m_eventWatcher;
 }
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 RendererEventWatcher*
 AbstractRenderer::eventWatcher()
 {

@@ -39,7 +39,7 @@
 #include <QFileInfo>
 #include <QXmlStreamWriter>
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 #include <QPixmap>
 #include <QImage>
 #endif
@@ -108,7 +108,7 @@ public:
     Backend::IInput*         input();
     const Backend::IInput*   input() const;
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 #endif
@@ -120,7 +120,7 @@ protected:
     QString                     m_fileName;
     Clip*                       m_baseClip;
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
 #endif

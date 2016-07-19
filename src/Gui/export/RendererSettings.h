@@ -24,7 +24,7 @@
 #define RENDERERSETTINGS_H
 
 #include <QDialog>
-#include "ui_RendererSettings.h"
+#include "ui/RendererSettings.h"
 
 class   RendererSettings : public QDialog
 {

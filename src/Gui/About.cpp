@@ -41,15 +41,15 @@ About::About( QWidget *parent ) : QDialog( parent )
     setText( ":/text/COPYING", m_ui.plainTextEditLicense );
 
     m_ui.labelTitle->setText(
-        m_ui.labelTitle->text().arg( PROJECT_VERSION, CODENAME ) );
+        m_ui.labelTitle->text().arg( PACKAGE_VERSION, CODENAME ) );
 
     m_ui.labelBuild->setText(
-        m_ui.labelBuild->text().arg( HOSTNAME, SYSNAME,
+        m_ui.labelBuild->text().arg( VLMC_COMPILE_HOST, VLMC_COMPILE_SYSTEM,
                                      QT_VERSION_STR, qVersion() ) );
 
     m_ui.labelCopyright->setText(
-        m_ui.labelCopyright->text().arg( PROJECT_COPYRIGHT, PROJECT_CONTACT,
-                                         ORG_WEBSITE ) );
+        m_ui.labelCopyright->text().arg( COPYRIGHT_MESSAGE, PROJECT_CONTACT,
+                                         PROJECT_WEBSITE ) );
 }
 
 void

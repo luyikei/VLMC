@@ -25,7 +25,7 @@
 
 #include <QWidget>
 
-#include "ui_MediaLibrary.h"
+#include "ui/MediaLibrary.h"
 class   Clip;
 class   MediaListView;
 class   MediaContainer;

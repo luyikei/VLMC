@@ -58,7 +58,7 @@ Commands::Generic::isValid() const
     return m_valid;
 }
 
-#ifndef WITH_GUI
+#ifndef HAVE_GUI
 void
 Commands::Generic::setText( const QString& text )
 {

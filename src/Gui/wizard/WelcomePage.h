@@ -25,7 +25,7 @@
 
 #include <QWizardPage>
 #include "ProjectWizard.h"
-#include "ui_WelcomePage.h"
+#include "ui/WelcomePage.h"
 
 class   QWizard;
 

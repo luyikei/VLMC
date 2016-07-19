@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 #include "Done.h"
-#include "ui_Done.h"
+#include "ui/Done.h"
 
 #include "Main/Core.h"
 #include "Settings/Settings.h"

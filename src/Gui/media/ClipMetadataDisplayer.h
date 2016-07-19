@@ -28,7 +28,7 @@
 class   Clip;
 class   Media;
 
-#include "ui_ClipMetadataDisplayer.h"
+#include "ui/ClipMetadataDisplayer.h"
 
 class ClipMetadataDisplayer : public QWidget
 {

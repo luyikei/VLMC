@@ -26,7 +26,7 @@
 
 #include "config.h"
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 # include <QUndoCommand>
 #endif
 #include <QObject>
@@ -45,7 +45,7 @@ class   EffectHelper;
 
 namespace Commands
 {
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     class       Generic : public QObject, public QUndoCommand
 #else
     class       Generic : public QObject
@@ -60,7 +60,7 @@ namespace Commands
             void            redo();
             void            undo();
             bool            isValid() const;
-#ifndef WITH_GUI
+#ifndef HAVE_GUI
             void            setText( const QString& text ) ;
             QString         text() const;
 #endif

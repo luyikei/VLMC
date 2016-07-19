@@ -23,7 +23,7 @@
 #ifndef GENERALPAGE_H
 #define GENERALPAGE_H
 
-#include "ui_GeneralPage.h"
+#include "ui/GeneralPage.h"
 
 class GeneralPage : public QWizardPage
 {

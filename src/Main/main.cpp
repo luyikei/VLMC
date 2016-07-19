@@ -35,14 +35,14 @@
 #include "Backend/IBackend.h"
 #include "Main/Core.h"
 #include "Settings/Settings.h"
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 #include "Gui/MainWindow.h"
 #include "Gui/IntroDialog.h"
 #include "Gui/LanguageHelper.h"
 #include "Gui/wizard/firstlaunch/FirstLaunchWizard.h"
 #endif
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 #include <QApplication>
 #include <QColor>
 #include <QPalette>
@@ -64,7 +64,7 @@ VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
     app.setApplicationName( "vlmc" );
     app.setOrganizationName( "VideoLAN" );
     app.setOrganizationDomain( "videolan.org" );
-    app.setApplicationVersion( PROJECT_VERSION );
+    app.setApplicationVersion( PACKAGE_VERSION );
 
     QSettings s;
 
@@ -83,7 +83,7 @@ VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
  *  \param argv
  *  \return Return value of vlmc
  */
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 int
 VLMCGuimain( int argc, char **argv )
 {
@@ -200,7 +200,7 @@ VLMCCoremain( int argc, char **argv )
     }
 
 
-#ifndef WITH_GUI
+#ifndef HAVE_GUI
     ConsoleRenderer renderer;
     Project  *p = Core::instance()->project();
 
@@ -215,7 +215,7 @@ VLMCCoremain( int argc, char **argv )
 int
 VLMCmain( int argc, char **argv )
 {
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     int res = VLMCGuimain( argc, argv );
 #else
     int res = VLMCCoremain( argc, argv );

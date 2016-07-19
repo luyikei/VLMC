@@ -26,7 +26,7 @@
 #include <QWidget>
 #include <memory>
 
-#include "ui_EffectInstanceWidget.h"
+#include "ui/EffectInstanceWidget.h"
 
 namespace Backend
 {

@@ -25,7 +25,7 @@
 
 #include <QObject>
 
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
 #include <QUndoStack>
 #include "Commands.h"
 #else
@@ -34,7 +34,7 @@
 
 namespace Commands
 {
-#ifdef WITH_GUI
+#ifdef HAVE_GUI
     class AbstractUndoStack : public QUndoStack
     {
 #else

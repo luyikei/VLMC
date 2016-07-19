@@ -24,7 +24,7 @@
 #define VIDEOPAGE_H
 
 #include <QWizardPage>
-#include "ui_VideoPage.h"
+#include "ui/VideoPage.h"
 
 class VideoPage : public QWizardPage
 {
