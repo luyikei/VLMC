@@ -133,6 +133,7 @@ Item {
                             if ( newClipInfo["video"] )
                                 vClipInfo = addClip( "Video", trackId, newClipInfo );
                         }
+                        lastX = drag.x;
                     }
                 }
 
@@ -142,18 +143,22 @@ Item {
                         return;
 
                     if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
-                        var newX = drag.source.mapToItem( clipArea, 0, 0 ).x; // FIXME: Mysterious QML Bug, you can't use drag.x
-                        drag.source.y = drag.source.y - drag.y + track.height / 2 - 1;
+                        drag.source.y = drag.source.y - drag.y + track.height / 2 - 1; // Adjust to the center
+                        var currentX = drag.source.x;
                     }
                     else
-                        newX = Math.max( drag.x, 0 );
+                        currentX = drag.x;
+
+                    var deltaX = currentX - lastX;
+                    lastX = currentX;
 
                     for ( var i = 0; i < selectedClips.length; ++i ) {
                         var target = selectedClips[i];
-
                         var oldx = target.pixelPosition();
 
                         if ( drag.source === target ) {
+                            var newX = drag.source.x;
+
                             var oldTrackId = target.newTrackId;
                             target.newTrackId = trackId;
                             for ( var j = 0; j < selectedClips.length; ++j ) {
@@ -161,6 +166,8 @@ Item {
                                     selectedClips[j].newTrackId = trackId - oldTrackId + selectedClips[j].trackId;
                             }
                         }
+                        else
+                            newX = Math.max( target.pixelPosition() + deltaX, 0 );
 
                         if ( isMagneticMode === true ) {
                             var leastDestance = 25;
@@ -243,17 +250,19 @@ Item {
                                 sView.flickableItem.contentX = newContentX;
                         }
 
-                        target.setPixelPosition( newX );
-
                         if ( isCollided ) {
                             for ( k = 0; k < clips.count; ++k ) {
                                 clip = clips.get( k );
                                 cx = ftop( clip["position"] );
                                 cw = ftop( clip["end"] - clip["begin"] + 1);
-                                if ( cx + cw > target.pixelPosition() )
-                                    target.setPixelPosition( cx + cw );
+                                newX = Math.max( newX, cx + cw );
                             }
                         }
+
+                        if ( target === drag.source )
+                            lastX = drag.source.x;
+
+                        target.setPixelPosition( newX );
 
                         if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
                             if ( target.newTrackId !== target.trackId ) {
@@ -266,6 +275,7 @@ Item {
                             }
                         }
                     }
+                    // END of for ( var i = 0; i < selectedClips.length; ++i )
                 }
             }
 
