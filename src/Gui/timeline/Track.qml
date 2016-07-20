@@ -78,6 +78,14 @@ Item {
                 property var aClipInfo: null
                 property var vClipInfo: null
 
+                property int lastX: 0
+                property int deltaX: 0
+
+                onContainsDragChanged: {
+                    if ( containsDrag === true )
+                        lastX = drag.x;
+                }
+
                 onDropped: {
                     if ( drop.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
                         aClipInfo = findClipFromTrack( "Audio", trackId, "tempUuid" );
@@ -133,7 +141,6 @@ Item {
                             if ( newClipInfo["video"] )
                                 vClipInfo = addClip( "Video", trackId, newClipInfo );
                         }
-                        lastX = drag.x;
                     }
                 }
 
@@ -144,21 +151,24 @@ Item {
 
                     if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
                         drag.source.y = drag.source.y - drag.y + track.height / 2 - 1; // Adjust to the center
-                        var currentX = drag.source.x;
+
+                        // Optimization: Delta delta X should be different
+                        if ( deltaX === drag.source.x - lastX ) {
+                            lastX = drag.source.x;
+                            return;
+                        }
+                        else
+                            deltaX = drag.source.x - lastX;
+
                     }
                     else
-                        currentX = drag.x;
-
-                    var deltaX = currentX - lastX;
-                    lastX = currentX;
+                        deltaX = drag.x - lastX;
 
                     for ( var i = 0; i < selectedClips.length; ++i ) {
                         var target = selectedClips[i];
                         var oldx = target.pixelPosition();
 
                         if ( drag.source === target ) {
-                            var newX = drag.source.x;
-
                             var oldTrackId = target.newTrackId;
                             target.newTrackId = trackId;
                             for ( var j = 0; j < selectedClips.length; ++j ) {
@@ -166,8 +176,8 @@ Item {
                                     selectedClips[j].newTrackId = trackId - oldTrackId + selectedClips[j].trackId;
                             }
                         }
-                        else
-                            newX = Math.max( target.pixelPosition() + deltaX, 0 );
+
+                        var newX = Math.max( target.pixelPosition() + deltaX, 0 );
 
                         if ( isMagneticMode === true ) {
                             var leastDestance = 25;
@@ -241,15 +251,6 @@ Item {
                             }
                         }
 
-                        // Scroll if needed
-                        if ( length < ptof( newX + target.width ) ) {
-                            length = ptof( newX + target.width );
-                            // Never show the background behind the timeline
-                            var newContentX = sView.flickableItem.contentWidth - sView.width;
-                            if ( newContentX >= 0 )
-                                sView.flickableItem.contentX = newContentX;
-                        }
-
                         if ( isCollided ) {
                             for ( k = 0; k < clips.count; ++k ) {
                                 clip = clips.get( k );
@@ -259,10 +260,16 @@ Item {
                             }
                         }
 
-                        if ( target === drag.source )
-                            lastX = drag.source.x;
-
                         target.setPixelPosition( newX );
+
+                        // Scroll if needed
+                        if ( length < ptof( newX + target.width ) ) {
+                            length = ptof( newX + target.width );
+                            // Never show the background behind the timeline
+                            var newContentX = sView.flickableItem.contentWidth - sView.width;
+                            if ( newContentX >= 0 )
+                                sView.flickableItem.contentX = newContentX;
+                        }
 
                         if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
                             if ( target.newTrackId !== target.trackId ) {
@@ -276,6 +283,11 @@ Item {
                         }
                     }
                     // END of for ( var i = 0; i < selectedClips.length; ++i )
+
+                    if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 )
+                        lastX = drag.source.x;
+                    else
+                        lastX = drag.x;
                 }
             }
 

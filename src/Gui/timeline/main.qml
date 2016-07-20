@@ -24,8 +24,6 @@ Rectangle {
 
     property int trackHeight: 30
 
-    property int lastX: 0
-
     function clearSelectedClips() {
         while ( selectedClips.length ) {
             var clip = selectedClips.pop();
