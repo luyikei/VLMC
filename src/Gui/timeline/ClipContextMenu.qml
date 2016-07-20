@@ -6,11 +6,10 @@ Menu {
     title: "Edit"
 
     property string uuid
+    property bool isGrouped
 
     MenuItem {
         text: isGrouped ? "Ungroup" : "Group"
-
-        property bool isGrouped: findGroup( uuid )
 
         onTriggered: {
             if ( selectedClips.length <= 1 )
@@ -26,7 +25,10 @@ Menu {
                 }
                 addGroup( l );
             }
-            isGrouped = Qt.binding( function(){ return findGroup( uuid ); } );
         }
+    }
+
+    onAboutToShow: {
+        isGrouped = findGroup( uuid );
     }
 }
