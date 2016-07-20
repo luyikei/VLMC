@@ -73,7 +73,7 @@ PreviewWidget::setRenderer( AbstractRenderer* renderer )
     // Give the renderer to the ruler
     m_ui->rulerWidget->setRenderer( m_renderer );
     auto output = new Backend::MLT::MLTSdlOutput;
-    output->setWindowId( m_ui->renderWidget->id() );
+    output->setWindowId( (intptr_t)m_ui->renderWidget->id() );
     m_renderer->setOutput( std::unique_ptr<Backend::IOutput>( output ) );
 
 #if defined ( Q_OS_MAC )
