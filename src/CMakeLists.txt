@@ -314,14 +314,14 @@ ENDIF(UNIX)
 
 if( APPLE )
     set(APPLICATION_BUNDLE ${CMAKE_BINARY_DIR}/bin/vlmc.app)
-    set(APPLICATION_LIB_DIR ${LIBVLC_LIB_DIR})
+    set(APPLICATION_LIB_DIR ${LIBVLC_LIBRARY_DIRS})
 
     # re-enable this when we start addressing redistribution
     # message(STATUS "Looking for bundle ${APPLICATION_BUNDLE} with library path ${APPLICATION_LIB_DIR}")
     # install(CODE "include(BundleUtilities)
     add_custom_command(TARGET vlmc
         POST_BUILD
-        COMMAND ${CMAKE_SOURCE_DIR}/cmake/FixBundle.sh ${APPLICATION_BUNDLE}/Contents/MacOS ${LIBVLC_LIB_DIR}
+        COMMAND ${CMAKE_SOURCE_DIR}/cmake/FixBundle.sh ${APPLICATION_BUNDLE}/Contents/MacOS ${LIBVLC_LIBRARY_DIRS}
         COMMENT "Fixing application bundle for local run")
     # fixup_bundle(\"${APPLICATION_BUNDLE}\" \"\" \"${APPLICATION_LIB_DIR}\")" COMPONENT Runtime)
 endif()
