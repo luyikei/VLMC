@@ -29,8 +29,6 @@
 #include <QtQml/QQmlContext>
 #include <QUrl>
 
-Timeline*   Timeline::m_instance = nullptr;
-
 Timeline::Timeline( MainWindow* parent )
     : QObject( parent )
     , m_view( new QQuickView )

@@ -68,7 +68,6 @@ protected:
     virtual void changeEvent( QEvent *e ) { Q_UNUSED( e ) }
 
 private:
-    static Timeline*    m_instance;
     QQuickView*         m_view;
     QWidget*            m_container;
 };

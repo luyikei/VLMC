@@ -129,6 +129,7 @@ MainWindow::~MainWindow()
     m_projectPreview->stop();
     m_clipPreview->stop();
     delete m_importController;
+    delete m_timeline;
 }
 
 void
