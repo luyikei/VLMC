@@ -214,6 +214,31 @@ AS_IF([test "$SYS" = linux],[
 ])
 AM_CONDITIONAL(HAVE_ANDROID, test "${HAVE_ANDROID}" = "1")
 
+AC_MSG_CHECKING([for 3rd party libraries path])
+AS_IF([test -z "${with_contrib}" || test "${with_contrib}" = "yes"], [
+    CONTRIB_DIR="${srcdir}/contribs/${host}"
+    AS_IF([test ! -d "${CONTRIB_DIR}"], [
+        echo "${CONTRIB_DIR} not found" >&AS_MESSAGE_LOG_FD
+        CONTRIB_DIR="${srcdir}/contribs/`$CXX -dumpmachine`"
+        AS_IF([test ! -d "${CONTRIB_DIR}"], [
+            echo "${CONTRIB_DIR} not found" >&AS_MESSAGE_LOG_FD
+        ])
+    ])
+])
+
+AS_IF([test -n "${CONTRIB_DIR}"], [
+    AS_IF([test -d "${CONTRIB_DIR}/lib"],[
+        CONTRIB_DIR=`cd "${CONTRIB_DIR}" && pwd`
+        AC_MSG_RESULT(["${CONTRIB_DIR}"])
+        export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${CONTRIB_DIR}/lib/pkgconfig"
+    ], [
+        echo "${CONTRIB_DIR}/lib not found" >&AS_MESSAGE_LOG_FD
+        CONTRIB_DIR=""
+        AC_MSG_RESULT([not usable])
+    ])
+])
+
+
 AC_ARG_ENABLE(gui, AC_HELP_STRING([--disable-gui],[Disable VLMC GUI]))
 AM_CONDITIONAL(HAVE_GUI, [test "${enable_gui}" !=  "no"])
 AS_IF([test "${enable_gui}" != "no"],[
