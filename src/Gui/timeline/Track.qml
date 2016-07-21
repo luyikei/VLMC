@@ -175,8 +175,8 @@ Item {
 
                     for ( i = 0; i < selectedClips.length; ++i ) {
                         var target = selectedClips[i];
-                        var oldx = target.pixelPosition();
-                        var newX = Math.max( oldx + deltaX, 0 );
+                        var oldX = target.pixelPosition();
+                        var newX = Math.max( oldX + deltaX, 0 );
 
                         if ( drag.source === target ) {
                             var oldTrackId = target.newTrackId;
@@ -235,7 +235,7 @@ Item {
                                             if ( cx - sw > 0 )
                                                 newX = cx - sw + 25;
                                             else
-                                                newX = oldx;
+                                                newX = oldX;
                                         } else {
                                             newX = cx + cw - 25;
                                         }
@@ -248,7 +248,7 @@ Item {
                                             if ( cx - sw > 0 )
                                                 newX = cx - sw;
                                             else
-                                                newX = oldx;
+                                                newX = oldX;
                                         } else {
                                             newX = cx + cw;
                                         }
@@ -271,7 +271,7 @@ Item {
                         // Recalculate deltaX in case of drag.source being moved
                         if ( drag.source === target ) {
                             if ( oldTrackId === target.newTrackId )
-                                deltaX = Math.round( newX - oldx );
+                                deltaX = Math.round( newX - oldX );
                             else
                                 // Don't move other clips if drag.source's track is changed
                                 deltaX = 0;
