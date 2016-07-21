@@ -150,6 +150,15 @@ Item {
                         return;
 
                     if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
+
+                        // Put drag.source top
+                        for ( var i = 1; i < selectedClips.length; ++i ) {
+                            if ( selectedClips[i] === drag.source ) {
+                                selectedClips.splice( i, 1 );
+                                selectedClips.unshift( drag.source );
+                            }
+                        }
+
                         drag.source.y = drag.source.y - drag.y + track.height / 2 - 1; // Adjust to the center
 
                         // Optimization: Delta delta X should be different
@@ -164,9 +173,10 @@ Item {
                     else
                         deltaX = drag.x - lastX;
 
-                    for ( var i = 0; i < selectedClips.length; ++i ) {
+                    for ( i = 0; i < selectedClips.length; ++i ) {
                         var target = selectedClips[i];
                         var oldx = target.pixelPosition();
+                        var newX = Math.max( oldx + deltaX, 0 );
 
                         if ( drag.source === target ) {
                             var oldTrackId = target.newTrackId;
@@ -176,8 +186,6 @@ Item {
                                     selectedClips[j].newTrackId = trackId - oldTrackId + selectedClips[j].trackId;
                             }
                         }
-
-                        var newX = Math.max( target.pixelPosition() + deltaX, 0 );
 
                         if ( isMagneticMode === true ) {
                             var leastDestance = 25;
@@ -259,6 +267,16 @@ Item {
                                 newX = Math.max( newX, cx + cw );
                             }
                         }
+
+                        // Recalculate deltaX in case of drag.source being moved
+                        if ( drag.source === target ) {
+                            if ( oldTrackId === target.newTrackId )
+                                deltaX = Math.round( newX - oldx );
+                            else
+                                // Don't move other clips if drag.source's track is changed
+                                deltaX = 0;
+                        }
+
 
                         target.setPixelPosition( newX );
 
