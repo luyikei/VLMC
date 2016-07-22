@@ -93,6 +93,7 @@ Rectangle {
         newDict["uuid"] = clipDict["uuid"];
         newDict["trackId"] = trackId;
         newDict["name"] = clipDict["name"];
+        newDict["linkedClip"] = clipDict["linkedClip"] ? clipDict["linkedClip"] : "";
         var tracks = trackContainer( trackType )["tracks"];
         tracks.get( trackId )["clips"].append( newDict );
 
@@ -157,6 +158,14 @@ Rectangle {
         if ( !v )
             return findClipFromTrackContainer( "Audio", uuid );
         return v;
+    }
+
+    function findClipItem( uuid ) {
+        for ( var i = 0; i < allClips.length; ++i ) {
+            if ( uuid === allClips[i].uuid )
+                return allClips[i];
+        }
+        return null;
     }
 
     function moveClipTo( trackType, uuid, trackId )

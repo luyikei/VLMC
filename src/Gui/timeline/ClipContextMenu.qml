@@ -5,7 +5,7 @@ Menu {
     id: clipContextMenu
     title: "Edit"
 
-    property string uuid
+    property var clip
     property bool isGrouped
 
     MenuItem {
@@ -15,8 +15,8 @@ Menu {
             if ( selectedClips.length <= 1 )
                 return;
 
-            if ( isGrouped ) {
-                removeGroup( uuid );
+            if ( isGrouped === true ) {
+                removeGroup( clip.uuid );
             }
             else {
                 var l = [];
@@ -28,7 +28,15 @@ Menu {
         }
     }
 
+    MenuItem {
+        text: clip.linked ? "Unlink" : "Link"
+
+        onTriggered: {
+            clip.linked = !clip.linked;
+        }
+    }
+
     onAboutToShow: {
-        isGrouped = findGroup( uuid );
+        isGrouped = findGroup( clip.uuid );
     }
 }

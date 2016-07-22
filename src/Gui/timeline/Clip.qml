@@ -29,6 +29,8 @@ Rectangle {
     property int begin
     property int end
     property string uuid
+    property string linkedClip // Uuid
+    property bool linked: false
     property string type
     property bool selected: false
 
@@ -41,6 +43,7 @@ Rectangle {
         position = clipInfo["position"];
         begin = clipInfo["begin"];
         end = clipInfo["end"];
+        linkedClip = clipInfo["linkedClip"];
     }
 
     onPositionChanged: {
@@ -53,6 +56,30 @@ Rectangle {
 
     onEndChanged: {
         clipInfo["end"] = end;
+    }
+
+    onLinkedClipChanged: {
+        clipInfo["linkedClip"] = linkedClip;
+        if ( linkedClip ) {
+            linked = true;
+            var linkedClipItem = findClipItem( linkedClip );
+            if ( linkedClipItem )
+                linkedClipItem.linked = true;
+        }
+        else
+            linked = false;
+    }
+
+    onLinkedChanged: {
+        selectLinkedClip();
+
+        if ( !linkedClip )
+            return;
+
+        if ( linked === true )
+            findClipItem( linkedClip ).linked = true;
+        else
+            findClipItem( linkedClip ).linked = false;
     }
 
     function setPixelPosition( pixels )
@@ -79,6 +106,11 @@ Rectangle {
     function resize() {
         // This function updates Backend
         workflow.resizeClip( uuid, begin, end, position )
+    }
+
+    function selectLinkedClip() {
+        if ( selected === true && linked === true && linkedClip )
+            findClipItem( linkedClip ).selected = true;
     }
 
     Component.onCompleted: {
@@ -205,7 +237,7 @@ Rectangle {
 
     ClipContextMenu {
         id: clipContextMenu
-        uuid: clip.uuid
+        clip: clip
     }
 
     onYChanged: {
@@ -225,11 +257,11 @@ Rectangle {
 
             var group = findGroup( uuid );
             for ( var i = 0; i < ( group ? group.length : 0 ); ++i ) {
-                for ( var j = 0; j < allClips.length; ++j ) {
-                    if ( group[i] === allClips[j].uuid )
-                        allClips[j].selected = true;
-                }
+                var clipItem = findClipItem( group[i] );
+                if ( clipItem )
+                    clipItem.selected = true;
             }
+            selectLinkedClip();
         }
         else {
             for ( i = 0; i < selectedClips.length; ++i )

@@ -81,24 +81,111 @@ Item {
                 property int lastX: 0
                 property int deltaX: 0
 
-                onContainsDragChanged: {
-                    if ( containsDrag === true )
-                        lastX = drag.x;
+                function findNewPosition( newX, target, useMagneticMode ) {
+                    var oldX = target.pixelPosition();
+
+                    if ( useMagneticMode === true ) {
+                        var leastDestance = 25;
+                        // Check two times
+                        for ( var k = 0; k < 2; ++k ) {
+                            for ( var j = 0; j < markers.count; ++j ) {
+                                var mx = ftop( markers.get( j ).position );
+                                if ( Math.abs( newX - mx ) < leastDestance ) {
+                                    leastDestance = Math.abs( newX - mx );
+                                    newX = mx;
+                                }
+                                else if ( Math.abs( newX + target.width - mx ) < leastDestance ) {
+                                    leastDestance = Math.abs( newX + target.width - mx );
+                                    newX = mx - target.width;
+                                }
+                            }
+                        }
+                    }
+
+                    // Collision detection
+                    var isCollided = true;
+                    var currentTrack = trackContainer( target.type )["tracks"].get( target.newTrackId );
+                    if ( currentTrack )
+                        var clips = currentTrack["clips"];
+                    else
+                        clips = [];
+                    for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
+                        isCollided = false;
+                        for ( k = 0; k < clips.count; ++k ) {
+                            var clip = clips.get( k );
+                            if ( clip.uuid === target.uuid )
+                                continue;
+                            var sw = target.width; // Width of the source clip
+                            var cx = ftop( clip["position"] );
+                            var cw = ftop( clip["end"] - clip["begin"] + 1);
+                            // Set a right position
+                            //
+                            // HACK: If magnetic mode, consider clips bigger.
+                            if ( useMagneticMode === true ) {
+                                if ( cx  + cw > newX && newX + sw > cx )
+                                    isCollided = true;
+
+                                cw += 50
+                                cx -= 25
+                                if ( cx + cw > newX && newX + sw > cx ) {
+                                    if ( cx > newX ) {
+                                        if ( cx - sw > 0 )
+                                            newX = cx - sw + 25;
+                                        else
+                                            newX = oldX;
+                                    } else {
+                                        newX = cx + cw - 25;
+                                    }
+                                }
+                            }
+                            else {
+                                if ( cx  + cw > newX && newX + sw > cx ) {
+                                    isCollided = true;
+                                    if ( cx > newX ) {
+                                        if ( cx - sw > 0 )
+                                            newX = cx - sw;
+                                        else
+                                            newX = oldX;
+                                    } else {
+                                        newX = cx + cw;
+                                    }
+                                }
+                            }
+                            if ( isCollided )
+                                break;
+                        }
+                    }
+
+                    if ( isCollided ) {
+                        for ( k = 0; k < clips.count; ++k ) {
+                            clip = clips.get( k );
+                            cx = ftop( clip["position"] );
+                            cw = ftop( clip["end"] - clip["begin"] + 1);
+                            newX = Math.max( newX, cx + cw );
+                        }
+                    }
+                    return newX;
                 }
 
                 onDropped: {
                     if ( drop.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
-                        aClipInfo = findClipFromTrack( "Audio", trackId, "tempUuid" );
-                        vClipInfo = findClipFromTrack( "Video", trackId, "tempUuid" );
+                        aClipInfo = findClipFromTrack( "Audio", trackId, "audioUuid" );
+                        vClipInfo = findClipFromTrack( "Video", trackId, "videoUuid" );
                         if ( aClipInfo ) {
                             var pos = aClipInfo["position"];
-                            removeClipFromTrack( "Audio", trackId, "tempUuid" );
-                            addClip( "Audio", trackId, workflow.clipInfo( workflow.addClip( currentUuid, trackId, pos, true ) ) );
+                            var audioClipUuid = workflow.addClip( currentUuid, trackId, pos, true );
+                            removeClipFromTrack( "Audio", trackId, "audioUuid" );
+                            addClip( "Audio", trackId, workflow.clipInfo( audioClipUuid ) );
                         }
                         if ( vClipInfo ) {
                             pos = vClipInfo["position"];
-                            removeClipFromTrack( "Video", trackId, "tempUuid" );
-                            addClip( "Video", trackId, workflow.clipInfo( workflow.addClip( currentUuid, trackId, pos, false ) ) );
+                            var videoClipUuid = workflow.addClip( currentUuid, trackId, pos, false );
+                            removeClipFromTrack( "Video", trackId, "videoUuid" );
+                            addClip( "Video", trackId, workflow.clipInfo( videoClipUuid ) );
+                        }
+                        if ( audioClipUuid && videoClipUuid ) {
+                            findClipItem( audioClipUuid ).linkedClip = videoClipUuid;
+                            findClipItem( videoClipUuid ).linkedClip = audioClipUuid;
                         }
                         currentUuid = "";
                         aClipInfo = null;
@@ -111,8 +198,8 @@ Item {
 
                 onExited: {
                     if ( currentUuid !== "" ) {
-                        removeClipFromTrack( "Audio", trackId, "tempUuid" );
-                        removeClipFromTrack( "Video", trackId, "tempUuid" );
+                        removeClipFromTrack( "Audio", trackId, "audioUuid" );
+                        removeClipFromTrack( "Video", trackId, "videoUuid" );
                     }
                 }
 
@@ -135,13 +222,19 @@ Item {
                             var newClipInfo = workflow.clipInfo( drag.getDataAsString( "vlmc/uuid" ) );
                             currentUuid = "" + newClipInfo["uuid"];
                             newClipInfo["position"] = ptof( drag.x );
-                            newClipInfo["uuid"] = "tempUuid";
-                            if ( newClipInfo["audio"] )
+                            if ( newClipInfo["audio"] ) {
+                                newClipInfo["uuid"] = "audioUuid";
                                 aClipInfo = addClip( "Audio", trackId, newClipInfo );
-                            if ( newClipInfo["video"] )
+                            }
+                            if ( newClipInfo["video"] ) {
+                                newClipInfo["uuid"] = "videoUuid";
                                 vClipInfo = addClip( "Video", trackId, newClipInfo );
+                            }
                         }
+                        lastX = drag.x;
                     }
+                    else
+                        lastX = drag.source.x;
                 }
 
                 onPositionChanged: {
@@ -173,11 +266,9 @@ Item {
                     else
                         deltaX = drag.x - lastX;
 
+                    var alreadyCalculated = []; // Uuids of clips being already set new x position.
                     for ( i = 0; i < selectedClips.length; ++i ) {
                         var target = selectedClips[i];
-                        var oldX = target.pixelPosition();
-                        var newX = Math.max( oldX + deltaX, 0 );
-
                         if ( drag.source === target ) {
                             var oldTrackId = target.newTrackId;
                             target.newTrackId = trackId;
@@ -187,102 +278,48 @@ Item {
                             }
                         }
 
-                        if ( isMagneticMode === true ) {
-                            var leastDestance = 25;
-                            // Check two times
-                            for ( var k = 0; k < 2; ++k ) {
-                                for ( j = 0; j < markers.count; ++j ) {
-                                    var mx = ftop( markers.get( j ).position );
-                                    if ( Math.abs( newX - mx ) < leastDestance ) {
-                                        leastDestance = Math.abs( newX - mx );
-                                        newX = mx;
-                                    }
-                                    else if ( Math.abs( newX + target.width - mx ) < leastDestance ) {
-                                        leastDestance = Math.abs( newX + target.width - mx );
-                                        newX = mx - target.width;
-                                    }
-                                }
+                        if ( alreadyCalculated.indexOf( target.uuid ) < 0 ) {
+                            var oldX = target.pixelPosition();
+                            var newX = Math.max( oldX + deltaX, 0 );
+
+                            // Recalculate deltaX in case of drag.source being moved
+                            if ( drag.source === target ) {
+                                if ( oldTrackId === target.newTrackId )
+                                    deltaX = Math.round( newX - oldX );
+                                else
+                                    // Don't move other clips if drag.source's track is changed
+                                    deltaX = 0;
                             }
-                        }
 
-                        // Collision detection
-                        var isCollided = true;
-                        var currentTrack = trackContainer( target.type )["tracks"].get( target.newTrackId );
-                        if ( currentTrack )
-                            var clips = currentTrack["clips"];
-                        else
-                            clips = [];
-                        for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
-                            isCollided = false;
-                            for ( k = 0; k < clips.count; ++k ) {
-                                var clip = clips.get( k );
-                                if ( clip.uuid === target.uuid )
-                                    continue;
-                                var sw = target.width; // Width of the source clip
-                                var cx = ftop( clip["position"] );
-                                var cw = ftop( clip["end"] - clip["begin"] + 1);
-                                // Set a right position
-                                //
-                                // HACK: If magnetic mode, consider clips bigger.
-                                if ( isMagneticMode === true ) {
-                                    if ( cx  + cw > newX && newX + sw > cx )
-                                        isCollided = true;
+                            newX = findNewPosition( newX, target, isMagneticMode );
 
-                                    cw += 50
-                                    cx -= 25
-                                    if ( cx + cw > newX && newX + sw > cx ) {
-                                        if ( cx > newX ) {
-                                            if ( cx - sw > 0 )
-                                                newX = cx - sw + 25;
-                                            else
-                                                newX = oldX;
-                                        } else {
-                                            newX = cx + cw - 25;
-                                        }
-                                    }
+                            // Let's find newX of the linked clip
+                            if ( target.linked === true ) {
+                                var linkedClipItem = findClipItem( target.linkedClip );
+                                var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
+
+                                // If linked clip collides
+                                if ( Math.abs( newLinkedClipX - newX ) > 1 ) {
+
+                                    // Recalculate target's newX
+                                    // This time, don't use magnets
+                                    newX = findNewPosition( newLinkedClipX, target, false );
+                                    newLinkedClipX = findNewPosition( newX, target, false );
+
+                                    // And if newX collides again, we don't move
+                                    if ( Math.abs( newLinkedClipX - newX ) > 1 )
+                                        newX = oldX;
                                 }
-                                else {
-                                    if ( cx  + cw > newX && newX + sw > cx ) {
-                                        isCollided = true;
-                                        if ( cx > newX ) {
-                                            if ( cx - sw > 0 )
-                                                newX = cx - sw;
-                                            else
-                                                newX = oldX;
-                                        } else {
-                                            newX = cx + cw;
-                                        }
-                                    }
-                                }
-                                if ( isCollided )
-                                    break;
+                                linkedClipItem.setPixelPosition( newX );
+                                alreadyCalculated.push( target.linkedClip );
                             }
+                            target.setPixelPosition( newX );
+                            alreadyCalculated.push( target.uuid );
                         }
-
-                        if ( isCollided ) {
-                            for ( k = 0; k < clips.count; ++k ) {
-                                clip = clips.get( k );
-                                cx = ftop( clip["position"] );
-                                cw = ftop( clip["end"] - clip["begin"] + 1);
-                                newX = Math.max( newX, cx + cw );
-                            }
-                        }
-
-                        // Recalculate deltaX in case of drag.source being moved
-                        if ( drag.source === target ) {
-                            if ( oldTrackId === target.newTrackId )
-                                deltaX = Math.round( newX - oldX );
-                            else
-                                // Don't move other clips if drag.source's track is changed
-                                deltaX = 0;
-                        }
-
-
-                        target.setPixelPosition( newX );
 
                         // Scroll if needed
-                        if ( length < ptof( newX + target.width ) ) {
-                            length = ptof( newX + target.width );
+                        if ( length < ptof( newX ) ) {
+                            length = ptof( newX );
                             // Never show the background behind the timeline
                             var newContentX = sView.flickableItem.contentWidth - sView.width;
                             if ( newContentX >= 0 )
@@ -321,6 +358,7 @@ Item {
                     position: model.position
                     begin: model.begin
                     end: model.end
+                    linkedClip: model.linkedClip
                     clipInfo: model
                 }
             }
