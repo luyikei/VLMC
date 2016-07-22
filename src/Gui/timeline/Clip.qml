@@ -145,7 +145,6 @@ Rectangle {
 
     Drag.keys: ["Clip"]
     Drag.active: dragArea.drag.active
-    Drag.hotSpot: Qt.point( 0, height / 2 )
 
     MouseArea {
         id: dragArea
@@ -193,6 +192,8 @@ Rectangle {
         }
 
         onPressed: {
+            clip.Drag.hotSpot = Qt.point( mouseX, clip.height / 2 );
+
             if ( selected === true )
                 return;
 
