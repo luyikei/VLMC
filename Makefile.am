@@ -380,12 +380,13 @@ EXTRA_DIST += $(vlmc_UI)
 vlmc_CPPFLAGS += -Isrc/Gui/ -I$(top_srcdir)/src/Gui
 
 nodist_vlmc_SOURCES += $(vlmc_UI:.ui=.h)
-#nodist_vlmc_SOURCES += 
 
 endif
 
 resources.cpp: $(vlmc_RC)
 	$(RCC) -o $@ $<
+
+nodist_vlmc_SOURCES += resources.cpp
 
 moc_verbose = $(moc_verbose_$(V))
 moc_verbose_ = $(moc_verbose__$(AM_DEFAULT_VERBOSITY))
