@@ -6,16 +6,16 @@ Menu {
     title: "Edit"
 
     property var clip
-    property bool isGrouped
+    property bool grouped
 
     MenuItem {
-        text: isGrouped ? "Ungroup" : "Group"
+        text: grouped ? "Ungroup" : "Group"
 
         onTriggered: {
             if ( selectedClips.length <= 1 )
                 return;
 
-            if ( isGrouped === true ) {
+            if ( grouped === true ) {
                 removeGroup( clip.uuid );
             }
             else {
@@ -37,6 +37,6 @@ Menu {
     }
 
     onAboutToShow: {
-        isGrouped = findGroup( clip.uuid );
+        grouped = findGroup( clip.uuid );
     }
 }
