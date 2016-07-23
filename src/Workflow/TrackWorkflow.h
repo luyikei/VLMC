@@ -107,9 +107,6 @@ class   TrackWorkflow : public QObject
 
     signals:
         void                lengthChanged( qint64 newLength );
-        void                clipAdded( TrackWorkflow*, std::shared_ptr<Clip> const& clip, qint64 );
-        void                clipRemoved( TrackWorkflow*, const QUuid& );
-        void                clipMoved( TrackWorkflow*, const QUuid&, qint64 );
 
         //these signals are here to ease connection with tracksview, as it only
         //monitors tracks

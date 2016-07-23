@@ -95,6 +95,8 @@ Rectangle {
         newDict["name"] = clipDict["name"];
         newDict["linkedClip"] = clipDict["linkedClip"] ? clipDict["linkedClip"] : "";
         var tracks = trackContainer( trackType )["tracks"];
+        while ( trackId > tracks.count - 1 )
+            addTrack( trackType );
         tracks.get( trackId )["clips"].append( newDict );
 
         if ( clipDict["uuid"] === "tempUuid" )
@@ -127,6 +129,12 @@ Rectangle {
     {
         for ( var i = 0; i < trackContainer( trackType )["tracks"].count; i++  )
             removeClipFromTrack( trackType, i, uuid );
+    }
+
+    function removeClip( uuid )
+    {
+        removeClipFromTrackContainer( "Audio", uuid );
+        removeClipFromTrackContainer( "Video", uuid );
     }
 
     function findClipFromTrackContainer( trackType, uuid )
@@ -168,16 +176,15 @@ Rectangle {
         return null;
     }
 
-    function moveClipTo( trackType, uuid, trackId )
+    function moveClipTo( trackType, uuid, trackId, position )
     {
         var clip = findClipFromTrackContainer( trackType, uuid );
         if ( !clip )
             return;
         var oldId = clip["trackId"];
         clip["trackId"] = trackId;
-        workflow.moveClip( trackId, uuid, clip["position"] );
-        addClip( trackType, trackId, clip );
-        removeClipFromTrack( trackType, oldId, uuid );
+        findClipItem( uuid ).position = position;
+        workflow.moveClip( trackId, uuid, position );
     }
 
     function adjustTracks( trackType ) {
@@ -459,10 +466,8 @@ Rectangle {
         icon: StandardIcon.Question
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            while ( selectedClips.length ) {
-                workflow.removeClip( selectedClips[0] );
-                removeClipFromTrackContainer( selectedClips[0].type, selectedClips[0].uuid );
-            }
+            while ( selectedClips.length )
+                workflow.removeClip( selectedClips[0].uuid );
         }
     }
 
@@ -488,6 +493,38 @@ Rectangle {
                 page.length = length;
                 zoomIn( sView.width / ( ftop( length ) + initPosOfCursor + 100 ) );
             }
+        }
+
+        onClipAdded: {
+            var clipInfo = workflow.clipInfo( uuid );
+            var type = clipInfo["audio"] ? "Audio" : "Video";
+            addClip( type, clipInfo["trackId"], clipInfo );
+        }
+
+        onClipMoved: {
+            var clipInfo = workflow.clipInfo( uuid );
+            var type = clipInfo["audio"] ? "Audio" : "Video";
+            var oldClip = findClipFromTrackContainer( type, uuid );
+
+            if ( clipInfo["trackId"] !== oldClip["trackId"] ) {
+                addClip( type, clipInfo["trackId"], clipInfo );
+                removeClipFromTrack( type, oldClip["trackId"], uuid );
+            }
+            else if ( oldClip["position"] !== clipInfo["position"] ) {
+                findClipItem( uuid ).position = clipInfo["position"];
+            }
+        }
+
+        onClipRemoved: {
+            removeClip( uuid );
+        }
+
+        onClipResized: {
+            var clipInfo = workflow.clipInfo( uuid );
+            var clip = findClipItem( uuid );
+            clip.position = clipInfo["position"];
+            clip.end = clipInfo["end"];
+            clip.begin = clipInfo["begin"];
         }
     }
 

@@ -175,13 +175,11 @@ Item {
                             var pos = aClipInfo["position"];
                             var audioClipUuid = workflow.addClip( currentUuid, trackId, pos, true );
                             removeClipFromTrack( "Audio", trackId, "audioUuid" );
-                            addClip( "Audio", trackId, workflow.clipInfo( audioClipUuid ) );
                         }
                         if ( vClipInfo ) {
                             pos = vClipInfo["position"];
                             var videoClipUuid = workflow.addClip( currentUuid, trackId, pos, false );
                             removeClipFromTrack( "Video", trackId, "videoUuid" );
-                            addClip( "Video", trackId, workflow.clipInfo( videoClipUuid ) );
                         }
                         if ( audioClipUuid && videoClipUuid ) {
                             findClipItem( audioClipUuid ).linkedClip = videoClipUuid;

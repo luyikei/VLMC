@@ -84,7 +84,6 @@ TrackWorkflow::addClip( std::shared_ptr<Clip> const& clip, qint64 start )
 {
     trackFromFormats( clip->formats() )->insertAt( *clip->input(), start );
     m_clips.insertMulti( start, clip );
-    emit clipAdded( this, clip, start );
 }
 
 qint64
@@ -138,7 +137,6 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
 
             m_clips.erase( it );
             m_clips.insertMulti( startingFrame, clip );
-            emit clipMoved( this, clip->uuid(), startingFrame );
             return ;
         }
         ++it;
@@ -180,7 +178,6 @@ TrackWorkflow::clipDestroyed( const QUuid& id )
             auto   clip = it.value();
             m_clips.erase( it );
             clip->disconnect( this );
-            emit clipRemoved( this, id );
             return ;
         }
         ++it;
@@ -204,7 +201,6 @@ TrackWorkflow::removeClip( const QUuid& id )
             track->remove( track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
             clip->disconnect( this );
-            emit clipRemoved( this, clip->uuid() );
             return clip;
         }
         ++it;
@@ -245,6 +241,7 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
         c->setFormats( (Clip::Formats)m["formats"].toInt() );
         EffectHelper::loadFromVariant( m["filters"], c->input() );
         addClip( c, m["startFrame"].toLongLong() );
+        emit Core::instance()->workflow()->clipAdded( c->uuid().toString() );
     }
     EffectHelper::loadFromVariant( variant.toMap()["filters"], m_multitrack );
 }

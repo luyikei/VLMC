@@ -96,11 +96,7 @@ Rectangle {
     }
 
     function move() {
-        // This function updates Backend
-        if ( newTrackId !== trackId )
-            moveClipTo( track.type, uuid, newTrackId );
-        else
-            workflow.moveClip( trackId, uuid, position )
+        moveClipTo( track.type, uuid, newTrackId, position );
     }
 
     function resize() {

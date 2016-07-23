@@ -190,7 +190,7 @@ MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool is
         newClip->setFormats( Clip::Video );
 
     Commands::trigger( new Commands::Clip::Add( newClip, track( trackId ), pos ) );
-
+    emit clipAdded( newClip->uuid().toString() );
     return newClip->uuid().toString();
 }
 
@@ -224,6 +224,7 @@ MainWorkflow::clipInfo( const QString& uuid )
             h["audio"] = clip->formats().testFlag( Clip::Audio );
             h["video"] = clip->formats().testFlag( Clip::Video );
             h["position"] = track( it.key() )->getClipPosition( uuid );
+            h["trackId"] = it.key();
             return QJsonObject::fromVariantHash( h );
         }
     }
@@ -247,6 +248,7 @@ MainWorkflow::moveClip( quint32 trackId, const QString& uuid, qint64 startFrame 
 
             m_clips.erase( it );
             m_clips.insertMulti( trackId, clip );
+            emit clipMoved( clip->uuid().toString() );
             return;
         }
     }
@@ -263,6 +265,7 @@ MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, q
             auto clip = it.value();
 
             Commands::trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
+            emit clipResized( uuid );
             return;
         }
     }
@@ -278,7 +281,8 @@ MainWorkflow::removeClip( const QString& uuid )
             auto trackId = it.key();
             auto clip = it.value();
 
-            Commands::trigger( new Commands::Clip::Remove( clip, track( trackId) ) );
+            Commands::trigger( new Commands::Clip::Remove( clip, track( trackId ) ) );
+            emit clipRemoved( uuid );
             return;
         }
     }

@@ -234,6 +234,11 @@ class   MainWorkflow : public QObject
          *  \param  newLength   The new length, in frames
          */
         void                    lengthChanged( qint64 length );
+
+        void                    clipAdded( const QString& uuid );
+        void                    clipResized( const QString& uuid );
+        void                    clipRemoved( const QString& uuid );
+        void                    clipMoved( const QString& uuid );
 };
 
 #endif // MAINWORKFLOW_H
