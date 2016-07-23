@@ -85,43 +85,37 @@ MainWorkflow::~MainWorkflow()
 qint64
 MainWorkflow::getClipPosition( const QUuid& uuid, unsigned int trackId ) const
 {
-    Q_ASSERT( trackId < m_trackCount );
-    return m_tracks[trackId]->getClipPosition( uuid );
+    return track( trackId )->getClipPosition( uuid );
 }
 
 void
 MainWorkflow::muteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
-    Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId]->mute( true, trackType );
+    track( trackId )->mute( true, trackType );
 }
 
 void
 MainWorkflow::unmuteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
-    Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId]->mute( false, trackType );
+    track( trackId )->mute( false, trackType );
 }
 
 void
 MainWorkflow::muteClip( const QUuid& uuid, unsigned int trackId )
 {
-    Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId]->muteClip( uuid );
+    track( trackId )->muteClip( uuid );
 }
 
 void
 MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId )
 {
-    Q_ASSERT( trackId < m_trackCount );
-    m_tracks[trackId]->unmuteClip( uuid );
+    track( trackId )->unmuteClip( uuid );
 }
 
 std::shared_ptr<Clip>
 MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
 {
-    Q_ASSERT( trackId < m_trackCount );
-    return m_tracks[trackId]->clip( uuid );
+    return track( trackId )->clip( uuid );
 }
 
 void
@@ -367,7 +361,7 @@ MainWorkflow::preSave()
 
     QVariantList l;
     for ( int i = 0; i < maxTrackId + 1; ++i )
-        l << m_tracks[i]->toVariant();
+        l << track( i )->toVariant();
 
     m_settings->value( "tracks" )->set( l );
 }
@@ -377,11 +371,19 @@ MainWorkflow::postLoad()
 {
     QVariantList l = m_settings->value( "tracks" )->get().toList();
     for ( int i = 0; i < l.size(); ++i )
-        m_tracks[i]->loadFromVariant( l[i] );
+        track( i )->loadFromVariant( l[i] );
 }
 
 TrackWorkflow*
 MainWorkflow::track( quint32 trackId )
 {
+    Q_ASSERT( trackId < m_trackCount );
+    return m_tracks[ trackId ];
+}
+
+TrackWorkflow*
+MainWorkflow::track( quint32 trackId ) const
+{
+    Q_ASSERT( trackId < m_trackCount );
     return m_tracks[ trackId ];
 }

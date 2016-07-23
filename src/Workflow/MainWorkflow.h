@@ -124,7 +124,8 @@ class   MainWorkflow : public QObject
          */
         bool                    contains( const QUuid& uuid ) const;
 
-        TrackWorkflow           *track( quint32 trackId );
+        TrackWorkflow*          track( quint32 trackId );
+        TrackWorkflow*          track( quint32 trackId ) const;
 
         /**
          * \brief   Return the number of track for each track type.
