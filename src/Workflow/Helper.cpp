@@ -26,7 +26,7 @@ using namespace Workflow;
 
 Helper::Helper( const QString &uuid/* = QString()*/ )
 {
-    if ( uuid.isNull() == true )
+    if ( uuid.isEmpty() == true )
         m_uuid = QUuid::createUuid();
     else
         m_uuid = uuid;

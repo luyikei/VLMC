@@ -34,7 +34,7 @@ namespace   Workflow
         Q_OBJECT
 
         protected: //This class is not meant to be used by itself.
-            Helper( const QString &uuid = QString() );
+            Helper( const QString &uuid = QStringLiteral() );
             ~Helper();
 
         public:
