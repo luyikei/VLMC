@@ -499,6 +499,7 @@ Rectangle {
             var type = clipInfo["audio"] ? "Audio" : "Video";
             clipInfo["selected"] = false;
             addClip( type, clipInfo["trackId"], clipInfo );
+            adjustTracks( type );
         }
 
         onClipMoved: {
@@ -513,10 +514,13 @@ Rectangle {
             else if ( oldClip["position"] !== clipInfo["position"] ) {
                 findClipItem( uuid ).position = clipInfo["position"];
             }
+            adjustTracks( type );
         }
 
         onClipRemoved: {
             removeClip( uuid );
+            adjustTracks( "Audio" );
+            adjustTracks( "Video" );
         }
 
         onClipResized: {
