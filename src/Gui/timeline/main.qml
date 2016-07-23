@@ -179,12 +179,10 @@ Rectangle {
 
     function moveClipTo( trackType, uuid, trackId, position )
     {
-        var clip = findClipFromTrackContainer( trackType, uuid );
+        var clip = findClipItem( uuid );
         if ( !clip )
             return;
-        var oldId = clip["trackId"];
-        clip["trackId"] = trackId;
-        findClipItem( uuid ).position = position;
+        clip.position = position;
         workflow.moveClip( trackId, uuid, position );
     }
 
