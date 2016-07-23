@@ -39,7 +39,6 @@
 
 class   MediaContainer;
 class   Media;
-class   ClipWorkflow;
 
 class   Clip : public Workflow::Helper
 {
@@ -158,8 +157,6 @@ class   Clip : public Workflow::Helper
         Clip*               m_parent;
 
         Formats             m_formats;
-
-        ClipWorkflow*       m_clipWorkflow;
 
     private slots:
         void                mediaMetadataUpdated();

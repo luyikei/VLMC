@@ -38,8 +38,7 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::
         Workflow::Helper( uuid ),
         m_media( media ),
         m_input( std::move( m_media->input()->cut( begin, end ) ) ),
-        m_parent( media->baseClip() ),
-        m_clipWorkflow( nullptr )
+        m_parent( media->baseClip() )
 {
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
