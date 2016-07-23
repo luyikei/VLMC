@@ -459,7 +459,7 @@ Rectangle {
     }
 
     MessageDialog {
-        id: removeClipDialog
+        id: removeSelectedClipsDialog
         title: "VLMC"
         text: qsTr( "Do you really want to remove selected clips?" )
         icon: StandardIcon.Question
@@ -472,7 +472,7 @@ Rectangle {
 
     Keys.onPressed: {
         if ( event.key === Qt.Key_Delete ) {
-            removeClipDialog.visible = true;
+            removeSelectedClipsDialog.visible = true;
         }
         else if ( event.key === Qt.Key_Plus && event.modifiers & Qt.ControlModifier )
         {

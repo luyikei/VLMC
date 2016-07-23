@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 
 Menu {
     id: clipContextMenu
@@ -33,6 +34,27 @@ Menu {
 
         onTriggered: {
             clip.linked = !clip.linked;
+        }
+    }
+
+    MenuSeparator { }
+
+    MenuItem {
+        text: "Delete"
+
+        onTriggered: {
+            removeClipDialog.visible = true;
+        }
+    }
+
+    MessageDialog {
+        id: removeClipDialog
+        title: "VLMC"
+        text: qsTr( "Do you really want to remove the clip?" )
+        icon: StandardIcon.Question
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            workflow.removeClip( clip.uuid );
         }
     }
 
