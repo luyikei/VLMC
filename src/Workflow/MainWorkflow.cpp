@@ -288,6 +288,21 @@ MainWorkflow::removeClip( const QString& uuid )
     }
 }
 
+void
+MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
+{
+
+    for ( auto clipA : m_clips )
+        if ( clipA->uuid().toString() == uuidA )
+            for ( auto clipB : m_clips )
+                if ( clipB->uuid().toString() == uuidB )
+                {
+                    Commands::trigger( new Commands::Clip::Link( clipA, clipB ) );
+                    emit clipLinked( uuidA, uuidB );
+                    return;
+                }
+}
+
 bool
 MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, quint32 height,
                                  double fps, const QString &ar, quint32 vbitrate, quint32 abitrate,

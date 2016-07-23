@@ -38,7 +38,8 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::
         Workflow::Helper( uuid ),
         m_media( media ),
         m_input( std::move( m_media->input()->cut( begin, end ) ) ),
-        m_parent( media->baseClip() )
+        m_parent( media->baseClip() ),
+        m_isLinked( false )
 {
     m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
@@ -186,6 +187,30 @@ Clip::setBoundaries( qint64 begin, qint64 end )
     m_input->setBoundaries( begin, end );
 }
 
+void
+Clip::setLinkedClipUuid( const QUuid& uuid )
+{
+    m_linkedClipUuid = uuid;
+}
+
+const QUuid&
+Clip::linkedClipUuid() const
+{
+    return m_linkedClipUuid;
+}
+
+void
+Clip::setLinked( bool isLinked )
+{
+    m_isLinked = isLinked;
+}
+
+bool
+Clip::isLinked() const
+{
+    return m_isLinked;
+}
+
 Clip*
 Clip::rootClip()
 {
@@ -267,6 +292,13 @@ Clip::toVariant() const
         h.insert( "begin", begin() );
         h.insert( "end", end() );
     }
+    if ( isLinked() == true )
+    {
+        h.insert( "linkedClip", m_linkedClipUuid );
+        h.insert( "linked", true );
+    }
+    else
+        h.insert( "linked", false );
     h.insert( "filters", EffectHelper::toVariant( m_input.get() ) );
     return QVariant( h );
 

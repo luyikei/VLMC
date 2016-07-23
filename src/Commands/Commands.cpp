@@ -271,6 +271,42 @@ Commands::Clip::Split::internalUndo()
     m_toSplit->setEnd( m_oldEnd );
 }
 
+Commands::Clip::Link::Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB )
+    : m_clipA( clipA )
+    , m_clipB( clipB )
+{
+    connect( m_clipA.get(), &::Clip::destroyed, this, &Link::invalidate );
+    connect( m_clipB.get(), &::Clip::destroyed, this, &Link::invalidate );
+    retranslate();
+}
+
+Commands::Clip::Link::~Link()
+{
+
+}
+
+void
+Commands::Clip::Link::retranslate()
+{
+    setText( tr( "Linking clip" ) );
+}
+
+void
+Commands::Clip::Link::internalRedo()
+{
+    m_clipA->setLinkedClipUuid( m_clipB->uuid() );
+    m_clipB->setLinkedClipUuid( m_clipA->uuid() );
+    m_clipA->setLinked( true );
+    m_clipB->setLinked( true );
+}
+
+void
+Commands::Clip::Link::internalUndo()
+{
+    m_clipA->setLinked( false );
+    m_clipB->setLinked( false );
+}
+
 Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )
     : m_helper( helper )
     , m_target( target )

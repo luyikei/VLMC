@@ -157,6 +157,9 @@ class   MainWorkflow : public QObject
         Q_INVOKABLE
         void                    removeClip( const QString& uuid );
 
+        Q_INVOKABLE
+        void                    linkClips( const QString& uuidA, const QString& uuidB );
+
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
                                                    quint32 nbChannels, quint32 sampleRate );
@@ -239,6 +242,7 @@ class   MainWorkflow : public QObject
         void                    clipResized( const QString& uuid );
         void                    clipRemoved( const QString& uuid );
         void                    clipMoved( const QString& uuid );
+        void                    clipLinked( const QString& uuidA, const QString& uuidB );
 };
 
 #endif // MAINWORKFLOW_H

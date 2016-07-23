@@ -177,6 +177,21 @@ namespace Commands
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;
         };
+
+        class   Link : public Generic
+        {
+            Q_OBJECT
+
+            public:
+                Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB );
+                ~Link();
+                virtual void    internalRedo();
+                virtual void    internalUndo();
+                virtual void    retranslate();
+            private:
+                std::shared_ptr<::Clip>     m_clipA;
+                std::shared_ptr<::Clip>     m_clipB;
+        };
     }
     namespace   Effect
     {

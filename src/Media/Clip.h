@@ -108,6 +108,12 @@ class   Clip : public Workflow::Helper
         virtual qint64      length() const override;
         virtual void        setBoundaries( qint64 begin, qint64 end ) override;
 
+        void                setLinkedClipUuid( const QUuid& uuid );
+        const QUuid&        linkedClipUuid() const;
+
+        void                setLinked( bool isLinked );
+        bool                isLinked() const;
+
         const QStringList   &metaTags() const;
         void                setMetaTags( const QStringList &tags );
         bool                matchMetaTag( const QString &tag ) const;
@@ -155,6 +161,9 @@ class   Clip : public Workflow::Helper
         MediaContainer*     m_childs;
 
         Clip*               m_parent;
+
+        QUuid               m_linkedClipUuid;
+        bool                m_isLinked;
 
         Formats             m_formats;
 
