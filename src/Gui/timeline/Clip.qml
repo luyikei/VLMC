@@ -78,10 +78,14 @@ Rectangle {
         if ( !linkedClip )
             return;
 
+        var linkedClipItem = findClipItem( linkedClip );
+        if ( !linkedClipItem )
+            return;
+
         if ( linked === true )
-            findClipItem( linkedClip ).linked = true;
+            linkedClipItem.linked = true;
         else
-            findClipItem( linkedClip ).linked = false;
+            linkedClipItem.linked = false;
     }
 
     function setPixelPosition( pixels )

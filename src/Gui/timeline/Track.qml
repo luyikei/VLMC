@@ -182,8 +182,6 @@ Item {
                             removeClipFromTrack( "Video", trackId, "videoUuid" );
                         }
                         if ( audioClipUuid && videoClipUuid ) {
-                            findClipItem( audioClipUuid ).linkedClip = videoClipUuid;
-                            findClipItem( videoClipUuid ).linkedClip = audioClipUuid;
                             workflow.linkClips( audioClipUuid, videoClipUuid );
                         }
                         currentUuid = "";

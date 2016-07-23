@@ -530,6 +530,11 @@ Rectangle {
             clip.end = clipInfo["end"];
             clip.begin = clipInfo["begin"];
         }
+
+        onClipLinked: {
+            findClipItem( uuidA ).linkedClip = uuidB;
+            findClipItem( uuidB ).linkedClip = uuidA;
+        }
     }
 
     Connections {
