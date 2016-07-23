@@ -361,9 +361,14 @@ MainWorkflow::canRender()
 void
 MainWorkflow::preSave()
 {
+    int maxTrackId = 0;
+    for ( auto it = m_clips.cbegin(); it != m_clips.cend(); ++it )
+        maxTrackId = qMax( it.key(), maxTrackId );
+
     QVariantList l;
-    for ( auto track : m_tracks )
-        l << track->toVariant();
+    for ( int i = 0; i < maxTrackId + 1; ++i )
+        l << m_tracks[i]->toVariant();
+
     m_settings->value( "tracks" )->set( l );
 }
 
