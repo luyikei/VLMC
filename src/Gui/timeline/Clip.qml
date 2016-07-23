@@ -63,8 +63,10 @@ Rectangle {
         if ( linkedClip ) {
             linked = true;
             var linkedClipItem = findClipItem( linkedClip );
-            if ( linkedClipItem )
+            if ( linkedClipItem ) {
+                linkedClipItem.linkedClip = clip.uuid;
                 linkedClipItem.linked = true;
+            }
         }
         else
             linked = false;
