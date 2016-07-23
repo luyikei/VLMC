@@ -328,6 +328,7 @@ Item {
                             if ( target.newTrackId !== target.trackId ) {
                                 drag.source.parent.parent.parent.z = ++maxZ;
                                 if ( drag.source.uuid !== target.uuid ) {
+                                    target.clipInfo["selected"] = true;
                                     addClip( target.type, target.newTrackId, target.clipInfo );
                                     removeClipFromTrack( target.type, target.trackId, target.uuid );
                                     --i;

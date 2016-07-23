@@ -93,7 +93,7 @@ Rectangle {
         newDict["uuid"] = clipDict["uuid"];
         newDict["trackId"] = trackId;
         newDict["name"] = clipDict["name"];
-        newDict["selected"] = false;
+        newDict["selected"] = clipDict["selected"] === false ? false : true ;
         newDict["linkedClip"] = clipDict["linkedClip"] ? clipDict["linkedClip"] : "";
         var tracks = trackContainer( trackType )["tracks"];
         while ( trackId > tracks.count - 1 )
@@ -499,6 +499,7 @@ Rectangle {
         onClipAdded: {
             var clipInfo = workflow.clipInfo( uuid );
             var type = clipInfo["audio"] ? "Audio" : "Video";
+            clipInfo["selected"] = false;
             addClip( type, clipInfo["trackId"], clipInfo );
         }
 
