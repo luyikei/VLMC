@@ -215,17 +215,12 @@ TrackWorkflow::toVariant() const
     for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
     {
         auto    clip = it.value();
-        QVariantHash h;
-        h.insert( "parent", clip->parent()->uuid().toString() );
-        h.insert( "begin", clip->begin() );
-        h.insert( "end", clip->end() );
-        h.insert( "formats", (int)clip->formats() );
-        h.insert( "filters", EffectHelper::toVariant( clip->input() ) );
+        auto    h = clip->toVariant().toHash();
         h.insert( "startFrame", it.key() );
         l << h;
     }
     QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_multitrack ) } };
-    return QVariant( h );
+    return h;
 }
 
 void
@@ -239,7 +234,15 @@ TrackWorkflow::loadFromVariant( const QVariant &variant )
                           m["end"].toULongLong()
                          );
         c->setFormats( (Clip::Formats)m["formats"].toInt() );
+        c->setUuid( m["uuid"].toString() );
+
+        auto isLinked = m["linked"].toBool();
+        c->setLinked( isLinked );
+        if ( isLinked == true )
+            c->setLinkedClipUuid( m["linkedClip"].toString() );
+
         EffectHelper::loadFromVariant( m["filters"], c->input() );
+
         addClip( c, m["startFrame"].toLongLong() );
         emit Core::instance()->workflow()->clipAdded( c->uuid().toString() );
     }
