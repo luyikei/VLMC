@@ -294,22 +294,25 @@ Item {
                             // Let's find newX of the linked clip
                             if ( target.linked === true ) {
                                 var linkedClipItem = findClipItem( target.linkedClip );
-                                var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
 
-                                // If linked clip collides
-                                if ( Math.abs( newLinkedClipX - newX ) > 1 ) {
+                                if ( linkedClipItem ) {
+                                    var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
 
-                                    // Recalculate target's newX
-                                    // This time, don't use magnets
-                                    newX = findNewPosition( newLinkedClipX, target, false );
-                                    newLinkedClipX = findNewPosition( newX, target, false );
+                                    // If linked clip collides
+                                    if ( Math.abs( newLinkedClipX - newX ) > 1 ) {
 
-                                    // And if newX collides again, we don't move
-                                    if ( Math.abs( newLinkedClipX - newX ) > 1 )
-                                        newX = oldX;
+                                        // Recalculate target's newX
+                                        // This time, don't use magnets
+                                        newX = findNewPosition( newLinkedClipX, target, false );
+                                        newLinkedClipX = findNewPosition( newX, target, false );
+
+                                        // And if newX collides again, we don't move
+                                        if ( Math.abs( newLinkedClipX - newX ) > 1 )
+                                            newX = oldX;
+                                    }
+                                    linkedClipItem.setPixelPosition( newX );
+                                    alreadyCalculated.push( target.linkedClip );
                                 }
-                                linkedClipItem.setPixelPosition( newX );
-                                alreadyCalculated.push( target.linkedClip );
                             }
                             target.setPixelPosition( newX );
                             alreadyCalculated.push( target.uuid );
