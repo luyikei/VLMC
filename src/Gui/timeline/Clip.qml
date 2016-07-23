@@ -110,7 +110,10 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        selected = true;
+        if ( clipInfo["selected"] === false )
+            selected = false;
+        else
+            selected = true;
         newTrackId = trackId;
         allClips.push( clip );
     }

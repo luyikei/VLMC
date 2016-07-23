@@ -93,6 +93,7 @@ Rectangle {
         newDict["uuid"] = clipDict["uuid"];
         newDict["trackId"] = trackId;
         newDict["name"] = clipDict["name"];
+        newDict["selected"] = false;
         newDict["linkedClip"] = clipDict["linkedClip"] ? clipDict["linkedClip"] : "";
         var tracks = trackContainer( trackType )["tracks"];
         while ( trackId > tracks.count - 1 )
