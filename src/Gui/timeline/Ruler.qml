@@ -127,7 +127,19 @@ Rectangle {
         keys: ["Marker"]
 
         onPositionChanged: {
-            drag.source.position = ptof( drag.x );
+            var newPosition = ptof( drag.x );
+
+            var samePosMarkersCount = 0;
+            for ( var i = 0; i < markers.count; ++i ) {
+                if ( markers.get( i )["position"] === newPosition )
+                    samePosMarkersCount++;
+            }
+
+            // Move the marker to the right a bit
+            if ( samePosMarkersCount >= 2 )
+                newPosition += Math.max( ptof( 1 ), 1 );
+
+            drag.source.position = newPosition;
         }
     }
 
