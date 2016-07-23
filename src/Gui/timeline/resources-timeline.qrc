@@ -9,5 +9,6 @@
         <file>Clip.qml</file>
         <file>ClipContextMenu.qml</file>
         <file>PropertyButton.qml</file>
+        <file>MarkerContextMenu.qml</file>
     </qresource>
 </RCC>

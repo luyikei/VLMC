@@ -203,6 +203,24 @@ Rectangle {
                        } );
     }
 
+    function findMarker( pos ) {
+        for ( var i = 0; i < markers.count; ++i ) {
+            if ( markers.get( i )["position"] === pos ) {
+                return markers.get( i );
+            }
+        }
+        return null;
+    }
+
+    function removeMarker( pos ) {
+        for ( var i = 0; i < markers.count; ++i ) {
+            if ( markers.get( i )["position"] === pos ) {
+                markers.remove( i );
+                return;
+            }
+        }
+    }
+
     function addGroup( clips ) {
         groups.push( clips );
     }

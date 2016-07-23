@@ -34,6 +34,18 @@ Rectangle {
             drag.target: marker
             drag.axis: Drag.XAxis
             drag.minimumX: 0
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+            onClicked: {
+                if ( mouse.button & Qt.RightButton ) {
+                    markerContextMenu.popup();
+                }
+            }
+        }
+
+        MarkerContextMenu {
+            id: markerContextMenu
+            marker: marker
         }
     }
 }
