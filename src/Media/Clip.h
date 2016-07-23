@@ -63,7 +63,7 @@ class   Clip : public Workflow::Helper
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QString() );
+        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QStringLiteral() );
         /**
          *  \brief  Clones a Clip, potentially with a new begin and end.
          *
@@ -73,7 +73,7 @@ class   Clip : public Workflow::Helper
          *  \param  end     The end, in frames, from the parent's beginning. If not given,
          *                  the end of the parent will be used.
          */
-        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IInput::EndOfParent, const QString& uuid = QString() );
+        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IInput::EndOfParent, const QString& uuid = QStringLiteral() );
         virtual ~Clip();
 
         /**
