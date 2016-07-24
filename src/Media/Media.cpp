@@ -62,9 +62,6 @@ Media::Media(const QString &path )
     : m_input( nullptr )
     , m_fileInfo( nullptr )
     , m_baseClip( nullptr )
-#ifdef WITH_GUI
-    , m_snapshotImage( nullptr )
-#endif
 {
     setFilePath( path );
 }
@@ -144,7 +141,19 @@ Media::setFilePath( const QString &filePath )
 QPixmap&
 Media::snapshot()
 {
-    Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
-    return *Media::defaultSnapshot;
+    if ( Media::defaultSnapshot == nullptr )
+        Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
+
+    if ( m_snapshot.isNull() == true ) {
+        int height = 200;
+        int width = height * m_input->aspectRatio();
+        m_input->setPosition( m_input->length() / 3 );
+        QImage img( m_input->image( width, height ), width, height,
+                    QImage::Format_RGBA8888, []( void* buf ){ delete[] (uchar*) buf; } );
+        m_input->setPosition( 0 );
+        m_snapshot.convertFromImage( img );
+    }
+
+    return m_snapshot.isNull() ? *Media::defaultSnapshot : m_snapshot;
 }
 #endif

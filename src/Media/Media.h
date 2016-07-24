@@ -123,7 +123,6 @@ protected:
 #ifdef WITH_GUI
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
-    QImage*                     m_snapshotImage;
 #endif
 
 signals:
