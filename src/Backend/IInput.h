@@ -88,6 +88,7 @@ namespace Backend
         virtual uint8_t*        image( uint32_t width, uint32_t height ) const = 0;
 
         virtual double          fps() const = 0;
+        virtual double          aspectRatio() const = 0;
         virtual int             width() const = 0;
         virtual int             height() const = 0;
         virtual bool            hasVideo() const = 0;

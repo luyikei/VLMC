@@ -90,6 +90,7 @@ class MLTInput : virtual public IInput, public MLTService
         virtual uint8_t*        image( uint32_t width, uint32_t height ) const override;
 
         virtual double          fps() const override;
+        virtual double          aspectRatio() const override;
         virtual int             width() const override;
         virtual int             height() const override;
         virtual bool            hasVideo() const override;

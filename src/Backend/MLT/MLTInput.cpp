@@ -272,6 +272,12 @@ MLTInput::fps() const
     return producer()->get_fps();
 }
 
+double
+MLTInput::aspectRatio() const
+{
+    return producer()->get_double( "aspect_ratio" );
+}
+
 int
 MLTInput::width() const
 {
