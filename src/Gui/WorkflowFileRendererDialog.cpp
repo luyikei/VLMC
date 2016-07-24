@@ -59,6 +59,9 @@ WorkflowFileRendererDialog::setProgressBarValue( int val )
 void
 WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 {
+    QImage img( buff, m_width, m_height,
+                QImage::Format_RGBA8888, []( void* buf ){ delete[] (uchar*) buf; } );
+    m_ui.previewLabel->setPixmap( QPixmap::fromImage( img ) );
 }
 
 void

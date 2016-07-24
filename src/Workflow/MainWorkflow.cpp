@@ -328,6 +328,15 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     dialog.setOutputFileName( outputFileName );
     connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
     connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
+    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, &dialog,
+             [this, &dialog, width, height]( qint64 pos )
+    {
+        // Update the preview per five seconds
+        if ( pos % qRound( m_multitrack->fps() * 5 ) == 0 )
+        {
+            dialog.updatePreview( m_multitrack->image( width, height ) );
+        }
+    });
 #endif
 
     connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
