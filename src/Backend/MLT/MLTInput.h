@@ -83,6 +83,12 @@ class MLTInput : virtual public IInput, public MLTService
         // The absolete position in frame
         virtual int64_t         frame() const override;
 
+        // Generates an 8-bit grayscale image at the current position
+        virtual uint8_t*        waveform( uint32_t width, uint32_t height ) const override;
+
+        // Generates an 32-bit RGBA image at the current position
+        virtual uint8_t*        image( uint32_t width, uint32_t height ) const override;
+
         virtual double          fps() const override;
         virtual int             width() const override;
         virtual int             height() const override;

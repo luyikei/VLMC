@@ -25,6 +25,7 @@
 #include "MLTBackend.h"
 #include "MLTFilter.h"
 
+#include <mlt++/MltFrame.h>
 #include <mlt++/MltFilter.h>
 #include <mlt++/MltProducer.h>
 #include <cstring>
@@ -249,6 +250,20 @@ int64_t
 MLTInput::frame() const
 {
     return producer()->frame();
+}
+
+uint8_t*
+MLTInput::waveform( uint32_t width, uint32_t height ) const
+{
+    std::unique_ptr<Mlt::Frame> waveformFrame( producer()->get_frame() );
+    return waveformFrame->get_waveform( (int)width, (int)height );
+}
+
+uint8_t*
+MLTInput::image( uint32_t width, uint32_t height ) const
+{
+    std::unique_ptr<Mlt::Frame> imageFrame( producer()->get_frame() );
+    return imageFrame->fetch_image( mlt_image_rgb24a, (int)width, (int)height );
 }
 
 double

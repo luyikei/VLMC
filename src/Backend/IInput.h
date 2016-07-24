@@ -81,6 +81,12 @@ namespace Backend
         // The absolete position in frame
         virtual int64_t         frame() const = 0;
 
+        // Generates an 8-bit grayscale image at the current position
+        virtual uint8_t*        waveform( uint32_t width, uint32_t height ) const = 0;
+
+        // Generates an 32-bit RGBA image at the current position
+        virtual uint8_t*        image( uint32_t width, uint32_t height ) const = 0;
+
         virtual double          fps() const = 0;
         virtual int             width() const = 0;
         virtual int             height() const = 0;
