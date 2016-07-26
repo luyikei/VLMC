@@ -16,7 +16,7 @@ Rectangle {
     property double unit: 3000 // In milliseconds therefore ppu / unit = Pixels Per milliseconds
     property double fps: 29.97
     property int maxZ: 100
-    property int scale: 10
+    property int scale: 4
     property var allClips: [] // Actual clip item objects
     property var selectedClips: [] // Actual clip item objects
     property var groups: [] // list of lists of clip uuids
