@@ -281,7 +281,7 @@ Item {
                         scrollToTarget( drag.source );
 
                         // Optimization: Delta delta X should be different
-                        if ( deltaX === drag.source.x - lastX ) {
+                        if ( deltaX === drag.source.x - lastX && drag.source.x !== 0 ) {
                             lastX = drag.source.x;
                             return;
                         }
