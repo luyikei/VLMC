@@ -174,6 +174,24 @@ Item {
                     return newX;
                 }
 
+                function scrollToTarget( target ) {
+                    while ( target.width > sView.width )
+                        zoomIn( 0.5 );
+
+                    if ( sView.flickableItem.contentX + sView.width <
+                            target.x + target.width + initPosOfCursor + sView.sViewPadding ) {
+                        // Never show the background behind the timeline
+                        var newContentX = sView.flickableItem.contentWidth - sView.width;
+                        if ( newContentX >= 0 ) {
+                            drag.source.Drag.hotSpot.x = 0;
+                            sView.flickableItem.contentX = newContentX;
+                        }
+                    }
+                    else if ( sView.flickableItem.contentX + sView.sViewPadding > target.x + initPosOfCursor ) {
+                        sView.flickableItem.contentX = target.x + initPosOfCursor - sView.sViewPadding;
+                    }
+                }
+
                 onDropped: {
                     if ( drop.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
                         aClipInfo = findClipFromTrack( "Audio", trackId, "audioUuid" );
@@ -260,6 +278,8 @@ Item {
                             }
                         }
 
+                        scrollToTarget( drag.source );
+
                         // Optimization: Delta delta X should be different
                         if ( deltaX === drag.source.x - lastX ) {
                             lastX = drag.source.x;
@@ -337,24 +357,8 @@ Item {
                         }
 
                         // Scroll if needed
-                        if ( drag.source === target || dMode === dropMode.New ) {
-
-                            while ( target.width > sView.width )
-                                zoomIn( 0.5 );
-
-                            if ( sView.flickableItem.contentX + sView.width <
-                                    newX + target.width + initPosOfCursor + sView.sViewPadding ) {
-                                // Never show the background behind the timeline
-                                var newContentX = sView.flickableItem.contentWidth - sView.width;
-                                if ( newContentX >= 0 ) {
-                                    drag.source.Drag.hotSpot.x = 0;
-                                    sView.flickableItem.contentX = newContentX;
-                                }
-                            }
-                            else if ( sView.flickableItem.contentX + sView.sViewPadding > newX + initPosOfCursor ) {
-                                sView.flickableItem.contentX = newX + initPosOfCursor - sView.sViewPadding;
-                            }
-                        }
+                        if ( drag.source === target || dMode === dropMode.New )
+                            scrollToTarget( target );
 
                         // Let's move to the new tracks
                         if ( dMode === dropMode.Move ) {
