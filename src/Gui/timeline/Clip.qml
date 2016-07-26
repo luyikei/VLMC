@@ -250,6 +250,7 @@ Rectangle {
     }
 
     onYChanged: {
+        y -= y % trackHeight;
         // Don't move outside its TrackContainer
         // For Top
         var yToMoveUp = track.mapToItem( container, 0, 0 ).y + y;

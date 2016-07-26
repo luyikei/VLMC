@@ -249,8 +249,6 @@ Item {
                             }
                         }
 
-                        drag.source.y = drag.source.y - drag.y + track.height / 2 - 1; // Adjust to the center
-
                         // Optimization: Delta delta X should be different
                         if ( deltaX === drag.source.x - lastX ) {
                             lastX = drag.source.x;
