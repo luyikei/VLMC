@@ -63,6 +63,14 @@ Rectangle {
             findClipItem( linkedClip ).selected = true;
     }
 
+    onXChanged: {
+        if ( sView.flickableItem.contentX + sView.width <
+                x + width + initPosOfCursor + sView.sViewPadding )
+            Drag.hotSpot.x = 0;
+        else if ( sView.flickableItem.contentX + sView.sViewPadding > x + initPosOfCursor )
+            Drag.hotSpot.x = width;
+    }
+
     onYChanged: {
         y -= y % trackHeight;
         // Don't move outside its TrackContainer

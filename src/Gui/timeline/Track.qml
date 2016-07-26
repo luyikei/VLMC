@@ -183,7 +183,6 @@ Item {
                         // Never show the background behind the timeline
                         var newContentX = sView.flickableItem.contentWidth - sView.width;
                         if ( newContentX >= 0 ) {
-                            drag.source.Drag.hotSpot.x = 0;
                             sView.flickableItem.contentX = newContentX;
                         }
                     }
