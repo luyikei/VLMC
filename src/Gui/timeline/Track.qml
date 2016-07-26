@@ -115,7 +115,7 @@ Item {
                     if ( currentTrack )
                         var clips = currentTrack["clips"];
                     else
-                        clips = [];
+                        currentTrack.append( { "clips": [] } );
                     for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
                         isCollided = false;
                         for ( k = 0; k < clips.count; ++k ) {
