@@ -274,7 +274,8 @@ Rectangle {
             newUnit = mUnit;
         }
 
-        // Make unit a multiple of fps. This can change the scale but let's ignore it.
+        // Make unit a multiple of fps.
+        newPpu *= ( newUnit - ( newUnit % mUnit ) ) / newUnit;
         newUnit -= newUnit % mUnit;
 
         // If "almost" the same value, don't bother redrawing the ruler.
