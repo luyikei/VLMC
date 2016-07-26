@@ -226,7 +226,7 @@ MainWorkflow::clipInfo( const QString& uuid )
 }
 
 void
-MainWorkflow::moveClip( quint32 trackId, const QString& uuid, qint64 startFrame )
+MainWorkflow::moveClip( const QString& uuid, quint32 trackId, qint64 startFrame )
 {
     for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
     {

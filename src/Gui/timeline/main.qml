@@ -183,7 +183,7 @@ Rectangle {
         if ( !clip )
             return;
         clip.position = position;
-        workflow.moveClip( trackId, uuid, position );
+        workflow.moveClip( uuid, trackId, position );
     }
 
     function adjustTracks( trackType ) {
@@ -289,6 +289,12 @@ Rectangle {
         // Never show the background behind the timeline
         if ( newContentX >= 0 && sView.flickableItem.contentWidth - newContentX > sView.width  )
             sView.flickableItem.contentX = newContentX;
+
+        if ( ratio > 1 )
+            scale++;
+        else
+            scale--;
+        mainwindow.setScale( scale );
     }
 
     function dragFinished() {

@@ -149,7 +149,7 @@ class   MainWorkflow : public QObject
         QJsonObject             clipInfo( const QString& uuid );
 
         Q_INVOKABLE
-        void                    moveClip( quint32 trackId, const QString& uuid, qint64 startFrame );
+        void                    moveClip( const QString& uuid, quint32 trackId, qint64 startFrame );
 
         Q_INVOKABLE
         void                    resizeClip( const QString& uuid, qint64 newBegin,
