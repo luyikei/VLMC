@@ -74,6 +74,11 @@ Item {
                 anchors.fill: parent
                 keys: ["Clip", "vlmc/uuid"]
 
+                // Enum for drop mode
+                readonly property var dropMode: {
+                    "New": 0,
+                    "Move": 1,
+                }
                 readonly property int magneticMargin: 25
 
                 property string currentUuid
@@ -241,8 +246,12 @@ Item {
                     if ( drag.source.resizing === true )
                         return;
 
-                    if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
+                    if ( drag.keys.indexOf( "vlmc/uuid" ) >= 0 )
+                        var dMode = dropMode.New;
+                    else
+                        dMode = dropMode.Move;
 
+                    if ( dMode === dropMode.Move ) {
                         // Put drag.source top
                         for ( var i = 1; i < selectedClips.length; ++i ) {
                             if ( selectedClips[i] === drag.source ) {
@@ -326,7 +335,8 @@ Item {
                                 sView.flickableItem.contentX = newContentX;
                         }
 
-                        if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 ) {
+                        // Let's move to the new tracks
+                        if ( dMode === dropMode.Move ) {
                             if ( target.newTrackId !== target.trackId ) {
                                 drag.source.parent.parent.parent.z = ++maxZ;
                                 if ( drag.source.uuid !== target.uuid ) {
@@ -340,7 +350,7 @@ Item {
                     }
                     // END of for ( var i = 0; i < selectedClips.length; ++i )
 
-                    if ( drag.keys.indexOf( "vlmc/uuid" ) < 0 )
+                    if ( dMode === dropMode.Move )
                         lastX = drag.source.x;
                     else
                         lastX = drag.x;
