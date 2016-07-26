@@ -360,13 +360,15 @@ Rectangle {
         id: sView
         height: page.height
         width: page.width
-        flickableItem.contentWidth: Math.max( page.width, ftop( length ) + initPosOfCursor + 100 )
+
+        readonly property int sViewPadding: 50
+
+        flickableItem.contentWidth: Math.max( page.width, ftop( length ) + initPosOfCursor + sViewPadding )
 
         Flickable {
 
             Column {
                 width: parent.width
-
                 Row {
                     width: parent.width
                     Rectangle {
