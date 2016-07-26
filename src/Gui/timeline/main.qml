@@ -299,8 +299,8 @@ Rectangle {
     }
 
     function dragFinished() {
-        var length = selectedClips.length;
-        for ( var i = length - 1; i >= 0; --i ) {
+        var _length = selectedClips.length;
+        for ( var i = _length - 1; i >= 0; --i ) {
             if ( selectedClips[i] ) {
                 selectedClips[i].move();
             }
