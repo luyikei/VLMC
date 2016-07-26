@@ -36,6 +36,45 @@ Rectangle {
 
     property var clipInfo
 
+    function setPixelPosition( pixels )
+    {
+        if ( pixels >= 0 )
+            position = ptof( pixels );
+        // FIXME: Binding can be lost because of dragging.
+        x = Qt.binding( function() { return ftop( position ); } );
+    }
+
+    function pixelPosition()
+    {
+        return ftop( position );
+    }
+
+    function move() {
+        moveClipTo( track.type, uuid, newTrackId, position );
+    }
+
+    function resize() {
+        // This function updates Backend
+        workflow.resizeClip( uuid, begin, end, position )
+    }
+
+    function selectLinkedClip() {
+        if ( selected === true && linked === true && linkedClip )
+            findClipItem( linkedClip ).selected = true;
+    }
+
+    onYChanged: {
+        y -= y % trackHeight;
+        // Don't move outside its TrackContainer
+        // For Top
+        var yToMoveUp = track.mapToItem( container, 0, 0 ).y + y;
+        if ( yToMoveUp < 0 )
+            y -= yToMoveUp;
+        // For Bottom
+        if ( yToMoveUp + height > container.height )
+            y -= yToMoveUp - container.height + height;
+    }
+
     onClipInfoChanged: {
         if ( !clipInfo )
             return;
@@ -88,31 +127,24 @@ Rectangle {
             linkedClipItem.linked = false;
     }
 
-    function setPixelPosition( pixels )
-    {
-        if ( pixels >= 0 )
-            position = ptof( pixels );
-        // FIXME: Binding can be lost because of dragging.
-        x = Qt.binding( function() { return ftop( position ); } );
-    }
+    onSelectedChanged: {
+        for ( var i = 0; i < selectedClips.length; ++i )
+            if ( !selectedClips[i] || selectedClips[i] === clip ) {
+                selectedClips.splice( i, 1 );
+                --i;
+            }
 
-    function pixelPosition()
-    {
-        return ftop( position );
-    }
+        if ( selected === true ) {
+            selectedClips.push( clip );
 
-    function move() {
-        moveClipTo( track.type, uuid, newTrackId, position );
-    }
-
-    function resize() {
-        // This function updates Backend
-        workflow.resizeClip( uuid, begin, end, position )
-    }
-
-    function selectLinkedClip() {
-        if ( selected === true && linked === true && linkedClip )
-            findClipItem( linkedClip ).selected = true;
+            var group = findGroup( uuid );
+            for ( i = 0; i < ( group ? group.length : 0 ); ++i ) {
+                var clipItem = findClipItem( group[i] );
+                if ( clipItem )
+                    clipItem.selected = true;
+            }
+            selectLinkedClip();
+        }
     }
 
     Component.onCompleted: {
@@ -139,6 +171,9 @@ Rectangle {
         }
     }
 
+    Drag.keys: ["Clip"]
+    Drag.active: dragArea.drag.active
+
     Text {
         id: text
         color: "white"
@@ -150,9 +185,6 @@ Rectangle {
         elide: Text.ElideRight
         wrapMode: Text.Wrap
     }
-
-    Drag.keys: ["Clip"]
-    Drag.active: dragArea.drag.active
 
     MouseArea {
         id: dragArea
@@ -247,38 +279,6 @@ Rectangle {
     ClipContextMenu {
         id: clipContextMenu
         clip: clip
-    }
-
-    onYChanged: {
-        y -= y % trackHeight;
-        // Don't move outside its TrackContainer
-        // For Top
-        var yToMoveUp = track.mapToItem( container, 0, 0 ).y + y;
-        if ( yToMoveUp < 0 )
-            y -= yToMoveUp;
-        // For Bottom
-        if ( yToMoveUp + height > container.height )
-            y -= yToMoveUp - container.height + height;
-    }
-
-    onSelectedChanged: {
-        for ( var i = 0; i < selectedClips.length; ++i )
-            if ( !selectedClips[i] || selectedClips[i] === clip ) {
-                selectedClips.splice( i, 1 );
-                --i;
-            }
-
-        if ( selected === true ) {
-            selectedClips.push( clip );
-
-            var group = findGroup( uuid );
-            for ( i = 0; i < ( group ? group.length : 0 ); ++i ) {
-                var clipItem = findClipItem( group[i] );
-                if ( clipItem )
-                    clipItem.selected = true;
-            }
-            selectLinkedClip();
-        }
     }
 
     states: [
