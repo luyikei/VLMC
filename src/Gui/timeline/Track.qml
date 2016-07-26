@@ -318,21 +318,42 @@ Item {
                                         if ( Math.abs( newLinkedClipX - newX ) > 1 )
                                             newX = oldX;
                                     }
+
+                                    if ( length < ptof( newX + linkedClipItem.width ) ) {
+                                        length = ptof( newX + linkedClipItem.width );
+                                    }
+
                                     linkedClipItem.setPixelPosition( newX );
                                     alreadyCalculated.push( target.linkedClip );
                                 }
                             }
+
+                            if ( length < ptof( newX + target.width ) ) {
+                                length = ptof( newX + target.width );
+                            }
+
                             target.setPixelPosition( newX );
                             alreadyCalculated.push( target.uuid );
                         }
 
                         // Scroll if needed
-                        if ( length < ptof( newX ) ) {
-                            length = ptof( newX );
-                            // Never show the background behind the timeline
-                            var newContentX = sView.flickableItem.contentWidth - sView.width;
-                            if ( newContentX >= 0 )
-                                sView.flickableItem.contentX = newContentX;
+                        if ( drag.source === target || dMode === dropMode.New ) {
+
+                            while ( target.width > sView.width )
+                                zoomIn( 0.5 );
+
+                            if ( sView.flickableItem.contentX + sView.width <
+                                    newX + target.width + initPosOfCursor + sView.sViewPadding ) {
+                                // Never show the background behind the timeline
+                                var newContentX = sView.flickableItem.contentWidth - sView.width;
+                                if ( newContentX >= 0 ) {
+                                    drag.source.Drag.hotSpot.x = 0;
+                                    sView.flickableItem.contentX = newContentX;
+                                }
+                            }
+                            else if ( sView.flickableItem.contentX + sView.sViewPadding > newX + initPosOfCursor ) {
+                                sView.flickableItem.contentX = newX + initPosOfCursor - sView.sViewPadding;
+                            }
                         }
 
                         // Let's move to the new tracks
