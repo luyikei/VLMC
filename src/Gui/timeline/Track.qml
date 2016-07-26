@@ -74,6 +74,8 @@ Item {
                 anchors.fill: parent
                 keys: ["Clip", "vlmc/uuid"]
 
+                readonly property int magneticMargin: 25
+
                 property string currentUuid
                 property var aClipInfo: null
                 property var vClipInfo: null
@@ -85,7 +87,7 @@ Item {
                     var oldX = target.pixelPosition();
 
                     if ( useMagneticMode === true ) {
-                        var leastDestance = 25;
+                        var leastDestance = magneticMargin;
                         // Check two times
                         for ( var k = 0; k < 2; ++k ) {
                             for ( var j = 0; j < markers.count; ++j ) {
@@ -125,16 +127,16 @@ Item {
                                 if ( cx  + cw > newX && newX + sw > cx )
                                     isCollided = true;
 
-                                cw += 50
-                                cx -= 25
+                                cw += magneticMargin * 2
+                                cx -= magneticMargin
                                 if ( cx + cw > newX && newX + sw > cx ) {
                                     if ( cx > newX ) {
                                         if ( cx - sw > 0 )
-                                            newX = cx - sw + 25;
+                                            newX = cx - sw + magneticMargin;
                                         else
                                             newX = oldX;
                                     } else {
-                                        newX = cx + cw - 25;
+                                        newX = cx + cw - magneticMargin;
                                     }
                                 }
                             }
