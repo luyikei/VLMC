@@ -166,7 +166,7 @@ private slots:
 
 signals:
     void                    toolChanged( ToolButtons );
-    void                    scaleChanged( double scaleLevel );
+    void                    scaleChanged( quint32 scaleLevel );
 };
 
 #endif // MAINWINDOW_H

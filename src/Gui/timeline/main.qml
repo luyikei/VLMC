@@ -559,11 +559,11 @@ Rectangle {
         target: mainwindow
         onScaleChanged: {
             // 10 levels
-            if ( scale < scaleLevel * 10 )
+            if ( scale < scaleLevel )
                 zoomIn( 0.5 );
-            else if ( scale > scaleLevel * 10 )
+            else if ( scale > scaleLevel )
                 zoomIn( 2 );
-            scale = scaleLevel * 10;
+            scale = scaleLevel;
         }
     }
 }

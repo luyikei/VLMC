@@ -414,7 +414,7 @@ MainWindow::createStatusBar()
              this, SLOT( zoomIn() ) );
     connect( m_zoomSlider, &QSlider::valueChanged, this, [this]( int val )
     {
-        emit scaleChanged( ( val + 1 ) / (double)( m_zoomSlider->maximum() + 1 ) );
+        emit scaleChanged( val );
     } );
 }
 
