@@ -697,6 +697,12 @@ MainWindow::zoomOut()
 }
 
 void
+MainWindow::setScale( quint32 scale )
+{
+    m_zoomSlider->setValue( scale );
+}
+
+void
 MainWindow::on_actionFullscreen_triggered( bool checked )
 {
     if ( checked && !isFullScreen() )

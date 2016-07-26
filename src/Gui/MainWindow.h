@@ -66,6 +66,7 @@ public:
 public slots:
     void        zoomIn();
     void        zoomOut();
+    void        setScale( quint32 scale );
 
 protected:
     virtual void    changeEvent( QEvent *e );
