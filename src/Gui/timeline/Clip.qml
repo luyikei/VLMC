@@ -23,7 +23,7 @@ Rectangle {
 
     property alias name: text.text
     property int trackId
-    // Usualy it is set -1. If not, the clip will be moved to the new track immediately.
+    // Usualy it is trackId, the clip will be moved to the new track immediately.
     property int newTrackId
     property int position
     property int begin
@@ -92,7 +92,7 @@ Rectangle {
     {
         if ( pixels >= 0 )
             position = ptof( pixels );
-        // FIXME: Qt bug. Sometimes binding is lost.
+        // FIXME: Binding can be lost because of dragging.
         x = Qt.binding( function() { return ftop( position ); } );
     }
 
