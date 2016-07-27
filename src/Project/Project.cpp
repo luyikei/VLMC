@@ -217,9 +217,7 @@ Project::initSettings()
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                     SettingValue::NotEmpty );
     connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
-    connect( fps, &SettingValue::changed, this,
-             [this]( const QVariant& var ){ Backend::instance()->profile().setFrameRate( var.toDouble() * 100, 100 ); }
-    );
+    connect( fps, &SettingValue::changed, this, [this]( const QVariant& var ){ emit fpsChanged( var.toDouble() ); } );
 }
 
 void

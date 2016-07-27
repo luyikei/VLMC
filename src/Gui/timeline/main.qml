@@ -514,6 +514,11 @@ Rectangle {
 
     Connections {
         target: workflow
+
+        onFpsChanged: {
+            page.fps = fps;
+        }
+
         onLengthChanged: {
             if ( page.length < length ) {
                 page.length = length;

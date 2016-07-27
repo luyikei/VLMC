@@ -206,6 +206,8 @@ class   MainWorkflow : public QObject
 
         void                            setPosition( qint64 newFrame );
 
+        void                            setFps( double fps );
+
     signals:
         /**
          *  \brief      Used to notify a change to the timeline and preview widget cursor
@@ -238,6 +240,8 @@ class   MainWorkflow : public QObject
          *  \param  newLength   The new length, in frames
          */
         void                    lengthChanged( qint64 length );
+
+        void                    fpsChanged( double fps );
 
         void                    clipAdded( const QString& uuid );
         void                    clipResized( const QString& uuid );

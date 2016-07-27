@@ -132,6 +132,13 @@ MainWorkflow::setPosition( qint64 newFrame )
     m_renderer->setPosition( newFrame );
 }
 
+void
+MainWorkflow::setFps( double fps )
+{
+    Backend::instance()->profile().setFrameRate( fps * 100, 100 );
+    emit fpsChanged( fps );
+}
+
 AbstractRenderer*
 MainWorkflow::renderer()
 {

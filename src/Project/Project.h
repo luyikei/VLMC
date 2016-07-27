@@ -124,6 +124,7 @@ class Project : public QObject
         void                projectClosed();
         void                backupProjectLoaded();
         void                outdatedBackupFileFound();
+        void                fpsChanged( double fps );
 
     private:
         QFile*              m_projectFile;
