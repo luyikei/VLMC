@@ -531,10 +531,7 @@ Rectangle {
         }
 
         onLengthChanged: {
-            if ( page.length < length ) {
-                page.length = length;
-                zoomIn( sView.width / ( ftop( length ) + initPosOfCursor + 100 ) );
-            }
+            page.length = length;
         }
 
         onClipAdded: {
