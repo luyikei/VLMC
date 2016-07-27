@@ -61,7 +61,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    if ( index % 10 == 0 ) {
+                    if ( index % 15 == 0 ) {
                         // Text
                         var obj = Qt.createQmlObject('import QtQuick 2.0; Text {'+
                                                'color: "white";' +
