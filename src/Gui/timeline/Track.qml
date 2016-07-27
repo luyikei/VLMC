@@ -137,8 +137,8 @@ Item {
             }
 
             function scrollToTarget( target ) {
-                while ( target.width > sView.width )
-                    zoomIn( 0.5 );
+                if ( target.width > sView.width )
+                    return;
 
                 var newContentX = sView.flickableItem.contentX;
 
