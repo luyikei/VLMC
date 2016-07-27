@@ -3,11 +3,12 @@ import QtQuick 2.5
 Rectangle {
     width: 1
     color: "#c24a00"
-    x: ftop( cursorPosition ) + initPosOfCursor
+    x: ftop( cursorPosition )
+    visible: x < sView.flickableItem.contentX ? false : true
 
     Component.onCompleted: {
         // FIXME: Binding is lost
-        x = Qt.binding( function() { return ftop( cursorPosition ) + initPosOfCursor; } );
+        x = Qt.binding( function() { return ftop( cursorPosition ); } );
     }
 
     // Triangle

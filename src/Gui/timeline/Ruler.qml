@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Rectangle {
     id: ruler
-    height: 52
+    height: parent.height
     width: parent.width - initPosOfCursor
     color: "#333333"
 

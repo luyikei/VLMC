@@ -6,7 +6,8 @@ Rectangle {
     width: 1
     height: page.height
     color: "#3F6644"
-    x: ftop( position ) + initPosOfCursor
+    x: ftop( position )
+    visible: x < sView.flickableItem.contentX ? false : true
 
     property int position: 0
     property var markerModel

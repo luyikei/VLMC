@@ -67,7 +67,7 @@ Rectangle {
         if ( sView.flickableItem.contentX + sView.width <
                 x + width + initPosOfCursor + sView.sViewPadding )
             Drag.hotSpot.x = 0;
-        else if ( sView.flickableItem.contentX + sView.sViewPadding > x + initPosOfCursor )
+        else if ( sView.flickableItem.contentX + sView.sViewPadding > x )
             Drag.hotSpot.x = width;
     }
 
