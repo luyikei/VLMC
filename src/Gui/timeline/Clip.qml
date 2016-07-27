@@ -64,6 +64,9 @@ Rectangle {
     }
 
     onXChanged: {
+        if ( sView.width - initPosOfCursor < width )
+            return;
+
         if ( sView.flickableItem.contentX + sView.width <
                 x + width + initPosOfCursor + sView.sViewPadding )
             Drag.hotSpot.x = 0;

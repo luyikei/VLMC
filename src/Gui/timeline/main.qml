@@ -270,11 +270,11 @@ Rectangle {
 
         if ( newUnit < mUnit ) {
             newPpu /= ratio; // Restore the original scale.
-            newPpu *= mUnit / newPpu;
+            newPpu *= mUnit / newUnit;
             newUnit = mUnit;
         }
 
-        // Make unit a multiple of fps.
+        // Make unit a multiple of 1 / fps.
         newPpu *= ( newUnit - ( newUnit % mUnit ) ) / newUnit;
         newUnit -= newUnit % mUnit;
 
@@ -291,10 +291,9 @@ Rectangle {
         if ( newContentX >= 0 && sView.flickableItem.contentWidth - newContentX > sView.width  )
             sView.flickableItem.contentX = newContentX;
 
-        if ( ratio > 1 )
-            scale++;
-        else
-            scale--;
+        scale = Math.floor( Math.log( newUnit / mUnit ) / Math.log( 2 ) - 1 );
+        scale = Math.min( 9, scale );
+        scale = Math.max( 0, scale );
         mainwindow.setScale( scale );
     }
 
@@ -511,12 +510,14 @@ Rectangle {
         if ( event.key === Qt.Key_Delete ) {
             removeSelectedClipsDialog.visible = true;
         }
-        else if ( event.key === Qt.Key_Plus && event.modifiers & Qt.ControlModifier )
-        {
+        else if ( event.key === Qt.Key_Plus &&
+                 event.modifiers & Qt.ControlModifier
+                 && scale > 0 ) {
             zoomIn( 2 );
         }
-        else if ( event.key === Qt.Key_Minus && event.modifiers & Qt.ControlModifier )
-        {
+        else if ( event.key === Qt.Key_Minus &&
+                 event.modifiers & Qt.ControlModifier &&
+                 scale < 9 ) {
             zoomIn( 0.5 );
         }
         event.accepted = true;
