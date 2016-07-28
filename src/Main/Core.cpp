@@ -35,7 +35,6 @@
 #include <Settings/Settings.h>
 #include <Tools/VlmcLogger.h>
 #include "Workflow/MainWorkflow.h"
-#include "Commands/AbstractUndoStack.h"
 
 Core::Core()
 {
@@ -48,12 +47,9 @@ Core::Core()
     m_recentProjects = new RecentProjects( m_settings );
     m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow( m_currentProject->settings() );
-    m_undoStack = new Commands::AbstractUndoStack;
 
-    QObject::connect( m_undoStack, &Commands::AbstractUndoStack::cleanChanged,
-             m_currentProject, &Project::cleanChanged );
-    QObject::connect( m_currentProject, &Project::projectSaved,
-             m_undoStack, &Commands::AbstractUndoStack::setClean );
+    QObject::connect( m_workflow, &MainWorkflow::cleanChanged, m_currentProject, &Project::cleanChanged );
+    QObject::connect( m_currentProject, &Project::projectSaved, m_workflow, &MainWorkflow::setClean );
     QObject::connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     QObject::connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
     QObject::connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
@@ -66,7 +62,6 @@ Core::Core()
 Core::~Core()
 {
     delete m_library;
-    delete m_undoStack;
     delete m_workflow;
     delete m_currentProject;
     delete m_workspace;
@@ -147,12 +142,6 @@ MainWorkflow*
 Core::workflow()
 {
     return m_workflow;
-}
-
-Commands::AbstractUndoStack*
-Core::undoStack()
-{
-    return m_undoStack;
 }
 
 Library*

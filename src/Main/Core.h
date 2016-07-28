@@ -38,11 +38,6 @@ namespace Backend
     class IBackend;
 }
 
-namespace Commands
-{
-    class AbstractUndoStack;
-}
-
 #include <QElapsedTimer>
 #include "Tools/Singleton.hpp"
 
@@ -56,7 +51,6 @@ class Core : public ScopedSingleton<Core>
         Workspace*              workspace();
         Project*                project();
         MainWorkflow*           workflow();
-        Commands::AbstractUndoStack*   undoStack();
         Library*                library();
         /**
          * @brief runtime returns the application runtime
@@ -81,7 +75,6 @@ class Core : public ScopedSingleton<Core>
         Workspace*              m_workspace;
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;
-        Commands::AbstractUndoStack*   m_undoStack;
         Library*                m_library;
         QElapsedTimer           m_timer;
 

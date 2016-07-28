@@ -36,6 +36,12 @@ class   Effect;
 class   TrackWorkflow;
 class   AbstractRenderer;
 
+namespace Commands
+{
+class AbstractUndoStack;
+class Generic;
+}
+
 namespace Backend
 {
 class IMultiTrack;
@@ -174,6 +180,8 @@ class   MainWorkflow : public QObject
 
         AbstractRenderer*       renderer();
 
+        Commands::AbstractUndoStack*       undoStack();
+
     private:
 
         /**
@@ -183,6 +191,8 @@ class   MainWorkflow : public QObject
          *  \returns    The clip that matches the given UUID, or nullptr.
          */
         std::shared_ptr<Clip>                   clip( const QUuid& uuid, unsigned int trackId );
+
+        void                    trigger( Commands::Generic* command );
 
         void                    preSave();
         void                    postLoad();
@@ -197,6 +207,8 @@ class   MainWorkflow : public QObject
         AbstractRenderer*               m_renderer;
         Backend::IMultiTrack*           m_multitrack;
 
+        std::unique_ptr<Commands::AbstractUndoStack> m_undoStack;
+
     public slots:
         /**
          *  \brief      Clear the workflow.
@@ -208,6 +220,8 @@ class   MainWorkflow : public QObject
          *  \sa     cleared()
          */
         void                            clear();
+
+        void                            setClean();
 
         void                            setPosition( qint64 newFrame );
 
@@ -247,6 +261,8 @@ class   MainWorkflow : public QObject
         void                    lengthChanged( qint64 length );
 
         void                    fpsChanged( double fps );
+
+        void                    cleanChanged( bool isClean );
 
         void                    clipAdded( const QString& uuid );
         void                    clipResized( const QString& uuid );

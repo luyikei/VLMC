@@ -53,7 +53,8 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_trackCount( trackCount ),
         m_settings( new Settings ),
         m_renderer( new AbstractRenderer ),
-        m_multitrack( new Backend::MLT::MLTMultiTrack )
+        m_multitrack( new Backend::MLT::MLTMultiTrack ),
+        m_undoStack( new Commands::AbstractUndoStack )
 {
     m_renderer->setInput( m_multitrack );
 
@@ -71,6 +72,8 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );
     connect( m_settings, &Settings::preSave, this, &MainWorkflow::preSave, Qt::DirectConnection );
     projectSettings->addSettings( "Workspace", *m_settings );
+
+    connect( m_undoStack.get(), &Commands::AbstractUndoStack::cleanChanged, this, &MainWorkflow::cleanChanged );
 }
 
 MainWorkflow::~MainWorkflow()
@@ -120,11 +123,23 @@ MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
 }
 
 void
+MainWorkflow::trigger( Commands::Generic* command )
+{
+    m_undoStack->push( command );
+}
+
+void
 MainWorkflow::clear()
 {
     for ( auto track : m_tracks )
         track->clear();
     emit cleared();
+}
+
+void
+MainWorkflow::setClean()
+{
+    m_undoStack->setClean();
 }
 
 void
@@ -144,6 +159,12 @@ AbstractRenderer*
 MainWorkflow::renderer()
 {
     return m_renderer;
+}
+
+Commands::AbstractUndoStack*
+MainWorkflow::undoStack()
+{
+    return m_undoStack.get();
 }
 
 int
@@ -201,7 +222,7 @@ MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool is
     else
         newClip->setFormats( Clip::Video );
 
-    Commands::trigger( new Commands::Clip::Add( newClip, track( trackId ), pos ) );
+    trigger( new Commands::Clip::Add( newClip, track( trackId ), pos ) );
     emit clipAdded( newClip->uuid().toString() );
     return newClip->uuid().toString();
 }
@@ -256,7 +277,7 @@ MainWorkflow::moveClip( const QString& uuid, quint32 trackId, qint64 startFrame 
             if ( startFrame == getClipPosition( uuid, oldTrackId ) )
                 return;
 
-            Commands::trigger( new Commands::Clip::Move( track( oldTrackId ), track( trackId ), clip, startFrame ) );
+            trigger( new Commands::Clip::Move( track( oldTrackId ), track( trackId ), clip, startFrame ) );
 
             m_clips.erase( it );
             m_clips.insertMulti( trackId, clip );
@@ -276,7 +297,7 @@ MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, q
             auto trackId = it.key();
             auto clip = it.value();
 
-            Commands::trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
+            trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
             emit clipResized( uuid );
             return;
         }
@@ -293,7 +314,7 @@ MainWorkflow::removeClip( const QString& uuid )
             auto trackId = it.key();
             auto clip = it.value();
 
-            Commands::trigger( new Commands::Clip::Remove( clip, track( trackId ) ) );
+            trigger( new Commands::Clip::Remove( clip, track( trackId ) ) );
             emit clipRemoved( uuid );
             return;
         }
@@ -309,7 +330,7 @@ MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
             for ( auto clipB : m_clips )
                 if ( clipB->uuid().toString() == uuidB )
                 {
-                    Commands::trigger( new Commands::Clip::Link( clipA, clipB ) );
+                    trigger( new Commands::Clip::Link( clipA, clipB ) );
                     emit clipLinked( uuidA, uuidB );
                     return;
                 }
@@ -332,7 +353,7 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
     for ( auto clip : m_clips )
         if ( clip->uuid().toString() == clipUuid )
         {
-            Commands::trigger( new Commands::Effect::Add(
+            trigger( new Commands::Effect::Add(
                                    std::shared_ptr<EffectHelper>( newEffect ), clip->input() )
                                );
             return newEffect->uuid().toString();

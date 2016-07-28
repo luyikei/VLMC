@@ -32,12 +32,6 @@
 #include "AbstractUndoStack.h"
 #include "Backend/IFilter.h"
 
-void
-Commands::trigger( Generic* command )
-{
-    Core::instance()->undoStack()->push( command );
-}
-
 Commands::Generic::Generic() :
         m_valid( true )
 {

@@ -439,7 +439,7 @@ MainWindow::setupUndoRedoWidget()
     m_undoView = new QUndoView;
     m_undoView->setObjectName( QStringLiteral( "History" ) );
     m_dockedUndoView = dockWidget( m_undoView, Qt::TopDockWidgetArea );
-    auto stack = Core::instance()->undoStack();
+    auto stack = Core::instance()->workflow()->undoStack();
     connect( stack, SIGNAL( canUndoChanged( bool ) ), this, SLOT( canUndoChanged( bool ) ) );
     connect( stack, SIGNAL( canRedoChanged( bool ) ), this, SLOT( canRedoChanged( bool ) ) );
     canUndoChanged( stack->canUndo() );
@@ -803,13 +803,13 @@ MainWindow::onProjectSaved()
 void
 MainWindow::on_actionUndo_triggered()
 {
-    Core::instance()->undoStack()->undo();
+    Core::instance()->workflow()->undoStack()->undo();
 }
 
 void
 MainWindow::on_actionRedo_triggered()
 {
-    Core::instance()->undoStack()->redo();
+    Core::instance()->workflow()->undoStack()->redo();
 }
 
 void

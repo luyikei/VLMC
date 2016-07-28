@@ -74,8 +74,6 @@ namespace Commands
             void            invalidated();
     };
 
-    void        trigger( Generic* command );
-
     namespace   Clip
     {
         class   Add : public Generic
