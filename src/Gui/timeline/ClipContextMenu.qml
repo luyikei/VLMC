@@ -61,4 +61,14 @@ Menu {
     onAboutToShow: {
         grouped = findGroup( clip.uuid );
     }
+
+    MenuSeparator { }
+
+    MenuItem {
+        text: "Effects"
+
+        onTriggered: {
+            timeline.showEffectStack( clip.uuid );
+        }
+    }
 }

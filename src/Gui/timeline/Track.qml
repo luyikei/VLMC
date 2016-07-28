@@ -387,12 +387,29 @@ Item {
             color: "#111111"
         }
 
-        Text {
-            text: type + " " + ( trackId + 1 )
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            color: "white"
-            font.pointSize: trackHeight / 3
+        Row {
+            spacing: 4
+            anchors.centerIn: parent
+
+            Text {
+                id: trackText
+                text: type + " " + ( trackId + 1 )
+                color: "white"
+                font.pointSize: trackHeight / 3
+            }
+
+            PropertyButton {
+                id: fxButton
+                text: "Fx"
+                selected: true
+
+                onSelectedChanged: {
+                    if ( selected === false ) {
+                        timeline.showEffectStack( trackId );
+                        selected = true;
+                    }
+                }
+            }
         }
     }
 }

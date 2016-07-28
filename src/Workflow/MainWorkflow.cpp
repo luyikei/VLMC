@@ -168,6 +168,16 @@ MainWorkflow::trackCount() const
 }
 
 std::shared_ptr<Clip>
+MainWorkflow::clip( const QUuid& uuid )
+{
+    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
+        if ( it.value()->uuid() == uuid )
+            return it.value();
+
+    return std::shared_ptr<Clip>( nullptr );
+}
+
+std::shared_ptr<Clip>
 MainWorkflow::createClip( const QUuid& uuid, quint32 trackId )
 {
     Clip* clip = Core::instance()->library()->clip( uuid );

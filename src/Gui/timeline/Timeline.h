@@ -45,20 +45,10 @@ public:
     QWidget*            container();
 
 public slots:
-    /**
-     * \brief Asks the workflow to clear itself.
-     */
-    void clear() {}
-    /**
-     * \brief Change the zoom level for all widgets of the timeline.
-     * \param factor The zoom factor.
-     */
-    void changeZoom( int factor ) { Q_UNUSED( factor ) }
-    /**
-     * \brief Change the duration of the project.
-     * \param duration Duration in frames.
-     */
-    void setDuration( int duration ) { Q_UNUSED( duration ) }
+
+    void showEffectStack( quint32 trackId );
+    void showEffectStack( const QString& uuid );
+
     /**
      * \brief Change the currently selected tool.
      */

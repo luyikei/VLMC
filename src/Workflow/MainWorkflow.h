@@ -132,6 +132,8 @@ class   MainWorkflow : public QObject
          */
         quint32                 trackCount() const;
 
+        std::shared_ptr<Clip>   clip( const QUuid& uuid );
+
         /**
          * \brief       Create a clip from a parent clip's uuid.
          *

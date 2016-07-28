@@ -23,8 +23,10 @@
 #include "Timeline.h"
 
 #include "Main/Core.h"
+#include "Workflow/TrackWorkflow.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/MainWindow.h"
+#include "Gui/effectsengine/EffectStack.h"
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlContext>
 #include <QUrl>
@@ -36,6 +38,7 @@ Timeline::Timeline( MainWindow* parent )
 {
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
+    m_view->rootContext()->setContextProperty( "timeline", this );
     m_view->rootContext()->setContextProperty( "mainwindow", parent );
     m_view->rootContext()->setContextProperty( "workflow", Core::instance()->workflow() );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
@@ -50,4 +53,18 @@ QWidget*
 Timeline::container()
 {
     return m_container;
+}
+
+void
+Timeline::showEffectStack( quint32 trackId )
+{
+    auto w = new EffectStack( Core::instance()->workflow()->track( trackId )->input() );
+    w->show();
+}
+
+void
+Timeline::showEffectStack( const QString& uuid )
+{
+    auto w = new EffectStack( Core::instance()->workflow()->clip( uuid )->input() );
+    w->show();
 }

@@ -287,12 +287,28 @@ Rectangle {
         ]
     }
 
+    DropArea {
+        id: effectDropArea
+        anchors.fill: parent
+        keys: ["vlmc/effect_name"]
+
+        onDropped: {
+            workflow.addEffect( uuid, drop.getDataAsString( "vlmc/effect_name" ) );
+        }
+    }
+
     ClipContextMenu {
         id: clipContextMenu
         clip: clip
     }
 
     states: [
+        State {
+            name: "EffectDrop"
+            when: effectDropArea.containsDrag
+            PropertyChanges { target: gStop1; color: "#427080" }
+            PropertyChanges { target: gStop2; color: "#225060" }
+        },
         State {
             name: "Selected"
             when: selected
