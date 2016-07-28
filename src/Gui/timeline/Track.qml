@@ -239,8 +239,8 @@ Item {
 
                     scrollToTarget( drag.source );
 
-                    // Optimization: Delta delta X should be different
-                    if ( deltaX === drag.source.x - lastX && drag.source.x !== 0 ) {
+                    // Optimization: Delta delta X should be 0
+                    if ( ptof( deltaX ) === ptof( drag.source.x - lastX ) && drag.source.x !== 0 ) {
                         lastX = drag.source.x;
                         return;
                     }
@@ -286,7 +286,7 @@ Item {
                                 var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
 
                                 // If linked clip collides
-                                if ( Math.abs( newLinkedClipX - newX ) > 1 ) {
+                                if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 ) {
 
                                     // Recalculate target's newX
                                     // This time, don't use magnets
@@ -294,7 +294,7 @@ Item {
                                     newLinkedClipX = findNewPosition( newX, target, false );
 
                                     // And if newX collides again, we don't move
-                                    if ( Math.abs( newLinkedClipX - newX ) > 1 )
+                                    if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
                                         newX = oldX;
                                 }
 
