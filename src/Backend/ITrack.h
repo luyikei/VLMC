@@ -37,7 +37,7 @@ namespace Backend
         virtual void        replaceWithBlank( int index ) = 0;
         virtual bool        append( IInput& input ) = 0;
         virtual bool        remove( int index ) = 0;
-        // src and dist are indexes.
+        // src and dist are frames.
         virtual bool        move( int src, int dist ) = 0;
         virtual IInput*     clip( int index ) const = 0;
         virtual IInput*     clipAt( int64_t position ) const = 0 ;

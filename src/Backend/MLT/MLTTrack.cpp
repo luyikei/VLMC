@@ -114,7 +114,12 @@ MLTTrack::remove( int index )
 bool
 MLTTrack::move( int src, int dist )
 {
-    return !playlist()->move( src, dist );
+    std::unique_ptr<Mlt::Producer> prod(
+                playlist()->replace_with_blank( playlist()->get_clip_index_at( src ) ) );
+    if ( !prod )
+        return false;
+    playlist()->consolidate_blanks( 0 );
+    return !playlist()->insert_at( dist, prod.get(), 1 );
 }
 
 Backend::IInput*

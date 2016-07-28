@@ -130,11 +130,7 @@ TrackWorkflow::moveClip( const QUuid& id, qint64 startingFrame )
         {
             auto clip = it.value();
             auto track = trackFromFormats( it.value()->formats() );
-            auto input = track->clipAt( it.key() );
-            track->remove( track->clipIndexAt( it.key() ) );
-            track->insertAt( *input, startingFrame );
-            delete input;
-
+            track->move( it.key(), startingFrame );
             m_clips.erase( it );
             m_clips.insertMulti( startingFrame, clip );
             return ;
