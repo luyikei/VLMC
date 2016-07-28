@@ -77,7 +77,7 @@ Item {
                 if ( currentTrack )
                     var clips = currentTrack["clips"];
                 else
-                    currentTrack.append( { "clips": [] } );
+                    return oldX;
                 for ( j = 0; j < clips.count + 2 && isCollided; ++j ) {
                     isCollided = false;
                     for ( k = 0; k < clips.count; ++k ) {
@@ -239,14 +239,17 @@ Item {
 
                     scrollToTarget( drag.source );
 
-                    // Optimization: Delta delta X should be 0
-                    if ( ptof( deltaX ) === ptof( drag.source.x - lastX ) && drag.source.x !== 0 ) {
-                        lastX = drag.source.x;
-                        return;
+                    if ( drag.source.x !== findNewPosition( drag.source.x, drag.source, false ) )
+                        deltaX = 0;
+                    else {
+                        // Optimization: Delta delta X should be 0
+                        if ( ptof( deltaX ) === ptof( drag.source.x - lastX ) && drag.source.x !== 0 ) {
+                            lastX = drag.source.x;
+                            return;
+                        }
+                        else
+                            deltaX = drag.source.x - lastX;
                     }
-                    else
-                        deltaX = drag.source.x - lastX;
-
                 }
                 else
                     deltaX = drag.x - lastX;
@@ -259,22 +262,13 @@ Item {
                         target.newTrackId = trackId;
                         for ( var j = 0; j < selectedClips.length; ++j ) {
                             if ( drag.source !== selectedClips[j] )
-                                selectedClips[j].newTrackId = trackId - oldTrackId + selectedClips[j].trackId;
+                                selectedClips[j].newTrackId = Math.max( 0, trackId - oldTrackId + selectedClips[j].trackId );
                         }
                     }
 
                     if ( alreadyCalculated.indexOf( target.uuid ) < 0 ) {
                         var oldX = target.pixelPosition();
                         var newX = Math.max( oldX + deltaX, 0 );
-
-                        // Recalculate deltaX in case of drag.source being moved
-                        if ( drag.source === target ) {
-                            if ( oldTrackId === target.newTrackId )
-                                deltaX = Math.round( newX - oldX );
-                            else
-                                // Don't move other clips if drag.source's track is changed
-                                deltaX = 0;
-                        }
 
                         newX = findNewPosition( newX, target, isMagneticMode );
 
@@ -309,6 +303,15 @@ Item {
 
                         if ( length < ptof( newX + target.width ) ) {
                             length = ptof( newX + target.width );
+                        }
+
+                        // Recalculate deltaX in case of drag.source being moved
+                        if ( drag.source === target ) {
+                            if ( oldTrackId === target.newTrackId )
+                                deltaX = newX - oldX;
+                            else
+                                // Don't move other clips if drag.source's track is changed
+                                deltaX = 0;
                         }
 
                         target.setPixelPosition( newX );
