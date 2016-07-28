@@ -171,8 +171,11 @@ Rectangle {
         Drag.drop();
         selected = false;
 
-        if ( linkedClip )
-            findClipItem( linkedClip ).linkedClip = "";
+        if ( linkedClip ) {
+            var linkedClipItem = findClipItem( linkedClip );
+            if ( linkedClipItem )
+                linkedClipItem.linkedClip = "";
+        }
 
         for ( var i = 0; i < allClips.length; ++i ) {
             if ( allClips[i] === clip ) {
