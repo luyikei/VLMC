@@ -88,6 +88,13 @@ MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
     return !playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 );
 }
 
+void
+MLTTrack::replaceWithBlank( int index )
+{
+    std::unique_ptr<Mlt::Producer> mltProducer( playlist()->replace_with_blank( index ) );
+    playlist()->consolidate_blanks( 0 );
+}
+
 bool
 MLTTrack::append( Backend::IInput& input )
 {
