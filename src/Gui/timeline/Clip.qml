@@ -4,7 +4,7 @@ Rectangle {
     id: clip
     // NEVER SET X DIRECTLY. BINDING WILL BE REMOVED.
     x: ftop( position )
-    width: ftop( end - begin )
+    width: ftop( end - begin + 1 )
     gradient: Gradient {
         GradientStop {
             id: gStop1
