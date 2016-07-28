@@ -161,6 +161,9 @@ class   MainWorkflow : public QObject
         Q_INVOKABLE
         void                    linkClips( const QString& uuidA, const QString& uuidB );
 
+        Q_INVOKABLE
+        QString                 addEffect( const QString& clipUuid, const QString& effectId );
+
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
                                                    quint32 nbChannels, quint32 sampleRate );

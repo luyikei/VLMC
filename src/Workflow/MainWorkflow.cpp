@@ -30,6 +30,7 @@
 #include "Backend/MLT/MLTMultiTrack.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Renderer/AbstractRenderer.h"
+#include "EffectsEngine/EffectHelper.h"
 #ifdef WITH_GUI
 #include "Gui/WorkflowFileRendererDialog.h"
 #endif
@@ -302,6 +303,32 @@ MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
                     emit clipLinked( uuidA, uuidB );
                     return;
                 }
+}
+
+QString
+MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
+{
+    EffectHelper* newEffect = nullptr;
+
+    try
+    {
+        newEffect = new EffectHelper( effectId );
+    }
+    catch( Backend::InvalidServiceException& e )
+    {
+        return QStringLiteral( "" );
+    }
+
+    for ( auto clip : m_clips )
+        if ( clip->uuid().toString() == clipUuid )
+        {
+            Commands::trigger( new Commands::Effect::Add(
+                                   std::shared_ptr<EffectHelper>( newEffect ), clip->input() )
+                               );
+            return newEffect->uuid().toString();
+        }
+
+    return QStringLiteral( "" );
 }
 
 bool
