@@ -100,16 +100,7 @@ bool
 MLTTrack::remove( int index )
 {
     auto ret = playlist()->remove( index );
-
-    // Remove last blanks.
-    for ( int i = playlist()->count() - 1; i >= 0; --i )
-    {
-        if ( strcmp( playlist()->clip_info( i )->resource, "blank" ) == 0 )
-            playlist()->remove( i );
-        else
-            break;
-    }
-
+    playlist()->consolidate_blanks( 0 );
     return !ret;
 }
 
