@@ -147,7 +147,6 @@ Commands::Clip::Move::internalRedo()
     {
         m_clip = m_oldTrack->removeClip( m_clip->uuid() );
         m_newTrack->addClip( m_clip, m_newPos );
-        std::swap( m_oldTrack, m_newTrack );
     }
     else
         m_oldTrack->moveClip( m_clip->uuid(), m_newPos );
@@ -158,9 +157,8 @@ Commands::Clip::Move::internalUndo()
 {
     if ( m_newTrack != m_oldTrack )
     {
-        m_clip = m_oldTrack->removeClip( m_clip->uuid() );
-        m_newTrack->addClip( m_clip, m_newPos );
-        std::swap( m_oldTrack, m_newTrack );
+        m_clip = m_newTrack->removeClip( m_clip->uuid() );
+        m_oldTrack->addClip( m_clip, m_oldPos );
     }
     else
         m_newTrack->moveClip( m_clip->uuid(), m_oldPos );
