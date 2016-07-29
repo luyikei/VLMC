@@ -339,11 +339,11 @@ MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
 QString
 MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
 {
-    EffectHelper* newEffect = nullptr;
+    std::shared_ptr<EffectHelper> newEffect;
 
     try
     {
-        newEffect = new EffectHelper( effectId );
+        newEffect.reset( new EffectHelper( effectId ) );
     }
     catch( Backend::InvalidServiceException& e )
     {
@@ -353,9 +353,7 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
     for ( auto clip : m_clips )
         if ( clip->uuid().toString() == clipUuid )
         {
-            trigger( new Commands::Effect::Add(
-                                   std::shared_ptr<EffectHelper>( newEffect ), clip->input() )
-                               );
+            trigger( new Commands::Effect::Add( newEffect, clip->input() ) );
             return newEffect->uuid().toString();
         }
 
