@@ -78,8 +78,6 @@ namespace Commands
     {
         class   Add : public Generic
         {
-            Q_OBJECT
-
             public:
                 Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos );
                 virtual ~Add();
@@ -94,8 +92,6 @@ namespace Commands
 
         class   Move : public Generic
         {
-            Q_OBJECT
-
             public:
                 Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
                       std::shared_ptr<::Clip> const& clip, qint64 newPos );
@@ -113,8 +109,6 @@ namespace Commands
 
         class   Remove : public Generic
         {
-            Q_OBJECT
-
             public:
                 Remove( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw );
                 virtual void internalRedo();
@@ -136,8 +130,6 @@ namespace Commands
         */
         class   Resize : public Generic
         {
-            Q_OBJECT
-
             public:
                 Resize( TrackWorkflow* tw, std::shared_ptr<::Clip> const& clip,
                             qint64 newBegin, qint64 newEnd, qint64 newPos );
@@ -158,8 +150,6 @@ namespace Commands
 
         class   Split : public Generic
         {
-            Q_OBJECT
-
             public:
                 Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
@@ -178,8 +168,6 @@ namespace Commands
 
         class   Link : public Generic
         {
-            Q_OBJECT
-
             public:
                 Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB );
                 ~Link();
@@ -195,8 +183,6 @@ namespace Commands
     {
         class   Add : public Generic
         {
-            Q_OBJECT
-
             public:
                 Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target );
                 virtual void    internalRedo();
@@ -209,8 +195,6 @@ namespace Commands
 
         class   Move : public Generic
         {
-            Q_OBJECT
-
             public:
                 Move( std::shared_ptr<EffectHelper> const& helper, std::shared_ptr<Backend::IInput> const& from, Backend::IInput* to, qint64 pos );
                 virtual void    internalRedo();
@@ -228,8 +212,6 @@ namespace Commands
 
         class   Resize : public Generic
         {
-            Q_OBJECT
-
             public:
                 Resize( std::shared_ptr<EffectHelper> const& helper, qint64 newBegin, qint64 newEnd );
                 virtual void        internalRedo();
@@ -245,8 +227,6 @@ namespace Commands
 
         class   Remove : public Generic
         {
-            Q_OBJECT
-
             public:
                 Remove( std::shared_ptr<EffectHelper> const& helper );
                 virtual void    internalRedo();
