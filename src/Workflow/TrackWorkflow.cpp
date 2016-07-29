@@ -194,7 +194,7 @@ TrackWorkflow::removeClip( const QUuid& id )
         {
             auto    clip = it.value();
             auto    track = trackFromFormats( clip->formats() );
-            track->replaceWithBlank( track->clipIndexAt( it.key() ) );
+            track->remove( track->clipIndexAt( it.key() ) );
             m_clips.erase( it );
             clip->disconnect( this );
             return clip;

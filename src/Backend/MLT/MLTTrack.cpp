@@ -89,7 +89,7 @@ MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
 }
 
 void
-MLTTrack::replaceWithBlank( int index )
+MLTTrack::remove( int index )
 {
     std::unique_ptr<Mlt::Producer> mltProducer( playlist()->replace_with_blank( index ) );
     playlist()->consolidate_blanks( 0 );
@@ -101,14 +101,6 @@ MLTTrack::append( Backend::IInput& input )
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
     return !playlist()->append( *mltInput->producer() );
-}
-
-bool
-MLTTrack::remove( int index )
-{
-    auto ret = playlist()->remove( index );
-    playlist()->consolidate_blanks( 0 );
-    return !ret;
 }
 
 bool

@@ -52,9 +52,8 @@ class MLTTrack : public ITrack, public MLTInput
         virtual Mlt::Producer*  producer() const override;
 
         virtual bool        insertAt( IInput& input, int64_t startFrame ) override;
-        virtual void        replaceWithBlank( int index ) override;
+        virtual void        remove( int index ) override;
         virtual bool        append( IInput& input ) override;
-        virtual bool        remove( int index ) override;
         virtual bool        move( int src, int dist ) override;
         virtual IInput*  clip( int index ) const override;
         virtual IInput*  clipAt( int64_t position ) const override;
