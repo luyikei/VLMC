@@ -80,7 +80,6 @@ namespace Commands
         {
             public:
                 Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos );
-                virtual ~Add();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
@@ -153,7 +152,6 @@ namespace Commands
             public:
                 Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit, qint64 newClipPos,
                            qint64 newClipBegin );
-                ~Split();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
@@ -170,7 +168,6 @@ namespace Commands
         {
             public:
                 Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB );
-                ~Link();
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();

@@ -95,10 +95,6 @@ Commands::Clip::Add::Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw
     retranslate();
 }
 
-Commands::Clip::Add::~Add()
-{
-}
-
 void
 Commands::Clip::Add::internalRedo()
 {
@@ -237,10 +233,6 @@ Commands::Clip::Split::Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& 
     retranslate();
 }
 
-Commands::Clip::Split::~Split()
-{
-}
-
 void
 Commands::Clip::Split::retranslate()
 {
@@ -270,11 +262,6 @@ Commands::Clip::Link::Link( std::shared_ptr<::Clip> const& clipA, std::shared_pt
     connect( m_clipA.get(), &::Clip::destroyed, this, &Link::invalidate );
     connect( m_clipB.get(), &::Clip::destroyed, this, &Link::invalidate );
     retranslate();
-}
-
-Commands::Clip::Link::~Link()
-{
-
 }
 
 void
