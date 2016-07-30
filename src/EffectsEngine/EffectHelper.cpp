@@ -42,7 +42,7 @@ conv( std::string str, SettingValue::Type type )
       return QVariant( std::stoi( str ) );
     else
       return QVariant( QString::fromStdString( str ) );
-};
+}
 
 EffectHelper::EffectHelper( const char* id, qint64 begin, qint64 end,
                             const QString &uuid ) :

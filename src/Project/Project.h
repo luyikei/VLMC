@@ -45,7 +45,7 @@ class Project : public QObject
         static const QString            backupSuffix;
 
     public:
-        Q_DISABLE_COPY( Project );
+        Q_DISABLE_COPY( Project )
         Project( Settings* settings );
 
         virtual ~Project();

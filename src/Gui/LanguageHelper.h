@@ -32,7 +32,7 @@ class   QTranslator;
 class   LanguageHelper : public QObject, public Singleton<LanguageHelper>
 {
     Q_OBJECT
-    Q_DISABLE_COPY( LanguageHelper );
+    Q_DISABLE_COPY( LanguageHelper )
 
 public slots:
     void        languageChanged( const QVariant &lang );

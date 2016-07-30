@@ -34,7 +34,7 @@ class   ViewController;
 class MediaLibrary : public QWidget
 {
     Q_OBJECT
-    Q_DISABLE_COPY( MediaLibrary );
+    Q_DISABLE_COPY( MediaLibrary )
 
     public:
         typedef bool    (*Filter)( const Clip*, const QString& filter );

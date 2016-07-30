@@ -33,7 +33,7 @@ class   Media;
 class ClipMetadataDisplayer : public QWidget
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ClipMetadataDisplayer);
+    Q_DISABLE_COPY(ClipMetadataDisplayer)
 
     public:
         explicit ClipMetadataDisplayer( QWidget *parent = 0 );

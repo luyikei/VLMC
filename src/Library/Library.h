@@ -46,7 +46,7 @@ class Settings;
 class Library : public MediaContainer
 {
     Q_OBJECT
-    Q_DISABLE_COPY( Library );
+    Q_DISABLE_COPY( Library )
 
 public:
     Library( Settings* projectSettings );

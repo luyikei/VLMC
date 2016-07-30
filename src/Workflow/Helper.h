@@ -55,6 +55,6 @@ namespace   Workflow
     };
 }
 
-Q_DECLARE_METATYPE( Workflow::Helper* );
+Q_DECLARE_METATYPE( Workflow::Helper* )
 
 #endif // IHELPER_H

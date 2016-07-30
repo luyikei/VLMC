@@ -31,7 +31,7 @@ class   RendererEventWatcher;
 class   WorkflowFileRendererDialog : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY( WorkflowFileRendererDialog );
+    Q_DISABLE_COPY( WorkflowFileRendererDialog )
 public:
     WorkflowFileRendererDialog( quint32 width, quint32 height, qint64 totalFrames, RendererEventWatcher* eventWatcher );
     void    setOutputFileName( const QString& filename );
