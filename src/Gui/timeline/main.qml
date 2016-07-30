@@ -347,6 +347,7 @@ Rectangle {
                 selectionRect.y = Math.min( mouseY + y, selectionRect.initPos.y );
                 selectionRect.width = Math.abs( mouseX + x - selectionRect.initPos.x );
                 selectionRect.height = Math.abs( mouseY + y - selectionRect.initPos.y );
+                selectionRect.selectClips();
             }
         }
 
@@ -485,6 +486,16 @@ Rectangle {
         visible: false
         color: "#999999cc"
         property point initPos
+
+        function selectClips() {
+            for ( var i = 0; i < allClips.length; ++i ) {
+                var clip = allClips[i];
+                var clipPos = clip.mapToItem( page, 0, 0 );
+                if ( ( x - clip.width < clipPos.x && clipPos.x < x + width ) &&
+                     ( y - clip.height < clipPos.y && clipPos.y < y + height ) )
+                    clip.selected = true;
+            }
+        }
     }
 
     MessageDialog {
