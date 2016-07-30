@@ -269,6 +269,8 @@ class   MainWorkflow : public QObject
         void                    clipRemoved( const QString& uuid );
         void                    clipMoved( const QString& uuid );
         void                    clipLinked( const QString& uuidA, const QString& uuidB );
+
+        void                    effectsUpdated( const QString& clipUuid );
 };
 
 #endif // MAINWORKFLOW_H

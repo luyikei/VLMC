@@ -569,11 +569,18 @@ Rectangle {
             clip.position = clipInfo["position"];
             clip.end = clipInfo["end"];
             clip.begin = clipInfo["begin"];
+            clip.updateEffects( clipInfo );
         }
 
         onClipLinked: {
             findClipItem( uuidA ).linkedClip = uuidB;
             findClipItem( uuidB ).linkedClip = uuidA;
+        }
+
+        onEffectsUpdated: {
+            var item = findClipItem( clipUuid );
+            if ( item )
+                item.updateEffects( workflow.clipInfo( clipUuid ) );
         }
     }
 

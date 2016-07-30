@@ -66,5 +66,6 @@ void
 Timeline::showEffectStack( const QString& uuid )
 {
     auto w = new EffectStack( Core::instance()->workflow()->clip( uuid )->input() );
+    connect( w, &EffectStack::finished, Core::instance()->workflow(), [uuid]{ emit Core::instance()->workflow()->effectsUpdated( uuid ); } );
     w->show();
 }

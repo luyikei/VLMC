@@ -63,6 +63,16 @@ Rectangle {
             findClipItem( linkedClip ).selected = true;
     }
 
+    function updateEffects( clipInfo ) {
+        if ( !clipInfo["filters"] )
+            return;
+
+        effects.clear();
+        for ( var i = 0; i < clipInfo["filters"].length; ++i ) {
+            effects.append( clipInfo["filters"][i] );
+        }
+    }
+
     onXChanged: {
         if ( sView.width - initPosOfCursor < width )
             return;
@@ -165,6 +175,8 @@ Rectangle {
             selected = true;
         newTrackId = trackId;
         allClips.push( clip );
+
+        updateEffects( workflow.clipInfo( uuid ) );
     }
 
     Component.onDestruction: {
@@ -188,6 +200,10 @@ Rectangle {
     Drag.keys: ["Clip"]
     Drag.active: dragArea.drag.active
 
+    ListModel {
+        id: effects
+    }
+
     Text {
         id: text
         color: "white"
@@ -198,6 +214,37 @@ Rectangle {
         font.pointSize: trackHeight / 4
         elide: Text.ElideRight
         wrapMode: Text.Wrap
+    }
+
+    ListView {
+        id: effectsView
+        property int effectHeight: 5
+        anchors.bottom: clip.bottom
+        width: clip.width
+        height: effectHeight * count
+        model: effects
+        delegate: Rectangle {
+            width: ftop( model.length )
+            x: ftop( model.begin )
+            height: effectsView.effectHeight
+            radius: 2
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.00;
+                    color: "#24245c";
+                }
+                GradientStop {
+                    position: 1.00;
+                    color: "#200f3c";
+                }
+            }
+            Text {
+                text: model.identifier
+                color: "white"
+                font.pointSize: parent.height
+                anchors.centerIn: parent
+            }
+        }
     }
 
     MouseArea {

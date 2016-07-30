@@ -234,7 +234,7 @@ MainWorkflow::clipInfo( const QString& uuid )
     if ( lClip != nullptr )
     {
         auto h = lClip->toVariant().toHash();
-        h["length"] = lClip->length();
+        h["length"] = (qint64)( lClip->input()->length() );
         h["name"] = lClip->media()->fileName();
         h["audio"] = lClip->formats().testFlag( Clip::Audio );
         h["video"] = lClip->formats().testFlag( Clip::Video );
@@ -252,7 +252,7 @@ MainWorkflow::clipInfo( const QString& uuid )
         {
             auto clip = it.value();
             auto h = clip->toVariant().toHash();
-            h["length"] = clip->length();
+            h["length"] = (qint64)( clip->input()->length() );
             h["name"] = clip->media()->fileName();
             h["audio"] = clip->formats().testFlag( Clip::Audio );
             h["video"] = clip->formats().testFlag( Clip::Video );
@@ -354,6 +354,7 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
         if ( clip->uuid().toString() == clipUuid )
         {
             trigger( new Commands::Effect::Add( newEffect, clip->input() ) );
+            emit effectsUpdated( clipUuid );
             return newEffect->uuid().toString();
         }
 

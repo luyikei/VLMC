@@ -195,7 +195,13 @@ EffectHelper::toVariant()
         auto val = value( QString::fromStdString( param->identifier() ) );
         h.insert( val->key(), val->get() );
     }
-    return QVariantHash{ { "identifier", identifier() }, { "parameters", h } };
+    return QVariantHash{
+        { "begin", begin() },
+        { "end", end() },
+        { "length", length() },
+        { "identifier", identifier() },
+        { "parameters", h }
+    };
 }
 
 QVariant
