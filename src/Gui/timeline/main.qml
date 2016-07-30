@@ -99,10 +99,6 @@ Rectangle {
         while ( trackId > tracks.count - 1 )
             addTrack( trackType );
         tracks.get( trackId )["clips"].append( newDict );
-
-        if ( clipDict["uuid"] === "tempUuid" )
-            return newDict;
-
         return newDict;
     }
 
@@ -120,9 +116,6 @@ Rectangle {
                 j--;
             }
         }
-        if ( uuid === "tempUuid" )
-            return ret;
-
         return ret;
     }
 
