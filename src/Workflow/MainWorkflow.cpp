@@ -315,6 +315,7 @@ MainWorkflow::removeClip( const QString& uuid )
             auto clip = it.value();
 
             trigger( new Commands::Clip::Remove( clip, track( trackId ) ) );
+            m_clips.erase( it );
             emit clipRemoved( uuid );
             return;
         }
