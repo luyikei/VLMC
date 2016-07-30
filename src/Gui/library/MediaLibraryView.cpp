@@ -48,7 +48,7 @@ MediaLibraryView::MediaLibraryView(QWidget *parent)
     auto ctx = view->rootContext();
     ctx->setContextProperty( QStringLiteral( "mlModel" ), Core::instance()->mediaLibrary()->model( MediaLibrary::MediaType::Video ) );
 
-    view->setSource( QUrl( QStringLiteral( "qrc:/qml/MediaLibraryView" ) ) );
+    view->setSource( QUrl( QStringLiteral( "qrc:/qml/MediaLibraryView.qml" ) ) );
     view->setResizeMode(QQuickView::SizeRootObjectToView);
 }
 
