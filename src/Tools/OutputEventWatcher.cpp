@@ -44,3 +44,9 @@ OutputEventWatcher::onVolumeChanged()
 {
     emit volumeChanged();
 }
+
+void
+OutputEventWatcher::onErrorEncountered()
+{
+    emit errorEncountered();
+}

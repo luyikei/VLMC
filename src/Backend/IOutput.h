@@ -38,6 +38,7 @@ namespace Backend
         virtual void    onPlaying() = 0;
         virtual void    onStopped() = 0;
         virtual void    onVolumeChanged() = 0;
+        virtual void    onErrorEncountered() = 0;
     };
 
     class IOutput

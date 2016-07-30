@@ -69,3 +69,9 @@ RendererEventWatcher::onLengthChanged( int64_t length )
 {
     emit lengthChanged( length );
 }
+
+void
+RendererEventWatcher::onErrorEncountered()
+{
+    emit errorEncountered();
+}

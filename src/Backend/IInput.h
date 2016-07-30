@@ -38,6 +38,7 @@ namespace Backend
         virtual void    onEndReached() = 0;
         virtual void    onPositionChanged( int64_t ) = 0;
         virtual void    onLengthChanged( int64_t ) = 0;
+        virtual void    onErrorEncountered() = 0;
     };
 
     class IInput

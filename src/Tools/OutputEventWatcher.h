@@ -37,11 +37,13 @@ private:
     virtual void    onPlaying();
     virtual void    onStopped();
     virtual void    onVolumeChanged();
+    virtual void    onErrorEncountered();
 
 signals:
     void            playing();
     void            stopped();
     void            volumeChanged();
+    void            errorEncountered();
 };
 
 #endif // OUTPUTEVENTWATCHER_H

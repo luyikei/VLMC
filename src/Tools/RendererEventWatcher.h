@@ -43,6 +43,7 @@ private:
     virtual void    onVolumeChanged();
     virtual void    onPositionChanged( int64_t );
     virtual void    onLengthChanged( int64_t );
+    virtual void    onErrorEncountered();
 
 signals:
     void            playing();
@@ -52,6 +53,7 @@ signals:
     void            volumeChanged();
     void            positionChanged( qint64 );
     void            lengthChanged( qint64 );
+    void            errorEncountered();
 };
 
 #endif // RENDEREREVENTWATCHER_H
