@@ -67,10 +67,13 @@ Rectangle {
         if ( !clipInfo["filters"] )
             return;
 
-        effects.clear();
+        var str = "";
         for ( var i = 0; i < clipInfo["filters"].length; ++i ) {
-            effects.append( clipInfo["filters"][i] );
+            str += clipInfo["filters"][i]["identifier"];
+            if ( i < clipInfo["filters"].length - 1 )
+                str += ", "
         }
+        effectsItem.text = str;
     }
 
     onXChanged: {
@@ -216,37 +219,6 @@ Rectangle {
         wrapMode: Text.Wrap
     }
 
-    ListView {
-        id: effectsView
-        property int effectHeight: 5
-        anchors.bottom: clip.bottom
-        width: clip.width
-        height: effectHeight * count
-        model: effects
-        delegate: Rectangle {
-            width: ftop( model.length )
-            x: ftop( model.begin )
-            height: effectsView.effectHeight
-            radius: 2
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.00;
-                    color: "#24245c";
-                }
-                GradientStop {
-                    position: 1.00;
-                    color: "#200f3c";
-                }
-            }
-            Text {
-                text: model.identifier
-                color: "white"
-                font.pointSize: parent.height
-                anchors.centerIn: parent
-            }
-        }
-    }
-
     MouseArea {
         id: dragArea
         anchors.fill: parent
@@ -345,6 +317,64 @@ Rectangle {
         onDropped: {
             workflow.addEffect( uuid, drop.getDataAsString( "vlmc/effect_name" ) );
         }
+    }
+
+    Rectangle {
+        id: effectsItem
+        height: clip.height / 3
+        width: clip.width
+        anchors.bottom: clip.bottom
+        visible: effectsTextItem.text ? true : false
+        radius: 2
+        gradient: Gradient {
+            GradientStop {
+                id: eGStop1
+                position: 0.00;
+            }
+            GradientStop {
+                id: eGStop2
+                position: 1.00;
+            }
+        }
+
+        property alias text: effectsTextItem.text
+
+        Text {
+            id: effectsTextItem
+            width: clip.width
+            color: "white"
+            horizontalAlignment: Text.AlignHCenter
+            font.pointSize: parent.height - 2
+            anchors.centerIn: parent
+            elide: Text.ElideRight
+        }
+
+        MouseArea {
+            id: effectsItemMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: {
+                timeline.showEffectStack( uuid );
+            }
+        }
+
+        states: [
+            State {
+                when: effectsItemMouseArea.pressed
+                PropertyChanges { target: eGStop1; color: "#220f3c" }
+                PropertyChanges { target: eGStop2; color: "#24245c" }
+            },
+            State {
+                when: effectsItemMouseArea.containsMouse
+                PropertyChanges { target: eGStop1; color: "#46469F" }
+                PropertyChanges { target: eGStop2; color: "#32215a" }
+            },
+            State {
+                when: !effectsItemMouseArea.containsMouse
+                PropertyChanges { target: eGStop1; color: "#24245c" }
+                PropertyChanges { target: eGStop2; color: "#200f3c" }
+            }
+        ]
     }
 
     ClipContextMenu {
