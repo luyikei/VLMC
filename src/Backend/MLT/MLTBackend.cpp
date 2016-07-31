@@ -26,12 +26,14 @@
 #include <mlt++/MltFactory.h>
 #include <mlt++/MltProperties.h>
 #include <mlt++/MltRepository.h>
+#include <mlt++/MltService.h>
 
 #include <mlt/framework/mlt_log.h>
 
 #include "MLTFilter.h"
 
 #include <mutex>
+#include <sstream>
 
 #include "Tools/VlmcDebug.h"
 #include "vlmc.h"
@@ -101,8 +103,28 @@ void
 MLTBackend::setLogHandler( IBackend::LogHandler logHandler )
 {
     staticLogHandler = logHandler;
-    mlt_log_set_callback( []( void*, int level, const char* format, va_list vl )
+    mlt_log_set_callback( []( void* ptr, int level, const char* format, va_list vl )
     {
+        std::string msg_str;
+
+        Mlt::Service service( ( mlt_service )ptr );
+
+        if ( service.is_valid() )
+        {
+            const char *mlt_type = service.get( "mlt_type" );
+            const char *mlt_service = service.get( "mlt_service" );
+            std::ostringstream os;
+
+            if ( mlt_service && mlt_type )
+                os << "[" << mlt_type << " " << mlt_service << "] ";
+            else if ( mlt_type )
+            {
+                os << "[" << mlt_type << " " << ptr << "] ";
+            }
+
+            msg_str = os.str();
+        }
+
         char* buffer = nullptr;
 
         auto lvl = IBackend::None;
@@ -118,7 +140,12 @@ MLTBackend::setLogHandler( IBackend::LogHandler logHandler )
         if ( vasprintf( &buffer, format, vl ) < 0 )
             return;
 
-        staticLogHandler( lvl, buffer );
+        if ( buffer )
+            msg_str += buffer;
+
+        if ( !msg_str.empty() )
+            staticLogHandler( lvl, msg_str.c_str() );
+
         free( buffer );
     } );
 }
