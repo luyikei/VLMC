@@ -90,34 +90,20 @@ Item {
                         // Set a right position
                         //
                         // HACK: If magnetic mode, consider clips bigger.
-                        if ( useMagneticMode === true ) {
-                            if ( cx  + cw > newX && newX + sw > cx )
-                                isCollided = true;
+                        var clipMargin = useMagneticMode ? magneticMargin : 0;
+                        if ( cx  + cw > newX && newX + sw > cx )
+                            isCollided = true;
 
-                            cw += magneticMargin * 2
-                            cx -= magneticMargin
-                            if ( cx + cw > newX && newX + sw > cx ) {
-                                if ( cx > newX ) {
-                                    if ( cx - sw > 0 )
-                                        newX = cx - sw + magneticMargin;
-                                    else
-                                        newX = oldX;
-                                } else {
-                                    newX = cx + cw - magneticMargin;
-                                }
-                            }
-                        }
-                        else {
-                            if ( cx  + cw > newX && newX + sw > cx ) {
-                                isCollided = true;
-                                if ( cx > newX ) {
-                                    if ( cx - sw > 0 )
-                                        newX = cx - sw;
-                                    else
-                                        newX = oldX;
-                                } else {
-                                    newX = cx + cw;
-                                }
+                        cw += clipMargin * 2
+                        cx -= clipMargin
+                        if ( cx + cw > newX && newX + sw > cx ) {
+                            if ( cx > newX ) {
+                                if ( cx - sw > 0 )
+                                    newX = cx - sw + clipMargin;
+                                else
+                                    newX = oldX;
+                            } else {
+                                newX = cx + cw - clipMargin;
                             }
                         }
                         if ( isCollided )
