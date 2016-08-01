@@ -81,9 +81,7 @@ class YouTubeService : public AbstractSharingService
     private slots:
         void authError( QString );
         void networkError( QNetworkReply::NetworkError );
-        #ifndef QT_NO_OPENSSL
         void sslErrors( QNetworkReply*, const QList<QSslError> &errors );
-        #endif
 };
 
 #endif // YOUTUBESERVICE_H

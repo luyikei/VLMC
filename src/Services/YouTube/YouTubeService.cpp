@@ -233,7 +233,6 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
     reply->deleteLater();
 }
 
-#ifndef QT_NO_OPENSSL
 void
 YouTubeService::sslErrors( QNetworkReply* reply, const QList<QSslError> &errors )
 {
@@ -256,4 +255,3 @@ YouTubeService::sslErrors( QNetworkReply* reply, const QList<QSslError> &errors 
         reply->ignoreSslErrors();
     }
 }
-#endif
