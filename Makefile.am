@@ -221,6 +221,10 @@ vlmc_SOURCES += \
 	src/Gui/wizard/firstlaunch/Done.cpp \
 	$(NULL)
 
+if HAVE_DARWIN
+vlmc_SOURCES += src/Gui/preview/RenderWidget.mm
+endif
+
 vlmc_SOURCES += \
 	src/Gui/ClipProperty.h \
 	src/Gui/WorkflowFileRendererDialog.h \
