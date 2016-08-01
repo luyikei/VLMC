@@ -159,6 +159,8 @@ vlmc_LDADD = \
 	$(MLTPP_LIBS) \
 	$(NULL)
 
+vlmc_LDFLAGS=
+
 if HAVE_GUI
 vlmc_SOURCES += \
 	src/Commands/KeyboardShortcutHelper.cpp \
@@ -223,6 +225,7 @@ vlmc_SOURCES += \
 
 if HAVE_DARWIN
 vlmc_SOURCES += src/Gui/preview/RenderWidget.mm
+vlmc_LDFLAGS += -Wl,-framework,Cocoa
 endif
 
 vlmc_SOURCES += \
