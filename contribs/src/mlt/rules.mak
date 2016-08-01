@@ -6,7 +6,7 @@ ifeq ($(call need_pkg,"mltframework"),)
 PKGS_FOUND += mlt
 endif
 
-DEPS_mlt += ffmpeg iconv sdl
+DEPS_mlt += ffmpeg iconv sdl libxml2
 
 ifdef HAVE_WIN32
 MLT_CONFIG=--target-os=mingw
