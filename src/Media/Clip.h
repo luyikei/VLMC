@@ -98,7 +98,7 @@ class   Clip : public Workflow::Helper
 
             \return         The Clip's Uuid as a QUuid
         */
-        const QUuid         &uuid() const;
+        const QUuid         &uuid() const override;
         void                setUuid( const QUuid &uuid );
 
         virtual qint64      begin() const override;

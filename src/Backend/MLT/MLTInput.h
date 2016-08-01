@@ -54,7 +54,7 @@ class MLTInput : virtual public IInput, public MLTService
 
         static void             onPropertyChanged( void* owner, MLTInput* self, const char* id );
 
-        virtual void            setCallback( IInputEventCb* callback );
+        virtual void            setCallback( IInputEventCb* callback ) override;
 
         virtual const char*     path() const override;
         virtual int64_t         begin() const override;

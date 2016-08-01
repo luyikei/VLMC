@@ -60,7 +60,7 @@ class MLTTrack : public ITrack, public MLTInput
         virtual bool        resizeClip( int clip, int64_t begin, int64_t end ) override;
         virtual int         clipIndexAt( int64_t position ) override;
         virtual int         count() const override;
-        virtual void        clear();
+        virtual void        clear() override;
 
         virtual void        setMute( bool muted ) override;
         virtual void        setVideoEnabled( bool enabled ) override;
