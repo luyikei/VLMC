@@ -2,7 +2,7 @@ MLT_VERSION := master
 MLT_URL := https://github.com/mltframework/mlt.git
 
 PKGS += mlt
-ifeq ($(call need_pkg,"mltframework"),)
+ifeq ($(call need_pkg,"mlt-framework"),)
 PKGS_FOUND += mlt
 endif
 
