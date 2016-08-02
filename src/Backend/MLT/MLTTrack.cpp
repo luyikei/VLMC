@@ -89,7 +89,7 @@ MLTTrack::insertAt( Backend::IInput& input, int64_t startFrame )
 {
     auto mltInput = dynamic_cast<MLTInput*>( &input );
     assert( mltInput );
-    return !playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 );
+    return playlist()->insert_at( (int)startFrame, mltInput->producer(), 1 ) != -1;
 }
 
 void
@@ -115,7 +115,7 @@ MLTTrack::move( int src, int dist )
     if ( !prod )
         return false;
     playlist()->consolidate_blanks( 0 );
-    return !playlist()->insert_at( dist, prod.get(), 1 );
+    return playlist()->insert_at( dist, prod.get(), 1 ) != -1;
 }
 
 Backend::IInput*
