@@ -321,7 +321,7 @@ Rectangle {
 
     Rectangle {
         id: effectsItem
-        height: clip.height / 3
+        height: clip.height / 5
         width: clip.width
         anchors.bottom: clip.bottom
         visible: effectsTextItem.text ? true : false
