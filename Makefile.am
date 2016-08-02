@@ -390,8 +390,8 @@ nodist_vlmc_SOURCES += $(vlmc_UI:.ui=.h)
 
 endif
 
-resources.cpp: $(vlmc_RC)
-	$(RCC) -o $@ $<
+resources.cpp:
+	$(RCC) -o $@ $(vlmc_RC)
 
 nodist_vlmc_SOURCES += resources.cpp
 
