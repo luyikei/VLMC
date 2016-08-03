@@ -128,15 +128,15 @@ nodist_vlmc_SOURCES = \
 	$(NULL)
 
 vlmc_RC = \
-	resources.qrc \
-	src/Gui/timeline/resources-timeline.qrc \
+	$(top_srcdir)/resources.qrc \
+	$(top_srcdir)/src/Gui/timeline/resources-timeline.qrc \
 	$(NULL)
 
 EXTRA_DIST = $(vlmc_RC)
 
 if HAVE_WIN32
 vlmc_SOURCES += src/Main/winvlmc.cpp
-vlmc_RC += resources/styles.qrc
+vlmc_RC += $(top_srcdir)/resources/styles.qrc
 else
 vlmc_SOURCES += src/Main/vlmc.cpp
 endif
