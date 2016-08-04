@@ -43,7 +43,6 @@
 #include "Library/Library.h"
 #include "MainWorkflow.h"
 #include "Project/Project.h"
-#include "TrackWorkflow.h"
 #include "SequenceWorkflow.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"

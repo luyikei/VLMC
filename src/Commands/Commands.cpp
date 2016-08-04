@@ -30,7 +30,6 @@
 #include "Main/Core.h"
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectHelper.h"
-#include "Workflow/TrackWorkflow.h"
 #include "Workflow/SequenceWorkflow.h"
 #include "Workflow/MainWorkflow.h"
 #include "AbstractUndoStack.h"

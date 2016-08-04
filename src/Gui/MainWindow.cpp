@@ -43,7 +43,6 @@
 #include "Tools/VlmcLogger.h"
 #include "Backend/IBackend.h"
 #include "Workflow/MainWorkflow.h"
-#include "Workflow/TrackWorkflow.h"
 #include "Renderer/ClipRenderer.h"
 #include "Commands/AbstractUndoStack.h"
 

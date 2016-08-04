@@ -27,7 +27,6 @@
 #include "Timeline.h"
 
 #include "Main/Core.h"
-#include "Workflow/TrackWorkflow.h"
 #include "Workflow/MainWorkflow.h"
 #include "Gui/MainWindow.h"
 #include "Gui/effectsengine/EffectStack.h"
