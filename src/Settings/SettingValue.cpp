@@ -20,6 +20,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "SettingValue.h"
 
 SettingValue::SettingValue( const QString& key, SettingValue::Type type, const QVariant& defaultValue,

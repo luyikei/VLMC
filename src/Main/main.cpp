@@ -26,7 +26,9 @@
  *  and start it.
  */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include "Tools/VlmcDebug.h"
 #include "Workflow/Types.h"

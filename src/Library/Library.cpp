@@ -27,6 +27,10 @@
   * It can load and unload Clips (Clip.h/Clip.cpp)
   */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "Library.h"
 #include "Media/Clip.h"
 #include "Media/Media.h"

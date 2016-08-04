@@ -25,6 +25,10 @@
   * This file contains the Clip class implementation.
   */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "Clip.h"
 #include "Main/Core.h"
 #include "Backend/MLT/MLTInput.h"

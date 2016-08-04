@@ -27,6 +27,10 @@
   * It's used by the Library
   */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <QUrl>
 
 #include "Media.h"
