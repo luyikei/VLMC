@@ -62,14 +62,14 @@ Timeline::container()
 void
 Timeline::showEffectStack( quint32 trackId )
 {
-    auto w = new EffectStack( Core::instance()->workflow()->track( trackId )->input() );
+    auto w = new EffectStack( Core::instance()->workflow()->trackInput( trackId ) );
     w->show();
 }
 
 void
 Timeline::showEffectStack( const QString& uuid )
 {
-    auto w = new EffectStack( Core::instance()->workflow()->clip( uuid )->input() );
+    auto w = new EffectStack( Core::instance()->workflow()->clipInput( uuid ) );
     connect( w, &EffectStack::finished, Core::instance()->workflow(), [uuid]{ emit Core::instance()->workflow()->effectsUpdated( uuid ); } );
     w->show();
 }

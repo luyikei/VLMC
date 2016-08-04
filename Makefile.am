@@ -36,7 +36,7 @@ vlmc_SOURCES = \
 	src/Tools/VlmcLogger.cpp \
 	src/Workflow/Helper.cpp \
 	src/Workflow/MainWorkflow.cpp \
-	src/Workflow/TrackWorkflow.cpp \
+	src/Workflow/SequenceWorkflow.cpp \
 	$(NULL)
 
 vlmc_SOURCES += \
@@ -92,7 +92,6 @@ vlmc_SOURCES += \
 	src/Main/Core.h \
 	src/Library/Library.h \
 	src/Library/MediaContainer.h \
-	src/Workflow/TrackWorkflow.h \
 	src/Workflow/Helper.h \
 	src/Workflow/Types.h \
 	src/Workflow/MainWorkflow.h \
@@ -100,7 +99,7 @@ vlmc_SOURCES += \
 
 nodist_vlmc_SOURCES = \
 	src/Media/Clip.moc.cpp \
-	src/Workflow/TrackWorkflow.moc.cpp \
+	src/Workflow/SequenceWorkflow.moc.cpp \
 	src/Services/YouTube/YouTubeService.moc.cpp \
 	src/EffectsEngine/EffectHelper.moc.cpp \
 	src/Workflow/Helper.moc.cpp \

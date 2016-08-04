@@ -30,12 +30,11 @@
 # include <QUndoCommand>
 #endif
 #include <QObject>
-
-#include "Workflow/MainWorkflow.h"
-
+#include <QUuid>
 #include <memory>
 
 class   Clip;
+class   SequenceWorkflow;
 
 namespace Backend
 {
@@ -79,29 +78,35 @@ namespace Commands
         class   Add : public Generic
         {
             public:
-                Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos );
+                Add( std::shared_ptr<SequenceWorkflow> const& workflow, const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
+
+                std::shared_ptr<::Clip>     newClip();
+
             private:
+                std::shared_ptr<SequenceWorkflow> m_workflow;
+                QUuid                       m_uuid;
                 std::shared_ptr<::Clip>     m_clip;
-                TrackWorkflow               *m_trackWorkflow;
+                quint32                     m_trackId;
                 qint64                      m_pos;
+                bool                        m_isAudioClip;
         };
 
         class   Move : public Generic
         {
             public:
-                Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                      std::shared_ptr<::Clip> const& clip, qint64 newPos );
+                Move( std::shared_ptr<SequenceWorkflow> const& workflow, const QString& uuid, quint32 trackId, qint64 pos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
 
             private:
-                TrackWorkflow   *m_oldTrack;
-                TrackWorkflow   *m_newTrack;
+                std::shared_ptr<SequenceWorkflow> m_workflow;
                 std::shared_ptr<::Clip>     m_clip;
+                quint32         m_newTrackId;
+                quint32         m_oldTrackId;
                 qint64          m_newPos;
                 qint64          m_oldPos;
         };
@@ -109,15 +114,16 @@ namespace Commands
         class   Remove : public Generic
         {
             public:
-                Remove( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw );
+                Remove( std::shared_ptr<SequenceWorkflow> const& workflow, const QUuid& uuid );
                 virtual void internalRedo();
                 virtual void internalUndo();
                 virtual void    retranslate();
 
             private:
-                std::shared_ptr<::Clip>     m_clip;
-                TrackWorkflow               *m_trackWorkflow;
-                qint64                      m_pos;
+                std::shared_ptr<SequenceWorkflow> m_workflow;
+                std::shared_ptr<::Clip>           m_clip;
+                quint32         m_trackId;
+                qint64          m_pos;
         };
 
         /**
@@ -130,18 +136,18 @@ namespace Commands
         class   Resize : public Generic
         {
             public:
-                Resize( TrackWorkflow* tw, std::shared_ptr<::Clip> const& clip,
-                            qint64 newBegin, qint64 newEnd, qint64 newPos );
+                Resize( std::shared_ptr<SequenceWorkflow> const& workflow,
+                        const QUuid& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
 
             private:
-                TrackWorkflow*              m_trackWorkflow;
+                std::shared_ptr<SequenceWorkflow> m_workflow;
                 std::shared_ptr<::Clip>     m_clip;
                 qint64                      m_newBegin;
-                qint64                      m_newEnd;
                 qint64                      m_oldBegin;
+                qint64                      m_newEnd;
                 qint64                      m_oldEnd;
                 qint64                      m_newPos;
                 qint64                      m_oldPos;
@@ -150,15 +156,16 @@ namespace Commands
         class   Split : public Generic
         {
             public:
-                Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit, qint64 newClipPos,
-                           qint64 newClipBegin );
+                Split( std::shared_ptr<SequenceWorkflow> const& workflow,
+                       const QUuid& uuid, qint64 newClipPos, qint64 newClipBegin );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                TrackWorkflow               *m_trackWorkflow;
-                std::shared_ptr<::Clip>                     m_toSplit;
-                std::shared_ptr<::Clip>                     m_newClip;
+                std::shared_ptr<SequenceWorkflow> m_workflow;
+                std::shared_ptr<::Clip>           m_toSplit;
+                quint32                           m_trackId;
+                std::shared_ptr<::Clip>           m_newClip;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;
@@ -167,13 +174,15 @@ namespace Commands
         class   Link : public Generic
         {
             public:
-                Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB );
+                Link( std::shared_ptr<SequenceWorkflow> const& workflow,
+                      const QUuid& clipA, const QUuid& clipB );
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
             private:
-                std::shared_ptr<::Clip>     m_clipA;
-                std::shared_ptr<::Clip>     m_clipB;
+                std::shared_ptr<SequenceWorkflow> m_workflow;
+                QUuid     m_clipA;
+                QUuid     m_clipB;
         };
     }
     namespace   Effect

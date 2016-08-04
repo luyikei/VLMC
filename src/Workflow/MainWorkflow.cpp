@@ -44,6 +44,7 @@
 #include "MainWorkflow.h"
 #include "Project/Project.h"
 #include "TrackWorkflow.h"
+#include "SequenceWorkflow.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 #include "Tools/RendererEventWatcher.h"
@@ -56,10 +57,10 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_trackCount( trackCount ),
         m_settings( new Settings ),
         m_renderer( new AbstractRenderer ),
-        m_multitrack( new Backend::MLT::MLTMultiTrack ),
-        m_undoStack( new Commands::AbstractUndoStack )
+        m_undoStack( new Commands::AbstractUndoStack ),
+        m_sequenceWorkflow( new SequenceWorkflow( trackCount ) )
 {
-    m_renderer->setInput( m_multitrack );
+    m_renderer->setInput( m_sequenceWorkflow->input() );
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
@@ -67,9 +68,6 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     {
         emit frameChanged( pos, Vlmc::Renderer );
     } );
-
-    for ( int i = 0; i < trackCount; ++i )
-        m_tracks << new TrackWorkflow( i, m_multitrack );
 
     m_settings->createVar( SettingValue::List, "tracks", QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );
@@ -81,48 +79,33 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
 
 MainWorkflow::~MainWorkflow()
 {
-    m_clips.clear();
-    for ( auto track : m_tracks )
-        delete track;
-    delete m_multitrack;
+    m_renderer->stop();
     delete m_renderer;
     delete m_settings;
-}
-
-qint64
-MainWorkflow::getClipPosition( const QUuid& uuid, unsigned int trackId ) const
-{
-    return track( trackId )->getClipPosition( uuid );
-}
-
-void
-MainWorkflow::muteTrack( unsigned int trackId, Workflow::TrackType trackType )
-{
-    track( trackId )->mute( true, trackType );
 }
 
 void
 MainWorkflow::unmuteTrack( unsigned int trackId, Workflow::TrackType trackType )
 {
-    track( trackId )->mute( false, trackType );
+    // TODO
 }
 
 void
 MainWorkflow::muteClip( const QUuid& uuid, unsigned int trackId )
 {
-    track( trackId )->muteClip( uuid );
+    // TODO
 }
 
 void
 MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId )
 {
-    track( trackId )->unmuteClip( uuid );
+    // TODO
 }
 
 std::shared_ptr<Clip>
 MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
 {
-    return track( trackId )->clip( uuid );
+    // TODO
 }
 
 void
@@ -134,8 +117,7 @@ MainWorkflow::trigger( Commands::Generic* command )
 void
 MainWorkflow::clear()
 {
-    for ( auto track : m_tracks )
-        track->clear();
+    m_sequenceWorkflow->clear();
     emit cleared();
 }
 
@@ -164,6 +146,21 @@ MainWorkflow::renderer()
     return m_renderer;
 }
 
+Backend::IInput*
+MainWorkflow::clipInput( const QString& uuid )
+{
+    auto clip = m_sequenceWorkflow->clip( uuid );
+    if ( clip )
+        return clip->input();
+    return nullptr;
+}
+
+Backend::IInput*
+MainWorkflow::trackInput( quint32 trackId )
+{
+    return m_sequenceWorkflow->trackInput( trackId );
+}
+
 Commands::AbstractUndoStack*
 MainWorkflow::undoStack()
 {
@@ -179,10 +176,8 @@ MainWorkflow::getTrackCount() const
 bool
 MainWorkflow::contains( const QUuid &uuid ) const
 {
-    for ( auto track : m_tracks )
-        if ( track->contains( uuid ) == true )
-            return true;
-    return false;
+    auto clip = m_sequenceWorkflow->clip( uuid );
+    return !clip == false;
 }
 
 quint32
@@ -191,43 +186,15 @@ MainWorkflow::trackCount() const
     return m_trackCount;
 }
 
-std::shared_ptr<Clip>
-MainWorkflow::clip( const QUuid& uuid )
-{
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
-        if ( it.value()->uuid() == uuid )
-            return it.value();
-
-    return std::shared_ptr<Clip>( nullptr );
-}
-
-std::shared_ptr<Clip>
-MainWorkflow::createClip( const QUuid& uuid, quint32 trackId )
-{
-    Clip* clip = Core::instance()->library()->clip( uuid );
-    if ( clip == nullptr )
-    {
-        vlmcCritical() << "Couldn't find an acceptable parent to be added.";
-        return nullptr;
-    }
-    auto newClip = std::make_shared<Clip>( clip );
-    m_clips.insertMulti( trackId, newClip );
-    return newClip;
-}
-
 QString
 MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool isAudioClip  )
 {
-    auto newClip = createClip( uuid, trackId );
-
-    if ( isAudioClip == true )
-        newClip->setFormats( Clip::Audio );
-    else
-        newClip->setFormats( Clip::Video );
-
-    trigger( new Commands::Clip::Add( newClip, track( trackId ), pos ) );
-    emit clipAdded( newClip->uuid().toString() );
-    return newClip->uuid().toString();
+    auto command = new Commands::Clip::Add( m_sequenceWorkflow, uuid, trackId, pos, isAudioClip );
+    trigger( command );
+    auto newClip = command->newClip();
+    if ( newClip )
+        return newClip->uuid().toString();
+    return QUuid().toString();
 }
 
 QJsonObject
@@ -249,95 +216,42 @@ MainWorkflow::clipInfo( const QString& uuid )
         return QJsonObject::fromVariantHash( h );
     }
 
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
-    {
-        if ( it.value()->uuid().toString() == uuid )
-        {
-            auto clip = it.value();
-            auto h = clip->toVariant().toHash();
-            h["length"] = (qint64)( clip->input()->length() );
-            h["name"] = clip->media()->fileName();
-            h["audio"] = clip->formats().testFlag( Clip::Audio );
-            h["video"] = clip->formats().testFlag( Clip::Video );
-            h["position"] = track( it.key() )->getClipPosition( uuid );
-            h["trackId"] = it.key();
-            return QJsonObject::fromVariantHash( h );
-        }
-    }
-    return QJsonObject();
+    auto clip = m_sequenceWorkflow->clip( uuid );
+    if ( !clip )
+        return QJsonObject();
+
+    auto h = clip->toVariant().toHash();
+    h["length"] = (qint64)( clip->input()->length() );
+    h["name"] = clip->media()->fileName();
+    h["audio"] = clip->formats().testFlag( Clip::Audio );
+    h["video"] = clip->formats().testFlag( Clip::Video );
+    h["position"] = m_sequenceWorkflow->position( uuid );
+    h["trackId"] = m_sequenceWorkflow->trackId( uuid );
+    return QJsonObject::fromVariantHash( h );
 }
 
 void
 MainWorkflow::moveClip( const QString& uuid, quint32 trackId, qint64 startFrame )
 {
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
-    {
-        if ( it.value()->uuid().toString() == uuid )
-        {
-            auto oldTrackId = it.key();
-            auto clip = it.value();
-
-            if ( startFrame == getClipPosition( uuid, oldTrackId ) )
-                return;
-
-            trigger( new Commands::Clip::Move( track( oldTrackId ), track( trackId ), clip, startFrame ) );
-
-            m_clips.erase( it );
-            m_clips.insertMulti( trackId, clip );
-            emit clipMoved( clip->uuid().toString() );
-            return;
-        }
-    }
+    trigger( new Commands::Clip::Move( m_sequenceWorkflow, uuid, trackId, startFrame ) );
 }
 
 void
 MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos )
 {
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
-    {
-        if ( it.value()->uuid().toString() == uuid )
-        {
-            auto trackId = it.key();
-            auto clip = it.value();
-
-            trigger( new Commands::Clip::Resize( track( trackId ), clip, newBegin, newEnd, newPos ) );
-            emit clipResized( uuid );
-            return;
-        }
-    }
+    trigger( new Commands::Clip::Resize( m_sequenceWorkflow, uuid, newBegin, newEnd, newPos ) );
 }
 
 void
 MainWorkflow::removeClip( const QString& uuid )
 {
-    for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
-    {
-        if ( it.value()->uuid().toString() == uuid )
-        {
-            auto trackId = it.key();
-            auto clip = it.value();
-
-            trigger( new Commands::Clip::Remove( clip, track( trackId ) ) );
-            m_clips.erase( it );
-            emit clipRemoved( uuid );
-            return;
-        }
-    }
+    trigger( new Commands::Clip::Remove( m_sequenceWorkflow, uuid ) );
 }
 
 void
 MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
 {
-
-    for ( auto clipA : m_clips )
-        if ( clipA->uuid().toString() == uuidA )
-            for ( auto clipB : m_clips )
-                if ( clipB->uuid().toString() == uuidB )
-                {
-                    trigger( new Commands::Clip::Link( clipA, clipB ) );
-                    emit clipLinked( uuidA, uuidB );
-                    return;
-                }
+    trigger( new Commands::Clip::Link( m_sequenceWorkflow, uuidA, uuidB ) );
 }
 
 QString
@@ -354,13 +268,13 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
         return QStringLiteral( "" );
     }
 
-    for ( auto clip : m_clips )
-        if ( clip->uuid().toString() == clipUuid )
-        {
-            trigger( new Commands::Effect::Add( newEffect, clip->input() ) );
-            emit effectsUpdated( clipUuid );
-            return newEffect->uuid().toString();
-        }
+    auto clipI = clipInput( clipUuid );
+    if ( clipI != nullptr )
+    {
+        trigger( new Commands::Effect::Add( newEffect, clipI ) );
+        emit effectsUpdated( clipUuid );
+        return newEffect->uuid().toString();
+    }
 
     return QStringLiteral( "" );
 }
@@ -372,10 +286,11 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
 {
     m_renderer->stop();
 
-    if ( m_multitrack->playableLength() == 0 )
+    if ( canRender() == false )
         return false;
 
     Backend::MLT::MLTFFmpegOutput output;
+    auto input = m_sequenceWorkflow->input();
     OutputEventWatcher            cEventWatcher;
     output.setCallback( &cEventWatcher );
     output.setTarget( qPrintable( outputFileName ) );
@@ -388,21 +303,21 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     output.setAudioBitrate( abitrate );
     output.setChannels( nbChannels );
     output.setAudioSampleRate( sampleRate );
-    output.connect( *m_multitrack );
+    output.connect( *input );
 
 #ifdef HAVE_GUI
-    WorkflowFileRendererDialog  dialog( width, height, m_multitrack->playableLength(), m_renderer->eventWatcher() );
+    WorkflowFileRendererDialog  dialog( width, height, input->playableLength(), m_renderer->eventWatcher() );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
     connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
     connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, &dialog,
-             [this, &dialog, width, height]( qint64 pos )
+             [this, input, &dialog, width, height]( qint64 pos )
     {
         // Update the preview per five seconds
-        if ( pos % qRound( m_multitrack->fps() * 5 ) == 0 )
+        if ( pos % qRound( input->fps() * 5 ) == 0 )
         {
-            dialog.updatePreview( m_multitrack->image( width, height ) );
+            dialog.updatePreview( input->image( width, height ) );
         }
     });
 #endif
@@ -410,7 +325,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
     connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&output]{ output.stop(); } );
 
-    m_multitrack->setPosition( 0 );
+    input->setPosition( 0 );
     output.start();
 
 #ifdef HAVE_GUI
@@ -426,41 +341,17 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
 bool
 MainWorkflow::canRender()
 {
-    return m_multitrack->playableLength() > 0;
+    return m_sequenceWorkflow->input()->playableLength() > 0;
 }
 
 void
 MainWorkflow::preSave()
 {
-    int maxTrackId = 0;
-    for ( auto it = m_clips.cbegin(); it != m_clips.cend(); ++it )
-        maxTrackId = qMax( it.key(), maxTrackId );
-
-    QVariantList l;
-    for ( int i = 0; i < maxTrackId + 1; ++i )
-        l << track( i )->toVariant();
-
-    m_settings->value( "tracks" )->set( l );
+    m_settings->value( "tracks" )->set( m_sequenceWorkflow->toVariant() );
 }
 
 void
 MainWorkflow::postLoad()
 {
-    QVariantList l = m_settings->value( "tracks" )->get().toList();
-    for ( int i = 0; i < l.size(); ++i )
-        track( i )->loadFromVariant( l[i] );
-}
-
-TrackWorkflow*
-MainWorkflow::track( quint32 trackId )
-{
-    Q_ASSERT( trackId < m_trackCount );
-    return m_tracks[ trackId ];
-}
-
-TrackWorkflow*
-MainWorkflow::track( quint32 trackId ) const
-{
-    Q_ASSERT( trackId < m_trackCount );
-    return m_tracks[ trackId ];
+    m_sequenceWorkflow->loadFromVariant( m_settings->value( "tracks" )->get() );
 }

@@ -31,6 +31,8 @@
 #include "Media/Clip.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Workflow/TrackWorkflow.h"
+#include "Workflow/SequenceWorkflow.h"
+#include "Workflow/MainWorkflow.h"
 #include "AbstractUndoStack.h"
 #include "Backend/IFilter.h"
 
@@ -88,42 +90,74 @@ Commands::Generic::undo()
         internalUndo();
 }
 
-Commands::Clip::Add::Add( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw, qint64 pos ) :
-        m_clip( clip ),
-        m_trackWorkflow( tw ),
-        m_pos( pos )
+Commands::Clip::Add::Add( std::shared_ptr<SequenceWorkflow> const& workflow,
+                          const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip ) :
+        m_workflow( workflow ),
+        m_uuid( uuid ),
+        m_trackId( trackId ),
+        m_pos( pos ),
+        m_isAudioClip( isAudioClip )
 {
-    connect( clip.get(), &::Clip::destroyed, this, &Add::invalidate );
     retranslate();
 }
 
 void
 Commands::Clip::Add::internalRedo()
 {
-    m_trackWorkflow->addClip( m_clip, m_pos );
+    if ( m_clip )
+    {
+        auto ret = m_workflow->addClip( m_clip, m_trackId, m_pos );
+        if ( ret == true )
+            emit Core::instance()->workflow()->clipAdded( m_clip->uuid().toString() );
+        else
+            invalidate();
+    }
+    else
+    {
+        auto ret = m_workflow->addClip( m_uuid, m_trackId, m_pos, m_isAudioClip );
+        if ( QUuid( ret ).isNull() == false )
+        {
+            m_clip = m_workflow->clip( ret );
+            connect( m_clip.get(), &::Clip::destroyed, this, &Add::invalidate );
+            emit Core::instance()->workflow()->clipAdded( ret );
+        }
+        else
+            invalidate();
+    }
 }
 
 void
 Commands::Clip::Add::internalUndo()
 {
-    m_trackWorkflow->removeClip( m_clip->uuid() );
+    m_clip = m_workflow->removeClip( m_uuid );
+    if ( m_clip )
+        emit Core::instance()->workflow()->clipRemoved( m_uuid.toString() );
+    else
+        invalidate();
 }
 
 void
 Commands::Clip::Add::retranslate()
 {
-    setText( tr( "Adding clip to track %1" ).arg( m_trackWorkflow->trackId() ) );
+    setText( tr( "Adding clip to track %1" ).arg( m_trackId ) );
 }
 
-Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
-                            std::shared_ptr<::Clip> const& clip, qint64 newPos ) :
-    m_oldTrack( oldTrack ),
-    m_newTrack( newTrack ),
-    m_clip( clip ),
-    m_newPos( newPos )
-
+std::shared_ptr<Clip>
+Commands::Clip::Add::newClip()
 {
-    m_oldPos = oldTrack->getClipPosition( m_clip->uuid() );
+    return m_clip;
+}
+
+Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
+                             const QString& uuid, quint32 trackId, qint64 pos ) :
+    m_workflow( workflow ),
+    //We have to find an actual clip to ensure that it exists
+    m_clip( workflow->clip( uuid ) ),
+    m_newTrackId( trackId ),
+    m_oldTrackId( workflow->trackId( uuid ) ),
+    m_newPos( pos ),
+    m_oldPos( workflow->position( uuid ) )
+{
     connect( m_clip.get(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     retranslate();
 }
@@ -131,9 +165,9 @@ Commands::Clip::Move::Move( TrackWorkflow *oldTrack, TrackWorkflow *newTrack,
 void
 Commands::Clip::Move::retranslate()
 {
-    if ( m_oldTrack != m_newTrack )
+    if ( m_oldTrackId != m_newTrackId )
         setText( tr( "Moving clip from track %1 to %2" ).arg(
-                QString::number( m_oldTrack->trackId() ), QString::number( m_newTrack->trackId() ) ) );
+                QString::number( m_oldTrackId ), QString::number( m_newTrackId ) ) );
     else
         setText( QObject::tr( "Moving clip" ) );
 }
@@ -141,33 +175,42 @@ Commands::Clip::Move::retranslate()
 void
 Commands::Clip::Move::internalRedo()
 {
-    if ( m_newTrack != m_oldTrack )
+    if ( !m_clip )
     {
-        m_clip = m_oldTrack->removeClip( m_clip->uuid() );
-        m_newTrack->addClip( m_clip, m_newPos );
+        invalidate();
+        return;
     }
+    auto ret = m_workflow->moveClip( m_clip->uuid(), m_newTrackId, m_newPos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipMoved( m_clip->uuid().toString() );
     else
-        m_oldTrack->moveClip( m_clip->uuid(), m_newPos );
+        invalidate();
 }
 
 void
 Commands::Clip::Move::internalUndo()
 {
-    if ( m_newTrack != m_oldTrack )
+    if ( !m_clip )
     {
-        m_clip = m_newTrack->removeClip( m_clip->uuid() );
-        m_oldTrack->addClip( m_clip, m_oldPos );
+        invalidate();
+        return;
     }
+    auto ret = m_workflow->moveClip( m_clip->uuid(), m_oldTrackId, m_oldPos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipMoved( m_clip->uuid().toString() );
     else
-        m_newTrack->moveClip( m_clip->uuid(), m_oldPos );
+        invalidate();
 }
 
-Commands::Clip::Remove::Remove( std::shared_ptr<::Clip> const& clip, TrackWorkflow* tw ) :
-        m_clip( clip ), m_trackWorkflow( tw )
+Commands::Clip::Remove::Remove( std::shared_ptr<SequenceWorkflow> const& workflow,
+                                const QUuid& uuid ) :
+        m_workflow( workflow ),
+        m_clip( workflow->clip( uuid ) ),
+        m_trackId( workflow->trackId( uuid ) ),
+        m_pos( workflow->position( uuid ) )
 {
-    connect( clip.get(), &::Clip::destroyed, this, &Remove::invalidate );
+    connect( m_clip.get(), &::Clip::destroyed, this, &Remove::invalidate );
     retranslate();
-    m_pos = tw->getClipPosition( clip->uuid() );
 }
 
 void
@@ -179,27 +222,51 @@ Commands::Clip::Remove::retranslate()
 void
 Commands::Clip::Remove::internalRedo()
 {
-    m_trackWorkflow->removeClip( m_clip->uuid() );
+    if ( !m_clip )
+    {
+        invalidate();
+        return;
+    }
+    m_clip = m_workflow->removeClip( m_clip->uuid() );
+    if ( m_clip )
+        emit Core::instance()->workflow()->clipRemoved( m_clip->uuid().toString() );
+    else
+        invalidate();
 }
 
 void
 Commands::Clip::Remove::internalUndo()
 {
-    m_trackWorkflow->addClip( m_clip, m_pos );
+    if ( !m_clip )
+    {
+        invalidate();
+        return;
+    }
+    auto ret = m_workflow->addClip( m_clip, m_trackId, m_pos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipAdded( m_clip->uuid().toString() );
+    else
+        invalidate();
 }
 
-Commands::Clip::Resize::Resize( TrackWorkflow* tw, std::shared_ptr<::Clip> const& clip, qint64 newBegin,
-                                qint64 newEnd, qint64 newPos ) :
-    m_trackWorkflow( tw ),
-    m_clip( clip ),
+Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflow,
+                                const QUuid& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos ) :
+    m_workflow( workflow ),
+    m_clip( workflow->clip( uuid ) ),
     m_newBegin( newBegin ),
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
-    connect( clip.get(), &::Clip::destroyed, this, &Resize::invalidate );
-    m_oldBegin = clip->begin();
-    m_oldEnd = clip->end();
-    m_oldPos = tw->getClipPosition( clip->uuid() );
+    connect( m_clip.get(), &::Clip::destroyed, this, &Resize::invalidate );
+    if ( !m_clip )
+    {
+        invalidate();
+        retranslate();
+        return;
+    }
+    m_oldBegin = m_clip->begin();
+    m_oldEnd = m_clip->end();
+    m_oldPos = workflow->trackId( uuid );
     retranslate();
 }
 
@@ -212,26 +279,41 @@ Commands::Clip::Resize::retranslate()
 void
 Commands::Clip::Resize::internalRedo()
 {
-    m_trackWorkflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd, m_newPos );
+    bool ret = m_workflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd, m_newPos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipResized( m_clip->uuid().toString() );
+    else
+        invalidate();
 }
 
 void
 Commands::Clip::Resize::internalUndo()
 {
-    m_trackWorkflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd, m_oldPos );
+    bool ret = m_workflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd, m_oldPos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipResized( m_clip->uuid().toString() );
+    else
+        invalidate();
 }
 
-Commands::Clip::Split::Split( TrackWorkflow *tw, std::shared_ptr<::Clip> const& toSplit,
-                                             qint64 newClipPos, qint64 newClipBegin ) :
-    m_trackWorkflow( tw ),
-    m_toSplit( toSplit ),
+Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
+                              const QUuid& uuid, qint64 newClipPos, qint64 newClipBegin ) :
+    m_workflow( workflow ),
+    m_toSplit( workflow->clip( uuid ) ),
+    m_trackId( workflow->trackId( uuid ) ),
     m_newClip( nullptr ),
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {
-    connect( toSplit.get(), &::Clip::destroyed, this, &Split::invalidate );
-    m_newClip = std::make_shared<::Clip>( toSplit.get(), newClipBegin, toSplit->end() );
-    m_oldEnd = toSplit->end();
+    connect( m_toSplit.get(), &::Clip::destroyed, this, &Split::invalidate );
+    if ( !m_toSplit )
+    {
+        invalidate();
+        retranslate();
+        return;
+    }
+    m_newClip = std::make_shared<::Clip>( m_toSplit.get(), newClipBegin, m_toSplit->end() );
+    m_oldEnd = m_toSplit->end();
     retranslate();
 }
 
@@ -246,23 +328,38 @@ Commands::Clip::Split::internalRedo()
 {
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
+    if ( !m_toSplit )
+    {
+        invalidate();
+        return;
+    }
     m_toSplit->setEnd( m_newClipBegin );
-    m_trackWorkflow->addClip( m_newClip, m_newClipPos );
+    bool ret = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipAdded( m_newClip->uuid().toString() );
+    else
+        invalidate();
+    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid().toString() );
 }
 
 void
 Commands::Clip::Split::internalUndo()
 {
-    m_trackWorkflow->removeClip( m_newClip->uuid() );
+    m_newClip = m_workflow->removeClip( m_newClip->uuid() );
+    if ( !m_newClip )
+    {
+        invalidate();
+        return;
+    }
     m_toSplit->setEnd( m_oldEnd );
 }
 
-Commands::Clip::Link::Link( std::shared_ptr<::Clip> const& clipA, std::shared_ptr<::Clip> const& clipB )
-    : m_clipA( clipA )
+Commands::Clip::Link::Link( std::shared_ptr<SequenceWorkflow> const& workflow,
+                            const QUuid& clipA, const QUuid& clipB )
+    : m_workflow( workflow )
+    , m_clipA( clipA )
     , m_clipB( clipB )
 {
-    connect( m_clipA.get(), &::Clip::destroyed, this, &Link::invalidate );
-    connect( m_clipB.get(), &::Clip::destroyed, this, &Link::invalidate );
     retranslate();
 }
 
@@ -275,17 +372,21 @@ Commands::Clip::Link::retranslate()
 void
 Commands::Clip::Link::internalRedo()
 {
-    m_clipA->setLinkedClipUuid( m_clipB->uuid() );
-    m_clipB->setLinkedClipUuid( m_clipA->uuid() );
-    m_clipA->setLinked( true );
-    m_clipB->setLinked( true );
+    auto ret = m_workflow->linkClips( m_clipA, m_clipB );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipLinked( m_clipA.toString(), m_clipB.toString() );
+    else
+        invalidate();
 }
 
 void
 Commands::Clip::Link::internalUndo()
 {
-    m_clipA->setLinked( false );
-    m_clipB->setLinked( false );
+    auto ret = m_workflow->unlinkClips( m_clipA, m_clipB );
+    if ( ret == true )
+        emit Core::instance()->workflow()->clipUnlinked( m_clipA.toString(), m_clipB.toString() );
+    else
+        invalidate();
 }
 
 Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )

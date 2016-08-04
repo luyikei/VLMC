@@ -33,8 +33,8 @@
 class   Clip;
 class   EffectsEngine;
 class   Effect;
-class   TrackWorkflow;
 class   AbstractRenderer;
+class   SequenceWorkflow;
 
 namespace Commands
 {
@@ -65,17 +65,6 @@ class   MainWorkflow : public QObject
     public:
         MainWorkflow( Settings* projectSettings, int trackCount = 64 );
         ~MainWorkflow();
-
-        /**
-         *  \brief              Return the given clip position.
-         *
-         *  \param      uuid        The clip uuid
-         *  \param      trackId     The track containing the clip
-         *  \param      trackType   The type of the track containing the clip
-         *  \return                 The given clip position, in frame. If not found, -1
-         *                          is returned.
-         */
-        qint64                  getClipPosition( const QUuid& uuid, unsigned int trackId ) const;
 
         /**
          *  \brief      Mute a track.
@@ -130,25 +119,10 @@ class   MainWorkflow : public QObject
          */
         bool                    contains( const QUuid& uuid ) const;
 
-        TrackWorkflow*          track( quint32 trackId );
-        TrackWorkflow*          track( quint32 trackId ) const;
-
         /**
          * \brief   Return the number of track for each track type.
          */
         quint32                 trackCount() const;
-
-        std::shared_ptr<Clip>   clip( const QUuid& uuid );
-
-        /**
-         * \brief       Create a clip from a parent clip's uuid.
-         *
-         * The clip will be added to this MediaContainer, not to the Library.
-         * The parent clip should be in the Library.
-         */
-        std::shared_ptr<Clip>   createClip( const QUuid& uuid, quint32 trackId );
-
-
 
         Q_INVOKABLE
         QString                 addClip( const QString& uuid, quint32 trackId, qint32 pos, bool isAudioClip );
@@ -180,6 +154,10 @@ class   MainWorkflow : public QObject
 
         AbstractRenderer*       renderer();
 
+        // Only for showEffectStack
+        Backend::IInput*        clipInput( const QString& uuid );
+        Backend::IInput*        trackInput( quint32 trackId );
+
         Commands::AbstractUndoStack*       undoStack();
 
     private:
@@ -198,16 +176,14 @@ class   MainWorkflow : public QObject
         void                    postLoad();
 
     private:
-        QList<TrackWorkflow*>           m_tracks;
-        QMap<qint32, std::shared_ptr<Clip>>           m_clips;
         const quint32                   m_trackCount;
 
         Settings*                       m_settings;
 
         AbstractRenderer*               m_renderer;
-        Backend::IMultiTrack*           m_multitrack;
 
         std::unique_ptr<Commands::AbstractUndoStack> m_undoStack;
+        std::shared_ptr<SequenceWorkflow>            m_sequenceWorkflow;
 
     public slots:
         /**
@@ -269,6 +245,7 @@ class   MainWorkflow : public QObject
         void                    clipRemoved( const QString& uuid );
         void                    clipMoved( const QString& uuid );
         void                    clipLinked( const QString& uuidA, const QString& uuidB );
+        void                    clipUnlinked( const QString& uuidA, const QString& uuidB );
 
         void                    effectsUpdated( const QString& clipUuid );
 };
