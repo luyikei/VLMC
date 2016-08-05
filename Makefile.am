@@ -147,6 +147,7 @@ vlmc_CPPFLAGS = \
 	$(QT_CFLAGS) \
 	$(MLT_CFLAGS) \
 	$(LIBVLCPP_CFLAGS) \
+	$(MEDIALIBRARY_CFLAGS) \
 	-I$(top_srcdir)/src \
 	$(NULL)
 
@@ -158,6 +159,7 @@ vlmc_LDADD = \
 	$(QT_LIBS) \
 	$(MLT_LIBS) \
 	$(MLTPP_LIBS) \
+	$(MEDIALIBRARY_LIBS) \
 	$(NULL)
 
 vlmc_LDFLAGS=

@@ -259,6 +259,7 @@ PKG_CHECK_MODULES(QT, [Qt5Core Qt5Widgets Qt5Gui Qt5Network Qt5Quick], [
 ])
 PKG_CHECK_MODULES(VLC, libvlc >= 3.0)
 PKG_CHECK_MODULES(VLCPP, libvlcpp)
+PKG_CHECK_MODULES(MEDIALIBRARY, medialibrary)
 PKG_CHECK_MODULES(MLT, mlt-framework >= 6.3)
 PKG_CHECK_MODULES(MLTPP, mlt++ >= 6.3.0)
 
