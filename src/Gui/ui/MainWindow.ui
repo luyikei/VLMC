@@ -147,7 +147,7 @@
    </property>
    <property name="statusTip">
     <string>Project Preferences</string>
-  </property>
+   </property>
   </action>
   <action name="actionPreview">
    <property name="checkable">
@@ -185,7 +185,7 @@
    </property>
    <property name="statusTip">
     <string>Makes VLMC Fullscreen</string>
-  </property>
+   </property>
   </action>
   <action name="actionRender">
    <property name="icon">
@@ -212,7 +212,7 @@
    </property>
    <property name="statusTip">
     <string>Loads a VLMC Project</string>
-  </property>
+   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -224,7 +224,7 @@
    </property>
    <property name="statusTip">
     <string>Saves a VLMC Project</string>
-  </property>
+   </property>
   </action>
   <action name="actionImport">
    <property name="icon">
@@ -248,7 +248,7 @@
    </property>
    <property name="statusTip">
     <string>Project Preferences</string>
-  </property>
+   </property>
   </action>
   <action name="actionSave_As">
    <property name="icon">
@@ -260,7 +260,7 @@
    </property>
    <property name="statusTip">
     <string>Save a VLMC project as a different name</string>
-  </property>
+   </property>
   </action>
   <action name="actionClose_Project">
    <property name="icon">
@@ -272,7 +272,7 @@
    </property>
    <property name="statusTip">
     <string>Closes a VLMC project</string>
-  </property>
+   </property>
   </action>
   <action name="actionCrash">
    <property name="text">
@@ -289,7 +289,7 @@
    </property>
    <property name="statusTip">
     <string>Undoes the previous action</string>
-  </property>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
@@ -301,7 +301,7 @@
    </property>
    <property name="statusTip">
     <string>Redoes the previous action</string>
-  </property>
+   </property>
   </action>
   <action name="actionShare_On_Internet">
    <property name="icon">
