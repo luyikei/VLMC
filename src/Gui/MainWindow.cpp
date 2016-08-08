@@ -648,6 +648,7 @@ MainWindow::dockWidget( QWidget* widget, Qt::DockWidgetArea startArea )
     dock->setAllowedAreas( Qt::AllDockWidgetAreas );
     widget->setParent( dock );
     dock->setWidget( widget );
+    dock->setTitleBarWidget( new QWidget );
     dock->setObjectName( widget->objectName() );
     addDockWidget( startArea, dock );
     registerWidgetInWindowMenu( dock );
