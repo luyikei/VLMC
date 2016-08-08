@@ -21,6 +21,7 @@ Rectangle {
     property var selectedClips: [] // Actual clip item objects
     property var groups: [] // list of lists of clip uuids
     property alias isMagneticMode: magneticModeButton.selected
+    property alias isCutMode: cutModeButton.selected
 
     property int trackHeight: 30
 
@@ -471,10 +472,20 @@ Rectangle {
                     width: parent.width - x * 2
                     height: parent.height / 2
 
-                    PropertyButton {
-                        id: magneticModeButton
-                        text: "M"
-                        selected: true
+                    Row {
+                        spacing: 2
+
+                        PropertyButton {
+                            id: magneticModeButton
+                            text: "M"
+                            selected: true
+                        }
+
+                        PropertyButton {
+                            id: cutModeButton
+                            text: "C"
+                            selected: false
+                        }
                     }
                 }
             }
