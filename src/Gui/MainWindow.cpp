@@ -84,9 +84,9 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
 
     // GUI
     createGlobalPreferences();
-    initializeDockWidgets();
     initToolbar();
     createStatusBar();
+    initializeDockWidgets();
     checkFolders();
     loadGlobalProxySettings();
     createProjectPreferences();
@@ -323,6 +323,26 @@ MainWindow::initVlmcPreferences()
     VLMC_CREATE_PRIVATE_PREFERENCE_STRING( "private/ImportPreviouslySelectPath", QDir::homePath() );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowGeometry", "" );
     VLMC_CREATE_PRIVATE_PREFERENCE_BYTEARRAY( "private/MainWindowState", "" );
+
+    // Toolbar
+    auto toolbarSetting = VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/ShowToolbar", false );
+    connect( toolbarSetting, &SettingValue::changed, this, [this]( const QVariant& var )
+    {
+        bool v = var.toBool();
+        m_ui.toolBar->setVisible( v );
+        m_ui.actionToolbar->setChecked( v );
+    } );
+    connect( m_ui.actionToolbar, &QAction::toggled, toolbarSetting, &SettingValue::set );
+
+    // Statusbar
+    auto statusbarSetting = VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/ShowStatusbar", false );
+    connect( statusbarSetting, &SettingValue::changed, this, [this]( const QVariant& var )
+    {
+        bool v = var.toBool();
+        m_ui.statusbar->setVisible( v );
+        m_ui.actionStatusbar->setChecked( v );
+    } );
+    connect( m_ui.actionStatusbar, &QAction::toggled, statusbarSetting, &SettingValue::set );
 }
 
 #undef CREATE_MENU_SHORTCUT
@@ -721,7 +741,7 @@ MainWindow::on_actionFullscreen_triggered( bool checked )
 void
 MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
 {
-    m_ui.menuWindow->addAction( widget->toggleViewAction() );
+    m_ui.menuView->insertAction( m_ui.actionFullscreen, widget->toggleViewAction() );
 }
 
 void

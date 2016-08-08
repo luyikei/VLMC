@@ -71,15 +71,12 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>&amp;Window</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="actionToolbar"/>
+    <addaction name="actionStatusbar"/>
     <addaction name="actionFullscreen"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -91,7 +88,6 @@
    <addaction name="menuEdit"/>
    <addaction name="menuTools"/>
    <addaction name="menuView"/>
-   <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -362,7 +358,23 @@
    </property>
    <property name="statusTip">
     <string>Use the Scissor Tool to cut regions in the timeline</string>
-  </property>
+   </property>
+  </action>
+  <action name="actionStatusbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Statusbar</string>
+   </property>
+  </action>
+  <action name="actionToolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toolbar</string>
+   </property>
   </action>
  </widget>
  <resources>
