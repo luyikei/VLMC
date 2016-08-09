@@ -133,7 +133,13 @@ MLTTrack::clipAt( int64_t position ) const
 bool
 MLTTrack::resizeClip( int clip, int64_t begin, int64_t end )
 {
-    return !playlist()->resize_clip( clip, (int)begin, (int)end );
+    auto oldEnd = playlist()->get_clip( clip )->get_out();
+    auto ret = playlist()->resize_clip( clip, (int)begin, (int)end );
+    if ( !ret && (int)end < oldEnd )
+    {
+        playlist()->insert_blank( clip + 1, oldEnd - end - 1 );
+    }
+    return !ret;
 }
 
 int
