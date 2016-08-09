@@ -486,6 +486,28 @@ Rectangle {
                             text: "C"
                             selected: false
                         }
+
+                        PropertyButton {
+                            id: zoomInButton
+                            text: "+"
+                            selected: false
+
+                            onPressed: {
+                                zoomIn( 2.0 );
+                                selected = false;
+                            }
+                        }
+
+                        PropertyButton {
+                            id: zoomOutButton
+                            text: "-"
+                            selected: false
+
+                            onPressed: {
+                                zoomIn( 0.5 );
+                                selected = false;
+                            }
+                        }
                     }
                 }
             }
