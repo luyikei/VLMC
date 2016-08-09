@@ -244,15 +244,15 @@ Rectangle {
                 // Handle resizing
                 if ( resizing === true ) {
                     if ( mouseX < width / 2 ) {
-                        var newPos = ptof( clip.x + mouseX );
-                        var newBegin = begin + ( newPos - position );
+                        var newPos = position + ptof( mouseX );
+                        var newBegin = begin + ptof( mouseX );
                         if ( newBegin < 0 || newPos < 0 || newBegin >= end )
                             return;
                         begin = newBegin;
                         position = newPos;
                     }
                     else {
-                        var newEnd = ptof( mouseX + ftop( begin ) );
+                        var newEnd = begin + ptof( mouseX );
                         if ( newEnd <= begin || newEnd + 1 > clipInfo["length"] )
                             return;
                         end = newEnd;
