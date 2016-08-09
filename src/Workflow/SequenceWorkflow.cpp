@@ -109,6 +109,9 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     }
     auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
     auto oldTrackId = std::get<ClipTupleIndex::TrackId>( it.value() );
+    auto oldPosition = std::get<ClipTupleIndex::Position>( it.value() );
+    if ( oldPosition == pos )
+        return true;
     auto track = trackFromFormats( oldTrackId, clip->formats() );
     bool ret = true;
     if ( trackId != oldTrackId )
