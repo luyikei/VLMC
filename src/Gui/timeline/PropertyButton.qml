@@ -9,6 +9,8 @@ Rectangle {
     property alias text: _text.text
     property bool selected: false
 
+    signal pressed()
+
     Text {
         id: _text
         color: "#EEEEEE"
@@ -22,6 +24,7 @@ Rectangle {
 
         onPressed: {
             selected = !selected;
+            parent.pressed();
         }
     }
 }
