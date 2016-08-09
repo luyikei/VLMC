@@ -248,6 +248,12 @@ MainWorkflow::removeClip( const QString& uuid )
 }
 
 void
+MainWorkflow::splitClip( const QUuid& uuid, qint64 newClipPos, qint64 newClipBegin )
+{
+    trigger( new Commands::Clip::Split( m_sequenceWorkflow, uuid, newClipPos, newClipBegin ) );
+}
+
+void
 MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
 {
     trigger( new Commands::Clip::Link( m_sequenceWorkflow, uuidA, uuidB ) );

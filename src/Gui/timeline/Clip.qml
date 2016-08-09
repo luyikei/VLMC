@@ -231,6 +231,9 @@ Rectangle {
         property bool resizing: false
 
         onPositionChanged: {
+            if ( isCutMode === true )
+                return;
+
             // If it's too short, don't resize.
             if ( width < 6 ) {
                 resizing = false;
@@ -281,10 +284,17 @@ Rectangle {
             if ( mouse.button & Qt.RightButton ) {
                 clipContextMenu.popup();
             }
+            else if ( isCutMode === true ) {
+                var newClipPos = position + ptof( mouseX );
+                var newClipBegin = begin + ptof( mouseX );
+                if ( newClipPos - position < 1 || end - newClipBegin < 1 )
+                    return;
+                workflow.splitClip( uuid, newClipPos, newClipBegin );
+            }
         }
 
         onReleased: {
-            if ( resizing === true )
+            if ( resizing === true && isCutMode === false )
                 resize();
             else
                 dragFinished();
@@ -293,6 +303,11 @@ Rectangle {
         states: [
             State {
                 name: "Normal"
+                when: isCutMode
+                PropertyChanges { target: dragArea; cursorShape: Qt.ArrowCursor }
+            },
+            State {
+                name: "Move"
                 when: !dragArea.pressed && !dragArea.resizing
                 PropertyChanges { target: dragArea; cursorShape: Qt.OpenHandCursor }
             },

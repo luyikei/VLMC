@@ -141,6 +141,9 @@ class   MainWorkflow : public QObject
         void                    removeClip( const QString& uuid );
 
         Q_INVOKABLE
+        void                    splitClip( const QUuid& uuid, qint64 newClipPos, qint64 newClipBegin );
+
+        Q_INVOKABLE
         void                    linkClips( const QString& uuidA, const QString& uuidB );
 
         Q_INVOKABLE

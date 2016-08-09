@@ -311,7 +311,7 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
         retranslate();
         return;
     }
-    m_newClip = std::make_shared<::Clip>( m_toSplit.get(), newClipBegin, m_toSplit->end() );
+    m_newClip = std::make_shared<::Clip>( m_toSplit.get(), newClipBegin - m_toSplit->begin(), m_toSplit->end() - m_toSplit->begin() );
     m_oldEnd = m_toSplit->end();
     retranslate();
 }
@@ -325,15 +325,22 @@ Commands::Clip::Split::retranslate()
 void
 Commands::Clip::Split::internalRedo()
 {
-    //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
-    //be rendering at the same time)
     if ( !m_toSplit )
     {
         invalidate();
         return;
     }
-    m_toSplit->setEnd( m_newClipBegin );
-    bool ret = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos );
+    //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
+    //be rendering at the same time)
+    bool ret = m_workflow->resizeClip( m_toSplit->uuid(), m_toSplit->begin(),
+                                       m_newClipBegin - 1, m_workflow->position( m_toSplit->uuid() ) );
+    if ( ret == false )
+    {
+        invalidate();
+        return;
+    }
+
+    ret = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos );
     if ( ret == true )
         emit Core::instance()->workflow()->clipAdded( m_newClip->uuid().toString() );
     else
@@ -350,7 +357,11 @@ Commands::Clip::Split::internalUndo()
         invalidate();
         return;
     }
-    m_toSplit->setEnd( m_oldEnd );
+    else
+        emit Core::instance()->workflow()->clipRemoved( m_newClip->uuid().toString() );
+    m_workflow->resizeClip( m_toSplit->uuid(), m_toSplit->begin(),
+                            m_oldEnd, m_workflow->position( m_toSplit->uuid() ) );
+    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid().toString() );
 }
 
 Commands::Clip::Link::Link( std::shared_ptr<SequenceWorkflow> const& workflow,
