@@ -343,6 +343,20 @@ MainWindow::initVlmcPreferences()
         m_ui.actionStatusbar->setChecked( v );
     } );
     connect( m_ui.actionStatusbar, &QAction::toggled, statusbarSetting, &SettingValue::set );
+
+    // Layout Lock
+    auto lockSetting = VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/LayoutLock", true );
+    connect( lockSetting, &SettingValue::changed, this, [this]( const QVariant& var )
+    {
+        bool v = var.toBool();
+        for ( auto w : findChildren<QDockWidget *>() )
+            if ( v == true )
+                w->setTitleBarWidget( new QWidget );
+            else
+                w->setTitleBarWidget( 0 );
+         m_ui.actionLock->setChecked( v );
+    } );
+    connect( m_ui.actionLock, &QAction::toggled, lockSetting, &SettingValue::set );
 }
 
 #undef CREATE_MENU_SHORTCUT
@@ -648,8 +662,11 @@ MainWindow::dockWidget( QWidget* widget, Qt::DockWidgetArea startArea )
     dock->setAllowedAreas( Qt::AllDockWidgetAreas );
     widget->setParent( dock );
     dock->setWidget( widget );
-    dock->setTitleBarWidget( new QWidget );
     dock->setObjectName( widget->objectName() );
+    if ( VLMC_GET_BOOL( "private/LayoutLock" ) == true )
+        dock->setTitleBarWidget( new QWidget );
+    else
+        dock->setTitleBarWidget( 0 );
     addDockWidget( startArea, dock );
     registerWidgetInWindowMenu( dock );
     return dock;

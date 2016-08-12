@@ -376,6 +376,14 @@
     <string>Toolbar</string>
    </property>
   </action>
+  <action name="actionLock">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Lock</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../../../resources.qrc"/>
