@@ -41,7 +41,6 @@ Timeline::Timeline( MainWindow* parent )
 {
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
-    m_view->rootContext()->setContextProperty( QStringLiteral( "timeline" ), this );
     m_view->rootContext()->setContextProperty( QStringLiteral( "mainwindow" ), parent );
     m_view->rootContext()->setContextProperty( QStringLiteral( "workflow" ), Core::instance()->workflow() );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
