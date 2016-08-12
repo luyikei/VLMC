@@ -394,7 +394,7 @@ Item {
 
                 onSelectedChanged: {
                     if ( selected === false ) {
-                        timeline.showEffectStack( trackId );
+                        workflow.showEffectStack( trackId );
                         selected = true;
                     }
                 }

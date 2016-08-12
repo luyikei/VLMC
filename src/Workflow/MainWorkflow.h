@@ -25,6 +25,10 @@
 #ifndef MAINWORKFLOW_H
 #define MAINWORKFLOW_H
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "Types.h"
 #include <QJsonObject>
 
@@ -157,10 +161,6 @@ class   MainWorkflow : public QObject
 
         AbstractRenderer*       renderer();
 
-        // Only for showEffectStack
-        Backend::IInput*        clipInput( const QString& uuid );
-        Backend::IInput*        trackInput( quint32 trackId );
-
         Commands::AbstractUndoStack*       undoStack();
 
     private:
@@ -205,6 +205,12 @@ class   MainWorkflow : public QObject
         void                            setPosition( qint64 newFrame );
 
         void                            setFps( double fps );
+
+        // FIXME: We can't use #ifdef HAVE_GUI here because qml files can't find them
+        //        You'll get:
+        //        TypeError: Property 'showEffectStack' of object MainWorkflow is not a function
+        void                            showEffectStack( quint32 trackId );
+        void                            showEffectStack( const QString& uuid );
 
     signals:
         /**

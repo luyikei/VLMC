@@ -68,7 +68,7 @@ Menu {
         text: "Effects"
 
         onTriggered: {
-            timeline.showEffectStack( clip.uuid );
+            workflow.showEffectStack( clip.uuid );
         }
     }
 }

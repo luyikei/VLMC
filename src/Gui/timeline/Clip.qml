@@ -369,7 +369,7 @@ Rectangle {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: {
-                timeline.showEffectStack( uuid );
+                workflow.showEffectStack( uuid );
             }
         }
 

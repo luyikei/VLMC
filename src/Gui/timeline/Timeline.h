@@ -45,10 +45,6 @@ public:
     QWidget*            container();
 
 public slots:
-
-    void showEffectStack( quint32 trackId );
-    void showEffectStack( const QString& uuid );
-
     /**
      * \brief Change the currently selected tool.
      */

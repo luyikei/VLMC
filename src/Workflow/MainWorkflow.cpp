@@ -35,6 +35,7 @@
 #include "Renderer/AbstractRenderer.h"
 #ifdef HAVE_GUI
 #include "EffectsEngine/EffectHelper.h"
+#include "Gui/effectsengine/EffectStack.h"
 #include "Gui/WorkflowFileRendererDialog.h"
 #endif
 #include "Project/Project.h"
@@ -139,25 +140,29 @@ MainWorkflow::setFps( double fps )
     emit fpsChanged( fps );
 }
 
+void
+MainWorkflow::showEffectStack( quint32 trackId )
+{
+#ifdef HAVE_GUI
+    auto w = new EffectStack( m_sequenceWorkflow->trackInput( trackId ) );
+    w->show();
+#endif
+}
+
+void
+MainWorkflow::showEffectStack( const QString& uuid )
+{
+#ifdef HAVE_GUI
+    auto w = new EffectStack( m_sequenceWorkflow->clip( uuid )->input() );
+    connect( w, &EffectStack::finished, Core::instance()->workflow(), [uuid]{ emit Core::instance()->workflow()->effectsUpdated( uuid ); } );
+    w->show();
+#endif
+}
+
 AbstractRenderer*
 MainWorkflow::renderer()
 {
     return m_renderer;
-}
-
-Backend::IInput*
-MainWorkflow::clipInput( const QString& uuid )
-{
-    auto clip = m_sequenceWorkflow->clip( uuid );
-    if ( clip )
-        return clip->input();
-    return nullptr;
-}
-
-Backend::IInput*
-MainWorkflow::trackInput( quint32 trackId )
-{
-    return m_sequenceWorkflow->trackInput( trackId );
 }
 
 Commands::AbstractUndoStack*
@@ -273,10 +278,10 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
         return QStringLiteral( "" );
     }
 
-    auto clipI = clipInput( clipUuid );
-    if ( clipI != nullptr )
+    auto clip = m_sequenceWorkflow->clip( clipUuid );
+    if ( clip && clip->input() )
     {
-        trigger( new Commands::Effect::Add( newEffect, clipI ) );
+        trigger( new Commands::Effect::Add( newEffect, clip->input() ) );
         emit effectsUpdated( clipUuid );
         return newEffect->uuid().toString();
     }
