@@ -77,7 +77,11 @@
     </property>
     <addaction name="actionToolbar"/>
     <addaction name="actionStatusbar"/>
+    <addaction name="widgetsSeparator"/>
+    <addaction name="separator"/>
     <addaction name="actionFullscreen"/>
+    <addaction name="separator"/>
+    <addaction name="actionLock"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -382,6 +386,14 @@
    </property>
    <property name="text">
     <string>Lock</string>
+   </property>
+  </action>
+  <action name="widgetsSeparator">
+   <property name="text">
+    <string>widgetsSeparator</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

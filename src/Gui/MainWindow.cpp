@@ -759,7 +759,7 @@ MainWindow::on_actionFullscreen_triggered( bool checked )
 void
 MainWindow::registerWidgetInWindowMenu( QDockWidget* widget )
 {
-    m_ui.menuView->insertAction( m_ui.actionFullscreen, widget->toggleViewAction() );
+    m_ui.menuView->insertAction( m_ui.widgetsSeparator, widget->toggleViewAction() );
 }
 
 void
