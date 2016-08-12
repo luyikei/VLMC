@@ -177,7 +177,7 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
     auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
-        vlmcCritical() << "Couldn't unlink clips: " << uuidA << " " << uuidB;
+        vlmcCritical() << "Couldn't link clips: " << uuidA << " and " << uuidB;
         return false;
     }
     clipA->setLinkedClipUuid( clipB->uuid() );
@@ -194,7 +194,7 @@ SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
     auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
-        vlmcCritical() << "Couldn't link clips " << uuidA << " " << uuidB;
+        vlmcCritical() << "Couldn't unlink clips: " << uuidA << " and " << uuidB;
         return false;
     }
     clipA->setLinked( false );
