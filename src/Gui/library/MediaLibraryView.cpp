@@ -43,6 +43,7 @@ MediaLibraryView::MediaLibraryView(QWidget *parent)
     auto view = new QQuickView;
     auto container = QWidget::createWindowContainer( view, this );
     auto layout = new QBoxLayout( QBoxLayout::TopToBottom, this );
+    container->setMinimumWidth( 300 );
     layout->addWidget( container );
 
     auto ctx = view->rootContext();
