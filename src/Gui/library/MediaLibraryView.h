@@ -27,6 +27,7 @@
 
 class MediaLibraryView : public QObject
 {
+    Q_OBJECT
     Q_DISABLE_COPY( MediaLibraryView )
 
     public:
@@ -34,6 +35,9 @@ class MediaLibraryView : public QObject
         virtual ~MediaLibraryView();
 
         QWidget*    container();
+
+    public slots:
+        void    startDrag( const QString& mediaPath, const QString& thumbnailPath );
 
     private:
         QWidget*    m_container;

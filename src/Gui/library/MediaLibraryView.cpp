@@ -35,6 +35,8 @@
 #include <QtQuick/QQuickView>
 #include <QQmlContext>
 #include <QUrl>
+#include <QDrag>
+#include <QMimeData>
 
 MediaLibraryView::MediaLibraryView( QWidget* parent )
     : QObject( parent )
@@ -47,6 +49,7 @@ MediaLibraryView::MediaLibraryView( QWidget* parent )
 
     auto ctx = view->rootContext();
     ctx->setContextProperty( QStringLiteral( "mlModel" ), Core::instance()->mediaLibrary()->model( MediaLibrary::MediaType::Video ) );
+    ctx->setContextProperty( QStringLiteral( "view" ), this );
 
     view->setSource( QUrl( QStringLiteral( "qrc:/qml/MediaLibraryView.qml" ) ) );
     view->setResizeMode(QQuickView::SizeRootObjectToView);
@@ -60,4 +63,19 @@ QWidget*
 MediaLibraryView::container()
 {
     return m_container;
+}
+
+void
+MediaLibraryView::startDrag( const QString& mediaPath, const QString& thumbnailPath )
+{
+    Q_UNUSED( mediaPath )
+
+    QDrag* drag = new QDrag( this );
+    QMimeData* mimeData = new QMimeData;
+
+    drag->setMimeData( mimeData );
+    drag->setPixmap( QPixmap( thumbnailPath.isEmpty() ? QStringLiteral( ":/images/vlmc" ) : thumbnailPath )
+                     .scaled( 100, 100, Qt::KeepAspectRatio ) );
+
+    drag->exec();
 }

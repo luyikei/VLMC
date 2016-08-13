@@ -132,6 +132,7 @@ nodist_vlmc_SOURCES = \
 	src/Library/Library.moc.cpp \
 	src/Library/MediaLibrary.moc.cpp \
 	src/Library/MediaLibraryModel.moc.cpp \
+	src/Gui/library/MediaLibraryView.moc.cpp \
 	$(NULL)
 
 vlmc_RC = \

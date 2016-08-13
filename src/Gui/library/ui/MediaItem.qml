@@ -52,16 +52,12 @@ Rectangle {
         }
     }
 
-    Drag.active: dragArea.drag.active
-    Drag.dragType: Drag.Automatic
-    Drag.mimeData: {
-        "vlmc/uuid":"test",
-    }
-
     MouseArea {
         id: dragArea
-        drag.target: parent
         anchors.fill: parent
+        onPressed: {
+            view.startDrag( "", thumbnailPath );
+        }
         onClicked: gridView.currentIndex = index
     }
 }
