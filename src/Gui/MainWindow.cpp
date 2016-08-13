@@ -504,8 +504,8 @@ MainWindow::setupEffectsList()
 void
 MainWindow::setupLibrary()
 {
-    m_mediaLibrary = new MediaLibraryView;
-    m_dockedLibrary = dockWidget( m_mediaLibrary, Qt::TopDockWidgetArea );
+    m_mediaLibrary = new MediaLibraryView( this );
+    m_dockedLibrary = dockWidget( m_mediaLibrary->container(), Qt::TopDockWidgetArea );
 }
 
 void

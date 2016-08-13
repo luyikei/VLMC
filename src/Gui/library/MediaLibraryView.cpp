@@ -36,15 +36,14 @@
 #include <QQmlContext>
 #include <QUrl>
 
-MediaLibraryView::MediaLibraryView(QWidget *parent)
-    : QWidget(parent)
+MediaLibraryView::MediaLibraryView( QWidget* parent )
+    : QObject( parent )
 {
     setObjectName( QStringLiteral( "medialibrary" ) );
     auto view = new QQuickView;
-    auto container = QWidget::createWindowContainer( view, this );
-    auto layout = new QBoxLayout( QBoxLayout::TopToBottom, this );
-    container->setMinimumWidth( 300 );
-    layout->addWidget( container );
+    m_container = QWidget::createWindowContainer( view, parent );
+    m_container->setMinimumSize( 100, 1 );
+    m_container->setObjectName( objectName() );
 
     auto ctx = view->rootContext();
     ctx->setContextProperty( QStringLiteral( "mlModel" ), Core::instance()->mediaLibrary()->model( MediaLibrary::MediaType::Video ) );
@@ -55,4 +54,10 @@ MediaLibraryView::MediaLibraryView(QWidget *parent)
 
 MediaLibraryView::~MediaLibraryView()
 {
+}
+
+QWidget*
+MediaLibraryView::container()
+{
+    return m_container;
 }

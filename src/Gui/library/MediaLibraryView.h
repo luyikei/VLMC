@@ -25,13 +25,18 @@
 
 #include <QWidget>
 
-class MediaLibraryView : public QWidget
+class MediaLibraryView : public QObject
 {
     Q_DISABLE_COPY( MediaLibraryView )
 
     public:
-        explicit MediaLibraryView( QWidget *parent = 0);
+        explicit MediaLibraryView( QWidget* parent = 0);
         virtual ~MediaLibraryView();
+
+        QWidget*    container();
+
+    private:
+        QWidget*    m_container;
 };
 
 #endif // MEDIALIBRARYVIEW_H
