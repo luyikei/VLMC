@@ -209,6 +209,7 @@ class   MainWorkflow : public QObject
         // FIXME: We can't use #ifdef HAVE_GUI here because qml files can't find them
         //        You'll get:
         //        TypeError: Property 'showEffectStack' of object MainWorkflow is not a function
+        void                            showEffectStack();
         void                            showEffectStack( quint32 trackId );
         void                            showEffectStack( const QString& uuid );
 

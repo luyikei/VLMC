@@ -508,6 +508,17 @@ Rectangle {
                                 selected = false;
                             }
                         }
+
+                        PropertyButton {
+                            id: fxButton
+                            text: "Fx"
+                            selected: false
+
+                            onPressed: {
+                                workflow.showEffectStack();
+                                selected = false;
+                            }
+                        }
                     }
                 }
             }

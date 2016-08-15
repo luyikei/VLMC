@@ -141,6 +141,15 @@ MainWorkflow::setFps( double fps )
 }
 
 void
+MainWorkflow::showEffectStack()
+{
+#ifdef HAVE_GUI
+    auto w = new EffectStack( m_sequenceWorkflow->input() );
+    w->show();
+#endif
+}
+
+void
 MainWorkflow::showEffectStack( quint32 trackId )
 {
 #ifdef HAVE_GUI
