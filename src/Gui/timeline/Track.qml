@@ -378,7 +378,8 @@ Item {
 
         Row {
             spacing: 4
-            anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
+            x: 20
 
             Text {
                 id: trackText
