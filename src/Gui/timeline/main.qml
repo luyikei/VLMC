@@ -11,7 +11,7 @@ Rectangle {
 
     property int length // in frames
     property int cursorPosition: 0 // in frames
-    property int initPosOfCursor: 100
+    property int initPosOfCursor: 150
     property double ppu: 10 // Pixels Per minimum Unit
     property double unit: 3000 // In milliseconds therefore ppu / unit = Pixels Per milliseconds
     property double fps: 29.97
