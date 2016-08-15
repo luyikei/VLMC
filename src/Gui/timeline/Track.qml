@@ -376,17 +376,19 @@ Item {
             color: "#111111"
         }
 
-        Row {
-            spacing: 4
+        Text {
+            id: trackText
             anchors.verticalCenter: parent.verticalCenter
-            x: 20
+            x: 10
+            text: type + " " + ( trackId + 1 )
+            color: "white"
+            font.pointSize: trackHeight / 3
+        }
 
-            Text {
-                id: trackText
-                text: type + " " + ( trackId + 1 )
-                color: "white"
-                font.pointSize: trackHeight / 3
-            }
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            x: parent.width / 2
+            spacing: 4
 
             PropertyButton {
                 id: fxButton
