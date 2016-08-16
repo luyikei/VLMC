@@ -209,6 +209,7 @@ vlmc_SOURCES += \
 	src/Gui/settings/SettingsDialog.cpp \
 	src/Gui/settings/StringWidget.cpp \
 	src/Gui/timeline/Timeline.cpp \
+	src/Gui/timeline/ThumbnailImageProvider.cpp \
 	src/Gui/widgets/ExtendedLabel.cpp \
 	src/Gui/widgets/FramelessButton.cpp \
 	src/Gui/widgets/NotificationZone.cpp \
@@ -249,6 +250,7 @@ vlmc_SOURCES += \
 	src/Gui/wizard/firstlaunch/Done.h \
 	src/Gui/wizard/OpenPage.h \
 	src/Gui/timeline/Timeline.h \
+	src/Gui/timeline/ThumbnailImageProvider.h \
 	src/Gui/About.h \
 	src/Gui/LanguageHelper.h \
 	src/Gui/library/ListViewController.h \
@@ -317,6 +319,7 @@ nodist_vlmc_SOURCES += \
 	src/Gui/preview/PreviewRuler.moc.cpp \
 	src/Gui/settings/PreferenceWidget.moc.cpp \
 	src/Gui/timeline/Timeline.moc.cpp \
+	src/Gui/timeline/ThumbnailImageProvider.moc.cpp \
 	src/Gui/settings/LanguageWidget.moc.cpp \
 	src/Gui/import/TagWidget.moc.cpp \
 	src/Gui/widgets/NotificationZone.moc.cpp \
