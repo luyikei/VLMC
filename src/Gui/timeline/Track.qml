@@ -382,7 +382,7 @@ Item {
             x: 10
             text: type + " " + ( trackId + 1 )
             color: "white"
-            font.pointSize: trackHeight / 3
+            font.pointSize: 10
         }
 
         Row {
