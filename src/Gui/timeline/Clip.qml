@@ -360,7 +360,7 @@ Rectangle {
 
     Rectangle {
         id: effectsItem
-        height: clip.height / 5
+        height: 6
         width: clip.width
         anchors.bottom: clip.bottom
         visible: effectsTextItem.text ? true : false
