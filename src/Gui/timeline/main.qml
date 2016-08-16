@@ -23,7 +23,7 @@ Rectangle {
     property alias isMagneticMode: magneticModeButton.selected
     property alias isCutMode: cutModeButton.selected
 
-    property int trackHeight: 30
+    property int trackHeight: 60
 
     function clearSelectedClips() {
         while ( selectedClips.length ) {
