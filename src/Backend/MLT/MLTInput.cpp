@@ -285,13 +285,16 @@ MLTInput::aspectRatio() const
 int
 MLTInput::width() const
 {
-    return producer()->get_int( "width" );
+    // FIXME: Sometimes I can't get width and height
+    auto v = producer()->get_int( "width" );
+    return v > 0 ? v : Backend::instance()->profile().width();
 }
 
 int
 MLTInput::height() const
 {
-    return producer()->get_int( "height" );
+    auto v = producer()->get_int( "height" );
+    return v > 0 ? v : Backend::instance()->profile().height();
 }
 
 bool
