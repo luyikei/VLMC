@@ -30,6 +30,8 @@
 #include "Workflow/MainWorkflow.h"
 #include "Gui/MainWindow.h"
 #include "Gui/effectsengine/EffectStack.h"
+#include "ThumbnailImageProvider.h"
+
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlContext>
 #include <QUrl>
@@ -41,6 +43,9 @@ Timeline::Timeline( MainWindow* parent )
 {
     m_container->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     m_container->setFocusPolicy( Qt::TabFocus );
+    auto p = new ThumbnailImageProvider;
+    m_view->engine()->addImageProvider( QStringLiteral( "thumbnail" ), p );
+    m_view->rootContext()->setContextProperty( QStringLiteral( "thumbnailProvider" ), p );
     m_view->rootContext()->setContextProperty( QStringLiteral( "mainwindow" ), parent );
     m_view->rootContext()->setContextProperty( QStringLiteral( "workflow" ), Core::instance()->workflow() );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
