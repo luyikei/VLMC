@@ -37,6 +37,7 @@ vlmc_SOURCES = \
 	src/Workflow/Helper.cpp \
 	src/Workflow/MainWorkflow.cpp \
 	src/Workflow/SequenceWorkflow.cpp \
+	src/Workflow/ThumbnailWorker.cpp \
 	$(NULL)
 
 vlmc_SOURCES += \
@@ -100,6 +101,7 @@ vlmc_SOURCES += \
 nodist_vlmc_SOURCES = \
 	src/Media/Clip.moc.cpp \
 	src/Workflow/SequenceWorkflow.moc.cpp \
+	src/Workflow/ThumbnailWorker.moc.cpp \
 	src/Services/YouTube/YouTubeService.moc.cpp \
 	src/EffectsEngine/EffectHelper.moc.cpp \
 	src/Workflow/Helper.moc.cpp \
