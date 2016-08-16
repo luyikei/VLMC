@@ -50,6 +50,7 @@
 #include "Tools/RendererEventWatcher.h"
 #include "Tools/OutputEventWatcher.h"
 #include "Workflow/Types.h"
+#include "ThumbnailWorker.h"
 
 #include <QMutex>
 
@@ -296,6 +297,17 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
     }
 
     return QStringLiteral( "" );
+}
+
+void
+MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
+{
+    ThumbnailWorker worker;
+    connect( &worker, &ThumbnailWorker::imageReady, this, &MainWorkflow::thumbnailUpdated, Qt::DirectConnection );
+    auto clip = m_sequenceWorkflow->clip( uuid );
+    worker.run( uuid, clip->media()->fileInfo()->absoluteFilePath(),
+                clip->begin() + pos, clip->input()->width(),
+                clip->input()->height() );
 }
 
 bool
