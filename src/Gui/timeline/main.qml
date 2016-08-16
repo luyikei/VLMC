@@ -643,5 +643,13 @@ Rectangle {
             scale = scaleLevel;
         }
     }
+
+    Connections {
+        target: thumbnailProvider
+        onImageReady: {
+            var clipItem = findClipItem( uuid );
+            clipItem.updateThumbnail( 0 );
+        }
+    }
 }
 

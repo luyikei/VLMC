@@ -22,6 +22,7 @@ Rectangle {
     border.width: 1
 
     property alias name: text.text
+    property alias thumbnailSource: thumbnailImage.source
     property int trackId
     // Usualy it is trackId, the clip will be moved to the new track immediately.
     property int newTrackId
@@ -74,6 +75,10 @@ Rectangle {
                 str += ", "
         }
         effectsItem.text = str;
+    }
+
+    function updateThumbnail( pos ) {
+        thumbnailSource = "image://thumbnail/" + uuid + "/" + pos;
     }
 
     onXChanged: {
@@ -180,6 +185,14 @@ Rectangle {
         allClips.push( clip );
 
         updateEffects( workflow.clipInfo( uuid ) );
+
+        if ( uuid === "videoUuid" || uuid === "audioUuid" )
+            return;
+
+        if ( thumbnailProvider.hasImage( uuid, 0 ) )
+            updateThumbnail( 0 );
+        else
+            workflow.takeThumbnail( uuid, 0 );
     }
 
     Component.onDestruction: {
@@ -217,6 +230,17 @@ Rectangle {
         font.pointSize: 7
         elide: Text.ElideRight
         wrapMode: Text.Wrap
+    }
+
+    Image {
+        id: thumbnailImage
+        x: 4
+        anchors.top: text.bottom
+        anchors.bottom: effectsItem.visible ? effectsItem.top : clip.bottom
+        anchors.topMargin: 4
+        anchors.bottomMargin: 4
+        fillMode: Image.PreserveAspectFit
+        visible: width < clip.width
     }
 
     MouseArea {
