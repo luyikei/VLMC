@@ -588,6 +588,8 @@ Rectangle {
             clipInfo["selected"] = false;
             addClip( type, clipInfo["trackId"], clipInfo );
             adjustTracks( type );
+
+            zoomIn( page.width / sView.flickableItem.contentWidth );
         }
 
         onClipMoved: {
