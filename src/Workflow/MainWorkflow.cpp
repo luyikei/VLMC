@@ -302,12 +302,18 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
 void
 MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
 {
-    ThumbnailWorker worker;
-    connect( &worker, &ThumbnailWorker::imageReady, this, &MainWorkflow::thumbnailUpdated, Qt::DirectConnection );
     auto clip = m_sequenceWorkflow->clip( uuid );
-    worker.run( uuid, clip->media()->fileInfo()->absoluteFilePath(),
-                clip->begin() + pos, clip->input()->width(),
-                clip->input()->height() );
+    auto worker = new ThumbnailWorker( uuid, clip->media()->fileInfo()->absoluteFilePath(),
+                                       clip->begin() + pos, clip->input()->width(),
+                                       clip->input()->height() );
+    auto t = new QThread;
+    worker->moveToThread( t );
+    connect( t, &QThread::started, worker, &ThumbnailWorker::run );
+    connect( worker, &ThumbnailWorker::imageReady, this, &MainWorkflow::thumbnailUpdated, Qt::DirectConnection );
+    connect( worker, &ThumbnailWorker::imageReady, t, &QThread::quit );
+    connect( t, &QThread::finished, worker, &ThumbnailWorker::deleteLater );
+    connect( t, &QThread::finished, t, &QThread::deleteLater );
+    t->start();
 }
 
 bool
