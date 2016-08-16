@@ -211,10 +211,10 @@ Rectangle {
         id: text
         color: "white"
         width: parent.width - 4
-        height: trackHeight
+        height: font.pointSize + 4
         x: 4
         y: 4 - font.pointSize / 2
-        font.pointSize: trackHeight / 4
+        font.pointSize: 7
         elide: Text.ElideRight
         wrapMode: Text.Wrap
     }
