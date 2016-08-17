@@ -30,8 +30,8 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include "MediaContainer.h"
 #include <QObject>
+#include <QHash>
 
 class Clip;
 class Media;
@@ -42,7 +42,7 @@ class Settings;
  *  \class Library
  *  \brief Library Object that handles public Clips
  */
-class Library : public MediaContainer
+class Library : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY( Library )
@@ -51,10 +51,18 @@ public:
     Library( Settings* projectSettings );
     virtual ~Library();
     virtual void    addMedia( Media* media );
-    virtual Media   *addMedia( const QFileInfo &fileInfo );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
     Media*          media( const QString& mrl );
+    /**
+     * @brief clip returns an existing clip
+     * @param uuid the clip's UUID
+     * @return The clip if it exists, or nullptr
+     * This can be any clip, the given UUID doesn't have to refer to a root clip
+     */
+    Clip*           clip( const QString& uuid );
+    Clip*           clip( const QUuid& uuid );
+    void            clear();
 
 private:
     void            setCleanState( bool newState );
@@ -63,6 +71,13 @@ private:
     bool        m_cleanState;
 
     Settings*   m_settings;
+    QHash<QString, Media*>  m_medias;
+    /**
+     * @brief m_clips   contains all the clips loaded in the library, without any
+     *                  subclip hierarchy
+     */
+    QHash<QUuid, Clip*>     m_clips;
+
     void        preSave();
     void        postLoad();
 

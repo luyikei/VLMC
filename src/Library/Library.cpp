@@ -94,31 +94,27 @@ void
 Library::addMedia( Media* media )
 {
     setCleanState( false );
-    MediaContainer::addMedia( media );
-}
-
-Media*
-Library::addMedia( const QFileInfo &fileInfo )
-{
-    Media* media = MediaContainer::addMedia( fileInfo );
-    if ( media != nullptr )
-    {
-        setCleanState( false );
-        connect( media, SIGNAL( metaDataComputed( const Media* ) ),
-                 this, SLOT( mediaLoaded( const Media* ) ), Qt::QueuedConnection );
-        m_medias[fileInfo.absoluteFilePath()] = media;
-    }
-    return media;
+    if ( m_medias.contains( media->fileInfo()->absoluteFilePath() ) )
+        return;
+    m_medias[media->fileInfo()->absoluteFilePath()] = media;
 }
 
 bool
 Library::addClip( Clip *clip )
 {
-    bool    ret = MediaContainer::addClip( clip );
-    if ( ret != false )
-        setCleanState( false );
+    foreach ( Clip* c, m_clips.values() )
+    {
+        if ( clip->uuid() == c->uuid() ||
+             ( clip->media()->fileInfo() == c->media()->fileInfo() &&
+                    ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
+        {
+            vlmcWarning() << "Clip already loaded.";
+            return false;
+        }
+    }
+    setCleanState( false );
     m_medias[clip->media()->fileInfo()->absoluteFilePath()] = clip->media();
-    return ret;
+    return true;
 }
 
 bool
@@ -131,6 +127,26 @@ Media*
 Library::media(const QString& mrl)
 {
     return m_medias.value( mrl );
+}
+
+Clip*
+Library::clip( const QString& uuid )
+{
+    return m_clips.value( uuid );
+}
+
+Clip*
+Library::clip( const QUuid& uuid )
+{
+    return clip( uuid.toString() );
+}
+
+void
+Library::clear()
+{
+    m_medias.clear();
+    m_clips.clear();
+    setCleanState( true );
 }
 
 void
