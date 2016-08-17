@@ -192,27 +192,3 @@ MediaContainer::count() const
 {
     return m_clips.size();
 }
-
-Clip*
-MediaContainer::createClipFromVariant( const QVariant &var, Clip* parent )
-{
-    QVariantMap h = var.toMap();
-    Clip* c = nullptr;
-
-    if ( h.contains( "parent" ) )
-        c = new Clip( parent, h["begin"].toULongLong(),
-                h["end"].toULongLong(), h["uuid"].toString() );
-    else {
-        c = new Clip( m_medias[ h["media"].toString() ], 0, -1, h["uuid"].toString() );
-        addClip( c );
-    }
-    if ( h.contains( "subClips" ) )
-        for ( auto& var : h["subClips"].toList() )
-            c->addSubclip( createClipFromVariant( var, c ) );
-
-    if ( h.contains( "filters" ) )
-        for ( auto& var : h["filters"].toList() )
-            EffectHelper::loadFromVariant( var, c->input() );
-
-    return c;
-}

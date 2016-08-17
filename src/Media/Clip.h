@@ -144,6 +144,12 @@ class   Clip : public Workflow::Helper
 
         Backend::IInput* input();
 
+        static Clip*        fromVariant( const QVariant& v );
+
+    private:
+        static Clip*        fromVariant( const QVariant& v, Clip* parent );
+        void                loadVariant(const QVariantMap& v );
+
     private:
         Media*              m_media;
         std::unique_ptr<Backend::IInput> m_input;

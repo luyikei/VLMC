@@ -78,7 +78,11 @@ Library::postLoad()
     }
 
     for ( const auto& var : m_settings->value( "clips" )->get().toList() )
-        createClipFromVariant( var, nullptr );
+    {
+        auto c = Clip::fromVariant( var );
+        if ( c != nullptr )
+            addClip( c );
+    }
 }
 
 Library::~Library()
@@ -121,6 +125,12 @@ bool
 Library::isInCleanState() const
 {
     return m_cleanState;
+}
+
+Media*
+Library::media(const QString& mrl)
+{
+    return m_medias.value( mrl );
 }
 
 void

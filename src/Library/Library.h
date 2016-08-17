@@ -54,6 +54,7 @@ public:
     virtual Media   *addMedia( const QFileInfo &fileInfo );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
+    Media*          media( const QString& mrl );
 
 private:
     void            setCleanState( bool newState );

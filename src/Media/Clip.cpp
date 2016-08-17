@@ -36,6 +36,7 @@
 #include "Media/Media.h"
 #include "Project/Workspace.h"
 #include "EffectsEngine/EffectHelper.h"
+#include "Tools/VlmcDebug.h"
 #include <QVariant>
 
 Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
@@ -340,6 +341,89 @@ Backend::IInput*
 Clip::input()
 {
     return m_input.get();
+}
+
+Clip*
+Clip::fromVariant( const QVariant& v )
+{
+    auto m = v.toMap();
+
+    if ( m.contains( "parent" ) )
+    {
+        vlmcWarning() << "Refusing to load a root clip with a parent field";
+        return nullptr;
+    }
+
+    auto mediaMrl = m["media"].toString();
+    if ( mediaMrl.isEmpty() == true )
+    {
+        vlmcWarning() << "Refusing to load an invalid root clip with no base media";
+        return nullptr;
+    }
+
+    auto uuid = m["uuid"].toString();
+    if ( uuid.isEmpty() == true )
+    {
+        vlmcWarning() << "Refusing to load an invalid root clip with no UUID";
+        return nullptr;
+    }
+
+    auto media = Core::instance()->library()->media( mediaMrl );
+    auto clip = new Clip( media, 0, -1, uuid );
+
+    clip->loadVariant( m );
+
+    return clip;
+}
+
+Clip*
+Clip::fromVariant( const QVariant& v, Clip* parent )
+{
+    auto m = v.toMap();
+
+    if ( m.contains( "parent" ) == false )
+    {
+        vlmcWarning() << "Refusing to load a subclip with no parent field";
+        return nullptr;
+    }
+
+    auto mediaMrl = m["media"].toString();
+    if ( mediaMrl.isEmpty() == true )
+    {
+        vlmcWarning() << "Refusing to load an invalid root clip with no base media";
+        return nullptr;
+    }
+
+    auto uuid = m["uuid"].toString();
+    if ( uuid.isEmpty() == true )
+    {
+        vlmcWarning() << "Refusing to load an invalid root clip with no UUID";
+        return nullptr;
+    }
+    auto begin = m["begin"].toLongLong();
+    auto end = m["end"].toLongLong();
+
+    auto media = Core::instance()->library()->media( mediaMrl );
+    auto clip = new Clip( parent, begin, end, uuid );
+    clip->loadVariant( m );
+    return clip;
+}
+
+void
+Clip::loadVariant( const QVariantMap& m )
+{
+    if ( m.contains( "subClips" ) )
+    {
+        auto children = m["subClips"].toList();
+        for ( const auto& clipMap : children )
+            m_childs->addClip( fromVariant( clipMap, this ) );
+    }
+    if ( m.contains( "filters" ) )
+    {
+        const auto& filters = m["filters"].toList();
+        for ( const auto& f : filters )
+            EffectHelper::loadFromVariant( f, input() );
+    }
 }
 
 void
