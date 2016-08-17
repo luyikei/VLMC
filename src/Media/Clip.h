@@ -30,6 +30,7 @@
 # define CLIP_H__
 
 #include "Workflow/Helper.h"
+#include <QHash>
 #include <QStringList>
 #include <QUuid>
 #include <QXmlStreamWriter>
@@ -37,7 +38,6 @@
 
 #include <memory>
 
-class   MediaContainer;
 class   Media;
 
 class   Clip : public Workflow::Helper
@@ -89,8 +89,8 @@ class   Clip : public Workflow::Helper
 
         Clip                *parent();
         const Clip          *parent() const;
-        MediaContainer*     mediaContainer();
-        const MediaContainer*     mediaContainer() const;
+
+        const QHash<QUuid, Clip*>& clips() const;
 
         /**
             \brief          Returns an unique Uuid for this clip (which is NOT the
@@ -164,7 +164,7 @@ class   Clip : public Workflow::Helper
          */
         Clip*               m_rootClip;
 
-        MediaContainer*     m_childs;
+        QHash<QUuid, Clip*> m_subclips;
 
         Clip*               m_parent;
 
@@ -181,6 +181,19 @@ class   Clip : public Workflow::Helper
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
+
+        /**
+         *  \brief          This signal should be emitted to tell a new sublip have been added
+         *  \param Clip     The newly added subclip
+         */
+        void    subclipAdded( Clip* );
+        /**
+         *  \brief This signal should be emiteted when a subclip has been removed
+         *  This signal pass a QUuid as the clip may be deleted when the signal reaches its
+         *  slot.
+         *  \param uuid The removed clip uuid
+         */
+        void    subclipRemoved( const QUuid& );
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( Clip::Formats )

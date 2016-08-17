@@ -46,7 +46,6 @@ Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::
         m_parent( media->baseClip() ),
         m_isLinked( false )
 {
-    m_childs = new MediaContainer( this );
     m_rootClip = media->baseClip();
     Formats f;
     if ( media->input()->hasAudio() == true )
@@ -63,7 +62,6 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
         m_rootClip( parent->rootClip() ),
         m_parent( parent )
 {
-    m_childs = new MediaContainer( this );
     if ( begin == -1 )
         begin = parent->begin();
     else
@@ -80,7 +78,6 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
 Clip::~Clip()
 {
     emit unloaded( this );
-    delete m_childs;
     if ( isRootClip() == true )
         delete m_media;
 }
@@ -242,28 +239,19 @@ Clip::parent() const
     return m_parent;
 }
 
-MediaContainer*
-Clip::mediaContainer()
-{
-    return m_childs;
-}
-
-const MediaContainer*
-Clip::mediaContainer() const
-{
-    return m_childs;
-}
-
 bool
 Clip::addSubclip( Clip *clip )
 {
-    return m_childs->addClip( clip );
+    if ( m_subclips.contains( clip->uuid() ) == true )
+        return false;
+    m_subclips[clip->uuid()] = clip;
+    emit subclipAdded( clip );
 }
 
 void
 Clip::clear()
 {
-    m_childs->clear();
+    m_subclips.clear();
 }
 
 bool
@@ -313,13 +301,12 @@ QVariant
 Clip::toVariantFull() const
 {
     QVariantHash h = toVariant().toHash();
-    if ( m_childs->count() > 0 )
-    {
-        QVariantList l;
-        for ( const auto& c : m_childs->clips() )
-            l << c->toVariant();
-        h.insert( "subClips", l );
-    }
+    if ( m_subclips.isEmpty() == true )
+        return h;
+    QVariantList l;
+    for ( const auto& c : m_subclips.values() )
+        l << c->toVariant();
+    h.insert( "subClips", l );
     return h;
 }
 
@@ -416,7 +403,7 @@ Clip::loadVariant( const QVariantMap& m )
     {
         auto children = m["subClips"].toList();
         for ( const auto& clipMap : children )
-            m_childs->addClip( fromVariant( clipMap, this ) );
+            addSubclip( fromVariant( clipMap, this ) );
     }
     if ( m.contains( "filters" ) )
     {
