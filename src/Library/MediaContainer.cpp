@@ -193,13 +193,6 @@ MediaContainer::count() const
     return m_clips.size();
 }
 
-Media*
-MediaContainer::createMediaFromVariant( const QVariant& var )
-{
-    Media* m = addMedia( QFileInfo( var.toString() ) );
-    return m;
-}
-
 Clip*
 MediaContainer::createClipFromVariant( const QVariant &var, Clip* parent )
 {

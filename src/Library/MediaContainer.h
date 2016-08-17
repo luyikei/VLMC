@@ -121,7 +121,6 @@ protected:
 
     Clip*                   m_parent;
 
-    Media*          createMediaFromVariant( const QVariant& var );
     Clip*           createClipFromVariant( const QVariant& var, Clip* parent );
 
 public slots:

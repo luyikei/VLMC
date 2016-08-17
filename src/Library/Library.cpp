@@ -72,7 +72,10 @@ void
 Library::postLoad()
 {
     for ( const auto& var : m_settings->value( "medias" )->get().toList() )
-        createMediaFromVariant( var );
+    {
+        auto m = Media::fromVariant( var );
+        addMedia( m );
+    }
 
     for ( const auto& var : m_settings->value( "clips" )->get().toList() )
         createClipFromVariant( var, nullptr );

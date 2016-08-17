@@ -32,6 +32,7 @@
 #endif
 
 #include <QUrl>
+#include <QVariant>
 
 #include "Media.h"
 
@@ -121,6 +122,11 @@ const Backend::IInput*
 Media::input() const
 {
     return m_input.get();
+}
+
+Media* Media::fromVariant( const QVariant& v )
+{
+    return new Media( QFileInfo( v.toString() ).absoluteFilePath() );
 }
 
 void
