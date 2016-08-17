@@ -81,7 +81,6 @@ public:
     virtual ~Media();
 
     const QFileInfo             *fileInfo() const;
-    const QString               &mrl() const;
     const QString               &fileName() const;
     /**
      *  \brief                  Set this media's path.
@@ -90,18 +89,12 @@ public:
      */
     void                        setFilePath( const QString& path );
 
-    void                        setNbFrames( qint64 nbFrames );
-
-    qint64                      nbFrames() const;
-
     FileType                    fileType() const;
     void                        setFileType( FileType type );
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
     void                        setBaseClip( Clip* clip );
-
-    void                        onMetaDataComputed();
 
     QVariant                    toVariant() const;
 
@@ -124,10 +117,6 @@ protected:
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
 #endif
-
-signals:
-    void                        metaDataComputed();
-    void                        snapshotAvailable();
 };
 
 #endif // MEDIA_H__

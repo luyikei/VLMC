@@ -93,12 +93,6 @@ void Media::setFileType(Media::FileType type)
 }
 
 const QString&
-Media::mrl() const
-{
-    return m_mrl;
-}
-
-const QString&
 Media::fileName() const
 {
     return m_fileName;
