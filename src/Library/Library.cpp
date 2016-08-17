@@ -37,7 +37,6 @@
 #include "Project/Project.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
-#include "Project/Workspace.h"
 
 #include <QVariant>
 #include <QHash>

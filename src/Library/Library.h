@@ -36,7 +36,6 @@
 class Clip;
 class Media;
 class ProjectManager;
-class Workspace;
 class Settings;
 
 /**
@@ -61,7 +60,6 @@ private:
 
 private:
     bool        m_cleanState;
-    Workspace*  m_workspace;
 
     Settings*   m_settings;
     void        preSave();
