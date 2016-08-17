@@ -58,7 +58,7 @@ void
 Library::preSave()
 {
     QVariantList l;
-    for ( auto val : m_medias )
+    for ( auto val : m_media )
         l << val->toVariant();
     m_settings->value( "medias" )->set( l );
     l.clear();
@@ -94,9 +94,9 @@ void
 Library::addMedia( Media* media )
 {
     setCleanState( false );
-    if ( m_medias.contains( media->fileInfo()->absoluteFilePath() ) )
+    if ( m_media.contains( media->fileInfo()->absoluteFilePath() ) )
         return;
-    m_medias[media->fileInfo()->absoluteFilePath()] = media;
+    m_media[media->fileInfo()->absoluteFilePath()] = media;
 }
 
 bool
@@ -113,7 +113,7 @@ Library::addClip( Clip *clip )
         }
     }
     setCleanState( false );
-    m_medias[clip->media()->fileInfo()->absoluteFilePath()] = clip->media();
+    m_media[clip->media()->fileInfo()->absoluteFilePath()] = clip->media();
     return true;
 }
 
@@ -126,7 +126,7 @@ Library::isInCleanState() const
 Media*
 Library::media(const QString& mrl)
 {
-    return m_medias.value( mrl );
+    return m_media.value( mrl );
 }
 
 Clip*
@@ -144,7 +144,7 @@ Library::clip( const QUuid& uuid )
 void
 Library::clear()
 {
-    m_medias.clear();
+    m_media.clear();
     m_clips.clear();
     setCleanState( true );
 }

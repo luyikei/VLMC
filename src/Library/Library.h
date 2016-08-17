@@ -71,7 +71,7 @@ private:
     bool        m_cleanState;
 
     Settings*   m_settings;
-    QHash<QString, Media*>  m_medias;
+    QHash<QString, Media*>  m_media;
     /**
      * @brief m_clips   contains all the clips loaded in the library, without any
      *                  subclip hierarchy
