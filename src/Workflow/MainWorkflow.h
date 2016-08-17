@@ -53,7 +53,6 @@ class IInput;
 }
 
 class   Settings;
-class   MediaContainer;
 
 #include <QObject>
 #include <QUuid>

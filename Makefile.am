@@ -19,7 +19,6 @@ vlmc_SOURCES = \
 	src/Library/Library.cpp \
 	src/Library/MediaLibrary.cpp \
 	src/Library/MediaLibraryModel.cpp \
-	src/Library/MediaContainer.cpp \
 	src/Main/Core.cpp \
 	src/Main/main.cpp \
 	src/Media/Clip.cpp \
@@ -93,7 +92,6 @@ vlmc_SOURCES += \
 	src/Backend/IMultiTrack.h \
 	src/Main/Core.h \
 	src/Library/Library.h \
-	src/Library/MediaContainer.h \
 	src/Library/MediaLibrary.h \
 	src/Library/MediaLibraryModel.h \
 	src/Workflow/Helper.h \
@@ -120,7 +118,6 @@ nodist_vlmc_SOURCES = \
 	src/Services/AbstractSharingService.moc.cpp \
 	src/Workflow/MainWorkflow.moc.cpp \
 	src/Project/RecentProjects.moc.cpp \
-	src/Library/MediaContainer.moc.cpp \
 	src/Commands/Commands.moc.cpp \
 	src/Renderer/ClipRenderer.moc.cpp \
 	src/Project/Project.moc.cpp \
