@@ -60,7 +60,6 @@ private:
     void            setCleanState( bool newState );
 
 private:
-    QAtomicInt  m_nbMediaToLoad;
     bool        m_cleanState;
     Workspace*  m_workspace;
 
@@ -68,14 +67,10 @@ private:
     void        preSave();
     void        postLoad();
 
-private slots:
-    void    mediaLoaded( const Media* m );
-
 signals:
     /**
      *  \brief
      */
-    void    projectLoaded();
     void    cleanStateChanged( bool newState );
 };
 

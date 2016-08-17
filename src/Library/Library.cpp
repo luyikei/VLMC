@@ -85,21 +85,6 @@ Library::~Library()
 }
 
 void
-Library::mediaLoaded( const Media* media )
-{
-    if ( media != nullptr )
-    {
-        //FIXME: metaDataComputed in Media class has no arguments, this shouldn't be working;
-        //replacing this with disconnect( media, &Media::metaDataComputed, this, &Library::mediaLoaded );
-        //produces static_assert error
-        disconnect( media, SIGNAL( metaDataComputed( const Media* ) ),
-                 this, SLOT( mediaLoaded( const Media* ) ) );
-    }
-    if (m_nbMediaToLoad.fetchAndAddAcquire( -1 ) == 1)
-        emit projectLoaded();
-}
-
-void
 Library::addMedia( Media* media )
 {
     setCleanState( false );
