@@ -69,7 +69,6 @@ vlmc_SOURCES += \
 	src/Services/YouTube/YouTubeService.h \
 	src/Services/YouTube/YouTubeFeedParser.h \
 	src/EffectsEngine/EffectHelper.h \
-	src/Media/Transcoder.h \
 	src/Media/Media.h \
 	src/Media/Clip.h \
 	src/Settings/Settings.h \
