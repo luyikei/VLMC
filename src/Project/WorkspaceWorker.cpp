@@ -65,9 +65,7 @@ WorkspaceWorker::run()
 
     if ( hardLinkOk == false )
     {
-        QFile           file( m_media->fileInfo()->absoluteFilePath() );
-
-        file.copy( m_media->fileInfo()->absoluteFilePath(), m_dest );
+        QFile::copy( m_media->fileInfo()->absoluteFilePath(), m_dest );
         vlmcDebug() << "Media copied to:" << m_dest;
     }
     emit copied( m_media, m_dest );
