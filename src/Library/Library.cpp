@@ -47,7 +47,6 @@ Library::Library( Settings *projectSettings )
     , m_settings( new Settings )
 {
     m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
-    m_settings->createVar( SettingValue::List, QString( "clips" ), QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
     connect( m_settings, &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
 
@@ -61,10 +60,6 @@ Library::preSave()
     for ( auto val : m_media )
         l << val->toVariant();
     m_settings->value( "medias" )->set( l );
-    l.clear();
-    for ( auto val : m_clips )
-        l << val->toVariantFull();
-    m_settings->value( "clips" )->set( l );
     setCleanState( true );
 }
 
@@ -75,13 +70,6 @@ Library::postLoad()
     {
         auto m = Media::fromVariant( var );
         addMedia( m );
-    }
-
-    for ( const auto& var : m_settings->value( "clips" )->get().toList() )
-    {
-        auto c = Clip::fromVariant( var );
-        if ( c != nullptr )
-            addClip( c );
     }
 }
 

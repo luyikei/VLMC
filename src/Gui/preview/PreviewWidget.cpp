@@ -252,11 +252,7 @@ PreviewWidget::createNewClipFromMarkers()
         return ;
 
     beg = beg < 0 ? 0 : beg;
-    Clip*   part = media->cut( beg, end );
-
-    //Adding the newly created clip to the media
-    if ( clip->addSubclip( part ) == false )
-        delete part;
+    media->cut( beg, end );
 }
 
 void

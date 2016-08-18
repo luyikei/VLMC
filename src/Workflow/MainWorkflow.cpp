@@ -222,11 +222,8 @@ MainWorkflow::clipInfo( const QString& uuid )
         h["name"] = lClip->media()->title();
         h["audio"] = lClip->formats().testFlag( Clip::Audio );
         h["video"] = lClip->formats().testFlag( Clip::Video );
-        if ( lClip->isRootClip() == true )
-        {
-            h["begin"] = lClip->begin();
-            h["end"] = lClip->end();
-        }
+        h["begin"] = lClip->begin();
+        h["end"] = lClip->end();
         return QJsonObject::fromVariantHash( h );
     }
 

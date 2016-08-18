@@ -63,7 +63,7 @@ const QString   Media::streamPrefix = "stream://";
 QPixmap*        Media::defaultSnapshot = nullptr;
 #endif
 
-Media::Media( medialibrary::MediaPtr media )
+Media::Media( medialibrary::MediaPtr media, const QUuid& uuid /* = QUuid() */ )
     : m_input( nullptr )
     , m_mlMedia( media )
 {
@@ -80,7 +80,7 @@ Media::Media( medialibrary::MediaPtr media )
     if ( m_mlFile == nullptr )
         vlmcFatal( "No file representing media %s", media->title().c_str(), "was found" );
     m_input.reset( new Backend::MLT::MLTInput( m_mlFile->mrl().c_str() ) );
-    m_baseClip = new Clip( sharedFromThis() );
+    m_baseClip = new Clip( sharedFromThis(), 0, Backend::IInput::EndOfMedia, uuid );
 }
 
 QString
@@ -119,13 +119,35 @@ Media::id() const
 Clip*
 Media::cut(qint64 begin, qint64 end)
 {
-    return new Clip( m_baseClip, begin, end );
+    auto clip = new Clip( sharedFromThis(), begin, end );
+    m_clips[clip->uuid()] = clip;
+    emit subclipAdded( clip );
+    return clip;
+}
+
+void
+Media::removeSubclip(const QUuid& uuid)
+{
+    if ( m_clips.remove( uuid ) == 0 )
+        return;
+    emit subclipRemoved( uuid );
 }
 
 QVariant
 Media::toVariant() const
 {
-    return QVariant( static_cast<qlonglong>( m_mlMedia->id() ) );
+    QVariantHash h = {
+        { "uuid", m_baseClip->uuid() },
+        { "mlId", static_cast<qlonglong>( m_mlMedia->id() ) }
+    };
+    if ( m_clips.isEmpty() == false )
+    {
+        QVariantList l;
+        for ( const auto& c : m_clips.values() )
+            l << c->toVariant();
+        h.insert( "clips", l );
+    }
+    return QVariant( h );
 }
 
 Backend::IInput*
@@ -143,13 +165,40 @@ Media::input() const
 QSharedPointer<Media>
 Media::fromVariant( const QVariant& v )
 {
-    bool ok = false;
-    auto mediaId = v.toLongLong( &ok );
-    if ( ok == false )
-        return QSharedPointer<Media>{};
+    /**
+     * The media is stored as such:
+     * media: {
+     *  mlId: <id>   // The media library ID
+     *  uuid: <uuid> // The root clip UUID
+     *  clips: [
+     *    <clip 1>,  // The subclips
+     *    ...
+     *  ]
+     * }
+     */
+    const auto& m = v.toMap();
+
+    if ( m.contains( "mlId" ) == false || m.contains( "uuid" ) == false )
+    {
+        vlmcWarning() << "Invalid clip provided:" << m << "Missing 'mlId' and/or 'uuid' field(s)";
+        return {};
+    }
+    auto mediaId = m["mlId"].toLongLong();
+    auto uuid = m["uuid"].toUuid();
     auto mlMedia = Core::instance()->mediaLibrary()->media( mediaId );
     //FIXME: Is QSharedPointer exception safe in case its constructor throws an exception?
-    return QSharedPointer<Media>( new Media( mlMedia ) );
+    auto media = QSharedPointer<Media>( new Media( mlMedia, uuid ) );
+
+    // Now load the subclips:
+    if ( m.contains( "clips" ) == false )
+        return media;
+
+    auto subclips = m["clips"].toList();
+    for ( const auto& c : subclips )
+    {
+        media->loadSubclip( c.toMap() );
+    }
+    return media;
 }
 
 #ifdef HAVE_GUI
@@ -170,5 +219,25 @@ Media::snapshot()
     }
 
     return m_snapshot.isNull() ? *Media::defaultSnapshot : m_snapshot;
+}
+
+Clip*
+Media::loadSubclip( const QVariantMap& m )
+{
+    if ( m.contains( "uuid" ) == false || m.contains( "begin" ) == false || m.contains( "end" ) == false )
+    {
+        vlmcWarning() << "Invalid clip provided:" << m;
+        return nullptr;
+    }
+    const auto& uuid = m["uuid"].toUuid();
+    const auto  begin = m["begin"].toLongLong();
+    const auto  end = m["end"].toLongLong();
+    auto clip = new Clip( sharedFromThis(), begin, end, uuid );
+    //FIXME: This shouldn't be loaded from the library
+    clip->loadFilters( m );
+
+    m_clips[uuid] = clip;
+    emit subclipAdded( clip );
+    return clip;
 }
 #endif

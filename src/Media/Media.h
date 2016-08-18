@@ -35,8 +35,10 @@
 #include <memory>
 
 #include <QEnableSharedFromThis>
+#include <QHash>
 #include <QString>
 #include <QObject>
+#include <QUuid>
 #include <QXmlStreamWriter>
 
 #include "Backend/MLT/MLTInput.h"
@@ -82,7 +84,7 @@ public:
     static const QString        ImageExtensions;
     static const QString        streamPrefix;
 
-    Media( medialibrary::MediaPtr media );
+    Media( medialibrary::MediaPtr media, const QUuid& uuid = QUuid() );
 
     QString                     mrl() const;
     FileType                    fileType() const;
@@ -98,6 +100,7 @@ public:
      * @return      A new Clip, representing the media from [begin] to [end]
      */
     Clip*                       cut( qint64 begin, qint64 end );
+    void                        removeSubclip( const QUuid& uuid );
 
     QVariant                    toVariant() const;
 
@@ -110,16 +113,35 @@ public:
     // This has to be called from the GUI thread.
     QPixmap&                    snapshot();
 #endif
+
+private:
+    Clip*                       loadSubclip( const QVariantMap& m );
+
 protected:
     std::unique_ptr<Backend::IInput>         m_input;
     medialibrary::MediaPtr      m_mlMedia;
     medialibrary::FilePtr       m_mlFile;
     Clip*                       m_baseClip;
+    QHash<QUuid, Clip*>         m_clips;
 
 #ifdef HAVE_GUI
     static QPixmap*             defaultSnapshot;
     QPixmap                     m_snapshot;
 #endif
+
+signals:
+    /**
+     *  \brief          This signal should be emitted to tell a new sublip have been added
+     *  \param Clip     The newly added subclip
+     */
+    void    subclipAdded( Clip* );
+    /**
+     *  \brief This signal should be emiteted when a subclip has been removed
+     *  This signal pass a QUuid as the clip may be deleted when the signal reaches its
+     *  slot.
+     *  \param uuid The removed clip uuid
+     */
+    void    subclipRemoved( const QUuid& );
 };
 
 #endif // MEDIA_H__

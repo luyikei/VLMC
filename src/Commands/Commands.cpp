@@ -29,6 +29,7 @@
 #include "Project/Project.h"
 #include "Main/Core.h"
 #include "Media/Clip.h"
+#include "Media/Media.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Workflow/SequenceWorkflow.h"
 #include "Workflow/MainWorkflow.h"
@@ -306,7 +307,8 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
         retranslate();
         return;
     }
-    m_newClip = std::make_shared<::Clip>( m_toSplit.get(), newClipBegin - m_toSplit->begin(), m_toSplit->end() - m_toSplit->begin() );
+    m_newClip = std::shared_ptr<::Clip>( m_toSplit->media()->cut( newClipBegin - m_toSplit->begin(),
+                                                                  m_toSplit->end() - m_toSplit->begin() ) );
     m_oldEnd = m_toSplit->end();
     retranslate();
 }

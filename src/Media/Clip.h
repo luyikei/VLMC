@@ -64,17 +64,8 @@ class   Clip : public Workflow::Helper
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( QSharedPointer<Media> parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QStringLiteral() );
-        /**
-         *  \brief  Clones a Clip, potentially with a new begin and end.
-         *
-         *  \param  creator The clip to clone.
-         *  \param  begin   The clip beginning (in frames, from the parent's beginning).
-         *                  If not given, 0 is assumed.
-         *  \param  end     The end, in frames, from the parent's beginning. If not given,
-         *                  the end of the parent will be used.
-         */
-        Clip( Clip *creator, qint64 begin = -1, qint64 end = Backend::IInput::EndOfParent, const QString& uuid = QStringLiteral() );
+        Clip( QSharedPointer<Media> parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QUuid &uuid = QStringLiteral() );
+
         virtual ~Clip();
 
         /**
@@ -87,9 +78,6 @@ class   Clip : public Workflow::Helper
         */
         QSharedPointer<Media>       media();
         QSharedPointer<const Media> media() const;
-
-        Clip                *parent();
-        const Clip          *parent() const;
 
         /**
             \brief          Returns an unique Uuid for this clip (which is NOT the
@@ -120,29 +108,15 @@ class   Clip : public Workflow::Helper
         const QString       &notes() const;
         void                setNotes( const QString &notes );
 
-        bool                isRootClip() const;
-        Clip*               rootClip();
-
-        /**
-         *  \brief          Clear all the clip subclips recursively.
-         */
-        void                clear();
-
-        bool                addSubclip( Clip* clip );
-
         QVariant            toVariant() const;
-        QVariant            toVariantFull() const;
 
         Formats             formats() const;
         void                setFormats( Formats formats );
 
         Backend::IInput* input();
 
-        static Clip*        fromVariant( const QVariant& v );
-
-    private:
-        static Clip*        fromVariant( const QVariant& v, Clip* parent );
-        void                loadVariant(const QVariantMap& v );
+        //FIXME: This shouldn't be represented in the Library
+        void                loadFilters(const QVariantMap& v );
 
     private:
         QSharedPointer<Media>               m_media;
@@ -150,17 +124,6 @@ class   Clip : public Workflow::Helper
 
         QStringList         m_metaTags;
         QString             m_notes;
-
-        /**
-         *  \brief          Return the root clip.
-         *
-         *  The root clip is the base clip for the parent media.
-         */
-        Clip*               m_rootClip;
-
-        QHash<QUuid, Clip*> m_subclips;
-
-        Clip*               m_parent;
 
         QUuid               m_linkedClipUuid;
         bool                m_isLinked;
@@ -172,19 +135,6 @@ class   Clip : public Workflow::Helper
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
-
-        /**
-         *  \brief          This signal should be emitted to tell a new sublip have been added
-         *  \param Clip     The newly added subclip
-         */
-        void    subclipAdded( Clip* );
-        /**
-         *  \brief This signal should be emiteted when a subclip has been removed
-         *  This signal pass a QUuid as the clip may be deleted when the signal reaches its
-         *  slot.
-         *  \param uuid The removed clip uuid
-         */
-        void    subclipRemoved( const QUuid& );
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( Clip::Formats )

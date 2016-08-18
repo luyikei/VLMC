@@ -39,40 +39,19 @@
 #include "Tools/VlmcDebug.h"
 #include <QVariant>
 
-Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
-        Workflow::Helper( uuid ),
+Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QUuid& uuid /*= QString()*/ ) :
+        //FIXME: uuid -> QString conversion should be removed, since the helper stores the UUID as a QUuid
+        Workflow::Helper( uuid.toString() ),
         m_media( media ),
         m_input( std::move( m_media->input()->cut( begin, end ) ) ),
-        m_parent( media->baseClip() ),
         m_isLinked( false )
 {
-    m_rootClip = media->baseClip();
     Formats f;
     if ( media->input()->hasAudio() == true )
         f |= Clip::Audio;
     if ( media->input()->hasVideo() == true )
         f |= Clip::Video;
     setFormats( f );
-}
-
-Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
-            const QString &uuid /*= QString()*/ ) :
-        Workflow::Helper( uuid ),
-        m_media( parent->media() ),
-        m_rootClip( parent->rootClip() ),
-        m_parent( parent )
-{
-    if ( begin == -1 )
-        begin = parent->begin();
-    else
-        begin = parent->begin() + begin;
-
-    if ( end == Backend::IInput::EndOfParent )
-        end = parent->end();
-    else
-        end = parent->begin() + end;
-    m_input = parent->input()->cut( begin, end );
-    setFormats( parent->formats() );
 }
 
 Clip::~Clip()
@@ -114,8 +93,6 @@ bool
 Clip::matchMetaTag( const QString &tag ) const
 {
     if ( tag.length() == 0 )
-        return true;
-    if ( m_parent && m_parent->matchMetaTag( tag ) == true )
         return true;
     QString metaTag;
     foreach ( metaTag, m_metaTags )
@@ -211,47 +188,6 @@ Clip::isLinked() const
     return m_isLinked;
 }
 
-Clip*
-Clip::rootClip()
-{
-    if ( m_rootClip == nullptr )
-        return this;
-    return m_rootClip;
-}
-
-bool
-Clip::isRootClip() const
-{
-    return ( m_rootClip == nullptr );
-}
-
-Clip*
-Clip::parent()
-{
-    return m_parent;
-}
-
-const Clip*
-Clip::parent() const
-{
-    return m_parent;
-}
-
-bool
-Clip::addSubclip( Clip *clip )
-{
-    if ( m_subclips.contains( clip->uuid() ) == true )
-        return false;
-    m_subclips[clip->uuid()] = clip;
-    emit subclipAdded( clip );
-}
-
-void
-Clip::clear()
-{
-    m_subclips.clear();
-}
-
 QVariant
 Clip::toVariant() const
 {
@@ -261,14 +197,8 @@ Clip::toVariant() const
         { "notes", m_notes },
         { "formats", (int)formats() }
     };
-    if ( isRootClip() )
-        h.insert( "media", m_media->toVariant() );
-    else
-    {
-        h.insert( "parent", m_parent->uuid().toString() );
-        h.insert( "begin", begin() );
-        h.insert( "end", end() );
-    }
+    h.insert( "begin", begin() );
+    h.insert( "end", end() );
     if ( isLinked() == true )
     {
         h.insert( "linkedClip", m_linkedClipUuid );
@@ -279,19 +209,6 @@ Clip::toVariant() const
     h.insert( "filters", EffectHelper::toVariant( m_input.get() ) );
     return QVariant( h );
 
-}
-
-QVariant
-Clip::toVariantFull() const
-{
-    QVariantHash h = toVariant().toHash();
-    if ( m_subclips.isEmpty() == true )
-        return h;
-    QVariantList l;
-    for ( const auto& c : m_subclips.values() )
-        l << c->toVariant();
-    h.insert( "subClips", l );
-    return h;
 }
 
 Clip::Formats
@@ -314,80 +231,9 @@ Clip::input()
     return m_input.get();
 }
 
-Clip*
-Clip::fromVariant( const QVariant& v )
-{
-    auto m = v.toMap();
-
-    if ( m.contains( "parent" ) )
-    {
-        vlmcWarning() << "Refusing to load a root clip with a parent field";
-        return nullptr;
-    }
-
-    auto mediaId = m["media"].toLongLong();
-    if ( mediaId == 0 )
-    {
-        vlmcWarning() << "Refusing to load an invalid root clip with no base media";
-        return nullptr;
-    }
-
-    auto uuid = m["uuid"].toString();
-    if ( uuid.isEmpty() == true )
-    {
-        vlmcWarning() << "Refusing to load an invalid root clip with no UUID";
-        return nullptr;
-    }
-
-    auto media = Core::instance()->library()->media( mediaId );
-    auto clip = new Clip( media, 0, -1, uuid );
-
-    clip->loadVariant( m );
-
-    return clip;
-}
-
-Clip*
-Clip::fromVariant( const QVariant& v, Clip* parent )
-{
-    auto m = v.toMap();
-
-    if ( m.contains( "parent" ) == false )
-    {
-        vlmcWarning() << "Refusing to load a subclip with no parent field";
-        return nullptr;
-    }
-
-    auto mediaMrl = m["media"].toString();
-    if ( mediaMrl.isEmpty() == true )
-    {
-        vlmcWarning() << "Refusing to load an invalid root clip with no base media";
-        return nullptr;
-    }
-
-    auto uuid = m["uuid"].toString();
-    if ( uuid.isEmpty() == true )
-    {
-        vlmcWarning() << "Refusing to load an invalid root clip with no UUID";
-        return nullptr;
-    }
-    auto begin = m["begin"].toLongLong();
-    auto end = m["end"].toLongLong();
-
-    auto clip = new Clip( parent, begin, end, uuid );
-    clip->loadVariant( m );
-    return clip;
-}
-
 void
-Clip::loadVariant( const QVariantMap& m )
+Clip::loadFilters( const QVariantMap& m )
 {
-    if ( m.contains( "subClips" ) )
-    {
-        auto children = m["subClips"].toList();
-        for ( const auto& clipMap : children )
-            addSubclip( fromVariant( clipMap, this ) );
-    }
     if ( m.contains( "filters" ) )
     {
         const auto& filters = m["filters"].toList();
