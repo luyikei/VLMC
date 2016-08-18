@@ -167,9 +167,6 @@ class   Clip : public Workflow::Helper
 
         Formats             m_formats;
 
-    private slots:
-        void                mediaMetadataUpdated();
-
     signals:
         /**
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.

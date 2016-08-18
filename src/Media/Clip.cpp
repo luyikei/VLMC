@@ -395,9 +395,3 @@ Clip::loadVariant( const QVariantMap& m )
             EffectHelper::loadFromVariant( f, input() );
     }
 }
-
-void
-Clip::mediaMetadataUpdated()
-{
-}
-
