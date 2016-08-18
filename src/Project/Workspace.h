@@ -24,11 +24,9 @@
 #define WORKSPACE_H
 
 #include <QObject>
-#include <QQueue>
 
 #include "Tools/ErrorHandler.h"
 
-class   QMutex;
 class   QFileInfo;
 
 class   Clip;
@@ -43,24 +41,15 @@ class Workspace : public QObject, public ErrorHandler
         static const QString        workspacePrefix;
 
         Workspace( Settings* settings );
-        ~Workspace();
         bool                        isInWorkspace( const QString &path );
         bool                        isInWorkspace( const Media *media );
 
-        bool                        copyToWorkspace( Media* media );
     private:
-        void                        startCopyWorker( Media *media );
         bool                        isInWorkspace( const QFileInfo &fInfo );
     private:
-        QQueue<Media*>              m_mediasToCopy;
-        QMutex                      *m_mediasToCopyMutex;
-        bool                        m_copyInProgress;
         QString                     m_workspaceDir;
 
-    public slots:
-        void                        clipLoaded( Clip* clip );
     private slots:
-        void                        copyTerminated( Media* media, QString dest );
         void                        workspaceChanged( const QVariant& newWorkspace );
 
     signals:
