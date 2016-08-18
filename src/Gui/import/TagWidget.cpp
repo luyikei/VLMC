@@ -72,7 +72,7 @@ TagWidget::clipSelected( Clip* clip )
         else
             static_cast<QPushButton*>(m_buttonList[i])->setChecked( false );
     }
-    connect( clip->media(), SIGNAL( metaDataComputed( const Media* ) ),
+    connect( clip->media().data(), SIGNAL( metaDataComputed( const Media* ) ),
              this, SLOT( setMetaTags() ) );
     connect( clip, SIGNAL( destroyed() ), this, SLOT( clipDestroyed() ) );
 }

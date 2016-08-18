@@ -39,7 +39,7 @@
 #include "Tools/VlmcDebug.h"
 #include <QVariant>
 
-Clip::Clip( Media *media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
+Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QString& uuid /*= QString()*/ ) :
         Workflow::Helper( uuid ),
         m_media( media ),
         m_input( std::move( m_media->input()->cut( begin, end ) ) ),
@@ -78,17 +78,15 @@ Clip::Clip( Clip *parent, qint64 begin /*= -1*/, qint64 end /*= -2*/,
 Clip::~Clip()
 {
     emit unloaded( this );
-    if ( isRootClip() == true )
-        delete m_media;
 }
 
-Media*
+QSharedPointer<Media>
 Clip::media()
 {
     return m_media;
 }
 
-const Media*
+QSharedPointer<const Media>
 Clip::media() const
 {
     return m_media;

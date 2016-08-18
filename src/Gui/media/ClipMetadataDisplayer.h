@@ -51,7 +51,7 @@ class ClipMetadataDisplayer : public QWidget
     private:
         Ui::ClipMetadataDisplayer       *m_ui;
         const Clip                      *m_watchedClip;
-        const Media                     *m_watchedMedia;
+        QSharedPointer<const Media>     m_watchedMedia;
 
     private slots:
         void                            metadataUpdated();

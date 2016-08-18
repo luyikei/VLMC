@@ -140,14 +140,16 @@ Media::input() const
     return m_input.get();
 }
 
-Media* Media::fromVariant( const QVariant& v )
+QSharedPointer<Media>
+Media::fromVariant( const QVariant& v )
 {
     bool ok = false;
     auto mediaId = v.toLongLong( &ok );
     if ( ok == false )
-        return nullptr;
+        return QSharedPointer<Media>{};
     auto mlMedia = Core::instance()->mediaLibrary()->media( mediaId );
-    return new Media( mlMedia );
+    //FIXME: Is QSharedPointer exception safe in case its constructor throws an exception?
+    return QSharedPointer<Media>( new Media( mlMedia ) );
 }
 
 #ifdef HAVE_GUI

@@ -32,6 +32,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QSharedPointer>
 
 class Clip;
 class Media;
@@ -50,10 +51,10 @@ class Library : public QObject
 public:
     Library( Settings* projectSettings );
     virtual ~Library();
-    virtual void    addMedia( Media* media );
+    virtual void    addMedia( QSharedPointer<Media> media );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
-    Media*          media( qint64 mediaId );
+    QSharedPointer<Media> media( qint64 mediaId );
     /**
      * @brief clip returns an existing clip
      * @param uuid the clip's UUID
@@ -71,7 +72,7 @@ private:
     bool        m_cleanState;
 
     Settings*   m_settings;
-    QHash<qint64, Media*>  m_media;
+    QHash<qint64, QSharedPointer<Media>>  m_media;
     /**
      * @brief m_clips   contains all the clips loaded in the library, without any
      *                  subclip hierarchy

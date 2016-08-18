@@ -91,7 +91,7 @@ Library::~Library()
 }
 
 void
-Library::addMedia( Media* media )
+Library::addMedia( QSharedPointer<Media> media )
 {
     setCleanState( false );
     if ( m_media.contains( media->id() ) )
@@ -122,7 +122,7 @@ Library::isInCleanState() const
     return m_cleanState;
 }
 
-Media*
+QSharedPointer<Media>
 Library::media( qint64 mediaId )
 {
     return m_media.value( mediaId );

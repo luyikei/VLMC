@@ -96,7 +96,7 @@ void
 ClipMetadataDisplayer::setWatchedClip( const Clip *clip )
 {
     if ( m_watchedMedia )
-        disconnect( m_watchedMedia );
+        disconnect( m_watchedMedia.data() );
     if ( m_watchedClip )
         disconnect( m_watchedClip );
 

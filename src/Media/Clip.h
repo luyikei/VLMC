@@ -31,6 +31,7 @@
 
 #include "Workflow/Helper.h"
 #include <QHash>
+#include <QSharedPointer>
 #include <QStringList>
 #include <QUuid>
 #include <QXmlStreamWriter>
@@ -63,7 +64,7 @@ class   Clip : public Workflow::Helper
          *                  the end of the parent will be used.
          *  \param  uuid    A unique identifier. If not given, one will be generated.
          */
-        Clip( Media *parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QStringLiteral() );
+        Clip( QSharedPointer<Media> parent, qint64 begin = 0, qint64 end = Backend::IInput::EndOfMedia, const QString &uuid = QStringLiteral() );
         /**
          *  \brief  Clones a Clip, potentially with a new begin and end.
          *
@@ -84,8 +85,8 @@ class   Clip : public Workflow::Helper
         /**
             \return         Returns the Media that the clip was basep uppon.
         */
-        Media*              media();
-        const Media*        media() const;
+        QSharedPointer<Media>       media();
+        QSharedPointer<const Media> media() const;
 
         Clip                *parent();
         const Clip          *parent() const;
@@ -151,8 +152,8 @@ class   Clip : public Workflow::Helper
         void                loadVariant(const QVariantMap& v );
 
     private:
-        Media*              m_media;
-        std::unique_ptr<Backend::IInput> m_input;
+        QSharedPointer<Media>               m_media;
+        std::unique_ptr<Backend::IInput>    m_input;
 
         QStringList         m_metaTags;
         QString             m_notes;

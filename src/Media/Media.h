@@ -97,7 +97,7 @@ public:
     Backend::IInput*         input();
     const Backend::IInput*   input() const;
 
-    static Media* fromVariant( const QVariant& v );
+    static QSharedPointer<Media> fromVariant( const QVariant& v );
 
 #ifdef HAVE_GUI
     // This has to be called from the GUI thread.
