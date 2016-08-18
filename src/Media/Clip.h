@@ -130,11 +130,6 @@ class   Clip : public Workflow::Helper
 
         bool                addSubclip( Clip* clip );
 
-        /**
-         *  \return         true if the clip is a child of the given clip uuid
-         */
-        bool                isChild( const QUuid& uuid ) const;
-
         QVariant            toVariant() const;
         QVariant            toVariantFull() const;
 
