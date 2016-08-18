@@ -53,7 +53,7 @@ public:
     virtual void    addMedia( Media* media );
     virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
-    Media*          media( const QString& mrl );
+    Media*          media( qint64 mediaId );
     /**
      * @brief clip returns an existing clip
      * @param uuid the clip's UUID
@@ -71,7 +71,7 @@ private:
     bool        m_cleanState;
 
     Settings*   m_settings;
-    QHash<QString, Media*>  m_media;
+    QHash<qint64, Media*>  m_media;
     /**
      * @brief m_clips   contains all the clips loaded in the library, without any
      *                  subclip hierarchy

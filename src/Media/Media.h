@@ -86,6 +86,7 @@ public:
     QString                     mrl() const;
     FileType                    fileType() const;
     QString                     title() const;
+    qint64                      id() const;
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }

@@ -109,6 +109,12 @@ Media::title() const
     return QString::fromStdString( m_mlMedia->title() );
 }
 
+qint64
+Media::id() const
+{
+    return m_mlMedia->id();
+}
+
 void
 Media::setBaseClip( Clip *clip )
 {

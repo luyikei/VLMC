@@ -94,11 +94,9 @@ void
 Library::addMedia( Media* media )
 {
     setCleanState( false );
-    if ( m_media.contains( media->mrl() ) )
+    if ( m_media.contains( media->id() ) )
         return;
-    //FIXME: This doesn't play well with a mountpoint change, we'd rather use the ML's media ID
-    // or an UUID that maps 1:1 to the ML media ID
-    m_media[media->mrl()] = media;
+    m_media[media->id()] = media;
 }
 
 bool
@@ -115,7 +113,6 @@ Library::addClip( Clip *clip )
         }
     }
     setCleanState( false );
-    m_media[clip->media()->mrl()] = clip->media();
     return true;
 }
 
@@ -126,9 +123,9 @@ Library::isInCleanState() const
 }
 
 Media*
-Library::media(const QString& mrl)
+Library::media( qint64 mediaId )
 {
-    return m_media.value( mrl );
+    return m_media.value( mediaId );
 }
 
 Clip*

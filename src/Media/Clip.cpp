@@ -341,8 +341,8 @@ Clip::fromVariant( const QVariant& v )
         return nullptr;
     }
 
-    auto mediaMrl = m["media"].toString();
-    if ( mediaMrl.isEmpty() == true )
+    auto mediaId = m["media"].toLongLong();
+    if ( mediaId == 0 )
     {
         vlmcWarning() << "Refusing to load an invalid root clip with no base media";
         return nullptr;
@@ -355,7 +355,7 @@ Clip::fromVariant( const QVariant& v )
         return nullptr;
     }
 
-    auto media = Core::instance()->library()->media( mediaMrl );
+    auto media = Core::instance()->library()->media( mediaId );
     auto clip = new Clip( media, 0, -1, uuid );
 
     clip->loadVariant( m );
