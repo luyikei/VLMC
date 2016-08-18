@@ -66,7 +66,6 @@ QPixmap*        Media::defaultSnapshot = nullptr;
 Media::Media( medialibrary::MediaPtr media )
     : m_input( nullptr )
     , m_mlMedia( media )
-    , m_baseClip( nullptr )
 {
     auto files = media->files();
     Q_ASSERT( files.size() > 0 );
@@ -81,6 +80,7 @@ Media::Media( medialibrary::MediaPtr media )
     if ( m_mlFile == nullptr )
         vlmcFatal( "No file representing media %s", media->title().c_str(), "was found" );
     m_input.reset( new Backend::MLT::MLTInput( m_mlFile->mrl().c_str() ) );
+    m_baseClip = new Clip( sharedFromThis() );
 }
 
 QString

@@ -34,6 +34,7 @@
 
 #include <memory>
 
+#include <QEnableSharedFromThis>
 #include <QString>
 #include <QObject>
 #include <QXmlStreamWriter>
@@ -61,7 +62,7 @@ class Clip;
 /**
   * Represents a basic container for media informations.
   */
-class       Media : public QObject
+class       Media : public QObject, public QEnableSharedFromThis<Media>
 {
     Q_OBJECT
 
