@@ -80,6 +80,7 @@ Media::Media( medialibrary::MediaPtr media )
     }
     if ( m_mlFile == nullptr )
         vlmcCritical() << "No file representing media", media->title(), "was found";
+    m_input.reset( new Backend::MLT::MLTInput( m_mlFile->mrl().c_str() ) );
 }
 
 QString
