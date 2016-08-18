@@ -91,8 +91,6 @@ class   Clip : public Workflow::Helper
         Clip                *parent();
         const Clip          *parent() const;
 
-        const QHash<QUuid, Clip*>& clips() const;
-
         /**
             \brief          Returns an unique Uuid for this clip (which is NOT the
                             parent's Uuid).
