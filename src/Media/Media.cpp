@@ -79,7 +79,7 @@ Media::Media( medialibrary::MediaPtr media )
         }
     }
     if ( m_mlFile == nullptr )
-        vlmcCritical() << "No file representing media", media->title(), "was found";
+        vlmcFatal( "No file representing media %s", media->title().c_str(), "was found" );
     m_input.reset( new Backend::MLT::MLTInput( m_mlFile->mrl().c_str() ) );
 }
 
