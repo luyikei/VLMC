@@ -219,7 +219,7 @@ MainWorkflow::clipInfo( const QString& uuid )
     {
         auto h = lClip->toVariant().toHash();
         h["length"] = (qint64)( lClip->input()->length() );
-        h["name"] = lClip->media()->fileName();
+        h["name"] = lClip->media()->title();
         h["audio"] = lClip->formats().testFlag( Clip::Audio );
         h["video"] = lClip->formats().testFlag( Clip::Video );
         if ( lClip->isRootClip() == true )
@@ -236,7 +236,7 @@ MainWorkflow::clipInfo( const QString& uuid )
 
     auto h = clip->toVariant().toHash();
     h["length"] = (qint64)( clip->input()->length() );
-    h["name"] = clip->media()->fileName();
+    h["name"] = clip->media()->title();
     h["audio"] = clip->formats().testFlag( Clip::Audio );
     h["video"] = clip->formats().testFlag( Clip::Video );
     h["position"] = m_sequenceWorkflow->position( uuid );
@@ -303,7 +303,7 @@ void
 MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
 {
     auto clip = m_sequenceWorkflow->clip( uuid );
-    auto worker = new ThumbnailWorker( uuid, clip->media()->fileInfo()->absoluteFilePath(),
+    auto worker = new ThumbnailWorker( uuid, clip->media()->mrl(),
                                        pos, clip->input()->width(), clip->input()->height() );
     auto t = new QThread;
     worker->moveToThread( t );

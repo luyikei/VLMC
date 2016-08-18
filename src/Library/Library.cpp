@@ -94,9 +94,11 @@ void
 Library::addMedia( Media* media )
 {
     setCleanState( false );
-    if ( m_media.contains( media->fileInfo()->absoluteFilePath() ) )
+    if ( m_media.contains( media->mrl() ) )
         return;
-    m_media[media->fileInfo()->absoluteFilePath()] = media;
+    //FIXME: This doesn't play well with a mountpoint change, we'd rather use the ML's media ID
+    // or an UUID that maps 1:1 to the ML media ID
+    m_media[media->mrl()] = media;
 }
 
 bool
@@ -105,7 +107,7 @@ Library::addClip( Clip *clip )
     foreach ( Clip* c, m_clips.values() )
     {
         if ( clip->uuid() == c->uuid() ||
-             ( clip->media()->fileInfo() == c->media()->fileInfo() &&
+             ( clip->media()->mrl() == c->media()->mrl() &&
                     ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
         {
             vlmcWarning() << "Clip already loaded.";
@@ -113,7 +115,7 @@ Library::addClip( Clip *clip )
         }
     }
     setCleanState( false );
-    m_media[clip->media()->fileInfo()->absoluteFilePath()] = clip->media();
+    m_media[clip->media()->mrl()] = clip->media();
     return true;
 }
 

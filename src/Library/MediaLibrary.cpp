@@ -50,6 +50,12 @@ MediaLibraryModel* MediaLibrary::model( MediaLibrary::MediaType type ) const
     Q_UNREACHABLE();
 }
 
+medialibrary::MediaPtr
+MediaLibrary::media( qint64 mediaId ) const
+{
+    return m_ml->media( mediaId );
+}
+
 void
 MediaLibrary::mlDirsChanged( const QVariant& value )
 {

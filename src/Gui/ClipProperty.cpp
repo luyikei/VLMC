@@ -45,7 +45,7 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
     connect( this, SIGNAL( accepted() ), this, SLOT( deleteLater() ) );
     connect( this, SIGNAL( rejected() ), this, SLOT( deleteLater() ) );
 
-    setWindowTitle( m_clip->media()->fileInfo()->fileName() + " " + tr( "properties" ) );
+    setWindowTitle( m_clip->media()->title() + " " + tr( "properties" ) );
     //Snapshot
     ui->snapshotLabel->setPixmap( m_clip->media()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
     //Metatags

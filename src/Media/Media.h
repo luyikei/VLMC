@@ -36,8 +36,12 @@
 
 #include <QString>
 #include <QObject>
-#include <QFileInfo>
 #include <QXmlStreamWriter>
+
+#include "Backend/MLT/MLTInput.h"
+
+#include <medialibrary/IMedia.h>
+#include <medialibrary/IFile.h>
 
 #ifdef HAVE_GUI
 #include <QPixmap>
@@ -77,20 +81,11 @@ public:
     static const QString        ImageExtensions;
     static const QString        streamPrefix;
 
-    Media( const QString& path );
-    virtual ~Media();
+    Media( medialibrary::MediaPtr media );
 
-    const QFileInfo             *fileInfo() const;
-    const QString               &fileName() const;
-    /**
-     *  \brief                  Set this media's path.
-     *
-     *  \param      path        The media path. This should be an absolute path.
-     */
-    void                        setFilePath( const QString& path );
-
+    QString                     mrl() const;
     FileType                    fileType() const;
-    void                        setFileType( FileType type );
+    QString                     title() const;
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
@@ -109,10 +104,8 @@ public:
 #endif
 protected:
     std::unique_ptr<Backend::IInput>         m_input;
-    QString                     m_mrl;
-    QFileInfo*                  m_fileInfo;
-    FileType                    m_fileType;
-    QString                     m_fileName;
+    medialibrary::MediaPtr      m_mlMedia;
+    medialibrary::FilePtr       m_mlFile;
     Clip*                       m_baseClip;
 
 #ifdef HAVE_GUI

@@ -46,6 +46,7 @@ public:
 
     explicit MediaLibrary( Settings* settings );
     MediaLibraryModel* model( MediaType type ) const;
+    medialibrary::MediaPtr media( qint64 mediaId ) const;
 
 signals:
     void    progressUpdated( int percent );

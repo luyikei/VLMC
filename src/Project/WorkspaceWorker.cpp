@@ -50,7 +50,7 @@ WorkspaceWorker::run()
 
 #ifdef Q_OS_UNIX
     errno = 0;
-    if ( link( m_media->fileInfo()->absoluteFilePath().toUtf8().constData(),
+    if ( link( m_media->mrl().toUtf8().constData(),
           m_dest.toUtf8().constData() ) < 0 )
     {
         vlmcDebug() << "Can't create hard link:" << strerror(errno) << "falling back to"
@@ -65,7 +65,7 @@ WorkspaceWorker::run()
 
     if ( hardLinkOk == false )
     {
-        QFile::copy( m_media->fileInfo()->absoluteFilePath(), m_dest );
+        QFile::copy( m_media->mrl(), m_dest );
         vlmcDebug() << "Media copied to:" << m_dest;
     }
     emit copied( m_media, m_dest );

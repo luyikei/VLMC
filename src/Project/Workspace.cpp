@@ -33,6 +33,8 @@
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
 
+#include <QFileInfo>
+
 const QString   Workspace::workspacePrefix = "workspace://";
 
 Workspace::Workspace(Settings *settings)
@@ -66,5 +68,5 @@ Workspace::isInWorkspace( const QString &path )
 bool
 Workspace::isInWorkspace(const Media *media)
 {
-    return isInWorkspace( *(media->fileInfo() ) );
+    return isInWorkspace( media->mrl() );
 }

@@ -33,16 +33,16 @@
 
 #include <QUrl>
 #include <QVariant>
+#include <QFileInfo>
 
 #include "Media.h"
 
 #include "Clip.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
+#include "Library/MediaLibrary.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
-#include "Backend/MLT/MLTInput.h"
-
 
 const QString   Media::VideoExtensions = "*.avi *.3gp *.amv *.asf *.divx *.dv *.flv *.gxf "
                                          "*.iso *.m1v *.m2v *.m2t *.m2ts *.m4v *.mkv *.mov "
@@ -63,40 +63,50 @@ const QString   Media::streamPrefix = "stream://";
 QPixmap*        Media::defaultSnapshot = nullptr;
 #endif
 
-Media::Media(const QString &path )
+Media::Media( medialibrary::MediaPtr media )
     : m_input( nullptr )
-    , m_fileInfo( nullptr )
+    , m_mlMedia( media )
     , m_baseClip( nullptr )
 {
-    setFilePath( path );
+    auto files = media->files();
+    Q_ASSERT( files.size() > 0 );
+    for ( const auto& f : files )
+    {
+        if ( f->type() == medialibrary::IFile::Type::Main )
+        {
+            m_mlFile = f;
+            break;
+        }
+    }
+    if ( m_mlFile == nullptr )
+        vlmcCritical() << "No file representing media", media->title(), "was found";
 }
 
-Media::~Media()
+QString
+Media::mrl() const
 {
-    delete m_fileInfo;
-}
-
-const QFileInfo*
-Media::fileInfo() const
-{
-    return m_fileInfo;
+    return QString::fromStdString( m_mlFile->mrl() );
 }
 
 Media::FileType
 Media::fileType() const
 {
-    return m_fileType;
+    switch ( m_mlMedia->type() )
+    {
+    case medialibrary::IMedia::Type::VideoType:
+        return Video;
+    case medialibrary::IMedia::Type::AudioType:
+        return Audio;
+    //FIXME: Unhandled Image type
+    default:
+        vlmcCritical() << "Unknown file type";
+    }
 }
 
-void Media::setFileType(Media::FileType type)
+QString
+Media::title() const
 {
-    m_fileType = type;
-}
-
-const QString&
-Media::fileName() const
-{
-    return m_fileName;
+    return QString::fromStdString( m_mlMedia->title() );
 }
 
 void
@@ -109,7 +119,7 @@ Media::setBaseClip( Clip *clip )
 QVariant
 Media::toVariant() const
 {
-    return QVariant( m_fileInfo->absoluteFilePath() );
+    return QVariant( static_cast<qlonglong>( m_mlMedia->id() ) );
 }
 
 Backend::IInput*
@@ -126,19 +136,12 @@ Media::input() const
 
 Media* Media::fromVariant( const QVariant& v )
 {
-    return new Media( QFileInfo( v.toString() ).absoluteFilePath() );
-}
-
-void
-Media::setFilePath( const QString &filePath )
-{
-    if ( m_fileInfo )
-        delete m_fileInfo;
-    m_fileInfo = new QFileInfo( filePath );
-    m_fileName = m_fileInfo->fileName();
-    m_mrl = "file:///" + QUrl::toPercentEncoding( filePath, "/" );
-
-    m_input.reset( new Backend::MLT::MLTInput( qPrintable( filePath ) ) );
+    bool ok = false;
+    auto mediaId = v.toLongLong( &ok );
+    if ( ok == false )
+        return nullptr;
+    auto mlMedia = Core::instance()->mediaLibrary()->media( mediaId );
+    return new Media( mlMedia );
 }
 
 #ifdef HAVE_GUI

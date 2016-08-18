@@ -55,7 +55,7 @@ ClipMetadataDisplayer::metadataUpdated()
     //Duration
     m_ui->durationValueLabel->setText( duration.toString( "hh:mm:ss" ) );
     //Filename || title
-    m_ui->nameValueLabel->setText( m_watchedMedia->fileInfo()->fileName() );
+    m_ui->nameValueLabel->setText( m_watchedMedia->title() );
     //Resolution
     m_ui->resolutionValueLabel->setText( QString::number( input->width() )
                                        + " x " + QString::number( input->height() ) );
@@ -65,7 +65,7 @@ ClipMetadataDisplayer::metadataUpdated()
     m_ui->nbVideoTracksValueLabel->setText( QString::number( input->nbVideoTracks() ) );
     m_ui->nbAudioTracksValueLabel->setText( QString::number( input->nbAudioTracks() ) );
     //Path:
-    m_ui->pathValueLabel->setText( m_watchedMedia->fileInfo()->absoluteFilePath() );
+    m_ui->pathValueLabel->setText( m_watchedMedia->mrl() );
 }
 
 void
