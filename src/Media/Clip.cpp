@@ -390,7 +390,6 @@ Clip::fromVariant( const QVariant& v, Clip* parent )
     auto begin = m["begin"].toLongLong();
     auto end = m["end"].toLongLong();
 
-    auto media = Core::instance()->library()->media( mediaMrl );
     auto clip = new Clip( parent, begin, end, uuid );
     clip->loadVariant( m );
     return clip;
