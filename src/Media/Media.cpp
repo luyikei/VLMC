@@ -116,6 +116,12 @@ Media::id() const
     return m_mlMedia->id();
 }
 
+Clip*
+Media::cut(qint64 begin, qint64 end)
+{
+    return new Clip( m_baseClip, begin, end );
+}
+
 QVariant
 Media::toVariant() const
 {

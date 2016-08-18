@@ -28,6 +28,7 @@
 #include <memory>
 
 #include "Media/Clip.h"
+#include "Media/Media.h"
 #include "Renderer/ClipRenderer.h"
 #include "Backend/MLT/MLTOutput.h"
 #include "PreviewWidget.h"
@@ -240,6 +241,7 @@ PreviewWidget::createNewClipFromMarkers()
     Clip* clip = clipRenderer->getClip();
     if ( clip == nullptr )
         return ;
+    auto media = clip->media();
     qint64  beg = m_ui->rulerWidget->getMarker( PreviewRuler::Start );
     qint64  end = m_ui->rulerWidget->getMarker( PreviewRuler::Stop );
 
@@ -250,7 +252,7 @@ PreviewWidget::createNewClipFromMarkers()
         return ;
 
     beg = beg < 0 ? 0 : beg;
-    Clip*   part = new Clip( clip, beg, end );
+    Clip*   part = media->cut( beg, end );
 
     //Adding the newly created clip to the media
     if ( clip->addSubclip( part ) == false )

@@ -91,6 +91,13 @@ public:
 
     Clip*                       baseClip() { return m_baseClip; }
     const Clip*                 baseClip() const { return m_baseClip; }
+    /**
+     * @brief cut   Creates a clip to represent a cut of a media
+     * @param begin The first frame of the cut
+     * @param end   The last frame of the cut
+     * @return      A new Clip, representing the media from [begin] to [end]
+     */
+    Clip*                       cut( qint64 begin, qint64 end );
 
     QVariant                    toVariant() const;
 
