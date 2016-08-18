@@ -115,13 +115,6 @@ Media::id() const
     return m_mlMedia->id();
 }
 
-void
-Media::setBaseClip( Clip *clip )
-{
-    Q_ASSERT( m_baseClip == nullptr );
-    m_baseClip = clip;
-}
-
 QVariant
 Media::toVariant() const
 {
