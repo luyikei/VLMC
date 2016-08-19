@@ -28,9 +28,9 @@
 
 using namespace Workflow;
 
-Helper::Helper( const QString &uuid/* = QString()*/ )
+Helper::Helper( const QUuid& uuid/* = QUuid()*/ )
 {
-    if ( uuid.isEmpty() == true )
+    if ( uuid.isNull() == true )
         m_uuid = QUuid::createUuid();
     else
         m_uuid = uuid;
