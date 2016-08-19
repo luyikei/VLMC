@@ -119,7 +119,7 @@ class   Clip : public Workflow::Helper
         void                loadFilters(const QVariantMap& v );
 
     private:
-        QSharedPointer<Media>               m_media;
+        QWeakPointer<Media>                 m_media;
         std::unique_ptr<Backend::IInput>    m_input;
 
         QStringList         m_metaTags;
