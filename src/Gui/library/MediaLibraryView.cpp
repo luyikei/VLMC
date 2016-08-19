@@ -26,9 +26,14 @@
 
 #include "MediaLibraryView.h"
 
+#include "Library/Library.h"
 #include "Library/MediaLibrary.h"
 #include "Library/MediaLibraryModel.h"
 #include "Main/Core.h"
+#include "Media/Media.h"
+#include "Media/Clip.h"
+
+#include <medialibrary/IMedia.h>
 
 #include <QBoxLayout>
 #include <QListView>
@@ -66,16 +71,22 @@ MediaLibraryView::container()
 }
 
 void
-MediaLibraryView::startDrag( const QString& mediaPath, const QString& thumbnailPath )
+MediaLibraryView::startDrag( qint64 mediaId )
 {
-    Q_UNUSED( mediaPath )
-
     QDrag* drag = new QDrag( this );
     QMimeData* mimeData = new QMimeData;
 
-    drag->setMimeData( mimeData );
-    drag->setPixmap( QPixmap( thumbnailPath.isEmpty() ? QStringLiteral( ":/images/vlmc" ) : thumbnailPath )
-                     .scaled( 100, 100, Qt::KeepAspectRatio ) );
+    QSharedPointer<Media> media = Core::instance()->library()->media( mediaId );
+    if ( media == nullptr ) {
+        media.reset( new Media( Core::instance()->mediaLibrary()->model( MediaLibrary::MediaType::Video )->findMedia( mediaId ) ) );
+        Core::instance()->library()->addMedia( media );
+    }
 
+    mimeData->setData( QStringLiteral( "vlmc/uuid" ), media->baseClip()->uuid().toByteArray() );
+
+    drag->setMimeData( mimeData );
+    auto thumbnailPath = media->snapshot();
+    drag->setPixmap( QPixmap( thumbnailPath.isEmpty() ? QStringLiteral( ":/images/vlmc" ) :
+                                thumbnailPath ).scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec();
 }

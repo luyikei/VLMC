@@ -60,6 +60,7 @@ Rectangle {
                         duration: model.duration
                         thumbnailPath: model.thumbnailPath
                         title: model.title
+                        mediaId: model.id
                     }
                 }
             }

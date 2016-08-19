@@ -9,6 +9,7 @@ Rectangle {
     property string thumbnailPath
     property string title
     property int duration
+    property int mediaId
 
     Image {
         id: thumbnail
@@ -56,7 +57,7 @@ Rectangle {
         id: dragArea
         anchors.fill: parent
         onPressed: {
-            view.startDrag( "", thumbnailPath );
+            view.startDrag( mediaId );
         }
         onClicked: gridView.currentIndex = index
     }

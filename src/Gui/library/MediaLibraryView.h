@@ -37,7 +37,7 @@ class MediaLibraryView : public QObject
         QWidget*    container();
 
     public slots:
-        void    startDrag( const QString& mediaPath, const QString& thumbnailPath );
+        void    startDrag( qint64 mediaId );
 
     private:
         QWidget*    m_container;
