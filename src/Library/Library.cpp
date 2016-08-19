@@ -117,15 +117,10 @@ Library::media( qint64 mediaId )
 }
 
 Clip*
-Library::clip( const QString& uuid )
-{
-    return m_clips.value( uuid );
-}
-
-Clip*
 Library::clip( const QUuid& uuid )
 {
-    return clip( uuid.toString() );
+    return m_clips.value( uuid );
+
 }
 
 void

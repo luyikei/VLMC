@@ -61,7 +61,6 @@ public:
      * @return The clip if it exists, or nullptr
      * This can be any clip, the given UUID doesn't have to refer to a root clip
      */
-    Clip*           clip( const QString& uuid );
     Clip*           clip( const QUuid& uuid );
     void            clear();
 
