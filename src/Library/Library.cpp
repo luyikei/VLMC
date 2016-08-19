@@ -85,6 +85,15 @@ Library::addMedia( QSharedPointer<Media> media )
     if ( m_media.contains( media->id() ) )
         return;
     m_media[media->id()] = media;
+    connect( media.data(), &Media::subclipAdded, [this]( Clip* c ) {
+        m_clips[c->uuid()] = c;
+        setCleanState( false );
+    });
+    connect( media.data(), &Media::subclipRemoved, [this]( const QUuid& uuid ) {
+        m_clips.remove( uuid );
+        // This seems wrong, for instance if we undo a clip splitting
+        setCleanState( false );
+    } );
 }
 
 bool
