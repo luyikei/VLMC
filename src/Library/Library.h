@@ -60,7 +60,7 @@ public:
      * @return The clip if it exists, or nullptr
      * This can be any clip, the given UUID doesn't have to refer to a root clip
      */
-    Clip*           clip( const QUuid& uuid );
+    QSharedPointer<Clip>        clip( const QUuid& uuid );
     void            clear();
 
 private:
@@ -75,7 +75,7 @@ private:
      * @brief m_clips   contains all the clips loaded in the library, without any
      *                  subclip hierarchy
      */
-    QHash<QUuid, Clip*>     m_clips;
+    QHash<QUuid, QSharedPointer<Clip>>      m_clips;
 
     void        preSave();
     void        postLoad();

@@ -57,14 +57,14 @@ class SequenceWorkflow : public QObject
         ~SequenceWorkflow();
 
         // Clip, Track Id, and Position
-        using ClipTuple = std::tuple<std::shared_ptr<Clip>, quint32, qint64>;
+        using ClipTuple = std::tuple<QSharedPointer<Clip>, quint32, qint64>;
 
-        bool                    addClip( std::shared_ptr<Clip> const& clip, quint32 trackId, qint32 pos );
+        bool                    addClip( QSharedPointer<Clip> const& clip, quint32 trackId, qint32 pos );
         QString                 addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip );
         bool                    moveClip( const QUuid& uuid, quint32 trackId, qint64 pos );
         bool                    resizeClip( const QUuid& uuid, qint64 newBegin,
                                             qint64 newEnd, qint64 newPos );
-        std::shared_ptr<Clip>   removeClip( const QUuid& uuid );
+        QSharedPointer<Clip>    removeClip( const QUuid& uuid );
         bool                    linkClips( const QUuid& uuidA, const QUuid& uuidB );
         bool                    unlinkClips( const QUuid& uuidA, const QUuid& uuidB );
 
@@ -72,7 +72,7 @@ class SequenceWorkflow : public QObject
         void                    loadFromVariant( const QVariant& variant );
         void                    clear();
 
-        std::shared_ptr<Clip>   clip( const QUuid& uuid );
+        QSharedPointer<Clip>    clip( const QUuid& uuid );
         quint32                 trackId( const QUuid& uuid );
         qint32                  position( const QUuid& uuid );
 

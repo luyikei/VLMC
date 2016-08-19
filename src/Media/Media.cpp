@@ -116,10 +116,10 @@ Media::id() const
     return m_mlMedia->id();
 }
 
-Clip*
-Media::cut(qint64 begin, qint64 end)
+QSharedPointer<Clip>
+Media::cut( qint64 begin, qint64 end )
 {
-    auto clip = new Clip( sharedFromThis(), begin, end );
+    auto clip = QSharedPointer<Clip>( new Clip( sharedFromThis(), begin, end ) );
     m_clips[clip->uuid()] = clip;
     emit subclipAdded( clip );
     return clip;
@@ -221,18 +221,18 @@ Media::snapshot()
     return m_snapshot.isNull() ? *Media::defaultSnapshot : m_snapshot;
 }
 
-Clip*
+QSharedPointer<Clip>
 Media::loadSubclip( const QVariantMap& m )
 {
     if ( m.contains( "uuid" ) == false || m.contains( "begin" ) == false || m.contains( "end" ) == false )
     {
         vlmcWarning() << "Invalid clip provided:" << m;
-        return nullptr;
+        return {};
     }
     const auto& uuid = m["uuid"].toUuid();
     const auto  begin = m["begin"].toLongLong();
     const auto  end = m["end"].toLongLong();
-    auto clip = new Clip( sharedFromThis(), begin, end, uuid );
+    auto clip = QSharedPointer<Clip>( new Clip( sharedFromThis(), begin, end, uuid ) );
     //FIXME: This shouldn't be loaded from the library
     clip->loadFilters( m );
 

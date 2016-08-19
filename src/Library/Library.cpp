@@ -85,7 +85,7 @@ Library::addMedia( QSharedPointer<Media> media )
     if ( m_media.contains( media->id() ) )
         return;
     m_media[media->id()] = media;
-    connect( media.data(), &Media::subclipAdded, [this]( Clip* c ) {
+    connect( media.data(), &Media::subclipAdded, [this]( QSharedPointer<Clip> c ) {
         m_clips[c->uuid()] = c;
         setCleanState( false );
     });
@@ -108,8 +108,7 @@ Library::media( qint64 mediaId )
     return m_media.value( mediaId );
 }
 
-Clip*
-Library::clip( const QUuid& uuid )
+QSharedPointer<Clip> Library::clip( const QUuid& uuid )
 {
     return m_clips.value( uuid );
 

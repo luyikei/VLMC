@@ -99,7 +99,7 @@ public:
      * @param end   The last frame of the cut
      * @return      A new Clip, representing the media from [begin] to [end]
      */
-    Clip*                       cut( qint64 begin, qint64 end );
+    QSharedPointer<Clip>        cut( qint64 begin, qint64 end );
     void                        removeSubclip( const QUuid& uuid );
 
     QVariant                    toVariant() const;
@@ -115,14 +115,14 @@ public:
 #endif
 
 private:
-    Clip*                       loadSubclip( const QVariantMap& m );
+    QSharedPointer<Clip>        loadSubclip( const QVariantMap& m );
 
 protected:
     std::unique_ptr<Backend::IInput>         m_input;
     medialibrary::MediaPtr      m_mlMedia;
     medialibrary::FilePtr       m_mlFile;
     Clip*                       m_baseClip;
-    QHash<QUuid, Clip*>         m_clips;
+    QHash<QUuid, QSharedPointer<Clip>>      m_clips;
 
 #ifdef HAVE_GUI
     static QPixmap*             defaultSnapshot;
@@ -134,7 +134,7 @@ signals:
      *  \brief          This signal should be emitted to tell a new sublip have been added
      *  \param Clip     The newly added subclip
      */
-    void    subclipAdded( Clip* );
+    void    subclipAdded( QSharedPointer<Clip> );
     /**
      *  \brief This signal should be emiteted when a subclip has been removed
      *  This signal pass a QUuid as the clip may be deleted when the signal reaches its

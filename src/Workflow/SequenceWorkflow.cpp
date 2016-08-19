@@ -64,7 +64,7 @@ SequenceWorkflow::~SequenceWorkflow()
 }
 
 bool
-SequenceWorkflow::addClip( std::shared_ptr<Clip> const& clip, quint32 trackId, qint32 pos )
+SequenceWorkflow::addClip( QSharedPointer<Clip> const& clip, quint32 trackId, qint32 pos )
 {
     auto ret = trackFromFormats( trackId, clip->formats() )->insertAt( *clip->input(), pos );
     if ( ret == false )
@@ -76,15 +76,12 @@ SequenceWorkflow::addClip( std::shared_ptr<Clip> const& clip, quint32 trackId, q
 QString
 SequenceWorkflow::addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip )
 {
-    Clip* clip = Core::instance()->library()->clip( uuid );
-    if ( clip == nullptr )
+    auto newClip = Core::instance()->library()->clip( uuid );
+    if ( newClip == nullptr )
     {
         vlmcCritical() << "Couldn't find an acceptable parent to be added.";
         return QUuid().toString();
     }
-
-    //FIXME: This will blow up:
-    auto newClip = std::shared_ptr<Clip>( clip );
 
     if ( isAudioClip == true )
         newClip->setFormats( Clip::Audio );
@@ -150,14 +147,14 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     return ret;
 }
 
-std::shared_ptr<Clip>
+QSharedPointer<Clip>
 SequenceWorkflow::removeClip( const QUuid& uuid )
 {
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
         vlmcCritical() << "Couldn't find a clip " << uuid;
-        return std::shared_ptr<Clip>( nullptr );
+        return {};
     }
     auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
     auto trackId = std::get<ClipTupleIndex::TrackId>( it.value() );
@@ -266,12 +263,12 @@ SequenceWorkflow::clear()
     }
 }
 
-std::shared_ptr<Clip>
+QSharedPointer<Clip>
 SequenceWorkflow::clip( const QUuid& uuid )
 {
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
-        return std::shared_ptr<Clip>( nullptr );
+        return {};
     return std::get<ClipTupleIndex::Clip>( it.value() );
 }
 

@@ -31,6 +31,8 @@
 #endif
 #include <QObject>
 #include <QUuid>
+#include <QSharedPointer>
+
 #include <memory>
 
 class   Clip;
@@ -83,12 +85,12 @@ namespace Commands
                 virtual void    internalUndo();
                 virtual void    retranslate();
 
-                std::shared_ptr<::Clip>     newClip();
+                QSharedPointer<::Clip> newClip();
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
                 QUuid                       m_uuid;
-                std::shared_ptr<::Clip>     m_clip;
+                QSharedPointer<::Clip>      m_clip;
                 quint32                     m_trackId;
                 qint64                      m_pos;
                 bool                        m_isAudioClip;
@@ -104,7 +106,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                std::shared_ptr<::Clip>     m_clip;
+                QSharedPointer<::Clip>            m_clip;
                 quint32         m_newTrackId;
                 quint32         m_oldTrackId;
                 qint64          m_newPos;
@@ -121,7 +123,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                std::shared_ptr<::Clip>           m_clip;
+                QSharedPointer<::Clip>            m_clip;
                 quint32         m_trackId;
                 qint64          m_pos;
         };
@@ -144,7 +146,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                std::shared_ptr<::Clip>     m_clip;
+                QSharedPointer<::Clip>      m_clip;
                 qint64                      m_newBegin;
                 qint64                      m_oldBegin;
                 qint64                      m_newEnd;
@@ -163,9 +165,9 @@ namespace Commands
                 virtual void    retranslate();
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                std::shared_ptr<::Clip>           m_toSplit;
+                QSharedPointer<::Clip>            m_toSplit;
                 quint32                           m_trackId;
-                std::shared_ptr<::Clip>           m_newClip;
+                QSharedPointer<::Clip>            m_newClip;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;
