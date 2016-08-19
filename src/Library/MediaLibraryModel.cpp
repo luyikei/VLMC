@@ -48,6 +48,17 @@ void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
     endInsertRows();
 }
 
+medialibrary::MediaPtr
+MediaLibraryModel::findMedia( qint64 mediaId )
+{
+    auto it = std::find_if( begin( m_media ), end( m_media ), [mediaId](medialibrary::MediaPtr m) {
+        return m->id() == mediaId;
+    });
+    if ( it == end( m_media ) )
+        return nullptr;
+    return *it;
+}
+
 void MediaLibraryModel::updateMedia( medialibrary::MediaPtr media )
 {
     auto m = createIndex( media->id(), 0 );

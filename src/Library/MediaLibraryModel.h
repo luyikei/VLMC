@@ -47,6 +47,7 @@ public:
                                 QObject *parent = 0 );
 
     void addMedia( medialibrary::MediaPtr media );
+    medialibrary::MediaPtr findMedia( qint64 mediaId );
     void updateMedia( medialibrary::MediaPtr media );
     bool removeMedia( int64_t media );
     void refresh();
