@@ -67,7 +67,8 @@ Media::Media( medialibrary::MediaPtr media, const QUuid& uuid /* = QUuid() */ )
     Q_ASSERT( files.size() > 0 );
     for ( const auto& f : files )
     {
-        if ( f->type() == medialibrary::IFile::Type::Main )
+        if ( f->type() == medialibrary::IFile::Type::Entire ||
+             f->type() == medialibrary::IFile::Type::Main )
         {
             m_mlFile = f;
             break;
