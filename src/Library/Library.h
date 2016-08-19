@@ -51,7 +51,7 @@ class Library : public QObject
 public:
     Library( Settings* projectSettings );
     virtual ~Library();
-    virtual void    addMedia( QSharedPointer<Media> media );
+    void            addMedia( QSharedPointer<Media> media );
     bool            isInCleanState() const;
     QSharedPointer<Media> media( qint64 mediaId );
     /**
