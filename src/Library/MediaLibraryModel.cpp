@@ -114,6 +114,8 @@ QVariant MediaLibraryModel::data( const QModelIndex &index, int role ) const
         return QVariant( QString::fromStdString( m->thumbnail() ) );
     case Roles::Duration:
         return QVariant::fromValue( m->duration() );
+    case Roles::Id:
+        return QVariant::fromValue( m->id() );
     case Qt::UserRole:
         return QVariant::fromValue( m );
     default:
@@ -129,7 +131,8 @@ MediaLibraryModel::roleNames() const
     return {
         { Roles::Title, "title" },
         { Roles::ThumbnailPath, "thumbnailPath" },
-        { Roles::Duration, "duration" }
+        { Roles::Duration, "duration" },
+        { Roles::Id, "id" }
     };
 }
 

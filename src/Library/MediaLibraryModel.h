@@ -41,6 +41,7 @@ public:
         Title = Qt::UserRole + 1,
         ThumbnailPath,
         Duration,
+        Id,
     };
 
     explicit MediaLibraryModel( medialibrary::IMediaLibrary& ml, medialibrary::IMedia::Type type,
