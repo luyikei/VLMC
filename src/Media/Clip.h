@@ -115,9 +115,6 @@ class   Clip : public Workflow::Helper
 
         Backend::IInput* input();
 
-        //FIXME: This shouldn't be represented in the Library
-        void                loadFilters(const QVariantMap& v );
-
     private:
         QWeakPointer<Media>                 m_media;
         std::unique_ptr<Backend::IInput>    m_input;

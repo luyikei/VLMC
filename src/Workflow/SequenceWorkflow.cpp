@@ -208,9 +208,13 @@ SequenceWorkflow::toVariant() const
         auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
         auto trackId = std::get<ClipTupleIndex::TrackId>( it.value() );
         auto position = std::get<ClipTupleIndex::Position>( it.value() );
-        auto    h = clip->toVariant().toHash();
-        h.insert( "position", position );
-        h.insert( "trackId", trackId );
+        QVariantHash h {
+            { "uuid", clip->uuid() },
+            { "position", position },
+            { "trackId", trackId },
+            { "filters", EffectHelper::toVariant( clip->input() ) }
+        };
+        //FIXME: Missing linking informations
         l << h;
     }
     QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_multitrack ) } };
@@ -222,31 +226,25 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
 {
     for ( auto& var : variant.toMap()["clips"].toList() )
     {
-        //FIXME!!!
+        auto m = var.toMap();
+        auto clip = Core::instance()->library()->clip( m["uuid"].toUuid() );
 
-//        auto m = var.toMap();
-//        auto parentClip = Core::instance()->library()->clip( m["parent"].toString() );
+        if ( clip == nullptr )
+        {
+            vlmcCritical() << "Couldn't find an acceptable parent to be added.";
+            continue;
+        }
 
-//        if ( parentClip == nullptr )
-//        {
-//            vlmcCritical() << "Couldn't find an acceptable parent to be added.";
-//            continue;
-//        }
+        addClip( clip, m["trackId"].toUInt(), m["position"].toLongLong() );
 
-//        auto c = std::make_shared<Clip>( parentClip, m["begin"].toLongLong(), m["end"].toLongLong() );
-//        c->setUuid( m["uuid"].toString() );
-//        c->setFormats( (Clip::Formats)m["formats"].toInt() );
+        auto isLinked = m["linked"].toBool();
+        clip->setLinked( isLinked );
+        if ( isLinked == true )
+            clip->setLinkedClipUuid( m["linkedClip"].toString() );
 
-//        addClip( c, m["trackId"].toUInt(), m["position"].toLongLong() );
+        EffectHelper::loadFromVariant( m["filters"], clip->input() );
 
-//        auto isLinked = m["linked"].toBool();
-//        c->setLinked( isLinked );
-//        if ( isLinked == true )
-//            c->setLinkedClipUuid( m["linkedClip"].toString() );
-
-//        EffectHelper::loadFromVariant( m["filters"], c->input() );
-
-//        emit Core::instance()->workflow()->clipAdded( c->uuid().toString() );
+        emit Core::instance()->workflow()->clipAdded( clip->uuid().toString() );
     }
     EffectHelper::loadFromVariant( variant.toMap()["filters"], m_multitrack );
 }

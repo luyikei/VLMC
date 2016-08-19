@@ -206,7 +206,6 @@ Clip::toVariant() const
     }
     else
         h.insert( "linked", false );
-    h.insert( "filters", EffectHelper::toVariant( m_input.get() ) );
     return QVariant( h );
 
 }
@@ -229,15 +228,4 @@ Backend::IInput*
 Clip::input()
 {
     return m_input.get();
-}
-
-void
-Clip::loadFilters( const QVariantMap& m )
-{
-    if ( m.contains( "filters" ) )
-    {
-        const auto& filters = m["filters"].toList();
-        for ( const auto& f : filters )
-            EffectHelper::loadFromVariant( f, input() );
-    }
 }
