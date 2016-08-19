@@ -220,6 +220,7 @@ Media::snapshot()
 
     return m_snapshot.isNull() ? *Media::defaultSnapshot : m_snapshot;
 }
+#endif
 
 QSharedPointer<Clip>
 Media::loadSubclip( const QVariantMap& m )
@@ -240,4 +241,3 @@ Media::loadSubclip( const QVariantMap& m )
     emit subclipAdded( clip );
     return clip;
 }
-#endif
