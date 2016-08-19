@@ -52,7 +52,6 @@ public:
     Library( Settings* projectSettings );
     virtual ~Library();
     virtual void    addMedia( QSharedPointer<Media> media );
-    virtual bool    addClip( Clip *clip );
     bool            isInCleanState() const;
     QSharedPointer<Media> media( qint64 mediaId );
     /**

@@ -88,23 +88,6 @@ Library::addMedia( QSharedPointer<Media> media )
 }
 
 bool
-Library::addClip( Clip *clip )
-{
-    foreach ( Clip* c, m_clips.values() )
-    {
-        if ( clip->uuid() == c->uuid() ||
-             ( clip->media()->mrl() == c->media()->mrl() &&
-                    ( clip->begin() == c->begin() && clip->end() == c->end() ) ) )
-        {
-            vlmcWarning() << "Clip already loaded.";
-            return false;
-        }
-    }
-    setCleanState( false );
-    return true;
-}
-
-bool
 Library::isInCleanState() const
 {
     return m_cleanState;
