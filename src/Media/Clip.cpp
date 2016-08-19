@@ -43,7 +43,7 @@ Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Ba
         //FIXME: uuid -> QString conversion should be removed, since the helper stores the UUID as a QUuid
         Workflow::Helper( uuid.toString() ),
         m_media( media ),
-        m_input( std::move( media->input()->cut( begin, end ) ) ),
+        m_input( media->input()->cut( begin, end ) ),
         m_isLinked( false )
 {
     Formats f;
