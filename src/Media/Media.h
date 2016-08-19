@@ -46,11 +46,6 @@
 #include <medialibrary/IMedia.h>
 #include <medialibrary/IFile.h>
 
-#ifdef HAVE_GUI
-#include <QPixmap>
-#include <QImage>
-#endif
-
 namespace Backend
 {
 class   IInput;
@@ -109,10 +104,7 @@ public:
 
     static QSharedPointer<Media> fromVariant( const QVariant& v );
 
-#ifdef HAVE_GUI
-    // This has to be called from the GUI thread.
-    QPixmap&                    snapshot();
-#endif
+    QString                    snapshot();
 
 private:
     QSharedPointer<Clip>        loadSubclip( const QVariantMap& m );
@@ -123,11 +115,6 @@ protected:
     medialibrary::FilePtr       m_mlFile;
     Clip*                       m_baseClip;
     QHash<QUuid, QSharedPointer<Clip>>      m_clips;
-
-#ifdef HAVE_GUI
-    static QPixmap*             defaultSnapshot;
-    QPixmap                     m_snapshot;
-#endif
 
 signals:
     /**

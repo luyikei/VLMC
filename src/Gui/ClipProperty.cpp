@@ -47,7 +47,8 @@ ClipProperty::ClipProperty( Clip* clip, QWidget *parent ) :
 
     setWindowTitle( m_clip->media()->title() + " " + tr( "properties" ) );
     //Snapshot
-    ui->snapshotLabel->setPixmap( m_clip->media()->snapshot().scaled( 128, 128, Qt::KeepAspectRatio ) );
+    QPixmap snapshot( m_clip->media()->snapshot() );
+    ui->snapshotLabel->setPixmap( snapshot.scaled( 128, 128, Qt::KeepAspectRatio ) );
     //Metatags
     const QPushButton* button = ui->buttonBox->button( QDialogButtonBox::Apply );
     Q_ASSERT( button != nullptr);

@@ -59,10 +59,6 @@ const QString   Media::AudioExtensions = "*.a52 *.aac *.ac3 *.aiff *.amr *.aob *
                                          "*.wma *.wv *.xa *.xm";
 const QString   Media::streamPrefix = "stream://";
 
-#ifdef HAVE_GUI
-QPixmap*        Media::defaultSnapshot = nullptr;
-#endif
-
 Media::Media( medialibrary::MediaPtr media, const QUuid& uuid /* = QUuid() */ )
     : m_input( nullptr )
     , m_mlMedia( media )
@@ -201,26 +197,11 @@ Media::fromVariant( const QVariant& v )
     return media;
 }
 
-#ifdef HAVE_GUI
-QPixmap&
+QString
 Media::snapshot()
 {
-    if ( Media::defaultSnapshot == nullptr )
-        Media::defaultSnapshot = new QPixmap( ":/images/vlmc" );
-
-    if ( m_snapshot.isNull() == true ) {
-        int height = 200;
-        int width = height * m_input->aspectRatio();
-        m_input->setPosition( m_input->length() / 3 );
-        QImage img( m_input->image( width, height ), width, height,
-                    QImage::Format_RGBA8888, []( void* buf ){ delete[] (uchar*) buf; } );
-        m_input->setPosition( 0 );
-        m_snapshot.convertFromImage( img );
-    }
-
-    return m_snapshot.isNull() ? *Media::defaultSnapshot : m_snapshot;
+    return QString::fromStdString( m_mlMedia->thumbnail() );
 }
-#endif
 
 QSharedPointer<Clip>
 Media::loadSubclip( const QVariantMap& m )
