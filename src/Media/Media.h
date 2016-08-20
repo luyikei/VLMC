@@ -86,7 +86,8 @@ public:
     QString                     title() const;
     qint64                      id() const;
 
-    Clip*                       baseClip() { return m_baseClip; }
+    Clip*                       baseClip();
+
     /**
      * @brief cut   Creates a clip to represent a cut of a media
      * @param begin The first frame of the cut
@@ -112,7 +113,8 @@ protected:
     std::unique_ptr<Backend::IInput>         m_input;
     medialibrary::MediaPtr      m_mlMedia;
     medialibrary::FilePtr       m_mlFile;
-    Clip*                       m_baseClip;
+    QUuid                       m_baseClipUuid;
+    mutable Clip*               m_baseClip;
     QHash<QUuid, QSharedPointer<Clip>>      m_clips;
 
 signals:
