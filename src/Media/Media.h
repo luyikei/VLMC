@@ -87,7 +87,6 @@ public:
     qint64                      id() const;
 
     Clip*                       baseClip() { return m_baseClip; }
-    const Clip*                 baseClip() const { return m_baseClip; }
     /**
      * @brief cut   Creates a clip to represent a cut of a media
      * @param begin The first frame of the cut
