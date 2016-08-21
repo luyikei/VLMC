@@ -162,7 +162,6 @@ Project::saveAs( const QString& fileName )
     delete m_projectFile;
     m_projectFile = new QFile( fileName );
     saveProject( fileName );
-    emit projectSaved();
 }
 
 void
