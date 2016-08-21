@@ -85,6 +85,7 @@ Library::addMedia( QSharedPointer<Media> media )
     if ( m_media.contains( media->id() ) )
         return;
     m_media[media->id()] = media;
+    m_clips[media->baseClip()->uuid()] = media->baseClip();
     connect( media.data(), &Media::subclipAdded, [this]( QSharedPointer<Clip> c ) {
         m_clips[c->uuid()] = c;
         setCleanState( false );
