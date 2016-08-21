@@ -119,9 +119,12 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     else
     {
         ret = track->move( std::get<ClipTupleIndex::Position>( it.value() ), pos );
+        if ( ret == true )
+        {
+            m_clips.erase( it );
+            m_clips.insert( uuid, std::make_tuple( clip, trackId, pos ) );
+        }
     }
-    m_clips.erase( it );
-    m_clips.insert( uuid, std::make_tuple( clip, trackId, pos ) );
     // TODO: If we detect collision too strictly, there will be a problem if we want to move multiple
     //       clips at the same time.
     return ret;
