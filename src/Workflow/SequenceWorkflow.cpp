@@ -33,6 +33,7 @@
 #include "Main/Core.h"
 #include "Library/Library.h"
 #include "Tools/VlmcDebug.h"
+#include "Media/Media.h"
 
 SequenceWorkflow::SequenceWorkflow( size_t trackCount )
     : m_multitrack( new Backend::MLT::MLTMultiTrack )
@@ -76,10 +77,16 @@ SequenceWorkflow::addClip( QSharedPointer<Clip> const& clip, quint32 trackId, qi
 QString
 SequenceWorkflow::addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip )
 {
-    auto newClip = Core::instance()->library()->clip( uuid );
-    if ( newClip == nullptr )
+    auto parentClip = Core::instance()->library()->clip( uuid );
+    if ( parentClip == nullptr )
     {
         vlmcCritical() << "Couldn't find an acceptable parent to be added.";
+        return QUuid().toString();
+    }
+    auto newClip = parentClip->media()->cut( parentClip->begin(), parentClip->end() );
+    if ( newClip == nullptr )
+    {
+        vlmcCritical() << "Couldn't duplicate the parent clip.";
         return QUuid().toString();
     }
 
