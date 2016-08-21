@@ -125,7 +125,7 @@ Media::baseClip()
 QSharedPointer<Clip>
 Media::cut( qint64 begin, qint64 end )
 {
-    auto clip = QSharedPointer<Clip>( new Clip( sharedFromThis(), begin, end ) );
+    auto clip = QSharedPointer<Clip>::create( sharedFromThis(), begin, end );
     m_clips[clip->uuid()] = clip;
     emit subclipAdded( clip );
     return clip;
@@ -193,7 +193,7 @@ Media::fromVariant( const QVariant& v )
     auto uuid = m["uuid"].toUuid();
     auto mlMedia = Core::instance()->mediaLibrary()->media( mediaId );
     //FIXME: Is QSharedPointer exception safe in case its constructor throws an exception?
-    auto media = QSharedPointer<Media>( new Media( mlMedia, uuid ) );
+    auto media = QSharedPointer<Media>::create( mlMedia, uuid );
 
     // Now load the subclips:
     if ( m.contains( "clips" ) == false )
@@ -225,7 +225,7 @@ Media::loadSubclip( const QVariantMap& m )
     const auto  begin = m["begin"].toLongLong();
     const auto  end = m["end"].toLongLong();
     const auto  formats = m["formats"].toInt();
-    auto clip = QSharedPointer<Clip>( new Clip( sharedFromThis(), begin, end, uuid ) );
+    auto clip = QSharedPointer<Clip>::create( sharedFromThis(), begin, end, uuid );
     clip->setFormats( static_cast<Clip::Formats>( formats ) );
 
     m_clips[uuid] = clip;
