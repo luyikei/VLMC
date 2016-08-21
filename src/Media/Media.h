@@ -86,7 +86,7 @@ public:
     QString                     title() const;
     qint64                      id() const;
 
-    Clip*                       baseClip();
+    QSharedPointer<Clip>        baseClip();
 
     /**
      * @brief cut   Creates a clip to represent a cut of a media
@@ -114,7 +114,7 @@ protected:
     medialibrary::MediaPtr      m_mlMedia;
     medialibrary::FilePtr       m_mlFile;
     QUuid                       m_baseClipUuid;
-    mutable Clip*               m_baseClip;
+    QSharedPointer<Clip>        m_baseClip;
     QHash<QUuid, QSharedPointer<Clip>>      m_clips;
 
 signals:

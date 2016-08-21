@@ -114,11 +114,11 @@ Media::id() const
     return m_mlMedia->id();
 }
 
-Clip*
+QSharedPointer<Clip>
 Media::baseClip()
 {
     if ( m_baseClip == nullptr )
-        m_baseClip = new Clip( sharedFromThis(), 0, Backend::IInput::EndOfMedia, m_baseClipUuid );
+        m_baseClip.reset( new Clip( sharedFromThis(), 0, Backend::IInput::EndOfMedia, m_baseClipUuid ) );
     return m_baseClip;
 }
 
