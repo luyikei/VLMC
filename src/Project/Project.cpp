@@ -227,8 +227,9 @@ void
 Project::saveProject( const QString& fileName )
 {
     m_settings->setSettingsFile( fileName );
-    m_settings->save();
-    emit projectSaved();
+    bool ret = m_settings->save();
+    if ( ret == true )
+        emit projectSaved( m_settings->value( "vlmc/ProjectName" )->get().toString(), fileName );
 }
 
 void

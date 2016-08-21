@@ -106,10 +106,8 @@ class Project : public QObject
 
         /**
          *  \brief      Used to signal that the project has been saved.
-         *
-         *  Right now, it is only used by the undo stack to flag the current state as clean.
          */
-        void                projectSaved();
+        void                projectSaved( const QString& projectName, const QString& projectFilePath );
 
         /**
           * @brief cleanStateChanged    Emited when the clean state changes.
