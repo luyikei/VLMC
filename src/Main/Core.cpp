@@ -56,6 +56,7 @@ Core::Core()
     QObject::connect( m_currentProject, &Project::projectSaved, m_workflow, &MainWorkflow::setClean );
     QObject::connect( m_library, &Library::cleanStateChanged, m_currentProject, &Project::libraryCleanChanged );
     QObject::connect( m_currentProject, &Project::projectLoaded, m_recentProjects, &RecentProjects::projectLoaded );
+    QObject::connect( m_currentProject, &Project::projectSaved, m_recentProjects, &RecentProjects::projectLoaded );
     QObject::connect( m_currentProject, &Project::projectClosed, m_library, &Library::clear );
     QObject::connect( m_currentProject, &Project::projectClosed, m_workflow, &MainWorkflow::clear );
     QObject::connect( m_currentProject, &Project::fpsChanged, m_workflow, &MainWorkflow::fpsChanged );
