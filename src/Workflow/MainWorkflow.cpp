@@ -214,6 +214,19 @@ MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool is
 QJsonObject
 MainWorkflow::clipInfo( const QString& uuid )
 {
+    auto clip = m_sequenceWorkflow->clip( uuid );
+    if ( clip != nullptr )
+    {
+        auto h = clip->toVariant().toHash();
+        h["length"] = (qint64)( clip->input()->length() );
+        h["name"] = clip->media()->title();
+        h["audio"] = clip->formats().testFlag( Clip::Audio );
+        h["video"] = clip->formats().testFlag( Clip::Video );
+        h["position"] = m_sequenceWorkflow->position( uuid );
+        h["trackId"] = m_sequenceWorkflow->trackId( uuid );
+        return QJsonObject::fromVariantHash( h );
+    }
+
     auto lClip = Core::instance()->library()->clip( uuid );
     if ( lClip != nullptr )
     {
@@ -227,18 +240,7 @@ MainWorkflow::clipInfo( const QString& uuid )
         return QJsonObject::fromVariantHash( h );
     }
 
-    auto clip = m_sequenceWorkflow->clip( uuid );
-    if ( !clip )
-        return QJsonObject();
-
-    auto h = clip->toVariant().toHash();
-    h["length"] = (qint64)( clip->input()->length() );
-    h["name"] = clip->media()->title();
-    h["audio"] = clip->formats().testFlag( Clip::Audio );
-    h["video"] = clip->formats().testFlag( Clip::Video );
-    h["position"] = m_sequenceWorkflow->position( uuid );
-    h["trackId"] = m_sequenceWorkflow->trackId( uuid );
-    return QJsonObject::fromVariantHash( h );
+    return QJsonObject();
 }
 
 void
