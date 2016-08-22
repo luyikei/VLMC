@@ -5,10 +5,13 @@
 
 #include "Backend/MLT/MLTInput.h"
 
-ThumbnailWorker::ThumbnailWorker( const QString& uuid, const QString& filePath, qint64 pos, quint32 width, quint32 height, QObject* parent )
+ThumbnailWorker::ThumbnailWorker( const QString& uuid, const QString& filePath,
+                                  qint64 begin, qint64 pos, quint32 width,
+                                  quint32 height, QObject* parent )
     : QObject( parent )
     , m_uuid( uuid )
     , m_filePath( filePath )
+    , m_begin( begin )
     , m_pos( pos )
     , m_width( width )
     , m_height( height )
@@ -20,6 +23,7 @@ void
 ThumbnailWorker::run()
 {
     Backend::MLT::MLTInput input( qPrintable( m_filePath ) );
+    input.setBegin( m_begin );
     input.setPosition( m_pos );
     auto image = input.image( m_width, m_height );
     QImage qImg( image, m_width, m_height,
