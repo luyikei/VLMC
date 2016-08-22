@@ -49,6 +49,13 @@ Timeline::Timeline( MainWindow* parent )
     m_view->rootContext()->setContextProperty( QStringLiteral( "mainwindow" ), parent );
     m_view->rootContext()->setContextProperty( QStringLiteral( "workflow" ), Core::instance()->workflow() );
     m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
+
+    connect( Core::instance()->workflow(), &MainWorkflow::cleared, this, [this]()
+    {
+        m_view->setSource( QUrl() );
+        m_view->engine()->clearComponentCache();
+        m_view->setSource( QUrl( QStringLiteral( "qrc:/QML/main.qml" ) ) );
+    } );
 }
 
 Timeline::~Timeline()
