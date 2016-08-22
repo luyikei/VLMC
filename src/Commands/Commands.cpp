@@ -117,7 +117,6 @@ Commands::Clip::Add::internalRedo()
         if ( QUuid( ret ).isNull() == false )
         {
             m_clip = m_workflow->clip( ret );
-            connect( m_clip.get(), &::Clip::destroyed, this, &Add::invalidate );
             emit Core::instance()->workflow()->clipAdded( ret );
         }
         else
@@ -157,7 +156,6 @@ Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
     m_newPos( pos ),
     m_oldPos( workflow->position( uuid ) )
 {
-    connect( m_clip.get(), SIGNAL( destroyed() ), this, SLOT( invalidate() ) );
     retranslate();
 }
 
@@ -208,7 +206,6 @@ Commands::Clip::Remove::Remove( std::shared_ptr<SequenceWorkflow> const& workflo
         m_trackId( workflow->trackId( uuid ) ),
         m_pos( workflow->position( uuid ) )
 {
-    connect( m_clip.get(), &::Clip::destroyed, this, &Remove::invalidate );
     retranslate();
 }
 
@@ -256,7 +253,6 @@ Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflo
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
-    connect( m_clip.get(), &::Clip::destroyed, this, &Resize::invalidate );
     if ( !m_clip )
     {
         invalidate();
@@ -304,7 +300,6 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
     m_newClipPos( newClipPos ),
     m_newClipBegin( newClipBegin )
 {
-    connect( m_toSplit.get(), &::Clip::destroyed, this, &Split::invalidate );
     if ( !m_toSplit )
     {
         invalidate();
