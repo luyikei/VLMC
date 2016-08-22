@@ -189,10 +189,10 @@ Rectangle {
         if ( uuid === "videoUuid" || uuid === "audioUuid" )
             return;
 
-        if ( thumbnailProvider.hasImage( uuid, 0 ) )
-            updateThumbnail( 0 );
+        if ( thumbnailProvider.hasImage( uuid, begin ) )
+            updateThumbnail( begin );
         else
-            workflow.takeThumbnail( uuid, 0 );
+            workflow.takeThumbnail( uuid, begin );
     }
 
     Component.onDestruction: {

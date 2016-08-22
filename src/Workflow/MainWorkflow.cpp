@@ -304,8 +304,7 @@ MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
 {
     auto clip = m_sequenceWorkflow->clip( uuid );
     auto worker = new ThumbnailWorker( uuid, clip->media()->fileInfo()->absoluteFilePath(),
-                                       clip->begin(), pos, clip->input()->width(),
-                                       clip->input()->height() );
+                                       pos, clip->input()->width(), clip->input()->height() );
     auto t = new QThread;
     worker->moveToThread( t );
     connect( t, &QThread::started, worker, &ThumbnailWorker::run );

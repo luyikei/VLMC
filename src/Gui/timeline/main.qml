@@ -650,7 +650,7 @@ Rectangle {
         target: thumbnailProvider
         onImageReady: {
             var clipItem = findClipItem( uuid );
-            clipItem.updateThumbnail( 0 );
+            clipItem.updateThumbnail( clipItem.begin );
         }
     }
 }
