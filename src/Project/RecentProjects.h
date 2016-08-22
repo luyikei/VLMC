@@ -40,6 +40,9 @@ class RecentProjects : public QObject
         const QVariant& toVariant() const;
         void            remove( const QString& projectFile );
 
+    signals:
+        void            updated();
+
     public slots:
         void            projectLoaded( const QString& projectName, const QString& projectFile );
 

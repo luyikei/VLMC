@@ -62,6 +62,7 @@ RecentProjects::remove( const QString &projectFile )
         }
     }
     m_recentsProjects->set( l );
+    emit updated();
 }
 
 void
@@ -75,4 +76,5 @@ RecentProjects::projectLoaded( const QString& projectName, const QString& projec
     l.removeAll( var );
     l.insert( 0, var );
     m_recentsProjects->set( l );
+    emit updated();
 }
