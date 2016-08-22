@@ -94,7 +94,6 @@ SequenceWorkflow::addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool 
     if ( ret == false )
         return QUuid().toString();
     m_clips.insert( newClip->uuid(), std::make_tuple( newClip, trackId, pos ) );
-    connect( newClip.get(), &Clip::destroyed, this, &SequenceWorkflow::removeClip );
     return newClip->uuid().toString();
 }
 
