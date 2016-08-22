@@ -101,12 +101,15 @@ Library::addMedia( QSharedPointer<Media> media )
         return;
     m_media[media->id()] = media;
     m_clips[media->baseClip()->uuid()] = media->baseClip();
+    vlmcDebug() << "Clip " << media->baseClip()->uuid().toString() << " is added to Library";
     connect( media.data(), &Media::subclipAdded, [this]( QSharedPointer<Clip> c ) {
         m_clips[c->uuid()] = c;
+        vlmcDebug() << "Clip " << c->uuid().toString() << " is added to Library";
         setCleanState( false );
     });
     connect( media.data(), &Media::subclipRemoved, [this]( const QUuid& uuid ) {
         m_clips.remove( uuid );
+        vlmcDebug() << "Clip " << uuid.toString() << " is removed in Library";
         // This seems wrong, for instance if we undo a clip splitting
         setCleanState( false );
     } );
