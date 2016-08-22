@@ -90,6 +90,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     checkFolders();
     loadGlobalProxySettings();
     createProjectPreferences();
+    updateRecentProjects();
 
 #ifdef WITH_CRASHBUTTON
     setupCrashTester();
@@ -105,6 +106,8 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, SLOT( onProjectSaved() ) );
     connect( Core::instance()->project(), &Project::cleanStateChanged,
              this, &MainWindow::cleanStateChanged );
+    connect( Core::instance()->recentProjects(), &RecentProjects::updated,
+             this, &MainWindow::updateRecentProjects );
 
     //Connecting Library stuff:
     const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
@@ -818,6 +821,27 @@ MainWindow::closeEvent( QCloseEvent* e )
     }
     saveSettings();
     e->accept();
+}
+
+void
+MainWindow::updateRecentProjects()
+{
+    auto menu = new QMenu;
+    for ( const auto& var : Core::instance()->recentProjects()->toVariant().toList() )
+    {
+        const auto& m = var.toMap();
+        auto name = m["name"].toString();
+        auto file = m["file"].toString();
+        auto action = menu->addAction( QString( "%1 - %2" )
+                                       .arg( name )
+                                       .arg( file )
+                                       );
+        connect( action, &QAction::triggered, this, [this, file]()
+        {
+            Core::instance()->loadProject( file );
+        } );
+    }
+    m_ui.actionRecent_Projects->setMenu( menu );
 }
 
 void
