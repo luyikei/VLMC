@@ -48,10 +48,6 @@ namespace   Workflow
 
         protected:
             QUuid                   m_uuid;
-
-        signals:
-            void                    lengthUpdated();
-            void                    destroyed( const QUuid &uuid );
     };
 }
 
