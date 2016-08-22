@@ -224,6 +224,7 @@ MainWorkflow::clipInfo( const QString& uuid )
         h["video"] = clip->formats().testFlag( Clip::Video );
         h["position"] = m_sequenceWorkflow->position( uuid );
         h["trackId"] = m_sequenceWorkflow->trackId( uuid );
+        h["filters"] = EffectHelper::toVariant( clip->input() );
         return QJsonObject::fromVariantHash( h );
     }
 
