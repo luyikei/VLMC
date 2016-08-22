@@ -50,6 +50,7 @@ Library::Library( Settings* vlmcSettings, Settings *projectSettings )
 {
     // Setting up the external media library
     m_ml.reset( NewMediaLibrary() );
+    m_ml->setVerbosity( medialibrary::LogLevel::Warning );
     m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
     m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
 
