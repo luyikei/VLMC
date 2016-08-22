@@ -26,7 +26,6 @@
 class AutomaticBackup;
 class Library;
 class MainWorkflow;
-class MediaLibrary;
 class Project;
 class RecentProjects;
 class Settings;
@@ -52,7 +51,6 @@ class Core : public ScopedSingleton<Core>
         Project*                project();
         MainWorkflow*           workflow();
         Library*                library();
-        MediaLibrary*           mediaLibrary();
         /**
          * @brief runtime returns the application runtime
          */
@@ -77,7 +75,6 @@ class Core : public ScopedSingleton<Core>
         Project*                m_currentProject;
         MainWorkflow*           m_workflow;
         Library*                m_library;
-        std::unique_ptr<MediaLibrary> m_ml;
         QElapsedTimer           m_timer;
 
         friend Singleton_t::AllowInstantiation;

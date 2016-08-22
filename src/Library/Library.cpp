@@ -34,6 +34,7 @@
 #include "Library.h"
 #include "Media/Clip.h"
 #include "Media/Media.h"
+#include "MediaLibraryModel.h"
 #include "Project/Project.h"
 #include "Settings/Settings.h"
 #include "Tools/VlmcDebug.h"
@@ -42,14 +43,27 @@
 #include <QHash>
 #include <QUuid>
 
-Library::Library( Settings *projectSettings )
-    : m_cleanState( true )
+Library::Library( Settings* vlmcSettings, Settings *projectSettings )
+    : m_initialized( false )
+    , m_cleanState( true )
     , m_settings( new Settings )
 {
+    // Setting up the external media library
+    m_ml.reset( NewMediaLibrary() );
+    m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
+    m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
+
+    auto s = vlmcSettings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
+                        "Media Library folders", "List of folders VLMC will search for media files",
+                         SettingValue::Folders );
+    connect( s, &SettingValue::changed, this, &Library::mlDirsChanged );
+    auto ws = vlmcSettings->value( "vlmc/WorkspaceLocation" );
+    connect( ws, &SettingValue::changed, this, &Library::workspaceChanged );
+
+    // Setting up the project section of the Library
     m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
     connect( m_settings, &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
-
     projectSettings->addSettings( "Library", *m_settings );
 }
 
@@ -109,7 +123,27 @@ Library::media( qint64 mediaId )
     return m_media.value( mediaId );
 }
 
-QSharedPointer<Clip> Library::clip( const QUuid& uuid )
+medialibrary::MediaPtr
+Library::mlMedia( qint64 mediaId )
+{
+    return m_ml->media( mediaId );
+}
+
+MediaLibraryModel*
+Library::model(Library::MediaType type) const
+{
+    switch ( type )
+    {
+        case MediaType::Video:
+            return m_videoModel;
+        case MediaType::Audio:
+            return m_audioModel;
+    }
+    Q_UNREACHABLE();
+}
+
+QSharedPointer<Clip>
+Library::clip( const QUuid& uuid )
 {
     return m_clips.value( uuid );
 
@@ -131,4 +165,149 @@ Library::setCleanState( bool newState )
         m_cleanState = newState;
         emit cleanStateChanged( newState );
     }
+}
+
+void
+Library::mlDirsChanged(const QVariant& value)
+{
+    // We can't handle this event without an initialized media library, and therefor without a valid
+    // workspace. In theory, the workspace SettingValue is created before the mlDirs,
+    // so it should be loaded before.
+    Q_ASSERT( m_initialized == true );
+
+    const auto list = value.toStringList();
+    Q_ASSERT( list.empty() == false );
+    for ( const auto f : list )
+        m_ml->discover( f.toStdString() );
+}
+
+void
+Library::workspaceChanged(const QVariant& workspace)
+{
+    Q_ASSERT( workspace.isNull() == false && workspace.canConvert<QString>() );
+
+    if ( m_initialized == false )
+    {
+        auto w = workspace.toString().toStdString();
+        Q_ASSERT( w.empty() == false );
+        // Initializing the medialibrary doesn't start new folders discovery.
+        // This will happen after the first call to IMediaLibrary::discover()
+        m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
+        m_initialized = true;
+    }
+    //else FIXME, and relocate the media library
+}
+
+void
+Library::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
+{
+    for ( auto m : mediaList )
+    {
+        switch ( m->type() )
+        {
+        case medialibrary::IMedia::Type::VideoType:
+            m_videoModel->addMedia( m );
+            break;
+        case medialibrary::IMedia::Type::AudioType:
+            m_audioModel->addMedia( m );
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+    }
+}
+
+void
+Library::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList )
+{
+    for ( auto m : mediaList )
+    {
+        switch ( m->type() )
+        {
+        case medialibrary::IMedia::Type::VideoType:
+            m_videoModel->updateMedia( m );
+            break;
+        case medialibrary::IMedia::Type::AudioType:
+            m_audioModel->updateMedia( m );
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+    }
+}
+
+void
+Library::onMediaDeleted( std::vector<int64_t> mediaList )
+{
+    for ( auto id : mediaList )
+    {
+        // We can't know the media type, however ID are unique regardless of the type
+        // so we are sure that we will remove the correct media.
+        if ( m_videoModel->removeMedia( id ) == true )
+            continue;
+        m_audioModel->removeMedia( id );
+    }
+}
+
+void
+Library::onArtistsAdded( std::vector<medialibrary::ArtistPtr> )
+{
+}
+
+void
+Library::onArtistsModified( std::vector<medialibrary::ArtistPtr> )
+{
+}
+
+void
+Library::onArtistsDeleted( std::vector<int64_t> )
+{
+}
+
+void
+Library::onAlbumsAdded( std::vector<medialibrary::AlbumPtr> )
+{
+}
+
+void
+Library::onAlbumsModified( std::vector<medialibrary::AlbumPtr> )
+{
+}
+
+void
+Library::onAlbumsDeleted( std::vector<int64_t> )
+{
+}
+
+void
+Library::onTracksAdded( std::vector<medialibrary::AlbumTrackPtr> )
+{
+}
+
+void
+Library::onTracksDeleted( std::vector<int64_t> )
+{
+}
+
+void
+Library::onDiscoveryStarted( const std::string& entryPoint )
+{
+    emit discoveryStarted( QString::fromStdString( entryPoint ) );
+}
+
+void
+Library::onDiscoveryCompleted( const std::string& entryPoint )
+{
+    if ( entryPoint.empty() == true )
+    {
+        m_videoModel->refresh();
+        m_audioModel->refresh();
+    }
+    emit discoveryCompleted( QString::fromStdString( entryPoint ) );
+}
+
+void
+Library::onParsingStatsUpdated( uint32_t percent )
+{
+    emit progressUpdated( static_cast<int>( percent ) );
 }

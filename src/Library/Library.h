@@ -34,8 +34,13 @@
 #include <QHash>
 #include <QSharedPointer>
 
+#include <medialibrary/IMediaLibrary.h>
+
+#include <memory>
+
 class Clip;
 class Media;
+class MediaLibraryModel;
 class ProjectManager;
 class Settings;
 
@@ -43,17 +48,29 @@ class Settings;
  *  \class Library
  *  \brief Library Object that handles public Clips
  */
-class Library : public QObject
+class Library : public QObject, private medialibrary::IMediaLibraryCb
 {
     Q_OBJECT
     Q_DISABLE_COPY( Library )
 
 public:
-    Library( Settings* projectSettings );
+    enum class MediaType
+    {
+        Video,
+        Audio
+    };
+
+    Library( Settings* vlmcSettings, Settings* projectSettings );
     virtual ~Library();
     void            addMedia( QSharedPointer<Media> media );
     bool            isInCleanState() const;
     QSharedPointer<Media> media( qint64 mediaId );
+
+    //FIXME: This feels rather ugly
+    medialibrary::MediaPtr mlMedia( qint64 mediaId);
+
+    MediaLibraryModel* model( MediaType type ) const;
+
     /**
      * @brief clip returns an existing clip
      * @param uuid the clip's UUID
@@ -65,26 +82,53 @@ public:
 
 private:
     void            setCleanState( bool newState );
+    void            mlDirsChanged( const QVariant& value );
+    void            workspaceChanged(const QVariant& workspace );
+
+    void            preSave();
+    void            postLoad();
 
 private:
-    bool        m_cleanState;
+    virtual void onMediaAdded( std::vector<medialibrary::MediaPtr> media ) override;
+    virtual void onMediaUpdated( std::vector<medialibrary::MediaPtr> media ) override;
+    virtual void onMediaDeleted( std::vector<int64_t> ids ) override;
+    virtual void onArtistsAdded( std::vector<medialibrary::ArtistPtr> artists ) override;
+    virtual void onArtistsModified( std::vector<medialibrary::ArtistPtr> artist ) override;
+    virtual void onArtistsDeleted( std::vector<int64_t> ids ) override;
+    virtual void onAlbumsAdded( std::vector<medialibrary::AlbumPtr> albums ) override;
+    virtual void onAlbumsModified( std::vector<medialibrary::AlbumPtr> albums ) override;
+    virtual void onAlbumsDeleted( std::vector<int64_t> ids ) override;
+    virtual void onTracksAdded( std::vector<medialibrary::AlbumTrackPtr> tracks ) override;
+    virtual void onTracksDeleted( std::vector<int64_t> trackIds ) override;
+    virtual void onDiscoveryStarted( const std::string& entryPoint ) override;
+    virtual void onDiscoveryCompleted( const std::string& entryPoint ) override;
+    virtual void onParsingStatsUpdated( uint32_t percent ) override;
 
-    Settings*   m_settings;
-    QHash<qint64, QSharedPointer<Media>>  m_media;
+private:
+    std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;
+    MediaLibraryModel*                              m_videoModel;
+    MediaLibraryModel*                              m_audioModel;
+    Settings*                                       m_settings;
+    bool                                            m_initialized;
+    bool                                            m_cleanState;
+
+    QHash<qint64, QSharedPointer<Media>>            m_media;
     /**
      * @brief m_clips   contains all the clips loaded in the library, without any
      *                  subclip hierarchy
      */
-    QHash<QUuid, QSharedPointer<Clip>>      m_clips;
-
-    void        preSave();
-    void        postLoad();
+    QHash<QUuid, QSharedPointer<Clip>>              m_clips;
 
 signals:
     /**
      *  \brief
      */
     void    cleanStateChanged( bool newState );
+
+    void    progressUpdated( int percent );
+    void    discoveryStarted( QString );
+    void    discoveryCompleted( QString );
+
 };
 
 #endif // LIBRARY_H

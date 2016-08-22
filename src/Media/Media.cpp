@@ -40,7 +40,6 @@
 #include "Clip.h"
 #include "Main/Core.h"
 #include "Library/Library.h"
-#include "Library/MediaLibrary.h"
 #include "Tools/VlmcDebug.h"
 #include "Project/Workspace.h"
 
@@ -191,7 +190,7 @@ Media::fromVariant( const QVariant& v )
     }
     auto mediaId = m["mlId"].toLongLong();
     auto uuid = m["uuid"].toUuid();
-    auto mlMedia = Core::instance()->mediaLibrary()->media( mediaId );
+    auto mlMedia = Core::instance()->library()->mlMedia( mediaId );
     //FIXME: Is QSharedPointer exception safe in case its constructor throws an exception?
     auto media = QSharedPointer<Media>::create( mlMedia, uuid );
 

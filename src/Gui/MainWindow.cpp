@@ -43,7 +43,6 @@
 #include "Tools/VlmcDebug.h"
 #include "Tools/VlmcLogger.h"
 #include "Backend/IBackend.h"
-#include "Library/MediaLibrary.h"
 #include "Workflow/MainWorkflow.h"
 #include "Renderer/ClipRenderer.h"
 #include "Commands/AbstractUndoStack.h"
@@ -108,7 +107,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
              this, &MainWindow::updateRecentProjects );
 
     // Connect the medialibrary before it starts discovering/reloading
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::progressUpdated, this,
+    connect( Core::instance()->library(), &Library::progressUpdated, this,
              [this]( int percent ) {
         if ( percent < 100 )
             m_progressBar->setValue( percent );
@@ -119,11 +118,11 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
         }
     });
 
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryStarted, this,
+    connect( Core::instance()->library(), &Library::discoveryStarted, this,
         [this](const QString& folder) {
             m_ui.statusbar->showMessage( "Discovering " + folder + "...", 2500 );
     }, Qt::QueuedConnection );
-    connect( Core::instance()->mediaLibrary(), &MediaLibrary::discoveryCompleted, this,
+    connect( Core::instance()->library(), &Library::discoveryCompleted, this,
         [this]( const QString& ) {
             m_ui.statusbar->showMessage( "Analyzing media" );
     }, Qt::QueuedConnection );

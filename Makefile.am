@@ -17,7 +17,6 @@ vlmc_SOURCES = \
 	src/Backend/MLT/MLTMultiTrack.cpp \
 	src/EffectsEngine/EffectHelper.cpp \
 	src/Library/Library.cpp \
-	src/Library/MediaLibrary.cpp \
 	src/Library/MediaLibraryModel.cpp \
 	src/Main/Core.cpp \
 	src/Main/main.cpp \
@@ -92,7 +91,6 @@ vlmc_SOURCES += \
 	src/Backend/IMultiTrack.h \
 	src/Main/Core.h \
 	src/Library/Library.h \
-	src/Library/MediaLibrary.h \
 	src/Library/MediaLibraryModel.h \
 	src/Workflow/Helper.h \
 	src/Workflow/Types.h \
@@ -126,7 +124,6 @@ nodist_vlmc_SOURCES = \
 	src/Tools/OutputEventWatcher.moc.cpp \
 	src/Services/UploaderIODevice.moc.cpp \
 	src/Library/Library.moc.cpp \
-	src/Library/MediaLibrary.moc.cpp \
 	src/Library/MediaLibraryModel.moc.cpp \
 	src/Gui/library/MediaLibraryView.moc.cpp \
 	$(NULL)
