@@ -215,9 +215,10 @@ SequenceWorkflow::toVariant() const
             { "uuid", clip->uuid() },
             { "position", position },
             { "trackId", trackId },
+            { "linked", clip->isLinked() },
+            { "linkedClip", clip->linkedClipUuid() },
             { "filters", EffectHelper::toVariant( clip->input() ) }
         };
-        //FIXME: Missing linking informations
         l << h;
     }
     QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_multitrack ) } };
