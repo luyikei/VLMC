@@ -219,7 +219,7 @@ Project::initSettings()
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                     SettingValue::NotEmpty );
-    connect( pName, SIGNAL( changed( QVariant ) ), this, SLOT( projectNameChanged( QVariant ) ) );
+    connect( pName, &SettingValue::changed, this, [this]( const QVariant& var ){ emit projectNameChanged( var.toString() ); } );
     connect( fps, &SettingValue::changed, this, [this]( const QVariant& var ){ emit fpsChanged( var.toDouble() ); } );
 }
 
