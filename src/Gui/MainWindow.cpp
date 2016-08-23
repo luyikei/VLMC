@@ -93,14 +93,14 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     setupCrashTester();
 #endif
 
-    connect( Core::instance()->project(), SIGNAL( projectNameChanged(QString) ),
-             this, SLOT( projectNameChanged( QString ) ) );
-    connect( Core::instance()->project(), SIGNAL( outdatedBackupFileFound() ),
-             this, SLOT( onOudatedBackupFile() ) );
-    connect( Core::instance()->project(), SIGNAL( backupProjectLoaded() ),
-             this, SLOT( onBackupFileLoaded() ) );
-    connect( Core::instance()->project(), SIGNAL( projectSaved() ),
-             this, SLOT( onProjectSaved() ) );
+    connect( Core::instance()->project(), &Project::projectNameChanged,
+             this, &MainWindow::projectNameChanged );
+    connect( Core::instance()->project(), &Project::outdatedBackupFileFound,
+             this, &MainWindow::onOudatedBackupFile );
+    connect( Core::instance()->project(), &Project::backupProjectLoaded,
+             this, &MainWindow::onBackupFileLoaded );
+    connect( Core::instance()->project(), &Project::projectSaved,
+             this, &MainWindow::onProjectSaved );
     connect( Core::instance()->project(), &Project::cleanStateChanged,
              this, &MainWindow::cleanStateChanged );
     connect( Core::instance()->recentProjects(), &RecentProjects::updated,

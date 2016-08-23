@@ -352,12 +352,6 @@ Project::libraryCleanChanged( bool val )
 }
 
 void
-Project::projectNameChanged( const QVariant& projectName )
-{
-    emit projectNameChanged( projectName.toString() );
-}
-
-void
 Project::autoSaveRequired()
 {
     if ( m_projectFile == nullptr )
