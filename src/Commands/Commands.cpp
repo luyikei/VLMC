@@ -309,6 +309,7 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
     }
     m_newClip = m_toSplit->media()->cut( newClipBegin - m_toSplit->begin(),
                                          m_toSplit->end() - m_toSplit->begin() );
+    m_newClip->setFormats( m_toSplit->formats() );
     m_oldEnd = m_toSplit->end();
     retranslate();
 }
