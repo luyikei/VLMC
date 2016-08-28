@@ -103,11 +103,9 @@ public:
     const Backend::IInput*   input() const;
 
     static QSharedPointer<Media> fromVariant( const QVariant& v );
+    QSharedPointer<Clip>        loadSubclip( const QVariantMap& m );
 
     QString                    snapshot();
-
-private:
-    QSharedPointer<Clip>        loadSubclip( const QVariantMap& m );
 
 protected:
     std::unique_ptr<Backend::IInput>         m_input;
