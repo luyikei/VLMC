@@ -64,16 +64,6 @@ class       Media : public QObject, public QEnableSharedFromThis<Media>
     Q_OBJECT
 
 public:
-    /**
-     *  \enum fType
-     *  \brief enum to determine file type
-     */
-    enum    FileType
-    {
-        Audio,
-        Video,
-        Image
-    };
     static const QString        VideoExtensions;
     static const QString        AudioExtensions;
     static const QString        ImageExtensions;
@@ -82,7 +72,6 @@ public:
     Media( medialibrary::MediaPtr media, const QUuid& uuid = QUuid() );
 
     QString                     mrl() const;
-    FileType                    fileType() const;
     QString                     title() const;
     qint64                      id() const;
 

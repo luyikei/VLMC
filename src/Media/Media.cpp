@@ -86,21 +86,6 @@ Media::mrl() const
     return QString::fromStdString( m_mlFile->mrl() );
 }
 
-Media::FileType
-Media::fileType() const
-{
-    switch ( m_mlMedia->type() )
-    {
-    case medialibrary::IMedia::Type::VideoType:
-        return Video;
-    case medialibrary::IMedia::Type::AudioType:
-        return Audio;
-    //FIXME: Unhandled Image type
-    default:
-        vlmcCritical() << "Unknown file type";
-    }
-}
-
 QString
 Media::title() const
 {
