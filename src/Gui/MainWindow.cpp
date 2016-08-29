@@ -497,7 +497,7 @@ void
 MainWindow::setupEffectsList()
 {
     m_effectsList = new EffectsListView;
-    m_dockedEffectsList = dockWidget( m_effectsList, Qt::TopDockWidgetArea );
+    m_dockedEffectsList = dockWidget( m_effectsList->container(), Qt::TopDockWidgetArea );
 }
 
 void

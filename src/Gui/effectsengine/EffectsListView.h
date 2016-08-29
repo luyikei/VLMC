@@ -23,28 +23,27 @@
 #ifndef EFFECTLISTVIEW_H
 #define EFFECTLISTVIEW_H
 
+#include <QObject>
+#include <QJsonArray>
 
-#include <QListView>
+class QWidget;
 
-class   QStandardItemModel;
-
-class EffectsListView : public QListView
+class EffectsListView : public QObject
 {
     Q_OBJECT
 
     public:
-        explicit            EffectsListView(QWidget *parent = 0);
+        explicit            EffectsListView( QWidget* parent = 0 );
+        QWidget*            container();
 
-    protected:
-        void                mousePressEvent( QMouseEvent *event );
-        void                mouseMoveEvent( QMouseEvent *event );
+        Q_INVOKABLE
+        QJsonArray          effects();
+
+public slots:
+    void    startDrag( const QString& effectId );
 
     private:
-        QStandardItemModel  *m_model;
-        QPoint              m_dragStartPos;
-
-    private slots:
-        void                effectActivated( const QModelIndex& index ) const;
+        QWidget*            m_container;
 };
 
 #endif // EFFECTLISTVIEW_H

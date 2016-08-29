@@ -30,67 +30,57 @@
 #include "EffectsListView.h"
 #include "EffectWidget.h"
 
-#include <QApplication>
-#include <QDialog>
-#include <QMouseEvent>
-#include <QStandardItem>
-#include <QVBoxLayout>
+#include <QJsonObject>
+#include <QQmlContext>
+#include <QQuickView>
 #include <QMimeData>
 #include <QDrag>
 
-EffectsListView::EffectsListView( QWidget *parent ) :
-    QListView(parent)
+EffectsListView::EffectsListView( QWidget* parent ) :
+    QObject(parent)
 {
-    m_model = new QStandardItemModel( this );
-    setModel( m_model );
-    connect( this, SIGNAL( activated( QModelIndex ) ),
-             this, SLOT( effectActivated( QModelIndex ) ) );
-    setEditTriggers( QAbstractItemView::NoEditTriggers );
-    setObjectName( QStringLiteral( "Effects List" ) );
+    setObjectName( QStringLiteral( "EffectsListView" ) );
+    auto view = new QQuickView;
+    m_container = QWidget::createWindowContainer( view, parent );
+    m_container->setMinimumSize( 100, 1 );
+    m_container->setObjectName( objectName() );
+    view->rootContext()->setContextProperty( QStringLiteral( "view" ), this );
+    view->setSource( QUrl( QStringLiteral( "qrc:/QML/EffectsListView.qml" ) ) );
+    view->setResizeMode( QQuickView::SizeRootObjectToView );
+}
 
-    for ( auto filter : Backend::instance()->availableFilters() )
-        m_model->appendRow( new QStandardItem( QString::fromStdString( filter.second->identifier() ) ) );
+QWidget*
+EffectsListView::container()
+{
+    return m_container;
+}
+
+QJsonArray
+EffectsListView::effects()
+{
+    QJsonArray array;
+    for ( auto p : Backend::instance()->availableFilters() )
+    {
+        auto info = p.second;
+        QJsonObject jInfo;
+        jInfo[QStringLiteral( "identifier" )] = QString::fromStdString( info->identifier() );
+        jInfo[QStringLiteral( "name" )] = QString::fromStdString( info->name() );
+        jInfo[QStringLiteral( "description" )] = QString::fromStdString( info->description() );
+        jInfo[QStringLiteral( "author" )] = QString::fromStdString( info->author() );
+        array.append( jInfo );
+    }
+    return array;
 }
 
 void
-EffectsListView::mousePressEvent( QMouseEvent *event )
+EffectsListView::startDrag( const QString& effectId )
 {
-    QListView::mousePressEvent( event );
-
-    if ( ( event->buttons() | Qt::LeftButton ) == Qt::LeftButton )
-        m_dragStartPos = event->pos();
-}
-
-void
-EffectsListView::mouseMoveEvent( QMouseEvent *event )
-{
-    if ( ( event->buttons() | Qt::LeftButton ) != Qt::LeftButton )
-         return;
-
-    if ( ( event->pos() - m_dragStartPos ).manhattanLength()
-          < QApplication::startDragDistance() )
-        return;
-
-    QMimeData* mimeData = new QMimeData;
-    mimeData->setData( "vlmc/effect_name", m_model->data( currentIndex() ).toByteArray() );
     QDrag* drag = new QDrag( this );
+    QMimeData* mimeData = new QMimeData;
+
+    mimeData->setData( QStringLiteral( "vlmc/effect_name" ), effectId.toUtf8() );
+
     drag->setMimeData( mimeData );
-    drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
-}
+    drag->exec();
 
-void
-EffectsListView::effectActivated( const QModelIndex &index ) const
-{
-    if ( index.isValid() == false )
-        return ;
-    auto filterInfo = Backend::instance()->filterInfo( m_model->data( index, Qt::DisplayRole ).toString().toStdString() );
-
-    QDialog         *dialog = new QDialog();
-    QVBoxLayout     *layout = new QVBoxLayout( dialog );
-    EffectWidget    *wid = new EffectWidget( dialog );
-    layout->addWidget( wid );
-    wid->setFilterInfo( filterInfo );
-    dialog->setWindowTitle( tr( "%1 informations" ).arg( QString::fromStdString( filterInfo->name() ) ) );
-    dialog->exec();
-    delete dialog;
 }
