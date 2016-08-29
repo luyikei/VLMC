@@ -375,6 +375,25 @@ vlmc_CPPFLAGS += -Isrc/Gui/ -I$(top_srcdir)/src/Gui
 
 nodist_vlmc_SOURCES += $(vlmc_UI:.ui=.h)
 
+vlmc_QML = \
+	src/Gui/timeline/PropertyButton.qml \
+	src/Gui/timeline/MarkerContextMenu.qml \
+	src/Gui/timeline/Ruler.qml \
+	src/Gui/timeline/Track.qml \
+	src/Gui/timeline/Clip.qml \
+	src/Gui/timeline/TrackContainer.qml \
+	src/Gui/timeline/Marker.qml \
+	src/Gui/timeline/main.qml \
+	src/Gui/timeline/ClipContextMenu.qml \
+	src/Gui/timeline/Cursor.qml \
+	src/Gui/library/ui/MediaLibraryView.qml \
+	src/Gui/library/ui/MediaItem.qml \
+	src/Gui/effectsengine/Effect.qml \
+	src/Gui/effectsengine/EffectsListView.qml \
+	$(NULL)
+
+EXTRA_DIST += $(vlmc_QML)
+
 endif
 
 resources.cpp:
