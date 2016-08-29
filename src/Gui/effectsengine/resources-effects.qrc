@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/QML">
-        <file>EffectsListView.qml</file>
-        <file>Effect.qml</file>
-    </qresource>
-</RCC>

@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 bin_PROGRAMS = vlmc
 
-SUFFIXES = .ui .h .moc.cpp
+SUFFIXES = .ui .h .moc.cpp .qrc .qml
 
 vlmc_SOURCES = \
 	src/Commands/Commands.cpp \
@@ -130,8 +130,6 @@ nodist_vlmc_SOURCES = \
 
 vlmc_RC = \
 	$(top_srcdir)/resources.qrc \
-	$(top_srcdir)/src/Gui/timeline/resources-timeline.qrc \
-	$(top_srcdir)/src/Gui/effectsengine/resources-effects.qrc \
 	$(NULL)
 
 EXTRA_DIST = $(vlmc_RC)
@@ -394,9 +392,12 @@ vlmc_QML = \
 
 EXTRA_DIST += $(vlmc_QML)
 
+vlmc_RC += $(vlmc_QML:.qml=.qrc)
+nodist_vlmc_SOURCES += $(vlmc_QML:.qml=.qrc)
+
 endif
 
-resources.cpp:
+resources.cpp: $(vlmc_QML)
 	$(RCC) -o $@ $(vlmc_RC)
 
 nodist_vlmc_SOURCES += resources.cpp
@@ -417,6 +418,17 @@ uic_verbose__0 = $(uic_verbose_0)
 %.h: %.ui
 	$(AM_V_at)mkdir -p $(@D)
 	$(uic_verbose)$(UIC) -p $< -o $@
+
+qmlrc_verbose = $(qmlrc_verbose_$(V))
+qmlrc_verbose_ = $(qmlrc_verbose__$(AM_DEFAULT_VERBOSITY))
+qmlrc_verbose_0 = @echo "  QML->QRC   " $@;
+qmlrc_verbose__0 = $(qmlrc_verbose_0)
+
+.qml.qrc:
+	$(AM_V_at)mkdir -p $(@D)
+	$(qmlrc_verbose)echo "<RCC><qresource prefix=\"/QML\">\
+		<file alias=\"$(<F)\">$(abs_top_builddir)/$<</file>\
+		</qresource></RCC>" > $@
 
 BUILT_SOURCES = $(nodist_vlmc_SOURCES)
 CLEANFILES = $(BUILT_SOURCES)
