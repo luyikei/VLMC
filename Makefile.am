@@ -131,6 +131,7 @@ nodist_vlmc_SOURCES = \
 vlmc_RC = \
 	$(top_srcdir)/resources.qrc \
 	$(top_srcdir)/src/Gui/timeline/resources-timeline.qrc \
+	$(top_srcdir)/src/Gui/effectsengine/resources-effects.qrc \
 	$(NULL)
 
 EXTRA_DIST = $(vlmc_RC)
