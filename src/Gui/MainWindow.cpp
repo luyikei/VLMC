@@ -118,7 +118,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
         }
     });
 
-    connect( Core::instance()->library(), &Library::discoveryStarted, this,
+    connect( Core::instance()->library(), &Library::discoveryProgress, this,
         [this](const QString& folder) {
             m_ui.statusbar->showMessage( "Discovering " + folder + "...", 2500 );
     }, Qt::QueuedConnection );

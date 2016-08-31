@@ -101,6 +101,7 @@ private:
     virtual void onTracksAdded( std::vector<medialibrary::AlbumTrackPtr> tracks ) override;
     virtual void onTracksDeleted( std::vector<int64_t> trackIds ) override;
     virtual void onDiscoveryStarted( const std::string& entryPoint ) override;
+    virtual void onDiscoveryProgress( const std::string& entryPoint ) override;
     virtual void onDiscoveryCompleted( const std::string& entryPoint ) override;
     virtual void onParsingStatsUpdated( uint32_t percent ) override;
 
@@ -126,7 +127,7 @@ signals:
     void    cleanStateChanged( bool newState );
 
     void    progressUpdated( int percent );
-    void    discoveryStarted( QString );
+    void    discoveryProgress( QString );
     void    discoveryCompleted( QString );
 
 };

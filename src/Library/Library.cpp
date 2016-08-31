@@ -298,9 +298,14 @@ Library::onTracksDeleted( std::vector<int64_t> )
 }
 
 void
-Library::onDiscoveryStarted( const std::string& entryPoint )
+Library::onDiscoveryStarted( const std::string& )
 {
-    emit discoveryStarted( QString::fromStdString( entryPoint ) );
+}
+
+void
+Library::onDiscoveryProgress( const std::string& entryPoint )
+{
+    emit discoveryProgress( QString::fromStdString( entryPoint ) );
 }
 
 void
