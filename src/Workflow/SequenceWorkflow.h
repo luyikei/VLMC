@@ -64,6 +64,7 @@ class SequenceWorkflow : public QObject
             QUuid                   uuid;
             quint32                 trackId;
             qint64                  pos;
+            QVector<QUuid>          linkedClips;
         };
 
         /**

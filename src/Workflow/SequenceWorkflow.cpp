@@ -155,33 +155,40 @@ SequenceWorkflow::removeClip( const QUuid& uuid )
 bool
 SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
 {
-    auto clipA = clip( uuidA )->clip;
-    auto clipB = clip( uuidB )->clip;
+    auto clipA = clip( uuidA );
+    auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
         vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
         return false;
     }
-    clipA->setLinkedClipUuid( clipB->uuid() );
-    clipB->setLinkedClipUuid( clipA->uuid() );
-    clipA->setLinked( true );
-    clipB->setLinked( true );
+    clipA->linkedClips.append( clipB->uuid );
+    clipB->linkedClips.append( clipA->uuid );
     return true;
 }
 
 bool
 SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
 {
-    auto clipA = clip( uuidA )->clip;
-    auto clipB = clip( uuidB )->clip;
+    auto clipA = clip( uuidA );
+    auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
         vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
         return false;
     }
-    clipA->setLinked( false );
-    clipB->setLinked( false );
-    return true;
+    bool ret = true;
+    if ( clipA->linkedClips.removeOne( uuidB ) == false )
+    {
+        ret = false;
+        vlmcWarning() << "Failed to unlink" << uuidB << "from Clip instance" << uuidA;
+    }
+    if ( clipB->linkedClips.removeOne( uuidA ) == false )
+    {
+        ret = false;
+        vlmcWarning() << "Failed to unlink" << uuidA << "from Clip instance" << uuidB;
+    }
+    return ret;
 }
 
 QVariant
@@ -196,10 +203,12 @@ SequenceWorkflow::toVariant() const
             { "clipUuid", c->clip->uuid().toString() },
             { "position", c->pos },
             { "trackId", c->trackId },
-            { "linked", c->clip->isLinked() },
-            { "linkedClip", c->clip->linkedClipUuid() },
             { "filters", EffectHelper::toVariant( c->clip->input() ) }
         };
+        QList<QVariant> linkedClipList;
+        for ( const auto& uuid : c->linkedClips )
+            linkedClipList.append( uuid.toString() );
+        h["linkedClips"] = linkedClipList;
         l << h;
     }
     QVariantHash h{ { "clips", l }, { "filters", EffectHelper::toVariant( m_multitrack ) } };
@@ -224,10 +233,11 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
         addClip( clip, m["trackId"].toUInt(), m["position"].toLongLong(), uuid );
         auto c = m_clips[uuid];
 
-        auto isLinked = m["linked"].toBool();
-        clip->setLinked( isLinked );
-        if ( isLinked == true )
-            clip->setLinkedClipUuid( m["linkedClip"].toString() );
+        auto linkedClipsList = m["linkedClip"].toList();
+        for ( const auto& uuid : linkedClipsList )
+        {
+            c->linkedClips.append( uuid.toUuid() );
+        }
 
         EffectHelper::loadFromVariant( m["filters"], clip->input() );
 
