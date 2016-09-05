@@ -187,7 +187,7 @@ Item {
                     }
                     else {
                         var newClipInfo = workflow.clipInfo( drag.getDataAsString( "vlmc/uuid" ) );
-                        currentUuid = "" + newClipInfo["uuid"];
+                        currentUuid = "" + newClipInfo["libraryUuid"];
                         newClipInfo["position"] = ptof( drag.x );
                         if ( newClipInfo["audio"] ) {
                             newClipInfo["uuid"] = "audioUuid";
@@ -252,7 +252,9 @@ Item {
                         }
                     }
 
-                    if ( alreadyCalculated.indexOf( target.uuid ) < 0 ) {
+                    var uuid = target.uuid;
+
+                    if ( alreadyCalculated.indexOf( uuid ) < 0 ) {
                         var oldX = target.pixelPosition();
                         var newX = Math.max( oldX + deltaX, 0 );
 
@@ -312,10 +314,10 @@ Item {
                     if ( dMode === dropMode.Move ) {
                         if ( target.newTrackId !== target.trackId ) {
                             drag.source.parent.parent.z = ++maxZ;
-                            if ( drag.source.uuid !== target.uuid ) {
+                            if ( drag.source.uuid !== uuid ) {
                                 target.clipInfo["selected"] = true;
                                 addClip( target.type, target.newTrackId, target.clipInfo );
-                                removeClipFromTrack( target.type, target.trackId, target.uuid );
+                                removeClipFromTrack( target.type, target.trackId, uuid );
                                 --i;
                             }
                         }

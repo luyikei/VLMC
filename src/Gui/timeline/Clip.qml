@@ -29,7 +29,8 @@ Rectangle {
     property int position
     property int begin
     property int end
-    property string uuid
+    property string libraryUuid // Library UUID: For thumbnails
+    property string uuid // Instance UUID
     property string linkedClip // Uuid
     property bool linked: false
     property string type
@@ -78,7 +79,7 @@ Rectangle {
     }
 
     function updateThumbnail( pos ) {
-        thumbnailSource = "image://thumbnail/" + uuid + "/" + pos;
+        thumbnailSource = "image://thumbnail/" + libraryUuid + "/" + pos;
     }
 
     onXChanged: {

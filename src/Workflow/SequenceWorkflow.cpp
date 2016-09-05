@@ -64,42 +64,18 @@ SequenceWorkflow::~SequenceWorkflow()
     clear();
 }
 
-bool
-SequenceWorkflow::addClip( QSharedPointer<Clip> const& clip, quint32 trackId, qint32 pos )
+QUuid
+SequenceWorkflow::addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 pos, const QUuid& uuid )
 {
     auto ret = trackFromFormats( trackId, clip->formats() )->insertAt( *clip->input(), pos );
     if ( ret == false )
-        return false;
-    m_clips.insert( clip->uuid(), std::make_tuple( clip, trackId, pos ) );
-    return true;
-}
-
-QString
-SequenceWorkflow::addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip )
-{
-    auto parentClip = Core::instance()->library()->clip( uuid );
-    if ( parentClip == nullptr )
-    {
-        vlmcCritical() << "Couldn't find an acceptable parent to be added.";
-        return QUuid().toString();
-    }
-    auto newClip = parentClip->media()->cut( parentClip->begin(), parentClip->end() );
-    if ( newClip == nullptr )
-    {
-        vlmcCritical() << "Couldn't duplicate the parent clip.";
-        return QUuid().toString();
-    }
-
-    if ( isAudioClip == true )
-        newClip->setFormats( Clip::Audio );
-    else
-        newClip->setFormats( Clip::Video );
-
-    bool ret = trackFromFormats( trackId, newClip->formats() )->insertAt( *newClip->input(), pos );
-    if ( ret == false )
-        return QUuid().toString();
-    m_clips.insert( newClip->uuid(), std::make_tuple( newClip, trackId, pos ) );
-    return newClip->uuid().toString();
+        return {};
+    auto c = QSharedPointer<Clip>::create( clip,
+                                           uuid.isNull() == true ? QUuid::createUuid() : uuid,
+                                           trackId, pos );
+    vlmcDebug() << "adding clip instance:" << c->uuid;
+    m_clips.insert( c->uuid, c ) ;
+    return c->uuid;
 }
 
 bool
@@ -111,9 +87,10 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
         vlmcCritical() << "Couldn't find a clip " << uuid;
         return false;
     }
-    auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
-    auto oldTrackId = std::get<ClipTupleIndex::TrackId>( it.value() );
-    auto oldPosition = std::get<ClipTupleIndex::Position>( it.value() );
+    auto& c = it.value();
+    auto clip = c->clip;
+    auto oldTrackId = c->trackId;
+    auto oldPosition = c->pos;
     if ( oldPosition == pos )
         return true;
     auto track = trackFromFormats( oldTrackId, clip->formats() );
@@ -121,16 +98,12 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     if ( trackId != oldTrackId )
     {
         removeClip( uuid );
-        ret = addClip( clip, trackId, pos );
+        return addClip( clip, trackId, pos, uuid ).isNull();
     }
-    else
+    ret = track->move( oldPosition, pos );
+    if ( ret == true )
     {
-        ret = track->move( std::get<ClipTupleIndex::Position>( it.value() ), pos );
-        if ( ret == true )
-        {
-            m_clips.erase( it );
-            m_clips.insert( uuid, std::make_tuple( clip, trackId, pos ) );
-        }
+        c->pos = pos;
     }
     // TODO: If we detect collision too strictly, there will be a problem if we want to move multiple
     //       clips at the same time.
@@ -146,9 +119,10 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
         vlmcCritical() << "Couldn't find a clip " << uuid;
         return false;
     }
-    auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
-    auto trackId = std::get<ClipTupleIndex::TrackId>( it.value() );
-    auto position = std::get<ClipTupleIndex::Position>( it.value() );
+    auto c = it.value();
+    auto clip = c->clip;
+    auto trackId = c->trackId;
+    auto position = c->pos;
     auto track = trackFromFormats( trackId, clip->formats() );
     auto ret = track->resizeClip( track->clipIndexAt( position ), newBegin, newEnd );
     if ( ret == false )
@@ -157,31 +131,32 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     return ret;
 }
 
-QSharedPointer<Clip>
+QSharedPointer<SequenceWorkflow::Clip>
 SequenceWorkflow::removeClip( const QUuid& uuid )
 {
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
-        vlmcCritical() << "Couldn't find a clip " << uuid;
+        vlmcCritical() << "Couldn't find a sequence workflow clip " << uuid;
         return {};
     }
-    auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
-    auto trackId = std::get<ClipTupleIndex::TrackId>( it.value() );
-    auto position = std::get<ClipTupleIndex::Position>( it.value() );
+    auto c = it.value();
+    auto clip = c->clip;
+    auto trackId = c->trackId;
+    auto position = c->pos;
     auto track = trackFromFormats( trackId, clip->formats() );
     track->remove( track->clipIndexAt( position ) );
     m_clips.erase( it );
     clip->disconnect( this );
-    return clip;
+    return c;
 
 }
 
 bool
 SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
 {
-    auto clipA = clip( uuidA );
-    auto clipB = clip( uuidB );
+    auto clipA = clip( uuidA )->clip;
+    auto clipB = clip( uuidB )->clip;
     if ( !clipA || !clipB )
     {
         vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
@@ -197,8 +172,8 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
 bool
 SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
 {
-    auto clipA = clip( uuidA );
-    auto clipB = clip( uuidB );
+    auto clipA = clip( uuidA )->clip;
+    auto clipB = clip( uuidB )->clip;
     if ( !clipA || !clipB )
     {
         vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
@@ -215,16 +190,15 @@ SequenceWorkflow::toVariant() const
     QVariantList l;
     for ( auto it = m_clips.begin(); it != m_clips.end(); ++it )
     {
-        auto clip = std::get<ClipTupleIndex::Clip>( it.value() );
-        auto trackId = std::get<ClipTupleIndex::TrackId>( it.value() );
-        auto position = std::get<ClipTupleIndex::Position>( it.value() );
-        QVariantHash h {
-            { "uuid", clip->uuid() },
-            { "position", position },
-            { "trackId", trackId },
-            { "linked", clip->isLinked() },
-            { "linkedClip", clip->linkedClipUuid() },
-            { "filters", EffectHelper::toVariant( clip->input() ) }
+        auto c = it.value();
+        QVariantHash h = {
+            { "uuid", c->uuid.toString() },
+            { "clipUuid", c->clip->uuid().toString() },
+            { "position", c->pos },
+            { "trackId", c->trackId },
+            { "linked", c->clip->isLinked() },
+            { "linkedClip", c->clip->linkedClipUuid() },
+            { "filters", EffectHelper::toVariant( c->clip->input() ) }
         };
         l << h;
     }
@@ -238,15 +212,17 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
     for ( auto& var : variant.toMap()["clips"].toList() )
     {
         auto m = var.toMap();
-        auto clip = Core::instance()->library()->clip( m["uuid"].toUuid() );
+        auto clip = Core::instance()->library()->clip( m["clipUuid"].toUuid() );
 
         if ( clip == nullptr )
         {
-            vlmcCritical() << "Couldn't find an acceptable parent to be added.";
+            vlmcCritical() << "Couldn't find an acceptable library clip to be added.";
             continue;
         }
 
-        addClip( clip, m["trackId"].toUInt(), m["position"].toLongLong() );
+        auto uuid = m["uuid"].toUuid();
+        addClip( clip, m["trackId"].toUInt(), m["position"].toLongLong(), uuid );
+        auto c = m_clips[uuid];
 
         auto isLinked = m["linked"].toBool();
         clip->setLinked( isLinked );
@@ -272,13 +248,13 @@ SequenceWorkflow::clear()
     }
 }
 
-QSharedPointer<Clip>
+QSharedPointer<SequenceWorkflow::Clip>
 SequenceWorkflow::clip( const QUuid& uuid )
 {
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
         return {};
-    return std::get<ClipTupleIndex::Clip>( it.value() );
+    return it.value();
 }
 
 quint32
@@ -287,7 +263,7 @@ SequenceWorkflow::trackId( const QUuid& uuid )
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
         return 0;
-    return std::get<ClipTupleIndex::TrackId>( it.value() );
+    return it.value()->trackId;
 }
 
 qint32
@@ -296,7 +272,7 @@ SequenceWorkflow::position( const QUuid& uuid )
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
         return 0;
-    return std::get<ClipTupleIndex::Position>( it.value() );
+    return it.value()->pos;
 }
 
 Backend::IInput*
@@ -313,13 +289,21 @@ SequenceWorkflow::trackInput( quint32 trackId )
 }
 
 std::shared_ptr<Backend::ITrack>
-SequenceWorkflow::trackFromFormats( quint32 trackId, Clip::Formats formats )
+SequenceWorkflow::trackFromFormats( quint32 trackId, ::Clip::Formats formats )
 {
     if ( trackId >= (quint32)m_trackCount )
         return nullptr;
-    if ( formats.testFlag( Clip::Audio ) )
+    if ( formats.testFlag( ::Clip::Audio ) )
         return m_tracks[Workflow::AudioTrack][trackId];
-    else if ( formats.testFlag( Clip::Video ) )
+    else if ( formats.testFlag( ::Clip::Video ) )
         return m_tracks[Workflow::VideoTrack][trackId];
     return nullptr;
+}
+
+SequenceWorkflow::Clip::Clip(QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p )
+    : clip( c )
+    , uuid( uuid )
+    , trackId( tId )
+    , pos( p )
+{
 }

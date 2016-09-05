@@ -56,11 +56,29 @@ class SequenceWorkflow : public QObject
         SequenceWorkflow( size_t trackCount = 64 );
         ~SequenceWorkflow();
 
-        // Clip, Track Id, and Position
-        using ClipTuple = std::tuple<QSharedPointer<Clip>, quint32, qint64>;
+        struct Clip
+        {
+            Clip() = default;
+            Clip( QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p );
+            QSharedPointer<::Clip>  clip;
+            QUuid                   uuid;
+            quint32                 trackId;
+            qint64                  pos;
+        };
 
-        bool                    addClip( QSharedPointer<Clip> const& clip, quint32 trackId, qint32 pos );
-        QString                 addClip( const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip );
+        /**
+         * @brief addClip   Adds a clip to the sequence workflow
+         * @param clip      A library clip's UUID
+         * @param trackId   The target track
+         * @param pos       Clip's position in the track
+         * @param uuid      The new clip instance UUID. If this is a default created UUID, a new UUID
+         *                  will be generated.
+         * @return          The given instance UUID, or the newly generated one, representing a new
+         *                  clip instance in the sequence workflow.
+         *                  This instance UUID must be used to manipulate this new clip instance
+         */
+        QUuid                   addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 pos,
+                                         const QUuid& uuid );
         bool                    moveClip( const QUuid& uuid, quint32 trackId, qint64 pos );
         bool                    resizeClip( const QUuid& uuid, qint64 newBegin,
                                             qint64 newEnd, qint64 newPos );
@@ -81,9 +99,9 @@ class SequenceWorkflow : public QObject
 
     private:
 
-        inline std::shared_ptr<Backend::ITrack>         trackFromFormats( quint32 trackId, Clip::Formats formats );
+        inline std::shared_ptr<Backend::ITrack>         trackFromFormats( quint32 trackId, ::Clip::Formats formats );
 
-        QMap<QUuid, ClipTuple>          m_clips;
+        QMap<QUuid, QSharedPointer<Clip>>               m_clips;
 
         Backend::IMultiTrack*           m_multitrack;
         QList<std::shared_ptr<Backend::ITrack>>         m_tracks[Workflow::NbTrackType];

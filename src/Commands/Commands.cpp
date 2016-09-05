@@ -35,6 +35,7 @@
 #include "Workflow/MainWorkflow.h"
 #include "AbstractUndoStack.h"
 #include "Backend/IFilter.h"
+#include "Library/Library.h"
 
 Commands::Generic::Generic() :
         m_valid( true )
@@ -91,12 +92,11 @@ Commands::Generic::undo()
 }
 
 Commands::Clip::Add::Add( std::shared_ptr<SequenceWorkflow> const& workflow,
-                          const QUuid& uuid, quint32 trackId, qint32 pos, bool isAudioClip ) :
+                          const QUuid& uuid, quint32 trackId, qint32 pos ) :
         m_workflow( workflow ),
-        m_uuid( uuid ),
+        m_libraryUuid( uuid ),
         m_trackId( trackId ),
-        m_pos( pos ),
-        m_isAudioClip( isAudioClip )
+        m_pos( pos )
 {
     retranslate();
 }
@@ -104,33 +104,26 @@ Commands::Clip::Add::Add( std::shared_ptr<SequenceWorkflow> const& workflow,
 void
 Commands::Clip::Add::internalRedo()
 {
-    if ( m_clip )
+    auto clip = Core::instance()->library()->clip( m_libraryUuid );
+    if ( clip == nullptr )
     {
-        auto ret = m_workflow->addClip( m_clip, m_trackId, m_pos );
-        if ( ret == true )
-            emit Core::instance()->workflow()->clipAdded( m_clip->uuid().toString() );
-        else
-            invalidate();
+        invalidate();
+        return;
     }
+    // In case we are redoing, we are feeding the addClip method with the previously generated UUID
+    // so that future operations could still rely on the same instance being present
+    m_instanceUuid = m_workflow->addClip( clip, m_trackId, m_pos, m_instanceUuid );
+    if ( m_instanceUuid.isNull() == false )
+        emit Core::instance()->workflow()->clipAdded( m_instanceUuid.toString() );
     else
-    {
-        auto ret = m_workflow->addClip( m_uuid, m_trackId, m_pos, m_isAudioClip );
-        if ( QUuid( ret ).isNull() == false )
-        {
-            m_clip = m_workflow->clip( ret );
-            emit Core::instance()->workflow()->clipAdded( ret );
-        }
-        else
-            invalidate();
-    }
+        invalidate();
 }
 
 void
 Commands::Clip::Add::internalUndo()
 {
-    m_clip = m_workflow->removeClip( m_uuid );
-    if ( m_clip )
-        emit Core::instance()->workflow()->clipRemoved( m_uuid.toString() );
+    if ( m_workflow->removeClip( m_instanceUuid ) == nullptr )
+        emit Core::instance()->workflow()->clipRemoved( m_instanceUuid.toString() );
     else
         invalidate();
 }
@@ -141,17 +134,17 @@ Commands::Clip::Add::retranslate()
     setText( tr( "Adding clip to track %1" ).arg( m_trackId ) );
 }
 
-QSharedPointer<::Clip>
+const QUuid&
 Commands::Clip::Add::newClip()
 {
-    return m_clip;
+    return m_instanceUuid;
 }
 
 Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
                              const QString& uuid, quint32 trackId, qint64 pos ) :
     m_workflow( workflow ),
     //We have to find an actual clip to ensure that it exists
-    m_clip( workflow->clip( uuid ) ),
+    m_clip( workflow->clip( uuid )->clip ),
     m_newTrackId( trackId ),
     m_oldTrackId( workflow->trackId( uuid ) ),
     m_newPos( pos ),
@@ -219,14 +212,14 @@ Commands::Clip::Remove::retranslate()
 void
 Commands::Clip::Remove::internalRedo()
 {
-    if ( !m_clip )
+    if ( m_clip == nullptr )
     {
         invalidate();
         return;
     }
-    m_clip = m_workflow->removeClip( m_clip->uuid() );
-    if ( m_clip )
-        emit Core::instance()->workflow()->clipRemoved( m_clip->uuid().toString() );
+    m_clip = m_workflow->removeClip( m_clip->uuid );
+    if ( m_clip == nullptr )
+        emit Core::instance()->workflow()->clipRemoved( m_clip->uuid.toString() );
     else
         invalidate();
 }
@@ -234,14 +227,14 @@ Commands::Clip::Remove::internalRedo()
 void
 Commands::Clip::Remove::internalUndo()
 {
-    if ( !m_clip )
+    if ( m_clip == nullptr )
     {
         invalidate();
         return;
     }
-    auto ret = m_workflow->addClip( m_clip, m_trackId, m_pos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipAdded( m_clip->uuid().toString() );
+    auto ret = m_workflow->addClip( m_clip->clip, m_trackId, m_pos, m_clip->uuid );
+    if ( ret.isNull() == false )
+        emit Core::instance()->workflow()->clipAdded( m_clip->uuid.toString() );
     else
         invalidate();
 }
@@ -254,14 +247,14 @@ Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflo
     m_newEnd( newEnd ),
     m_newPos( newPos )
 {
-    if ( !m_clip )
+    if ( m_clip->uuid.isNull() == false )
     {
         invalidate();
         retranslate();
         return;
     }
-    m_oldBegin = m_clip->begin();
-    m_oldEnd = m_clip->end();
+    m_oldBegin = m_clip->clip->begin();
+    m_oldEnd = m_clip->clip->end();
     m_oldPos = workflow->trackId( uuid );
     retranslate();
 }
@@ -275,9 +268,9 @@ Commands::Clip::Resize::retranslate()
 void
 Commands::Clip::Resize::internalRedo()
 {
-    bool ret = m_workflow->resizeClip( m_clip->uuid(), m_newBegin, m_newEnd, m_newPos );
+    bool ret = m_workflow->resizeClip( m_clip->uuid, m_newBegin, m_newEnd, m_newPos );
     if ( ret == true )
-        emit Core::instance()->workflow()->clipResized( m_clip->uuid().toString() );
+        emit Core::instance()->workflow()->clipResized( m_clip->uuid.toString() );
     else
         invalidate();
 }
@@ -285,9 +278,9 @@ Commands::Clip::Resize::internalRedo()
 void
 Commands::Clip::Resize::internalUndo()
 {
-    bool ret = m_workflow->resizeClip( m_clip->uuid(), m_oldBegin, m_oldEnd, m_oldPos );
+    bool ret = m_workflow->resizeClip( m_clip->uuid, m_oldBegin, m_oldEnd, m_oldPos );
     if ( ret == true )
-        emit Core::instance()->workflow()->clipResized( m_clip->uuid().toString() );
+        emit Core::instance()->workflow()->clipResized( m_clip->uuid.toString() );
     else
         invalidate();
 }
@@ -307,10 +300,10 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
         retranslate();
         return;
     }
-    m_newClip = m_toSplit->media()->cut( newClipBegin - m_toSplit->begin(),
-                                         m_toSplit->end() - m_toSplit->begin() );
-    m_newClip->setFormats( m_toSplit->formats() );
-    m_oldEnd = m_toSplit->end();
+    m_newClip = m_toSplit->clip->media()->cut( newClipBegin - m_toSplit->clip->begin(),
+                                         m_toSplit->clip->end() - m_toSplit->clip->begin() );
+    m_newClip->setFormats( m_toSplit->clip->formats() );
+    m_oldEnd = m_toSplit->clip->end();
     retranslate();
 }
 
@@ -330,36 +323,35 @@ Commands::Clip::Split::internalRedo()
     }
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
-    bool ret = m_workflow->resizeClip( m_toSplit->uuid(), m_toSplit->begin(),
-                                       m_newClipBegin - 1, m_workflow->position( m_toSplit->uuid() ) );
+    bool ret = m_workflow->resizeClip( m_toSplit->uuid, m_toSplit->clip->begin(),
+                                       m_newClipBegin - 1, m_workflow->position( m_toSplit->uuid ) );
     if ( ret == false )
     {
         invalidate();
         return;
     }
 
-    ret = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipAdded( m_newClip->uuid().toString() );
+    m_newClipUuid = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos, m_newClipUuid );
+    if ( m_newClipUuid.isNull() == false )
+        emit Core::instance()->workflow()->clipAdded( m_newClipUuid.toString() );
     else
         invalidate();
-    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid().toString() );
+    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid.toString() );
 }
 
 void
 Commands::Clip::Split::internalUndo()
 {
-    m_newClip = m_workflow->removeClip( m_newClip->uuid() );
-    if ( !m_newClip )
+    if ( m_workflow->removeClip( m_newClip->uuid() ) == nullptr )
     {
         invalidate();
         return;
     }
     else
         emit Core::instance()->workflow()->clipRemoved( m_newClip->uuid().toString() );
-    m_workflow->resizeClip( m_toSplit->uuid(), m_toSplit->begin(),
-                            m_oldEnd, m_workflow->position( m_toSplit->uuid() ) );
-    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid().toString() );
+    m_workflow->resizeClip( m_toSplit->clip->uuid(), m_toSplit->clip->begin(),
+                            m_oldEnd, m_workflow->position( m_toSplit->uuid ) );
+    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid.toString() );
 }
 
 Commands::Clip::Link::Link( std::shared_ptr<SequenceWorkflow> const& workflow,

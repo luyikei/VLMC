@@ -163,7 +163,7 @@ void
 MainWorkflow::showEffectStack( const QString& uuid )
 {
 #ifdef HAVE_GUI
-    auto w = new EffectStack( m_sequenceWorkflow->clip( uuid )->input() );
+    auto w = new EffectStack( m_sequenceWorkflow->clip( uuid )->clip->input() );
     connect( w, &EffectStack::finished, Core::instance()->workflow(), [uuid]{ emit Core::instance()->workflow()->effectsUpdated( uuid ); } );
     w->show();
 #endif
@@ -201,23 +201,26 @@ MainWorkflow::trackCount() const
 }
 
 QString
-MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos, bool isAudioClip  )
+MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos )
 {
-    auto command = new Commands::Clip::Add( m_sequenceWorkflow, uuid, trackId, pos, isAudioClip );
+    vlmcDebug() << "Adding clip:" << uuid;
+    auto command = new Commands::Clip::Add( m_sequenceWorkflow, uuid, trackId, pos );
     trigger( command );
     auto newClip = command->newClip();
-    if ( newClip )
-        return newClip->uuid().toString();
+    if ( newClip.isNull() == false )
+        return newClip.toString();
     return QUuid().toString();
 }
 
 QJsonObject
 MainWorkflow::clipInfo( const QString& uuid )
 {
-    auto clip = m_sequenceWorkflow->clip( uuid );
-    if ( clip != nullptr )
+    auto c = m_sequenceWorkflow->clip( uuid );
+    if ( c != nullptr )
     {
+        auto clip = c->clip;
         auto h = clip->toVariant().toHash();
+        h["uuid"] = uuid;
         h["length"] = (qint64)( clip->input()->length() );
         h["name"] = clip->media()->title();
         h["audio"] = clip->formats().testFlag( Clip::Audio );
@@ -289,9 +292,9 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
     }
 
     auto clip = m_sequenceWorkflow->clip( clipUuid );
-    if ( clip && clip->input() )
+    if ( clip && clip->clip->input() )
     {
-        trigger( new Commands::Effect::Add( newEffect, clip->input() ) );
+        trigger( new Commands::Effect::Add( newEffect, clip->clip->input() ) );
         emit effectsUpdated( clipUuid );
         return newEffect->uuid().toString();
     }
@@ -302,7 +305,11 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
 void
 MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
 {
-    auto clip = m_sequenceWorkflow->clip( uuid );
+    vlmcDebug() << "Generating thumbnail for" << uuid;
+    // We need to fetch the clip from the library. This clip is being added to the library
+    // and doesn't have an instance ID yet
+    auto swClip = m_sequenceWorkflow->clip( uuid );
+    auto clip = swClip->clip;
     auto worker = new ThumbnailWorker( uuid, clip->media()->mrl(),
                                        pos, clip->input()->width(), clip->input()->height() );
     auto t = new QThread;

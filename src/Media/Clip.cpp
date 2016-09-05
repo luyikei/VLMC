@@ -191,7 +191,7 @@ QVariant
 Clip::toVariant() const
 {
     QVariantHash h = {
-        { "uuid", m_uuid.toString() },
+        { "libraryUuid", m_uuid.toString() },
         { "metatags", m_metaTags },
         { "notes", m_notes },
         { "formats", (int)formats() }

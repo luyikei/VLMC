@@ -91,6 +91,7 @@ Rectangle {
         newDict["end"] = clipDict["end"];
         newDict["position"] = clipDict["position"];
         newDict["length"] = clipDict["length"];
+        newDict["libraryUuid"] = clipDict["libraryUuid"];
         newDict["uuid"] = clipDict["uuid"];
         newDict["trackId"] = trackId;
         newDict["name"] = clipDict["name"];
