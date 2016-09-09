@@ -61,6 +61,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_undoStack( new Commands::AbstractUndoStack ),
         m_sequenceWorkflow( new SequenceWorkflow( trackCount ) )
 {
+    connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipAdded, this, &MainWorkflow::clipAdded );
     m_renderer->setInput( m_sequenceWorkflow->input() );
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );

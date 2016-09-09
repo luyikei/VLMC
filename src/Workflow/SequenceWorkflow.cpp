@@ -75,6 +75,7 @@ SequenceWorkflow::addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 
                                            trackId, pos );
     vlmcDebug() << "adding clip instance:" << c->uuid;
     m_clips.insert( c->uuid, c ) ;
+    emit clipAdded( c->uuid.toString() );
     return c->uuid;
 }
 

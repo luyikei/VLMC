@@ -108,6 +108,9 @@ class SequenceWorkflow : public QObject
         QList<std::shared_ptr<Backend::ITrack>>         m_tracks[Workflow::NbTrackType];
         QList<std::shared_ptr<Backend::IMultiTrack>>    m_multiTracks;
         const size_t                    m_trackCount;
+
+    signals:
+        void                    clipAdded( QString );
 };
 
 #endif // SEQUENCEWORKFLOW_H
