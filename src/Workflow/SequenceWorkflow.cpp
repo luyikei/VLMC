@@ -166,6 +166,7 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
     }
     clipA->linkedClips.append( clipB->uuid );
     clipB->linkedClips.append( clipA->uuid );
+    emit clipLinked( clipA->uuid.toString(), clipB->uuid.toString() );
     return true;
 }
 

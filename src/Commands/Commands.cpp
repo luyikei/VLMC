@@ -124,6 +124,8 @@ Commands::Clip::Add::internalRedo()
         if ( m_videoInstanceUuid.isNull() == true )
             invalidate();
     }
+    if ( m_audioInstanceUuid.isNull() == false && m_videoInstanceUuid.isNull() == false )
+        m_workflow->linkClips( m_audioInstanceUuid, m_videoInstanceUuid );
 }
 
 void

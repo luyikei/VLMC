@@ -151,9 +151,6 @@ Item {
                         removeClipFromTrack( "Video", trackId, "videoUuid" );
                     }
                     workflow.addClip( drop.getDataAsString("vlmc/uuid"), trackId, pos, false );
-                    if ( audioClipUuid && videoClipUuid ) {
-                        workflow.linkClips( audioClipUuid, videoClipUuid );
-                    }
                     currentUuid = "";
                     aClipInfo = null;
                     vClipInfo = null;
