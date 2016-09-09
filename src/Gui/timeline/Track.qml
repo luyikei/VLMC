@@ -141,16 +141,16 @@ Item {
                 if ( drop.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
                     aClipInfo = findClipFromTrack( "Audio", trackId, "audioUuid" );
                     vClipInfo = findClipFromTrack( "Video", trackId, "videoUuid" );
+                    var pos = 0;
                     if ( aClipInfo ) {
                         var pos = aClipInfo["position"];
-                        var audioClipUuid = workflow.addClip( currentUuid, trackId, pos, true );
                         removeClipFromTrack( "Audio", trackId, "audioUuid" );
                     }
                     if ( vClipInfo ) {
                         pos = vClipInfo["position"];
-                        var videoClipUuid = workflow.addClip( currentUuid, trackId, pos, false );
                         removeClipFromTrack( "Video", trackId, "videoUuid" );
                     }
+                    workflow.addClip( drop.getDataAsString("vlmc/uuid"), trackId, pos, false );
                     if ( audioClipUuid && videoClipUuid ) {
                         workflow.linkClips( audioClipUuid, videoClipUuid );
                     }

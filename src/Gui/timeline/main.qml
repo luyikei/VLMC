@@ -166,7 +166,7 @@ Rectangle {
 
     function findClipItem( uuid ) {
         for ( var i = 0; i < allClips.length; ++i ) {
-            if ( uuid === allClips[i].instanceUuid )
+            if ( uuid === allClips[i].uuid )
                 return allClips[i];
         }
         return null;

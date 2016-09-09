@@ -46,14 +46,6 @@ class   Clip : public Workflow::Helper
     Q_OBJECT
 
     public:
-        enum    Format
-        {
-            None          = 0,
-            Audio         = 1 << 0,
-            Video         = 1 << 1,
-        };
-        Q_DECLARE_FLAGS( Formats, Format )
-
         static const int DefaultFPS;
         /**
          *  \brief  Constructs a Clip that is a subpart of a Media.
@@ -104,9 +96,6 @@ class   Clip : public Workflow::Helper
 
         QVariant            toVariant() const;
 
-        Formats             formats() const;
-        void                setFormats( Formats formats );
-
         Backend::IInput* input();
 
     private:
@@ -116,15 +105,11 @@ class   Clip : public Workflow::Helper
         QStringList         m_metaTags;
         QString             m_notes;
 
-        Formats             m_formats;
-
     signals:
         /**
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
 };
-
-Q_DECLARE_OPERATORS_FOR_FLAGS( Clip::Formats )
 
 #endif //CLIP_H__

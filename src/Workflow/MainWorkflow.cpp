@@ -201,16 +201,12 @@ MainWorkflow::trackCount() const
     return m_trackCount;
 }
 
-QString
+void
 MainWorkflow::addClip( const QString& uuid, quint32 trackId, qint32 pos )
 {
     vlmcDebug() << "Adding clip:" << uuid;
     auto command = new Commands::Clip::Add( m_sequenceWorkflow, uuid, trackId, pos );
     trigger( command );
-    auto newClip = command->newClip();
-    if ( newClip.isNull() == false )
-        return newClip.toString();
-    return QUuid().toString();
 }
 
 QJsonObject
@@ -224,8 +220,7 @@ MainWorkflow::clipInfo( const QString& uuid )
         h["uuid"] = uuid;
         h["length"] = (qint64)( clip->input()->length() );
         h["name"] = clip->media()->title();
-        h["audio"] = clip->formats().testFlag( Clip::Audio );
-        h["video"] = clip->formats().testFlag( Clip::Video );
+        h["audio"] = c->isAudio;
         h["position"] = m_sequenceWorkflow->position( uuid );
         h["trackId"] = m_sequenceWorkflow->trackId( uuid );
         h["filters"] = EffectHelper::toVariant( clip->input() );

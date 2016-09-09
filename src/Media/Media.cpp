@@ -220,9 +220,7 @@ Media::loadSubclip( const QVariantMap& m )
     const auto& uuid = m["uuid"].toUuid();
     const auto  begin = m["begin"].toLongLong();
     const auto  end = m["end"].toLongLong();
-    const auto  formats = m["formats"].toInt();
     auto clip = QSharedPointer<Clip>::create( sharedFromThis(), begin, end, uuid );
-    clip->setFormats( static_cast<Clip::Formats>( formats ) );
 
     m_clips[uuid] = clip;
     emit subclipAdded( clip );

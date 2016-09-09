@@ -59,12 +59,14 @@ class SequenceWorkflow : public QObject
         struct Clip
         {
             Clip() = default;
-            Clip( QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p );
+            Clip( QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p, bool isAudio );
             QSharedPointer<::Clip>  clip;
             QUuid                   uuid;
             quint32                 trackId;
             qint64                  pos;
             QVector<QUuid>          linkedClips;
+            // true is this instance represents an audio track, false otherwise
+            bool                    isAudio;
         };
 
         /**
@@ -79,7 +81,7 @@ class SequenceWorkflow : public QObject
          *                  This instance UUID must be used to manipulate this new clip instance
          */
         QUuid                   addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 pos,
-                                         const QUuid& uuid );
+                                         const QUuid& uuid, bool isAudioClip );
         bool                    moveClip( const QUuid& uuid, quint32 trackId, qint64 pos );
         bool                    resizeClip( const QUuid& uuid, qint64 newBegin,
                                             qint64 newEnd, qint64 newPos );
@@ -100,7 +102,7 @@ class SequenceWorkflow : public QObject
 
     private:
 
-        inline std::shared_ptr<Backend::ITrack>         trackFromFormats( quint32 trackId, ::Clip::Formats formats );
+        inline std::shared_ptr<Backend::ITrack>         track( quint32 trackId, bool audio );
 
         QMap<QUuid, QSharedPointer<Clip>>               m_clips;
 

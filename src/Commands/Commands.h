@@ -85,12 +85,11 @@ namespace Commands
                 virtual void    internalUndo();
                 virtual void    retranslate();
 
-                const QUuid&    newClip();
-
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
                 QUuid                       m_libraryUuid;
-                QUuid                       m_instanceUuid;
+                QUuid                       m_audioInstanceUuid;
+                QUuid                       m_videoInstanceUuid;
                 quint32                     m_trackId;
                 qint64                      m_pos;
         };

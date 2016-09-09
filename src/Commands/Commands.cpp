@@ -110,34 +110,45 @@ Commands::Clip::Add::internalRedo()
         invalidate();
         return;
     }
-    // In case we are redoing, we are feeding the addClip method with the previously generated UUID
-    // so that future operations could still rely on the same instance being present
-    m_instanceUuid = m_workflow->addClip( clip, m_trackId, m_pos, m_instanceUuid );
-    if ( m_instanceUuid.isNull() == false )
-        emit Core::instance()->workflow()->clipAdded( m_instanceUuid.toString() );
-    else
-        invalidate();
+    if ( clip->media()->hasAudioTracks() )
+    {
+        // In case we are redoing, we are feeding the addClip method with the previously generated UUID
+        // so that future operations could still rely on the same instance being present
+        m_audioInstanceUuid = m_workflow->addClip( clip, m_trackId, m_pos, m_audioInstanceUuid, true );
+        if ( m_audioInstanceUuid.isNull() == true )
+            invalidate();
+    }
+    if ( clip->media()->hasVideoTracks() )
+    {
+        m_videoInstanceUuid = m_workflow->addClip( clip, m_trackId, m_pos, m_videoInstanceUuid, false );
+        if ( m_videoInstanceUuid.isNull() == true )
+            invalidate();
+    }
 }
 
 void
 Commands::Clip::Add::internalUndo()
 {
-    if ( m_workflow->removeClip( m_instanceUuid ) == nullptr )
-        emit Core::instance()->workflow()->clipRemoved( m_instanceUuid.toString() );
-    else
-        invalidate();
+    if ( m_audioInstanceUuid.isNull() == false )
+    {
+        if ( m_workflow->removeClip( m_audioInstanceUuid ) != nullptr )
+            emit Core::instance()->workflow()->clipRemoved( m_audioInstanceUuid.toString() );
+        else
+            invalidate();
+    }
+    if ( m_videoInstanceUuid.isNull() == false )
+    {
+        if ( m_workflow->removeClip( m_videoInstanceUuid ) == nullptr )
+            emit Core::instance()->workflow()->clipRemoved( m_videoInstanceUuid.toString() );
+        else
+            invalidate();
+    }
 }
 
 void
 Commands::Clip::Add::retranslate()
 {
     setText( tr( "Adding clip to track %1" ).arg( m_trackId ) );
-}
-
-const QUuid&
-Commands::Clip::Add::newClip()
-{
-    return m_instanceUuid;
 }
 
 Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
@@ -232,10 +243,8 @@ Commands::Clip::Remove::internalUndo()
         invalidate();
         return;
     }
-    auto ret = m_workflow->addClip( m_clip->clip, m_trackId, m_pos, m_clip->uuid );
-    if ( ret.isNull() == false )
-        emit Core::instance()->workflow()->clipAdded( m_clip->uuid.toString() );
-    else
+    auto ret = m_workflow->addClip( m_clip->clip, m_trackId, m_pos, m_clip->uuid, m_clip->isAudio );
+    if ( ret.isNull() == true )
         invalidate();
 }
 
@@ -302,7 +311,6 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
     }
     m_newClip = m_toSplit->clip->media()->cut( newClipBegin - m_toSplit->clip->begin(),
                                          m_toSplit->clip->end() - m_toSplit->clip->begin() );
-    m_newClip->setFormats( m_toSplit->clip->formats() );
     m_oldEnd = m_toSplit->clip->end();
     retranslate();
 }
@@ -331,10 +339,8 @@ Commands::Clip::Split::internalRedo()
         return;
     }
 
-    m_newClipUuid = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos, m_newClipUuid );
-    if ( m_newClipUuid.isNull() == false )
-        emit Core::instance()->workflow()->clipAdded( m_newClipUuid.toString() );
-    else
+    m_newClipUuid = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos, m_newClipUuid, m_toSplit->isAudio );
+    if ( m_newClipUuid.isNull() == true )
         invalidate();
     emit Core::instance()->workflow()->clipResized( m_toSplit->uuid.toString() );
 }

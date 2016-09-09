@@ -44,12 +44,6 @@ Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Ba
         m_media( media ),
         m_input( media->input()->cut( begin, end ) )
 {
-    Formats f;
-    if ( media->input()->hasAudio() == true )
-        f |= Clip::Audio;
-    if ( media->input()->hasVideo() == true )
-        f |= Clip::Video;
-    setFormats( f );
 }
 
 Clip::~Clip()
@@ -169,26 +163,11 @@ Clip::toVariant() const
         { "libraryUuid", m_uuid.toString() },
         { "metatags", m_metaTags },
         { "notes", m_notes },
-        { "formats", (int)formats() }
     };
     h.insert( "begin", begin() );
     h.insert( "end", end() );
     return QVariant( h );
 
-}
-
-Clip::Formats
-Clip::formats() const
-{
-    return m_formats;
-}
-
-void
-Clip::setFormats( Formats formats )
-{
-    if ( formats.testFlag( Clip::None ) )
-        m_formats = Clip::None;
-    m_formats = formats;
 }
 
 Backend::IInput*

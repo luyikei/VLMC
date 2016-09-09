@@ -128,7 +128,7 @@ class   MainWorkflow : public QObject
         quint32                 trackCount() const;
 
         Q_INVOKABLE
-        QString                 addClip( const QString& uuid, quint32 trackId, qint32 pos );
+        void                    addClip( const QString& uuid, quint32 trackId, qint32 pos );
 
         Q_INVOKABLE
         QJsonObject             clipInfo( const QString& uuid );
