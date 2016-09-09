@@ -156,8 +156,7 @@ Commands::Clip::Add::retranslate()
 Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
                              const QString& uuid, quint32 trackId, qint64 pos ) :
     m_workflow( workflow ),
-    //We have to find an actual clip to ensure that it exists
-    m_clip( workflow->clip( uuid )->clip ),
+    m_uuid( uuid ),
     m_newTrackId( trackId ),
     m_oldTrackId( workflow->trackId( uuid ) ),
     m_newPos( pos ),
@@ -179,14 +178,9 @@ Commands::Clip::Move::retranslate()
 void
 Commands::Clip::Move::internalRedo()
 {
-    if ( !m_clip )
-    {
-        invalidate();
-        return;
-    }
-    auto ret = m_workflow->moveClip( m_clip->uuid(), m_newTrackId, m_newPos );
+    auto ret = m_workflow->moveClip( m_uuid, m_newTrackId, m_newPos );
     if ( ret == true )
-        emit Core::instance()->workflow()->clipMoved( m_clip->uuid().toString() );
+        emit Core::instance()->workflow()->clipMoved( m_uuid.toString() );
     else
         invalidate();
 }
@@ -194,14 +188,9 @@ Commands::Clip::Move::internalRedo()
 void
 Commands::Clip::Move::internalUndo()
 {
-    if ( !m_clip )
-    {
-        invalidate();
-        return;
-    }
-    auto ret = m_workflow->moveClip( m_clip->uuid(), m_oldTrackId, m_oldPos );
+    auto ret = m_workflow->moveClip( m_uuid, m_oldTrackId, m_oldPos );
     if ( ret == true )
-        emit Core::instance()->workflow()->clipMoved( m_clip->uuid().toString() );
+        emit Core::instance()->workflow()->clipMoved( m_uuid.toString() );
     else
         invalidate();
 }

@@ -104,7 +104,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                QSharedPointer<::Clip>            m_clip;
+                QUuid           m_uuid;
                 quint32         m_newTrackId;
                 quint32         m_oldTrackId;
                 qint64          m_newPos;
