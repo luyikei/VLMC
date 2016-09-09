@@ -134,6 +134,9 @@ class   MainWorkflow : public QObject
         QJsonObject             clipInfo( const QString& uuid );
 
         Q_INVOKABLE
+        QJsonObject             libraryClipInfo( const QString& uuid );
+
+        Q_INVOKABLE
         void                    moveClip( const QString& uuid, quint32 trackId, qint64 startFrame );
 
         Q_INVOKABLE

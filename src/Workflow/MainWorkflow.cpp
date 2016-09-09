@@ -230,21 +230,24 @@ MainWorkflow::clipInfo( const QString& uuid )
         h["filters"] = EffectHelper::toVariant( clip->input() );
         return QJsonObject::fromVariantHash( h );
     }
-
-    auto lClip = Core::instance()->library()->clip( uuid );
-    if ( lClip != nullptr )
-    {
-        auto h = lClip->toVariant().toHash();
-        h["length"] = (qint64)( lClip->input()->length() );
-        h["name"] = lClip->media()->title();
-        h["audio"] = lClip->formats().testFlag( Clip::Audio );
-        h["video"] = lClip->formats().testFlag( Clip::Video );
-        h["begin"] = lClip->begin();
-        h["end"] = lClip->end();
-        return QJsonObject::fromVariantHash( h );
-    }
-
     return QJsonObject();
+}
+
+QJsonObject
+MainWorkflow::libraryClipInfo( const QString& uuid )
+{
+    auto c = Core::instance()->library()->clip( uuid );
+    if ( c == nullptr )
+        return {};
+    auto h = c->toVariant().toHash();
+    h["length"] = (qint64)( c->input()->length() );
+    h["name"] = c->media()->title();
+    h["audio"] = c->media()->hasAudioTracks();
+    h["video"] = c->media()->hasVideoTracks();
+    h["begin"] = c->begin();
+    h["end"] = c->end();
+    h["uuid"] = "libraryUuid";
+    return QJsonObject::fromVariantHash( h );
 }
 
 void
