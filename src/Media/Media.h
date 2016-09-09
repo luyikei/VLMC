@@ -91,6 +91,9 @@ public:
     Backend::IInput*         input();
     const Backend::IInput*   input() const;
 
+    bool                        hasVideoTracks() const;
+    bool                        hasAudioTracks() const;
+
     static QSharedPointer<Media> fromVariant( const QVariant& v );
     QSharedPointer<Clip>        loadSubclip( const QVariantMap& m );
 

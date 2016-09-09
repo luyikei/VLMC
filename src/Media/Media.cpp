@@ -152,6 +152,18 @@ Media::input() const
     return m_input.get();
 }
 
+bool
+Media::hasVideoTracks() const
+{
+    return input()->hasVideo();
+}
+
+bool
+Media::hasAudioTracks() const
+{
+    return input()->hasAudio();
+}
+
 QSharedPointer<Media>
 Media::fromVariant( const QVariant& v )
 {
