@@ -225,8 +225,6 @@ Commands::Clip::Remove::internalRedo()
     }
     m_clip = m_workflow->removeClip( m_clip->uuid );
     if ( m_clip == nullptr )
-        emit Core::instance()->workflow()->clipRemoved( m_clip->uuid.toString() );
-    else
         invalidate();
 }
 
