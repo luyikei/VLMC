@@ -137,6 +137,7 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     if ( ret == false )
         return false;
     ret = moveClip( uuid, trackId, newPos );
+    emit clipResized( uuid.toString() );
     return ret;
 }
 

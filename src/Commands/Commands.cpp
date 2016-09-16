@@ -271,9 +271,7 @@ void
 Commands::Clip::Resize::internalRedo()
 {
     bool ret = m_workflow->resizeClip( m_clip->uuid, m_newBegin, m_newEnd, m_newPos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipResized( m_clip->uuid.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 
@@ -281,9 +279,7 @@ void
 Commands::Clip::Resize::internalUndo()
 {
     bool ret = m_workflow->resizeClip( m_clip->uuid, m_oldBegin, m_oldEnd, m_oldPos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipResized( m_clip->uuid.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 

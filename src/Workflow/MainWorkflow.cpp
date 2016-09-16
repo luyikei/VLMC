@@ -65,6 +65,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipRemoved, this, &MainWorkflow::clipRemoved );
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipLinked, this, &MainWorkflow::clipLinked );
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipMoved, this, &MainWorkflow::clipMoved );
+    connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipResized, this, &MainWorkflow::clipResized );
     m_renderer->setInput( m_sequenceWorkflow->input() );
 
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
