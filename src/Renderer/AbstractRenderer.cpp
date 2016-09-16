@@ -59,6 +59,8 @@ AbstractRenderer::eventWatcher()
 void
 AbstractRenderer::stop()
 {
+    if ( m_output == nullptr )
+        return;
     m_output->stop();
 }
 
