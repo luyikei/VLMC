@@ -93,7 +93,7 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     auto clip = c->clip;
     auto oldTrackId = c->trackId;
     auto oldPosition = c->pos;
-    if ( oldPosition == pos )
+    if ( oldPosition == pos && oldTrackId == trackId )
         return true;
     auto t = track( oldTrackId, c->isAudio );
     if ( trackId != oldTrackId )
