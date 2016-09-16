@@ -115,6 +115,7 @@ class SequenceWorkflow : public QObject
         void                    clipAdded( QString );
         void                    clipRemoved( QString );
         void                    clipLinked( QString, QString );
+        void                    clipMoved( QString );
 };
 
 #endif // SEQUENCEWORKFLOW_H

@@ -171,9 +171,7 @@ void
 Commands::Clip::Move::internalRedo()
 {
     auto ret = m_workflow->moveClip( m_uuid, m_newTrackId, m_newPos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipMoved( m_uuid.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 
@@ -181,9 +179,7 @@ void
 Commands::Clip::Move::internalUndo()
 {
     auto ret = m_workflow->moveClip( m_uuid, m_oldTrackId, m_oldPos );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipMoved( m_uuid.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 

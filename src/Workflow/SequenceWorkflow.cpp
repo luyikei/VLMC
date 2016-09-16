@@ -107,6 +107,7 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     {
         c->pos = pos;
     }
+    emit clipMoved( uuid.toString() );
     // TODO: If we detect collision too strictly, there will be a problem if we want to move multiple
     //       clips at the same time.
     return ret;
