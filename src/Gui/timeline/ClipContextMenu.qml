@@ -33,7 +33,8 @@ Menu {
         text: clip.linked ? "Unlink" : "Link"
 
         onTriggered: {
-            clip.linked = !clip.linked;
+            if ( clip.linked === true )
+                workflow.unlinkClips( uuid, clip.linkedClip );
         }
     }
 
