@@ -368,9 +368,7 @@ void
 Commands::Clip::Link::internalRedo()
 {
     auto ret = m_workflow->linkClips( m_clipA, m_clipB );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipLinked( m_clipA.toString(), m_clipB.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 
@@ -378,9 +376,7 @@ void
 Commands::Clip::Link::internalUndo()
 {
     auto ret = m_workflow->unlinkClips( m_clipA, m_clipB );
-    if ( ret == true )
-        emit Core::instance()->workflow()->clipUnlinked( m_clipA.toString(), m_clipB.toString() );
-    else
+    if ( ret == false )
         invalidate();
 }
 

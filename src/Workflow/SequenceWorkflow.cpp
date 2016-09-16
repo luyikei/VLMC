@@ -201,6 +201,8 @@ SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
         ret = false;
         vlmcWarning() << "Failed to unlink" << uuidA << "from Clip instance" << uuidB;
     }
+    if ( ret == true )
+        emit clipUnlinked( uuidA.toString(), uuidB.toString() );
     return ret;
 }
 

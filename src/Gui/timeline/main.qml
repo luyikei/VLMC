@@ -628,6 +628,11 @@ Rectangle {
             findClipItem( uuidB ).linkedClip = uuidA;
         }
 
+        onClipUnLinked: {
+            findClipItem( uuidA ).linkedClip = null;
+            findClipItem( uuidB ).linkedClip = null;
+        }
+
         onEffectsUpdated: {
             var item = findClipItem( clipUuid );
             if ( item )
