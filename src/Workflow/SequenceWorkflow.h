@@ -113,6 +113,7 @@ class SequenceWorkflow : public QObject
 
     signals:
         void                    clipAdded( QString );
+        void                    clipRemoved( QString );
         void                    clipLinked( QString, QString );
 };
 

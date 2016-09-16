@@ -131,20 +131,12 @@ Commands::Clip::Add::internalRedo()
 void
 Commands::Clip::Add::internalUndo()
 {
-    if ( m_audioInstanceUuid.isNull() == false )
-    {
-        if ( m_workflow->removeClip( m_audioInstanceUuid ) != nullptr )
-            emit Core::instance()->workflow()->clipRemoved( m_audioInstanceUuid.toString() );
-        else
+    if ( m_audioInstanceUuid.isNull() == false &&
+         m_workflow->removeClip( m_audioInstanceUuid ) == nullptr )
             invalidate();
-    }
-    if ( m_videoInstanceUuid.isNull() == false )
-    {
-        if ( m_workflow->removeClip( m_videoInstanceUuid ) != nullptr )
-            emit Core::instance()->workflow()->clipRemoved( m_videoInstanceUuid.toString() );
-        else
+    if ( m_videoInstanceUuid.isNull() == false &&
+         m_workflow->removeClip( m_videoInstanceUuid ) == nullptr )
             invalidate();
-    }
 }
 
 void

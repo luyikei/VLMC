@@ -62,6 +62,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
         m_sequenceWorkflow( new SequenceWorkflow( trackCount ) )
 {
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipAdded, this, &MainWorkflow::clipAdded );
+    connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipRemoved, this, &MainWorkflow::clipRemoved );
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipLinked, this, &MainWorkflow::clipLinked );
     m_renderer->setInput( m_sequenceWorkflow->input() );
 

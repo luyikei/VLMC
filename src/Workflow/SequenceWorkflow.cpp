@@ -136,6 +136,7 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
 QSharedPointer<SequenceWorkflow::Clip>
 SequenceWorkflow::removeClip( const QUuid& uuid )
 {
+    vlmcDebug() << "Removing clip instance" << uuid;
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
@@ -150,6 +151,7 @@ SequenceWorkflow::removeClip( const QUuid& uuid )
     t->remove( t->clipIndexAt( position ) );
     m_clips.erase( it );
     clip->disconnect( this );
+    emit clipRemoved( uuid.toString() );
     return c;
 
 }
