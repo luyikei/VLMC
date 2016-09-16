@@ -197,6 +197,20 @@ namespace Commands
                 QUuid     m_clipA;
                 QUuid     m_clipB;
         };
+
+        class   Unlink : public Generic
+        {
+            public:
+                Unlink( std::shared_ptr<SequenceWorkflow> const& workflow,
+                      const QUuid& clipA, const QUuid& clipB );
+                virtual void    internalRedo();
+                virtual void    internalUndo();
+                virtual void    retranslate();
+            private:
+                std::shared_ptr<SequenceWorkflow> m_workflow;
+                QUuid     m_clipA;
+                QUuid     m_clipB;
+        };
     }
     namespace   Effect
     {

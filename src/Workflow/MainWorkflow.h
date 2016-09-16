@@ -153,6 +153,9 @@ class   MainWorkflow : public QObject
         void                    linkClips( const QString& uuidA, const QString& uuidB );
 
         Q_INVOKABLE
+        void                    unlinkClips( const QString& uuidA, const QString& uuidB );
+
+        Q_INVOKABLE
         QString                 addEffect( const QString& clipUuid, const QString& effectId );
 
         Q_INVOKABLE

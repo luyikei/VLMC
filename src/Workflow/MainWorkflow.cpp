@@ -281,6 +281,12 @@ MainWorkflow::linkClips( const QString& uuidA, const QString& uuidB )
     trigger( new Commands::Clip::Link( m_sequenceWorkflow, uuidA, uuidB ) );
 }
 
+void
+MainWorkflow::unlinkClips( const QString& uuidA, const QString& uuidB )
+{
+    trigger( new Commands::Clip::Unlink( m_sequenceWorkflow, uuidA, uuidB ) );
+}
+
 QString
 MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
 {

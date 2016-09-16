@@ -380,6 +380,37 @@ Commands::Clip::Link::internalUndo()
         invalidate();
 }
 
+Commands::Clip::Unlink::Unlink( std::shared_ptr<SequenceWorkflow> const& workflow,
+                            const QUuid& clipA, const QUuid& clipB )
+    : m_workflow( workflow )
+    , m_clipA( clipA )
+    , m_clipB( clipB )
+{
+    retranslate();
+}
+
+void
+Commands::Clip::Unlink::retranslate()
+{
+    setText( tr( "Unlinking clips" ) );
+}
+
+void
+Commands::Clip::Unlink::internalRedo()
+{
+    auto ret = m_workflow->unlinkClips( m_clipA, m_clipB );
+    if ( ret == false )
+        invalidate();
+}
+
+void
+Commands::Clip::Unlink::internalUndo()
+{
+    auto ret = m_workflow->linkClips( m_clipA, m_clipB );
+    if ( ret == false )
+        invalidate();
+}
+
 Commands::Effect::Add::Add( std::shared_ptr<EffectHelper> const& helper, Backend::IInput* target )
     : m_helper( helper )
     , m_target( target )
