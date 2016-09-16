@@ -183,6 +183,7 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
 bool
 SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
 {
+    vlmcDebug() << "Unlinking clips" << uuidA.toString() << "and" << uuidB.toString();
     auto clipA = clip( uuidA );
     auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
