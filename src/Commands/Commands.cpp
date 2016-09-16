@@ -140,7 +140,7 @@ Commands::Clip::Add::internalUndo()
     }
     if ( m_videoInstanceUuid.isNull() == false )
     {
-        if ( m_workflow->removeClip( m_videoInstanceUuid ) == nullptr )
+        if ( m_workflow->removeClip( m_videoInstanceUuid ) != nullptr )
             emit Core::instance()->workflow()->clipRemoved( m_videoInstanceUuid.toString() );
         else
             invalidate();
