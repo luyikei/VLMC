@@ -46,6 +46,12 @@ class   EffectHelper;
 
 namespace Commands
 {
+
+    enum class Id
+    {
+        Move,
+    };
+
 #ifdef HAVE_GUI
     class       Generic : public QObject, public QUndoCommand
 #else
@@ -101,14 +107,20 @@ namespace Commands
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
+                virtual int     id() const;
+                virtual bool    mergeWith( const QUndoCommand* command );
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                QUuid           m_uuid;
-                quint32         m_newTrackId;
-                quint32         m_oldTrackId;
-                qint64          m_newPos;
-                qint64          m_oldPos;
+                struct Info
+                {
+                    QUuid           uuid;
+                    quint32         newTrackId;
+                    quint32         oldTrackId;
+                    qint64          newPos;
+                    qint64          oldPos;
+                };
+                QVector<Info>       m_infos;
         };
 
         class   Remove : public Generic

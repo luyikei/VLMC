@@ -148,11 +148,7 @@ Commands::Clip::Add::retranslate()
 Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
                              const QString& uuid, quint32 trackId, qint64 pos ) :
     m_workflow( workflow ),
-    m_uuid( uuid ),
-    m_newTrackId( trackId ),
-    m_oldTrackId( workflow->trackId( uuid ) ),
-    m_newPos( pos ),
-    m_oldPos( workflow->position( uuid ) )
+    m_infos( {{ uuid, trackId, workflow->trackId( uuid ),pos, workflow->position( uuid ) }} )
 {
     retranslate();
 }
@@ -160,27 +156,47 @@ Commands::Clip::Move::Move(  std::shared_ptr<SequenceWorkflow> const& workflow,
 void
 Commands::Clip::Move::retranslate()
 {
-    if ( m_oldTrackId != m_newTrackId )
-        setText( tr( "Moving clip from track %1 to %2" ).arg(
-                QString::number( m_oldTrackId ), QString::number( m_newTrackId ) ) );
-    else
-        setText( QObject::tr( "Moving clip" ) );
+    setText( QObject::tr( "Moving clip(s)", "", m_infos.count() ) );
+}
+
+int
+Commands::Clip::Move::id() const
+{
+    return static_cast<int>( Commands::Id::Move );
+}
+
+bool
+Commands::Clip::Move::mergeWith( const QUndoCommand* command )
+{
+    auto cmd = static_cast<const Move*>( command );
+    if ( cmd->m_infos.count() > 1 )
+        return false;
+    const auto& clip = m_workflow->clip( m_infos[0].uuid );
+    const auto& linkedClips = clip->linkedClips;
+    if ( linkedClips.contains( cmd->m_infos[0].uuid ) == false )
+        return false;
+    m_infos += cmd->m_infos[0];
+    return true;
 }
 
 void
 Commands::Clip::Move::internalRedo()
 {
-    auto ret = m_workflow->moveClip( m_uuid, m_newTrackId, m_newPos );
-    if ( ret == false )
-        invalidate();
+    for ( const auto& info : m_infos )
+    {
+        if ( m_workflow->moveClip( info.uuid, info.newTrackId, info.newPos ) == false )
+            invalidate();
+    }
 }
 
 void
 Commands::Clip::Move::internalUndo()
 {
-    auto ret = m_workflow->moveClip( m_uuid, m_oldTrackId, m_oldPos );
-    if ( ret == false )
-        invalidate();
+    for ( const auto& info : m_infos )
+    {
+        if ( m_workflow->moveClip( info.uuid, info.oldTrackId, info.oldPos ) == false )
+            invalidate();
+    }
 }
 
 Commands::Clip::Remove::Remove( std::shared_ptr<SequenceWorkflow> const& workflow,
