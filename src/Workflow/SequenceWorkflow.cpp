@@ -96,21 +96,27 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     if ( oldPosition == pos )
         return true;
     auto t = track( oldTrackId, c->isAudio );
-    bool ret = true;
     if ( trackId != oldTrackId )
     {
-        removeClip( uuid );
-        return addClip( clip, trackId, pos, uuid, c->isAudio ).isNull();
+        // Don't call removeClip/addClip as they would destroy & recreate clip instances for nothing.
+        // Simply fiddle with the track to move the clip around
+        t->remove( t->clipIndexAt( oldPosition ) );
+        auto newTrack = track( trackId, c->isAudio );
+        if ( newTrack->insertAt( *clip->input(), pos ) == false )
+            return false;
+        c->pos = pos;
+        c->trackId = trackId;
     }
-    ret = t->move( oldPosition, pos );
-    if ( ret == true )
+    else
     {
+        if ( t->move( oldPosition, pos ) == false )
+            return false;
         c->pos = pos;
     }
     emit clipMoved( uuid.toString() );
     // TODO: If we detect collision too strictly, there will be a problem if we want to move multiple
     //       clips at the same time.
-    return ret;
+    return true;
 }
 
 bool
