@@ -110,11 +110,22 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     connect( Core::instance()->library(), &Library::progressUpdated, this,
              [this]( int percent ) {
         if ( percent < 100 )
+        {
             m_progressBar->setValue( percent );
+            m_ui.statusbar->show();
+            m_ui.actionStatusbar->setEnabled( false );
+            m_ui.actionStatusbar->setChecked( true );
+        }
         else
         {
             m_progressBar->hide();
             m_ui.statusbar->clearMessage();
+            m_ui.actionStatusbar->setEnabled( true );
+            if ( VLMC_GET_BOOL( "private/ShowStatusbar" ) == false )
+            {
+                m_ui.actionStatusbar->setChecked( false );
+                m_ui.statusbar->hide();
+            }
         }
     });
 
@@ -364,7 +375,7 @@ MainWindow::initVlmcPreferences()
         m_ui.statusbar->setVisible( v );
         m_ui.actionStatusbar->setChecked( v );
     } );
-    connect( m_ui.actionStatusbar, &QAction::toggled, statusbarSetting, &SettingValue::set );
+    connect( m_ui.actionStatusbar, &QAction::triggered, statusbarSetting, &SettingValue::set );
 
     // Layout Lock
     auto lockSetting = VLMC_CREATE_PRIVATE_PREFERENCE_BOOL( "private/LayoutLock", true );
