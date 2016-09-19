@@ -157,6 +157,7 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
     // Restore the layout
     restoreState( VLMC_GET_BYTEARRAY( "private/MainWindowState" ) );
     retranslateUi();
+    projectNameChanged( Project::unNamedProject );
 }
 
 MainWindow::~MainWindow()
