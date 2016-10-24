@@ -386,7 +386,7 @@ Item {
 
         Row {
             anchors.verticalCenter: parent.verticalCenter
-            x: parent.width / 2
+            x: trackText.y + trackText.contentWidth + 10
             spacing: 4
 
             PropertyButton {
