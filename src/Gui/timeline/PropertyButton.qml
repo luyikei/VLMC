@@ -14,6 +14,7 @@ Rectangle {
     Text {
         id: _text
         color: "#EEEEEE"
+        font.pixelSize: width / 2
         anchors.centerIn: parent
     }
 
