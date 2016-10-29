@@ -35,6 +35,16 @@ Menu {
         onTriggered: {
             if ( clip.linked === true )
                 workflow.unlinkClips( uuid, clip.linkedClip );
+            else {
+                var selectedClip;
+                for ( var i = 0; i < selectedClips.length; ++i ) {
+                    if ( selectedClips[i].uuid !== uuid ) {
+                        selectedClip = selectedClips[i].uuid;
+                        break;
+                    }
+                }
+                workflow.linkClips( clip.uuid, selectedClip );
+            }
         }
     }
 
