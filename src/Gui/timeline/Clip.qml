@@ -57,7 +57,12 @@ Rectangle {
 
     function resize() {
         // This function updates Backend
-        workflow.resizeClip( uuid, begin, end, position )
+        var _length = selectedClips.length;
+        for ( var i = _length - 1; i >= 0; --i ) {
+            if ( selectedClips[i] ) {
+                workflow.resizeClip( selectedClips[i].uuid, begin, end, position );
+            }
+        }
     }
 
     function selectLinkedClip() {
@@ -80,6 +85,21 @@ Rectangle {
 
     function updateThumbnail( pos ) {
         thumbnailSource = "image://thumbnail/" + libraryUuid + "/" + pos;
+    }
+
+    function resizeLinkedClips( oldPos, oldBegin, oldEnd ) {
+        if ( !linkedClip )
+            return;
+        var lc = findClipItem( linkedClip );
+        if ( lc === null )
+            return;
+        // Don't resize from the begining if the clips didn't shared the same begin position
+        if ( lc.position === oldPos ) {
+            lc.position = position;
+            lc.begin = begin;
+        }
+        if ( lc.end === oldEnd )
+            lc.end = end;
     }
 
     onXChanged: {
@@ -268,6 +288,9 @@ Rectangle {
             if ( dragArea.pressed === true ) {
                 // Handle resizing
                 if ( resizing === true ) {
+                    var oldPos = position;
+                    var oldBegin = begin;
+                    var oldEnd = end;
                     if ( mouseX < width / 2 ) {
                         var newPos = position + ptof( mouseX );
                         var newBegin = begin + ptof( mouseX );
@@ -282,6 +305,7 @@ Rectangle {
                             return;
                         end = newEnd;
                     }
+                    resizeLinkedClips(oldPos, oldBegin, oldEnd);
                 }
             }
             else {
