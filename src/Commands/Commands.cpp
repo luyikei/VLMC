@@ -256,7 +256,7 @@ Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflo
     }
     m_oldBegin = m_clip->clip->begin();
     m_oldEnd = m_clip->clip->end();
-    m_oldPos = workflow->trackId( uuid );
+    m_oldPos = m_clip->pos;
     retranslate();
 
 }
