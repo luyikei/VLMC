@@ -628,7 +628,7 @@ Rectangle {
             findClipItem( uuidB ).linkedClip = uuidA;
         }
 
-        onClipUnLinked: {
+        onClipUnlinked: {
             findClipItem( uuidA ).linkedClip = null;
             findClipItem( uuidB ).linkedClip = null;
         }
