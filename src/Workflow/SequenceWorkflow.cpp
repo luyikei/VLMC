@@ -129,7 +129,6 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
         return false;
     }
     auto c = it.value();
-    auto clip = c->clip;
     auto trackId = c->trackId;
     auto position = c->pos;
     auto t = track( trackId, c->isAudio );
