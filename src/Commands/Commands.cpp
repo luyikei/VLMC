@@ -243,22 +243,24 @@ Commands::Clip::Remove::internalUndo()
 
 Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflow,
                                 const QUuid& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos ) :
-    m_workflow( workflow ),
-    m_clip( workflow->clip( uuid ) ),
-    m_newBegin( newBegin ),
-    m_newEnd( newEnd ),
-    m_newPos( newPos )
+    m_workflow( workflow )
 {
-    if ( m_clip->uuid.isNull() == true )
+    auto clip = workflow->clip( uuid );
+    if ( clip == nullptr )
     {
         invalidate();
         return;
     }
-    m_oldBegin = m_clip->clip->begin();
-    m_oldEnd = m_clip->clip->end();
-    m_oldPos = m_clip->pos;
+    m_infos.append( Info{
+        clip,
+        newBegin,
+        clip->clip->begin(),
+        newEnd,
+        clip->clip->end(),
+        newPos,
+        clip->pos
+    });
     retranslate();
-
 }
 
 void
@@ -267,20 +269,43 @@ Commands::Clip::Resize::retranslate()
     setText( tr( "Resizing clip" ) );
 }
 
+bool
+Commands::Clip::Resize::mergeWith( const QUndoCommand* command )
+{
+    auto cmd = static_cast<const Resize*>( command );
+    if ( cmd->m_infos.count() > 1 )
+        return false;
+    const auto& linkedClips = m_infos[0].clip->linkedClips;
+    if ( linkedClips.contains( cmd->m_infos[0].clip->uuid ) == false )
+        return false;
+    m_infos += cmd->m_infos[0];
+    return true;
+}
+
+int
+Commands::Clip::Resize::id() const
+{
+    return static_cast<int>( Commands::Id::Resize );
+}
+
 void
 Commands::Clip::Resize::internalRedo()
 {
-    bool ret = m_workflow->resizeClip( m_clip->uuid, m_newBegin, m_newEnd, m_newPos );
-    if ( ret == false )
-        invalidate();
+    for ( const auto& info : m_infos )
+    {
+        if ( m_workflow->resizeClip( info.clip->uuid, info.newBegin, info.newEnd, info.newPos ) == false )
+            invalidate();
+    }
 }
 
 void
 Commands::Clip::Resize::internalUndo()
 {
-    bool ret = m_workflow->resizeClip( m_clip->uuid, m_oldBegin, m_oldEnd, m_oldPos );
-    if ( ret == false )
-        invalidate();
+    for ( const auto& info : m_infos )
+    {
+        if ( m_workflow->resizeClip( info.clip->uuid, info.oldBegin, info.oldEnd, info.oldPos ) == false )
+            invalidate();
+    }
 }
 
 Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,

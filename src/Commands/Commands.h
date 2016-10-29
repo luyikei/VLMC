@@ -50,6 +50,7 @@ namespace Commands
     enum class Id
     {
         Move,
+        Resize,
     };
 
 #ifdef HAVE_GUI
@@ -153,16 +154,22 @@ namespace Commands
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
+                virtual bool    mergeWith( const QUndoCommand* cmd );
+                virtual int     id() const;
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                QSharedPointer<SequenceWorkflow::ClipInstance>  m_clip;
-                qint64                      m_newBegin;
-                qint64                      m_oldBegin;
-                qint64                      m_newEnd;
-                qint64                      m_oldEnd;
-                qint64                      m_newPos;
-                qint64                      m_oldPos;
+                struct Info
+                {
+                    QSharedPointer<SequenceWorkflow::ClipInstance>  clip;
+                    qint64                      newBegin;
+                    qint64                      oldBegin;
+                    qint64                      newEnd;
+                    qint64                      oldEnd;
+                    qint64                      newPos;
+                    qint64                      oldPos;
+                };
+                QVector<Info>                   m_infos;
         };
 
         class   Split : public Generic
