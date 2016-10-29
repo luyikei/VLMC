@@ -319,10 +319,13 @@ Rectangle {
         }
 
         onReleased: {
+            // Don't trigger event if the mouse didn't move
             if ( resizing === true && isCutMode === false )
                 resize();
-            else
+            else if ( dragArea.drag.active )
+            {
                 dragFinished();
+            }
         }
 
         states: [
