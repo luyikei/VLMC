@@ -56,10 +56,10 @@ class SequenceWorkflow : public QObject
         SequenceWorkflow( size_t trackCount = 64 );
         ~SequenceWorkflow();
 
-        struct Clip
+        struct ClipInstance
         {
-            Clip() = default;
-            Clip( QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p, bool isAudio );
+            ClipInstance() = default;
+            ClipInstance( QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p, bool isAudio );
             QSharedPointer<::Clip>  clip;
             QUuid                   uuid;
             quint32                 trackId;
@@ -85,7 +85,7 @@ class SequenceWorkflow : public QObject
         bool                    moveClip( const QUuid& uuid, quint32 trackId, qint64 pos );
         bool                    resizeClip( const QUuid& uuid, qint64 newBegin,
                                             qint64 newEnd, qint64 newPos );
-        QSharedPointer<Clip>    removeClip( const QUuid& uuid );
+        QSharedPointer<ClipInstance>    removeClip( const QUuid& uuid );
         bool                    linkClips( const QUuid& uuidA, const QUuid& uuidB );
         bool                    unlinkClips( const QUuid& uuidA, const QUuid& uuidB );
 
@@ -93,7 +93,7 @@ class SequenceWorkflow : public QObject
         void                    loadFromVariant( const QVariant& variant );
         void                    clear();
 
-        QSharedPointer<Clip>    clip( const QUuid& uuid );
+        QSharedPointer<ClipInstance>    clip( const QUuid& uuid );
         quint32                 trackId( const QUuid& uuid );
         qint32                  position( const QUuid& uuid );
 
@@ -104,7 +104,7 @@ class SequenceWorkflow : public QObject
 
         inline std::shared_ptr<Backend::ITrack>         track( quint32 trackId, bool audio );
 
-        QMap<QUuid, QSharedPointer<Clip>>               m_clips;
+        QMap<QUuid, QSharedPointer<ClipInstance>>       m_clips;
 
         Backend::IMultiTrack*           m_multitrack;
         QList<std::shared_ptr<Backend::ITrack>>         m_tracks[Workflow::NbTrackType];

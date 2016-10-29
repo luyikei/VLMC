@@ -71,7 +71,7 @@ SequenceWorkflow::addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 
     auto ret = t->insertAt( *clip->input(), pos );
     if ( ret == false )
         return {};
-    auto c = QSharedPointer<Clip>::create( clip,
+    auto c = QSharedPointer<ClipInstance>::create( clip,
                                            uuid.isNull() == true ? QUuid::createUuid() : uuid,
                                            trackId, pos, isAudioClip );
     vlmcDebug() << "adding" << (isAudioClip ? "audio" : "video") <<  "clip instance:" << c->uuid;
@@ -141,7 +141,7 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     return ret;
 }
 
-QSharedPointer<SequenceWorkflow::Clip>
+QSharedPointer<SequenceWorkflow::ClipInstance>
 SequenceWorkflow::removeClip( const QUuid& uuid )
 {
     vlmcDebug() << "Removing clip instance" << uuid;
@@ -279,7 +279,7 @@ SequenceWorkflow::clear()
     }
 }
 
-QSharedPointer<SequenceWorkflow::Clip>
+QSharedPointer<SequenceWorkflow::ClipInstance>
 SequenceWorkflow::clip( const QUuid& uuid )
 {
     auto it = m_clips.find( uuid );
@@ -329,7 +329,7 @@ SequenceWorkflow::track( quint32 trackId, bool isAudio )
     return m_tracks[Workflow::VideoTrack][trackId];
 }
 
-SequenceWorkflow::Clip::Clip(QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p, bool isAudio )
+SequenceWorkflow::ClipInstance::ClipInstance(QSharedPointer<::Clip> c, const QUuid& uuid, quint32 tId, qint64 p, bool isAudio )
     : clip( c )
     , uuid( uuid )
     , trackId( tId )

@@ -133,7 +133,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow>       m_workflow;
-                QSharedPointer<SequenceWorkflow::Clip>  m_clip;
+                QSharedPointer<SequenceWorkflow::ClipInstance>  m_clip;
                 quint32         m_trackId;
                 qint64          m_pos;
         };
@@ -156,7 +156,7 @@ namespace Commands
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                QSharedPointer<SequenceWorkflow::Clip>  m_clip;
+                QSharedPointer<SequenceWorkflow::ClipInstance>  m_clip;
                 qint64                      m_newBegin;
                 qint64                      m_oldBegin;
                 qint64                      m_newEnd;
@@ -175,7 +175,7 @@ namespace Commands
                 virtual void    retranslate();
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
-                QSharedPointer<SequenceWorkflow::Clip>  m_toSplit;
+                QSharedPointer<SequenceWorkflow::ClipInstance>  m_toSplit;
                 quint32                           m_trackId;
                 QSharedPointer<::Clip>      m_newClip;
                 QUuid                       m_newClipUuid;
