@@ -338,6 +338,7 @@ Item {
                 trackId: model.trackId
                 type: track.type
                 uuid: model.uuid
+                libraryUuid: model.libraryUuid
                 position: model.position
                 begin: model.begin
                 end: model.end
