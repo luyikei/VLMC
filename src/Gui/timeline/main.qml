@@ -21,7 +21,7 @@ Rectangle {
     property var selectedClips: [] // Actual clip item objects
     property var groups: [] // list of lists of clip uuids
     property alias isMagneticMode: magneticModeButton.selected
-    property alias isCutMode: cutModeButton.selected
+    property bool isCutMode: false
 
     property int trackHeight: 60
 
@@ -483,12 +483,6 @@ Rectangle {
                         }
 
                         PropertyButton {
-                            id: cutModeButton
-                            text: "C"
-                            selected: false
-                        }
-
-                        PropertyButton {
                             id: zoomInButton
                             text: "+"
                             selected: false
@@ -649,6 +643,12 @@ Rectangle {
             else if ( scale > scaleLevel )
                 zoomIn( 2 );
             scale = scaleLevel;
+        }
+        onCutToolSelected: {
+            isCutMode = true;
+        }
+        onSelectionToolSelected: {
+            isCutMode = false;
         }
     }
 
