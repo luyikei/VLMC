@@ -132,7 +132,15 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     auto trackId = c->trackId;
     auto position = c->pos;
     auto t = track( trackId, c->isAudio );
-    auto ret = t->resizeClip( t->clipIndexAt( position ), newBegin, newEnd );
+    auto clipIndex = t->clipIndexAt( position );
+    // This will only duplicate the clip once; no need to panic about endless duplications
+    if ( c->duplicateClipForResize( newBegin, newEnd ) == true )
+    {
+        vlmcDebug() << "Duplicating clip for resize" << c->uuid << "is now using" << c->clip->uuid();
+        t->remove( clipIndex );
+        t->insertAt( *c->clip->input(), position );
+    }
+    auto ret = t->resizeClip( clipIndex, newBegin, newEnd );
     if ( ret == false )
         return false;
     ret = moveClip( uuid, trackId, newPos );
@@ -334,5 +342,16 @@ SequenceWorkflow::ClipInstance::ClipInstance(QSharedPointer<::Clip> c, const QUu
     , trackId( tId )
     , pos( p )
     , isAudio( isAudio )
+    , m_hasClonedClip( false )
 {
+}
+
+bool
+SequenceWorkflow::ClipInstance::duplicateClipForResize( qint64 begin, qint64 end )
+{
+    if ( m_hasClonedClip == true )
+        return false;
+    clip = clip->media()->cut( begin, end );
+    m_hasClonedClip = true;
+    return true;
 }

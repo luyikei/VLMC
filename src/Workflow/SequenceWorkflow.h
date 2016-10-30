@@ -67,6 +67,17 @@ class SequenceWorkflow : public QObject
             QVector<QUuid>          linkedClips;
             // true is this instance represents an audio track, false otherwise
             bool                    isAudio;
+
+            ///
+            /// \brief duplicateClipForResize   Duplicates the used clip for enabling it to be resize independently
+            /// \param begin        The new begining for this clip
+            /// \param end          The new end for this clip
+            ///
+            bool                    duplicateClipForResize( qint64 begin, qint64 end );
+
+        private:
+            // true if this instance now contains its own Clip
+            bool                    m_hasClonedClip;
         };
 
         /**
