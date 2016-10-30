@@ -5,6 +5,7 @@ Rectangle {
     height: 20
     color: mouseArea.containsMouse ? "#44FFFFFF" : selected ? "#AA000000" : "transparent"
     radius: 2
+    id: propertyButton
 
     property alias text: _text.text
     property bool selected: false
@@ -14,7 +15,7 @@ Rectangle {
     Text {
         id: _text
         color: "#EEEEEE"
-        font.pixelSize: width / 2
+        font.pixelSize: propertyButton.width / 2
         anchors.centerIn: parent
     }
 
