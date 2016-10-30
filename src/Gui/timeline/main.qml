@@ -293,12 +293,7 @@ Rectangle {
     }
 
     function dragFinished() {
-        var _length = selectedClips.length;
-        for ( var i = _length - 1; i >= 0; --i ) {
-            if ( selectedClips[i] ) {
-                selectedClips[i].move();
-            }
-        }
+        selectedClips[0].move();
         adjustTracks( "Audio" );
         adjustTracks( "Video" );
     }
@@ -544,8 +539,7 @@ Rectangle {
         icon: StandardIcon.Question
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            while ( selectedClips.length )
-                workflow.removeClip( selectedClips[0].uuid );
+            workflow.removeClip( selectedClips[0].uuid );
         }
     }
 

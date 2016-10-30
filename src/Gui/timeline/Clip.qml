@@ -57,12 +57,7 @@ Rectangle {
 
     function resize() {
         // This function updates Backend
-        var _length = selectedClips.length;
-        for ( var i = _length - 1; i >= 0; --i ) {
-            if ( selectedClips[i] ) {
-                workflow.resizeClip( selectedClips[i].uuid, begin, end, position );
-            }
-        }
+        workflow.resizeClip( uuid, begin, end, position );
     }
 
     function selectLinkedClip() {
@@ -347,9 +342,7 @@ Rectangle {
             if ( resizing === true && isCutMode === false )
                 resize();
             else if ( dragArea.drag.active )
-            {
                 dragFinished();
-            }
         }
 
         states: [
