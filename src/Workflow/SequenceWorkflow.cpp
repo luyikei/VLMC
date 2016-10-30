@@ -128,7 +128,7 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
         vlmcCritical() << "Couldn't find a clip " << uuid;
         return false;
     }
-    auto c = it.value();
+    auto& c = it.value();
     auto trackId = c->trackId;
     auto position = c->pos;
     auto t = track( trackId, c->isAudio );
