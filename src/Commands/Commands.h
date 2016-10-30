@@ -51,6 +51,7 @@ namespace Commands
     {
         Move,
         Resize,
+        Remove,
     };
 
 #ifdef HAVE_GUI
@@ -131,12 +132,12 @@ namespace Commands
                 virtual void internalRedo();
                 virtual void internalUndo();
                 virtual void    retranslate();
+                virtual int     id() const;
+                virtual bool    mergeWith( const QUndoCommand* command );
 
             private:
                 std::shared_ptr<SequenceWorkflow>       m_workflow;
-                QSharedPointer<SequenceWorkflow::ClipInstance>  m_clip;
-                quint32         m_trackId;
-                qint64          m_pos;
+                QVector<QSharedPointer<SequenceWorkflow::ClipInstance>>     m_clips;
         };
 
         /**

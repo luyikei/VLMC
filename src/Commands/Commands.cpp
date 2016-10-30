@@ -200,45 +200,55 @@ Commands::Clip::Move::internalUndo()
 }
 
 Commands::Clip::Remove::Remove( std::shared_ptr<SequenceWorkflow> const& workflow,
-                                const QUuid& uuid ) :
-        m_workflow( workflow ),
-        m_clip( workflow->clip( uuid ) ),
-        m_trackId( workflow->trackId( uuid ) ),
-        m_pos( workflow->position( uuid ) )
+                                const QUuid& uuid )
+    : m_workflow( workflow )
 {
+    auto clip = workflow->clip( uuid );
+    m_clips.append( clip );
     retranslate();
 }
 
 void
 Commands::Clip::Remove::retranslate()
 {
-   setText( tr( "Removing clip " ) );
+    setText( tr( "Removing clip " ) );
+}
+
+int
+Commands::Clip::Remove::id() const
+{
+    return static_cast<int>( Commands::Id::Remove );
+}
+
+bool
+Commands::Clip::Remove::mergeWith(const QUndoCommand* command)
+{
+    auto cmd = static_cast<const Remove*>( command );
+    if ( cmd->m_clips.count() > 1 )
+        return false;
+    const auto& linkedClips = m_clips[0]->linkedClips;
+    if ( linkedClips.contains( cmd->m_clips[0]->uuid ) == false )
+        return false;
+    m_clips += cmd->m_clips[0];
+    return true;
 }
 
 void
 Commands::Clip::Remove::internalRedo()
 {
-    if ( m_clip == nullptr )
-    {
-        invalidate();
-        return;
-    }
-    m_clip = m_workflow->removeClip( m_clip->uuid );
-    if ( m_clip == nullptr )
-        invalidate();
+    for ( const auto& clip : m_clips )
+        m_workflow->removeClip( clip->uuid );
 }
 
 void
 Commands::Clip::Remove::internalUndo()
 {
-    if ( m_clip == nullptr )
+    for ( const auto& clip : m_clips )
     {
-        invalidate();
-        return;
+        auto uuid = m_workflow->addClip( clip->clip, clip->trackId, clip->pos, clip->uuid, clip->isAudio );
+        if ( uuid.isNull() == true )
+            invalidate();
     }
-    auto ret = m_workflow->addClip( m_clip->clip, m_trackId, m_pos, m_clip->uuid, m_clip->isAudio );
-    if ( ret.isNull() == true )
-        invalidate();
 }
 
 Commands::Clip::Resize::Resize( std::shared_ptr<SequenceWorkflow> const& workflow,
