@@ -43,12 +43,6 @@ public:
 
     QWidget*            container();
 
-public slots:
-    /**
-     * \brief Change the currently selected tool.
-     */
-    void setTool( ToolButtons button ) { Q_UNUSED( button ) }
-
 protected:
     virtual void changeEvent( QEvent *e ) { Q_UNUSED( e ) }
 
