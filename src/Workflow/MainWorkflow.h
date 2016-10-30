@@ -115,14 +115,6 @@ class   MainWorkflow : public QObject
         int                     getTrackCount() const;
 
         /**
-         *  \return     true if the current workflow contains the clip which the uuid was
-         *              passed. Falsed otherwise.
-         *
-         *  \param      uuid    The Clip uuid, not the Clip's.
-         */
-        bool                    contains( const QUuid& uuid ) const;
-
-        /**
          * \brief   Return the number of track for each track type.
          */
         quint32                 trackCount() const;
@@ -172,14 +164,6 @@ class   MainWorkflow : public QObject
         Commands::AbstractUndoStack*       undoStack();
 
     private:
-
-        /**
-         *  \param      uuid : The clip's uuid.
-         *  \param      trackId : the track id
-         *  \param      trackType : the track type (audio or video)
-         *  \returns    The clip that matches the given UUID, or nullptr.
-         */
-        std::shared_ptr<Clip>                   clip( const QUuid& uuid, unsigned int trackId );
 
         void                    trigger( Commands::Generic* command );
 

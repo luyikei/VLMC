@@ -109,12 +109,6 @@ MainWorkflow::unmuteClip( const QUuid& uuid, unsigned int trackId )
     // TODO
 }
 
-std::shared_ptr<Clip>
-MainWorkflow::clip( const QUuid &uuid, unsigned int trackId )
-{
-    // TODO
-}
-
 void
 MainWorkflow::trigger( Commands::Generic* command )
 {
@@ -191,13 +185,6 @@ int
 MainWorkflow::getTrackCount() const
 {
     return m_trackCount;
-}
-
-bool
-MainWorkflow::contains( const QUuid &uuid ) const
-{
-    auto clip = m_sequenceWorkflow->clip( uuid );
-    return !clip == false;
 }
 
 quint32
