@@ -43,10 +43,4 @@
 #define SleepS( x ) sleep( x )
 #endif
 
-enum ToolButtons
-{
-    TOOL_DEFAULT,
-    TOOL_CUT,
-};
-
 #endif // VLMC_H

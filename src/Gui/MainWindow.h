@@ -165,7 +165,8 @@ private slots:
     void                    onProjectSaved();
 
 signals:
-    void                    toolChanged( ToolButtons );
+    void                    selectionToolSelected();
+    void                    cutToolSelected();
     void                    scaleChanged( quint32 scaleLevel );
 };
 

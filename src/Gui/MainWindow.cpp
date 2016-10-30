@@ -789,9 +789,9 @@ void
 MainWindow::toolButtonClicked( QAction *action )
 {
     if ( action == m_ui.actionSelection_mode )
-        emit toolChanged( TOOL_DEFAULT );
+        emit selectionToolSelected();
     else if ( action == m_ui.actionCut_mode )
-        emit toolChanged( TOOL_CUT );
+        emit cutToolSelected();
     else
         vlmcCritical() << "Unknown tool. This should not happen !";
 }
