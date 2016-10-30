@@ -185,7 +185,7 @@ namespace Commands
                 QSharedPointer<SequenceWorkflow::ClipInstance>  m_toSplit;
                 quint32                           m_trackId;
                 QSharedPointer<::Clip>      m_newClip;
-                QUuid                       m_newClipUuid;
+                QUuid                       m_newClipInstanceUuid;
                 qint64                      m_newClipPos;
                 qint64                      m_newClipBegin;
                 qint64                      m_oldEnd;

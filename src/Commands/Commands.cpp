@@ -320,7 +320,6 @@ Commands::Clip::Split::Split( std::shared_ptr<SequenceWorkflow> const& workflow,
     if ( !m_toSplit )
     {
         invalidate();
-        retranslate();
         return;
     }
     m_newClip = m_toSplit->clip->media()->cut( newClipBegin - m_toSplit->clip->begin(),
@@ -346,32 +345,29 @@ Commands::Clip::Split::internalRedo()
     //If we don't remove 1, the clip will end exactly at the starting frame (ie. they will
     //be rendering at the same time)
     bool ret = m_workflow->resizeClip( m_toSplit->uuid, m_toSplit->clip->begin(),
-                                       m_newClipBegin - 1, m_workflow->position( m_toSplit->uuid ) );
+                                       m_newClipBegin - 1, m_toSplit->pos );
     if ( ret == false )
     {
         invalidate();
         return;
     }
 
-    m_newClipUuid = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos, m_newClipUuid, m_toSplit->isAudio );
-    if ( m_newClipUuid.isNull() == true )
+    m_newClipInstanceUuid = m_workflow->addClip( m_newClip, m_trackId, m_newClipPos, m_newClipInstanceUuid,
+                                                 m_toSplit->isAudio );
+    if ( m_newClipInstanceUuid.isNull() == true )
         invalidate();
-    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid.toString() );
 }
 
 void
 Commands::Clip::Split::internalUndo()
 {
-    if ( m_workflow->removeClip( m_newClip->uuid() ) == nullptr )
+    if ( m_workflow->removeClip( m_newClipInstanceUuid ) == nullptr )
     {
         invalidate();
         return;
     }
-    else
-        emit Core::instance()->workflow()->clipRemoved( m_newClip->uuid().toString() );
-    m_workflow->resizeClip( m_toSplit->clip->uuid(), m_toSplit->clip->begin(),
-                            m_oldEnd, m_workflow->position( m_toSplit->uuid ) );
-    emit Core::instance()->workflow()->clipResized( m_toSplit->uuid.toString() );
+    m_workflow->resizeClip( m_toSplit->uuid, m_toSplit->clip->begin(),
+                            m_oldEnd, m_toSplit->pos );
 }
 
 Commands::Clip::Link::Link( std::shared_ptr<SequenceWorkflow> const& workflow,
