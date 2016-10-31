@@ -645,13 +645,5 @@ Rectangle {
             isCutMode = false;
         }
     }
-
-    Connections {
-        target: thumbnailProvider
-        onImageReady: {
-            var clipItem = findClipItem( uuid );
-            clipItem.updateThumbnail( clipItem.begin );
-        }
-    }
 }
 

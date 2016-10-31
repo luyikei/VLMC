@@ -50,7 +50,6 @@
 #include "Tools/RendererEventWatcher.h"
 #include "Tools/OutputEventWatcher.h"
 #include "Workflow/Types.h"
-#include "ThumbnailWorker.h"
 
 #include <QMutex>
 
@@ -210,6 +209,7 @@ MainWorkflow::clipInfo( const QString& uuid )
         auto clip = c->clip;
         auto h = clip->toVariant().toHash();
         h["uuid"] = uuid;
+        vlmcWarning() << "library UUID: " << h["libraryUuid"];
         h["length"] = (qint64)( clip->input()->length() );
         h["name"] = clip->media()->title();
         h["audio"] = c->isAudio;
@@ -306,26 +306,6 @@ MainWorkflow::addEffect( const QString &clipUuid, const QString &effectId )
     }
 
     return QStringLiteral( "" );
-}
-
-void
-MainWorkflow::takeThumbnail( const QString& uuid, quint32 pos )
-{
-    vlmcDebug() << "Generating thumbnail for" << uuid;
-    // We need to fetch the clip from the library. This clip is being added to the library
-    // and doesn't have an instance ID yet
-    auto swClip = m_sequenceWorkflow->clip( uuid );
-    auto clip = swClip->clip;
-    auto worker = new ThumbnailWorker( uuid, clip->media()->mrl(),
-                                       pos, clip->input()->width(), clip->input()->height() );
-    auto t = new QThread;
-    worker->moveToThread( t );
-    connect( t, &QThread::started, worker, &ThumbnailWorker::run );
-    connect( worker, &ThumbnailWorker::imageReady, this, &MainWorkflow::thumbnailUpdated, Qt::DirectConnection );
-    connect( worker, &ThumbnailWorker::imageReady, t, &QThread::quit );
-    connect( t, &QThread::finished, worker, &ThumbnailWorker::deleteLater );
-    connect( t, &QThread::finished, t, &QThread::deleteLater );
-    t->start();
 }
 
 bool

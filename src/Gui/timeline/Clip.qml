@@ -78,10 +78,6 @@ Rectangle {
         effectsItem.text = str;
     }
 
-    function updateThumbnail( pos ) {
-        thumbnailSource = "image://thumbnail/" + libraryUuid + "/" + pos;
-    }
-
     function resizeLinkedClips( oldPos, oldBegin, oldEnd ) {
         if ( !linkedClip )
             return;
@@ -204,11 +200,7 @@ Rectangle {
 
         if ( uuid === "videoUuid" || uuid === "audioUuid" )
             return;
-
-        if ( thumbnailProvider.hasImage( uuid, begin ) )
-            updateThumbnail( begin );
-        else
-            workflow.takeThumbnail( uuid, begin );
+        thumbnailSource = "image://thumbnail/" + libraryUuid + "/0";
     }
 
     Component.onDestruction: {
@@ -257,6 +249,7 @@ Rectangle {
         anchors.bottomMargin: 4
         fillMode: Image.PreserveAspectFit
         visible: width < clip.width
+        asynchronous: true
     }
 
     MouseArea {

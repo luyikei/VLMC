@@ -150,9 +150,6 @@ class   MainWorkflow : public QObject
         Q_INVOKABLE
         QString                 addEffect( const QString& clipUuid, const QString& effectId );
 
-        Q_INVOKABLE
-        void                    takeThumbnail( const QString& uuid, quint32 pos );
-
         bool                    startRenderToFile( const QString& outputFileName, quint32 width, quint32 height,
                                                    double fps, const QString& ar, quint32 vbitrate, quint32 abitrate,
                                                    quint32 nbChannels, quint32 sampleRate );
@@ -179,7 +176,6 @@ class   MainWorkflow : public QObject
 
         std::unique_ptr<Commands::AbstractUndoStack> m_undoStack;
         std::shared_ptr<SequenceWorkflow>            m_sequenceWorkflow;
-
     public slots:
         /**
          *  \brief      Clear the workflow.
@@ -250,8 +246,6 @@ class   MainWorkflow : public QObject
         void                    clipUnlinked( const QString& uuidA, const QString& uuidB );
 
         void                    effectsUpdated( const QString& clipUuid );
-
-        void                    thumbnailUpdated( const QString& uuid, quint32 pos, const QPixmap& pixmap );
 };
 
 #endif // MAINWORKFLOW_H
