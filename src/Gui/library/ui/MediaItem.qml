@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 
 Rectangle {
     id: mediaItem
-    color: "#333333"
+    color: GridView.isCurrentItem ? "black" : "#333333"
     border.color: "#222222"
     border.width: 1
     property string thumbnailPath
@@ -57,8 +57,8 @@ Rectangle {
         id: dragArea
         anchors.fill: parent
         onPressed: {
+            gridView.currentIndex = index;
             view.startDrag( mediaId );
         }
-        onClicked: gridView.currentIndex = index
     }
 }
