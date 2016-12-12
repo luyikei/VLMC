@@ -138,12 +138,6 @@ MainWindow::MainWindow( Backend::IBackend* backend, QWidget *parent )
             m_ui.statusbar->showMessage( "Analyzing media" );
     }, Qt::QueuedConnection );
 
-    //Connecting Library stuff:
-    const ClipRenderer* clipRenderer = qobject_cast<const ClipRenderer*>( m_clipPreview->getAbstractRenderer() );
-    Q_ASSERT( clipRenderer != nullptr );
-    connect( m_mediaLibrary, SIGNAL( clipSelected( Clip* ) ),
-             clipRenderer, SLOT( setClip( Clip* ) ) );
-
 #ifdef WITH_CRASHHANDLER
     if ( restoreSession() == true )
         return ;
