@@ -38,9 +38,13 @@ class MediaLibraryView : public QObject
 
     public slots:
         void    startDrag( qint64 mediaId );
+        void    onMediaSelected( qint64 mediaId );
 
     private:
         QWidget*    m_container;
+
+    signals:
+        void    baseClipSelected( const QString& uuid );
 };
 
 #endif // MEDIALIBRARYVIEW_H

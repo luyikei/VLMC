@@ -58,7 +58,7 @@ Rectangle {
         anchors.fill: parent
         onPressed: {
             gridView.currentIndex = index;
-            view.startDrag( mediaId );
+            view.onMediaSelected( mediaId );
         }
     }
 }

@@ -531,6 +531,11 @@ MainWindow::setupClipPreview()
     {
         renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
     } );
+    connect( m_mediaLibrary, &MediaLibraryView::baseClipSelected, renderer, [renderer]( const QString& uuid )
+    {
+        renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
+    } );
+
 
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
     connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );

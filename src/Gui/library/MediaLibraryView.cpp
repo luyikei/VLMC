@@ -76,11 +76,6 @@ MediaLibraryView::startDrag( qint64 mediaId )
     QMimeData* mimeData = new QMimeData;
 
     QSharedPointer<Media> media = Core::instance()->library()->media( mediaId );
-    if ( media == nullptr ) {
-        media.reset( new Media( Core::instance()->library()->model( Library::MediaType::Video )->findMedia( mediaId ) ) );
-        Core::instance()->library()->addMedia( media );
-    }
-
     mimeData->setData( QStringLiteral( "vlmc/uuid" ), media->baseClip()->uuid().toByteArray() );
 
     drag->setMimeData( mimeData );
@@ -88,4 +83,18 @@ MediaLibraryView::startDrag( qint64 mediaId )
     drag->setPixmap( QPixmap( thumbnailPath.isEmpty() ? QStringLiteral( ":/images/vlmc" ) :
                                 thumbnailPath ).scaled( 100, 100, Qt::KeepAspectRatio ) );
     drag->exec();
+}
+
+void
+MediaLibraryView::onMediaSelected( qint64 mediaId )
+{
+    QSharedPointer<Media> media = Core::instance()->library()->media( mediaId );
+    if ( media == nullptr ) {
+        media.reset( new Media( Core::instance()->library()->model( Library::MediaType::Video )->findMedia( mediaId ) ) );
+        Core::instance()->library()->addMedia( media );
+    }
+
+    emit baseClipSelected( media->baseClip()->uuid().toString() );
+
+    startDrag( mediaId );
 }
