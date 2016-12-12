@@ -6,7 +6,7 @@ Rectangle {
     id: clipItem
     color: ListView.isCurrentItem ? "black" : "#333333"
     visible: ( clipLibraryView.currentMediaId === mediaId && !isBaseClip ) ||
-             ( clipLibraryView.currentMediaId === -1 && isBaseClip && onTimeline )
+             ( clipLibraryView.currentMediaId === -1 && isBaseClip && ( onTimeline || subClipsCount ) )
 
     property string uuid
     property int mediaId
