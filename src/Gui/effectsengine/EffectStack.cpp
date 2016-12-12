@@ -40,8 +40,7 @@
 
 EffectStack::EffectStack( Backend::IInput *input, QWidget *parent ):
     QDialog( parent ),
-    m_ui( new Ui::EffectStack ),
-    m_input( input )
+    m_ui( new Ui::EffectStack )
 {
     m_ui->setupUi( this );
 
@@ -62,8 +61,8 @@ EffectStack::EffectStack( Backend::IInput *input, QWidget *parent ):
     //Add an empty instance widget.
     m_stackedLayout->addWidget( new EffectInstanceWidget( this ) );
     //Create instance widgets for already inserted effects
-    for ( int i = 0; i < m_input->filterCount(); ++i )
-        addEffectHelper( new EffectHelper( m_input->filter( i ) ) );
+    for ( int i = 0; i < input->filterCount(); ++i )
+        addEffectHelper( new EffectHelper( input->filter( i ) ) );
 }
 
 EffectStack::~EffectStack()

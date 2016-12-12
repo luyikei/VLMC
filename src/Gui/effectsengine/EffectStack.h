@@ -64,7 +64,6 @@ class EffectStack : public QDialog
     private:
         Ui::EffectStack                 *m_ui;
         EffectInstanceListModel         *m_model;
-        Backend::IInput                 *m_input;
         QStackedLayout                  *m_stackedLayout;
         QHash<QString, EffectInstanceWidget*>   m_instanceWidgets;
 };
