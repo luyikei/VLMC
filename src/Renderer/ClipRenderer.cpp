@@ -92,8 +92,9 @@ ClipRenderer::startPreview()
     updateInfos( m_selectedClip );
     setInput( m_selectedClip->input() );
 
-    m_output->start();
     m_input->setPosition( 0 );
+    m_input->setPause( false );
+    m_output->start();
 
     m_clipLoaded = true;
     m_mediaChanged = false;
