@@ -37,6 +37,7 @@ class QProgressBar;
 #include "ui/MainWindow.h"
 
 class   EffectsListView;
+class   ClipLibraryView;
 class   MediaLibraryView;
 class   PreviewWidget;
 class   Project;
@@ -128,12 +129,14 @@ private:
     SettingsDialog*         m_DefaultProjectPreferences;
     SettingsDialog*         m_projectPreferences;
     ProjectWizard*          m_wizard;
-    MediaLibraryView            *m_mediaLibrary;
+    MediaLibraryView*       m_mediaLibrary;
+    ClipLibraryView*        m_clipLibrary;
     EffectsListView*        m_effectsList;
     QUndoView*              m_undoView;
     QDockWidget*            m_dockedUndoView;
     QDockWidget*            m_dockedEffectsList;
-    QDockWidget*            m_dockedLibrary;
+    QDockWidget*            m_dockedClipLibrary;
+    QDockWidget*            m_dockedMediaLibrary;
     QDockWidget*            m_dockedClipPreview;
     QDockWidget*            m_dockedProjectPreview;
     QProgressBar*           m_progressBar;

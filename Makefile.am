@@ -124,6 +124,7 @@ nodist_vlmc_SOURCES = \
 	src/Library/Library.moc.cpp \
 	src/Library/MediaLibraryModel.moc.cpp \
 	src/Gui/library/MediaLibraryView.moc.cpp \
+        src/Gui/library/ClipLibraryView.moc.cpp \
 	$(NULL)
 
 vlmc_RC = \
@@ -184,6 +185,7 @@ vlmc_SOURCES += \
 	src/Gui/export/ShareOnInternet.cpp \
 	src/Gui/import/TagWidget.cpp \
 	src/Gui/library/MediaLibraryView.cpp \
+        src/Gui/library/ClipLibraryView.cpp \
 	src/Gui/media/ClipMetadataDisplayer.cpp \
 	src/Gui/preview/LCDTimecode.cpp \
 	src/Gui/preview/PreviewRuler.cpp \
@@ -248,6 +250,7 @@ vlmc_SOURCES += \
 	src/Gui/About.h \
 	src/Gui/LanguageHelper.h \
 	src/Gui/library/MediaLibraryView.h \
+        src/Gui/library/ClipLibraryView.h \
 	src/Gui/library/ViewController.h \
 	src/Gui/media/ClipMetadataDisplayer.h \
 	src/Gui/preview/RenderWidget.h \
@@ -383,7 +386,9 @@ vlmc_QML = \
 	src/Gui/timeline/ClipContextMenu.qml \
 	src/Gui/timeline/Cursor.qml \
 	src/Gui/library/ui/MediaLibraryView.qml \
+        src/Gui/library/ui/ClipLibraryView.qml \
 	src/Gui/library/ui/MediaItem.qml \
+	src/Gui/library/ui/ClipItem.qml \
 	src/Gui/effectsengine/Effect.qml \
 	src/Gui/effectsengine/EffectsListView.qml \
 	$(NULL)

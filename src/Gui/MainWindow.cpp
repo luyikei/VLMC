@@ -57,6 +57,7 @@
 /* Widgets */
 #include "effectsengine/EffectsListView.h"
 #include "library/MediaLibraryView.h"
+#include "library/ClipLibraryView.h"
 #include "preview/PreviewWidget.h"
 #include "timeline/Timeline.h"
 
@@ -177,7 +178,8 @@ MainWindow::retranslateUi()
 {
     m_dockedUndoView->setWindowTitle( tr( "History" ) );
     m_dockedEffectsList->setWindowTitle( tr( "Effects List" ) );
-    m_dockedLibrary->setWindowTitle( tr( "Media Library" ) );
+    m_dockedMediaLibrary->setWindowTitle( tr( "Media Library" ) );
+    m_dockedClipLibrary->setWindowTitle( tr( "Clip Library" ) );
     m_dockedClipPreview->setWindowTitle( tr( "Clip Preview" ) );
     m_dockedProjectPreview->setWindowTitle( tr( "Project Preview" ) );
 }
@@ -510,7 +512,10 @@ void
 MainWindow::setupLibrary()
 {
     m_mediaLibrary = new MediaLibraryView( this );
-    m_dockedLibrary = dockWidget( m_mediaLibrary->container(), Qt::TopDockWidgetArea );
+    m_clipLibrary = new ClipLibraryView( this );
+    m_dockedMediaLibrary = dockWidget( m_mediaLibrary->container(), Qt::TopDockWidgetArea );
+    m_dockedClipLibrary = dockWidget( m_clipLibrary->container(), Qt::TopDockWidgetArea );
+    tabifyDockWidget( m_dockedMediaLibrary, m_dockedClipLibrary );
 }
 
 void
@@ -522,6 +527,10 @@ MainWindow::setupClipPreview()
     m_clipPreview->setRenderer( renderer );
     connect( Core::instance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
              renderer, SLOT( clipUnloaded( const QUuid& ) ) );
+    connect( m_clipLibrary, &ClipLibraryView::clipSelected, renderer, [renderer]( const QString& uuid )
+    {
+        renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
+    } );
 
     KeyboardShortcutHelper* clipShortcut = new KeyboardShortcutHelper( "keyboard/mediapreview", this );
     connect( clipShortcut, SIGNAL( activated() ), m_clipPreview, SLOT( on_pushButtonPlay_clicked() ) );
