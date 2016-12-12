@@ -42,7 +42,8 @@
 Clip::Clip( QSharedPointer<Media> media, qint64 begin /*= 0*/, qint64 end /*= Backend::IInput::EndOfMedia */, const QUuid& uuid /*= QString()*/ ) :
         Workflow::Helper( uuid ),
         m_media( media ),
-        m_input( media->input()->cut( begin, end ) )
+        m_input( media->input()->cut( begin, end ) ),
+        m_onTimeline( false )
 {
 }
 
@@ -105,6 +106,20 @@ void
 Clip::setNotes( const QString &notes )
 {
     m_notes = notes;
+}
+
+bool
+Clip::onTimeline() const
+{
+    return m_onTimeline;
+}
+
+void
+Clip::setOnTimeline( bool onTimeline )
+{
+    if ( m_onTimeline != onTimeline )
+        emit onTimelineChanged( onTimeline );
+    m_onTimeline = onTimeline;
 }
 
 const QUuid&

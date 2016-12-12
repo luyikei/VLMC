@@ -76,6 +76,7 @@ SequenceWorkflow::addClip( QSharedPointer<::Clip> clip, quint32 trackId, qint32 
                                            trackId, pos, isAudioClip );
     vlmcDebug() << "adding" << (isAudioClip ? "audio" : "video") <<  "clip instance:" << c->uuid;
     m_clips.insert( c->uuid, c ) ;
+    clip->setOnTimeline( true );
     emit clipAdded( c->uuid.toString() );
     return c->uuid;
 }
@@ -166,6 +167,11 @@ SequenceWorkflow::removeClip( const QUuid& uuid )
     t->remove( t->clipIndexAt( position ) );
     m_clips.erase( it );
     clip->disconnect( this );
+    bool onTimeline = false;
+    for ( const auto& clipInstance : m_clips )
+        if ( clipInstance->clip->uuid() == clip->uuid() )
+            onTimeline = true;
+    clip->setOnTimeline( onTimeline );
     emit clipRemoved( uuid.toString() );
     return c;
 

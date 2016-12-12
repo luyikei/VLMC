@@ -94,6 +94,9 @@ class   Clip : public Workflow::Helper
         const QString       &notes() const;
         void                setNotes( const QString &notes );
 
+        bool                onTimeline() const;
+        void                setOnTimeline( bool onTimeline );
+
         QVariant            toVariant() const;
 
         Backend::IInput* input();
@@ -105,11 +108,14 @@ class   Clip : public Workflow::Helper
         QStringList         m_metaTags;
         QString             m_notes;
 
+        bool                m_onTimeline;
+
     signals:
         /**
          *  \brief          Act just like QObject::destroyed(), but before the clip deletion.
          */
         void                unloaded( Clip* );
+        bool                onTimelineChanged( bool );
 };
 
 #endif //CLIP_H__
