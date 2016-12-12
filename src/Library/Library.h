@@ -130,6 +130,9 @@ signals:
     void    discoveryProgress( QString );
     void    discoveryCompleted( QString );
 
+    void    clipAdded( const QString& uuid );
+    void    clipRemoved( const QString& uuid );
+
 };
 
 #endif // LIBRARY_H
