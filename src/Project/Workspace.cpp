@@ -34,6 +34,7 @@
 #include "Tools/VlmcDebug.h"
 
 #include <QFileInfo>
+#include <QDir>
 
 const QString   Workspace::workspacePrefix = "workspace://";
 
@@ -49,9 +50,15 @@ Workspace::Workspace(Settings *settings)
 }
 
 void
-Workspace::workspaceChanged(const QVariant &newWorkspace)
+Workspace::workspaceChanged( const QVariant &newWorkspace )
 {
-    m_workspaceDir = newWorkspace.toString();
+    QString path = newWorkspace.toString();
+    Q_ASSERT( path.isEmpty() == false );
+    m_workspaceDir = std::move( path );
+
+    QDir workspace( m_workspaceDir );
+    if ( workspace.exists() == false )
+        QDir().mkdir( m_workspaceDir );
 }
 
 bool
