@@ -82,10 +82,6 @@ Core::createSettings()
     QString configPath = configDir + QDir::separator() + qApp->organizationName()
             + QDir::separator() + qApp->applicationName() + ".conf";
     m_settings = new Settings( configPath );
-    m_settings->createVar( SettingValue::String, "vlmc/WorkspaceLocation", "",
-                                    QT_TRANSLATE_NOOP( "Settings", "Workspace location" ),
-                                    QT_TRANSLATE_NOOP( "Settings", "VLMC's workspace location" ),
-                                    SettingValue::Nothing );
     m_settings->createVar( SettingValue::Bool, "private/FirstLaunchDone", false, "", "", SettingValue::Private );
 }
 
