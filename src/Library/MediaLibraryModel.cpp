@@ -144,10 +144,10 @@ void MediaLibraryModel::refresh()
 
     switch ( m_mediaType )
     {
-    case medialibrary::IMedia::Type::AudioType:
+    case medialibrary::IMedia::Type::Audio:
         m_media = m_ml.audioFiles();
         break;
-    case medialibrary::IMedia::Type::VideoType:
+    case medialibrary::IMedia::Type::Video:
         m_media = m_ml.videoFiles();
         break;
     default:

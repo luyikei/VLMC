@@ -104,6 +104,9 @@ private:
     virtual void onDiscoveryProgress( const std::string& entryPoint ) override;
     virtual void onDiscoveryCompleted( const std::string& entryPoint ) override;
     virtual void onParsingStatsUpdated( uint32_t percent ) override;
+    virtual void onPlaylistsAdded( std::vector<medialibrary::PlaylistPtr> playlists ) override;
+    virtual void onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> playlists ) override;
+    virtual void onPlaylistsDeleted( std::vector<int64_t> playlistIds ) override;
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;

@@ -51,8 +51,8 @@ Library::Library( Settings* vlmcSettings, Settings *projectSettings )
     // Setting up the external media library
     m_ml.reset( NewMediaLibrary() );
     m_ml->setVerbosity( medialibrary::LogLevel::Warning );
-    m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::VideoType, this );
-    m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::AudioType, this );
+    m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::Video, this );
+    m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::Audio, this );
 
     auto s = vlmcSettings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
                         "Media Library folders", "List of folders VLMC will search for media files",
@@ -216,10 +216,10 @@ Library::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
     {
         switch ( m->type() )
         {
-        case medialibrary::IMedia::Type::VideoType:
+        case medialibrary::IMedia::Type::Video:
             m_videoModel->addMedia( m );
             break;
-        case medialibrary::IMedia::Type::AudioType:
+        case medialibrary::IMedia::Type::Audio:
             m_audioModel->addMedia( m );
             break;
         default:
@@ -235,10 +235,10 @@ Library::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList )
     {
         switch ( m->type() )
         {
-        case medialibrary::IMedia::Type::VideoType:
+        case medialibrary::IMedia::Type::Video:
             m_videoModel->updateMedia( m );
             break;
-        case medialibrary::IMedia::Type::AudioType:
+        case medialibrary::IMedia::Type::Audio:
             m_audioModel->updateMedia( m );
             break;
         default:
@@ -326,4 +326,16 @@ void
 Library::onParsingStatsUpdated( uint32_t percent )
 {
     emit progressUpdated( static_cast<int>( percent ) );
+}
+
+void Library::onPlaylistsAdded( std::vector<medialibrary::PlaylistPtr> )
+{
+}
+
+void Library::onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> )
+{
+}
+
+void Library::onPlaylistsDeleted( std::vector<int64_t> )
+{
 }
