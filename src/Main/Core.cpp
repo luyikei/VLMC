@@ -47,9 +47,9 @@ Core::Core()
 
     createSettings();
     m_currentProject = new Project( m_settings );
+    m_workspace = new Workspace( m_settings );
     m_library = new Library( m_settings, m_currentProject->settings() );
     m_recentProjects = new RecentProjects( m_settings );
-    m_workspace = new Workspace( m_settings );
     m_workflow = new MainWorkflow( m_currentProject->settings() );
 
     QObject::connect( m_workflow, &MainWorkflow::cleanChanged, m_currentProject, &Project::cleanChanged );
