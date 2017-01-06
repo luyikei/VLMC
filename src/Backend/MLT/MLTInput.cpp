@@ -80,7 +80,7 @@ MLTInput::MLTInput( Mlt::Producer* producer, IInputEventCb* callback )
 MLTInput::MLTInput( IProfile& profile, const char* path, IInputEventCb* callback )
     : MLTInput()
 {
-    std::string temp = std::string( "avformat:" ) + path;
+    std::string temp = std::string( "vlc:" ) + path;
     MLTProfile& mltProfile = static_cast<MLTProfile&>( profile );
     m_producer = new Mlt::Producer( *mltProfile.m_profile, "loader", temp.c_str() );
     setCallback( callback );

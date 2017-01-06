@@ -163,7 +163,7 @@ MLTOutput::isConnected() const
 void
 MLTSdlOutput::setWindowId( intptr_t id )
 {
-    consumer()->set( "window_id", std::to_string( id ).c_str() );
+    consumer()->set( "window_id", id );
 }
 
 void

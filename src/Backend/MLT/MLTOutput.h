@@ -81,7 +81,7 @@ class MLTSdlOutput : public MLTOutput
 {
     public:
         MLTSdlOutput()
-            : MLTOutput( Backend::instance()->profile(), "sdl" ) { }
+            : MLTOutput( Backend::instance()->profile(), "vlc" ) { }
 
         void setWindowId( intptr_t id );
 };
