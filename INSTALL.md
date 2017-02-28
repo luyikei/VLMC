@@ -2,51 +2,47 @@
 
 ## Dependencies
 * Latest version of VLC installed (from the git repository)
-* Qt framework >= 5.0.0
+* Qt framework >= 5.6.0
+* MLT >= 6.4.0
+* medialibrary
+* libvlcpp
 
-##Get the sources
 
-  git clone https://code.videolan.org/videolan/vlmc.git
+## Install VLC
 
-## Fetch libvlcpp
+	See https://wiki.videolan.org/Category:Building/
 
-  git submodule init
-  git submodule update
+## Install libvlcpp
 
-##Building and packaging VLMC on Linux
+	git clone https://code.videolan.org/videolan/libvlcpp.git
+	cd libvlcpp
+	./bootstrap
+	./configure
+	sudo make install
 
-A typical way to build VLMC is:
-  mkdir build && cd build
 
-To set install path: (optional)
-  cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+## Install medialibrary
 
-Else:
-  cmake ..
+	git clone https://code.videolan.org/videolan/medialibrary.git
+	cd medialibrary
+	./bootstrap
+	./configure
+	make
+	sudo make install
 
-Build:
-  make
+## Install MLT
 
-To package:
-  make package
+	git clone https://github.com/mltframework/mlt.git
+	./configure
+	make
+	sudo make install
 
-But this by default will search for available pkg builders and build accordingly.
+## Build VLMC
 
-To force building deb:
-  cpack -G DEB
-To force building rpm:
-  cpack -G RPM
-   
-## Installing on Linux
-
-### To install
-  dpkg -i <deb package>
-  rpm -i <rpm package>
-
-### To remove:
-  dpkg -r vlmc
-  rpm -e vlmc
-
+	git clone https://code.videolan.org/videolan/vlmc.git
+	./bootstrap
+	./configure
+	make
 
 ## Running VLMC
 
