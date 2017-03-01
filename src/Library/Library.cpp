@@ -328,34 +328,42 @@ Library::onParsingStatsUpdated( uint32_t percent )
     emit progressUpdated( static_cast<int>( percent ) );
 }
 
-void Library::onPlaylistsAdded( std::vector<medialibrary::PlaylistPtr> )
+void
+Library::onPlaylistsAdded( std::vector<medialibrary::PlaylistPtr> )
 {
 }
 
-void Library::onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> )
+void
+Library::onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> )
 {
 }
 
-void Library::onPlaylistsDeleted( std::vector<int64_t> )
+void
+Library::onPlaylistsDeleted( std::vector<int64_t> )
 {
 }
 
-void Library::onReloadStarted( const std::string& entryPoint )
+void
+Library::onReloadStarted( const std::string& )
 {
 }
 
-void Library::onReloadCompleted( const std::string& entryPoint )
+void
+Library::onReloadCompleted( const std::string& )
 {
 }
 
-void Library::onEntryPointRemoved( const std::string& entryPoint, bool success )
+void
+Library::onEntryPointRemoved( const std::string&, bool )
 {
 }
 
-void Library::onEntryPointBanned( const std::string& entryPoint, bool success )
+void
+Library::onEntryPointBanned( const std::string&, bool )
 {
 }
 
-void Library::onEntryPointUnbanned( const std::string& entryPoint, bool success )
+void
+Library::onEntryPointUnbanned( const std::string&, bool )
 {
 }
