@@ -107,6 +107,11 @@ private:
     virtual void onPlaylistsAdded( std::vector<medialibrary::PlaylistPtr> playlists ) override;
     virtual void onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> playlists ) override;
     virtual void onPlaylistsDeleted( std::vector<int64_t> playlistIds ) override;
+    virtual void onReloadStarted( const std::string& entryPoint ) override;
+    virtual void onReloadCompleted( const std::string& entryPoint ) override;
+    virtual void onEntryPointRemoved( const std::string& entryPoint, bool success ) override;
+    virtual void onEntryPointBanned( const std::string& entryPoint, bool success ) override;
+    virtual void onEntryPointUnbanned( const std::string& entryPoint, bool success ) override;
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;

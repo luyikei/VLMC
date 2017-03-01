@@ -339,3 +339,23 @@ void Library::onPlaylistsModified( std::vector<medialibrary::PlaylistPtr> )
 void Library::onPlaylistsDeleted( std::vector<int64_t> )
 {
 }
+
+void Library::onReloadStarted( const std::string& entryPoint )
+{
+}
+
+void Library::onReloadCompleted( const std::string& entryPoint )
+{
+}
+
+void Library::onEntryPointRemoved( const std::string& entryPoint, bool success )
+{
+}
+
+void Library::onEntryPointBanned( const std::string& entryPoint, bool success )
+{
+}
+
+void Library::onEntryPointUnbanned( const std::string& entryPoint, bool success )
+{
+}
