@@ -33,6 +33,7 @@
 ## Install MLT
 
 	git clone https://github.com/mltframework/mlt.git
+	cd mlt
 	./configure
 	make
 	sudo make install
@@ -40,6 +41,7 @@
 ## Build VLMC
 
 	git clone https://code.videolan.org/videolan/vlmc.git
+	cd vlmc
 	./bootstrap
 	./configure
 	make
