@@ -38,7 +38,6 @@
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QScrollArea>
 #include <QStackedLayout>
 
 SettingsDialog::SettingsDialog(Settings *settings, const QString &title, QWidget *parent ) :
