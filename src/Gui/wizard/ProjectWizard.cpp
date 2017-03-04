@@ -120,6 +120,7 @@ ProjectWizard::accept()
         projectPreferences->setValue( "audio/AudioSampleRate", field( "samplerate" ).toString().replace( " Hz", "" ) );
         projectPreferences->setValue( "audio/AudioBitRate", field( "abitrate" ).toString().replace( " Kbps", "" ) );
         projectPreferences->setValue( "audio/NbChannels", field( "channels" ) );
+        projectPreferences->save();
     }
     QDialog::accept();
 }
