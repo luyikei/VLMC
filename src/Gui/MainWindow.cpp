@@ -515,7 +515,6 @@ MainWindow::setupLibrary()
     m_clipLibrary = new ClipLibraryView( this );
     m_dockedMediaLibrary = dockWidget( m_mediaLibrary->container(), Qt::TopDockWidgetArea );
     m_dockedClipLibrary = dockWidget( m_clipLibrary->container(), Qt::TopDockWidgetArea );
-    tabifyDockWidget( m_dockedMediaLibrary, m_dockedClipLibrary );
 }
 
 void
