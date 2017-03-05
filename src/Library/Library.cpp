@@ -189,7 +189,8 @@ Library::mlDirsChanged(const QVariant& value)
     const auto list = value.toStringList();
     Q_ASSERT( list.empty() == false );
     for ( const auto f : list )
-        m_ml->discover( f.toStdString() );
+        // To use FsDiscoverer
+        m_ml->discover( std::string( "file://" ) + f.toStdString() );
 }
 
 void
