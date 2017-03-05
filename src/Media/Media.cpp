@@ -76,7 +76,9 @@ Media::Media( medialibrary::MediaPtr media, const QUuid& uuid /* = QUuid() */ )
     }
     if ( m_mlFile == nullptr )
         vlmcFatal( "No file representing media %s", media->title().c_str(), "was found" );
-    m_input.reset( new Backend::MLT::MLTInput( m_mlFile->mrl().c_str() ) );
+    m_input.reset( new Backend::MLT::MLTInput(
+                       qPrintable( QUrl::fromPercentEncoding( QByteArray( m_mlFile->mrl().c_str() ) ) )
+                       ) );
 }
 
 QString
