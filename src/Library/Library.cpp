@@ -320,6 +320,16 @@ Library::onDiscoveryCompleted( const std::string& entryPoint )
         m_videoModel->refresh();
         m_audioModel->refresh();
     }
+
+    // FIXME: Optimization Needed
+    for ( auto media : m_ml->videoFiles() )
+        if ( m_videoModel->findMedia( media->id() ) == nullptr )
+            m_videoModel->addMedia( media );
+
+    for ( auto media : m_ml->audioFiles() )
+        if ( m_audioModel->findMedia( media->id() ) == nullptr )
+            m_audioModel->addMedia( media );
+
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
 
