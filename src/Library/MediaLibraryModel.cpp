@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "MediaLibraryModel.h"
+#include <QUrl>
 
 #ifdef WITH_GUI
 #include <QPixmap>
@@ -105,7 +106,7 @@ QVariant MediaLibraryModel::data( const QModelIndex &index, int role ) const
     {
     case Qt::DisplayRole:
     case Roles::Title:
-        return QVariant( QString::fromStdString( m->title() ) );
+        return QVariant( QUrl::fromPercentEncoding( QByteArray( m->title().c_str() ) ) );
 #ifdef WITH_GUI
     case Qt::DecorationRole:
         return QPixmap( QString::fromStdString( m->thumbnail() ) );
