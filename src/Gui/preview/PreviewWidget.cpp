@@ -99,6 +99,7 @@ PreviewWidget::setRenderer( AbstractRenderer* renderer )
              this, SLOT( updateVolume( int ) ) );
     connect( m_ui->volumeSlider, SIGNAL( sliderMoved( int ) ),
              this, SLOT( updateVolume( int ) ) );
+    m_ui->volumeSlider->setValue( m_renderer->getVolume() );
 }
 
 void
