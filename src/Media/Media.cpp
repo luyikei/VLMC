@@ -88,7 +88,7 @@ Media::mrl() const
 QString
 Media::title() const
 {
-    return QString::fromStdString( m_mlMedia->title() );
+    return QUrl::fromPercentEncoding( QByteArray( m_mlMedia->title().c_str() ) );
 }
 
 qint64
