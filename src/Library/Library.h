@@ -54,12 +54,6 @@ class Library : public QObject, private medialibrary::IMediaLibraryCb
     Q_DISABLE_COPY( Library )
 
 public:
-    enum class MediaType
-    {
-        Video,
-        Audio
-    };
-
     Library( Settings* vlmcSettings, Settings* projectSettings );
     virtual ~Library();
     void            addMedia( QSharedPointer<Media> media );
@@ -69,7 +63,7 @@ public:
     //FIXME: This feels rather ugly
     medialibrary::MediaPtr mlMedia( qint64 mediaId);
 
-    MediaLibraryModel* model( MediaType type ) const;
+    MediaLibraryModel* model() const;
 
     /**
      * @brief clip returns an existing clip
@@ -115,8 +109,7 @@ private:
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;
-    MediaLibraryModel*                              m_videoModel;
-    MediaLibraryModel*                              m_audioModel;
+    MediaLibraryModel*                              m_model;
     Settings*                                       m_settings;
     bool                                            m_initialized;
     bool                                            m_cleanState;

@@ -51,8 +51,7 @@ Library::Library( Settings* vlmcSettings, Settings *projectSettings )
     // Setting up the external media library
     m_ml.reset( NewMediaLibrary() );
     m_ml->setVerbosity( medialibrary::LogLevel::Warning );
-    m_videoModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::Video, this );
-    m_audioModel = new MediaLibraryModel( *m_ml, medialibrary::IMedia::Type::Audio, this );
+    m_model = new MediaLibraryModel( *m_ml, this );
 
     auto s = vlmcSettings->createVar( SettingValue::List, QStringLiteral( "vlmc/mlDirs" ), QVariantList(),
                         "Media Library folders", "List of folders VLMC will search for media files",
@@ -141,16 +140,9 @@ Library::mlMedia( qint64 mediaId )
 }
 
 MediaLibraryModel*
-Library::model(Library::MediaType type) const
+Library::model() const
 {
-    switch ( type )
-    {
-        case MediaType::Video:
-            return m_videoModel;
-        case MediaType::Audio:
-            return m_audioModel;
-    }
-    Q_UNREACHABLE();
+    return m_model;
 }
 
 QSharedPointer<Clip>
@@ -215,17 +207,7 @@ Library::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
 {
     for ( auto m : mediaList )
     {
-        switch ( m->type() )
-        {
-        case medialibrary::IMedia::Type::Video:
-            m_videoModel->addMedia( m );
-            break;
-        case medialibrary::IMedia::Type::Audio:
-            m_audioModel->addMedia( m );
-            break;
-        default:
-            Q_UNREACHABLE();
-        }
+        m_model->addMedia( m );
     }
 }
 
@@ -234,17 +216,7 @@ Library::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList )
 {
     for ( auto m : mediaList )
     {
-        switch ( m->type() )
-        {
-        case medialibrary::IMedia::Type::Video:
-            m_videoModel->updateMedia( m );
-            break;
-        case medialibrary::IMedia::Type::Audio:
-            m_audioModel->updateMedia( m );
-            break;
-        default:
-            Q_UNREACHABLE();
-        }
+        m_model->updateMedia( m );
     }
 }
 
@@ -252,13 +224,7 @@ void
 Library::onMediaDeleted( std::vector<int64_t> mediaList )
 {
     for ( auto id : mediaList )
-    {
-        // We can't know the media type, however ID are unique regardless of the type
-        // so we are sure that we will remove the correct media.
-        if ( m_videoModel->removeMedia( id ) == true )
-            continue;
-        m_audioModel->removeMedia( id );
-    }
+        m_model->removeMedia( id );
 }
 
 void
@@ -316,10 +282,7 @@ void
 Library::onDiscoveryCompleted( const std::string& entryPoint )
 {
     if ( entryPoint.empty() == true )
-    {
-        m_videoModel->refresh();
-        m_audioModel->refresh();
-    }
+        m_model->refresh();
 
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
@@ -356,10 +319,10 @@ Library::onReloadCompleted( const std::string& entryPoint )
     if ( entryPoint.empty() == true )
     {
         for ( auto media : m_ml->videoFiles() )
-            m_videoModel->addMedia( media );
+            m_model->addMedia( media );
 
         for ( auto media : m_ml->audioFiles() )
-            m_audioModel->addMedia( media );
+            m_model->addMedia( media );
     }
 }
 

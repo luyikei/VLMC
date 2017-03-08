@@ -44,8 +44,7 @@ public:
         Id,
     };
 
-    explicit MediaLibraryModel( medialibrary::IMediaLibrary& ml, medialibrary::IMedia::Type type,
-                                QObject *parent = 0 );
+    explicit MediaLibraryModel( medialibrary::IMediaLibrary& ml, QObject *parent = 0 );
 
     void addMedia( medialibrary::MediaPtr media );
     medialibrary::MediaPtr findMedia( qint64 mediaId );
@@ -59,7 +58,6 @@ public:
 
 private:
     medialibrary::IMediaLibrary& m_ml;
-    const medialibrary::IMedia::Type m_mediaType;
 
     // Use an atomic int to avoid locking m_media within rowCount()
     mutable std::mutex m_mediaMutex;

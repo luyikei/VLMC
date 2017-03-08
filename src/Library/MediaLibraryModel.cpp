@@ -29,18 +29,15 @@
 #include <QPixmap>
 #endif
 
-MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, medialibrary::IMedia::Type type, QObject *parent )
+MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, QObject *parent )
     : QAbstractListModel(parent)
     , m_ml( ml )
-    , m_mediaType( type )
     , m_rowCount( 0 )
 {
 }
 
 void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
 {
-    if ( media->type() != m_mediaType )
-        return;
     std::lock_guard<std::mutex> lock( m_mediaMutex );
     auto size = m_media.size();
     beginInsertRows( QModelIndex(), size, size );
@@ -143,17 +140,10 @@ void MediaLibraryModel::refresh()
 
     beginResetModel();
 
-    switch ( m_mediaType )
-    {
-    case medialibrary::IMedia::Type::Audio:
-        m_media = m_ml.audioFiles();
-        break;
-    case medialibrary::IMedia::Type::Video:
-        m_media = m_ml.videoFiles();
-        break;
-    default:
-        Q_UNREACHABLE();
-    }
+    const auto& audioFiles = m_ml.audioFiles();
+    const auto& videoFiles = m_ml.videoFiles();
+    m_media.insert( m_media.end(), audioFiles.begin(), audioFiles.end() );
+    m_media.insert( m_media.end(), videoFiles.begin(), videoFiles.end() );
     m_rowCount = m_media.size();
     endResetModel();
 }

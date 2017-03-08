@@ -52,7 +52,7 @@ MediaLibraryView::MediaLibraryView( QWidget* parent )
     m_container->setObjectName( objectName() );
 
     auto ctx = view->rootContext();
-    ctx->setContextProperty( QStringLiteral( "mlModel" ), Core::instance()->library()->model( Library::MediaType::Video ) );
+    ctx->setContextProperty( QStringLiteral( "mlModel" ), Core::instance()->library()->model() );
     ctx->setContextProperty( QStringLiteral( "view" ), this );
 
     view->setSource( QUrl( QStringLiteral( "qrc:/QML/MediaLibraryView.qml" ) ) );
@@ -90,7 +90,7 @@ MediaLibraryView::onMediaSelected( qint64 mediaId )
 {
     QSharedPointer<Media> media = Core::instance()->library()->media( mediaId );
     if ( media == nullptr ) {
-        media.reset( new Media( Core::instance()->library()->model( Library::MediaType::Video )->findMedia( mediaId ) ) );
+        media.reset( new Media( Core::instance()->library()->model()->findMedia( mediaId ) ) );
         Core::instance()->library()->addMedia( media );
     }
 
