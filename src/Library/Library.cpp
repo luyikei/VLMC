@@ -321,15 +321,6 @@ Library::onDiscoveryCompleted( const std::string& entryPoint )
         m_audioModel->refresh();
     }
 
-    // FIXME: Optimization Needed
-    for ( auto media : m_ml->videoFiles() )
-        if ( m_videoModel->findMedia( media->id() ) == nullptr )
-            m_videoModel->addMedia( media );
-
-    for ( auto media : m_ml->audioFiles() )
-        if ( m_audioModel->findMedia( media->id() ) == nullptr )
-            m_audioModel->addMedia( media );
-
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
 
@@ -360,8 +351,16 @@ Library::onReloadStarted( const std::string& )
 }
 
 void
-Library::onReloadCompleted( const std::string& )
+Library::onReloadCompleted( const std::string& entryPoint )
 {
+    if ( entryPoint.empty() == true )
+    {
+        for ( auto media : m_ml->videoFiles() )
+            m_videoModel->addMedia( media );
+
+        for ( auto media : m_ml->audioFiles() )
+            m_audioModel->addMedia( media );
+    }
 }
 
 void
