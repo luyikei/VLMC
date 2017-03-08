@@ -84,7 +84,7 @@ Media::Media( medialibrary::MediaPtr media, const QUuid& uuid /* = QUuid() */ )
 QString
 Media::mrl() const
 {
-    return QString::fromStdString( m_mlFile->mrl() );
+    return QUrl::fromPercentEncoding( QByteArray( m_mlFile->mrl().c_str() ) );
 }
 
 QString
