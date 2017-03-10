@@ -633,7 +633,7 @@ void
 MainWindow::on_actionQuit_triggered()
 {
     saveSettings();
-    QApplication::quit();
+    close();
 }
 
 void
