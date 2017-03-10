@@ -55,7 +55,7 @@ PreferenceWidget::PreferenceWidget( const QString &name, const char *label, Sett
     QFormLayout *layout = new QFormLayout( container );
     layout->setFieldGrowthPolicy( QFormLayout::AllNonFixedFieldsGrow );
 
-    foreach ( SettingValue* s, settingList )
+    for ( auto s : settingList )
     {
         //Do not display private variables
         if ( ( s->flags() & SettingValue::Private ) != 0 )
