@@ -106,6 +106,14 @@ WelcomePage::validatePage()
                                       "the list.\nThen click next to continue..." ) );
             return false;
         }
+        else if ( QFile::exists( *m_projectPath ) == false )
+        {
+            QMessageBox::warning( this, tr( "Warning" ),
+                                  QStringLiteral( "%1\n%2" )
+                                  .arg( tr( "Sorry, we couldn't find your file. Was it moved, renamed, or deleted?" ) )
+                                  .arg( *m_projectPath ) );
+            return false;
+        }
         return true;
     }
     return true;
