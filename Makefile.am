@@ -361,7 +361,11 @@ vlmc_UI = \
 
 if HAVE_CRASHHANDLER
 vlmc_UI += src/Gui/ui/CrashHandler.ui
-vlmc_SOURCES += src/Gui/widgets/CrashHandler.cpp
+vlmc_SOURCES += \
+	src/Gui/widgets/CrashHandler.h \
+	src/Gui/widgets/CrashHandler.cpp \
+	$(NULL)
+nodist_vlmc_SOURCES += src/Gui/widgets/CrashHandler.moc.cpp
 if HAVE_WIN32
 vlmc_SOURCES += src/Tools/Win32BacktraceGenerator.cpp
 else
