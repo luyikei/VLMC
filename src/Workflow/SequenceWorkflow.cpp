@@ -187,9 +187,9 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
         vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
         return false;
     }
-    clipA->linkedClips.append( clipB->uuid );
-    clipB->linkedClips.append( clipA->uuid );
-    emit clipLinked( clipA->uuid.toString(), clipB->uuid.toString() );
+    clipA->linkedClips.append( uuidB );
+    clipB->linkedClips.append( uuidA );
+    emit clipLinked( uuidA.toString(), uuidB.toString() );
     return true;
 }
 
