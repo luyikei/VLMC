@@ -111,19 +111,17 @@ MLTBackend::setLogHandler( IBackend::LogHandler logHandler )
     {
         std::string msg_str;
 
-        Mlt::Service service( ( mlt_service )ptr );
-
-        if ( service.is_valid() )
+        if ( ptr != nullptr )
         {
-            const char *mlt_type = service.get( "mlt_type" );
-            const char *mlt_service = service.get( "mlt_service" );
+            auto mltType = mlt_properties_get( MLT_SERVICE_PROPERTIES( ( mlt_service )ptr ), "mlt_type" );
+            auto mltService = mlt_properties_get( MLT_SERVICE_PROPERTIES( ( mlt_service )ptr ), "mlt_service" );
             std::ostringstream os;
 
-            if ( mlt_service && mlt_type )
-                os << "[" << mlt_type << " " << mlt_service << "] ";
-            else if ( mlt_type )
+            if ( mltService && mltType )
+                os << "[" << mltType << " " << mltService << "] ";
+            else if ( mltType )
             {
-                os << "[" << mlt_type << " " << ptr << "] ";
+                os << "[" << mltType << " " << ptr << "] ";
             }
 
             msg_str = os.str();
