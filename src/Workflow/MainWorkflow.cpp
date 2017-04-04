@@ -350,7 +350,6 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     });
 #endif
 
-    connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
     connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&output]{ output.stop(); } );
     connect( this, &MainWorkflow::mainWorkflowEndReached, &dialog, &WorkflowFileRendererDialog::accept );
 
