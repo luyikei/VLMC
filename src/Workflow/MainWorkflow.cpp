@@ -338,7 +338,6 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     WorkflowFileRendererDialog  dialog( width, height, input->playableLength(), m_renderer->eventWatcher() );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
-    connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
     connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, &dialog,
              [this, input, &dialog, width, height]( qint64 pos )
@@ -353,6 +352,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
 
     connect( &cEventWatcher, &OutputEventWatcher::stopped, this, [&output]{ output.stop(); } );
     connect( this, &MainWorkflow::mainWorkflowEndReached, this, [&output]{ output.stop(); } );
+    connect( this, &MainWorkflow::mainWorkflowEndReached, &dialog, &WorkflowFileRendererDialog::accept );
 
     input->setPosition( 0 );
     output.start();
