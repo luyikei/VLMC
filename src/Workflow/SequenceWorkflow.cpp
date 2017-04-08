@@ -283,13 +283,8 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
 void
 SequenceWorkflow::clear()
 {
-    auto it = m_clips.begin();
-    while ( it != m_clips.end() )
-    {
-        removeClip( it.key() );
-        // m_clips.begin() can be changed
-        it = m_clips.begin();
-    }
+    while ( !m_clips.empty() )
+        removeClip( m_clips.begin().key() );
 }
 
 QSharedPointer<SequenceWorkflow::ClipInstance>
