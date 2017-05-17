@@ -340,3 +340,9 @@ void
 Library::onEntryPointUnbanned( const std::string&, bool )
 {
 }
+
+void
+Library::onBackgroundTasksIdleChanged( bool )
+{
+
+}

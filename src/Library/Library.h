@@ -106,6 +106,7 @@ private:
     virtual void onEntryPointRemoved( const std::string& entryPoint, bool success ) override;
     virtual void onEntryPointBanned( const std::string& entryPoint, bool success ) override;
     virtual void onEntryPointUnbanned( const std::string& entryPoint, bool success ) override;
+    virtual void onBackgroundTasksIdleChanged( bool isIdle ) override;
 
 private:
     std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;
