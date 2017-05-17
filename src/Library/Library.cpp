@@ -198,6 +198,7 @@ Library::workspaceChanged(const QVariant& workspace)
         // This will happen after the first call to IMediaLibrary::discover()
         m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
         m_initialized = true;
+        m_ml->start();
     }
     //else FIXME, and relocate the media library
 }
