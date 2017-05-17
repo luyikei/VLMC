@@ -199,6 +199,7 @@ Library::workspaceChanged(const QVariant& workspace)
         m_ml->initialize( w + "/ml.db", w + "/thumbnails/", this );
         m_initialized = true;
         m_ml->start();
+        m_ml->reload();
     }
     //else FIXME, and relocate the media library
 }
