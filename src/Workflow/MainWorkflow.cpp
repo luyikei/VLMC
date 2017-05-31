@@ -33,8 +33,8 @@
 #include "Backend/MLT/MLTMultiTrack.h"
 #include "Backend/MLT/MLTTrack.h"
 #include "Renderer/AbstractRenderer.h"
-#ifdef HAVE_GUI
 #include "EffectsEngine/EffectHelper.h"
+#ifdef HAVE_GUI
 #include "Gui/effectsengine/EffectStack.h"
 #include "Gui/WorkflowFileRendererDialog.h"
 #endif
