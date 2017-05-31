@@ -206,10 +206,12 @@ class   MainWorkflow : public QObject
          *  \brief      Used to notify a change to the timeline and preview widget cursor
          *
          *  \param      newFrame    The new rendered frame
+         *  \param      length      The playable length
          *  \param      reason      The reason for clipanging frame. Usually, if emitted
          *                          from the MainWorkflow, this should be "Renderer"
          */
         void                    frameChanged( qint64 newFrame,
+                                              qint64 length,
                                               Vlmc::FrameChangedReason reason );
 
         /**
