@@ -43,12 +43,12 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
 }
 
 void
-ConsoleRenderer::frameChanged( qint64 frame ) const
+ConsoleRenderer::frameChanged( qint64 frame, qint64 length ) const
 {
-    static int      percent = 0;
-    int             newPercent;
+    static qint64   percent = 0;
+    qint64          newPercent;
 
-    newPercent = frame * 100 / Core::instance()->workflow()->getLengthFrame();
+    newPercent = ( frame + 1 ) * 100 / length; // The frame is 0-indexed
     if ( newPercent != percent )
     {
         percent = newPercent;

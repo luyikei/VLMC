@@ -35,7 +35,7 @@ public:
     void        startRender();
 
 private:
-    void        frameChanged( qint64 frame ) const;
+    void        frameChanged( qint64 frame, qint64 length ) const;
 
 private:
     QString                 m_outputFileName;
