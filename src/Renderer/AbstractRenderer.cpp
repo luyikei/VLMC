@@ -48,13 +48,11 @@ AbstractRenderer::~AbstractRenderer()
     delete m_eventWatcher;
 }
 
-#ifdef HAVE_GUI
 RendererEventWatcher*
 AbstractRenderer::eventWatcher()
 {
     return m_eventWatcher;
 }
-#endif
 
 void
 AbstractRenderer::stop()
