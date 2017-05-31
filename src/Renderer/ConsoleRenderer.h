@@ -23,8 +23,6 @@
 #ifndef CONSOLERENDERER_H
 #define CONSOLERENDERER_H
 
-class   WorkflowFileRenderer;
-
 #include <QObject>
 #include <QString>
 
@@ -42,7 +40,6 @@ private slots:
     void        frameChanged( qint64 frame ) const;
 
 private:
-    WorkflowFileRenderer    *m_renderer;
     QString                 m_outputFileName;
 };
 
