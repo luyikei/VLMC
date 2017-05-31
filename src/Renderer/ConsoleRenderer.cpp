@@ -28,7 +28,7 @@
 #include "Main/Core.h"
 #include "Project/Project.h"
 #include "Tools/VlmcDebug.h"
-#include "Renderer/WorkflowRenderer.h"
+#include "Workflow/MainWorkflow.h"
 
 #include <QCoreApplication>
 #include <QStringList>
@@ -39,7 +39,7 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
     m_outputFileName = qApp->arguments()[2];
     connect( Core::instance()->workflow(), &MainWorkflow::frameChanged,
              this, &ConsoleRenderer::frameChanged);
-    connect( Core::instance()->workflowRenderer(), SIGNAL( renderComplete() ), qApp, SLOT( quit() ) );
+    connect( Core::instance()->workflow(), &MainWorkflow::mainWorkflowEndReached, qApp, &QCoreApplication::quit );
 }
 
 void
@@ -60,14 +60,14 @@ void
 ConsoleRenderer::startRender()
 {
     auto project = Core::instance()->project();
-    Core::instance()->workflowRenderer()->startRenderToFile( m_outputFileName,
-                                                             project->width(),
-                                                             project->height(),
-                                                             project->fps(),
-                                                             project->aspectRatio(),
-                                                             project->videoBitrate(),
-                                                             project->audioBitrate(),
-                                                             project->nbChannels(),
-                                                             project->sampleRate()
-                                                             );
+    Core::instance()->workflow()->startRenderToFile( m_outputFileName,
+                                                     project->width(),
+                                                     project->height(),
+                                                     project->fps(),
+                                                     project->aspectRatio(),
+                                                     project->videoBitrate(),
+                                                     project->audioBitrate(),
+                                                     project->nbChannels(),
+                                                     project->sampleRate()
+                                                     );
 }
