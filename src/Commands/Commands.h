@@ -110,7 +110,7 @@ namespace Commands
                 virtual void    internalUndo();
                 virtual void    retranslate();
                 virtual int     id() const;
-                virtual bool    mergeWith( const QUndoCommand* command );
+                virtual bool    mergeWith( const Generic* command );
 
             private:
                 std::shared_ptr<SequenceWorkflow> m_workflow;
@@ -133,7 +133,7 @@ namespace Commands
                 virtual void internalUndo();
                 virtual void    retranslate();
                 virtual int     id() const;
-                virtual bool    mergeWith( const QUndoCommand* command );
+                virtual bool    mergeWith( const Generic* command );
 
             private:
                 std::shared_ptr<SequenceWorkflow>       m_workflow;
@@ -155,7 +155,7 @@ namespace Commands
                 virtual void    internalRedo();
                 virtual void    internalUndo();
                 virtual void    retranslate();
-                virtual bool    mergeWith( const QUndoCommand* cmd );
+                virtual bool    mergeWith( const Generic* cmd );
                 virtual int     id() const;
 
             private:

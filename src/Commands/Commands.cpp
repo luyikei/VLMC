@@ -166,7 +166,7 @@ Commands::Clip::Move::id() const
 }
 
 bool
-Commands::Clip::Move::mergeWith( const QUndoCommand* command )
+Commands::Clip::Move::mergeWith( const Generic* command )
 {
     auto cmd = static_cast<const Move*>( command );
     if ( cmd->m_infos.count() > 1 )
@@ -221,7 +221,7 @@ Commands::Clip::Remove::id() const
 }
 
 bool
-Commands::Clip::Remove::mergeWith(const QUndoCommand* command)
+Commands::Clip::Remove::mergeWith( const Generic* command )
 {
     auto cmd = static_cast<const Remove*>( command );
     if ( cmd->m_clips.count() > 1 )
@@ -280,7 +280,7 @@ Commands::Clip::Resize::retranslate()
 }
 
 bool
-Commands::Clip::Resize::mergeWith( const QUndoCommand* command )
+Commands::Clip::Resize::mergeWith( const Generic* command )
 {
     auto cmd = static_cast<const Resize*>( command );
     if ( cmd->m_infos.count() > 1 )
