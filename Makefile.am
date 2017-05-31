@@ -44,9 +44,7 @@ vlmc_SOURCES += \
 	src/Project/WorkspaceWorker.h \
 	src/Project/Project.h \
 	src/Project/RecentProjects.h \
-	src/Commands/Commands.h \
-	src/Commands/AbstractUndoStack.h \
-	src/Commands/KeyboardShortcutHelper.h \
+        src/Commands/Commands.h \
 	src/Tools/RendererEventWatcher.h \
 	src/Tools/VlmcDebug.h \
 	src/Tools/ErrorHandler.h \
@@ -55,16 +53,10 @@ vlmc_SOURCES += \
 	src/Tools/VlmcLogger.h \
 	src/Tools/OutputEventWatcher.h \
 	src/Tools/Singleton.hpp \
-	src/Renderer/ClipRenderer.h \
-	src/Renderer/ConsoleRenderer.h \
+        src/Renderer/ClipRenderer.h \
 	src/Renderer/AbstractRenderer.h \
 	src/Services/UploaderIODevice.h \
-	src/Services/AbstractSharingService.h \
-	src/Services/YouTube/YouTubeUploader.h \
-	src/Services/YouTube/YouTubeCommon.h \
-	src/Services/YouTube/YouTubeAuthenticator.h \
-	src/Services/YouTube/YouTubeService.h \
-	src/Services/YouTube/YouTubeFeedParser.h \
+        src/Services/AbstractSharingService.h \
 	src/EffectsEngine/EffectHelper.h \
 	src/Media/Media.h \
 	src/Media/Clip.h \
@@ -98,33 +90,26 @@ vlmc_SOURCES += \
 
 nodist_vlmc_SOURCES = \
 	src/Media/Clip.moc.cpp \
-	src/Workflow/SequenceWorkflow.moc.cpp \
-	src/Services/YouTube/YouTubeService.moc.cpp \
+        src/Workflow/SequenceWorkflow.moc.cpp \
 	src/EffectsEngine/EffectHelper.moc.cpp \
 	src/Workflow/Helper.moc.cpp \
 	src/Tools/RendererEventWatcher.moc.cpp \
-	src/Project/Workspace.moc.cpp \
-	src/Services/YouTube/YouTubeUploader.moc.cpp \
+        src/Project/Workspace.moc.cpp \
 	src/Tools/VlmcLogger.moc.cpp \
 	src/Settings/Settings.moc.cpp \
 	src/Media/Media.moc.cpp \
 	src/Renderer/AbstractRenderer.moc.cpp \
-	src/Project/WorkspaceWorker.moc.cpp \
-	src/Commands/KeyboardShortcutHelper.moc.cpp \
+        src/Project/WorkspaceWorker.moc.cpp \
 	src/Services/AbstractSharingService.moc.cpp \
 	src/Workflow/MainWorkflow.moc.cpp \
 	src/Project/RecentProjects.moc.cpp \
-	src/Commands/Commands.moc.cpp \
-	src/Renderer/ClipRenderer.moc.cpp \
-	src/Project/Project.moc.cpp \
-	src/Services/YouTube/YouTubeAuthenticator.moc.cpp \
+        src/Commands/Commands.moc.cpp \
+        src/Project/Project.moc.cpp \
 	src/Settings/SettingValue.moc.cpp \
 	src/Tools/OutputEventWatcher.moc.cpp \
 	src/Services/UploaderIODevice.moc.cpp \
 	src/Library/Library.moc.cpp \
-	src/Library/MediaLibraryModel.moc.cpp \
-	src/Gui/library/MediaLibraryView.moc.cpp \
-        src/Gui/library/ClipLibraryView.moc.cpp \
+        src/Library/MediaLibraryModel.moc.cpp \
 	$(NULL)
 
 vlmc_RC = \
@@ -227,6 +212,7 @@ vlmc_LDFLAGS += -Wl,-framework,Cocoa
 endif
 
 vlmc_SOURCES += \
+        src/Commands/KeyboardShortcutHelper.h \
 	src/Gui/ClipProperty.h \
 	src/Gui/WorkflowFileRendererDialog.h \
 	src/Gui/widgets/FramelessButton.h \
@@ -281,9 +267,15 @@ vlmc_SOURCES += \
 	src/Gui/export/RendererSettings.h \
 	src/Gui/export/ShareOnInternet.h \
 	src/Gui/IntroDialog.h \
+        src/Services/YouTube/YouTubeUploader.h \
+        src/Services/YouTube/YouTubeCommon.h \
+        src/Services/YouTube/YouTubeAuthenticator.h \
+        src/Services/YouTube/YouTubeService.h \
+        src/Services/YouTube/YouTubeFeedParser.h \
 	$(NULL)
 
 nodist_vlmc_SOURCES += \
+        src/Commands/KeyboardShortcutHelper.moc.cpp \
 	src/Gui/wizard/WelcomePage.moc.cpp \
 	src/Gui/settings/SettingsDialog.moc.cpp \
 	src/Gui/export/ShareOnInternet.moc.cpp \
@@ -331,6 +323,12 @@ nodist_vlmc_SOURCES += \
 	src/Gui/settings/StringWidget.moc.cpp \
 	src/Gui/settings/FolderListWidget.moc.cpp \
 	src/Gui/effectsengine/EffectsListView.moc.cpp \
+        src/Gui/library/MediaLibraryView.moc.cpp \
+        src/Gui/library/ClipLibraryView.moc.cpp \
+        src/Renderer/ClipRenderer.moc.cpp \
+        src/Services/YouTube/YouTubeAuthenticator.moc.cpp \
+        src/Services/YouTube/YouTubeUploader.moc.cpp \
+        src/Services/YouTube/YouTubeService.moc.cpp \
 	$(NULL)
 
 vlmc_UI = \
@@ -401,6 +399,23 @@ EXTRA_DIST += $(vlmc_QML)
 
 vlmc_RC += $(vlmc_QML:.qml=.qrc)
 nodist_vlmc_SOURCES += $(vlmc_QML:.qml=.qrc)
+
+else #HAVE_GUI=FALSE
+
+vlmc_SOURCES += \
+    src/Renderer/ConsoleRenderer.h \
+    src/Commands/AbstractUndoStack.h \
+    $(NULL)
+
+vlmc_SOURCES += \
+    src/Renderer/ConsoleRenderer.cpp \
+    src/Commands/AbstractUndoStack.cpp \
+    $(NULL)
+
+
+nodist_vlmc_SOURCES += \
+    src/Commands/AbstractUndoStack.moc.cpp \
+    $(NULL)
 
 endif
 
