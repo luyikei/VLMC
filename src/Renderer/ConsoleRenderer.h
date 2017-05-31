@@ -28,15 +28,13 @@
 
 class ConsoleRenderer : public QObject
 {
-    Q_OBJECT
 
 public:
     explicit ConsoleRenderer( QObject *parent = 0 );
 
-public slots:
     void        startRender();
 
-private slots:
+private:
     void        frameChanged( qint64 frame ) const;
 
 private:
