@@ -24,7 +24,9 @@
 #ifndef ABSTRACTRENDERER_H
 #define ABSTRACTRENDERER_H
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 #include <memory>
 #include <QObject>
 
