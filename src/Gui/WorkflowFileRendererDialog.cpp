@@ -34,16 +34,12 @@
 #include "Tools/RendererEventWatcher.h"
 #include "Backend/IInput.h"
 
-WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height,
-                                                        qint64 totalFrames, RendererEventWatcher* eventWatcher ) :
+WorkflowFileRendererDialog::WorkflowFileRendererDialog( quint32 width, quint32 height ) :
         m_width( width ),
-        m_height( height ),
-        m_totalFrames( totalFrames )
+        m_height( height )
 {
     m_ui.setupUi( this );
     connect( m_ui.cancelButton, SIGNAL( clicked() ), this, SLOT( cancel() ) );
-
-    connect( eventWatcher, &RendererEventWatcher::positionChanged, this, &WorkflowFileRendererDialog::frameChanged );
 }
 
 void
@@ -69,15 +65,15 @@ WorkflowFileRendererDialog::updatePreview( const uchar* buff )
 }
 
 void
-WorkflowFileRendererDialog::frameChanged( qint64 frame )
+WorkflowFileRendererDialog::frameChanged( qint64 newFrame, qint64 length  )
 {
     // Since frame is 0-indexed
-    frame++;
-    if ( frame <= m_totalFrames )
+    newFrame++;
+    if ( newFrame <= length )
     {
-        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg( QString::number( frame ),
-                                        QString::number( m_totalFrames ) ) );
-        setProgressBarValue( frame * 100 / m_totalFrames );
+        m_ui.frameCounter->setText( tr("Rendering frame %1 / %2").arg( QString::number( newFrame ),
+                                        QString::number( length ) ) );
+        setProgressBarValue( newFrame * 100 / length );
     }
 }
 

@@ -335,9 +335,10 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     output.connect( *input );
 
 #ifdef HAVE_GUI
-    WorkflowFileRendererDialog  dialog( width, height, input->playableLength(), m_renderer->eventWatcher() );
+    WorkflowFileRendererDialog  dialog( width, height );
     dialog.setModal( true );
     dialog.setOutputFileName( outputFileName );
+    connect( this, &MainWorkflow::frameChanged, &dialog, &WorkflowFileRendererDialog::frameChanged );
     connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, &dialog,
              [this, input, &dialog, width, height]( qint64 pos )
