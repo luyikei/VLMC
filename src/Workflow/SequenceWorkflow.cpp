@@ -274,8 +274,6 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
         }
 
         EffectHelper::loadFromVariant( m["filters"], clip->input() );
-
-        emit Core::instance()->workflow()->clipAdded( clip->uuid().toString() );
     }
     EffectHelper::loadFromVariant( variant.toMap()["filters"], m_multitrack );
 }
