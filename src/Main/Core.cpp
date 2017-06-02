@@ -66,10 +66,10 @@ Core::Core()
 
 Core::~Core()
 {
-    delete m_library;
     delete m_workflow;
-    delete m_currentProject;
+    delete m_library;
     delete m_workspace;
+    delete m_currentProject;
     delete m_settings;
     delete m_backend;
     delete m_logger;
