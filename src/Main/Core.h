@@ -40,7 +40,7 @@ namespace Backend
 #include <QElapsedTimer>
 #include "Tools/Singleton.hpp"
 
-class Core : public ScopedSingleton<Core>
+class Core : public MeyersSingleton<Core>
 {
     public:
         Backend::IBackend*      backend();

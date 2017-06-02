@@ -97,7 +97,6 @@ VLMCGuimain( int argc, char **argv )
 
     Backend::IBackend* backend;
     VLMCmainCommon( app, &backend );
-    auto coreLock = Core::Policy_t::lock();
 
     /* Load a project file */
     bool        project = false;
@@ -192,7 +191,6 @@ VLMCCoremain( int argc, char **argv )
 
     Backend::IBackend* backend;
     VLMCmainCommon( app, &backend );
-    auto coreLock = Core::Policy_t::lock();
 
     /* Load a project file */
     if ( app.arguments().count() < 3 )
