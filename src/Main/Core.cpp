@@ -67,6 +67,7 @@ Core::Core()
 Core::~Core()
 {
     delete m_workflow;
+    delete m_recentProjects;
     delete m_library;
     delete m_workspace;
     delete m_currentProject;
