@@ -73,7 +73,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, this, [this]( qint64 pos )
     {
         emit frameChanged( pos, m_sequenceWorkflow->input()->playableLength(), Vlmc::Renderer );
-    } );
+    }, Qt::DirectConnection );
 
     m_settings->createVar( SettingValue::List, "tracks", QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );

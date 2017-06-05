@@ -38,7 +38,7 @@ ConsoleRenderer::ConsoleRenderer(QObject *parent) :
 {
     m_outputFileName = qApp->arguments()[2];
     connect( Core::instance()->workflow(), &MainWorkflow::frameChanged,
-             this, &ConsoleRenderer::frameChanged);
+             this, &ConsoleRenderer::frameChanged, Qt::DirectConnection );
     connect( Core::instance()->workflow(), &MainWorkflow::mainWorkflowEndReached, qApp, &QCoreApplication::quit );
 }
 
