@@ -349,7 +349,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
             dialog.updatePreview( input->image( width, height ) );
         }
     });
-    connect( this, &MainWorkflow::mainWorkflowEndReached, &dialog, &WorkflowFileRendererDialog::accept );
+    connect( &cEventWatcher, &OutputEventWatcher::stopped, &dialog, &WorkflowFileRendererDialog::accept );
 #endif
 
     input->setPosition( 0 );
