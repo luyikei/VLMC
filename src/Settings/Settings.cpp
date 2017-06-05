@@ -169,7 +169,10 @@ Settings::loadJsonFrom( const QJsonObject &object )
 
         SettingValue* val = value( it.key() );
         if ( val == nullptr )
+        {
             vlmcWarning() << "Loaded invalid project setting:" << it.key();
+            continue;
+        }
 
         if ( val->type() == SettingValue::ByteArray )
             val->set( QByteArray::fromBase64( (*it).toVariant().toByteArray() ) );
