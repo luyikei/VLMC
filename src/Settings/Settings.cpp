@@ -212,7 +212,7 @@ Settings::setValue( const QString &key, const QVariant &value )
         (*it)->set( value );
         return true;
     }
-    Q_ASSERT_X( false, __FILE__, "setting value without a created variable" );
+    vlmcCritical() << "setting value without a created variable: " << key;
     return false;
 }
 void
@@ -235,7 +235,7 @@ Settings::value( const QString &key )
     SettingMap::iterator it = m_settings.find( key );
     if ( it != m_settings.end() )
         return *it;
-    Q_ASSERT_X( false, __FILE__, "fetching value without a created variable" );
+    vlmcCritical() << "fetching value without a created variable" << key;
     return nullptr;
 }
 
