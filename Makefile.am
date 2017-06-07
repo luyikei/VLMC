@@ -419,7 +419,7 @@ nodist_vlmc_SOURCES += \
 
 endif
 
-resources.cpp: $(vlmc_QML)
+resources.cpp: $(vlmc_RC)
 	$(RCC) -o $@ $(vlmc_RC)
 
 nodist_vlmc_SOURCES += resources.cpp
