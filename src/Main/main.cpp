@@ -204,14 +204,13 @@ VLMCCoremain( int argc, char **argv )
     }
 
 
-#ifndef HAVE_GUI
     ConsoleRenderer renderer;
     Project  *p = Core::instance()->project();
 
     QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
     Core::instance()->settings()->load();
     p->load( app.arguments()[1] );
-#endif
+
     auto res = app.exec();
     Core::instance()->settings()->save();
     return res;
