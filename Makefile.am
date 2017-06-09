@@ -27,6 +27,7 @@ vlmc_SOURCES = \
 	src/Project/WorkspaceWorker.cpp \
 	src/Project/RecentProjects.cpp \
 	src/Renderer/AbstractRenderer.cpp \
+        src/Renderer/ConsoleRenderer.h \
 	src/Services/UploaderIODevice.cpp \
 	src/Settings/Settings.cpp \
 	src/Settings/SettingValue.cpp \
@@ -55,6 +56,7 @@ vlmc_SOURCES += \
 	src/Tools/Singleton.hpp \
 	src/Renderer/ClipRenderer.h \
 	src/Renderer/AbstractRenderer.h \
+        src/Renderer/ConsoleRenderer.cpp \
 	src/Services/UploaderIODevice.h \
 	src/Services/AbstractSharingService.h \
 	src/EffectsEngine/EffectHelper.h \
@@ -403,12 +405,10 @@ nodist_vlmc_SOURCES += $(vlmc_QML:.qml=.qrc)
 else #HAVE_GUI=FALSE
 
 vlmc_SOURCES += \
-	src/Renderer/ConsoleRenderer.h \
 	src/Commands/AbstractUndoStack.h \
 	$(NULL)
 
 vlmc_SOURCES += \
-	src/Renderer/ConsoleRenderer.cpp \
 	src/Commands/AbstractUndoStack.cpp \
 	$(NULL)
 
