@@ -25,10 +25,6 @@
 #include "MediaLibraryModel.h"
 #include <QUrl>
 
-#ifdef WITH_GUI
-#include <QPixmap>
-#endif
-
 MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, QObject *parent )
     : QAbstractListModel(parent)
     , m_ml( ml )
