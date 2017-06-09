@@ -187,7 +187,11 @@ VLMCGuimain( int argc, char **argv )
 int
 VLMCCoremain( int argc, char **argv )
 {
+#ifdef HAVE_GUI
+    QApplication app( argc, argv );
+#else
     QCoreApplication app( argc, argv );
+#endif
 
     Backend::IBackend* backend;
     VLMCmainCommon( app, &backend );
