@@ -30,15 +30,12 @@
 #include "Tools/VlmcDebug.h"
 #include "Workflow/MainWorkflow.h"
 
-#include <QCoreApplication>
-
 ConsoleRenderer::ConsoleRenderer( const QString& outputFileName, QObject *parent )
     : QObject( parent )
     , m_outputFileName( outputFileName )
 {
     connect( Core::instance()->workflow(), &MainWorkflow::frameChanged,
              this, &ConsoleRenderer::frameChanged, Qt::DirectConnection );
-    connect( Core::instance()->workflow(), &MainWorkflow::mainWorkflowEndReached, qApp, &QCoreApplication::quit );
 }
 
 void
@@ -69,4 +66,5 @@ ConsoleRenderer::startRender()
                                                      project->nbChannels(),
                                                      project->sampleRate()
                                                      );
+    emit finished();
 }

@@ -40,6 +40,9 @@ private:
 
 private:
     QString                 m_outputFileName;
+
+signals:
+    void        finished();
 };
 
 #endif // CONSOLERENDERER_H

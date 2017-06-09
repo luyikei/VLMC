@@ -101,6 +101,7 @@ nodist_vlmc_SOURCES = \
 	src/Settings/Settings.moc.cpp \
 	src/Media/Media.moc.cpp \
 	src/Renderer/AbstractRenderer.moc.cpp \
+        src/Renderer/ConsoleRenderer.moc.cpp \
 	src/Project/WorkspaceWorker.moc.cpp \
 	src/Services/AbstractSharingService.moc.cpp \
 	src/Workflow/MainWorkflow.moc.cpp \
