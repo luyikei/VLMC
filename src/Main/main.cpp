@@ -204,7 +204,7 @@ VLMCCoremain( int argc, char **argv )
     }
 
 
-    ConsoleRenderer renderer;
+    ConsoleRenderer renderer( app.arguments()[2] );
     Project  *p = Core::instance()->project();
 
     QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );

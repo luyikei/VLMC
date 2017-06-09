@@ -31,12 +31,11 @@
 #include "Workflow/MainWorkflow.h"
 
 #include <QCoreApplication>
-#include <QStringList>
 
-ConsoleRenderer::ConsoleRenderer(QObject *parent) :
-    QObject(parent)
+ConsoleRenderer::ConsoleRenderer( const QString& outputFileName, QObject *parent )
+    : QObject( parent )
+    , m_outputFileName( outputFileName )
 {
-    m_outputFileName = qApp->arguments()[2];
     connect( Core::instance()->workflow(), &MainWorkflow::frameChanged,
              this, &ConsoleRenderer::frameChanged, Qt::DirectConnection );
     connect( Core::instance()->workflow(), &MainWorkflow::mainWorkflowEndReached, qApp, &QCoreApplication::quit );
