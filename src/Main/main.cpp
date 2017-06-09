@@ -199,7 +199,11 @@ VLMCCoremain( int argc, char **argv )
     /* Load a project file */
     if ( app.arguments().count() < 3 )
     {
-        vlmcCritical() << "Usage: ./vlmc project.vlmc output_file";
+        vlmcCritical() << "Usage: ./vlmc "
+#ifdef HAVE_GUI
+                << "--no-gui "
+#endif
+                << "project.vlmc output_file";
         return 1;
     }
 
@@ -220,10 +224,15 @@ int
 VLMCmain( int argc, char **argv )
 {
 #ifdef HAVE_GUI
-    int res = VLMCGuimain( argc, argv );
+    if ( argc < 2 || strcmp( argv[1], "--no-gui" ) != 0 )
+    {
+        return VLMCGuimain( argc, argv );
+    }
+    // Remove --no-gui from argv
+    std::swap( argv[0], argv[1] );
+    return VLMCCoremain( argc - 1, argv + 1 );
 #else
-    int res = VLMCCoremain( argc, argv );
+    return VLMCCoremain( argc, argv );
 #endif
-    return res;
 }
 
