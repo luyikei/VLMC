@@ -217,7 +217,7 @@ VLMCCoremain( int argc, char **argv )
     {
         vlmcCritical() << "Usage:" << argv[0]
 #ifdef HAVE_GUI
-                << "--no-gui "
+                << "--no-gui"
 #endif
                 << "project.vlmc output_file";
         return 1;

@@ -74,7 +74,7 @@ ClipLibraryView::startDrag( const QString& uuid )
     auto clip = Core::instance()->library()->clip( uuid );
     if ( !clip )
     {
-        vlmcCritical() << "Couldn't find a clip " << uuid;
+        vlmcCritical() << "Couldn't find a clip:" << uuid;
         return;
     }
 

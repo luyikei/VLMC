@@ -151,7 +151,7 @@ YouTubeService::setVideoParameters( const QString& fileName, const VideoData& da
 void
 YouTubeService::authError( QString e )
 {
-    vlmcDebug() << "[YT SERVICE]: AUTH ERROR " << e;
+    vlmcDebug() << "[YT SERVICE]: AUTH ERROR" << e;
 
     if( e == "BadAuthentication" )
         m_error = BadAuthentication;
@@ -216,7 +216,7 @@ YouTubeService::networkError( QNetworkReply::NetworkError e )
             m_error = UnknownError;
     }
 
-    vlmcDebug() << "[NETWORK ERROR]: " << e << ": " << errString;
+    vlmcDebug() << "[NETWORK ERROR]:" << e << ":" << errString;
     emit error( errString );
 
     /* Ignore Content and Abort errors */

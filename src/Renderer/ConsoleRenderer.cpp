@@ -48,7 +48,7 @@ ConsoleRenderer::frameChanged( qint64 frame, qint64 length ) const
     if ( newPercent != percent )
     {
         percent = newPercent;
-        vlmcDebug() << "ConsoleRenderer: " << percent << "%";
+        vlmcDebug() << "ConsoleRenderer:" << percent << "%";
     }
 }
 

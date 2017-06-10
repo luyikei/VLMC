@@ -139,7 +139,7 @@ YouTubeUploader::uploadFinished()
     QNetworkReply *reply = static_cast<QNetworkReply *>( sender() );
     const QByteArray data = reply->readAll();
 
-    vlmcDebug() << "In YouTubeUploader::uploadFinished: data received = " << data;
+    vlmcDebug() << "In YouTubeUploader::uploadFinished: data received =" << data;
     m_service->m_state = UploadFinish;
 
     /* Feed parser called to parse the XML data received */

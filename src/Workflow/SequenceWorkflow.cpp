@@ -87,7 +87,7 @@ SequenceWorkflow::moveClip( const QUuid& uuid, quint32 trackId, qint64 pos )
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
-        vlmcCritical() << "Couldn't find a clip " << uuid;
+        vlmcCritical() << "Couldn't find a clip:" << uuid;
         return false;
     }
     auto& c = it.value();
@@ -126,7 +126,7 @@ SequenceWorkflow::resizeClip( const QUuid& uuid, qint64 newBegin, qint64 newEnd,
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
-        vlmcCritical() << "Couldn't find a clip " << uuid;
+        vlmcCritical() << "Couldn't find a clip:" << uuid;
         return false;
     }
     auto& c = it.value();
@@ -156,7 +156,7 @@ SequenceWorkflow::removeClip( const QUuid& uuid )
     auto it = m_clips.find( uuid );
     if ( it == m_clips.end() )
     {
-        vlmcCritical() << "Couldn't find a sequence workflow clip " << uuid;
+        vlmcCritical() << "Couldn't find a sequence workflow clip:" << uuid;
         return {};
     }
     auto c = it.value();
@@ -184,7 +184,7 @@ SequenceWorkflow::linkClips( const QUuid& uuidA, const QUuid& uuidB )
     auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
-        vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
+        vlmcCritical() << "Couldn't find clips:" << uuidA << "and" << uuidB;
         return false;
     }
     clipA->linkedClips.append( uuidB );
@@ -201,7 +201,7 @@ SequenceWorkflow::unlinkClips( const QUuid& uuidA, const QUuid& uuidB )
     auto clipB = clip( uuidB );
     if ( !clipA || !clipB )
     {
-        vlmcCritical() << "Couldn't find clips: " << uuidA << " and " << uuidB;
+        vlmcCritical() << "Couldn't find clips:" << uuidA << "and" << uuidB;
         return false;
     }
     bool ret = true;

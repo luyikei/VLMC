@@ -108,7 +108,7 @@ YouTubeAuthenticator::authFinished()
 void
 YouTubeAuthenticator::error( QString& e )
 {
-    vlmcDebug() << "[YouTube AUTH ERROR]: " << e;
+    vlmcDebug() << "[YouTube AUTH ERROR]:" << e;
     emit authError( e );
 }
 
