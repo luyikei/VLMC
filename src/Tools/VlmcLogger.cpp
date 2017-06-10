@@ -55,7 +55,7 @@ VlmcLogger::setup()
 	SettingValue* logLevel = VLMC_CREATE_PREFERENCE( SettingValue::Int, "private/LogLevel", (int)VlmcLogger::Quiet,
 													"", "", SettingValue::Private | SettingValue::Clamped | SettingValue::Runtime );
 	logLevel->setLimits((int)Debug, (int)Verbose);
-    QStringList args = qApp->arguments();
+    const QStringList& args = qApp->arguments();
     if ( args.indexOf( QRegExp( "-vv+" ) ) >= 0 )
         m_currentLogLevel = VlmcLogger::Debug;
     else if ( args.contains( "-v" ) == true )
@@ -68,8 +68,8 @@ VlmcLogger::setup()
     int pos = args.indexOf( QRegExp( "--logfile=.*" ) );
     if ( pos > 0 )
     {
-        QString arg = args[pos];
-        QString logFile = arg.mid( 10 );
+        const QString& arg = args[pos];
+        const QString& logFile = arg.mid( 10 );
         if ( logFile.length() <= 0 )
             vlmcWarning() << tr("Invalid value supplied for argument --logfile" );
         else
@@ -81,8 +81,8 @@ VlmcLogger::setup()
     pos = args.indexOf( QRegExp( "--backendverbose=.*" ) );
     if ( pos > 0 )
     {
-        QString arg = args[pos];
-        QString vlcLogLevelStr = arg.mid( 17 );
+        const QString& arg = args[pos];
+        const QString& vlcLogLevelStr = arg.mid( 17 );
 
         if ( vlcLogLevelStr.length() <= 0 )
             vlmcWarning() << tr("Invalid value supplied for argument --backendverbose" );
