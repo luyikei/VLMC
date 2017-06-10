@@ -105,23 +105,24 @@ main( int argc, char **argv )
 #else
     bool gui = false;
 #endif
+
     /* Check for command arguments */
-    for( int i = 1; i < argc; i++ )
+    for ( int i = 1; i < argc; i++ )
     {
         QString arg = argv[i];
 
-        if( arg == "--help" || arg == "-?" )
+        if ( arg == "--help" || arg == "-?" )
         {
-            ::usage( QString(argv[0]) );
+            ::usage( QString( argv[0] ) );
             return 2;
         }
-        else if( arg == "--version" )
+        else if ( arg == "--version" )
         {
             ::version();
             return 2;
         }
 #ifdef HAVE_GUI
-        else if( arg == "--no-gui" )
+        else if ( arg == "--no-gui" )
             gui = false;
 #endif
     }
