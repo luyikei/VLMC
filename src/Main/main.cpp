@@ -196,8 +196,24 @@ VLMCCoremain( int argc, char **argv )
     Backend::IBackend* backend;
     VLMCmainCommon( app, &backend );
 
+    const QString* projectFile = nullptr;
+    const QString* outputFile = nullptr;
+    QStringList&& args = app.arguments();
+
+    // We don't check the first argument, possibly "./vlmc"
+    args.pop_front();
+
+    for ( const auto& arg : args )
+    {
+        // Make sure it's not an option
+        if ( projectFile == nullptr && arg.at( 0 ) != '-' )
+            projectFile = &arg;
+        else if ( outputFile == nullptr && arg.at( 0 ) != '-' )
+            outputFile = &arg;
+    }
+
     /* Load a project file */
-    if ( app.arguments().count() < 3 )
+    if ( projectFile == nullptr || outputFile == nullptr )
     {
         vlmcCritical() << "Usage: ./vlmc "
 #ifdef HAVE_GUI
@@ -208,13 +224,13 @@ VLMCCoremain( int argc, char **argv )
     }
 
 
-    ConsoleRenderer renderer( app.arguments()[2] );
+    ConsoleRenderer renderer( *outputFile );
     Project  *p = Core::instance()->project();
 
     QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
     QCoreApplication::connect( &renderer, &ConsoleRenderer::finished, &app, &QCoreApplication::quit, Qt::QueuedConnection );
     Core::instance()->settings()->load();
-    p->load( app.arguments()[1] );
+    p->load( *projectFile );
 
     auto res = app.exec();
     Core::instance()->settings()->save();
@@ -222,18 +238,12 @@ VLMCCoremain( int argc, char **argv )
 }
 
 int
-VLMCmain( int argc, char **argv )
+VLMCmain( int argc, char **argv, bool gui )
 {
 #ifdef HAVE_GUI
-    if ( argc < 2 || strcmp( argv[1], "--no-gui" ) != 0 )
-    {
+    if ( gui == true )
         return VLMCGuimain( argc, argv );
-    }
-    // Remove --no-gui from argv
-    std::swap( argv[0], argv[1] );
-    return VLMCCoremain( argc - 1, argv + 1 );
-#else
-    return VLMCCoremain( argc, argv );
 #endif
+    return VLMCCoremain( argc, argv );
 }
 

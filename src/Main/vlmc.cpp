@@ -37,7 +37,7 @@
 #include <unistd.h>
 
 
-int VLMCmain( int , char** );
+int VLMCmain( int , char**, bool );
 
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
@@ -100,6 +100,11 @@ usage( QString const& appName )
 int
 main( int argc, char **argv )
 {
+#ifdef HAVE_GUI
+    bool gui = true;
+#else
+    bool gui = false;
+#endif
     /* Check for command arguments */
     for( int i = 1; i < argc; i++ )
     {
@@ -115,6 +120,10 @@ main( int argc, char **argv )
             ::version();
             return 2;
         }
+#ifdef HAVE_GUI
+        else if( arg == "--no-gui" )
+            gui = false;
+#endif
     }
 
     #ifdef WITH_CRASHHANDLER
@@ -155,5 +164,5 @@ main( int argc, char **argv )
         }
     #endif
 
-    return VLMCmain( argc, argv );
+    return VLMCmain( argc, argv, gui );
 }
