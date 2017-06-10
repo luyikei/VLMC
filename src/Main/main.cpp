@@ -215,7 +215,7 @@ VLMCCoremain( int argc, char **argv )
     /* Load a project file */
     if ( projectFile == nullptr || outputFile == nullptr )
     {
-        vlmcCritical() << "Usage: ./vlmc "
+        vlmcCritical() << "Usage:" << argv[0]
 #ifdef HAVE_GUI
                 << "--no-gui "
 #endif
