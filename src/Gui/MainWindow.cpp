@@ -857,8 +857,8 @@ MainWindow::updateRecentProjects()
     for ( const auto& var : Core::instance()->recentProjects()->toVariant().toList() )
     {
         const auto& m = var.toMap();
-        auto name = m["name"].toString();
-        auto file = m["file"].toString();
+        const auto& name = m["name"].toString();
+        const auto& file = m["file"].toString();
         auto action = menu->addAction( QString( "%1 - %2" )
                                        .arg( name )
                                        .arg( file )
