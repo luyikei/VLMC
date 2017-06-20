@@ -135,7 +135,7 @@ Project::load( const QString& path )
     }
 
     m_settings->load();
-    auto projectName = m_settings->value( "vlmc/ProjectName" )->get().toString();
+    auto projectName = m_settings->value( "general/ProjectName" )->get().toString();
     emit projectLoading( projectName );
     m_isClean = autoBackupFound == false;
     emit cleanStateChanged( m_isClean );
@@ -168,7 +168,7 @@ void
 Project::newProject( const QString& projectName, const QString& projectFilePath )
 {
     closeProject();
-    m_settings->setValue( "vlmc/ProjectName", projectName );
+    m_settings->setValue( "general/ProjectName", projectName );
     m_projectFile = new QFile( projectFilePath );
     save();
 }
@@ -215,7 +215,7 @@ Project::initSettings()
                                                              QT_TRANSLATE_NOOP("PreferenceWidget", "Number of audio channels" ),
                                                              SettingValue::Clamped );
     audioChannel->setLimits( 2, 2 );
-    SettingValue    *pName = m_settings->createVar( SettingValue::String, "vlmc/ProjectName", unNamedProject,
+    SettingValue    *pName = m_settings->createVar( SettingValue::String, "general/ProjectName", unNamedProject,
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "Project name" ),
                                     QT_TRANSLATE_NOOP( "PreferenceWidget", "The project name" ),
                                     SettingValue::NotEmpty );
@@ -234,7 +234,7 @@ Project::saveProject( const QString& fileName )
     m_settings->setSettingsFile( fileName );
     bool ret = m_settings->save();
     if ( ret == true )
-        emit projectSaved( m_settings->value( "vlmc/ProjectName" )->get().toString(), fileName );
+        emit projectSaved( m_settings->value( "general/ProjectName" )->get().toString(), fileName );
 }
 
 void
@@ -280,7 +280,7 @@ Project::removeBackupFile()
 QString
 Project::name() const
 {
-    return m_settings->value( "vlmc/ProjectName" )->get().toString();
+    return m_settings->value( "general/ProjectName" )->get().toString();
 }
 
 double
