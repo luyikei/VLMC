@@ -62,6 +62,8 @@ PreferenceWidget::PreferenceWidget( const QString &name, const char *label, Sett
             continue ;
         ISettingsCategoryWidget    *widget = widgetFactory( s );
         QLabel                      *label = new QLabel( tr( s->name() ), this );
+        if ( s->flags().testFlag( SettingValue::Folders ) == true )
+            label->setMinimumHeight( 650 ); // The expected height of FolderListWidget
         label->setToolTip( tr( s->description() ) );
         m_labels.insert( s, label );
         widget->setToolTip( s->description() );
