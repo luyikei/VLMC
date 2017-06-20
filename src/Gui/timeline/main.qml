@@ -367,6 +367,8 @@ Rectangle {
 
         Flickable {
 
+            interactive: false
+
             TrackContainer {
                 y: topArea.height
                 id: videoTrackContainer
