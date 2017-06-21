@@ -83,11 +83,14 @@ Library::postLoad()
     for ( const auto& var : m_settings->value( "medias" )->get().toList() )
     {
         auto map = var.toMap();
-        auto subClipsMap = map["clips"].toMap();
-        map["clips"] = QVariant();
         auto m = Media::fromVariant( map );
         addMedia( m );
-        m->loadSubclip( subClipsMap );
+        if ( map.contains( "clips" ) == true )
+        {
+            const auto& subClipsList = map["clips"].toList();
+            for ( const auto& subClip : subClipsList )
+                m->loadSubclip( subClip.toMap() );
+        }
     }
 }
 

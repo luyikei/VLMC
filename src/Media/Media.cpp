@@ -211,12 +211,12 @@ Media::snapshot()
 QSharedPointer<Clip>
 Media::loadSubclip( const QVariantMap& m )
 {
-    if ( m.contains( "uuid" ) == false || m.contains( "begin" ) == false || m.contains( "end" ) == false )
+    if ( m.contains( "libraryUuid" ) == false || m.contains( "begin" ) == false || m.contains( "end" ) == false )
     {
         vlmcWarning() << "Invalid clip provided:" << m;
         return {};
     }
-    const auto& uuid = m["uuid"].toUuid();
+    const auto& uuid = m["libraryUuid"].toUuid();
     const auto  begin = m["begin"].toLongLong();
     const auto  end = m["end"].toLongLong();
     auto clip = QSharedPointer<Clip>::create( sharedFromThis(), begin, end, uuid );
