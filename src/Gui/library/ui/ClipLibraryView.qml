@@ -49,9 +49,9 @@ Rectangle {
         }
 
         onClipOnTimelineChanged: {
-            for ( var i = 0; i < clipItems.length; ++i ) {
-                if ( clipItems[i].uuid === uuid ) {
-                    clipItems[i].onTimeline = onTimeline;
+            for ( var i = 0; i < clips.count; ++i ) {
+                if ( clips.get(i)["uuid"] === uuid ) {
+                    clips.get(i)["onTimeline"] = onTimeline;
                     break;
                 }
             }
