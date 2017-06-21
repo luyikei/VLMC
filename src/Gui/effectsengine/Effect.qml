@@ -5,7 +5,7 @@ Rectangle {
     id: effect
     color: "#444444"
     width: parent.width
-    height: 100
+    height: 200
     border.color: "#222222"
     border.width: 1
 
