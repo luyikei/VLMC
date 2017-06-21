@@ -6,10 +6,17 @@ Rectangle {
     color: GridView.isCurrentItem ? "black" : "#333333"
     border.color: "#222222"
     border.width: 1
+    visible: searchText.length > 0 ? containsString( searchText ) : true
+    enabled: visible
     property string thumbnailPath
     property string title
     property int duration
     property int mediaId
+
+    function containsString( str )
+    {
+        return title.toLowerCase().indexOf( str.toLowerCase() ) !== -1;
+    }
 
     Image {
         id: thumbnail

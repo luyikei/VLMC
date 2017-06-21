@@ -5,6 +5,8 @@ Rectangle {
     anchors.fill: parent
     color: "#999999"
 
+    property alias searchText: searchTextInput.text
+
     ScrollView {
         id: sView
         height: parent.height
@@ -41,6 +43,7 @@ Rectangle {
                         }
 
                         TextInput {
+                            id: searchTextInput
                             color: "#DDDDDD"
                             width: parent.width
                             anchors.centerIn: parent
