@@ -67,7 +67,7 @@ Rectangle {
                     }
                 }
             }
-            for ( var i = 0; i < clips.count; ++i ) {
+            for ( i = 0; i < clips.count; ++i ) {
                 if ( clips[i].uuid === uuid ) {
                     clips.remove( i );
                     break;

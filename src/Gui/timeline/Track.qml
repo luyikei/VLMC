@@ -143,7 +143,7 @@ Item {
                     vClipInfo = findClipFromTrack( "Video", trackId, "videoUuid" );
                     var pos = 0;
                     if ( aClipInfo ) {
-                        var pos = aClipInfo["position"];
+                        pos = aClipInfo["position"];
                         removeClipFromTrack( "Audio", trackId, "audioUuid" );
                     }
                     if ( vClipInfo ) {
