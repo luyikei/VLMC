@@ -46,14 +46,6 @@ Rectangle {
         onClipAdded: {
             var clip = view.clip( uuid );
             clips.append( clip );
-            if ( !clip.isBaseClip ) {
-                for ( var i = 0; i < clipItems.length; ++i ) {
-                    if ( clipItems[i].mediaId === clip.mediaId && clipItems[i].isBaseClip ) {
-                        clipItems[i].addSubClip( uuid );
-                        break;
-                    }
-                }
-            }
         }
 
         onClipOnTimelineChanged: {

@@ -48,7 +48,15 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        clipLibraryView.clipItems.push( this )
+        clipLibraryView.clipItems.push( this );
+        if ( !isBaseClip ) {
+            for ( var i = 0; i < clipItems.length; ++i ) {
+                if ( clipItems[i].mediaId === mediaId && clipItems[i].isBaseClip ) {
+                    clipItems[i].addSubClip( uuid );
+                    break;
+                }
+            }
+        }
     }
 
     Component.onDestruction: {
