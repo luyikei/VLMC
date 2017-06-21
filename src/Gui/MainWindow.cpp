@@ -524,8 +524,8 @@ MainWindow::setupClipPreview()
     auto renderer = new ClipRenderer;
     renderer->setParent( m_clipPreview );
     m_clipPreview->setRenderer( renderer );
-    connect( Core::instance()->library(), SIGNAL( clipRemoved( const QUuid& ) ),
-             renderer, SLOT( clipUnloaded( const QUuid& ) ) );
+    connect( Core::instance()->library(), &Library::clipRemoved,
+             renderer, &ClipRenderer::clipUnloaded );
     connect( m_clipLibrary, &ClipLibraryView::clipSelected, renderer, [renderer]( const QString& uuid )
     {
         renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
