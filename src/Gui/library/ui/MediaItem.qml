@@ -3,10 +3,11 @@ import QtQuick.Controls 1.4
 
 Rectangle {
     id: mediaItem
-    color: GridView.isCurrentItem ? "black" : "#333333"
-    border.color: "#222222"
+    width: visible ? gridView.cellWidth : 0
+    height: visible ? gridView.cellWidth + 50 : 0
+    color: gridView.currentMedia == mediaId ? "black" : "#333333"
     border.width: 1
-    visible: searchText.length > 0 ? containsString( searchText ) : true
+    visible: searchText.length == 0 || containsString( searchText )
     enabled: visible
     property string thumbnailPath
     property string title
@@ -64,7 +65,7 @@ Rectangle {
         id: dragArea
         anchors.fill: parent
         onPressed: {
-            gridView.currentIndex = index;
+            gridView.currentMedia = mediaId;
             view.onMediaSelected( mediaId );
         }
     }

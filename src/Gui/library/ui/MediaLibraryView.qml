@@ -52,19 +52,37 @@ Rectangle {
                     }
                 }
 
-                GridView {
+                Flickable {
                     id: gridView
-                    model: mlModel
                     width: sView.viewport.width
-                    height: ( count + 3 - ( count % 3 ) ) / 3 * cellHeight
-                    cellHeight: cellWidth
-                    delegate: MediaItem {
-                        width: gridView.cellWidth
-                        height: width
-                        duration: model.duration
-                        thumbnailPath: model.thumbnailPath
-                        title: model.title
-                        mediaId: model.id
+                    height: ( mlRepeater.count + 3 - ( mlRepeater.count % 3 ) ) / 3 * cellHeight
+
+                    property int cellWidth: 200
+                    property int cellHeight: cellWidth
+                    property int currentMedia: -1
+
+                    Grid {
+                        columns: 3
+
+                        add: Transition {
+                            NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 200; easing.type: Easing.OutSine }
+                        }
+
+                        move: Transition {
+                            NumberAnimation { property: "x"; duration: 400; easing.type: Easing.OutSine }
+                            NumberAnimation { property: "y"; duration: 400; easing.type: Easing.OutSine }
+                        }
+
+                        Repeater {
+                            id: mlRepeater
+                            model: mlModel
+                            MediaItem {
+                                duration: model.duration
+                                thumbnailPath: model.thumbnailPath
+                                title: model.title
+                                mediaId: model.id
+                            }
+                        }
                     }
                 }
             }
