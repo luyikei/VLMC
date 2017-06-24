@@ -28,18 +28,15 @@
 MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, QObject *parent )
     : QAbstractListModel(parent)
     , m_ml( ml )
-    , m_rowCount( 0 )
 {
     qRegisterMetaType<medialibrary::MediaPtr>();
 }
 
 void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )
 {
-    std::lock_guard<std::mutex> lock( m_mediaMutex );
     auto size = m_media.size();
     beginInsertRows( QModelIndex(), size, size );
     m_media.push_back( media );
-    m_rowCount.fetch_add( 1, std::memory_order_relaxed );
     endInsertRows();
 }
 
@@ -62,7 +59,6 @@ void MediaLibraryModel::updateMedia( medialibrary::MediaPtr media )
 
 bool MediaLibraryModel::removeMedia( int64_t mediaId )
 {
-    std::lock_guard<std::mutex> lock( m_mediaMutex );
     auto it = std::find_if( begin( m_media ), end( m_media ), [mediaId](medialibrary::MediaPtr m) {
         return m->id() == mediaId;
     });
@@ -71,7 +67,6 @@ bool MediaLibraryModel::removeMedia( int64_t mediaId )
     auto idx = it - begin( m_media );
     beginRemoveRows(QModelIndex(), idx, idx );
     m_media.erase( it );
-    m_rowCount.fetch_sub( 1, std::memory_order_relaxed );
     endRemoveRows();
     return true;
 }
@@ -82,19 +77,16 @@ int MediaLibraryModel::rowCount( const QModelIndex& index ) const
     // An invalid index is the root node, which does have children
     if ( index.isValid() == true )
         return 0;
-    return m_rowCount.load( std::memory_order_relaxed );
+    return m_media.size();
 }
 
 QVariant MediaLibraryModel::data( const QModelIndex &index, int role ) const
 {
-    if ( !index.isValid() || index.row() < 0 || index.row() >= m_rowCount )
+    if ( !index.isValid() || index.row() < 0 || index.row() >= m_media.size() )
         return QVariant();
 
     medialibrary::MediaPtr m;
-    {
-        std::lock_guard<std::mutex> lock( m_mediaMutex );
-        m = m_media.at( static_cast<size_t>( index.row() ) );
-    }
+    m = m_media.at( static_cast<size_t>( index.row() ) );
 
     switch ( role )
     {
@@ -133,14 +125,10 @@ MediaLibraryModel::roleNames() const
 
 void MediaLibraryModel::refresh()
 {
-    std::lock_guard<std::mutex> lock( m_mediaMutex );
-
     beginResetModel();
-
     const auto& audioFiles = m_ml.audioFiles();
     const auto& videoFiles = m_ml.videoFiles();
     m_media.insert( m_media.end(), audioFiles.begin(), audioFiles.end() );
     m_media.insert( m_media.end(), videoFiles.begin(), videoFiles.end() );
-    m_rowCount = m_media.size();
     endResetModel();
 }

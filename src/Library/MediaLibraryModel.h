@@ -60,10 +60,6 @@ public slots:
 
 private:
     medialibrary::IMediaLibrary& m_ml;
-
-    // Use an atomic int to avoid locking m_media within rowCount()
-    mutable std::mutex m_mediaMutex;
-    std::atomic_int m_rowCount;
     std::vector<medialibrary::MediaPtr> m_media;
 };
 
