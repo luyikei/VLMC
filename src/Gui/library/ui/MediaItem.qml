@@ -24,23 +24,27 @@ Rectangle {
         anchors.left: mediaItem.left
         anchors.right: mediaItem.right
         anchors.top: mediaItem.top
-        anchors.bottom: textColumn.top
         source: thumbnailPath.length > 0 ? "file://" + thumbnailPath : "qrc:///images/vlmc"
         fillMode: Image.PreserveAspectFit
     }
+
     Column {
         id: textColumn
+        anchors.top: thumbnail.bottom
         anchors.bottom: mediaItem.bottom
         width: mediaItem.width
+
         Text {
             id: mediaTitle
-            text: title
-            fontSizeMode: Text.HorizontalFit
-            minimumPixelSize: 4
-            width: mediaItem.width
-            elide: Text.ElideRight
+            width: gridView.cellWidth
+            height: textColumn.height / 3 * 2
             color: "#EEEEEE"
+            lineHeight: 0.8
+            text: title
+            wrapMode: Text.Wrap
+            elide: Text.ElideRight
         }
+
         Text {
             function toDuration( seconds ) {
                 if ( seconds <= 0 )
@@ -55,9 +59,12 @@ Rectangle {
                 if (seconds < 10) {seconds = "0" + seconds;}
                 return hours + ':' + minutes + ':' + seconds;
             }
-            color: "#EEEEEE"
             id: durationLabel
+            color: "#EEEEEE"
             text: toDuration( duration / 1000 )
+            width: mediaItem.width
+            height: textColumn.height / 3
+            elide: Text.ElideRight
         }
     }
 
