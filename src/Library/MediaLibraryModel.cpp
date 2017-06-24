@@ -30,6 +30,7 @@ MediaLibraryModel::MediaLibraryModel( medialibrary::IMediaLibrary& ml, QObject *
     , m_ml( ml )
     , m_rowCount( 0 )
 {
+    qRegisterMetaType<medialibrary::MediaPtr>();
 }
 
 void MediaLibraryModel::addMedia( medialibrary::MediaPtr media )

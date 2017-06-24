@@ -212,7 +212,9 @@ Library::onMediaAdded( std::vector<medialibrary::MediaPtr> mediaList )
 {
     for ( auto m : mediaList )
     {
-        m_model->addMedia( m );
+        QMetaObject::invokeMethod( m_model, "addMedia",
+                                   Qt::QueuedConnection,
+                                   Q_ARG( medialibrary::MediaPtr, m ) );
     }
 }
 
@@ -221,7 +223,9 @@ Library::onMediaUpdated( std::vector<medialibrary::MediaPtr> mediaList )
 {
     for ( auto m : mediaList )
     {
-        m_model->updateMedia( m );
+        QMetaObject::invokeMethod( m_model, "updateMedia",
+                                   Qt::QueuedConnection,
+                                   Q_ARG( medialibrary::MediaPtr, m ) );
     }
 }
 
@@ -229,7 +233,9 @@ void
 Library::onMediaDeleted( std::vector<int64_t> mediaList )
 {
     for ( auto id : mediaList )
-        m_model->removeMedia( id );
+        QMetaObject::invokeMethod( m_model, "removeMedia",
+                                   Qt::QueuedConnection,
+                                   Q_ARG( int64_t, id ) );
 }
 
 void
@@ -287,7 +293,8 @@ void
 Library::onDiscoveryCompleted( const std::string& entryPoint )
 {
     if ( entryPoint.empty() == true )
-        m_model->refresh();
+        QMetaObject::invokeMethod( m_model, "refresh",
+                                   Qt::QueuedConnection );
 
     emit discoveryCompleted( QString::fromStdString( entryPoint ) );
 }
@@ -324,10 +331,14 @@ Library::onReloadCompleted( const std::string& entryPoint )
     if ( entryPoint.empty() == true )
     {
         for ( auto media : m_ml->videoFiles() )
-            m_model->addMedia( media );
+            QMetaObject::invokeMethod( m_model, "addMedia",
+                                       Qt::QueuedConnection,
+                                       Q_ARG( medialibrary::MediaPtr, media ) );
 
         for ( auto media : m_ml->audioFiles() )
-            m_model->addMedia( media );
+            QMetaObject::invokeMethod( m_model, "addMedia",
+                                       Qt::QueuedConnection,
+                                       Q_ARG( medialibrary::MediaPtr, media ) );
     }
 }
 
