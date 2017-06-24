@@ -71,7 +71,7 @@ Rectangle {
 
         // Avoid binding loop
         onViewWidthChanged: {
-            gridView.cellWidth = viewWidth / 3;
+            gridView.cellWidth = Math.max( viewWidth / 3, 50 );
         }
     }
 }
