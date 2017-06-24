@@ -133,6 +133,7 @@ Rectangle {
             source: "qrc:///images/marker_left"
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
+            z: -100
 
             MouseArea {
                 anchors.fill: parent
