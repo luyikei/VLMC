@@ -46,6 +46,7 @@ Rectangle {
                             id: searchTextInput
                             color: "#DDDDDD"
                             width: parent.width
+                            selectByMouse: true
                             anchors.centerIn: parent
                         }
                     }
