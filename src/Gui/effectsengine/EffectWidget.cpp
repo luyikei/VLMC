@@ -25,6 +25,7 @@
 #endif
 
 #include "Backend/IFilter.h"
+#include "Backend/IInfo.h"
 #include "EffectWidget.h"
 #include "ui/EffectWidget.h"
 
@@ -41,7 +42,7 @@ EffectWidget::~EffectWidget()
 }
 
 void
-EffectWidget::setFilterInfo( Backend::IFilterInfo* info )
+EffectWidget::setFilterInfo( Backend::IInfo* info )
 {
     clear();
     m_ui->nameValueLabel->setText( QString::fromStdString( info->name() ) );

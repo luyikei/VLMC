@@ -27,6 +27,7 @@
 #include "EffectStack.h"
 #include "ui/EffectStack.h"
 
+#include "Backend/IInfo.h"
 #include "Backend/IInput.h"
 #include "Backend/IBackend.h"
 #include "Backend/IFilter.h"

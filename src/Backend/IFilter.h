@@ -31,32 +31,7 @@
 namespace Backend
 {
     class IInput;
-    class IParameterInfo
-    {
-    public:
-        virtual ~IParameterInfo() = default;
-
-        virtual const std::string&  identifier() const = 0;
-        virtual const std::string&  name() const = 0;
-        virtual const std::string&  type() const = 0;
-        virtual const std::string&  description() const = 0;
-
-        virtual const std::string&   defaultValue() const = 0;
-        virtual const std::string&   minValue() const = 0;
-        virtual const std::string&   maxValue() const = 0;
-    };
-
-    class IFilterInfo
-    {
-    public:
-        virtual ~IFilterInfo() = default;
-
-        virtual const std::string&  identifier() const = 0;
-        virtual const std::string&  name() const = 0;
-        virtual const std::string&  description() const = 0;
-        virtual const std::string&  author() const = 0;
-        virtual const std::vector<IParameterInfo*>& paramInfos() const = 0;
-    };
+    class IInfo;
 
     class IFilter
     {
@@ -74,7 +49,7 @@ namespace Backend
 
         virtual std::shared_ptr<IInput> input() const = 0;
 
-        virtual const IFilterInfo&  filterInfo() const = 0;
+        virtual const IInfo&    filterInfo() const = 0;
     };
 }
 

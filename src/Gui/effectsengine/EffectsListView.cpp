@@ -27,6 +27,7 @@
 #include "Main/Core.h"
 #include "Backend/IBackend.h"
 #include "Backend/IFilter.h"
+#include "Backend/IInfo.h"
 #include "EffectsListView.h"
 #include "EffectWidget.h"
 

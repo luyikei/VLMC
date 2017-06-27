@@ -26,6 +26,8 @@
 #include <memory>
 #include <exception>
 
+#include "Backend/IInfo.h"
+
 namespace Mlt
 {
 class Service;
@@ -48,6 +50,30 @@ public:
 
 namespace MLT
 {
+
+    class MLTServiceInfo : public IInfo
+    {
+    public:
+        MLTServiceInfo() = default;
+        virtual ~MLTServiceInfo() override;
+
+        virtual const std::string&  identifier() const override;
+        virtual const std::string&  name() const override;
+        virtual const std::string&  description() const override;
+        virtual const std::string&  author() const override;
+        virtual const std::vector<IParameterInfo*>& paramInfos() const override;
+
+        void                        setProperties( Mlt::Properties* properties );
+
+    private:
+        std::string             m_identifier;
+        std::string             m_name;
+        std::string             m_author;
+        std::string             m_description;
+
+        std::vector<IParameterInfo*> m_paramInfos;
+    };
+
     class MLTService
     {
     public:

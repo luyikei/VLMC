@@ -63,7 +63,7 @@ MLTBackend::MLTBackend()
     for ( int i = 0; i < m_mltRepo->filters()->count(); ++i )
     {
         auto pro = std::unique_ptr<Mlt::Properties>( m_mltRepo->metadata( filter_type, m_mltRepo->filters()->get_name( i ) ) );
-        auto filterInfo = new MLTFilterInfo;
+        auto filterInfo = new MLTServiceInfo;
         filterInfo->setProperties( pro.get() );
         if ( filterInfo->identifier().empty() == true )
         {
@@ -88,13 +88,13 @@ MLTBackend::profile()
     return m_profile;
 }
 
-const std::map<std::string, IFilterInfo*>&
+const std::map<std::string, IInfo*>&
 MLTBackend::availableFilters() const
 {
     return m_availableFilters;
 }
 
-IFilterInfo*
+IInfo*
 MLTBackend::filterInfo( const std::string& id ) const
 {
     auto it = m_availableFilters.find( id );

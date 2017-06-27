@@ -33,6 +33,7 @@
 #include "Gui/settings/DoubleSliderWidget.h"
 #include "EffectsEngine/EffectHelper.h"
 #include "Backend/IFilter.h"
+#include "Backend/IInfo.h"
 #include "Main/Core.h"
 #include "Tools/VlmcDebug.h"
 

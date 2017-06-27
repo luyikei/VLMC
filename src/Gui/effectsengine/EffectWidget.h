@@ -32,7 +32,7 @@ namespace Ui
 
 namespace Backend
 {
-class IFilterInfo;
+class IInfo;
 }
 
 class EffectWidget : public QWidget
@@ -42,7 +42,7 @@ class EffectWidget : public QWidget
     public:
         explicit EffectWidget( QWidget *parent = 0 );
         ~EffectWidget();
-        void                setFilterInfo( Backend::IFilterInfo* info );
+        void                setFilterInfo( Backend::IInfo* info );
         void                clear();
 
     private:

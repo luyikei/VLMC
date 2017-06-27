@@ -34,7 +34,7 @@ namespace Backend
 
 class IOutput;
 class IProfile;
-class IFilterInfo;
+class IInfo;
 
 class IBackend
 {
@@ -50,8 +50,8 @@ class IBackend
 
         virtual ~IBackend() = default;
         virtual IProfile&                   profile() = 0;
-        virtual const std::map<std::string, IFilterInfo*>&    availableFilters() const = 0;
-        virtual IFilterInfo*                                  filterInfo( const std::string& id ) const = 0;
+        virtual const std::map<std::string, IInfo*>&          availableFilters() const = 0;
+        virtual IInfo*                                        filterInfo( const std::string& id ) const = 0;
 
         virtual void                        setLogHandler( LogHandler logHandler ) = 0;
 };

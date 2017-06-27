@@ -42,7 +42,7 @@ class IOutput;
 class IInput;
 class IProfile;
 class IClip;
-class IFilterInfo;
+class IInfo;
 
 
 namespace MLT
@@ -53,8 +53,8 @@ class MLTBackend : public IBackend, public Singleton<MLTBackend>
         virtual IProfile&                   profile() override;
 
 
-        virtual const std::map<std::string, IFilterInfo*>&   availableFilters() const override;
-        virtual IFilterInfo*                                 filterInfo( const std::string& id ) const override;
+        virtual const std::map<std::string, IInfo*>&         availableFilters() const override;
+        virtual IInfo*                                       filterInfo( const std::string& id ) const override;
 
         virtual void            setLogHandler( LogHandler logHandler ) override;
 
@@ -64,7 +64,7 @@ class MLTBackend : public IBackend, public Singleton<MLTBackend>
         Mlt::Repository*    m_mltRepo;
         MLTProfile           m_profile;
 
-        std::map<std::string, IFilterInfo*>    m_availableFilters;
+        std::map<std::string, IInfo*>    m_availableFilters;
 
     friend Singleton_t::AllowInstantiation;
 };

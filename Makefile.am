@@ -15,6 +15,7 @@ vlmc_SOURCES = \
 	src/Backend/MLT/MLTFilter.cpp \
 	src/Backend/MLT/MLTTransition.cpp \
 	src/Backend/MLT/MLTMultiTrack.cpp \
+        src/Backend/MLT/MLTParameterInfo.cpp \
 	src/EffectsEngine/EffectHelper.cpp \
 	src/Library/Library.cpp \
 	src/Library/MediaLibraryModel.cpp \
@@ -79,6 +80,7 @@ vlmc_SOURCES += \
 	src/Backend/MLT/MLTInput.h \
 	src/Backend/MLT/MLTMultiTrack.h \
 	src/Backend/MLT/MLTOutput.h \
+        src/Backend/MLT/MLTParameterInfo.h \
 	src/Backend/IBackend.h \
 	src/Backend/IProfile.h \
 	src/Backend/IMultiTrack.h \

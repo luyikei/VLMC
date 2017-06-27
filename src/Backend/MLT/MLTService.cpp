@@ -30,9 +30,77 @@
 
 #include "MLTFilter.h"
 #include "MLTProfile.h"
+#include "MLTParameterInfo.h"
 #include <cassert>
 
 using namespace Backend::MLT;
+
+inline std::string makeString( char* str )
+{
+    if ( str == nullptr )
+        return std::string( "" );
+    return std::string( str );
+}
+
+MLTServiceInfo::~MLTServiceInfo()
+{
+    for ( IParameterInfo* info : m_paramInfos )
+        delete info;
+    m_paramInfos.clear();
+}
+
+const std::string&
+MLTServiceInfo::identifier() const
+{
+    return m_identifier;
+}
+
+const std::string&
+MLTServiceInfo::name() const
+{
+    return m_name;
+}
+
+const std::string&
+MLTServiceInfo::description() const
+{
+    return m_description;
+}
+
+const std::string&
+MLTServiceInfo::author() const
+{
+    return m_author;
+}
+
+const std::vector<Backend::IParameterInfo*>&
+MLTServiceInfo::paramInfos() const
+{
+    return m_paramInfos;
+}
+
+void
+MLTServiceInfo::setProperties( Mlt::Properties* properties )
+{
+    if ( properties == nullptr )
+        return;
+
+    m_identifier    = makeString( properties->get( "identifier" ) );
+    m_name          = makeString( properties->get( "title" ) );
+    m_description   = makeString( properties->get( "description" ) );
+    m_author        = makeString( properties->get( "creator" ) );
+
+    Mlt::Properties params( properties->get_data( "parameters" ) );
+
+    for ( int i = 0; i < params.count(); ++i )
+    {
+        int s;
+        Mlt::Properties param( params.get_data( i, s ) );
+        MLTParameterInfo* info = new MLTParameterInfo;
+        info->setProperties( &param );
+        m_paramInfos.push_back( info );
+    }
+}
 
 MLTService::~MLTService()
 {

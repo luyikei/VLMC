@@ -279,7 +279,7 @@ EffectHelper::setTarget( Backend::IInput* input )
     input->attach( *m_filter );
 }
 
-Backend::IFilterInfo*
+Backend::IInfo*
 EffectHelper::filterInfo()
 {
     if ( m_filterInfo == nullptr )

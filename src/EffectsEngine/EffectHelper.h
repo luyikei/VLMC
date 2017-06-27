@@ -69,7 +69,7 @@ class   EffectHelper : public Workflow::Helper
 
         void                setTarget( Backend::IInput* input );
 
-        Backend::IFilterInfo*           filterInfo();
+        Backend::IInfo*                 filterInfo();
 
         QString                         identifier();
 
@@ -88,7 +88,7 @@ class   EffectHelper : public Workflow::Helper
 
     private:
         std::shared_ptr<Backend::MLT::MLTFilter>    m_filter;
-        Backend::IFilterInfo*       m_filterInfo;
+        Backend::IInfo*             m_filterInfo;
 
         Settings                    m_settings;
 
