@@ -51,7 +51,9 @@ class IBackend
         virtual ~IBackend() = default;
         virtual IProfile&                   profile() = 0;
         virtual const std::map<std::string, IInfo*>&          availableFilters() const = 0;
+        virtual const std::map<std::string, IInfo*>&          availableTransitions() const = 0;
         virtual IInfo*                                        filterInfo( const std::string& id ) const = 0;
+        virtual IInfo*                                        transitionInfo( const std::string& id ) const = 0;
 
         virtual void                        setLogHandler( LogHandler logHandler ) = 0;
 };

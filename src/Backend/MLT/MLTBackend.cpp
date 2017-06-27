@@ -72,6 +72,19 @@ MLTBackend::MLTBackend()
         }
         m_availableFilters[ filterInfo->identifier() ] = filterInfo;
     }
+
+    for ( int i = 0; i < m_mltRepo->transitions()->count(); ++i )
+    {
+        auto pro = std::unique_ptr<Mlt::Properties>( m_mltRepo->metadata( transition_type, m_mltRepo->transitions()->get_name( i ) ) );
+        auto transitionInfo = new MLTServiceInfo;
+        transitionInfo->setProperties( pro.get() );
+        if ( transitionInfo->identifier().empty() == true )
+        {
+            delete transitionInfo;
+            continue;
+        }
+        m_availableTransitions[ transitionInfo->identifier() ] = transitionInfo;
+    }
 }
 
 MLTBackend::~MLTBackend()
@@ -94,11 +107,26 @@ MLTBackend::availableFilters() const
     return m_availableFilters;
 }
 
+const std::map<std::string, IInfo *>&
+MLTBackend::availableTransitions() const
+{
+    return m_availableTransitions;
+}
+
 IInfo*
 MLTBackend::filterInfo( const std::string& id ) const
 {
     auto it = m_availableFilters.find( id );
     if ( it != m_availableFilters.end() )
+        return (*it).second;
+    return nullptr;
+}
+
+IInfo*
+MLTBackend::transitionInfo( const std::string& id ) const
+{
+    auto it = m_availableTransitions.find( id );
+    if ( it != m_availableTransitions.end() )
         return (*it).second;
     return nullptr;
 }

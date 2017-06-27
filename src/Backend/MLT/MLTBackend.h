@@ -54,7 +54,9 @@ class MLTBackend : public IBackend, public Singleton<MLTBackend>
 
 
         virtual const std::map<std::string, IInfo*>&         availableFilters() const override;
+        virtual const std::map<std::string, IInfo*>&         availableTransitions() const override;
         virtual IInfo*                                       filterInfo( const std::string& id ) const override;
+        virtual IInfo*                                       transitionInfo( const std::string& id ) const override;
 
         virtual void            setLogHandler( LogHandler logHandler ) override;
 
@@ -65,6 +67,7 @@ class MLTBackend : public IBackend, public Singleton<MLTBackend>
         MLTProfile           m_profile;
 
         std::map<std::string, IInfo*>    m_availableFilters;
+        std::map<std::string, IInfo*>    m_availableTransitions;
 
     friend Singleton_t::AllowInstantiation;
 };
