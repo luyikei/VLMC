@@ -90,6 +90,7 @@ Rectangle {
         newDict["begin"] = clipDict["begin"];
         newDict["end"] = clipDict["end"];
         newDict["position"] = clipDict["position"];
+        newDict["lastPosition"] = clipDict["position"];
         newDict["length"] = clipDict["length"];
         newDict["libraryUuid"] = clipDict["libraryUuid"];
         newDict["uuid"] = clipDict["uuid"];
@@ -172,7 +173,7 @@ Rectangle {
         return null;
     }
 
-    function moveClipTo( trackType, uuid, trackId, position )
+    function moveClipTo( uuid, trackId, position )
     {
         var clip = findClipItem( uuid );
         if ( !clip )
@@ -293,7 +294,32 @@ Rectangle {
     }
 
     function dragFinished() {
-        selectedClips[0].move();
+        var toMove = [];
+        for ( var i = 0; i < selectedClips.length; ++i )
+            toMove.push( selectedClips[i] );
+
+        // Move clips in a manner that clips won't overlap each other.
+        toMove.sort(
+                    function( clipA, clipB )
+                    {
+                        if ( clipA.newTrackId !== clipB.newTrackId )
+                        {
+                            return clipA.newTrackId - clipB.newTrackId;
+                        }
+                        else if ( clipA.position > clipA.lastPosition )
+                        {
+                            return - ( clipA.position - clipB.position );
+                        }
+                        else if ( clipA.position < clipA.position )
+                        {
+                            return clipA.position - clipB.position;
+                        }
+                    }
+                    );
+
+        for ( i = 0; i < toMove.length; ++i )
+            moveClipTo( toMove[i].uuid, toMove[i].newTrackId, toMove[i].position );
+
         adjustTracks( "Audio" );
         adjustTracks( "Video" );
     }
@@ -592,9 +618,8 @@ Rectangle {
                 addClip( type, clipInfo["trackId"], clipInfo );
                 removeClipFromTrack( type, oldClip["trackId"], uuid );
             }
-            else if ( oldClip["position"] !== clipInfo["position"] ) {
-                findClipItem( uuid ).position = clipInfo["position"];
-            }
+            findClipItem( uuid ).position = clipInfo["position"];
+            findClipItem( uuid ).lastPosition = clipInfo["position"];
             adjustTracks( type );
         }
 

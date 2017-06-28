@@ -340,6 +340,7 @@ Item {
                 uuid: model.uuid
                 libraryUuid: model.libraryUuid
                 position: model.position
+                lastPosition: model.lastPosition
                 begin: model.begin
                 end: model.end
                 linkedClip: model.linkedClip

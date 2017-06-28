@@ -27,6 +27,7 @@ Rectangle {
     // Usualy it is trackId, the clip will be moved to the new track immediately.
     property int newTrackId
     property int position
+    property int lastPosition
     property int begin
     property int end
     property string libraryUuid // Library UUID: For thumbnails
@@ -52,7 +53,7 @@ Rectangle {
     }
 
     function move() {
-        moveClipTo( track.type, uuid, newTrackId, position );
+        moveClipTo( uuid, newTrackId, position );
     }
 
     function resize() {
