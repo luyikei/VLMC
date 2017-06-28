@@ -28,6 +28,7 @@
 
 #include <mlt++/MltTransition.h>
 #include "MLTProfile.h"
+#include "MLTBackend.h"
 
 using namespace Backend::MLT;
 
@@ -37,6 +38,12 @@ MLTTransition::MLTTransition( Backend::IProfile& profile, const char *id )
     m_transition = new Mlt::Transition( *mltProfile.m_profile, id );
     if ( isValid() == false )
         throw InvalidServiceException();
+}
+
+MLTTransition::MLTTransition( const char* id )
+    : MLTTransition( Backend::instance()->profile(), id )
+{
+
 }
 
 MLTTransition::~MLTTransition()

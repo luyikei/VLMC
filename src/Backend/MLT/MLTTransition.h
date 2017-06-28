@@ -40,6 +40,7 @@ namespace MLT
     {
     public:
         MLTTransition( IProfile& profile, const char* id );
+        MLTTransition( const char* id );
         virtual ~MLTTransition() override;
 
         virtual Mlt::Transition*  transition();
