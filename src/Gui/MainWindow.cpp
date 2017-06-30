@@ -528,11 +528,11 @@ MainWindow::setupClipPreview()
              renderer, &ClipRenderer::clipUnloaded );
     connect( m_clipLibrary, &ClipLibraryView::clipSelected, renderer, [renderer]( const QString& uuid )
     {
-        renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
+        renderer->setClip( Core::instance()->library()->clip( uuid ) );
     } );
     connect( m_mediaLibrary, &MediaLibraryView::baseClipSelected, renderer, [renderer]( const QString& uuid )
     {
-        renderer->setClip( Core::instance()->library()->clip( uuid ).data() );
+        renderer->setClip( Core::instance()->library()->clip( uuid ) );
     } );
 
 

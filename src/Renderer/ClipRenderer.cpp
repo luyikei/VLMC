@@ -54,7 +54,7 @@ ClipRenderer::~ClipRenderer()
 }
 
 void
-ClipRenderer::setClip( Clip* clip )
+ClipRenderer::setClip( QSharedPointer<Clip> clip )
 {
     // if the clip is different (or nullptr) we have to stop playback.
     if ( m_selectedClip != nullptr &&
@@ -64,7 +64,7 @@ ClipRenderer::setClip( Clip* clip )
     }
     if ( clip == nullptr )
     {
-        m_selectedClip = nullptr;
+        m_selectedClip.clear();
         m_clipLoaded = false;
         m_input = nullptr;
         return ;
@@ -72,12 +72,6 @@ ClipRenderer::setClip( Clip* clip )
     m_selectedClip = clip;
     if ( clip->length() == 0 )
         return ;
-    updateInfos( clip );
-}
-
-void
-ClipRenderer::updateInfos( Clip* clip )
-{
     if ( m_output->isStopped() == true )
         m_clipLoaded = false;
     else
@@ -89,7 +83,6 @@ ClipRenderer::startPreview()
 {
     if ( m_selectedClip == nullptr || m_selectedClip->length() == 0 )
         return ;
-    updateInfos( m_selectedClip );
     setInput( m_selectedClip->input() );
 
     m_input->setPosition( 0 );
@@ -154,11 +147,11 @@ ClipRenderer::clipUnloaded( const QUuid& uuid )
     {
         stop();
         m_clipLoaded = false;
-        m_selectedClip = nullptr;
+        m_selectedClip.clear();
     }
 }
 
-Clip*
+QSharedPointer<Clip>
 ClipRenderer::getClip()
 {
     return m_selectedClip;

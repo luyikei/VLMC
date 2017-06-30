@@ -239,7 +239,7 @@ PreviewWidget::createNewClipFromMarkers()
     ClipRenderer* clipRenderer = qobject_cast<ClipRenderer*>( m_renderer );
     Q_ASSERT( clipRenderer != nullptr );
 
-    Clip* clip = clipRenderer->getClip();
+    auto clip = clipRenderer->getClip();
     if ( clip == nullptr )
         return ;
     auto media = clip->media();

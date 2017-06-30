@@ -27,6 +27,7 @@
 #include "AbstractRenderer.h"
 
 #include <QObject>
+#include <QSharedPointer>
 
 class   Clip;
 class   Media;
@@ -44,14 +45,14 @@ public:
     virtual void            stop();
     virtual qint64          length() const;
     virtual qint64          getLengthMs() const;
-    virtual Clip            *getClip();
+    virtual QSharedPointer<Clip> getClip();
 
 private:
     void                    startPreview();
 
 private:
     bool                    m_clipLoaded;
-    Clip*                   m_selectedClip;
+    QSharedPointer<Clip>    m_selectedClip;
     /**
      *  \brief  This flags is used to know if a new media has been selected in the
      * library. If so, we must relaunch the render if the play button is clicked again.
@@ -63,9 +64,8 @@ public slots:
      *  \brief      Set the Clip to render
      *  \param      clip    The clip to render
      */
-    void                    setClip( Clip* clip );
+    void                    setClip( QSharedPointer<Clip> clip );
     void                    clipUnloaded( const QUuid& uuid );
-    void                    updateInfos( Clip* clip );
 
     /**
      *  \brief      Triggered at every libvlc_MediaPlayerTimeChanged event.
