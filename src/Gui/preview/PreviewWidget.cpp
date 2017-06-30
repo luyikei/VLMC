@@ -86,11 +86,11 @@ PreviewWidget::setRenderer( AbstractRenderer* renderer )
     m_ui->renderWidget->release();
 #endif
 
-    connect( renderer->eventWatcher(), SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
-    connect( renderer->eventWatcher(), SIGNAL( paused() ), this, SLOT( videoPaused() ) );
-    connect( renderer->eventWatcher(), SIGNAL( playing() ), this, SLOT( videoPlaying() ) );
-    connect( renderer->eventWatcher(), SIGNAL( errorEncountered() ), this, SLOT( error() ) );
-    connect( renderer->eventWatcher(), SIGNAL( volumeChanged() ), this, SLOT( volumeChanged() ) );
+    connect( renderer->eventWatcher().data(), SIGNAL( stopped() ), this, SLOT( videoStopped() ) );
+    connect( renderer->eventWatcher().data(), SIGNAL( paused() ), this, SLOT( videoPaused() ) );
+    connect( renderer->eventWatcher().data(), SIGNAL( playing() ), this, SLOT( videoPlaying() ) );
+    connect( renderer->eventWatcher().data(), SIGNAL( errorEncountered() ), this, SLOT( error() ) );
+    connect( renderer->eventWatcher().data(), SIGNAL( volumeChanged() ), this, SLOT( volumeChanged() ) );
 
     connect( m_ui->rulerWidget, SIGNAL( frameChanged(qint64, Vlmc::FrameChangedReason) ),
              m_renderer,       SLOT( previewWidgetCursorChanged(qint64) ) );

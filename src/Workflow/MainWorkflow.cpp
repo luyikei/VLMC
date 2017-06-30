@@ -68,9 +68,9 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     connect( m_sequenceWorkflow.get(), &SequenceWorkflow::clipResized, this, &MainWorkflow::clipResized );
     m_renderer->setInput( m_sequenceWorkflow->input() );
 
-    connect( m_renderer->eventWatcher(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
-    connect( m_renderer->eventWatcher(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
-    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, this, [this]( qint64 pos )
+    connect( m_renderer->eventWatcher().data(), &RendererEventWatcher::lengthChanged, this, &MainWorkflow::lengthChanged );
+    connect( m_renderer->eventWatcher().data(), &RendererEventWatcher::endReached, this, &MainWorkflow::mainWorkflowEndReached );
+    connect( m_renderer->eventWatcher().data(), &RendererEventWatcher::positionChanged, this, [this]( qint64 pos )
     {
         emit frameChanged( pos, m_sequenceWorkflow->input()->playableLength(), Vlmc::Renderer );
     }, Qt::DirectConnection );
@@ -340,7 +340,7 @@ MainWorkflow::startRenderToFile( const QString &outputFileName, quint32 width, q
     dialog.setOutputFileName( outputFileName );
     connect( this, &MainWorkflow::frameChanged, &dialog, &WorkflowFileRendererDialog::frameChanged );
     connect( &dialog, &WorkflowFileRendererDialog::stop, this, [&output]{ output.stop(); } );
-    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged, &dialog,
+    connect( m_renderer->eventWatcher().data(), &RendererEventWatcher::positionChanged, &dialog,
              [this, input, &dialog, width, height]( qint64 pos )
     {
         // Update the preview per five seconds

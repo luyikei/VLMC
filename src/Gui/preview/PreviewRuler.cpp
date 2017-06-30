@@ -49,9 +49,9 @@ PreviewRuler::setRenderer( AbstractRenderer* renderer )
         m_renderer->disconnect( this );
     m_renderer = renderer;
 
-    connect( m_renderer->eventWatcher(), &RendererEventWatcher::positionChanged,
+    connect( m_renderer->eventWatcher().data(), &RendererEventWatcher::positionChanged,
              this, &PreviewRuler::updateTimecode );
-    connect( m_renderer->eventWatcher(), SIGNAL( stopped() ),
+    connect( m_renderer->eventWatcher().data(), SIGNAL( stopped() ),
              this, SLOT( clear() ) );
     connect( m_renderer, SIGNAL( lengthChanged(qint64) ), this, SLOT( update() ) );
 }

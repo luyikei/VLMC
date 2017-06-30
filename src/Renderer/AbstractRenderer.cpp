@@ -34,21 +34,20 @@
 
 AbstractRenderer::AbstractRenderer()
     : m_input( nullptr )
+    , m_eventWatcher( new RendererEventWatcher )
 {
-    m_eventWatcher = new RendererEventWatcher;
-    connect( m_eventWatcher, &RendererEventWatcher::stopped, this, &AbstractRenderer::stop );
-    connect( m_eventWatcher, &RendererEventWatcher::positionChanged, this, [this]( qint64 pos ){ emit frameChanged( pos, Vlmc::Renderer ); } );
-    connect( m_eventWatcher, &RendererEventWatcher::lengthChanged, this, &AbstractRenderer::lengthChanged );
-    connect( m_eventWatcher, &RendererEventWatcher::endReached, this, &AbstractRenderer::stop );
+    connect( m_eventWatcher.data(), &RendererEventWatcher::stopped, this, &AbstractRenderer::stop );
+    connect( m_eventWatcher.data(), &RendererEventWatcher::positionChanged, this, [this]( qint64 pos ){ emit frameChanged( pos, Vlmc::Renderer ); } );
+    connect( m_eventWatcher.data(), &RendererEventWatcher::lengthChanged, this, &AbstractRenderer::lengthChanged );
+    connect( m_eventWatcher.data(), &RendererEventWatcher::endReached, this, &AbstractRenderer::stop );
 }
 
 AbstractRenderer::~AbstractRenderer()
 {
     stop();
-    delete m_eventWatcher;
 }
 
-RendererEventWatcher*
+QSharedPointer<RendererEventWatcher>
 AbstractRenderer::eventWatcher()
 {
     return m_eventWatcher;
@@ -163,7 +162,7 @@ AbstractRenderer::setInput( Backend::IInput* input )
 
     if ( m_input )
     {
-        m_input->setCallback( m_eventWatcher );
+        m_input->setCallback( m_eventWatcher.data() );
         emit lengthChanged( m_input->playableLength() );
     }
     else
@@ -177,7 +176,7 @@ void
 AbstractRenderer::setOutput( std::unique_ptr<Backend::IOutput> consuemr )
 {
     m_output = std::move( consuemr );
-    m_output->setCallback( m_eventWatcher );
+    m_output->setCallback( m_eventWatcher.data() );
 
     if ( m_input != nullptr )
         m_output->connect( *m_input );

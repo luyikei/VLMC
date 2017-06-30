@@ -29,6 +29,7 @@
 #endif
 #include <memory>
 #include <QObject>
+#include <QSharedPointer>
 
 #include "Workflow/Types.h"
 #include "Backend/IOutput.h"
@@ -149,12 +150,12 @@ public:
     virtual void                    setInput( Backend::IInput* input );
     virtual void                    setOutput( std::unique_ptr<Backend::IOutput> consuemr );
 
-    RendererEventWatcher*           eventWatcher();
+    QSharedPointer<RendererEventWatcher>           eventWatcher();
 protected:
     std::unique_ptr<Backend::IOutput>             m_output;
 
     Backend::IInput*                             m_input;
-    RendererEventWatcher*                           m_eventWatcher;
+    QSharedPointer<RendererEventWatcher>           m_eventWatcher;
 
 
 public slots:
