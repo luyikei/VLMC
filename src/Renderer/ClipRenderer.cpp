@@ -70,6 +70,7 @@ ClipRenderer::setClip( QSharedPointer<Clip> clip )
         return ;
     }
     m_selectedClip = clip;
+    setInput( clip->input() );
     if ( clip->length() == 0 )
         return ;
     if ( m_output->isStopped() == true )
@@ -83,7 +84,6 @@ ClipRenderer::startPreview()
 {
     if ( m_selectedClip == nullptr || m_selectedClip->length() == 0 )
         return ;
-    setInput( m_selectedClip->input() );
 
     m_input->setPosition( 0 );
     m_input->setPause( false );
