@@ -266,10 +266,14 @@ SequenceWorkflow::loadFromVariant( const QVariant& variant )
         addClip( clip, m["trackId"].toUInt(), m["position"].toLongLong(), uuid, isAudio );
         auto c = m_clips[uuid];
 
-        auto linkedClipsList = m["linkedClip"].toList();
-        for ( const auto& uuid : linkedClipsList )
+        auto linkedClipsList = m["linkedClips"].toList();
+        for ( const auto& uuidVar : linkedClipsList )
         {
-            c->linkedClips.append( uuid.toUuid() );
+            auto linkedClipUuid = uuidVar.toUuid();
+            c->linkedClips.append( linkedClipUuid );
+            auto it = m_clips.find( linkedClipUuid );
+            if ( it != m_clips.end() )
+                emit clipLinked( uuid.toString(), linkedClipUuid.toString() );
         }
 
         EffectHelper::loadFromVariant( m["filters"], clip->input() );

@@ -32,8 +32,7 @@ Rectangle {
     property int end
     property string libraryUuid // Library UUID: For thumbnails
     property string uuid // Instance UUID
-    property string linkedClip // Uuid
-    property bool linked: false
+    property var linkedClips: [] // Uuid
     property string type
     property bool selected: false
 
@@ -62,8 +61,25 @@ Rectangle {
     }
 
     function selectLinkedClip() {
-        if ( selected === true && linked === true && linkedClip )
+        if ( selected === false )
+            return;
+        for ( var i = 0; i < linkedClips.length; ++i )
+        {
+            var linkedClip = linkedClips[i];
             findClipItem( linkedClip ).selected = true;
+        }
+    }
+
+    function linked() {
+        if ( selectedClips.length < 2 )
+            return false;
+        for ( var i = 0; i < selectedClips.length; ++i ) {
+            for ( var j = i + 1; j < selectedClips.length; ++j ) {
+                if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) === -1 )
+                    return false;
+            }
+        }
+        return true;
     }
 
     function updateEffects( clipInfo ) {
@@ -80,18 +96,20 @@ Rectangle {
     }
 
     function resizeLinkedClips( oldPos, oldBegin, oldEnd ) {
-        if ( !linkedClip )
-            return;
-        var lc = findClipItem( linkedClip );
-        if ( lc === null )
-            return;
-        // Don't resize from the begining if the clips didn't shared the same begin position
-        if ( lc.position === oldPos ) {
-            lc.position = position;
-            lc.begin = begin;
+        for ( var i = 0; i < linkedClips.length; ++i )
+        {
+            var linkedClip = linkedClips[i];
+            var lc = findClipItem( linkedClip );
+            if ( lc === null )
+                return;
+            // Don't resize from the begining if the clips didn't shared the same begin position
+            if ( lc.position === oldPos ) {
+                lc.position = position;
+                lc.begin = begin;
+            }
+            if ( lc.end === oldEnd )
+                lc.end = end;
         }
-        if ( lc.end === oldEnd )
-            lc.end = end;
     }
 
     onXChanged: {
@@ -124,7 +142,6 @@ Rectangle {
         position = clipInfo["position"];
         begin = clipInfo["begin"];
         end = clipInfo["end"];
-        linkedClip = clipInfo["linkedClip"];
     }
 
     onPositionChanged: {
@@ -139,34 +156,16 @@ Rectangle {
         clipInfo["end"] = end;
     }
 
-    onLinkedClipChanged: {
-        clipInfo["linkedClip"] = linkedClip;
-        if ( linkedClip ) {
-            linked = true;
+    onLinkedClipsChanged: {
+        for ( var i = 0; i < linkedClips.length; ++i )
+        {
+            var linkedClip = linkedClips[i];
             var linkedClipItem = findClipItem( linkedClip );
             if ( linkedClipItem ) {
-                linkedClipItem.linkedClip = clip.uuid;
-                linkedClipItem.linked = true;
+                if ( linkedClipItem.linkedClips.indexOf( uuid ) !== -1 )
+                    linkedClipItem.linkedClips.push( uuid );
             }
         }
-        else
-            linked = false;
-    }
-
-    onLinkedChanged: {
-        selectLinkedClip();
-
-        if ( !linkedClip )
-            return;
-
-        var linkedClipItem = findClipItem( linkedClip );
-        if ( !linkedClipItem )
-            return;
-
-        if ( linked === true )
-            linkedClipItem.linked = true;
-        else
-            linkedClipItem.linked = false;
     }
 
     onSelectedChanged: {
@@ -190,6 +189,10 @@ Rectangle {
     }
 
     Component.onCompleted: {
+        for ( var i = 0; i < allClips.length; ++i ) {
+            if ( allClips[i].linkedClips.indexOf( uuid ) !== -1 )
+                linkedClips.push( allClips[i].uuid );
+        }
         if ( clipInfo["selected"] === false )
             selected = false;
         else
@@ -208,13 +211,22 @@ Rectangle {
         Drag.drop();
         selected = false;
 
-        if ( linkedClip ) {
+        for ( var i = 0; i < linkedClips.length; ++i )
+        {
+            var linkedClip = linkedClips[i];
             var linkedClipItem = findClipItem( linkedClip );
             if ( linkedClipItem )
-                linkedClipItem.linkedClip = "";
+                for ( var j = 0; j < linkedClipItem.linkedClips.length; ++j )
+                {
+                    if ( linkedClipItem.linkedClips[j] === uuid )
+                    {
+                        linkedClipItem.linkedClips.splice( j, 1 );
+                        break;
+                    }
+                }
         }
 
-        for ( var i = 0; i < allClips.length; ++i ) {
+        for ( i = 0; i < allClips.length; ++i ) {
             if ( allClips[i] === clip ) {
                 allClips.splice( i, 1 );
                 return;

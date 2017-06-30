@@ -8,6 +8,7 @@ Menu {
 
     property var clip
     property bool grouped
+    property bool linked
 
     MenuItem {
         text: grouped ? "Ungroup" : "Group"
@@ -30,20 +31,24 @@ Menu {
     }
 
     MenuItem {
-        text: clip.linked ? "Unlink" : "Link"
+        text: linked ? "Unlink" : "Link"
 
         onTriggered: {
-            if ( clip.linked === true )
-                workflow.unlinkClips( uuid, clip.linkedClip );
-            else {
-                var selectedClip;
+            if ( linked === true ) {
                 for ( var i = 0; i < selectedClips.length; ++i ) {
-                    if ( selectedClips[i].uuid !== uuid ) {
-                        selectedClip = selectedClips[i].uuid;
-                        break;
+                    for ( var j = i + 1; j < selectedClips.length; ++j ) {
+                        if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) !== -1 )
+                            workflow.unlinkClips( selectedClips[i].uuid, selectedClips[j].uuid );
                     }
                 }
-                workflow.linkClips( clip.uuid, selectedClip );
+            }
+            else {
+                for ( i = 0; i < selectedClips.length; ++i ) {
+                    for ( j = i + 1; j < selectedClips.length; ++j ) {
+                        if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) === -1 )
+                            workflow.linkClips( selectedClips[i].uuid, selectedClips[j].uuid );
+                    }
+                }
             }
         }
     }
@@ -70,6 +75,7 @@ Menu {
     }
 
     onAboutToShow: {
+        linked = clip.linked();
         grouped = findGroup( clip.uuid );
     }
 

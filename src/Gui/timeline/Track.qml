@@ -258,8 +258,9 @@ Item {
                         newX = findNewPosition( newX, target, isMagneticMode );
 
                         // Let's find newX of the linked clip
-                        if ( target.linked === true ) {
-                            var linkedClipItem = findClipItem( target.linkedClip );
+                        for ( j = 0; j < target.linkedClips.length; ++j )
+                        {
+                            var linkedClipItem = findClipItem( target.linkedClips[j] );
 
                             if ( linkedClipItem ) {
                                 var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
@@ -282,7 +283,7 @@ Item {
                                 }
 
                                 linkedClipItem.setPixelPosition( newX );
-                                alreadyCalculated.push( target.linkedClip );
+                                alreadyCalculated.push( target.linkedClips[j] );
                             }
                         }
 
@@ -343,7 +344,6 @@ Item {
                 lastPosition: model.lastPosition
                 begin: model.begin
                 end: model.end
-                linkedClip: model.linkedClip
                 clipInfo: model
             }
         }

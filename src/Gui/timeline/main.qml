@@ -97,7 +97,6 @@ Rectangle {
         newDict["trackId"] = trackId;
         newDict["name"] = clipDict["name"];
         newDict["selected"] = clipDict["selected"] === false ? false : true ;
-        newDict["linkedClip"] = clipDict["linkedClip"] ? clipDict["linkedClip"] : "";
         var tracks = trackContainer( trackType )["tracks"];
         while ( trackId > tracks.count - 1 )
             addTrack( trackType );
@@ -639,13 +638,35 @@ Rectangle {
         }
 
         onClipLinked: {
-            findClipItem( uuidA ).linkedClip = uuidB;
-            findClipItem( uuidB ).linkedClip = uuidA;
+            var item = findClipItem( uuidA );
+            if ( item )
+                findClipItem( uuidA ).linkedClips.push( uuidB );
+            item = findClipItem( uuidB );
+            if ( item )
+                findClipItem( uuidB ).linkedClips.push( uuidA );
         }
 
         onClipUnlinked: {
-            findClipItem( uuidA ).linkedClip = "";
-            findClipItem( uuidB ).linkedClip = "";
+            var item = findClipItem( uuidA );
+            if ( item )
+            {
+                for ( var i = 0; i < item.linkedClips.length; ++i )
+                    if ( item.linkedClips[i] === uuidB )
+                    {
+                        item.linkedClips.splice( i, 1 );
+                        break;
+                    }
+            }
+            item = findClipItem( uuidB );
+            if ( item )
+            {
+                for ( i = 0; i < item.linkedClips.length; ++i )
+                    if ( item.linkedClips[i] === uuidA )
+                    {
+                        item.linkedClips.splice( i, 1 );
+                        break;
+                    }
+            }
         }
 
         onEffectsUpdated: {
