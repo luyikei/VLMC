@@ -323,10 +323,14 @@ Rectangle {
 
     function dragFinished() {
         sortSelectedClips();
+
+        // We don't want to rely on selectedClips while moving since it "will" be changed
+        // I'm aware that it's not the best solution but it's the safest solution for sure
+        var toMove = [];
         for ( var i = 0; i < selectedClips.length; ++i )
-        {
-            moveClipTo( selectedClips[i].uuid, selectedClips[i].newTrackId, selectedClips[i].position );
-        }
+            toMove.push( [selectedClips[i].uuid, selectedClips[i].newTrackId, selectedClips[i].position] );
+        for ( i = 0; i < toMove.length; ++i )
+            moveClipTo( toMove[i][0], toMove[i][1], toMove[i][2] );
 
         adjustTracks( "Audio" );
         adjustTracks( "Video" );
