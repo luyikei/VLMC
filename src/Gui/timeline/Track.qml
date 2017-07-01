@@ -242,12 +242,12 @@ Item {
                 else
                     deltaX = drag.x - lastX;
 
+                sortSelectedClips();
                 var alreadyCalculated = []; // Uuids of clips being already set new x position.
                 for ( i = 0; i < selectedClips.length; ++i ) {
                     target = selectedClips[i];
 
                     var uuid = target.uuid;
-
                     if ( alreadyCalculated.indexOf( uuid ) < 0 ) {
                         var oldX = target.pixelPosition();
                         var newX = Math.max( oldX + deltaX, 0 );

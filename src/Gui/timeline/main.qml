@@ -292,16 +292,18 @@ Rectangle {
         mainwindow.setScale( scale );
     }
 
-    function dragFinished() {
-        var toMove = [];
-        for ( var i = 0; i < selectedClips.length; ++i )
-            toMove.push( selectedClips[i] );
-
-        // Move clips in a manner that clips won't overlap each other.
-        toMove.sort(
+    // Sort clips in a manner that clips won't overlap each other while they are being moved
+    function sortSelectedClips() {
+        // Workaround: We cannot sort selectedClips directly maybe because of a Qt bug
+        var sorted = selectedClips.slice();
+        sorted.sort(
                     function( clipA, clipB )
                     {
-                        if ( clipA.newTrackId !== clipB.newTrackId )
+                        if ( clipA.newTrackId > clipA.trackId )
+                        {
+                            return - ( clipA.newTrackId - clipB.newTrackId );
+                        }
+                        else if ( clipA.newTrackId < clipA.trackId )
                         {
                             return clipA.newTrackId - clipB.newTrackId;
                         }
@@ -309,15 +311,22 @@ Rectangle {
                         {
                             return - ( clipA.position - clipB.position );
                         }
-                        else if ( clipA.position < clipA.position )
+                        else if ( clipA.position < clipA.lastPosition )
                         {
                             return clipA.position - clipB.position;
-                        }
+                        };
+                        return 0;
                     }
                     );
+        selectedClips = sorted;
+    }
 
-        for ( i = 0; i < toMove.length; ++i )
-            moveClipTo( toMove[i].uuid, toMove[i].newTrackId, toMove[i].position );
+    function dragFinished() {
+        sortSelectedClips();
+        for ( var i = 0; i < selectedClips.length; ++i )
+        {
+            moveClipTo( selectedClips[i].uuid, selectedClips[i].newTrackId, selectedClips[i].position );
+        }
 
         adjustTracks( "Audio" );
         adjustTracks( "Video" );
