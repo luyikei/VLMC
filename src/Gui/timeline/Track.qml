@@ -212,11 +212,16 @@ Item {
                     dMode = dropMode.Move;
 
                 if ( dMode === dropMode.Move ) {
-                    // Put drag.source top
-                    for ( var i = 1; i < selectedClips.length; ++i ) {
-                        if ( selectedClips[i] === drag.source ) {
-                            selectedClips.splice( i, 1 );
-                            selectedClips.unshift( drag.source );
+                    // Prepare newTrackId for all the selected clips
+                    for ( var i = 0; i < selectedClips.length; ++i ) {
+                        var target = selectedClips[i];
+                        if ( drag.source === target ) {
+                            var oldTrackId = target.newTrackId;
+                            target.newTrackId = trackId;
+                            for ( var j = 0; j < selectedClips.length; ++j ) {
+                                if ( drag.source !== selectedClips[j] )
+                                    selectedClips[j].newTrackId = Math.max( 0, trackId - oldTrackId + selectedClips[j].trackId );
+                            }
                         }
                     }
 
@@ -239,15 +244,7 @@ Item {
 
                 var alreadyCalculated = []; // Uuids of clips being already set new x position.
                 for ( i = 0; i < selectedClips.length; ++i ) {
-                    var target = selectedClips[i];
-                    if ( drag.source === target ) {
-                        var oldTrackId = target.newTrackId;
-                        target.newTrackId = trackId;
-                        for ( var j = 0; j < selectedClips.length; ++j ) {
-                            if ( drag.source !== selectedClips[j] )
-                                selectedClips[j].newTrackId = Math.max( 0, trackId - oldTrackId + selectedClips[j].trackId );
-                        }
-                    }
+                    target = selectedClips[i];
 
                     var uuid = target.uuid;
 
