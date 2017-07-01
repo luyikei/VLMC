@@ -241,28 +241,19 @@ MainWorkflow::libraryClipInfo( const QString& uuid )
 void
 MainWorkflow::moveClip( const QString& uuid, quint32 trackId, qint64 startFrame )
 {
-    auto clip = m_sequenceWorkflow->clip( uuid );
     trigger( new Commands::Clip::Move( m_sequenceWorkflow, uuid, trackId, startFrame ) );
-    for ( const auto& lcUuid : clip->linkedClips )
-        trigger( new Commands::Clip::Move( m_sequenceWorkflow, lcUuid.toString(), trackId, startFrame ) );
 }
 
 void
 MainWorkflow::resizeClip( const QString& uuid, qint64 newBegin, qint64 newEnd, qint64 newPos )
 {
-    auto clip = m_sequenceWorkflow->clip( uuid );
     trigger( new Commands::Clip::Resize( m_sequenceWorkflow, uuid, newBegin, newEnd, newPos ) );
-    for ( const auto& lcUuid : clip->linkedClips )
-        trigger( new Commands::Clip::Resize( m_sequenceWorkflow, lcUuid, newBegin, newEnd, newPos ) );
 }
 
 void
 MainWorkflow::removeClip( const QString& uuid )
 {
-    auto clip = m_sequenceWorkflow->clip( uuid );
     trigger( new Commands::Clip::Remove( m_sequenceWorkflow, uuid ) );
-    for ( const auto& lcUuid : clip->linkedClips )
-        trigger( new Commands::Clip::Remove( m_sequenceWorkflow, lcUuid ) );
 }
 
 void
