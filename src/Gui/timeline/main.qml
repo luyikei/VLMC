@@ -173,15 +173,6 @@ Rectangle {
         return null;
     }
 
-    function moveClipTo( uuid, trackId, position )
-    {
-        var clip = findClipItem( uuid );
-        if ( !clip )
-            return;
-        clip.position = position;
-        workflow.moveClip( uuid, trackId, position );
-    }
-
     function adjustTracks( trackType ) {
         var tracks = trackContainer( trackType )["tracks"];
 
@@ -337,7 +328,7 @@ Rectangle {
         for ( var i = 0; i < selectedClips.length; ++i )
             toMove.push( [selectedClips[i].uuid, selectedClips[i].newTrackId, selectedClips[i].position] );
         for ( i = 0; i < toMove.length; ++i )
-            moveClipTo( toMove[i][0], toMove[i][1], toMove[i][2] );
+            workflow.moveClip( toMove[i][0], toMove[i][1], toMove[i][2] );
 
         adjustTracks( "Audio" );
         adjustTracks( "Video" );
