@@ -20,6 +20,7 @@ Rectangle {
     property var allClips: [] // Actual clip item objects
     property var selectedClips: [] // Actual clip item objects
     property var groups: [] // list of lists of clip uuids
+    property var linkedClipsDict: ({}) // Uuid
     property alias isMagneticMode: magneticModeButton.selected
     property bool isCutMode: false
 
@@ -241,6 +242,12 @@ Rectangle {
                 }
             }
         }
+    }
+
+    function updateLinkedClips( uuid ) {
+        var item = findClipItem( uuid );
+        if ( item )
+            item.linkedClips = linkedClipsDict[uuid];
     }
 
     function zoomIn( ratio ) {
@@ -615,6 +622,7 @@ Rectangle {
             var clipInfo = workflow.clipInfo( uuid );
             var type = clipInfo["audio"] ? "Audio" : "Video";
             clipInfo["selected"] = false;
+            linkedClipsDict[uuid] = clipInfo["linkedClips"];
             addClip( type, clipInfo["trackId"], clipInfo );
             adjustTracks( type );
 
@@ -625,6 +633,8 @@ Rectangle {
             var clipInfo = workflow.clipInfo( uuid );
             var type = clipInfo["audio"] ? "Audio" : "Video";
             var oldClip = findClipFromTrackContainer( type, uuid );
+            linkedClipsDict[uuid] = clipInfo["linkedClips"];
+            updateLinkedClips( uuid );
 
             if ( clipInfo["trackId"] !== oldClip["trackId"] ) {
                 addClip( type, clipInfo["trackId"], clipInfo );
@@ -651,35 +661,27 @@ Rectangle {
         }
 
         onClipLinked: {
-            var item = findClipItem( uuidA );
-            if ( item )
-                findClipItem( uuidA ).linkedClips.push( uuidB );
-            item = findClipItem( uuidB );
-            if ( item )
-                findClipItem( uuidB ).linkedClips.push( uuidA );
+            linkedClipsDict[uuidA].push( uuidB );
+            linkedClipsDict[uuidB].push( uuidA );
+            updateLinkedClips( uuidA );
+            updateLinkedClips( uuidB );
         }
 
         onClipUnlinked: {
-            var item = findClipItem( uuidA );
-            if ( item )
-            {
-                for ( var i = 0; i < item.linkedClips.length; ++i )
-                    if ( item.linkedClips[i] === uuidB )
-                    {
-                        item.linkedClips.splice( i, 1 );
-                        break;
-                    }
-            }
-            item = findClipItem( uuidB );
-            if ( item )
-            {
-                for ( i = 0; i < item.linkedClips.length; ++i )
-                    if ( item.linkedClips[i] === uuidA )
-                    {
-                        item.linkedClips.splice( i, 1 );
-                        break;
-                    }
-            }
+            for ( var i = 0; i < linkedClipsDict[uuidA].length; ++i )
+                if ( linkedClipsDict[uuidA][i] === uuidB )
+                {
+                    linkedClipsDict[uuidA].splice( i, 1 );
+                    break;
+                }
+            for ( i = 0; i < linkedClipsDict[uuidB].length; ++i )
+                if ( linkedClipsDict[uuidB][i] === uuidA )
+                {
+                    linkedClipsDict[uuidB].splice( i, 1 );
+                    break;
+                }
+            updateLinkedClips( uuidA );
+            updateLinkedClips( uuidB );
         }
 
         onEffectsUpdated: {

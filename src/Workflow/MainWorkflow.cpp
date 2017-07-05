@@ -51,6 +51,7 @@
 #include "Tools/OutputEventWatcher.h"
 #include "Workflow/Types.h"
 
+#include <QJsonArray>
 #include <QMutex>
 
 MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
@@ -213,6 +214,12 @@ MainWorkflow::clipInfo( const QString& uuid )
         h["length"] = (qint64)( clip->input()->length() );
         h["name"] = clip->media()->title();
         h["audio"] = c->isAudio;
+
+        QStringList linkedClipList;
+        for ( const auto& linkedClipUuid : c->linkedClips )
+            linkedClipList << linkedClipUuid.toString();
+        h["linkedClips"] = QJsonArray::fromStringList( linkedClipList );
+
         h["position"] = m_sequenceWorkflow->position( uuid );
         h["trackId"] = m_sequenceWorkflow->trackId( uuid );
         h["filters"] = EffectHelper::toVariant( clip->input() );

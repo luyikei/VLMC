@@ -32,7 +32,7 @@ Rectangle {
     property int end
     property string libraryUuid // Library UUID: For thumbnails
     property string uuid // Instance UUID
-    property var linkedClips: [] // Uuid
+    property var linkedClips: linkedClipsDict[uuid] // Uuid
     property string type
     property bool selected: false
 
