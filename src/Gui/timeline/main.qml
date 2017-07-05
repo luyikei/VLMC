@@ -241,10 +241,11 @@ Rectangle {
             item.linkedClips = linkedClipsDict[uuid];
     }
 
-    function zoomIn( ratio ) {
+    function zoomIn( ratio, scrollToCuror ) {
         var newPpu = ppu;
         var newUnit = unit;
         newPpu *= ratio;
+        var contentXPos = ptof( sView.flickableItem.contentX );
 
         // Don't be too narrow.
         while ( newPpu < 10 ) {
@@ -278,11 +279,17 @@ Rectangle {
         if ( Math.abs( ppu - newPpu ) > 0.0001 )
             ppu = newPpu;
 
-        // Let's scroll to the cursor position!
-        var newContentX = cursor.x - sView.width / 2;
-        // Never show the background behind the timeline
-        if ( newContentX >= 0 && sView.flickableItem.contentWidth - newContentX > sView.width  )
-            sView.flickableItem.contentX = newContentX;
+        if ( scrollToCuror === true ) {
+            // Let's scroll to the cursor position!
+            var newContentX = cursor.x - sView.width / 2;
+            // Never show the background behind the timeline
+            if ( newContentX >= 0 && sView.flickableItem.contentWidth - newContentX > sView.width  )
+                sView.flickableItem.contentX = newContentX;
+        }
+        else {
+            sView.flickableItem.contentX = ftop( contentXPos );
+        }
+
 
         scale = Math.floor( Math.log( newUnit / mUnit ) / Math.log( 2 ) - 1 );
         scale = Math.min( 9, scale );
@@ -521,7 +528,7 @@ Rectangle {
                             selected: false
 
                             onPressed: {
-                                zoomIn( 2.0 );
+                                zoomIn( 2.0, true );
                                 selected = false;
                             }
                         }
@@ -532,7 +539,7 @@ Rectangle {
                             selected: false
 
                             onPressed: {
-                                zoomIn( 0.5 );
+                                zoomIn( 0.5, true );
                                 selected = false;
                             }
                         }
@@ -588,12 +595,12 @@ Rectangle {
         else if ( event.key === Qt.Key_Plus &&
                  event.modifiers & Qt.ControlModifier
                  && scale > 0 ) {
-            zoomIn( 2 );
+            zoomIn( 2, true );
         }
         else if ( event.key === Qt.Key_Minus &&
                  event.modifiers & Qt.ControlModifier &&
                  scale < 9 ) {
-            zoomIn( 0.5 );
+            zoomIn( 0.5, true );
         }
         event.accepted = true;
     }
@@ -617,7 +624,7 @@ Rectangle {
             addClip( type, clipInfo["trackId"], clipInfo );
             adjustTracks( type );
 
-            zoomIn( page.width / sView.flickableItem.contentWidth );
+            zoomIn( page.width / sView.flickableItem.contentWidth, false );
         }
 
         onClipMoved: {
@@ -687,9 +694,9 @@ Rectangle {
         onScaleChanged: {
             // 10 levels
             if ( scale < scaleLevel )
-                zoomIn( 0.5 );
+                zoomIn( 0.5, false );
             else if ( scale > scaleLevel )
-                zoomIn( 2 );
+                zoomIn( 2, false );
             scale = scaleLevel;
         }
         onCutToolSelected: {
