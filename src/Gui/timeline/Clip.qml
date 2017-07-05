@@ -35,6 +35,7 @@ Rectangle {
     property var linkedClips: linkedClipsDict[uuid] // Uuid
     property string type
     property bool selected: false
+    property alias mouseX: dragArea.mouseX
 
     property var clipInfo
 

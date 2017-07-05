@@ -129,10 +129,10 @@ Item {
                 var newContentX = sView.flickableItem.contentX;
 
                 if ( sView.flickableItem.contentX + sView.width <
-                        target.x + target.width + initPosOfCursor + sView.sViewPadding )
-                    newContentX = target.x + target.width + initPosOfCursor + sView.sViewPadding - sView.width;
-                else if ( sView.flickableItem.contentX + sView.sViewPadding > target.x )
-                    newContentX = target.x - sView.sViewPadding;
+                        target.x + target.mouseX + initPosOfCursor + sView.sViewPadding )
+                    newContentX = target.x + target.mouseX + initPosOfCursor + sView.sViewPadding - sView.width;
+                else if ( sView.flickableItem.contentX + sView.sViewPadding > target.x + target.mouseX )
+                    newContentX = target.x + target.mouseX - sView.sViewPadding;
 
                 sView.flickableItem.contentX = Math.max( newContentX, 0 );
             }
