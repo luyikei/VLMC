@@ -52,10 +52,6 @@ Rectangle {
         return ftop( position );
     }
 
-    function move() {
-        moveClipTo( uuid, newTrackId, position );
-    }
-
     function resize() {
         // This function updates Backend
         workflow.resizeClip( uuid, begin, end, position );
