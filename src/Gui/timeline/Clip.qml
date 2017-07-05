@@ -113,6 +113,21 @@ Rectangle {
         }
     }
 
+    function scrollToThis() {
+        if ( width > sView.width )
+            return;
+
+        var newContentX = sView.flickableItem.contentX;
+
+        if ( sView.flickableItem.contentX + sView.width <
+                x + mouseX + initPosOfCursor + sView.sViewPadding )
+            newContentX = x + mouseX + initPosOfCursor + sView.sViewPadding - sView.width;
+        else if ( sView.flickableItem.contentX + sView.sViewPadding > x + mouseX )
+            newContentX = x + mouseX - sView.sViewPadding;
+
+        sView.flickableItem.contentX = Math.max( newContentX, 0 );
+    }
+
     onXChanged: {
         if ( sView.width - initPosOfCursor < width )
             return;

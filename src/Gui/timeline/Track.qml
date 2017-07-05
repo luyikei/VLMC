@@ -122,21 +122,6 @@ Item {
                 return newX;
             }
 
-            function scrollToTarget( target ) {
-                if ( target.width > sView.width )
-                    return;
-
-                var newContentX = sView.flickableItem.contentX;
-
-                if ( sView.flickableItem.contentX + sView.width <
-                        target.x + target.mouseX + initPosOfCursor + sView.sViewPadding )
-                    newContentX = target.x + target.mouseX + initPosOfCursor + sView.sViewPadding - sView.width;
-                else if ( sView.flickableItem.contentX + sView.sViewPadding > target.x + target.mouseX )
-                    newContentX = target.x + target.mouseX - sView.sViewPadding;
-
-                sView.flickableItem.contentX = Math.max( newContentX, 0 );
-            }
-
             onDropped: {
                 if ( drop.keys.indexOf( "vlmc/uuid" ) >= 0 ) {
                     aClipInfo = findClipFromTrack( "Audio", trackId, "audioUuid" );
@@ -225,7 +210,7 @@ Item {
                         }
                     }
 
-                    scrollToTarget( drag.source );
+                    drag.source.scrollToThis();
 
                     if ( drag.source.x !== findNewPosition( drag.source.x, drag.source, false ) )
                         deltaX = 0;
@@ -303,7 +288,7 @@ Item {
 
                     // Scroll if needed
                     if ( drag.source === target || dMode === dropMode.New )
-                        scrollToTarget( target );
+                        target.scrollToThis();
 
                     // Let's move to the new tracks
                     if ( dMode === dropMode.Move ) {
