@@ -221,8 +221,6 @@ Item {
                         }
                     }
 
-                    drag.source.scrollToThis();
-
                     if ( drag.source.x !== findNewPosition( drag.source.x, drag.source, false ) )
                         deltaX = 0;
                     else {
