@@ -211,6 +211,7 @@ Rectangle {
             selected = true;
         newTrackId = trackId;
         allClips.push( clip );
+        allClipsDict[uuid] = clip;
 
         updateEffects( workflow.clipInfo( uuid ) );
 

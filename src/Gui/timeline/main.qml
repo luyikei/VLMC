@@ -18,6 +18,7 @@ Rectangle {
     property int maxZ: 100
     property int scale: 4
     property var allClips: [] // Actual clip item objects
+    property var allClipsDict: ({}) // Actual clip item objects
     property var selectedClips: [] // Actual clip item objects
     property var groups: [] // list of lists of clip uuids
     property var linkedClipsDict: ({}) // Uuid
@@ -166,11 +167,7 @@ Rectangle {
     }
 
     function findClipItem( uuid ) {
-        for ( var i = 0; i < allClips.length; ++i ) {
-            if ( uuid === allClips[i].uuid )
-                return allClips[i];
-        }
-        return null;
+        return allClipsDict[uuid];
     }
 
     function adjustTracks( trackType ) {
