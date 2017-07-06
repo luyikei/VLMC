@@ -196,17 +196,28 @@ Item {
                 else
                     dMode = dropMode.Move;
 
+                var toMove = [];
+                for ( var i = 0; i < selectedClips.length; ++i )
+                    toMove.push( selectedClips[i].uuid );
+
                 if ( dMode === dropMode.Move ) {
                     // Prepare newTrackId for all the selected clips
-                    for ( var i = 0; i < selectedClips.length; ++i ) {
-                        var target = selectedClips[i];
+                    for ( i = 0; i < toMove.length; ++i ) {
+                        var target = findClipItem( toMove[i] );
                         if ( drag.source === target ) {
+                            drag.source.parent.parent.z = ++maxZ;
                             var oldTrackId = target.newTrackId;
                             target.newTrackId = trackId;
                             for ( var j = 0; j < selectedClips.length; ++j ) {
                                 if ( drag.source !== selectedClips[j] )
                                     selectedClips[j].newTrackId = Math.max( 0, trackId - oldTrackId + selectedClips[j].trackId );
                             }
+                        }
+                        // Let's move to the new tracks
+                        else if ( target.newTrackId !== target.trackId ) {
+                                target.clipInfo["selected"] = true;
+                                addClip( target.type, target.newTrackId, target.clipInfo );
+                                removeClipFromTrack( target.type, target.trackId, target.uuid );
                         }
                     }
 
@@ -227,81 +238,64 @@ Item {
                 else
                     deltaX = drag.x - lastX;
 
-                sortSelectedClips();
-                var alreadyCalculated = []; // Uuids of clips being already set new x position.
-                for ( i = 0; i < selectedClips.length; ++i ) {
-                    target = selectedClips[i];
+                while ( toMove.length > 0 ) {
+                    target = findClipItem( toMove[0] );
 
                     var uuid = target.uuid;
-                    if ( alreadyCalculated.indexOf( uuid ) < 0 ) {
-                        var oldX = target.pixelPosition();
-                        var newX = Math.max( oldX + deltaX, 0 );
+                    var oldX = target.pixelPosition();
+                    var newX = findNewPosition( Math.max( oldX + deltaX, 0 ), target, isMagneticMode );
 
-                        newX = findNewPosition( newX, target, isMagneticMode );
+                    // Let's find newX of the linked clip
+                    for ( j = 0; j < target.linkedClips.length; ++j )
+                    {
+                        var linkedClipItem = findClipItem( target.linkedClips[j] );
 
-                        // Let's find newX of the linked clip
-                        for ( j = 0; j < target.linkedClips.length; ++j )
-                        {
-                            var linkedClipItem = findClipItem( target.linkedClips[j] );
+                        if ( linkedClipItem ) {
+                            var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
 
-                            if ( linkedClipItem ) {
-                                var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
+                            // If linked clip collides
+                            if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 ) {
 
-                                // If linked clip collides
-                                if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 ) {
+                                // Recalculate target's newX
+                                // This time, don't use magnets
+                                newX = findNewPosition( newLinkedClipX, target, false );
+                                newLinkedClipX = findNewPosition( newX, target, false );
 
-                                    // Recalculate target's newX
-                                    // This time, don't use magnets
-                                    newX = findNewPosition( newLinkedClipX, target, false );
-                                    newLinkedClipX = findNewPosition( newX, target, false );
-
-                                    // And if newX collides again, we don't move
-                                    if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
-                                        newX = oldX;
-                                }
-
-                                if ( length < ptof( newX + linkedClipItem.width ) ) {
-                                    length = ptof( newX + linkedClipItem.width );
-                                }
-
-                                linkedClipItem.setPixelPosition( newX );
-                                alreadyCalculated.push( target.linkedClips[j] );
+                                // And if newX collides again, we don't move
+                                if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
+                                    newX = oldX;
                             }
-                        }
 
-                        if ( length < ptof( newX + target.width ) ) {
-                            length = ptof( newX + target.width );
-                        }
+                            if ( length < ptof( newX + linkedClipItem.width ) ) {
+                                length = ptof( newX + linkedClipItem.width );
+                            }
 
-                        // Recalculate deltaX in case of drag.source being moved
-                        if ( drag.source === target ) {
-                            if ( oldTrackId === target.newTrackId )
-                                deltaX = newX - oldX;
-                            else
-                                // Don't move other clips if drag.source's track is changed
-                                deltaX = 0;
+                            linkedClipItem.setPixelPosition( newX );
+                            var ind = toMove.indexOf( linkedClipItem.uuid );
+                            if ( ind > 0 )
+                                toMove.splice( ind, 1 );
                         }
-
-                        target.setPixelPosition( newX );
-                        alreadyCalculated.push( target.uuid );
                     }
+
+                    if ( length < ptof( newX + target.width ) ) {
+                        length = ptof( newX + target.width );
+                    }
+
+                    // Recalculate deltaX in case of drag.source being moved
+                    if ( drag.source === target ) {
+                        if ( oldTrackId === target.newTrackId )
+                            deltaX = newX - oldX;
+                        else
+                            // Don't move other clips if drag.source's track is changed
+                            deltaX = 0;
+                    }
+
+                    target.setPixelPosition( newX );
+                    toMove.splice( 0, 1 );
 
                     // Scroll if needed
                     if ( drag.source === target || dMode === dropMode.New )
                         target.scrollToThis();
-
-                    // Let's move to the new tracks
-                    if ( dMode === dropMode.Move ) {
-                        if ( target.newTrackId !== target.trackId ) {
-                            drag.source.parent.parent.z = ++maxZ;
-                            if ( drag.source.uuid !== uuid ) {
-                                target.clipInfo["selected"] = true;
-                                addClip( target.type, target.newTrackId, target.clipInfo );
-                                removeClipFromTrack( target.type, target.trackId, uuid );
-                                --i;
-                            }
-                        }
-                    }
                 }
                 // END of for ( var i = 0; i < selectedClips.length; ++i )
 
