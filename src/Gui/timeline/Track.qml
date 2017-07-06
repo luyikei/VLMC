@@ -223,15 +223,8 @@ Item {
 
                     if ( drag.source.x !== findNewPosition( drag.source.x, drag.source, false ) )
                         deltaX = 0;
-                    else {
-                        // Optimization: Delta delta X should be 0
-                        if ( ptof( deltaX ) === ptof( drag.source.x - lastX ) && drag.source.x !== 0 ) {
-                            lastX = drag.source.x;
-                            return;
-                        }
-                        else
-                            deltaX = drag.source.x - lastX;
-                    }
+                    else
+                        deltaX = drag.source.x - lastX;
                 }
                 else
                     deltaX = drag.x - lastX;
@@ -277,15 +270,6 @@ Item {
 
                     if ( length < ptof( newX + target.width ) ) {
                         length = ptof( newX + target.width );
-                    }
-
-                    // Recalculate deltaX in case of drag.source being moved
-                    if ( drag.source === target ) {
-                        if ( oldTrackId === target.newTrackId )
-                            deltaX = newX - oldX;
-                        else
-                            // Don't move other clips if drag.source's track is changed
-                            deltaX = 0;
                     }
 
                     target.setPixelPosition( newX );
