@@ -168,18 +168,6 @@ Rectangle {
         clipInfo["end"] = end;
     }
 
-    onLinkedClipsChanged: {
-        for ( var i = 0; i < linkedClips.length; ++i )
-        {
-            var linkedClip = linkedClips[i];
-            var linkedClipItem = findClipItem( linkedClip );
-            if ( linkedClipItem ) {
-                if ( linkedClipItem.linkedClips.indexOf( uuid ) !== -1 )
-                    linkedClipItem.linkedClips.push( uuid );
-            }
-        }
-    }
-
     onSelectedChanged: {
         for ( var i = 0; i < selectedClips.length; ++i )
             if ( !selectedClips[i] || selectedClips[i] === clip ) {
