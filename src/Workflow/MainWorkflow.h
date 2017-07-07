@@ -156,13 +156,13 @@ class   MainWorkflow : public QObject
 
         bool                    canRender();
 
+        void                    trigger( Commands::Generic* command );
+
         AbstractRenderer*       renderer();
 
         Commands::AbstractUndoStack*       undoStack();
 
     private:
-
-        void                    trigger( Commands::Generic* command );
 
         void                    preSave();
         void                    postLoad();
