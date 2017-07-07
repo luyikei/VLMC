@@ -61,10 +61,10 @@ Library::Library( Settings* vlmcSettings, Settings *projectSettings )
     connect( ws, &SettingValue::changed, this, &Library::workspaceChanged );
 
     // Setting up the project section of the Library
-    m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
+    m_settings->createVar( SettingValue::List, QStringLiteral( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings.get(), &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
     connect( m_settings.get(), &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
-    projectSettings->addSettings( "Library", *m_settings );
+    projectSettings->addSettings( QStringLiteral( "Library" ), *m_settings );
 }
 
 void

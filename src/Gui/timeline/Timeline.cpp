@@ -72,7 +72,7 @@ Timeline::Timeline( Settings* projectSettings, MainWindow* parent )
                            SettingValue::Folders );
     connect( m_settings.get(), &Settings::postLoad, this, &Timeline::postLoad, Qt::DirectConnection );
     connect( m_settings.get(), &Settings::preSave, this, &Timeline::preSave, Qt::DirectConnection );
-    projectSettings->addSettings( "Timeline", *m_settings );
+    projectSettings->addSettings( QStringLiteral( "Timeline" ), *m_settings );
 }
 
 Timeline::~Timeline()

@@ -79,7 +79,7 @@ MainWorkflow::MainWorkflow( Settings* projectSettings, int trackCount ) :
     m_settings->createVar( SettingValue::List, "tracks", QVariantList(), "", "", SettingValue::Nothing );
     connect( m_settings, &Settings::postLoad, this, &MainWorkflow::postLoad, Qt::DirectConnection );
     connect( m_settings, &Settings::preSave, this, &MainWorkflow::preSave, Qt::DirectConnection );
-    projectSettings->addSettings( "Workspace", *m_settings );
+    projectSettings->addSettings( QStringLiteral( "Workspace" ), *m_settings );
 
     connect( m_undoStack.get(), &Commands::AbstractUndoStack::cleanChanged, this, &MainWorkflow::cleanChanged );
 }
