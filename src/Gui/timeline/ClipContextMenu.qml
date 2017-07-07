@@ -31,6 +31,7 @@ Menu {
     }
 
     MenuItem {
+        id: linkOrUnlink
         text: linked ? "Unlink" : "Link"
 
         onTriggered: {
@@ -77,6 +78,7 @@ Menu {
     onAboutToShow: {
         linked = clip.linked();
         grouped = findGroup( clip.uuid );
+        linkOrUnlink.enabled = selectedClips.length > 1
     }
 
     MenuSeparator { }
