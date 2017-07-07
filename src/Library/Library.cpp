@@ -62,8 +62,8 @@ Library::Library( Settings* vlmcSettings, Settings *projectSettings )
 
     // Setting up the project section of the Library
     m_settings->createVar( SettingValue::List, QString( "medias" ), QVariantList(), "", "", SettingValue::Nothing );
-    connect( m_settings, &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
-    connect( m_settings, &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
+    connect( m_settings.get(), &Settings::postLoad, this, &Library::postLoad, Qt::DirectConnection );
+    connect( m_settings.get(), &Settings::preSave, this, &Library::preSave, Qt::DirectConnection );
     projectSettings->addSettings( "Library", *m_settings );
 }
 
@@ -96,7 +96,6 @@ Library::postLoad()
 
 Library::~Library()
 {
-    delete m_settings;
 }
 
 void

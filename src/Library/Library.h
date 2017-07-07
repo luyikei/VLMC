@@ -111,7 +111,7 @@ private:
 private:
     std::unique_ptr<medialibrary::IMediaLibrary>    m_ml;
     MediaLibraryModel*                              m_model;
-    Settings*                                       m_settings;
+    std::unique_ptr<Settings>                       m_settings;
     bool                                            m_initialized;
     bool                                            m_cleanState;
 
