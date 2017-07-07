@@ -23,7 +23,7 @@ Menu {
         icon: StandardIcon.Question
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            removeMarker( marker.position );
+            timeline.removeMarker( marker.position );
         }
     }
 }

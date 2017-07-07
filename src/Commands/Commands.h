@@ -43,6 +43,7 @@ namespace Backend
 class IInput;
 }
 class   EffectHelper;
+class   MarkerManager;
 
 namespace Commands
 {
@@ -220,6 +221,7 @@ namespace Commands
                 QUuid     m_clipB;
         };
     }
+
     namespace   Effect
     {
         class   Add : public Generic
@@ -278,6 +280,54 @@ namespace Commands
                 std::shared_ptr<Backend::IInput>    m_target;
         };
     }
+
+#ifdef HAVE_GUI
+    // Gui commands
+    namespace   Marker
+    {
+        class   Add : public Generic
+        {
+            public:
+                // We use a raw pointer because it will only be accessed from Timeline itself.
+                // Plus, Timeline is a QObject and has a parent so we don't worry about memory leak :)
+                Add( QSharedPointer<MarkerManager> markerManager, quint64 pos );
+                virtual void    internalRedo();
+                virtual void    internalUndo();
+                virtual void    retranslate();
+
+            private:
+                QSharedPointer<MarkerManager>   m_markerManager;
+                quint64                         m_pos;
+        };
+
+        class   Move : public Generic
+        {
+            public:
+                Move( QSharedPointer<MarkerManager> markerManager, quint64 oldPos, quint64 newPos );
+                virtual void    internalRedo();
+                virtual void    internalUndo();
+                virtual void    retranslate();
+
+            private:
+                QSharedPointer<MarkerManager>   m_markerManager;
+                quint64                         m_oldPos;
+                quint64                         m_newPos;
+        };
+
+        class   Remove : public Generic
+        {
+            public:
+                Remove( QSharedPointer<MarkerManager> markerManager, quint64 pos );
+                virtual void    internalRedo();
+                virtual void    internalUndo();
+                virtual void    retranslate();
+
+            private:
+                QSharedPointer<MarkerManager>   m_markerManager;
+                quint64                         m_pos;
+        };
+    }
+#endif
 }
 
 #endif // COMMANDS_H

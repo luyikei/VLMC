@@ -703,5 +703,15 @@ Rectangle {
             isCutMode = false;
         }
     }
+
+    Connections {
+        target: timeline
+        onMarkerAdded: {
+            addMarker( pos );
+        }
+        onMarkerRemoved: {
+            removeMarker( pos );
+        }
+    }
 }
 

@@ -37,6 +37,10 @@
 #include "Backend/IFilter.h"
 #include "Library/Library.h"
 
+#ifdef HAVE_GUI
+# include "Gui/timeline/MarkerManager.h"
+#endif
+
 Commands::Generic::Generic() :
         m_valid( true )
 {
@@ -565,3 +569,82 @@ Commands::Effect::Remove::internalUndo()
 {
     m_helper->setTarget( m_target.get() );
 }
+
+#ifdef HAVE_GUI
+Commands::Marker::Add::Add( QSharedPointer<MarkerManager> markerManager, quint64 pos )
+    : m_markerManager( markerManager )
+    , m_pos( pos )
+{
+    retranslate();
+}
+
+void
+Commands::Marker::Add::internalRedo()
+{
+    m_markerManager->addMarker( m_pos );
+}
+
+void
+Commands::Marker::Add::internalUndo()
+{
+    m_markerManager->removeMarker( m_pos );
+}
+
+void
+Commands::Marker::Add::retranslate()
+{
+    setText( tr( "Adding marker at %1" ).arg( m_pos ) );
+}
+
+Commands::Marker::Move::Move( QSharedPointer<MarkerManager> markerManager, quint64 oldPos, quint64 newPos )
+    : m_markerManager( markerManager )
+    , m_oldPos( oldPos )
+    , m_newPos( newPos )
+{
+    retranslate();
+}
+
+void
+Commands::Marker::Move::internalRedo()
+{
+    m_markerManager->moveMarker( m_oldPos, m_newPos );
+}
+
+void
+Commands::Marker::Move::internalUndo()
+{
+    m_markerManager->moveMarker( m_newPos, m_oldPos );
+}
+
+void
+Commands::Marker::Move::retranslate()
+{
+    setText( tr( "Moving marker from %1 to %2" ).arg( m_oldPos ).arg( m_newPos ) );
+}
+
+Commands::Marker::Remove::Remove( QSharedPointer<MarkerManager> markerManager, quint64 pos )
+    : m_markerManager( markerManager )
+
+    , m_pos( pos )
+{
+    retranslate();
+}
+
+void
+Commands::Marker::Remove::internalRedo()
+{
+    m_markerManager->removeMarker( m_pos );
+}
+
+void
+Commands::Marker::Remove::internalUndo()
+{
+    m_markerManager->addMarker( m_pos );
+}
+
+void
+Commands::Marker::Remove::retranslate()
+{
+    setText( tr( "Removing marker at %1" ).arg( m_pos ) );
+}
+#endif

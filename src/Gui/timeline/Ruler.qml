@@ -149,7 +149,7 @@ Rectangle {
         height: markersArea.height
 
         onClicked: {
-            addMarker( ptof( mouseX ) );
+            timeline.addMarker( ptof( mouseX ) );
         }
     }
 

@@ -477,7 +477,7 @@ MainWindow::createStatusBar()
 void
 MainWindow::initializeDockWidgets()
 {
-    m_timeline = new Timeline( this );
+    m_timeline = new Timeline( Core::instance()->project()->settings(), this );
     setCentralWidget( m_timeline->container() );
 
     setupLibrary();

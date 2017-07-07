@@ -1,9 +1,9 @@
 /*****************************************************************************
- * Timeline.h: Widget that handle the tracks
+ * MarkerManager.h: Manager for markers
  *****************************************************************************
- * Copyright (C) 2008-2016 VideoLAN
+ * Copyright (C) 2008-2017 VideoLAN
  *
- * Authors: Ludovic Fauvet <etix@l0cal.com>
+ * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,56 +20,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef TIMELINE_H
-#define TIMELINE_H
+#ifndef MARKERMANAGER_H
+#define MARKERMANAGER_H
 
-#include "Media/Clip.h"
-#include "vlmc.h"
-#include "Workflow/Types.h"
+#include <QObject>
+#include <QList>
+#include <QVariant>
 
-#include <QSharedPointer>
-
-class MainWindow;
-class QQuickView;
-class Settings;
-class MarkerManager;
-
-/**
- * \brief Entry point of the timeline widget.
- */
-class Timeline : public QObject
+class MarkerManager : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY( Timeline )
 public:
-    explicit Timeline( Settings* projectSettings, MainWindow* parent = 0 );
-    virtual ~Timeline();
+    MarkerManager();
 
-    QWidget*            container();
+    void                addMarker( quint64 pos );
+    void                moveMarker( quint64 from, quint64 to );
+    void                removeMarker( quint64 pos );
+
+    QVariant            toVariant();
+    void                fromVariant( const QVariant& variant );
 
 signals:
     void                markerAdded( quint64 pos );
     void                markerMoved( quint64 from, quint64 to );
     void                markerRemoved( quint64 pos );
 
-public slots:
-    void                addMarker( quint64 pos );
-    void                moveMarker( quint64 from, quint64 to );
-    void                removeMarker( quint64 pos );
-
-private slots:
-    void                preSave();
-    void                postLoad();
-
-protected:
-    virtual void changeEvent( QEvent *e ) { Q_UNUSED( e ) }
-
 private:
-    QQuickView*         m_view;
-    QWidget*            m_container;
-
-    QSharedPointer<MarkerManager> m_markerManager;
-    std::unique_ptr<Settings> m_settings;
+    QList<quint64>      m_markers;
 };
 
-#endif // TIMELINE_H
+#endif // MARKERMANAGER_H

@@ -196,6 +196,7 @@ vlmc_SOURCES += \
 	src/Gui/settings/FolderListWidget.cpp \
 	src/Gui/timeline/Timeline.cpp \
 	src/Gui/timeline/ThumbnailImageProvider.cpp \
+        src/Gui/timeline/MarkerManager.cpp \
 	src/Gui/widgets/ExtendedLabel.cpp \
 	src/Gui/widgets/FramelessButton.cpp \
 	src/Gui/widgets/SearchLineEdit.cpp \
@@ -303,6 +304,7 @@ nodist_vlmc_SOURCES += \
 	src/Gui/settings/PreferenceWidget.moc.cpp \
 	src/Gui/timeline/Timeline.moc.cpp \
 	src/Gui/timeline/ThumbnailImageProvider.moc.cpp \
+        src/Gui/timeline/MarkerManager.moc.cpp \
 	src/Gui/settings/LanguageWidget.moc.cpp \
 	src/Gui/import/TagWidget.moc.cpp \
 	src/Gui/settings/DoubleSliderWidget.moc.cpp \
