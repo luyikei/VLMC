@@ -279,7 +279,7 @@ Item {
                     if ( drag.source === target || dMode === dropMode.New )
                         target.scrollToThis();
                 }
-                // END of for ( var i = 0; i < selectedClips.length; ++i )
+                // END of while ( toMove.length > 0 )
 
                 if ( dMode === dropMode.Move )
                     lastX = drag.source.x;
