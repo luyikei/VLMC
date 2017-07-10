@@ -60,7 +60,10 @@ Menu {
         text: "Delete"
 
         onTriggered: {
-            removeClipDialog.visible = true;
+            if ( selectedClips.length > 0 )
+                removeSelectedClipsDialog.visible = true;
+            else
+                removeClipDialog.visible = true;
         }
     }
 
