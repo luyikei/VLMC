@@ -20,6 +20,7 @@ Rectangle {
     radius: 2
     border.color: "#1f546f"
     border.width: 1
+    opacity: page.dragging === true && selectedClips.indexOf( uuid ) !== -1 ? 0.5 : 1.0
 
     property alias name: text.text
     property alias thumbnailSource: thumbnailImage.source
@@ -322,14 +323,14 @@ Rectangle {
         onPressed: {
             clip.Drag.hotSpot = Qt.point( mouseX, clip.height / 2 );
 
-            if ( selected === true )
-                return;
-
-            if ( !( mouse.modifiers & Qt.ControlModifier ) )
-                clearSelectedClips();
-
-            if ( mouse.button & Qt.LeftButton )
-                selected = true;
+            if ( mouse.button & Qt.LeftButton ) {
+                if ( selected === false ) {
+                    if ( !( mouse.modifiers & Qt.ControlModifier ) )
+                        clearSelectedClips();
+                    selected = true;
+                }
+                page.dragging = true;
+            }
         }
 
         onClicked: {
@@ -343,6 +344,7 @@ Rectangle {
                     return;
                 workflow.splitClip( uuid, newClipPos, newClipBegin );
             }
+            page.dragging = false;
         }
 
         onReleased: {

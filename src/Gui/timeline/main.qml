@@ -24,6 +24,7 @@ Rectangle {
     property var linkedClipsDict: ({}) // Uuid
     property alias isMagneticMode: magneticModeButton.selected
     property bool isCutMode: false
+    property bool dragging: false
 
     property int trackHeight: 60
 
@@ -325,6 +326,7 @@ Rectangle {
     }
 
     function dragFinished() {
+        dragging = false;
         sortSelectedClips();
 
         // We don't want to rely on selectedClips while moving since it "will" be changed
