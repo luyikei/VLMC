@@ -17,7 +17,7 @@ Rectangle {
         Flickable {
             id: fItem
             contentHeight: inputRect.height + gridView.height
-            contentWidth: parent.width
+            contentWidth: parent.parent.width
 
             Column {
                 Rectangle {
@@ -55,7 +55,7 @@ Rectangle {
                 Flickable {
                     id: gridView
                     width: sView.viewport.width
-                    height: ( mlRepeater.count + 3 - ( mlRepeater.count % 3 ) ) / 3 * cellHeight
+                    height: contentHeight
 
                     property int cellWidth: 200
                     property int cellHeight: cellWidth
