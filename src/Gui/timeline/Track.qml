@@ -169,7 +169,7 @@ Item {
                     }
                     else {
                         var newClipInfo = workflow.libraryClipInfo( drag.getDataAsString( "vlmc/uuid" ) );
-                        currentUuid = "" + newClipInfo["libraryUuid"];
+                        currentUuid = "" + newClipInfo["uuid"];
                         newClipInfo["position"] = ptof( drag.x );
                         if ( newClipInfo["audio"] ) {
                             newClipInfo["uuid"] = "audioUuid";

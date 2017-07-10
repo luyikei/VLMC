@@ -241,7 +241,7 @@ MainWorkflow::libraryClipInfo( const QString& uuid )
     h["video"] = c->media()->hasVideoTracks();
     h["begin"] = c->begin();
     h["end"] = c->end();
-    h["uuid"] = "libraryUuid";
+    h["uuid"] = c->uuid().toString();
     return QJsonObject::fromVariantHash( h );
 }
 
