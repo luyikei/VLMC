@@ -19,7 +19,7 @@ Rectangle {
     property int scale: 4
     property var allClips: [] // Actual clip item objects
     property var allClipsDict: ({}) // Actual clip item objects
-    property var selectedClips: [] // Actual clip item objects
+    property var selectedClips: [] // Selected clip uuids
     property var groups: [] // list of lists of clip uuids
     property var linkedClipsDict: ({}) // Uuid
     property alias isMagneticMode: magneticModeButton.selected
@@ -29,7 +29,7 @@ Rectangle {
 
     function clearSelectedClips() {
         while ( selectedClips.length ) {
-            var clip = selectedClips.pop();
+            var clip = findClipItem( selectedClips.pop() );
             if ( clip )
                 clip.selected = false;
         }
@@ -299,8 +299,10 @@ Rectangle {
         // Workaround: We cannot sort selectedClips directly maybe because of a Qt bug
         var sorted = selectedClips.slice();
         sorted.sort(
-                    function( clipA, clipB )
+                    function( clipAUuid, clipBUuid )
                     {
+                        var clipA = findClipItem( clipAUuid );
+                        var clipB = findClipItem( clipBUuid );
                         if ( clipA.newTrackId > clipA.trackId )
                         {
                             return - ( clipA.newTrackId - clipB.newTrackId );
@@ -320,7 +322,6 @@ Rectangle {
                         return 0;
                     }
                     );
-        selectedClips = sorted;
     }
 
     function dragFinished() {
@@ -330,7 +331,10 @@ Rectangle {
         // I'm aware that it's not the best solution but it's the safest solution for sure
         var toMove = [];
         for ( var i = 0; i < selectedClips.length; ++i )
-            toMove.push( [selectedClips[i].uuid, selectedClips[i].newTrackId, selectedClips[i].position] );
+        {
+            var clip = findClipItem( selectedClips[i] );
+            toMove.push( [clip.uuid, clip.newTrackId, clip.position] );
+        }
         for ( i = 0; i < toMove.length; ++i )
             workflow.moveClip( toMove[i][0], toMove[i][1], toMove[i][2] );
 
@@ -581,7 +585,8 @@ Rectangle {
         icon: StandardIcon.Question
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            workflow.removeClip( selectedClips[0].uuid );
+            while ( selectedClips.length > 0 )
+                workflow.removeClip( selectedClips[0] );
         }
     }
 

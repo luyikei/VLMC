@@ -196,21 +196,22 @@ Item {
                 else
                     dMode = dropMode.Move;
 
-                var toMove = [];
-                for ( var i = 0; i < selectedClips.length; ++i )
-                    toMove.push( selectedClips[i].uuid );
+                var toMove = selectedClips.concat();
 
                 if ( dMode === dropMode.Move ) {
                     // Prepare newTrackId for all the selected clips
-                    for ( i = 0; i < toMove.length; ++i ) {
+                    for ( var i = 0; i < toMove.length; ++i ) {
                         var target = findClipItem( toMove[i] );
                         if ( drag.source === target ) {
                             drag.source.parent.parent.z = ++maxZ;
                             var oldTrackId = target.newTrackId;
                             target.newTrackId = trackId;
                             for ( var j = 0; j < selectedClips.length; ++j ) {
-                                if ( drag.source !== selectedClips[j] )
-                                    selectedClips[j].newTrackId = Math.max( 0, trackId - oldTrackId + selectedClips[j].trackId );
+                                if ( drag.source.uuid !== selectedClips[j] )
+                                {
+                                    var clip = findClipItem( selectedClips[j] );
+                                    clip.newTrackId = Math.max( 0, trackId - oldTrackId + clip.trackId );
+                                }
                             }
                         }
                         // Let's move to the new tracks

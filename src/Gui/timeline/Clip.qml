@@ -72,7 +72,7 @@ Rectangle {
             return false;
         for ( var i = 0; i < selectedClips.length; ++i ) {
             for ( var j = i + 1; j < selectedClips.length; ++j ) {
-                if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) === -1 )
+                if ( findClipItem( selectedClips[i] ).linkedClips.indexOf( selectedClips[j] ) === -1 )
                     return false;
             }
         }
@@ -169,23 +169,24 @@ Rectangle {
     }
 
     onSelectedChanged: {
-        for ( var i = 0; i < selectedClips.length; ++i )
-            if ( !selectedClips[i] || selectedClips[i] === clip ) {
-                selectedClips.splice( i, 1 );
-                --i;
-            }
-
         if ( selected === true ) {
-            selectedClips.push( clip );
+            selectedClips.push( uuid );
 
             var group = findGroup( uuid );
-            for ( i = 0; i < ( group ? group.length : 0 ); ++i ) {
+            for ( var i = 0; i < ( group ? group.length : 0 ); ++i ) {
                 var clipItem = findClipItem( group[i] );
                 if ( clipItem )
                     clipItem.selected = true;
             }
             selectLinkedClip();
         }
+        else
+            for ( i = 0; i < selectedClips.length; ++i )
+                if ( selectedClips[i] === uuid ) {
+                    selectedClips.splice( i, 1 );
+                    --i;
+                    break;
+                }
     }
 
     Component.onCompleted: {

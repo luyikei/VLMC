@@ -23,7 +23,7 @@ Menu {
             else {
                 var l = [];
                 for ( var i = 0; i < selectedClips.length; ++i ) {
-                    l.push( "" + selectedClips[i].uuid );
+                    l.push( "" + selectedClips[i] );
                 }
                 addGroup( l );
             }
@@ -38,16 +38,16 @@ Menu {
             if ( linked === true ) {
                 for ( var i = 0; i < selectedClips.length; ++i ) {
                     for ( var j = i + 1; j < selectedClips.length; ++j ) {
-                        if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) !== -1 )
-                            workflow.unlinkClips( selectedClips[i].uuid, selectedClips[j].uuid );
+                        if ( findClipItem( selectedClips[i] ).linkedClips.indexOf( selectedClips[j] ) !== -1 )
+                            workflow.unlinkClips( selectedClips[i], selectedClips[j] );
                     }
                 }
             }
             else {
                 for ( i = 0; i < selectedClips.length; ++i ) {
                     for ( j = i + 1; j < selectedClips.length; ++j ) {
-                        if ( selectedClips[i].linkedClips.indexOf( selectedClips[j].uuid ) === -1 )
-                            workflow.linkClips( selectedClips[i].uuid, selectedClips[j].uuid );
+                        if (findClipItem( selectedClips[i] ).linkedClips.indexOf( selectedClips[j] ) === -1 )
+                            workflow.linkClips( selectedClips[i], selectedClips[j] );
                     }
                 }
             }
