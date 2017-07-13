@@ -24,11 +24,6 @@
 
 #include "Tools/VlmcDebug.h"
 
-MarkerManager::MarkerManager()
-{
-
-}
-
 void
 MarkerManager::addMarker( quint64 pos )
 {

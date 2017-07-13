@@ -31,7 +31,7 @@ class MarkerManager : public QObject
 {
     Q_OBJECT
 public:
-    MarkerManager();
+    MarkerManager() = default;
 
     void                addMarker( quint64 pos );
     void                moveMarker( quint64 from, quint64 to );
