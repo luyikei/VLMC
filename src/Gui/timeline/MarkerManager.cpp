@@ -43,14 +43,13 @@ MarkerManager::addMarker( quint64 pos )
 void
 MarkerManager::moveMarker( quint64 from, quint64 to )
 {
-    for ( int i = 0; i < m_markers.size(); ++i )
+    auto it = m_markers.find( from );
+    if ( it != m_markers.end() )
     {
-        if ( m_markers[i] == from )
-        {
-            m_markers[i] = to;
-            emit markerMoved( from, to );
-            return;
-        }
+        m_markers.erase( it );
+        m_markers << to;
+        emit markerMoved( from, to );
+        return;
     }
     vlmcCritical() << "Marker at" << from << "doesn't exist.";
 }
@@ -58,7 +57,7 @@ MarkerManager::moveMarker( quint64 from, quint64 to )
 void
 MarkerManager::removeMarker( quint64 pos )
 {
-    bool ret = m_markers.removeOne( pos );
+    bool ret = m_markers.remove( pos );
     if ( ret == true )
         emit markerRemoved( pos );
     else

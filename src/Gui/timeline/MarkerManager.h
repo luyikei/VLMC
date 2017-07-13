@@ -24,7 +24,7 @@
 #define MARKERMANAGER_H
 
 #include <QObject>
-#include <QList>
+#include <QSet>
 #include <QVariant>
 
 class MarkerManager : public QObject
@@ -46,7 +46,7 @@ signals:
     void                markerRemoved( quint64 pos );
 
 private:
-    QList<quint64>      m_markers;
+    QSet<quint64>       m_markers;
 };
 
 #endif // MARKERMANAGER_H
