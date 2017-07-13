@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2008-2016 VideoLAN
  *
- * Authors: Yikei Lu    <luyikei.qmltu@gmail.com>
+ * Authors: Ludovic Fauvet <etix@l0cal.com>
+ *          Yikei Lu    <luyikei.qmltu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
