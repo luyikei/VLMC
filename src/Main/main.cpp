@@ -55,21 +55,45 @@
 #include <QSettings>
 #include <QUuid>
 #include <QTextCodec>
+#include <QCommandLineParser>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
 #endif
 
 static void
-VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
+setupCommandLine( QCommandLineParser& parser )
 {
-    app.setApplicationName( "vlmc" );
-    app.setOrganizationName( "VideoLAN" );
-    app.setOrganizationDomain( "videolan.org" );
-    app.setApplicationVersion( PACKAGE_VERSION );
+    parser.setSingleDashWordOptionMode( QCommandLineParser::ParseAsLongOptions );
+    parser.setApplicationDescription(
+                QString(
+                    "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
+                    "video editing software."
+                    ) );
+    parser.addHelpOption();
+    parser.addVersionOption();
 
-    QSettings s;
+    parser.addPositionalArgument( "project",
+                                  QCoreApplication::translate( "main", "Project file to open." ),
+                                  "[filename|URI]" );
+    parser.addPositionalArgument( "output",
+                                  QCoreApplication::translate( "main", "Output file to write to." ),
+                                  "[filename]" );
 
+    parser.addOption( { "v",
+                        QCoreApplication::translate( "main", "Log level - Verbose" ) } );
+    parser.addOption( { "vv",
+                        QCoreApplication::translate( "main", "Log level - Debug" ) } );
+    parser.addOption( { { "b", "backendverbose" },
+                        QCoreApplication::translate( "main", "Backend Log level to set" ),
+                        "value" } );
+    parser.process( *qApp );
+}
+
+
+static void
+VLMCmainCommon( Backend::IBackend** backend )
+{
     qRegisterMetaType<Workflow::TrackType>( "Workflow::TrackType" );
     qRegisterMetaType<Vlmc::FrameChangedReason>( "Vlmc::FrameChangedReason" );
     qRegisterMetaType<QVariant>( "QVariant" );
@@ -81,36 +105,18 @@ VLMCmainCommon( const QCoreApplication &app, Backend::IBackend** backend )
 /**
  *  VLMC Entry point
  *  \brief this is the VLMC entry point
- *  \param argc
- *  \param argv
  *  \return Return value of vlmc
  */
 #ifdef HAVE_GUI
 int
-VLMCGuimain( int argc, char **argv )
+VLMCGuimain( const QString& projectFile )
 {
 #ifdef Q_WS_X11
     XInitThreads();
 #endif
 
-    QApplication app( argc, argv );
-
     Backend::IBackend* backend;
-    VLMCmainCommon( app, &backend );
-
-    /* Load a project file */
-    bool        project = false;
-    for ( int i = 1; i < argc; i++ )
-    {
-        QString arg = argv[i];
-
-        if ( argc > ( i + 1 ) && ( arg == "--project" || arg == "-p" ) )
-        {
-            Core::instance()->loadProject( argv[i+1] );
-            project = true;
-            break;
-        }
-    }
+    VLMCmainCommon( &backend );
 
     /* Translations */
     QSettings s;
@@ -167,25 +173,47 @@ VLMCGuimain( int argc, char **argv )
     }
 
     //Don't show the wizard if a project has been passed through command line.
-    if ( project == false )
+    if ( projectFile.isEmpty() == true )
         w.showWizard();
 
     /* Main Window display */
     w.show();
-    auto res = app.exec();
+
+    if ( projectFile.isEmpty() == false )
+        Core::instance()->loadProject( projectFile );
+
+    auto res = qApp->exec();
     Core::instance()->settings()->save();
     return res;
 }
 #endif
+
 /**
  *  VLMC Entry point
  *  \brief this is the VLMC entry point
- *  \param argc
- *  \param argv
  *  \return Return value of vlmc
  */
 int
-VLMCCoremain( int argc, char **argv )
+VLMCCoremain( const QString& projectFile , const QString& outputFile)
+{
+    Backend::IBackend* backend;
+    VLMCmainCommon( &backend );
+
+    ConsoleRenderer renderer( outputFile );
+    Project  *p = Core::instance()->project();
+
+    QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
+    QCoreApplication::connect( &renderer, &ConsoleRenderer::finished, qApp, &QCoreApplication::quit, Qt::QueuedConnection );
+    Core::instance()->settings()->load();
+    p->load( projectFile );
+
+    auto res = qApp->exec();
+    Core::instance()->settings()->save();
+    return res;
+}
+
+int
+VLMCmain( int argc, char **argv )
 {
 #ifdef HAVE_GUI
     QApplication app( argc, argv );
@@ -193,57 +221,34 @@ VLMCCoremain( int argc, char **argv )
     QCoreApplication app( argc, argv );
 #endif
 
-    Backend::IBackend* backend;
-    VLMCmainCommon( app, &backend );
+    app.setApplicationName( "VLMC" );
+    app.setOrganizationName( "VideoLAN" );
+    app.setOrganizationDomain( "videolan.org" );
+    app.setApplicationVersion(
+                QString(
+                    "%1 '%2'\n"
+                    "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
+                    "video editing software.\n"
+                    "Copyright (C) 2008-10 VideoLAN\n"
+                    "This is free software; see the source for copying conditions. There is NO\n"
+                    "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+                    ).arg( PACKAGE_VERSION ).arg( CODENAME ) );
 
-    const QString* projectFile = nullptr;
-    const QString* outputFile = nullptr;
-    QStringList&& args = app.arguments();
+    QCommandLineParser parser;
+    setupCommandLine( parser );
 
-    // We don't check the first argument, possibly "./vlmc"
-    args.pop_front();
+    const auto& args = parser.positionalArguments();
 
-    for ( const auto& arg : args )
-    {
-        // Make sure it's not an option
-        if ( projectFile == nullptr && arg.at( 0 ) != '-' )
-            projectFile = &arg;
-        else if ( outputFile == nullptr && arg.at( 0 ) != '-' )
-            outputFile = &arg;
-    }
-
-    /* Load a project file */
-    if ( projectFile == nullptr || outputFile == nullptr )
-    {
-        vlmcCritical() << "Usage:" << argv[0]
+    if ( args.size() >= 2  )
+        return VLMCCoremain( args.at( 0 ), args.at( 1 ) );
 #ifdef HAVE_GUI
-                << "--no-gui"
+    else if ( args.size() == 1 )
+        return VLMCGuimain( args.at( 0 ) );
+    else
+        return VLMCGuimain( "" );
+#else
+    else
+        parser.showHelp( 1 ); // This function exits the application. No need to return any value.
 #endif
-                << "project.vlmc output_file";
-        return 1;
-    }
-
-
-    ConsoleRenderer renderer( *outputFile );
-    Project  *p = Core::instance()->project();
-
-    QCoreApplication::connect( p, &Project::projectLoaded, &renderer, &ConsoleRenderer::startRender );
-    QCoreApplication::connect( &renderer, &ConsoleRenderer::finished, &app, &QCoreApplication::quit, Qt::QueuedConnection );
-    Core::instance()->settings()->load();
-    p->load( *projectFile );
-
-    auto res = app.exec();
-    Core::instance()->settings()->save();
-    return res;
-}
-
-int
-VLMCmain( int argc, char **argv, bool gui )
-{
-#ifdef HAVE_GUI
-    if ( gui == true )
-        return VLMCGuimain( argc, argv );
-#endif
-    return VLMCCoremain( argc, argv );
 }
 

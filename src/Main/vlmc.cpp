@@ -37,7 +37,7 @@
 #include <unistd.h>
 
 
-int VLMCmain( int , char**, bool );
+int VLMCmain( int , char** );
 
 #if defined(WITH_CRASHHANDLER) && defined(Q_OS_UNIX)
 
@@ -65,68 +65,9 @@ signalHandler( int sig )
 }
 #endif
 
-/**
- * Print version text
- */
-void
-version( void )
-{
-    QTextStream out( stdout );
-    out << "VLMC-" << PACKAGE_VERSION << " '" << CODENAME << "'\n"
-        << "VideoLAN Movie Creator (VLMC) is a cross-platform, non-linear\n"
-        << "video editing software.\n"
-        << "Copyright (C) 2008-10 VideoLAN\n"
-        << "This is free software; see the source for copying conditions. There is NO\n"
-        << "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
-}
-
-/**
- * Print usage text
- */
-void
-usage( QString const& appName )
-{
-    QTextStream out( stdout );
-    out << "Usage: " << appName << " [options] [filename|URI]...\n"
-        << "Options:\n"
-        << "\t[--project|-p projectfile]\tload the given VLMC project\n"
-        << "\t[--version]\tversion information\n"
-        << "\t[--help|-?]\tthis text\n\n"
-        << "\tFILES:\n"
-        << "\t\tFiles specified on the command line should include \n"
-        << "\t\tVLMC project files (.vlmc)\n";
-}
-
 int
 main( int argc, char **argv )
 {
-#ifdef HAVE_GUI
-    bool gui = true;
-#else
-    bool gui = false;
-#endif
-
-    /* Check for command arguments */
-    for ( int i = 1; i < argc; i++ )
-    {
-        QString arg = argv[i];
-
-        if ( arg == "--help" || arg == "-?" )
-        {
-            ::usage( QString( argv[0] ) );
-            return 2;
-        }
-        else if ( arg == "--version" )
-        {
-            ::version();
-            return 2;
-        }
-#ifdef HAVE_GUI
-        else if ( arg == "--no-gui" )
-            gui = false;
-#endif
-    }
-
     #ifdef WITH_CRASHHANDLER
         while( true )
         {
@@ -165,5 +106,5 @@ main( int argc, char **argv )
         }
     #endif
 
-    return VLMCmain( argc, argv, gui );
+    return VLMCmain( argc, argv );
 }
