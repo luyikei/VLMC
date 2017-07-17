@@ -110,9 +110,7 @@ Core::loadProject(const QString& fileName)
     if ( fileName.isEmpty() == true )
         return false;
     //FIXME: What if the project was unsaved, and the user wants to cancel the operation?
-    m_currentProject->load( fileName );
-
-    return true;
+    return m_currentProject->load( fileName );
 }
 
 bool
