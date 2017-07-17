@@ -27,6 +27,8 @@
 #include "Project/Project.h"
 #include "SettingValue.h"
 
+#include <memory>
+
 #include <QString>
 #include <QMap>
 #include <QPair>
@@ -125,7 +127,7 @@ class   Settings: public QObject
     private:
         SettingMap                  m_settings;
         mutable QReadWriteLock      m_rwLock;
-        QFile*                      m_settingsFile;
+        std::unique_ptr<QFile>      m_settingsFile;
 
         QList<QPair<QString, Settings*>>                 m_settingsChildren;
 

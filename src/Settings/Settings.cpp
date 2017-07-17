@@ -55,13 +55,11 @@ Settings::Settings( const QString &settingsFile )
 Settings::~Settings()
 {
     qDeleteAll( m_settings );
-    delete m_settingsFile;
 }
 
 void
 Settings::setSettingsFile( const QString &settingsFile )
 {
-    delete m_settingsFile;
     if ( settingsFile.isEmpty() == false )
     {
         QFileInfo fInfo( settingsFile );
@@ -71,10 +69,10 @@ Settings::setSettingsFile( const QString &settingsFile )
             if ( dir.exists() == false )
                 dir.mkpath( fInfo.absolutePath() );
         }
-        m_settingsFile = new QFile( settingsFile );
+        m_settingsFile.reset( new QFile( settingsFile ) );
     }
     else
-        m_settingsFile = nullptr;
+        m_settingsFile.release();
 }
 
 QJsonDocument
