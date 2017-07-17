@@ -72,7 +72,6 @@ Project::Project( Settings* settings )
 
 Project::~Project()
 {
-    delete m_projectFile;
     delete m_settings;
     delete m_timer;
 }
@@ -96,10 +95,10 @@ Project::load( const QString& path )
     bool            outdatedBackupFound = false;
 
     // Always consider the actual project as the project file
-    m_projectFile = new QFile( path );
+    m_projectFile.reset( new QFile( path ) );
     if ( m_projectFile->exists() == false )
     {
-        delete m_projectFile;
+        m_projectFile.release();
         return false;
     }
 
@@ -115,8 +114,7 @@ Project::load( const QString& path )
             if ( autoBackup.open( QFile::ReadOnly ) == false )
             {
                 vlmcCritical() << "Can't open project file" << backupFilename;
-                delete m_projectFile;
-                m_projectFile = nullptr;
+                m_projectFile.release();
                 return false;
             }
             autoBackupFound = true;
@@ -127,8 +125,7 @@ Project::load( const QString& path )
     {
         if ( m_projectFile->open( QFile::ReadOnly ) == false )
         {
-            delete m_projectFile;
-            m_projectFile = nullptr;
+            m_projectFile.release();
             return false;
         }
         m_settings->setSettingsFile( path );
@@ -159,8 +156,7 @@ Project::save()
 void
 Project::saveAs( const QString& fileName )
 {
-    delete m_projectFile;
-    m_projectFile = new QFile( fileName );
+    m_projectFile.reset( new QFile( fileName ) );
     saveProject( fileName );
 }
 
@@ -169,8 +165,7 @@ Project::newProject( const QString& projectName, const QString& projectFilePath 
 {
     closeProject();
     m_settings->setValue( "general/ProjectName", projectName );
-    m_projectFile = new QFile( projectFilePath );
-    save();
+    saveAs( projectFilePath );
 }
 
 void
@@ -258,8 +253,7 @@ Project::closeProject()
         return;
     m_settings->restoreDefaultValues();
     emit projectClosed();
-    delete m_projectFile;
-    m_projectFile = nullptr;
+    m_projectFile.release();
 }
 
 bool

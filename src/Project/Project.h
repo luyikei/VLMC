@@ -25,6 +25,8 @@
 
 #include "config.h"
 
+#include <memory>
+
 #include <QObject>
 
 class QFile;
@@ -124,7 +126,7 @@ class Project : public QObject
         void                fpsChanged( double fps );
 
     private:
-        QFile*              m_projectFile;
+        std::unique_ptr<QFile>              m_projectFile;
         bool                m_isClean;
         bool                m_libraryCleanState;
         QTimer*             m_timer;
