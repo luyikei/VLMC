@@ -56,9 +56,6 @@ class Core : public MeyersSingleton<Core>
          */
         qint64                  runtime();
 
-        bool                    loadProject( const QString& fileName );
-        bool                    newProject( const QString& projectName, const QString& projectPath );
-
     private:
         Core();
         ~Core();

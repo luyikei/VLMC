@@ -104,22 +104,6 @@ Core::recentProjects()
     return m_recentProjects;
 }
 
-bool
-Core::loadProject(const QString& fileName)
-{
-    if ( fileName.isEmpty() == true )
-        return false;
-    //FIXME: What if the project was unsaved, and the user wants to cancel the operation?
-    return m_currentProject->load( fileName );
-}
-
-bool
-Core::newProject( const QString& projectName, const QString& projectPath )
-{
-    m_currentProject->newProject( projectName, projectPath );
-    return true;
-}
-
 Settings*
 Core::settings()
 {

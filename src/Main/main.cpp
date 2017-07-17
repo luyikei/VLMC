@@ -180,7 +180,7 @@ VLMCGuimain( const QString& projectFile )
     w.show();
 
     if ( projectFile.isEmpty() == false )
-        Core::instance()->loadProject( projectFile );
+        Core::instance()->project()->load( projectFile );
 
     auto res = qApp->exec();
     Core::instance()->settings()->save();

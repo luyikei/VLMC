@@ -103,7 +103,7 @@ ProjectWizard::accept()
     //If he was creating a project, the current page will be the video/audio settings one.
     if ( currentId() == Page_Video )
     {
-        Core::instance()->newProject
+        Core::instance()->project()->newProject
                     (
                     field( "projectName" ).toString(),
                     QString( "%1/%2.vlmc" )

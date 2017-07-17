@@ -425,7 +425,7 @@ MainWindow::on_actionLoad_Project_triggered()
                                     folder, tr( "VLMC project file(*.vlmc)" ) );
     if ( fileName.isEmpty() == true )
         return ;
-    Core::instance()->loadProject( fileName );
+    Core::instance()->project()->load( fileName );
 }
 
 void
@@ -865,7 +865,7 @@ MainWindow::updateRecentProjects()
                                        );
         connect( action, &QAction::triggered, this, [this, file]()
         {
-            Core::instance()->loadProject( file );
+            Core::instance()->project()->load( file );
         } );
     }
     m_ui.actionRecent_Projects->setMenu( menu );
