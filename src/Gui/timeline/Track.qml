@@ -188,8 +188,12 @@ Item {
                     }
                     lastX = drag.x;
                 }
-                else
+                else {
                     lastX = drag.source.x;
+                    // HACK: Call onPositoinChanged forcely here.
+                    // x will be rounded so it won't affect actual its position.
+                    drag.source.x = drag.source.x + 0.000001;
+                }
             }
 
             onPositionChanged: {
