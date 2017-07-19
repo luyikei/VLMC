@@ -49,14 +49,9 @@ ThumbnailImageProvider::requestImage( const QString& id, QSize* size, const QSiz
     auto infos = tmp.split( '/' );
     auto libraryUuid = infos[0];
     auto clip = Core::instance()->library()->clip( libraryUuid );
-    Backend::MLT::MLTInput input( qPrintable( clip->media()->mrl() ) );
-    input.setPosition( infos[0].toLongLong() );
-    size->setWidth( input.width() );
-    size->setHeight( input.height() );
+    QImage snapshot( clip->media()->snapshot() );
+    *size = snapshot.size();
     auto width = requestedSize.width() > 0 ? requestedSize.width() : size->width();
     auto height = requestedSize.height() > 0 ? requestedSize.height() : size->height();
-    auto image = input.image( width, height );
-    QImage qImg( image, width, height, QImage::Format_RGBA8888,
-                 []( void* ptr ){ delete[] (uint8_t*)ptr; } );
-    return qImg;
+    return snapshot.scaled( width, height );
 }
