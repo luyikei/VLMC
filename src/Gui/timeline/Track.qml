@@ -267,7 +267,10 @@ Item {
                                     newX = oldX;
                             }
 
-                            if ( length < ptof( newX + linkedClipItem.width ) ) {
+                            // We only want to update the length when the left edge of the timeline
+                            // is exposed.
+                            if ( sView.flickableItem.contentX + page.width > sView.width &&
+                                    length < ptof( newX + linkedClipItem.width ) ) {
                                 length = ptof( newX + linkedClipItem.width );
                             }
 
@@ -278,7 +281,8 @@ Item {
                         }
                     }
 
-                    if ( length < ptof( newX + target.width ) ) {
+                    if ( sView.flickableItem.contentX + page.width > sView.width &&
+                            length < ptof( newX + target.width ) ) {
                         length = ptof( newX + target.width );
                     }
 
