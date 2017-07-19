@@ -50,7 +50,7 @@ Item {
             property int lastX: 0
             property int deltaX: 0
 
-            function findNewPosition( newX, target, useMagneticMode ) {
+            function findNewPosition( newX, target, dragSource, useMagneticMode ) {
                 var oldX = target.pixelPosition();
 
                 if ( useMagneticMode === true ) {
@@ -82,10 +82,12 @@ Item {
                     isCollided = false;
                     for ( k = 0; k < clips.count; ++k ) {
                         var clip = clips.get( k );
-                        if ( clip.uuid === target.uuid )
+                        if ( clip.uuid === target.uuid ||
+                             ( clip.uuid === dragSource.uuid && target.newTrackId !== dragSource.newTrackId )
+                           )
                             continue;
                         var sw = target.width; // Width of the source clip
-                        var cx = ftop( clip["position"] );
+                        var cx = clip.uuid === dragSource.uuid ? dragSource.x : ftop( clip["position"] );
                         var cw = ftop( clip["end"] - clip["begin"] + 1);
                         // Set a right position
                         //
@@ -114,9 +116,10 @@ Item {
                 if ( isCollided ) {
                     for ( k = 0; k < clips.count; ++k ) {
                         clip = clips.get( k );
-                        if ( clip.uuid === target.uuid )
+                        if ( clip.uuid === target.uuid ||
+                             ( clip.uuid === dragSource.uuid && target.newTrackId !== dragSource.newTrackId ) )
                             continue;
-                        cx = ftop( clip["position"] );
+                        cx = clip.uuid === dragSource.uuid ? dragSource.x : ftop( clip["position"] );
                         cw = ftop( clip["end"] - clip["begin"] + 1);
                         newX = Math.max( newX, cx + cw );
                     }
@@ -235,7 +238,7 @@ Item {
 
                     var uuid = target.uuid;
                     var oldX = target.pixelPosition();
-                    var newX = findNewPosition( Math.max( oldX + deltaX, 0 ), target, isMagneticMode );
+                    var newX = findNewPosition( Math.max( oldX + deltaX, 0 ), target, drag.source, isMagneticMode );
 
                     // Let's find newX of the linked clip
                     for ( j = 0; j < target.linkedClips.length; ++j )
@@ -243,7 +246,7 @@ Item {
                         var linkedClipItem = findClipItem( target.linkedClips[j] );
 
                         if ( linkedClipItem ) {
-                            var newLinkedClipX = findNewPosition( newX, linkedClipItem, isMagneticMode );
+                            var newLinkedClipX = findNewPosition( newX, linkedClipItem, drag.source, isMagneticMode );
 
                             // If linked clip collides
                             if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 ) {
@@ -251,8 +254,8 @@ Item {
                                 // This time, don't use magnets
                                 if ( isMagneticMode === true )
                                 {
-                                    newX = findNewPosition( newLinkedClipX, target, false );
-                                    newLinkedClipX = findNewPosition( newX, target, false );
+                                    newLinkedClipX = findNewPosition( newX, linkedClipItem, drag.source, false );
+                                    newX = findNewPosition( newX, target, drag.source, false );
 
                                     // And if newX collides again, we don't move
                                     if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
