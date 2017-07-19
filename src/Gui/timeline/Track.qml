@@ -114,11 +114,14 @@ Item {
                 if ( isCollided ) {
                     for ( k = 0; k < clips.count; ++k ) {
                         clip = clips.get( k );
+                        if ( clip.uuid === target.uuid )
+                            continue;
                         cx = ftop( clip["position"] );
                         cw = ftop( clip["end"] - clip["begin"] + 1);
                         newX = Math.max( newX, cx + cw );
                     }
                 }
+
                 return newX;
             }
 
@@ -222,10 +225,7 @@ Item {
                         }
                     }
 
-                    if ( drag.source.x !== findNewPosition( drag.source.x, drag.source, false ) )
-                        deltaX = 0;
-                    else
-                        deltaX = drag.source.x - lastX;
+                    deltaX = drag.source.x - lastX;
                 }
                 else
                     deltaX = drag.x - lastX;
@@ -247,14 +247,18 @@ Item {
 
                             // If linked clip collides
                             if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 ) {
-
                                 // Recalculate target's newX
                                 // This time, don't use magnets
-                                newX = findNewPosition( newLinkedClipX, target, false );
-                                newLinkedClipX = findNewPosition( newX, target, false );
+                                if ( isMagneticMode === true )
+                                {
+                                    newX = findNewPosition( newLinkedClipX, target, false );
+                                    newLinkedClipX = findNewPosition( newX, target, false );
 
-                                // And if newX collides again, we don't move
-                                if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
+                                    // And if newX collides again, we don't move
+                                    if ( ptof( Math.abs( newLinkedClipX - newX ) ) !== 0 )
+                                        newX = oldX;
+                                }
+                                else
                                     newX = oldX;
                             }
 
