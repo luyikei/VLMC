@@ -206,29 +206,27 @@ Item {
                 else
                     dMode = dropMode.Move;
 
+                sortSelectedClips();
                 var toMove = selectedClips.concat();
 
                 if ( dMode === dropMode.Move ) {
+                    // Move to the top
+                    drag.source.parent.parent.z = ++maxZ;
+
                     // Prepare newTrackId for all the selected clips
+                    var oldTrackId = drag.source.newTrackId;
+                    drag.source.newTrackId = trackId;
+
                     for ( var i = 0; i < toMove.length; ++i ) {
                         var target = findClipItem( toMove[i] );
-                        if ( drag.source === target ) {
-                            drag.source.parent.parent.z = ++maxZ;
-                            var oldTrackId = target.newTrackId;
-                            target.newTrackId = trackId;
-                            for ( var j = 0; j < selectedClips.length; ++j ) {
-                                if ( drag.source.uuid !== selectedClips[j] )
-                                {
-                                    var clip = findClipItem( selectedClips[j] );
-                                    clip.newTrackId = Math.max( 0, trackId - oldTrackId + clip.trackId );
-                                }
-                            }
-                        }
-                        // Let's move to the new tracks
-                        else if ( target.newTrackId !== target.trackId ) {
+                        if ( target !== drag.source ) {
+                            target.newTrackId = Math.max( 0, trackId - oldTrackId + target.trackId );
+                            if ( target.newTrackId !== target.trackId ) {
+                                // Let's move to the new tracks
                                 target.clipInfo["selected"] = true;
                                 addClip( target.type, target.newTrackId, target.clipInfo );
                                 removeClipFromTrack( target.type, target.trackId, target.uuid );
+                            }
                         }
                     }
 
@@ -245,9 +243,9 @@ Item {
                     var newX = findNewPosition( Math.max( oldX + deltaX, 0 ), target, drag.source, isMagneticMode );
 
                     // Let's find newX of the linked clip
-                    for ( j = 0; j < target.linkedClips.length; ++j )
+                    for ( i = 0; i < target.linkedClips.length; ++i )
                     {
-                        var linkedClipItem = findClipItem( target.linkedClips[j] );
+                        var linkedClipItem = findClipItem( target.linkedClips[i] );
 
                         if ( linkedClipItem ) {
                             var newLinkedClipX = findNewPosition( newX, linkedClipItem, drag.source, isMagneticMode );
