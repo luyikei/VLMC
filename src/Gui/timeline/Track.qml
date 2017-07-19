@@ -54,17 +54,17 @@ Item {
                 var oldX = target.pixelPosition();
 
                 if ( useMagneticMode === true ) {
-                    var leastDestance = magneticMargin;
+                    var leastDistance = magneticMargin;
                     // Check two times
                     for ( var k = 0; k < 2; ++k ) {
                         for ( var j = 0; j < markers.count; ++j ) {
                             var mx = ftop( markers.get( j ).position );
-                            if ( Math.abs( newX - mx ) < leastDestance ) {
-                                leastDestance = Math.abs( newX - mx );
+                            if ( Math.abs( newX - mx ) < leastDistance ) {
+                                leastDistance = Math.abs( newX - mx );
                                 newX = mx;
                             }
-                            else if ( Math.abs( newX + target.width - mx ) < leastDestance ) {
-                                leastDestance = Math.abs( newX + target.width - mx );
+                            else if ( Math.abs( newX + target.width - mx ) < leastDistance ) {
+                                leastDistance = Math.abs( newX + target.width - mx );
                                 newX = mx - target.width;
                             }
                         }
